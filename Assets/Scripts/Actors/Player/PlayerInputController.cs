@@ -4,43 +4,43 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Actors.Player
 {
     public class PlayerInputController : MonoBehaviour, IPlayerInputController
     {
         #region Fields
         private IPlayerControls _playerControls;
-        private IPlayerMovementBehaviour _playerMovementBehaviour;
+        private IActorMovementBehaviour _actorMovementBehaviour;
         #endregion
 
         #region Methods
         public void Start()
         {
             _playerControls = GetComponent<PlayerControls>();
-            _playerMovementBehaviour = GetComponent<PlayerMovementBehaviour>();
+            _actorMovementBehaviour = GetComponent<ActorMovementBehaviour>();
         }
 
         public void Update()
         {
             if (Input.GetKey(_playerControls.MoveDown))
             {
-                _playerMovementBehaviour.Move(PlayerDirection.Down);
+                _actorMovementBehaviour.Move(ActorDirection.Down);
             }
             else if (Input.GetKey(_playerControls.MoveUp))
             {
-                _playerMovementBehaviour.Move(PlayerDirection.Up);
+                _actorMovementBehaviour.Move(ActorDirection.Up);
             }
             else if (Input.GetKey(_playerControls.MoveRight))
             {
-                _playerMovementBehaviour.Move(PlayerDirection.Right);
+                _actorMovementBehaviour.Move(ActorDirection.Right);
             }
             else if (Input.GetKey(_playerControls.MoveLeft))
             {
-                _playerMovementBehaviour.Move(PlayerDirection.Left);
+                _actorMovementBehaviour.Move(ActorDirection.Left);
             }
             else
             {
-                _playerMovementBehaviour.Idle();
+                _actorMovementBehaviour.Idle();
             }
         }
         #endregion

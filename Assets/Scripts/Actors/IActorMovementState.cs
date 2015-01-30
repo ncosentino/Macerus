@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Actors
 {
-    public interface IPlayerMovementState
+    public interface IActorMovementState
     {
         #region Properties
         float Speed { get; }
 
-        PlayerDirection Direction { get; }
+        ActorDirection Direction { get; }
         #endregion
     }
 }

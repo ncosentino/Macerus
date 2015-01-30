@@ -46,15 +46,15 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\AnimatePlayerSprite.cs" />
-     <Compile Include="Assets\Scripts\IPlayerControls.cs" />
-     <Compile Include="Assets\Scripts\IPlayerInputController.cs" />
-     <Compile Include="Assets\Scripts\IPlayerMovementBehaviour.cs" />
-     <Compile Include="Assets\Scripts\IPlayerMovementState.cs" />
-     <Compile Include="Assets\Scripts\PlayerControls.cs" />
-     <Compile Include="Assets\Scripts\PlayerDirection.cs" />
-     <Compile Include="Assets\Scripts\PlayerInputController.cs" />
-     <Compile Include="Assets\Scripts\PlayerMovementBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Actors\ActorDirection.cs" />
+     <Compile Include="Assets\Scripts\Actors\ActorMovementBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Actors\AnimateActorSprite.cs" />
+     <Compile Include="Assets\Scripts\Actors\IActorMovementBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Actors\IActorMovementState.cs" />
+     <Compile Include="Assets\Scripts\Actors\Player\IPlayerControls.cs" />
+     <Compile Include="Assets\Scripts\Actors\Player\IPlayerInputController.cs" />
+     <Compile Include="Assets\Scripts\Actors\Player\PlayerControls.cs" />
+     <Compile Include="Assets\Scripts\Actors\Player\PlayerInputController.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\SortingLayerExposed.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\TileAnimator.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\TiledMap.cs" />

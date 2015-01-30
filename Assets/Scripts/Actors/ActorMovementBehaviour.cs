@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Scripts.Actors;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class PlayerMovementBehaviour : MonoBehaviour, IPlayerMovementBehaviour
+    public class ActorMovementBehaviour : MonoBehaviour, IActorMovementBehaviour
     {
         #region Properties
         public float Speed { get; private set; }
 
-        public PlayerDirection Direction { get; private set; }
+        public ActorDirection Direction { get; private set; }
         #endregion
 
         #region Methods
@@ -27,25 +28,25 @@ namespace Assets.Scripts
 
             switch (Direction)
             {
-                case PlayerDirection.Down:
+                case ActorDirection.Down:
                     gameObject.transform.Translate(0, -distance, 0);
                     break;
 
-                case PlayerDirection.Up:
+                case ActorDirection.Up:
                     gameObject.transform.Translate(0, distance, 0);
                     break;
 
-                case PlayerDirection.Right:
+                case ActorDirection.Right:
                     gameObject.transform.Translate(distance, 0, 0);
                     break;
 
-                case PlayerDirection.Left:
+                case ActorDirection.Left:
                     gameObject.transform.Translate(-distance, 0, 0);
                     break;
             }
         }
 
-        public void Move(PlayerDirection direction)
+        public void Move(ActorDirection direction)
         {
             Direction = direction;
             Speed = 0.5f;

@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Actors
 {
-    public interface IPlayerMovementBehaviour : IPlayerMovementState
+    public interface IActorMovementBehaviour : IActorMovementState
     {
         #region Methods
-        void Move(PlayerDirection direction);
+        void Move(ActorDirection direction);
 
         void Idle();
         #endregion

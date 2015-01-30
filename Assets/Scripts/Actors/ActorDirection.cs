@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Actors
 {
-    public enum PlayerDirection
+    public enum ActorDirection
     {
         Up,
         Down,
