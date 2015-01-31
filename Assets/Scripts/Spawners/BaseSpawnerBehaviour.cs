@@ -60,7 +60,7 @@ namespace Assets.Scripts.Spawners
             _spawner = new Spawner(
                 PrefabPath,
                 SpawnName,
-                MaximumSpawns == 1,
+                MaximumSpawns != 1,
                 gameObject.transform.position,
                 SpawnRadius);
         }

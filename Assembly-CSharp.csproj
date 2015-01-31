@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\Camera\ICameraTargetting.cs" />
      <Compile Include="Assets\Scripts\MapLoader.cs" />
      <Compile Include="Assets\Scripts\Spawners\BaseSpawnerBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Spawners\CollisionSpawnerBehaviour.cs" />
      <Compile Include="Assets\Scripts\Spawners\IntervalSpawnerBehaviour.cs" />
      <Compile Include="Assets\Scripts\Spawners\Spawner.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\SortingLayerExposed.cs" />
