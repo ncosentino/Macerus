@@ -27,7 +27,7 @@ namespace Assets.Scripts.Actors
         public void Start()
         {
             _animator = GetComponent<Animator>();
-            _actorMovementState = GetComponent<ActorMovementBehaviour>();
+            _actorMovementState = (IActorMovementBehaviour)GetComponent(typeof(IActorMovementBehaviour));
         }
 
         public void Update()

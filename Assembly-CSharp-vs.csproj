@@ -55,6 +55,10 @@
      <Compile Include="Assets\Scripts\Actors\Player\IPlayerInputController.cs" />
      <Compile Include="Assets\Scripts\Actors\Player\PlayerControls.cs" />
      <Compile Include="Assets\Scripts\Actors\Player\PlayerInputController.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraFindTargetBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraFollowBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Camera\ICameraTargetting.cs" />
+     <Compile Include="Assets\Scripts\SpawnerBehaviour.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\SortingLayerExposed.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\TileAnimator.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\TiledMap.cs" />

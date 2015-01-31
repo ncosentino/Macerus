@@ -16,8 +16,8 @@ namespace Assets.Scripts.Actors.Player
         #region Methods
         public void Start()
         {
-            _playerControls = GetComponent<PlayerControls>();
-            _actorMovementBehaviour = GetComponent<ActorMovementBehaviour>();
+            _playerControls = (IPlayerControls)GetComponent(typeof(IPlayerControls));
+            _actorMovementBehaviour = (IActorMovementBehaviour)GetComponent(typeof(IActorMovementBehaviour));
         }
 
         public void Update()
