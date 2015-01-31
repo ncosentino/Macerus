@@ -58,12 +58,14 @@
      <Compile Include="Assets\Scripts\Camera\CameraFindTargetBehaviour.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraFollowBehaviour.cs" />
      <Compile Include="Assets\Scripts\Camera\ICameraTargetting.cs" />
+     <Compile Include="Assets\Scripts\MapLoader.cs" />
      <Compile Include="Assets\Scripts\SpawnerBehaviour.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\SortingLayerExposed.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\TileAnimator.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\TiledMap.cs" />
      <None Include="Assets\Tiled2Unity\Prefabs\_ReadMe.txt" />
      <None Include="Assets\Tiled2Unity\Shaders\shaTiledMap.shader" />
+     <None Include="Assets\Resources\Maps\swamp.xml" />
      <None Include="Assets\Tiled2Unity\Materials\_ReadMe.txt" />
      <None Include="Assets\Tiled2Unity\Imported\swamp.tiled2unity.xml" />
      <None Include="Assets\Tiled2Unity\Textures\_ReadMe.txt" />
