@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assets.Scripts.Tiled
+namespace Assets.Scripts.Maps.Tiled
 {
-    public class MapObject
+    public class MapObject : IMapObject
     {
         #region Fields
         private readonly string _id;
@@ -25,6 +25,38 @@ namespace Assets.Scripts.Tiled
             _gid = gid;
             _x = x;
             _y = y;
+        }
+        #endregion
+
+        #region Properties
+        public string Id
+        {
+            get { return _id; }
+        }
+
+        public string Gid
+        {
+            get { return _gid; }
+        }
+
+        public string Name
+        {
+            get { return _name; }
+        }
+
+        public string Type
+        {
+            get { return _type; }
+        }
+
+        public int X
+        {
+            get { return _x; }
+        }
+
+        public int Y
+        {
+            get { return _y; }
         }
         #endregion
     }

@@ -25,7 +25,7 @@ namespace Assets.Scripts.Spawners
         {
             for (int i = 0; i < TargetSpawnCount; i++)
             {
-                Spawner.Spawn();
+                Spawner.Spawn(gameObject.transform.parent);
             }
         }
         #endregion

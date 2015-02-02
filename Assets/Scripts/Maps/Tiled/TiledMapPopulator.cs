@@ -2,25 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Assets.Scripts.Tiled;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Maps.Tiled
 {
-    public class MapLoader
+    public class TiledMapPopulator
     {
-        #region Constants
-        private const float SPRITE_TO_UNITY_SPACING_MULTIPLIER = 0.32f;
-        private const float SPRITE_TO_UNITY_SCALE_MULTIPLIER = SPRITE_TO_UNITY_SPACING_MULTIPLIER + 0.001f;
-        #endregion
+
 
         #region Fields
+        private readonly Action<GameObject, TilesetTileResource> _transformTile;
+        #endregion
 
+        #region Constructors
+        public TiledMapPopulator(Action<GameObject, TilesetTileResource> transformTile)
+        {
+            _transformTile = transformTile;
+        }
+        #endregion
+
+        #region Properties
+        public float SpriteSpacingMultiplier { get; set; }
+
+        public float SpriteScaleMultiplier { get; set; }
+
+        public bool FlipVerticalPlacement { get; set; }
+
+        public bool FlipHorizontalPlacement { get; set; }
         #endregion
 
         #region Methods
-        public void Xxx(GameObject mapObject, ITiledMap map)
+        public void PopulateMap(GameObject mapObject, ITiledMap map)
         {
             var resources = BuildResources(map.Tilesets, "Assets/Resources/Maps/");
 
@@ -43,7 +56,7 @@ namespace Assets.Scripts
                     for (int rowIndex = 0; rowIndex < layer.Heighth; rowIndex++)
                     {
                         var tile = layer.GetTile(columnIndex, rowIndex);
-                        if (tile.Gid == 0)
+                        if (tile == null || tile.Gid == 0)
                         {
                             continue;
                         }
@@ -56,32 +69,48 @@ namespace Assets.Scripts
 
                         var renderer = tileObject.GetComponent<SpriteRenderer>();
                         renderer.sprite = tileResource.Sprite;
-                        renderer.transform.localScale *= SPRITE_TO_UNITY_SCALE_MULTIPLIER;
+                        renderer.transform.localScale *= SpriteScaleMultiplier;
                         renderer.transform.Translate(
-                            columnIndex * SPRITE_TO_UNITY_SPACING_MULTIPLIER,
-                            -rowIndex * SPRITE_TO_UNITY_SPACING_MULTIPLIER,
+                            columnIndex * SpriteSpacingMultiplier * (FlipHorizontalPlacement ? -1 : 1),
+                            rowIndex * SpriteSpacingMultiplier * (FlipVerticalPlacement ? -1 : 1),
                             0);
                         renderer.sortingLayerName = layerContainer.name;
 
                         tileObject.name = renderer.sprite.name;
 
-                        ApplyTileProperties(tileObject, tileResource);
+                        if (_transformTile != null)
+                        {
+                            _transformTile(tileObject, tileResource);
+                        }
                     }
                 }
             }
-        }
 
-        private void ApplyTileProperties(GameObject tileObject, TilesetTileResource tileResource)
-        {
-            if (string.Equals("false", tileResource.GetPropertyValue("Walkable"), StringComparison.OrdinalIgnoreCase))
+            Debug.Log("Object Layers: " + map.ObjectLayers.Count());
+            foreach (var objectLayer in map.ObjectLayers)
             {
-                tileObject.AddComponent<Rigidbody2D>();
-                var rigidBody = tileObject.GetComponent<Rigidbody2D>();
-                rigidBody.gravityScale = 0;
-                rigidBody.fixedAngle = false;
-                rigidBody.isKinematic = true;
+                var objectLayerContainer = new GameObject();
+                objectLayerContainer.transform.parent = tilesContainer.transform;
+                objectLayerContainer.name = objectLayer.Name;
 
-                tileObject.AddComponent<BoxCollider2D>();
+                foreach (var objectLayerObject in objectLayer.Objects)
+                {
+                    var prefab = (GameObject)UnityEngine.Object.Instantiate(
+                        Resources.Load(objectLayerObject.Type),
+                        new Vector3(
+                            objectLayerObject.X / 32f * SpriteSpacingMultiplier * (FlipHorizontalPlacement ? -1 : 1),
+                            objectLayerObject.Y / 32f * SpriteSpacingMultiplier * (FlipVerticalPlacement ? -1 : 1),
+                            0),
+                        Quaternion.identity);
+                    prefab.transform.parent = objectLayerContainer.transform;
+                    prefab.name = objectLayerObject.Name;
+
+                    var renderer = prefab.GetComponent<SpriteRenderer>();
+                    if (renderer != null)
+                    {
+                        renderer.sortingLayerName = objectLayerContainer.name;
+                    }
+                }
             }
         }
 
@@ -142,48 +171,6 @@ namespace Assets.Scripts
             }
 
             return builder.ToString();
-        }
-        #endregion
-    }
-
-    public class TilesetTileResource
-    {
-        #region Fields
-        private readonly Sprite _sprite;
-        private readonly Dictionary<string, string> _properties;
-        #endregion
-
-        #region Constructors
-        public TilesetTileResource(Sprite sprite, IEnumerable<KeyValuePair<string, string>> properties)
-        {
-            _sprite = sprite;
-            _properties = new Dictionary<string, string>();
-
-            foreach (var property in properties)
-            {
-                _properties[property.Key] = property.Value;
-            }
-        }
-        #endregion
-
-        #region Properties
-        public Sprite Sprite
-        {
-            get { return _sprite; }
-        }
-
-        public IEnumerable<string> PropertyNames
-        {
-            get { return _properties.Keys; }
-        }
-        #endregion
-
-        #region Methods
-        public string GetPropertyValue(string propertyName)
-        {
-            return _properties.ContainsKey(propertyName)
-                ? _properties[propertyName]
-                : null;
         }
         #endregion
     }

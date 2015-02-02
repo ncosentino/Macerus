@@ -42,19 +42,20 @@ namespace Assets.Scripts.Spawners
         #endregion
 
         #region Methods
-        public void Spawn()
+        public void Spawn(Transform containerToSpawnIn)
         {
             var spawnAngle = UnityEngine.Random.value * Math.PI * 2;
             var xLocation = (float)(_spawnOrigin.x + _spawnRadius * UnityEngine.Random.value * Math.Cos(spawnAngle));
             var yLocation = (float)(_spawnOrigin.y + _spawnRadius * UnityEngine.Random.value * Math.Sin(spawnAngle));
 
-            var spawned = UnityEngine.Object.Instantiate(
+            var spawned = (GameObject)UnityEngine.Object.Instantiate(
                 Resources.Load(_prefabPath), 
                 new Vector3(xLocation, yLocation, _spawnOrigin.z),
                 Quaternion.identity);
             spawned.name = _addIndexToName
                 ? _spawnName + _currentSpawnCount
                 : _spawnName;
+            spawned.transform.parent = containerToSpawnIn;
 
             _currentSpawnCount++;
         }

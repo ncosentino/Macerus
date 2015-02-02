@@ -35,7 +35,7 @@ namespace Assets.Scripts.Spawners
 
             if (_remainingTime <= 0)
             {
-                Spawner.Spawn();
+                Spawner.Spawn(gameObject.transform.parent);
                 _remainingTime = Interval;
             }
         }

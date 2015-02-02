@@ -7,7 +7,7 @@ using System.Text;
 using System.Xml;
 using UnityEngine;
 
-namespace Assets.Scripts.Tiled
+namespace Assets.Scripts.Maps.Tiled
 {
     public class XmlTmxMapLoader
     {

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assets.Scripts.Tiled
+namespace Assets.Scripts.Maps.Tiled
 {
-    public interface IMapLayerTile
+    public interface IObjectLayer
     {
         #region Properties
-        int Gid { get; }
+        string Name { get; }
+
+        IEnumerable<MapObject> Objects { get; }
         #endregion
     }
 }
