@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Tiled
 {
-    public class MapLayer
+    public class MapLayer : IMapLayer
     {
         #region Fields
         private readonly string _name;
@@ -21,6 +21,30 @@ namespace Assets.Scripts.Tiled
             _width = width;
             _heighth = height;
             _tiles = tiles; // FIXME: should probably create a copy...
+        }
+        #endregion
+
+        #region Properties
+        public string Name
+        {
+            get { return _name; }
+        }
+
+        public int Width
+        {
+            get { return _width; }
+        }
+
+        public int Heighth
+        {
+            get { return _heighth; }
+        }
+        #endregion
+
+        #region Methods
+        public MapLayerTile GetTile(int x, int y)
+        {
+            return _tiles[y][x];
         }
         #endregion
     }

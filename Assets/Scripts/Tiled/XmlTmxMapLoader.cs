@@ -50,7 +50,9 @@ namespace Assets.Scripts.Tiled
                     height,
                     tileWidth,
                     tileHeight,
-                    tilesets);
+                    tilesets,
+                    layers,
+                    objectLayers);
             }
 
             throw new FormatException("Could not find the map element.");
@@ -132,20 +134,20 @@ namespace Assets.Scripts.Tiled
 
             var tiles = new Dictionary<int, IDictionary<int, MapLayerTile>>();
 
-            int row = -1;
-            int column = 0;
+            int row = 0;
+            int column = -1;
             foreach (var tile in ReadLayerTiles(reader.ReadSubtree()))
             {
-                if (column % width == 0)
+                if (row % width == 0)
                 {
-                    row++;
-                    column = 0;
+                    column++;
+                    row = 0;
 
-                    tiles[row] = new Dictionary<int, MapLayerTile>();
+                    tiles[column] = new Dictionary<int, MapLayerTile>();
                 }
 
-                tiles[row][column] = tile;
-                column++;
+                tiles[column][row] = tile;
+                row++;
             }
 
             Debug.Log("Got layer.");
@@ -166,7 +168,7 @@ namespace Assets.Scripts.Tiled
                     continue;
                 }
 
-                var gid = reader.GetAttribute("gid");
+                var gid = int.Parse(reader.GetAttribute("gid"), CultureInfo.InvariantCulture);
 
                 Debug.Log("Got tile.");
                 yield return new MapLayerTile(gid);
@@ -175,15 +177,18 @@ namespace Assets.Scripts.Tiled
 
         private Tileset ReadTileset(XmlReader reader)
         {
+            var firstGid = int.Parse(reader.GetAttribute("firstgid"), CultureInfo.InvariantCulture);
             var tilesetName = reader.GetAttribute("name");
             var tileWidth = int.Parse(reader.GetAttribute("tilewidth"), CultureInfo.InvariantCulture);
             var tileHeight = int.Parse(reader.GetAttribute("tileheight"), CultureInfo.InvariantCulture);
 
-            var images = ReadTilesetImages(reader.ReadSubtree());
-            var tiles = ReadTilesetTiles(reader.ReadSubtree());
+            List<TilesetImage> images;
+            List<TilesetTile> tiles;
+            ReadTilesetContent(reader.ReadSubtree(), out images, out tiles);
 
             Debug.Log("Got tileset.");
             return new Tileset(
+                firstGid,
                 tilesetName,
                 tileWidth,
                 tileHeight,
@@ -191,46 +196,55 @@ namespace Assets.Scripts.Tiled
                 tiles);
         }
 
-        private IEnumerable<TilesetImage> ReadTilesetImages(XmlReader reader)
+        private void ReadTilesetContent(XmlReader reader, out List<TilesetImage> images, out List<TilesetTile> tiles)
         {
+            images = new List<TilesetImage>();
+            tiles = new List<TilesetTile>();
+
             while (reader.Read())
             {
-                if (reader.NodeType != XmlNodeType.Element ||
-                    reader.Name != "image")
+                if (reader.NodeType != XmlNodeType.Element)
                 {
                     continue;
                 }
 
-                var entrySource = reader.GetAttribute("source");
-                var width = int.Parse(reader.GetAttribute("width"), CultureInfo.InvariantCulture);
-                var height = int.Parse(reader.GetAttribute("height"), CultureInfo.InvariantCulture);
-
-                Debug.Log("Got tileset image.");
-                yield return new TilesetImage(
-                    entrySource,
-                    width,
-                    height);
+                switch (reader.Name)
+                {
+                    case "image":
+                        images.Add(ReadTilesetImage(reader));
+                        break;
+                    case "tile":
+                        tiles.Add(ReadTilesetTile(reader));
+                        break;
+                    default:
+                        Debug.Log("Unsupported tilset element: " + reader.Name);
+                        break;
+                }
             }
         }
 
-        private IEnumerable<TilesetTile> ReadTilesetTiles(XmlReader reader)
+        private TilesetImage ReadTilesetImage(XmlReader reader)
         {
-            while (reader.Read())
-            {
-                if (reader.NodeType != XmlNodeType.Element ||
-                    reader.Name != "tile")
-                {
-                    continue;
-                }
+            var entrySource = reader.GetAttribute("source");
+            var width = int.Parse(reader.GetAttribute("width"), CultureInfo.InvariantCulture);
+            var height = int.Parse(reader.GetAttribute("height"), CultureInfo.InvariantCulture);
 
-                var id = reader.GetAttribute("id");
-                var properties = ReadTilesetTileProperties(reader.ReadSubtree());
+            Debug.Log("Got tileset image.");
+            return new TilesetImage(
+                entrySource,
+                width,
+                height);
+        }
 
-                Debug.Log("Got tileset tile.");
-                yield return new TilesetTile(
-                    id,
-                    properties);
-            }
+        private TilesetTile ReadTilesetTile(XmlReader reader)
+        {
+            var id = int.Parse(reader.GetAttribute("id"), CultureInfo.InvariantCulture);
+            var properties = ReadTilesetTileProperties(reader.ReadSubtree());
+
+            Debug.Log("Got tileset tile.");
+            return new TilesetTile(
+                id,
+                properties);
         }
 
         private IEnumerable<KeyValuePair<string, string>> ReadTilesetTileProperties(XmlReader reader)

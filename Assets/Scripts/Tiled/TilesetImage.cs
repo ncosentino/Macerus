@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Tiled
 {
-    public class TilesetImage
+    public class TilesetImage : ITilesetImage
     {
         #region Fields
         private readonly string _sourcePath;
@@ -19,6 +19,23 @@ namespace Assets.Scripts.Tiled
             _sourcePath = sourcePath;
             _width = width;
             _height = height;
+        }
+        #endregion
+
+        #region Properties
+        public string SourcePath
+        {
+            get { return _sourcePath; }
+        }
+
+        public int Width
+        {
+            get { return _width; }
+        }
+
+        public int Height
+        {
+            get { return _height; }
         }
         #endregion
     }
