@@ -35,12 +35,19 @@ namespace Assets.Scripts.Tiled
         {
             get { return _properties.Keys; }
         }
+
+        public IEnumerable<KeyValuePair<string, string>> Properties
+        {
+            get { return _properties; }
+        }
         #endregion
 
         #region Methods
-        public string GetProperty(string propertyName)
+        public string GetPropertyValue(string propertyName)
         {
-            return _properties[propertyName];
+            return _properties.ContainsKey(propertyName)
+                ? _properties[propertyName]
+                : null;
         }
         #endregion
     }

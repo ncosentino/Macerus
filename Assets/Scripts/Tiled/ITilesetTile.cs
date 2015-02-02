@@ -11,10 +11,12 @@ namespace Assets.Scripts.Tiled
         int Id { get; }
         
         IEnumerable<string>  PropertyNames { get; }
+        
+        IEnumerable<KeyValuePair<string, string>> Properties { get; }
         #endregion
 
         #region Methods
-        string GetProperty(string propertyName);
+        string GetPropertyValue(string propertyName);
         #endregion
     }
 }

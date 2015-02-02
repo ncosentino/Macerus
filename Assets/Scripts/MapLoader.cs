@@ -11,7 +11,8 @@ namespace Assets.Scripts
     public class MapLoader
     {
         #region Constants
-        private const float SPRITE_TO_UNITY_MULTIPLIER = 0.32f;
+        private const float SPRITE_TO_UNITY_SPACING_MULTIPLIER = 0.32f;
+        private const float SPRITE_TO_UNITY_SCALE_MULTIPLIER = SPRITE_TO_UNITY_SPACING_MULTIPLIER + 0.001f;
         #endregion
 
         #region Fields
@@ -47,28 +48,46 @@ namespace Assets.Scripts
                             continue;
                         }
 
+                        var tileResource = resources[tile.Gid];
+
                         var tileObject = new GameObject();
                         tileObject.transform.parent = layerContainer.transform;
                         tileObject.AddComponent<SpriteRenderer>();
 
                         var renderer = tileObject.GetComponent<SpriteRenderer>();
-                        renderer.sprite = resources[tile.Gid];
-                        renderer.transform.localScale *= SPRITE_TO_UNITY_MULTIPLIER;
+                        renderer.sprite = tileResource.Sprite;
+                        renderer.transform.localScale *= SPRITE_TO_UNITY_SCALE_MULTIPLIER;
                         renderer.transform.Translate(
-                            columnIndex * SPRITE_TO_UNITY_MULTIPLIER,
-                            -rowIndex * SPRITE_TO_UNITY_MULTIPLIER,
+                            columnIndex * SPRITE_TO_UNITY_SPACING_MULTIPLIER,
+                            -rowIndex * SPRITE_TO_UNITY_SPACING_MULTIPLIER,
                             0);
                         renderer.sortingLayerName = layerContainer.name;
 
                         tileObject.name = renderer.sprite.name;
+
+                        ApplyTileProperties(tileObject, tileResource);
                     }
                 }
             }
         }
 
-        private Dictionary<int, Sprite> BuildResources(IEnumerable<Tileset> tilesets, string mapResourceRoot)
+        private void ApplyTileProperties(GameObject tileObject, TilesetTileResource tileResource)
         {
-            var resources = new Dictionary<int, Sprite>();
+            if (string.Equals("false", tileResource.GetPropertyValue("Walkable"), StringComparison.OrdinalIgnoreCase))
+            {
+                tileObject.AddComponent<Rigidbody2D>();
+                var rigidBody = tileObject.GetComponent<Rigidbody2D>();
+                rigidBody.gravityScale = 0;
+                rigidBody.fixedAngle = false;
+                rigidBody.isKinematic = true;
+
+                tileObject.AddComponent<BoxCollider2D>();
+            }
+        }
+
+        private Dictionary<int, TilesetTileResource> BuildResources(IEnumerable<Tileset> tilesets, string mapResourceRoot)
+        {
+            var resources = new Dictionary<int, TilesetTileResource>();
 
             foreach (var tileset in tilesets)
             {
@@ -86,7 +105,9 @@ namespace Assets.Scripts
                 foreach (var tilesetTile in tileset.Tiles)
                 {
                     Debug.Log("Resource for GID: " + gid);
-                    resources[gid++] = sprites[tilesetTile.Id];   
+                    resources[gid++] = new TilesetTileResource(
+                        sprites[tilesetTile.Id],
+                        tilesetTile.Properties);
                 }
             }
 
@@ -121,6 +142,48 @@ namespace Assets.Scripts
             }
 
             return builder.ToString();
+        }
+        #endregion
+    }
+
+    public class TilesetTileResource
+    {
+        #region Fields
+        private readonly Sprite _sprite;
+        private readonly Dictionary<string, string> _properties;
+        #endregion
+
+        #region Constructors
+        public TilesetTileResource(Sprite sprite, IEnumerable<KeyValuePair<string, string>> properties)
+        {
+            _sprite = sprite;
+            _properties = new Dictionary<string, string>();
+
+            foreach (var property in properties)
+            {
+                _properties[property.Key] = property.Value;
+            }
+        }
+        #endregion
+
+        #region Properties
+        public Sprite Sprite
+        {
+            get { return _sprite; }
+        }
+
+        public IEnumerable<string> PropertyNames
+        {
+            get { return _properties.Keys; }
+        }
+        #endregion
+
+        #region Methods
+        public string GetPropertyValue(string propertyName)
+        {
+            return _properties.ContainsKey(propertyName)
+                ? _properties[propertyName]
+                : null;
         }
         #endregion
     }
