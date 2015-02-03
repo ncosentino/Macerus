@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="4">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="8">
  <tileset firstgid="1" name="swamp" tilewidth="32" tileheight="32">
   <image source="../Graphics/Tilesets/Exterior/swamp.png" trans="ff00ff" width="224" height="96"/>
   <tile id="0">
@@ -10114,5 +10114,12 @@
  </layer>
  <objectgroup name="Object Layer 1">
   <object id="3" name="playerSpawnLocation" type="Prefabs/Spawners/PlayerSpawner" gid="15" x="1259" y="592"/>
+  <object id="6" name="enemySpawner" type="Prefabs/Spawners/CollisionSpawner" x="1174.67" y="736" width="209.333" height="202.667">
+   <properties>
+    <property name="CollisionSpawnerBehaviour_PrefabPath" value="Prefabs/Actors/Enemy"/>
+    <property name="CollisionSpawnerBehaviour_SpawnName" value="Enemy"/>
+   </properties>
+   <ellipse/>
+  </object>
  </objectgroup>
 </map>

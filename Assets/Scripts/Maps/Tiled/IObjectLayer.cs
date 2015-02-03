@@ -10,7 +10,7 @@ namespace Assets.Scripts.Maps.Tiled
         #region Properties
         string Name { get; }
 
-        IEnumerable<MapObject> Objects { get; }
+        IEnumerable<TiledMapObject> Objects { get; }
         #endregion
     }
 }

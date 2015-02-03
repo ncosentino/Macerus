@@ -22,12 +22,15 @@ namespace Assets.Scripts.Maps
             var xmlMapContents = Resources.Load<TextAsset>("Maps/swamp").text;
             var tmxMap = new XmlTmxMapLoader().ReadXml(xmlMapContents);
 
-            var mapPopulator = new TiledMapPopulator(ApplyTileProperties)
+            var mapPopulator = new TiledMapPopulator(
+                ApplyTileProperties,
+                ApplyMapObjectProperties)
             {
                 SpriteScaleMultiplier = SPRITE_TO_UNITY_SCALE_MULTIPLIER,
                 SpriteSpacingMultiplier = SPRITE_TO_UNITY_SPACING_MULTIPLIER,
                 FlipHorizontalPlacement = false,
                 FlipVerticalPlacement = true,
+                CenterAlignGameObjects = true,
             };
 
             mapPopulator.PopulateMap(gameObject, tmxMap);
@@ -44,6 +47,49 @@ namespace Assets.Scripts.Maps
                 rigidBody.isKinematic = true;
 
                 tileObject.AddComponent<BoxCollider2D>();
+            }
+        }
+
+        private void ApplyMapObjectProperties(GameObject prefab, ITiledMapObject tiledMapObject)
+        {
+            var componentProperties = new Dictionary<string, HashSet<string>>();
+
+            foreach (var propertyName in tiledMapObject.PropertyNames)
+            {
+                var parts = propertyName.Split(new[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (parts.Length == 2)
+                {
+                    if (!componentProperties.ContainsKey(parts[0]))
+                    {
+                        componentProperties[parts[0]] = new HashSet<string>();
+                    }
+
+                    componentProperties[parts[0]].Add(parts[1]);
+                }
+            }
+
+            foreach (var componentName in componentProperties.Keys)
+            {
+                var component = prefab.GetComponent(componentName);
+                if (component == null)
+                {
+                    Debug.LogWarning(string.Format("Could not find component '{0}' on prefab '{1}'.", componentName, prefab.name));
+                    continue;
+                }
+
+                foreach (var componentProperty in componentProperties[componentName])
+                {
+                    var field = component.GetType().GetField(componentProperty);
+                    if (field == null)
+                    {
+                        Debug.LogWarning(string.Format("Could not find field '{0}' on component '{1}'.", componentProperty, componentName));
+                        continue;
+                    }
+
+                    var propertyValue = tiledMapObject.GetPropertyValue(string.Format("{0}_{1}", componentName, componentProperty));
+                    field.SetValue(component, propertyValue);    
+                }
             }
         }
         #endregion

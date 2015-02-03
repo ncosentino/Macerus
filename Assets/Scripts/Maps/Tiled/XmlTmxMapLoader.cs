@@ -98,7 +98,7 @@ namespace Assets.Scripts.Maps.Tiled
                 objects);
         }
 
-        private IEnumerable<MapObject> ReadMapObjects(XmlReader reader)
+        private IEnumerable<TiledMapObject> ReadMapObjects(XmlReader reader)
         {
             while (reader.Read())
             {
@@ -112,17 +112,32 @@ namespace Assets.Scripts.Maps.Tiled
                 var objectName = reader.GetAttribute("name");
                 var type = reader.GetAttribute("type");
                 var gid = reader.GetAttribute("gid");
-                var x = int.Parse(reader.GetAttribute("x"), CultureInfo.InvariantCulture);
-                var y = int.Parse(reader.GetAttribute("y"), CultureInfo.InvariantCulture);
+                var x = float.Parse(reader.GetAttribute("x"), CultureInfo.InvariantCulture);
+                var y = float.Parse(reader.GetAttribute("y"), CultureInfo.InvariantCulture);
+
+                var widthAttr = reader.GetAttribute("width");
+                var width = widthAttr == null
+                    ? (float?)null
+                    : float.Parse(widthAttr, CultureInfo.InvariantCulture);
+
+                var heightAttr = reader.GetAttribute("height");
+                var height = heightAttr == null
+                    ? (float?)null
+                    : float.Parse(heightAttr, CultureInfo.InvariantCulture);
+
+                var properties = ReadTilesetTileProperties(reader.ReadSubtree());
 
                 Debug.Log("Got map object.");
-                yield return new MapObject(
+                yield return new TiledMapObject(
                     id,
                     objectName,
                     type,
                     gid,
                     x,
-                    y);
+                    y,
+                    width,
+                    height,
+                    properties);
             }
         }
 

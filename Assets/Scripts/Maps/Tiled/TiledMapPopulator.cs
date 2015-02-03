@@ -9,16 +9,18 @@ namespace Assets.Scripts.Maps.Tiled
 {
     public class TiledMapPopulator
     {
-
-
         #region Fields
         private readonly Action<GameObject, TilesetTileResource> _transformTile;
+        private readonly Action<GameObject, ITiledMapObject> _transformMapObject;
         #endregion
 
         #region Constructors
-        public TiledMapPopulator(Action<GameObject, TilesetTileResource> transformTile)
+        public TiledMapPopulator(
+            Action<GameObject, TilesetTileResource> transformTile,
+            Action<GameObject, ITiledMapObject> transformMapObject)
         {
             _transformTile = transformTile;
+            _transformMapObject = transformMapObject;
         }
         #endregion
 
@@ -30,6 +32,8 @@ namespace Assets.Scripts.Maps.Tiled
         public bool FlipVerticalPlacement { get; set; }
 
         public bool FlipHorizontalPlacement { get; set; }
+
+        public bool CenterAlignGameObjects { get; set; }
         #endregion
 
         #region Methods
@@ -95,20 +99,48 @@ namespace Assets.Scripts.Maps.Tiled
 
                 foreach (var objectLayerObject in objectLayer.Objects)
                 {
+                    var positionX = objectLayerObject.X / map.TileWidth * SpriteSpacingMultiplier * (FlipHorizontalPlacement ? -1 : 1);
+                    var positionY = objectLayerObject.Y / map.TileHeight * SpriteSpacingMultiplier * (FlipVerticalPlacement ? -1 : 1);
+
                     var prefab = (GameObject)UnityEngine.Object.Instantiate(
                         Resources.Load(objectLayerObject.Type),
                         new Vector3(
-                            objectLayerObject.X / 32f * SpriteSpacingMultiplier * (FlipHorizontalPlacement ? -1 : 1),
-                            objectLayerObject.Y / 32f * SpriteSpacingMultiplier * (FlipVerticalPlacement ? -1 : 1),
+                            positionX,
+                            positionY,
                             0),
                         Quaternion.identity);
                     prefab.transform.parent = objectLayerContainer.transform;
                     prefab.name = objectLayerObject.Name;
 
+                    var width = objectLayerObject.Width.HasValue
+                        ? objectLayerObject.Width.Value / map.TileWidth * SpriteScaleMultiplier
+                        : SpriteScaleMultiplier;
+                    var height = objectLayerObject.Height.HasValue
+                        ? objectLayerObject.Height.Value / map.TileHeight * SpriteScaleMultiplier
+                        : -SpriteScaleMultiplier; // FIXME: comment on why this default height needs to be negative for things to align properly
+                    
+                    prefab.transform.localScale = new Vector3(
+                        width,
+                        height,
+                        prefab.transform.localScale.z);
+
+                    if (CenterAlignGameObjects)
+                    {
+                        prefab.transform.Translate(
+                            (width / 2) * (FlipHorizontalPlacement ? -1 : 1),
+                            (height / 2) * (FlipVerticalPlacement ? -1 : 1),
+                            0);
+                    }
+
                     var renderer = prefab.GetComponent<SpriteRenderer>();
                     if (renderer != null)
                     {
                         renderer.sortingLayerName = objectLayerContainer.name;
+                    }
+
+                    if (_transformMapObject != null)
+                    {
+                        _transformMapObject(prefab, objectLayerObject);
                     }
                 }
             }

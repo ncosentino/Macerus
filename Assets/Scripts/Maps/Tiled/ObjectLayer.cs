@@ -9,14 +9,14 @@ namespace Assets.Scripts.Maps.Tiled
     {
         #region Fields
         private readonly string _name;
-        private readonly List<MapObject> _objects;
+        private readonly List<TiledMapObject> _objects;
         #endregion
 
         #region Constructors
-        public ObjectLayer(string name, IEnumerable<MapObject> objects)
+        public ObjectLayer(string name, IEnumerable<TiledMapObject> objects)
         {
             _name = name;
-            _objects = new List<MapObject>(objects);
+            _objects = new List<TiledMapObject>(objects);
         }
         #endregion
 
@@ -26,7 +26,7 @@ namespace Assets.Scripts.Maps.Tiled
             get { return _name; }
         }
 
-        public IEnumerable<MapObject> Objects
+        public IEnumerable<TiledMapObject> Objects
         {
             get { return _objects; }
         }
