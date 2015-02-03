@@ -102,8 +102,15 @@ namespace Assets.Scripts.Maps.Tiled
                     var positionX = objectLayerObject.X / map.TileWidth * SpriteSpacingMultiplier * (FlipHorizontalPlacement ? -1 : 1);
                     var positionY = objectLayerObject.Y / map.TileHeight * SpriteSpacingMultiplier * (FlipVerticalPlacement ? -1 : 1);
 
+                    var originalPrefab = Resources.Load(objectLayerObject.Type);
+                    if (originalPrefab == null)
+                    {
+                        Debug.LogWarning(string.Format("Prefab does not exist at '{0}'.", objectLayerObject.Type));
+                        continue;
+                    }
+
                     var prefab = (GameObject)UnityEngine.Object.Instantiate(
-                        Resources.Load(objectLayerObject.Type),
+                        originalPrefab,
                         new Vector3(
                             positionX,
                             positionY,
