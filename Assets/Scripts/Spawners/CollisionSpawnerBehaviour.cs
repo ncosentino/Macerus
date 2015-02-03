@@ -14,8 +14,8 @@ namespace Assets.Scripts.Spawners
             if (SpawnRadius <= 0)
             {
                 SpawnRadius = (float) Math.Sqrt(
-                    Math.Pow(gameObject.transform.localScale.x, 2) +
-                    Math.Pow(gameObject.transform.localScale.y, 2));
+                    Math.Pow(gameObject.transform.localScale.x / 2, 2) +
+                    Math.Pow(gameObject.transform.localScale.y / 2, 2));
             }
 
             base.Start();
