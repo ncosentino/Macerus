@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using UnityEngine;
 
 namespace Assets.Scripts.Maps.Tiled
 {
@@ -44,7 +43,6 @@ namespace Assets.Scripts.Maps.Tiled
                     out layers,
                     out objectLayers);
 
-                Debug.Log("Got map.");
                 return new TiledMap(
                     width,
                     height,
@@ -92,7 +90,6 @@ namespace Assets.Scripts.Maps.Tiled
             
             var objects = ReadMapObjects(reader.ReadSubtree());
 
-            Debug.Log("Got object layer.");
             return new ObjectLayer(
                 layerName, 
                 objects);
@@ -127,7 +124,6 @@ namespace Assets.Scripts.Maps.Tiled
 
                 var properties = ReadTilesetTileProperties(reader.ReadSubtree());
 
-                Debug.Log("Got map object.");
                 yield return new TiledMapObject(
                     id,
                     objectName,
@@ -165,7 +161,6 @@ namespace Assets.Scripts.Maps.Tiled
                 row++;
             }
 
-            Debug.Log("Got layer.");
             return new MapLayer(
                 layerName, 
                 width, 
@@ -185,7 +180,6 @@ namespace Assets.Scripts.Maps.Tiled
 
                 var gid = int.Parse(reader.GetAttribute("gid"), CultureInfo.InvariantCulture);
 
-                Debug.Log("Got tile.");
                 yield return new MapLayerTile(gid);
             }
         }
@@ -201,7 +195,6 @@ namespace Assets.Scripts.Maps.Tiled
             List<TilesetTile> tiles;
             ReadTilesetContent(reader.ReadSubtree(), out images, out tiles);
 
-            Debug.Log("Got tileset.");
             return new Tileset(
                 firstGid,
                 tilesetName,
@@ -232,7 +225,6 @@ namespace Assets.Scripts.Maps.Tiled
                         tiles.Add(ReadTilesetTile(reader));
                         break;
                     default:
-                        Debug.Log("Unsupported tilset element: " + reader.Name);
                         break;
                 }
             }
@@ -244,7 +236,6 @@ namespace Assets.Scripts.Maps.Tiled
             var width = int.Parse(reader.GetAttribute("width"), CultureInfo.InvariantCulture);
             var height = int.Parse(reader.GetAttribute("height"), CultureInfo.InvariantCulture);
 
-            Debug.Log("Got tileset image.");
             return new TilesetImage(
                 entrySource,
                 width,
@@ -256,7 +247,6 @@ namespace Assets.Scripts.Maps.Tiled
             var id = int.Parse(reader.GetAttribute("id"), CultureInfo.InvariantCulture);
             var properties = ReadTilesetTileProperties(reader.ReadSubtree());
 
-            Debug.Log("Got tileset tile.");
             return new TilesetTile(
                 id,
                 properties);
@@ -275,7 +265,6 @@ namespace Assets.Scripts.Maps.Tiled
                 var propertyName = reader.GetAttribute("name");
                 var propertyValue = reader.GetAttribute("value");
                 
-                Debug.Log("Got tileset tile property.");
                 yield return new KeyValuePair<string, string>(
                     propertyName, 
                     propertyValue);

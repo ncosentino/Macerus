@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -19,7 +20,7 @@ namespace Assets.Scripts.Maps
         #region Methods
         public void Start()
         {
-            var xmlMapContents = Resources.Load<TextAsset>("Maps/swamp").text;
+            var xmlMapContents = File.ReadAllText(@"Assets/Resources/Maps/swamp.tmx");
             var tmxMap = new XmlTmxMapLoader().ReadXml(xmlMapContents);
 
             var mapPopulator = new TiledMapPopulator(
