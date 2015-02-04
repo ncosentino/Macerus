@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Maps.Tiled
@@ -10,15 +9,18 @@ namespace Assets.Scripts.Maps.Tiled
     public class TiledMapPopulator
     {
         #region Fields
+        private readonly string _resourceDirectory;
         private readonly Action<GameObject, TilesetTileResource> _transformTile;
         private readonly Action<GameObject, ITiledMapObject> _transformMapObject;
         #endregion
 
         #region Constructors
         public TiledMapPopulator(
+            string resourceDirectory,
             Action<GameObject, TilesetTileResource> transformTile,
             Action<GameObject, ITiledMapObject> transformMapObject)
         {
+            _resourceDirectory = resourceDirectory;
             _transformTile = transformTile;
             _transformMapObject = transformMapObject;
         }
@@ -162,12 +164,10 @@ namespace Assets.Scripts.Maps.Tiled
                 int gid = tileset.FirstGid;
 
                 var tilesetImage = tileset.Images.First();
-                var resourcePath = CollapsePath(mapResourceRoot + tilesetImage.SourcePath);
+                var resourcePath = ResourcePathFromSourcePath(mapResourceRoot, tilesetImage.SourcePath);
                 Debug.Log("Resource at: " + resourcePath);
 
-                var sprites = AssetDatabase.LoadAllAssetRepresentationsAtPath(resourcePath)
-                    .OfType<Sprite>()
-                    .ToArray();
+                var sprites = Resources.LoadAll<Sprite>(resourcePath);
 
                 Debug.Log("Tile count: " + tileset.Tiles.Count());
                 foreach (var tilesetTile in tileset.Tiles)
@@ -180,6 +180,20 @@ namespace Assets.Scripts.Maps.Tiled
             }
 
             return resources;
+        }
+
+        private string ResourcePathFromSourcePath(string mapResourceRoot, string tilesetImageSourcePath)
+        {
+            var resourcePath = CollapsePath(mapResourceRoot + tilesetImageSourcePath);
+            resourcePath = resourcePath.Substring(resourcePath.IndexOf(_resourceDirectory, StringComparison.OrdinalIgnoreCase) + _resourceDirectory.Length);
+
+            var lastPeriodIndex = resourcePath.LastIndexOf(".", StringComparison.Ordinal);
+            if (lastPeriodIndex != -1)
+            {
+                resourcePath = resourcePath.Substring(0, lastPeriodIndex);
+            }
+
+            return resourcePath;
         }
 
         private string CollapsePath(string path)

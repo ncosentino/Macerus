@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{3E7919FC-A4B2-9A2D-9F1E-2EA6B5C5CA51}") = "macerus-unity", "Assembly-CSharp.csproj", "{9A7936B0-FD5D-F581-121C-55852EBFA269}"
 EndProject
-Project("{3E7919FC-A4B2-9A2D-9F1E-2EA6B5C5CA51}") = "macerus-unity", "Assembly-CSharp-Editor.csproj", "{8CC2EDAA-D930-878F-1D31-26B20B262A7D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,15 +13,11 @@ Global
 		{9A7936B0-FD5D-F581-121C-55852EBFA269}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A7936B0-FD5D-F581-121C-55852EBFA269}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A7936B0-FD5D-F581-121C-55852EBFA269}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8CC2EDAA-D930-878F-1D31-26B20B262A7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8CC2EDAA-D930-878F-1D31-26B20B262A7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8CC2EDAA-D930-878F-1D31-26B20B262A7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8CC2EDAA-D930-878F-1D31-26B20B262A7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																																		GlobalSection(MonoDevelopProperties) = preSolution
+																																																																								GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

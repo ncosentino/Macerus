@@ -24,6 +24,7 @@ namespace Assets.Scripts.Maps
             var tmxMap = new XmlTmxMapLoader().ReadXml(xmlMapContents);
 
             var mapPopulator = new TiledMapPopulator(
+                "/Resources/",
                 ApplyTileProperties,
                 ApplyMapObjectProperties)
             {
