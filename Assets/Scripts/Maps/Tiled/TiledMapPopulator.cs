@@ -46,7 +46,16 @@ namespace Assets.Scripts.Maps.Tiled
         {
             var resources = BuildResources(map.Tilesets, "Assets/Resources/Maps/");
 
-            var tilesContainer = new GameObject()
+            var tilesContainerTransform = mapObject.transform.FindChild("Tiles");
+            var tilesContainer = tilesContainerTransform == null
+                ? null
+                : tilesContainerTransform.gameObject;
+            if (tilesContainer != null)
+            {
+                UnityEngine.Object.Destroy(tilesContainer);
+            }
+
+            tilesContainer = new GameObject()
             {
                 name = "Tiles",
             };

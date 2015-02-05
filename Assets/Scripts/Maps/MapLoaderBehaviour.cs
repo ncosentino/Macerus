@@ -19,10 +19,14 @@ namespace Assets.Scripts.Maps
         private const float SPRITE_TO_UNITY_SCALE_MULTIPLIER = SPRITE_TO_UNITY_SPACING_MULTIPLIER + 0.001f;
         #endregion
 
+        #region Unity Properties
+        public string MapAssetPath;
+        #endregion
+
         #region Methods
         public void Start()
         {
-            var xmlMapContents = File.ReadAllText(@"Assets/Resources/Maps/swamp.tmx");
+            var xmlMapContents = File.ReadAllText(MapAssetPath);
             var tmxMap = new XmlTmxMapParser().ReadXml(xmlMapContents);
 
             var mapPopulator = new TiledMapPopulator(
@@ -38,6 +42,9 @@ namespace Assets.Scripts.Maps
             };
 
             mapPopulator.PopulateMap(gameObject, tmxMap);
+
+            // this is a one shot component
+            Destroy(this);
         }
 
         private void ApplyTileProperties(GameObject tileObject, TilesetTileResource tileResource)
