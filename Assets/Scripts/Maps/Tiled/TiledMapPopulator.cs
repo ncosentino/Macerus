@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Tiled.Net.Layers;
+using Tiled.Net.Maps;
+using Tiled.Net.Tilesets;
 using UnityEngine;
 
 namespace Assets.Scripts.Maps.Tiled
@@ -56,10 +59,10 @@ namespace Assets.Scripts.Maps.Tiled
                 layerContainer.transform.parent = tilesContainer.transform;
                 layerContainer.name = layer.Name;
 
-                Debug.Log("Layer Size: " + layer.Width + "x" + layer.Heighth);
+                Debug.Log("Layer Size: " + layer.Width + "x" + layer.Height);
                 for (int columnIndex = 0; columnIndex < layer.Width; columnIndex++)
                 {
-                    for (int rowIndex = 0; rowIndex < layer.Heighth; rowIndex++)
+                    for (int rowIndex = 0; rowIndex < layer.Height; rowIndex++)
                     {
                         var tile = layer.GetTile(columnIndex, rowIndex);
                         if (tile == null || tile.Gid == 0)
@@ -155,7 +158,7 @@ namespace Assets.Scripts.Maps.Tiled
             }
         }
 
-        private Dictionary<int, TilesetTileResource> BuildResources(IEnumerable<Tileset> tilesets, string mapResourceRoot)
+        private Dictionary<int, TilesetTileResource> BuildResources(IEnumerable<ITileset> tilesets, string mapResourceRoot)
         {
             var resources = new Dictionary<int, TilesetTileResource>();
 

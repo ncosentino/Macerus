@@ -7,6 +7,8 @@ using System.Text;
 using UnityEngine;
 
 using Assets.Scripts.Maps.Tiled;
+using Tiled.Net.Layers;
+using Tiled.Net.Parsers;
 
 namespace Assets.Scripts.Maps
 {
@@ -21,7 +23,7 @@ namespace Assets.Scripts.Maps
         public void Start()
         {
             var xmlMapContents = File.ReadAllText(@"Assets/Resources/Maps/swamp.tmx");
-            var tmxMap = new XmlTmxMapLoader().ReadXml(xmlMapContents);
+            var tmxMap = new XmlTmxMapParser().ReadXml(xmlMapContents);
 
             var mapPopulator = new TiledMapPopulator(
                 "/Resources/",
