@@ -6,21 +6,18 @@ using UnityEngine;
 
 namespace Assets.Scripts.Encounters
 {
-    public class EncounterBehaviour : MonoBehaviour
+    public class EncounterProperties : IEncounterProperties
     {
-        #region Constants
-        private const float MINIMUM_TIME = 2;
-        private const float INTERVAL = 2;
-        private const float CHANCE = 0.5f;
-        #endregion
-
         #region Fields
         #endregion
 
         #region Constructors
+        public EncounterProperties()
+        {
+        }
         #endregion
 
-        #region Methods
+        #region Properties
         #endregion
     }
 }

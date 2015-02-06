@@ -59,7 +59,14 @@
      <Compile Include="Assets\Scripts\Camera\CameraFindTargetBehaviour.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraFollowBehaviour.cs" />
      <Compile Include="Assets\Scripts\Camera\ICameraTargetting.cs" />
-     <Compile Include="Assets\Scripts\Encounters\EncounterBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Encounters\EncounterProperties.cs" />
+     <Compile Include="Assets\Scripts\Encounters\EncounterableBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Encounters\EncountererBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Encounters\IEncounterProperties.cs" />
+     <Compile Include="Assets\Scripts\Encounters\IEncounterableBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Encounters\IEncountererBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Encounters\ITryEncounterProperties.cs" />
+     <Compile Include="Assets\Scripts\Encounters\TryEncounterProperties.cs" />
      <Compile Include="Assets\Scripts\Maps\ILoadMapProperties.cs" />
      <Compile Include="Assets\Scripts\Maps\IMapLoader.cs" />
      <Compile Include="Assets\Scripts\Maps\LoadMapProperties.cs" />
