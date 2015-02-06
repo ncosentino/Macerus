@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Actors.Player
 {
-    public interface IPlayerControls
+    public interface IPlayerControlsBehaviour
     {
         #region Properties
         KeyCode MoveLeft { get; }

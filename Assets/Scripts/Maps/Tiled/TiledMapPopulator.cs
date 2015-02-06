@@ -83,9 +83,8 @@ namespace Assets.Scripts.Maps.Tiled
 
                         var tileObject = new GameObject();
                         tileObject.transform.parent = layerContainer.transform;
-                        tileObject.AddComponent<SpriteRenderer>();
+                        var renderer = tileObject.AddComponent<SpriteRenderer>();
 
-                        var renderer = tileObject.GetComponent<SpriteRenderer>();
                         renderer.sprite = tileResource.Sprite;
                         renderer.transform.localScale *= SpriteScaleMultiplier;
                         renderer.transform.Translate(

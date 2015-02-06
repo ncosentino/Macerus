@@ -48,32 +48,40 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Actors\ActorDirection.cs" />
      <Compile Include="Assets\Scripts\Actors\ActorMovementBehaviour.cs" />
-     <Compile Include="Assets\Scripts\Actors\AnimateActorSprite.cs" />
+     <Compile Include="Assets\Scripts\Actors\AnimateActorSpriteBehaviour.cs" />
      <Compile Include="Assets\Scripts\Actors\IActorMovementBehaviour.cs" />
      <Compile Include="Assets\Scripts\Actors\IActorMovementState.cs" />
-     <Compile Include="Assets\Scripts\Actors\Player\IPlayerControls.cs" />
-     <Compile Include="Assets\Scripts\Actors\Player\IPlayerInputController.cs" />
-     <Compile Include="Assets\Scripts\Actors\Player\PlayerControls.cs" />
-     <Compile Include="Assets\Scripts\Actors\Player\PlayerInputController.cs" />
+     <Compile Include="Assets\Scripts\Actors\Player\IPlayerControlsBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Actors\Player\IPlayerInputControllerBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Actors\Player\PlayerBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Actors\Player\PlayerControlsBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Actors\Player\PlayerInputControllerBehaviour.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraFindTargetBehaviour.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraFollowBehaviour.cs" />
      <Compile Include="Assets\Scripts\Camera\ICameraTargetting.cs" />
      <Compile Include="Assets\Scripts\Encounters\EncounterBehaviour.cs" />
-     <Compile Include="Assets\Scripts\Maps\MapLoaderBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Maps\ILoadMapProperties.cs" />
+     <Compile Include="Assets\Scripts\Maps\IMapLoader.cs" />
+     <Compile Include="Assets\Scripts\Maps\LoadMapProperties.cs" />
+     <Compile Include="Assets\Scripts\Maps\MapBehaviour.cs" />
      <Compile Include="Assets\Scripts\Maps\Tiled\TiledMapPopulator.cs" />
      <Compile Include="Assets\Scripts\Maps\TilesetTileResource.cs" />
      <Compile Include="Assets\Scripts\Spawners\BaseSpawnerBehaviour.cs" />
      <Compile Include="Assets\Scripts\Spawners\CollisionSpawnerBehaviour.cs" />
      <Compile Include="Assets\Scripts\Spawners\IntervalSpawnerBehaviour.cs" />
      <Compile Include="Assets\Scripts\Spawners\Spawner.cs" />
+     <Compile Include="Assets\Scripts\Triggers\Teleporters\CollisionTeleporterBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Triggers\Teleporters\ICanTeleport.cs" />
+     <Compile Include="Assets\Scripts\Triggers\Teleporters\ITeleportProperties.cs" />
+     <Compile Include="Assets\Scripts\Triggers\Teleporters\TeleportProperties.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
- <Reference Include="Tiled.Net">
- <HintPath>C:/dev/nexus/products/macerus-unity/Assets/Dependencies/Tiled.Net.dll</HintPath>
- </Reference>
  <Reference Include="Microsoft.Contracts">
  <HintPath>C:/dev/nexus/products/macerus-unity/Assets/Dependencies/Microsoft.Contracts.dll</HintPath>
+ </Reference>
+ <Reference Include="Tiled.Net">
+ <HintPath>C:/dev/nexus/products/macerus-unity/Assets/Dependencies/Tiled.Net.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

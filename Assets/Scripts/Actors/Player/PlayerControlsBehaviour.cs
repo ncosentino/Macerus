@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Actors.Player
 {
-    public class PlayerControls : MonoBehaviour, IPlayerControls
+    public class PlayerControlsBehaviour : MonoBehaviour, IPlayerControlsBehaviour
     {
         #region Properties
         /// <inheritdoc />

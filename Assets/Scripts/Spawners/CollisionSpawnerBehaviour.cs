@@ -23,6 +23,11 @@ namespace Assets.Scripts.Spawners
 
         public void OnTriggerEnter2D(Collider2D collider)
         {
+            if (collider.gameObject.name != "Player")
+            {
+                return;
+            }
+
             for (int i = 0; i < TargetSpawnCount; i++)
             {
                 Spawner.Spawn(gameObject.transform.parent);

@@ -12,7 +12,7 @@ using Tiled.Net.Parsers;
 
 namespace Assets.Scripts.Maps
 {
-    public class MapLoaderBehaviour : MonoBehaviour
+    public class MapBehaviour : MonoBehaviour, IMapLoader
     {
         #region Constants
         private const float SPRITE_TO_UNITY_SPACING_MULTIPLIER = 0.32f;
@@ -26,33 +26,14 @@ namespace Assets.Scripts.Maps
         #region Methods
         public void Start()
         {
-            var xmlMapContents = File.ReadAllText(MapAssetPath);
-            var tmxMap = new XmlTmxMapParser().ReadXml(xmlMapContents);
-
-            var mapPopulator = new TiledMapPopulator(
-                "/Resources/",
-                ApplyTileProperties,
-                ApplyMapObjectProperties)
-            {
-                SpriteScaleMultiplier = SPRITE_TO_UNITY_SCALE_MULTIPLIER,
-                SpriteSpacingMultiplier = SPRITE_TO_UNITY_SPACING_MULTIPLIER,
-                FlipHorizontalPlacement = false,
-                FlipVerticalPlacement = true,
-                CenterAlignGameObjects = true,
-            };
-
-            mapPopulator.PopulateMap(gameObject, tmxMap);
-
-            // this is a one shot component
-            Destroy(this);
+            LoadMap(new LoadMapProperties(MapAssetPath));
         }
 
         private void ApplyTileProperties(GameObject tileObject, TilesetTileResource tileResource)
         {
             if (string.Equals("false", tileResource.GetPropertyValue("Walkable"), StringComparison.OrdinalIgnoreCase))
             {
-                tileObject.AddComponent<Rigidbody2D>();
-                var rigidBody = tileObject.GetComponent<Rigidbody2D>();
+                var rigidBody = tileObject.AddComponent<Rigidbody2D>();
                 rigidBody.gravityScale = 0;
                 rigidBody.fixedAngle = false;
                 rigidBody.isKinematic = true;
@@ -102,6 +83,29 @@ namespace Assets.Scripts.Maps
                     field.SetValue(component, propertyValue);    
                 }
             }
+        }
+
+        public void LoadMap(ILoadMapProperties loadMapProperties)
+        {
+            var xmlMapContents = File.ReadAllText(loadMapProperties.MapAssetPath);
+            var tmxMap = new XmlTmxMapParser().ReadXml(xmlMapContents);
+
+            var mapPopulator = new TiledMapPopulator(
+                "/Resources/",
+                ApplyTileProperties,
+                ApplyMapObjectProperties)
+            {
+                SpriteScaleMultiplier = SPRITE_TO_UNITY_SCALE_MULTIPLIER,
+                SpriteSpacingMultiplier = SPRITE_TO_UNITY_SPACING_MULTIPLIER,
+                FlipHorizontalPlacement = false,
+                FlipVerticalPlacement = true,
+                CenterAlignGameObjects = true,
+            };
+
+            mapPopulator.PopulateMap(gameObject, tmxMap);
+
+            ////mapLoadBehaviour.MapAssetPath = "Assets/Resources/Maps/swamp.tmx";
+            ////Destroy(gameObject);
         }
         #endregion
     }

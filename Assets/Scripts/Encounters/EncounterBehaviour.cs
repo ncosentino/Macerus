@@ -15,29 +15,12 @@ namespace Assets.Scripts.Encounters
         #endregion
 
         #region Fields
-        private float _timeRemaining;
+        #endregion
+
+        #region Constructors
         #endregion
 
         #region Methods
-        public void OnTriggerEnter2D(Collider2D collider)
-        {
-            _timeRemaining = MINIMUM_TIME;
-        }
-
-        public void OnTriggerStay2D(Collider2D collider)
-        {
-            _timeRemaining -= Time.deltaTime;
-
-            if (_timeRemaining <= 0)
-            {
-                if (UnityEngine.Random.value <= CHANCE)
-                {
-                    Debug.Log("Encounter!");
-                }
-
-                _timeRemaining = INTERVAL;
-            }
-        }
         #endregion
     }
 }

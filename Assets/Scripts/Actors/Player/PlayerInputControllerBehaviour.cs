@@ -6,17 +6,17 @@ using UnityEngine;
 
 namespace Assets.Scripts.Actors.Player
 {
-    public class PlayerInputController : MonoBehaviour, IPlayerInputController
+    public class PlayerInputControllerBehaviour : MonoBehaviour, IPlayerInputControllerBehaviour
     {
         #region Fields
-        private IPlayerControls _playerControls;
+        private IPlayerControlsBehaviour _playerControls;
         private IActorMovementBehaviour _actorMovementBehaviour;
         #endregion
 
         #region Methods
         public void Start()
         {
-            _playerControls = (IPlayerControls)GetComponent(typeof(IPlayerControls));
+            _playerControls = (IPlayerControlsBehaviour)GetComponent(typeof(IPlayerControlsBehaviour));
             _actorMovementBehaviour = (IActorMovementBehaviour)GetComponent(typeof(IActorMovementBehaviour));
         }
 

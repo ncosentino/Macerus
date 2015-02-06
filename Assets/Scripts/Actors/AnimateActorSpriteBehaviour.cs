@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Actors
 {
-    public class AnimateActorSprite : MonoBehaviour
+    public class AnimateActorSpriteBehaviour : MonoBehaviour
     {
         #region Constants
         private static readonly Dictionary<ActorDirection, int> DIRECTION_TO_ANIMATION_INDEX = new Dictionary<ActorDirection, int>()

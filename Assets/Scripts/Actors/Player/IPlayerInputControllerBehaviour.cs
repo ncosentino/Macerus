@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Actors.Player
 {
-    public interface IPlayerInputController
+    public interface IPlayerInputControllerBehaviour
     {
     }
 }
