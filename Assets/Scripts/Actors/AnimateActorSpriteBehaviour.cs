@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Actors
 {
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(IActorMovementBehaviour))]
     public class AnimateActorSpriteBehaviour : MonoBehaviour
     {
         #region Constants
@@ -21,11 +24,13 @@ namespace Assets.Scripts.Actors
         #region Fields
         private IActorMovementState _actorMovementState;
         private Animator _animator;
+        private SpriteRenderer _spriteRenderer;
         #endregion
         
         #region Methods
         public void Start()
         {
+            _spriteRenderer = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
             _actorMovementState = (IActorMovementBehaviour)GetComponent(typeof(IActorMovementBehaviour));
         }
@@ -41,6 +46,13 @@ namespace Assets.Scripts.Actors
             {
                 _animator.SetBool("Walking", false);
             }
+        }
+
+        public void LateUpdate()
+        {
+            // little trick to allow 2D sprites to go in front and behind each other
+            const int PIXEL_OFFSET = 10;
+            _spriteRenderer.sortingOrder = (int)((UnityEngine.Camera.main.WorldToScreenPoint(_spriteRenderer.bounds.min).y + PIXEL_OFFSET) * -10);
         }
         #endregion
     }
