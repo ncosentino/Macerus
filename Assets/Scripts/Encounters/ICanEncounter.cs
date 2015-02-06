@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Encounters
 {
-    public interface IEncountererBehaviour
+    public interface ICanEncounter
     {
         #region Methods
         void Encounter(IEncounterProperties encounterProperties);

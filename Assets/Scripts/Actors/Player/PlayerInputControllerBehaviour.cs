@@ -6,6 +6,8 @@ using UnityEngine;
 
 namespace Assets.Scripts.Actors.Player
 {
+    [RequireComponent(typeof(IPlayerControlsBehaviour))]
+    [RequireComponent(typeof(IActorMovementBehaviour))]
     public class PlayerInputControllerBehaviour : MonoBehaviour, IPlayerInputControllerBehaviour
     {
         #region Fields

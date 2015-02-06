@@ -9,7 +9,7 @@ namespace Assets.Scripts.Encounters
     public interface ITryEncounterProperties
     {
         #region Properties
-        GameObject Encounterer { get; }
+        ICanEncounter Encounterer { get; }
         #endregion
     }
 }

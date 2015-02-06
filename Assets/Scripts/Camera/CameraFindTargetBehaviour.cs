@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Camera
 {
+    [RequireComponent(typeof(ICameraTargetting))]
     public class CameraFindTargetBehaviour : MonoBehaviour
     {
         #region Fields

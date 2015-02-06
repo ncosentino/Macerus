@@ -10,19 +10,30 @@ using UnityEngine;
 
 namespace Assets.Scripts.Actors.Player
 {
-    public class PlayerBehaviour : MonoBehaviour, ICanTeleport
+    public class PlayerBehaviour : MonoBehaviour, ICanTeleport, ICanEncounter
     {
+        #region Fields
+        private IMapLoader _mapLoader;
+        #endregion
+
         #region Methods
+        public void Start()
+        {
+            var map = GameObject.Find("Map");
+            _mapLoader = (IMapLoader)map.GetComponent(typeof(IMapLoader));
+        }
+
         public void Teleport(ITeleportProperties teleportProperties)
         {
             Debug.Log(string.Format("Player wants to teleport to '{0}'.", teleportProperties.MapAssetPath));
-            var map = GameObject.Find("Map");
-
+            
             var loadMapProperties = new LoadMapProperties(teleportProperties.MapAssetPath);
-            map.SendMessage(
-                "LoadMap",
-                loadMapProperties,
-                SendMessageOptions.RequireReceiver);
+            _mapLoader.LoadMap(loadMapProperties);
+        }
+
+        public void Encounter(IEncounterProperties encounterProperties)
+        {
+            Debug.Log("Player has encountered something!!!");
         }
         #endregion
     }

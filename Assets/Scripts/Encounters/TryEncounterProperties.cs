@@ -9,18 +9,18 @@ namespace Assets.Scripts.Encounters
     public class TryEncounterProperties : ITryEncounterProperties
     {
         #region Fields
-        private readonly GameObject _encounterer;
+        private readonly ICanEncounter _encounterer;
         #endregion
 
         #region Constructors
-        public TryEncounterProperties(GameObject encounterer)
+        public TryEncounterProperties(ICanEncounter encounterer)
         {
             _encounterer = encounterer;
         }
         #endregion
 
         #region Properties
-        public GameObject Encounterer
+        public ICanEncounter Encounterer
         {
             get { return _encounterer; }
         }

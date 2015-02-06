@@ -30,10 +30,13 @@ namespace Assets.Scripts.Triggers.Teleporters
         {
             var teleportProperties = new TeleportProperties(MapAssetPath);
 
-            collider.gameObject.SendMessage(
-                "Teleport",
-                teleportProperties, 
-                SendMessageOptions.DontRequireReceiver);
+            var teleporter = (ICanTeleport)collider.gameObject.GetComponent(typeof(ICanTeleport));
+            if (teleporter == null)
+            {
+                return;
+            }
+
+            teleporter.Teleport(teleportProperties);
         }
         #endregion
     }

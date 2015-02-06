@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using UnityEngine;
 
 namespace Assets.Scripts.Encounters
 {
-    public class EncountererBehaviour : MonoBehaviour, IEncountererBehaviour
+    [RequireComponent(typeof(ICanEncounter))]
+    public class EncountererBehaviour : MonoBehaviour
     {
         #region Constants
         private const float INTERVAL = 2;
@@ -14,12 +16,18 @@ namespace Assets.Scripts.Encounters
 
         #region Fields
         private float _remainingTime;
+        private ICanEncounter _encounterer;
         #endregion
 
         #region Constructors
         #endregion
 
         #region Methods
+        public void Start()
+        {
+            _encounterer = (ICanEncounter)gameObject.GetComponent(typeof(ICanEncounter));
+        }
+
         public void OnTriggerStay2D(Collider2D collider)
         {
             _remainingTime -= Time.deltaTime;
@@ -31,18 +39,12 @@ namespace Assets.Scripts.Encounters
             _remainingTime = INTERVAL;
             Debug.Log("Encounterer is trying to encounter.");
 
-            var tryEncounterProperties = new TryEncounterProperties(gameObject);
+            var tryEncounterProperties = new TryEncounterProperties(_encounterer);
 
             collider.gameObject.SendMessage(
                 "TryEncounter",
                 tryEncounterProperties,
                 SendMessageOptions.DontRequireReceiver);
-            Debug.Log("POST: Encounterer is trying to encounter.");
-        }
-
-        public void Encounter(IEncounterProperties encounterProperties)
-        {
-            Debug.Log("Encountered!!!");
         }
         #endregion
     }

@@ -30,10 +30,7 @@ namespace Assets.Scripts.Encounters
             Debug.Log("Encounterable has being encountered.");
             var encounterProperties = new EncounterProperties();
 
-            tryEncounterProperties.Encounterer.SendMessage(
-                "Encounter",
-                encounterProperties,
-                SendMessageOptions.RequireReceiver);
+            tryEncounterProperties.Encounterer.Encounter(encounterProperties);
         }
         #endregion
     }
