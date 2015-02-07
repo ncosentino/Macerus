@@ -87,10 +87,10 @@
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="Microsoft.Contracts">
- <HintPath>C:/dev/nexus/products/macerus-unity/Assets/Dependencies/Microsoft.Contracts.dll</HintPath>
+ <HintPath>C:/dev/nexus/products/macerus-unity/Assets/Dependencies/Tiled.Net/Microsoft.Contracts.dll</HintPath>
  </Reference>
  <Reference Include="Tiled.Net">
- <HintPath>C:/dev/nexus/products/macerus-unity/Assets/Dependencies/Tiled.Net.dll</HintPath>
+ <HintPath>C:/dev/nexus/products/macerus-unity/Assets/Dependencies/Tiled.Net/Tiled.Net.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
