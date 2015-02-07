@@ -9,7 +9,7 @@ namespace Assets.Scripts.Triggers.Teleporters
 {
     public class CollisionTeleporterBehaviour : MonoBehaviour
     {
-        #region UnityFields
+        #region Unity Properties
         public float Radius;
 
         public string MapAssetPath;

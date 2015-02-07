@@ -73,6 +73,8 @@
      <Compile Include="Assets\Scripts\Maps\MapBehaviour.cs" />
      <Compile Include="Assets\Scripts\Maps\Tiled\TiledMapPopulator.cs" />
      <Compile Include="Assets\Scripts\Maps\TilesetTileResource.cs" />
+     <Compile Include="Assets\Scripts\Scenes\ExploreSceneManager.cs" />
+     <Compile Include="Assets\Scripts\SingletonBehaviour.cs" />
      <Compile Include="Assets\Scripts\Spawners\BaseSpawnerBehaviour.cs" />
      <Compile Include="Assets\Scripts\Spawners\CollisionSpawnerBehaviour.cs" />
      <Compile Include="Assets\Scripts\Spawners\IntervalSpawnerBehaviour.cs" />

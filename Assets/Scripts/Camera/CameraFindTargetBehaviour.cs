@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Scripts.Scenes;
 using UnityEngine;
 
 namespace Assets.Scripts.Camera
 {
     [RequireComponent(typeof(ICameraTargetting))]
-    public class CameraFindTargetBehaviour : MonoBehaviour
+    public sealed class CameraFindTargetBehaviour : MonoBehaviour
     {
         #region Fields
         private ICameraTargetting _cameraTargetting;
@@ -16,8 +17,6 @@ namespace Assets.Scripts.Camera
 
         #region Unity Properties
         public float SearchInterval = 0.1f;
-
-        public string TargetName;
         #endregion
 
         #region Methods
@@ -37,7 +36,7 @@ namespace Assets.Scripts.Camera
 
             if (_remainingSearchTime <= 0)
             {
-                var target = GameObject.Find(TargetName);
+                var target = ExploreSceneManager.Instance.Player;
                 if (target != null)
                 {
                     _cameraTargetting.SetTarget(target.transform);

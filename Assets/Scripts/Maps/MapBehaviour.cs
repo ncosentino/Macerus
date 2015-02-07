@@ -19,16 +19,7 @@ namespace Assets.Scripts.Maps
         private const float SPRITE_TO_UNITY_SCALE_MULTIPLIER = SPRITE_TO_UNITY_SPACING_MULTIPLIER + 0.001f;
         #endregion
 
-        #region Unity Properties
-        public string MapAssetPath;
-        #endregion
-
         #region Methods
-        public void Start()
-        {
-            LoadMap(new LoadMapProperties(MapAssetPath));
-        }
-
         private void ApplyTileProperties(GameObject tileObject, TilesetTileResource tileResource)
         {
             if (string.Equals("false", tileResource.GetPropertyValue("Walkable"), StringComparison.OrdinalIgnoreCase))
@@ -103,9 +94,6 @@ namespace Assets.Scripts.Maps
             };
 
             mapPopulator.PopulateMap(gameObject, tmxMap);
-
-            ////mapLoadBehaviour.MapAssetPath = "Assets/Resources/Maps/swamp.tmx";
-            ////Destroy(gameObject);
         }
         #endregion
     }
