@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Assets.Scripts.Maps;
+using Mono.Data.SqliteClient;
+using ProjectXyz.Application.Core;
+using ProjectXyz.Application.Core.Maps;
+using ProjectXyz.Application.Interface;
+using ProjectXyz.Data.Sql;
 using UnityEngine;
 
 namespace Assets.Scripts.Scenes
@@ -11,6 +15,8 @@ namespace Assets.Scripts.Scenes
     public sealed class ExploreSceneManager : SingletonBehaviour<ExploreSceneManager>, IExploreSceneManager
     {
         #region Fields
+        private readonly IManager _manager;
+
         private GameObject _player;
         private GameObject _map;
         private IMapLoader _mapLoader;
@@ -22,6 +28,15 @@ namespace Assets.Scripts.Scenes
         /// </summary>
         private ExploreSceneManager()
         {
+            var connectionString = "URI=file::memory:,version=3";
+            var connection = new SqliteConnection(connectionString);
+            connection.Open();
+            
+            var database = SqlDatabase.Create(connection, true);
+            var upgrader = SqlDatabaseUpgrader.Create();
+            var dataStore = SqlDataStore.Create(database, upgrader);
+
+            _manager = Manager.Create(dataStore);
         }
         #endregion
 
@@ -48,7 +63,11 @@ namespace Assets.Scripts.Scenes
             _map.transform.parent = this.transform;
 
             _mapLoader = _map.AddComponent<MapBehaviour>();
-            _mapLoader.LoadMap(new LoadMapProperties("Assets/Resources/Maps/swamp.tmx"));
+
+            var mapContext = MapContext.Create();
+            var mapAssetPath = _manager.Maps.GetMapById(Guid.NewGuid(), mapContext).ResourceName;
+            var mapLoadProperties = new LoadMapProperties(mapAssetPath);
+            _mapLoader.LoadMap(mapLoadProperties);
         }
 
         public void LoadMap(ILoadMapProperties loadMapProperties)
