@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Assets.Scripts.Encounters;
 using Assets.Scripts.Triggers.Teleporters;
+using ProjectXyz.Application.Interface.Actors;
 using UnityEngine;
 
 namespace Assets.Scripts.Actors.Player
@@ -12,6 +13,8 @@ namespace Assets.Scripts.Actors.Player
     {
         #region Properties
         GameObject PlayerGameObject { get; }
+
+        IActor Player { get; }
         #endregion
     }
 }

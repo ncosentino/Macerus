@@ -43,7 +43,7 @@ namespace Assets.Scripts.Gui
         #region Methods
         public void Start()
         {
-            Value = 1f;
+            Value = 0f;
             FillColor = InitialFillColor;
             BackgroundColor = InitialBackgroundColor;
         }

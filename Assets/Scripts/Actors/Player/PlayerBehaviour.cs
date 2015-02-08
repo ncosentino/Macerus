@@ -6,7 +6,8 @@ using Assets.Scripts.Encounters;
 using Assets.Scripts.Maps;
 using Assets.Scripts.Scenes;
 using Assets.Scripts.Triggers.Teleporters;
-
+using ProjectXyz.Application.Core.Actors;
+using ProjectXyz.Application.Interface.Actors;
 using UnityEngine;
 
 namespace Assets.Scripts.Actors.Player
@@ -22,12 +23,17 @@ namespace Assets.Scripts.Actors.Player
         {
             get { return gameObject; }
         }
+
+        public IActor Player { get; private set; }
         #endregion
 
         #region Methods
         public void Start()
         {
-            ExploreSceneManager.Instance.RegisterPlayer(this);
+            Player = ExploreSceneManager.Instance.Manager.Actors.GetActorById(
+                Guid.NewGuid(),
+                ExploreSceneManager.Instance.ActorContext);
+            ExploreSceneManager.Instance.PlayerBehaviourRegistrar.RegisterPlayer(this);
         }
 
         public void Teleport(ITeleportProperties teleportProperties)
