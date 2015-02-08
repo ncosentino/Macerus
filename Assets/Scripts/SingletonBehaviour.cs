@@ -14,35 +14,35 @@ namespace Assets.Scripts
     /// 
     /// As a note, this is made as MonoBehaviour because we need Coroutines.
     /// </summary>
-    public class SingletonBehaviour<T> : MonoBehaviour where T : MonoBehaviour
+    public class SingletonBehaviour<TInternal, TInstance> : MonoBehaviour where TInternal : MonoBehaviour, TInstance
     {
         #region Fields
         private readonly static object _lock = new object();
 
-        private static T _instance;
+        private static TInternal _instance;
         private static bool _applicationIsQuitting;
         #endregion
 
         #region Properties
-        public static T Instance
+        public static TInstance Instance
         {
             get
             {
                 if (_applicationIsQuitting)
                 {
-                    Debug.LogWarning("[Singleton] Instance '" + typeof(T) +
+                    Debug.LogWarning("[Singleton] Instance '" + typeof(TInternal) +
                         "' already destroyed on application quit." +
                         " Won't create again - returning null.");
-                    return null;
+                    return default(TInstance);
                 }
 
                 lock (_lock)
                 {
                     if (_instance == null)
                     {
-                        _instance = (T)FindObjectOfType(typeof(T));
+                        _instance = (TInternal)FindObjectOfType(typeof(TInternal));
 
-                        if (FindObjectsOfType(typeof(T)).Length > 1)
+                        if (FindObjectsOfType(typeof(TInternal)).Length > 1)
                         {
                             Debug.LogError("[Singleton] Something went really wrong " +
                                 " - there should never be more than 1 singleton!" +
@@ -53,12 +53,12 @@ namespace Assets.Scripts
                         if (_instance == null)
                         {
                             var singleton = new GameObject();
-                            _instance = singleton.AddComponent<T>();
-                            singleton.name = "(singleton) " + typeof(T).ToString();
+                            _instance = singleton.AddComponent<TInternal>();
+                            singleton.name = "(singleton) " + typeof(TInternal).ToString();
 
                             DontDestroyOnLoad(singleton);
 
-                            Debug.Log("[Singleton] An instance of " + typeof(T) +
+                            Debug.Log("[Singleton] An instance of " + typeof(TInternal) +
                                 " is needed in the scene, so '" + singleton +
                                 "' was created with DontDestroyOnLoad.");
                         }

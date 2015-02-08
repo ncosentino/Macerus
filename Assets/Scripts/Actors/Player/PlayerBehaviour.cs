@@ -11,13 +11,25 @@ using UnityEngine;
 
 namespace Assets.Scripts.Actors.Player
 {
-    public class PlayerBehaviour : MonoBehaviour, ICanTeleport, ICanEncounter
+    public class PlayerBehaviour : MonoBehaviour, IPlayerBehaviour
     {
         #region Unity Properties
         public string Id;
         #endregion
 
+        #region Properties
+        public GameObject PlayerGameObject
+        {
+            get { return gameObject; }
+        }
+        #endregion
+
         #region Methods
+        public void Start()
+        {
+            ExploreSceneManager.Instance.RegisterPlayer(this);
+        }
+
         public void Teleport(ITeleportProperties teleportProperties)
         {
             Debug.Log(string.Format("Player wants to teleport to '{0}'.", teleportProperties.MapAssetPath));

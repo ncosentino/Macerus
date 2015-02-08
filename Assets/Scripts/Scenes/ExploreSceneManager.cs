@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Scripts.Actors.Player;
 using Assets.Scripts.Maps;
 using Mono.Data.SqliteClient;
 using ProjectXyz.Application.Core;
@@ -12,12 +13,12 @@ using UnityEngine;
 
 namespace Assets.Scripts.Scenes
 {
-    public sealed class ExploreSceneManager : SingletonBehaviour<ExploreSceneManager>, IExploreSceneManager
+    public sealed class ExploreSceneManager : SingletonBehaviour<ExploreSceneManager, IExploreSceneManager>, IExploreSceneManager
     {
         #region Fields
         private readonly IManager _manager;
 
-        private GameObject _player;
+        private IPlayerBehaviour _player;
         private GameObject _map;
         private IMapLoader _mapLoader;
         #endregion
@@ -41,15 +42,10 @@ namespace Assets.Scripts.Scenes
         #endregion
 
         #region Properties
-        public GameObject Player
+        public IPlayerBehaviour Player
         {
             get
             {
-                if (_player == null)
-                {
-                    _player = GameObject.Find("Player");     
-                }
-                
                 return _player;
             }
         }
@@ -72,8 +68,23 @@ namespace Assets.Scripts.Scenes
 
         public void LoadMap(ILoadMapProperties loadMapProperties)
         {
+            UnregisterPlayer(_player);
             _mapLoader.LoadMap(loadMapProperties);
+        }
+
+        public void UnregisterPlayer(IPlayerBehaviour player)
+        {
+            if (player != _player)
+            {
+                return;
+            }
+
             _player = null;
+        }
+
+        public void RegisterPlayer(IPlayerBehaviour player)
+        {
+            _player = player;
         }
         #endregion
     }
@@ -81,7 +92,13 @@ namespace Assets.Scripts.Scenes
     public interface IExploreSceneManager : IMapLoader
     {
         #region Properties
-        GameObject Player { get; }
+        IPlayerBehaviour Player { get; }
+        #endregion
+
+        #region Methods
+        void RegisterPlayer(IPlayerBehaviour player);
+
+        void UnregisterPlayer(IPlayerBehaviour player);
         #endregion
     }
 }

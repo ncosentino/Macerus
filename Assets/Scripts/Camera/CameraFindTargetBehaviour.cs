@@ -39,7 +39,7 @@ namespace Assets.Scripts.Camera
                 var target = ExploreSceneManager.Instance.Player;
                 if (target != null)
                 {
-                    _cameraTargetting.SetTarget(target.transform);
+                    _cameraTargetting.SetTarget(target.PlayerGameObject.transform);
                 }
 
                 _remainingSearchTime = SearchInterval;
