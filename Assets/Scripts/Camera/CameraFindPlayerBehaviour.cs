@@ -36,7 +36,7 @@ namespace Assets.Scripts.Camera
         #region Event Handlers
         private void PlayerBehaviourRegistrar_PlayerRegistered(object sender, PlayerBehaviourRegisteredEventArgs e)
         {
-            _cameraTargetting.SetTarget(e.PlayerBehaviour.PlayerGameObject.transform);
+            _cameraTargetting.SetTarget(e.PlayerBehaviour.ActorGameObject.transform);
         }
 
         private void PlayerBehaviourRegistrar_PlayerUnregistered(object sender, PlayerBehaviourRegisteredEventArgs e)

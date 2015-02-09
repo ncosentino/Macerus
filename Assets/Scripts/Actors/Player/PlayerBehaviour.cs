@@ -12,27 +12,20 @@ using UnityEngine;
 
 namespace Assets.Scripts.Actors.Player
 {
-    public class PlayerBehaviour : MonoBehaviour, IPlayerBehaviour
+    public class PlayerBehaviour : ActorBehaviour, IPlayerBehaviour
     {
-        #region Unity Properties
-        public string Id;
-        #endregion
-
         #region Properties
-        public GameObject PlayerGameObject
+        public IActor Player
         {
-            get { return gameObject; }
+            get { return Actor; }
         }
-
-        public IActor Player { get; private set; }
         #endregion
 
         #region Methods
-        public void Start()
+        public override void Start()
         {
-            Player = ExploreSceneManager.Instance.Manager.Actors.GetActorById(
-                Guid.NewGuid(),
-                ExploreSceneManager.Instance.ActorContext);
+            base.Start();
+
             ExploreSceneManager.Instance.PlayerBehaviourRegistrar.RegisterPlayer(this);
         }
 

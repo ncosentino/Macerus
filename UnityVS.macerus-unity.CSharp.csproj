@@ -112,6 +112,8 @@
     <Compile Include="Assets\Scripts\Actors\AnimateActorSpriteBehaviour.cs" />
     <Compile Include="Assets\Scripts\Actors\IActorMovementBehaviour.cs" />
     <Compile Include="Assets\Scripts\Actors\IActorMovementState.cs" />
+    <Compile Include="Assets\Scripts\Actors\IActorBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Actors\ActorBehaviour.cs" />
     <Compile Include="Assets\Scripts\Actors\Player\IPlayerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Actors\Player\IPlayerBehaviourRegistrar.cs" />
     <Compile Include="Assets\Scripts\Actors\Player\IPlayerControlsBehaviour.cs" />

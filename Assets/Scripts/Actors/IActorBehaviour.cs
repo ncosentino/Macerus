@@ -7,12 +7,14 @@ using Assets.Scripts.Triggers.Teleporters;
 using ProjectXyz.Application.Interface.Actors;
 using UnityEngine;
 
-namespace Assets.Scripts.Actors.Player
+namespace Assets.Scripts.Actors
 {
-    public interface IPlayerBehaviour : IActorBehaviour, ICanTeleport, ICanEncounter
+    public interface IActorBehaviour
     {
         #region Properties
-        IActor Player { get; }
+        GameObject ActorGameObject { get; }
+
+        IActor Actor { get; }
         #endregion
     }
 }
