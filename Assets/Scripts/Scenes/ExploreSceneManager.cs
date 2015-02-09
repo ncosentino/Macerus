@@ -34,8 +34,6 @@ namespace Assets.Scripts.Scenes
         private ExploreSceneManager()
         {
             _playerBehaviourRegistrar = new PlayerBehaviourRegistrar();
-            _playerBehaviourRegistrar.PlayerRegistered += PlayerBehaviourRegistrar_PlayerRegistered;
-            _playerBehaviourRegistrar.PlayerUnregistered += PlayerBehaviourRegistrar_PlayerUnregistered;
 
             var connectionString = "URI=file::memory:,version=3";
             var connection = new SqliteConnection(connectionString);
@@ -53,11 +51,6 @@ namespace Assets.Scripts.Scenes
         #endregion
 
         #region Properties
-        public IPlayerBehaviour Player
-        {
-            get { return _player; }
-        }
-
         public IPlayerBehaviourRegistrar PlayerBehaviourRegistrar
         {
             get { return _playerBehaviourRegistrar; }
@@ -95,116 +88,5 @@ namespace Assets.Scripts.Scenes
             _mapLoader.LoadMap(loadMapProperties);
         }
         #endregion
-
-        #region Event Handlers
-        private void PlayerBehaviourRegistrar_PlayerUnregistered(object sender, PlayerBehaviourRegisteredEventArgs e)
-        {
-            _player = null;
-        }
-
-        private void PlayerBehaviourRegistrar_PlayerRegistered(object sender, PlayerBehaviourRegisteredEventArgs e)
-        {
-            _player = e.PlayerBehaviour;
-        }
-        #endregion
-    }
-
-    public interface IExploreSceneManager : IMapLoader
-    {
-        #region Properties
-        IPlayerBehaviour Player { get; }
-
-        IPlayerBehaviourRegistrar PlayerBehaviourRegistrar { get; }
-
-        IManager Manager { get; }
-
-        IActorContext ActorContext { get; }
-        #endregion
-
-        #region Methods
-        #endregion
-    }
-
-    public class PlayerBehaviourRegistrar : IPlayerBehaviourRegistrar
-    {
-        #region Fields
-        private IPlayerBehaviour _player;
-        #endregion
-
-        #region Events
-        public event EventHandler<PlayerBehaviourRegisteredEventArgs> PlayerRegistered;
-
-        public event EventHandler<PlayerBehaviourRegisteredEventArgs> PlayerUnregistered;
-        #endregion
-
-        #region Methods
-        public void UnregisterPlayer(IPlayerBehaviour player)
-        {
-            if (player != _player || player == null)
-            {
-                return;
-            }
-
-            _player = null;
-
-            var handler = PlayerUnregistered;
-            if (handler != null)
-            {
-                handler.Invoke(this, new PlayerBehaviourRegisteredEventArgs(player));
-            }
-        }
-
-        public void RegisterPlayer(IPlayerBehaviour player)
-        {
-            if (player == _player || player == null)
-            {
-                return;
-            }
-
-            _player = player;
-
-            var handler = PlayerRegistered;
-            if (handler != null)
-            {
-                handler.Invoke(this, new PlayerBehaviourRegisteredEventArgs(player));
-            }
-        }
-        #endregion
-    }
-
-    public interface IPlayerBehaviourRegistrar
-    {
-        #region Events
-        event EventHandler<PlayerBehaviourRegisteredEventArgs> PlayerRegistered;
-
-        event EventHandler<PlayerBehaviourRegisteredEventArgs> PlayerUnregistered;
-        #endregion
-
-        #region Methods
-        void RegisterPlayer(IPlayerBehaviour player);
-
-        void UnregisterPlayer(IPlayerBehaviour player);
-        #endregion
-    }
-
-    public class PlayerBehaviourRegisteredEventArgs : EventArgs
-    {
-        #region Fields
-        private readonly IPlayerBehaviour _playerBehaviour;
-        #endregion
-
-        #region Constructors
-        public PlayerBehaviourRegisteredEventArgs(IPlayerBehaviour playerBehaviour)
-        {
-            _playerBehaviour = playerBehaviour;
-        }
-        #endregion
-
-        #region Properties
-        public IPlayerBehaviour PlayerBehaviour
-        {
-            get { return _playerBehaviour; }
-        }
-        #endregion
-    }
+    }    
 }

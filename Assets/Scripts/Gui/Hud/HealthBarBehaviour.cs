@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Scripts.Actors.Player;
 using Assets.Scripts.Scenes;
 using ProjectXyz.Application.Core.Actors.ExtensionMethods;
 using ProjectXyz.Application.Interface.Actors;
