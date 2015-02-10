@@ -22,7 +22,6 @@ namespace Assets.Scripts.Scenes
         private readonly IActorContext _actorContext;
         private readonly IPlayerBehaviourRegistrar _playerBehaviourRegistrar;
 
-        private IPlayerBehaviour _player;
         private GameObject _map;
         private IMapLoader _mapLoader;
         #endregion
@@ -84,7 +83,7 @@ namespace Assets.Scripts.Scenes
 
         public void LoadMap(ILoadMapProperties loadMapProperties)
         {
-            _playerBehaviourRegistrar.UnregisterPlayer(_player);
+            _playerBehaviourRegistrar.UnregisterPlayer(null);
             _mapLoader.LoadMap(loadMapProperties);
         }
         #endregion

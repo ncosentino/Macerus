@@ -79,16 +79,16 @@
       <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.Core\ProjectXyz.Data.Interface.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Contracts">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.SQL\Microsoft.Contracts.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.Sql\Microsoft.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Data.Core">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.SQL\ProjectXyz.Data.Core.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.Sql\ProjectXyz.Data.Core.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Data.Interface">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.SQL\ProjectXyz.Data.Interface.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.Sql\ProjectXyz.Data.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Data.Sql">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.SQL\ProjectXyz.Data.Sql.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.Sql\ProjectXyz.Data.Sql.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Contracts">
       <HintPath>Assets\Dependencies\bin\Tiled.Net\Microsoft.Contracts.dll</HintPath>
@@ -107,13 +107,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Actors\ActorBehaviour.cs" />
     <Compile Include="Assets\Scripts\Actors\ActorDirection.cs" />
     <Compile Include="Assets\Scripts\Actors\ActorMovementBehaviour.cs" />
     <Compile Include="Assets\Scripts\Actors\AnimateActorSpriteBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Actors\IActorBehaviour.cs" />
     <Compile Include="Assets\Scripts\Actors\IActorMovementBehaviour.cs" />
     <Compile Include="Assets\Scripts\Actors\IActorMovementState.cs" />
-    <Compile Include="Assets\Scripts\Actors\IActorBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Actors\ActorBehaviour.cs" />
     <Compile Include="Assets\Scripts\Actors\Player\IPlayerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Actors\Player\IPlayerBehaviourRegistrar.cs" />
     <Compile Include="Assets\Scripts\Actors\Player\IPlayerControlsBehaviour.cs" />
@@ -135,7 +135,10 @@
     <Compile Include="Assets\Scripts\Encounters\ITryEncounterProperties.cs" />
     <Compile Include="Assets\Scripts\Encounters\TryEncounterProperties.cs" />
     <Compile Include="Assets\Scripts\Gui\CircularFillControlBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\ClosableWindowBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\DraggableWindowBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Hud\HealthBarBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\InventoryWindowBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\MainMenuNavigationBehaviour.cs" />
     <Compile Include="Assets\Scripts\Maps\ILoadMapProperties.cs" />
     <Compile Include="Assets\Scripts\Maps\IMapLoader.cs" />

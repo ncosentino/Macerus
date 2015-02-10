@@ -30,6 +30,11 @@ namespace Assets.Scripts.Actors
                 Guid.NewGuid(),
                 ExploreSceneManager.Instance.ActorContext);
         }
+
+        public virtual void Update()
+        {
+            Actor.UpdateElapsedTime(TimeSpan.FromSeconds(Time.deltaTime));
+        }
         #endregion
     }
 }

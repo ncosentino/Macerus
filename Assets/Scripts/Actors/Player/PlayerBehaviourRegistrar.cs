@@ -20,7 +20,7 @@ namespace Assets.Scripts.Actors.Player
         #region Methods
         public void UnregisterPlayer(IPlayerBehaviour player)
         {
-            if (player != _player || player == null)
+            if (player != _player)
             {
                 return;
             }
