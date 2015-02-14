@@ -26,7 +26,7 @@ namespace Assets.Scripts.Gui.Inventory
                 return;
             }
 
-            var draggedItem = eventData.pointerDrag.GetRequiredComponent<IInventoryDraggedItemBehaviour>();
+            var draggedItem = (IInventoryDraggedItemBehaviour)eventData.pointerDrag.GetComponent(typeof(IInventoryDraggedItemBehaviour));
             if (draggedItem == null || 
                 draggedItem.Source == null || 
                 draggedItem.Source.GameObject == gameObject)
