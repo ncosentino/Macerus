@@ -1,26 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Assets.Scripts.Actors.Player;
 using Assets.Scripts.Scenes;
 using UnityEngine;
 
-namespace Assets.Scripts.Camera
+namespace Assets.Scripts.Gui.Inventory
 {
-    [RequireComponent(typeof(ICameraTargetting))]
-    public sealed class CameraFindPlayerBehaviour : MonoBehaviour
+    public sealed class PlayerInventoryGridViewPanelBehaviour : InventoryGridViewPanelBehaviour
     {
         #region Fields
-        private ICameraTargetting _cameraTargetting;
         private IExploreSceneManager _exploreSceneManager;
         #endregion
         
         #region Methods
         public void Start()
         {
-            _cameraTargetting = (ICameraTargetting)gameObject.GetComponent(typeof(ICameraTargetting));
-
             _exploreSceneManager = ExploreSceneManager.Instance;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered += PlayerBehaviourRegistrar_PlayerRegistered;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered += PlayerBehaviourRegistrar_PlayerUnregistered;
@@ -34,14 +29,14 @@ namespace Assets.Scripts.Camera
         #endregion
 
         #region Event Handlers
-        private void PlayerBehaviourRegistrar_PlayerRegistered(object sender, PlayerBehaviourRegisteredEventArgs e)
-        {
-            _cameraTargetting.SetTarget(e.PlayerBehaviour.ActorGameObject.transform);
-        }
-
         private void PlayerBehaviourRegistrar_PlayerUnregistered(object sender, PlayerBehaviourRegisteredEventArgs e)
         {
-            _cameraTargetting.SetTarget(null);
+            Inventory = null;
+        }
+
+        private void PlayerBehaviourRegistrar_PlayerRegistered(object sender, PlayerBehaviourRegisteredEventArgs e)
+        {
+            Inventory = e.PlayerBehaviour.Player.Inventory;
         }
         #endregion
     }

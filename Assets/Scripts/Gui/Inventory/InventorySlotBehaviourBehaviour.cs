@@ -1,27 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Assets.Scripts.Actors.Player;
-using Assets.Scripts.Scenes;
-using ProjectXyz.Application.Core.Enchantments;
-using ProjectXyz.Application.Core.Items;
 using ProjectXyz.Application.Interface.Items;
 using ProjectXyz.Application.Interface.Items.ExtensionMethods;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Gui.Inventory
 {
-    public class InventorySlotBehaviourBehaviour : MonoBehaviour, ICanAddItemBehaviour, ICanRemoveItemBehaviour, IHasItemBehaviour
+    public class InventorySlotBehaviourBehaviour : MonoBehaviour, IInventorySlotBehaviourBehaviour
     {
-        #region Fields
-        private IExploreSceneManager _exploreSceneManager;
-        private ICanEquip _equippable;
-        private ICanUnequip _unequippable;
-        private Func<string, IItem> _getItemForSlotCallback;
-        #endregion
-        
         #region Properties
         public int InventoryIndex { get; set; }
 
@@ -29,23 +16,14 @@ namespace Assets.Scripts.Gui.Inventory
 
         public IItem Item
         {
-            get { return Inventory.Items.ToList()[InventoryIndex]; }
+            get { return Inventory[InventoryIndex]; }
         }
         #endregion
 
         #region Methods
-        public void Start()
-        {
-        }
-
-        public void OnDestroy()
-        {
-           
-        }
-
         public bool CanRemoveItem()
         {
-            var result = Inventory.Items.Count > InventoryIndex;
+            var result = Inventory.SlotOccupied(InventoryIndex);
             Debug.Log(string.Format("Can remove from {0}? {1}", InventoryIndex, result));
 
             return result;
@@ -67,7 +45,7 @@ namespace Assets.Scripts.Gui.Inventory
                 throw new ArgumentNullException("Cannot add null item.");
             }
 
-            var result = Inventory.Items.Count < Inventory.ItemCapacity;
+            var result = !Inventory.SlotOccupied(InventoryIndex);
             Debug.Log(string.Format("Can {0} be added? {1}", item, result));
 
             return result;
@@ -75,7 +53,7 @@ namespace Assets.Scripts.Gui.Inventory
 
         public void AddItem(IItem item)
         {
-            Inventory.Add(item);
+            Inventory.Add(item, InventoryIndex);
             Debug.Log(string.Format("Added {0}.", item));
         }
         #endregion

@@ -42,7 +42,7 @@ namespace Assets.Scripts.Gui.Hud
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered += PlayerBehaviourRegistrar_PlayerUnregistered;
         }
 
-        public void OnDestroy()
+        private void OnDestroy()
         {
             StopCoroutine(UpdateHealthBar(null));
 

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Gui.Inventory
 {
-    public class InventoryGridViewPanelBehaviour : MonoBehaviour
+    public class InventoryGridViewPanelBehaviour : MonoBehaviour, IInventoryGridViewPanelBehaviour
     {
         #region Fields
         private IInventory _inventory;
@@ -19,6 +19,10 @@ namespace Assets.Scripts.Gui.Inventory
         public ScrollRect ItemCollectionScrollRect;
 
         public GameObject InventorySlotPrefab;
+
+        public float SlotWidth = 64;
+
+        public float SlotHeight = 64;
         #endregion
 
         #region Properties
@@ -39,18 +43,11 @@ namespace Assets.Scripts.Gui.Inventory
         #endregion
 
         #region Methods
-        public void OnDestroy()
+        private void OnDestroy()
         {
             Inventory = null;
         }
-
-        public void Start()
-        {
-            var mutator = ProjectXyz.Application.Core.Items.Inventory.Create();
-            Inventory = mutator;
-            mutator.ItemCapacity = 10;
-        }
-
+        
         private void HookInventoryEvents(IInventory inventory)
         {
             if (inventory == null)
@@ -75,48 +72,45 @@ namespace Assets.Scripts.Gui.Inventory
 
         private void PopulateItemSlots(IMutableInventory inventory, ScrollRect itemCollectionScrollRect)
         {
-            (from
-                 Transform child 
-             in 
-                 itemCollectionScrollRect.transform
-             select 
-                child.gameObject)
-            .ToList()
-            .ForEach(Destroy);
+            (from Transform child 
+             in itemCollectionScrollRect.transform
+             select child.gameObject)
+                .ToList()
+                .ForEach(Destroy);
             
             if (inventory == null)
             {
                 return;
             }
 
-            const int ROW_COUNT = 10;
-            const int COLUMN_COUNT = 10;
+            int columnCount = (int)(itemCollectionScrollRect.content.rect.width / SlotWidth);
+            float stretchedSlotWidth = SlotWidth + (itemCollectionScrollRect.content.rect.width - columnCount * SlotWidth) / columnCount;
 
-            float slotWidth = itemCollectionScrollRect.content.rect.width / ROW_COUNT;
-            float slotHeight = itemCollectionScrollRect.content.rect.height / COLUMN_COUNT;
+            // TODO: this is actually based on the maximum slot...
+            int rowCount = (int)Math.Ceiling(Math.Max(inventory.ItemCapacity, inventory.Count) / (float)columnCount);
 
-            for (int x = 0; x < COLUMN_COUNT; x++)
+            for (int x = 0; x < columnCount; x++)
             {
-                for (int y = 0; y < ROW_COUNT; y++)
+                for (int y = 0; y < rowCount; y++)
                 {
                     var slot = (GameObject)PrefabUtility.InstantiatePrefab(InventorySlotPrefab);
                     slot.transform.SetParent(itemCollectionScrollRect.content.transform);
 
                     var slotRectTransform = slot.GetComponent<RectTransform>();
                     slotRectTransform.SetInsetAndSizeFromParentEdge(
-                        RectTransform.Edge.Left, 
-                        x * slotWidth, 
+                        RectTransform.Edge.Left,
+                        x * stretchedSlotWidth, 
                         0);
                     slotRectTransform.SetInsetAndSizeFromParentEdge(
                         RectTransform.Edge.Top,
-                        y * slotHeight,
+                        y * SlotHeight,
                         0);
-                    slotRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, slotWidth);
-                    slotRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, slotHeight);
+                    slotRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, stretchedSlotWidth);
+                    slotRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, SlotHeight);
 
                     var inventorySlotBehaviour = (InventorySlotBehaviourBehaviour)slot.GetComponent(typeof(InventorySlotBehaviourBehaviour));
                     inventorySlotBehaviour.Inventory = inventory;
-                    inventorySlotBehaviour.InventoryIndex = x * COLUMN_COUNT + y;
+                    inventorySlotBehaviour.InventoryIndex = x + columnCount * y;
                 }
             }
         }

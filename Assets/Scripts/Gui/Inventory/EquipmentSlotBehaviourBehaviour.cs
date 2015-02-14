@@ -51,12 +51,6 @@ namespace Assets.Scripts.Gui.Inventory
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered += PlayerBehaviourRegistrar_PlayerUnregistered;
         }
 
-        public void OnDestroy()
-        {
-            _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered -= PlayerBehaviourRegistrar_PlayerRegistered;
-            _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered -= PlayerBehaviourRegistrar_PlayerUnregistered;
-        }
-
         public bool CanRemoveItem()
         {
             var result = _unequippable.CanUnequip(EquipmentSlotType);
@@ -90,6 +84,12 @@ namespace Assets.Scripts.Gui.Inventory
         {
             _equippable.Equip(item, EquipmentSlotType);
             Debug.Log(string.Format("Equipped {0} to {1}.", item, EquipmentSlotType));
+        }
+
+        private void OnDestroy()
+        {
+            _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered -= PlayerBehaviourRegistrar_PlayerRegistered;
+            _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered -= PlayerBehaviourRegistrar_PlayerUnregistered;
         }
         #endregion
 

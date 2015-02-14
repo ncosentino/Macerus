@@ -138,6 +138,9 @@
     <Compile Include="Assets\Scripts\Gui\ClosableWindowBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\DraggableWindowBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Hud\HealthBarBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\PlayerInventoryGridViewPanelBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\IInventoryGridViewPanelBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\IInventorySlotBehaviourBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventorySlotBehaviourBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\EquipmentSlotBehaviourBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\ICanAddItemBehaviour.cs" />
