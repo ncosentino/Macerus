@@ -8,7 +8,7 @@ namespace Assets.Scripts.Gui.Inventory
     public interface IInventoryGridViewPanelBehaviour
     {
         #region Properties
-        IInventory Inventory { get; set; }
+        IMutableInventory Inventory { get; set; }
         #endregion
     }
 }

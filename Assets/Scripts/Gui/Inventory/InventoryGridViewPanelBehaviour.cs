@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using ProjectXyz.Application.Interface.Items;
+using ProjectXyz.Application.Interface.Items.ExtensionMethods;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ namespace Assets.Scripts.Gui.Inventory
     public class InventoryGridViewPanelBehaviour : MonoBehaviour, IInventoryGridViewPanelBehaviour
     {
         #region Fields
-        private IInventory _inventory;
+        private IMutableInventory _inventory;
         #endregion
 
         #region Unity Properties
@@ -26,7 +27,7 @@ namespace Assets.Scripts.Gui.Inventory
         #endregion
 
         #region Properties
-        public IInventory Inventory
+        public IMutableInventory Inventory
         {
             get
             {
@@ -38,6 +39,8 @@ namespace Assets.Scripts.Gui.Inventory
                 UnhookInventoryEvents(_inventory);
                 _inventory = value;
                 HookInventoryEvents(_inventory);
+
+                PopulateItemSlots(_inventory, ItemCollectionScrollRect);
             }
         }
         #endregion
@@ -86,8 +89,12 @@ namespace Assets.Scripts.Gui.Inventory
             int columnCount = (int)(itemCollectionScrollRect.content.rect.width / SlotWidth);
             float stretchedSlotWidth = SlotWidth + (itemCollectionScrollRect.content.rect.width - columnCount * SlotWidth) / columnCount;
 
-            // TODO: this is actually based on the maximum slot...
-            int rowCount = (int)Math.Ceiling(Math.Max(inventory.ItemCapacity, inventory.Count) / (float)columnCount);
+            int lastUsedSlot;
+            inventory.TryGetLastUsedSlot(out lastUsedSlot);
+
+            int rowCount = (int)Math.Ceiling(Math.Max(inventory.ItemCapacity, lastUsedSlot) / (float)columnCount);
+
+            Debug.Log(string.Format("Inventory: {0}x{1}", columnCount, rowCount));
 
             for (int x = 0; x < columnCount; x++)
             {
