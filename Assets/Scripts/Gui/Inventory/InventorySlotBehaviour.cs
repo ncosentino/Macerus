@@ -40,10 +40,9 @@ namespace Assets.Scripts.Gui.Inventory
                 EmptySprite = IconImage.sprite;
             }
 
-            // TODO: grab the resource off of the item itself.
             if (Item != null)
             {
-                IconImage.sprite = Resources.Load<Sprite>("Graphics/Items/Gloves/leather gloves");
+                IconImage.sprite = Resources.Load<Sprite>(Item.InventoryGraphicResource);
             }
         }
 
@@ -82,10 +81,9 @@ namespace Assets.Scripts.Gui.Inventory
         public void AddItem(IItem item)
         {
             Inventory.Add(item, InventoryIndex);
-            Debug.Log(string.Format("Added {0}.", item));
+            IconImage.sprite = Resources.Load<Sprite>(item.InventoryGraphicResource);
 
-            // TODO: grab the resource off of the item itself.
-            IconImage.sprite = Resources.Load<Sprite>("Graphics/Items/Gloves/leather gloves");
+            Debug.Log(string.Format("Added {0}.", item));
         }
         #endregion
     }

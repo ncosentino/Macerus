@@ -91,9 +91,8 @@ namespace Assets.Scripts.Gui.Inventory
         public void AddItem(IItem item)
         {
             _equippable.Equip(item, EquipmentSlotType);
+            IconImage.sprite = Resources.Load<Sprite>(item.InventoryGraphicResource);
 
-            // TODO: grab the resource off of the item itself.
-            IconImage.sprite = Resources.Load<Sprite>("Graphics/Items/Gloves/leather gloves");
             Debug.Log(string.Format("Equipped {0} to {1}.", item, EquipmentSlotType));
         }
 
