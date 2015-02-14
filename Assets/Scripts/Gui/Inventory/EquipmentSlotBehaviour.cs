@@ -24,6 +24,8 @@ namespace Assets.Scripts.Gui.Inventory
         public string DefaultEquipmentSlotType;
 
         public Image IconImage;
+
+        public Sprite EmptySprite;
         #endregion
         
         #region Properties
@@ -56,6 +58,8 @@ namespace Assets.Scripts.Gui.Inventory
             _exploreSceneManager = ExploreSceneManager.Instance;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered += PlayerBehaviourRegistrar_PlayerRegistered;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered += PlayerBehaviourRegistrar_PlayerUnregistered;
+
+            IconImage.sprite = EmptySprite;
         }
 
         public bool CanRemoveItem()
@@ -71,7 +75,7 @@ namespace Assets.Scripts.Gui.Inventory
             var item = _unequippable.Unequip(EquipmentSlotType);
             Debug.Log(string.Format("Unequipped {0} from {1}.", item, EquipmentSlotType));
 
-            IconImage.sprite = null;
+            IconImage.sprite = EmptySprite;
             return item;
         }
 
