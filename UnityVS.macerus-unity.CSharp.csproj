@@ -141,11 +141,11 @@
     <Compile Include="Assets\Scripts\Gui\Inventory\PlayerInventoryGridViewPanelBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\IInventoryGridViewPanelBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\IInventorySlotBehaviourBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Gui\Inventory\InventorySlotBehaviourBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Gui\Inventory\EquipmentSlotBehaviourBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\InventorySlotBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\EquipmentSlotBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\ICanAddItemBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\ICanRemoveItemBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Gui\Inventory\IEquipmentSlotBehaviourBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\IEquipmentSlotBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\IHasItemBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\IInventoryDragItemSourceBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\IInventoryDraggedItemBehaviour.cs" />

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using ProjectXyz.Application.Interface.Items;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Gui.Inventory
 {
@@ -17,6 +16,10 @@ namespace Assets.Scripts.Gui.Inventory
         private Canvas _canvas;
         private ICanRemoveItemBehaviour _canRemoveItemBehaviour;
         private IHasItemBehaviour _hasItemBehaviour;
+        #endregion
+
+        #region Unity Properties
+        public Image IconImage;
         #endregion
 
         #region Properties
@@ -37,6 +40,11 @@ namespace Assets.Scripts.Gui.Inventory
             _canvas = gameObject.GetComponentInParent<Canvas>();
             _canRemoveItemBehaviour = (ICanRemoveItemBehaviour)gameObject.GetComponent(typeof(ICanRemoveItemBehaviour));
             _hasItemBehaviour = (IHasItemBehaviour)gameObject.GetComponent(typeof(IHasItemBehaviour));
+
+            if (IconImage == null)
+            {
+                IconImage = GetComponent<Image>();
+            }
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -56,6 +64,7 @@ namespace Assets.Scripts.Gui.Inventory
             var draggedItemBehaviour = (IInventoryDraggedItemBehaviour)dragItem.GetComponent((typeof(IInventoryDraggedItemBehaviour)));
             draggedItemBehaviour.Source = this;
             draggedItemBehaviour.HasItemBehaviour = _hasItemBehaviour;
+            draggedItemBehaviour.Icon = IconImage.sprite;
 
             eventData.pointerDrag = dragItem;
         }

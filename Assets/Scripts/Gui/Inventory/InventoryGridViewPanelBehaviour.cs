@@ -108,7 +108,7 @@ namespace Assets.Scripts.Gui.Inventory
                     slotRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, stretchedSlotWidth);
                     slotRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, SlotHeight);
 
-                    var inventorySlotBehaviour = (InventorySlotBehaviourBehaviour)slot.GetComponent(typeof(InventorySlotBehaviourBehaviour));
+                    var inventorySlotBehaviour = (InventorySlotBehaviour)slot.GetComponent(typeof(InventorySlotBehaviour));
                     inventorySlotBehaviour.Inventory = inventory;
                     inventorySlotBehaviour.InventoryIndex = x + columnCount * y;
                 }

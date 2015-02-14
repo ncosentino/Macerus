@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Gui.Inventory
 {
-    public interface IEquipmentSlotBehaviourBehaviour : ICanAddItemBehaviour, ICanRemoveItemBehaviour, IHasItemBehaviour
+    public interface IEquipmentSlotBehaviour : ICanAddItemBehaviour, ICanRemoveItemBehaviour, IHasItemBehaviour
     {
         #region Properties
         string EquipmentSlotType { get; }

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Assets.Scripts.Actors.Player;
 using Assets.Scripts.Scenes;
 using ProjectXyz.Application.Core.Enchantments;
 using ProjectXyz.Application.Core.Items;
 using ProjectXyz.Application.Interface.Items;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Gui.Inventory
 {
-    public class EquipmentSlotBehaviourBehaviour : MonoBehaviour, IEquipmentSlotBehaviourBehaviour
+    public class EquipmentSlotBehaviour : MonoBehaviour, IEquipmentSlotBehaviour
     {
         #region Fields
         private IExploreSceneManager _exploreSceneManager;
@@ -22,6 +22,8 @@ namespace Assets.Scripts.Gui.Inventory
 
         #region Unity Properties
         public string DefaultEquipmentSlotType;
+
+        public Image IconImage;
         #endregion
         
         #region Properties
@@ -46,6 +48,11 @@ namespace Assets.Scripts.Gui.Inventory
                 EquipmentSlotType = DefaultEquipmentSlotType;
             }
 
+            if (IconImage == null)
+            {
+                IconImage = gameObject.GetComponent<Image>();
+            }
+
             _exploreSceneManager = ExploreSceneManager.Instance;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered += PlayerBehaviourRegistrar_PlayerRegistered;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered += PlayerBehaviourRegistrar_PlayerUnregistered;
@@ -64,6 +71,7 @@ namespace Assets.Scripts.Gui.Inventory
             var item = _unequippable.Unequip(EquipmentSlotType);
             Debug.Log(string.Format("Unequipped {0} from {1}.", item, EquipmentSlotType));
 
+            IconImage.sprite = null;
             return item;
         }
 
@@ -83,6 +91,9 @@ namespace Assets.Scripts.Gui.Inventory
         public void AddItem(IItem item)
         {
             _equippable.Equip(item, EquipmentSlotType);
+
+            // TODO: grab the resource off of the item itself.
+            IconImage.sprite = Resources.Load<Sprite>("Graphics/Items/Gloves/leather gloves");
             Debug.Log(string.Format("Equipped {0} to {1}.", item, EquipmentSlotType));
         }
 

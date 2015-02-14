@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Gui.Inventory
 {
     public class InventoryDraggedItemBehaviour : MonoBehaviour, IInventoryDraggedItemBehaviour
     {
+        #region Unity Properties
+        public Image IconImage;
+        #endregion
+
         #region Properties
         public IInventoryDragItemSourceBehaviour Source
         {
@@ -20,9 +24,25 @@ namespace Assets.Scripts.Gui.Inventory
             get;
             set;
         }
+
+        public Sprite Icon
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Methods
+        public void Start()
+        {
+            if (IconImage == null)
+            {
+                IconImage = gameObject.GetComponent<Image>();
+            }
+
+            IconImage.sprite = Icon;
+        }
+
         public void OnDrag(PointerEventData eventData)
         {
             eventData.pointerDrag.transform.Translate(eventData.delta);

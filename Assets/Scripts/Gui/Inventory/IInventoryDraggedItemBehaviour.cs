@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Gui.Inventory
@@ -12,6 +12,8 @@ namespace Assets.Scripts.Gui.Inventory
         IInventoryDragItemSourceBehaviour Source { get; set; }
 
         IHasItemBehaviour HasItemBehaviour { get; set; }
+
+        Sprite Icon { get; set; }
         #endregion
     }
 }

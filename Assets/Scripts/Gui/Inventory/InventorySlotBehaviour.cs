@@ -4,11 +4,18 @@ using System.Linq;
 using ProjectXyz.Application.Interface.Items;
 using ProjectXyz.Application.Interface.Items.ExtensionMethods;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Gui.Inventory
 {
-    public class InventorySlotBehaviourBehaviour : MonoBehaviour, IInventorySlotBehaviourBehaviour
+    public class InventorySlotBehaviour : MonoBehaviour, IInventorySlotBehaviourBehaviour
     {
+        #region Unity Properties
+        public Image IconImage;
+
+        public Sprite EmptySprite;
+        #endregion
+
         #region Properties
         public int InventoryIndex { get; set; }
 
@@ -21,6 +28,25 @@ namespace Assets.Scripts.Gui.Inventory
         #endregion
 
         #region Methods
+        public void Start()
+        {
+            if (IconImage == null)
+            {
+                IconImage = GetComponent<Image>();
+            }
+
+            if (EmptySprite == null)
+            {
+                EmptySprite = IconImage.sprite;
+            }
+
+            // TODO: grab the resource off of the item itself.
+            if (Item != null)
+            {
+                IconImage.sprite = Resources.Load<Sprite>("Graphics/Items/Gloves/leather gloves");
+            }
+        }
+
         public bool CanRemoveItem()
         {
             var result = Inventory.SlotOccupied(InventoryIndex);
@@ -34,6 +60,8 @@ namespace Assets.Scripts.Gui.Inventory
             var item = Item;
             Inventory.Remove(Item);
             Debug.Log(string.Format("Removed {0} from {1}.", item, InventoryIndex));
+
+            IconImage.sprite = EmptySprite;
 
             return item;
         }
@@ -55,6 +83,9 @@ namespace Assets.Scripts.Gui.Inventory
         {
             Inventory.Add(item, InventoryIndex);
             Debug.Log(string.Format("Added {0}.", item));
+
+            // TODO: grab the resource off of the item itself.
+            IconImage.sprite = Resources.Load<Sprite>("Graphics/Items/Gloves/leather gloves");
         }
         #endregion
     }
