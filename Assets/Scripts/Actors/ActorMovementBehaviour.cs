@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Assets.Scripts.Components;
 using UnityEngine;
 
 namespace Assets.Scripts.Actors
 {
-    [RequireComponent(typeof(IActorBehaviour))]
     public class ActorMovementBehaviour : MonoBehaviour, IActorMovementBehaviour
     {
         #region Fields
@@ -22,7 +21,7 @@ namespace Assets.Scripts.Actors
         #region Methods
         public void Start()
         {
-            _actorBehaviour = (IActorBehaviour)gameObject.GetComponent(typeof(IActorBehaviour));
+            _actorBehaviour = this.GetRequiredComponent<IActorBehaviour>();
         }
 
         public void Update()

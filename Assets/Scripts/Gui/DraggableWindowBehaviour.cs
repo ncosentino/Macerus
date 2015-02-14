@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Components;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Gui
         #region Methods
         public void Awake()
         {
-            _canvasRectTransform = (RectTransform)GetComponentInParent<Canvas>().transform;
+            _canvasRectTransform = this.GetRequiredComponent<RectTransform>();
 
             if (PanelRectTransform == null)
             {

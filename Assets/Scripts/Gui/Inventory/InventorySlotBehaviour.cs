@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Components;
 using ProjectXyz.Application.Interface.Items;
 using ProjectXyz.Application.Interface.Items.ExtensionMethods;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Gui.Inventory
 {
-    public class InventorySlotBehaviour : MonoBehaviour, IInventorySlotBehaviourBehaviour
+    public class InventorySlotBehaviour : MonoBehaviour, IInventorySlotBehaviour
     {
         #region Unity Properties
         public Image IconImage;
@@ -32,7 +33,7 @@ namespace Assets.Scripts.Gui.Inventory
         {
             if (IconImage == null)
             {
-                IconImage = GetComponent<Image>();
+                IconImage = this.GetRequiredComponent<Image>();
             }
 
             if (EmptySprite == null)

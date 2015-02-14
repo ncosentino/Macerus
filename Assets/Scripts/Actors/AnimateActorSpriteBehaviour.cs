@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Assets.Scripts.Components;
 using UnityEngine;
 
 namespace Assets.Scripts.Actors
 {
-    [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(SpriteRenderer))]
-    [RequireComponent(typeof(IActorMovementBehaviour))]
     public class AnimateActorSpriteBehaviour : MonoBehaviour
     {
         #region Constants
@@ -30,9 +27,9 @@ namespace Assets.Scripts.Actors
         #region Methods
         public void Start()
         {
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-            _animator = GetComponent<Animator>();
-            _actorMovementState = (IActorMovementBehaviour)GetComponent(typeof(IActorMovementBehaviour));
+            _spriteRenderer = this.GetRequiredComponent<SpriteRenderer>();
+            _animator = this.GetRequiredComponent<Animator>();
+            _actorMovementState = this.GetRequiredComponent<IActorMovementBehaviour>();
         }
 
         public void Update()

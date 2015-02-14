@@ -5,7 +5,7 @@ using ProjectXyz.Application.Interface.Items;
 
 namespace Assets.Scripts.Gui.Inventory
 {
-    public interface IInventorySlotBehaviourBehaviour : ICanAddItemBehaviour, ICanRemoveItemBehaviour, IHasItemBehaviour
+    public interface IInventorySlotBehaviour : ICanAddItemBehaviour, ICanRemoveItemBehaviour, IHasItemBehaviour
     {
         #region Properties
         int InventoryIndex { get; set; }

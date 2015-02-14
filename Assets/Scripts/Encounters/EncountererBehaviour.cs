@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Text;
+using Assets.Scripts.Components;
 using UnityEngine;
 
 namespace Assets.Scripts.Encounters
 {
-    [RequireComponent(typeof(ICanEncounter))]
     public class EncountererBehaviour : MonoBehaviour
     {
         #region Constants
@@ -25,7 +23,7 @@ namespace Assets.Scripts.Encounters
         #region Methods
         public void Start()
         {
-            _encounterer = (ICanEncounter)gameObject.GetComponent(typeof(ICanEncounter));
+            _encounterer = this.GetRequiredComponent<ICanEncounter>();
         }
 
         public void OnTriggerStay2D(Collider2D collider)

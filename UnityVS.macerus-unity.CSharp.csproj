@@ -126,6 +126,8 @@
     <Compile Include="Assets\Scripts\Camera\CameraFindPlayerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFollowBehaviour.cs" />
     <Compile Include="Assets\Scripts\Camera\ICameraTargetting.cs" />
+    <Compile Include="Assets\Scripts\Components\ComponentExtensionMethods.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\GameObjectExtensionMethods.cs" />
     <Compile Include="Assets\Scripts\Encounters\EncounterProperties.cs" />
     <Compile Include="Assets\Scripts\Encounters\EncounterableBehaviour.cs" />
     <Compile Include="Assets\Scripts\Encounters\EncountererBehaviour.cs" />
@@ -140,7 +142,7 @@
     <Compile Include="Assets\Scripts\Gui\Hud\HealthBarBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\PlayerInventoryGridViewPanelBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\IInventoryGridViewPanelBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Gui\Inventory\IInventorySlotBehaviourBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\IInventorySlotBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventorySlotBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\EquipmentSlotBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\ICanAddItemBehaviour.cs" />
@@ -173,5 +175,6 @@
     <Compile Include="Assets\Scripts\Triggers\Teleporters\ITeleportProperties.cs" />
     <Compile Include="Assets\Scripts\Triggers\Teleporters\TeleportProperties.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2012\UnityVS.CSharp.targets" />
 </Project>

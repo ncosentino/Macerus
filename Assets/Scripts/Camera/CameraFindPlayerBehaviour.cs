@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Scripts.Actors;
 using Assets.Scripts.Actors.Player;
+using Assets.Scripts.Components;
 using Assets.Scripts.Scenes;
 using UnityEngine;
 
 namespace Assets.Scripts.Camera
 {
-    [RequireComponent(typeof(ICameraTargetting))]
     public sealed class CameraFindPlayerBehaviour : MonoBehaviour
     {
         #region Fields
@@ -19,7 +20,7 @@ namespace Assets.Scripts.Camera
         #region Methods
         public void Start()
         {
-            _cameraTargetting = (ICameraTargetting)gameObject.GetComponent(typeof(ICameraTargetting));
+            _cameraTargetting = this.GetRequiredComponent<ICameraTargetting>();
 
             _exploreSceneManager = ExploreSceneManager.Instance;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered += PlayerBehaviourRegistrar_PlayerRegistered;

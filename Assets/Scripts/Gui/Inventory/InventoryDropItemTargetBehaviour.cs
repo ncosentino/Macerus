@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Assets.Scripts.Components;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Gui.Inventory
 {
-    [RequireComponent(typeof(ICanAddItemBehaviour))]
     public class InventoryDropItemTargetBehaviour : MonoBehaviour, IDropHandler
     {
         #region Fields
@@ -17,7 +16,7 @@ namespace Assets.Scripts.Gui.Inventory
         #region Methods
         public void Start()
         {
-            _canAddItemBehaviour = (ICanAddItemBehaviour)gameObject.GetComponent(typeof(ICanAddItemBehaviour));
+            _canAddItemBehaviour = this.GetRequiredComponent<ICanAddItemBehaviour>();
         }
 
         public void OnDrop(PointerEventData eventData)
@@ -27,7 +26,7 @@ namespace Assets.Scripts.Gui.Inventory
                 return;
             }
 
-            var draggedItem = (IInventoryDraggedItemBehaviour)eventData.pointerDrag.GetComponent(typeof(IInventoryDraggedItemBehaviour));
+            var draggedItem = eventData.pointerDrag.GetRequiredComponent<IInventoryDraggedItemBehaviour>();
             if (draggedItem == null || 
                 draggedItem.Source == null || 
                 draggedItem.Source.GameObject == gameObject)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using Assets.Scripts.Components;
 using ProjectXyz.Application.Interface.Items;
 using ProjectXyz.Application.Interface.Items.ExtensionMethods;
 using UnityEditor;
@@ -103,7 +104,7 @@ namespace Assets.Scripts.Gui.Inventory
                     var slot = (GameObject)PrefabUtility.InstantiatePrefab(InventorySlotPrefab);
                     slot.transform.SetParent(itemCollectionScrollRect.content.transform);
 
-                    var slotRectTransform = slot.GetComponent<RectTransform>();
+                    var slotRectTransform = slot.GetRequiredComponent<RectTransform>();
                     slotRectTransform.SetInsetAndSizeFromParentEdge(
                         RectTransform.Edge.Left,
                         x * stretchedSlotWidth, 
@@ -115,7 +116,7 @@ namespace Assets.Scripts.Gui.Inventory
                     slotRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, stretchedSlotWidth);
                     slotRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, SlotHeight);
 
-                    var inventorySlotBehaviour = (InventorySlotBehaviour)slot.GetComponent(typeof(InventorySlotBehaviour));
+                    var inventorySlotBehaviour = slot.GetRequiredComponent<IInventorySlotBehaviour>();
                     inventorySlotBehaviour.Inventory = inventory;
                     inventorySlotBehaviour.InventoryIndex = x + columnCount * y;
                 }

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Assets.Scripts.Components;
 using UnityEngine;
 
 namespace Assets.Scripts.Actors.Player
 {
-    [RequireComponent(typeof(IPlayerControlsBehaviour))]
-    [RequireComponent(typeof(IActorMovementBehaviour))]
     public class PlayerInputControllerBehaviour : MonoBehaviour, IPlayerInputControllerBehaviour
     {
         #region Fields
@@ -18,8 +16,8 @@ namespace Assets.Scripts.Actors.Player
         #region Methods
         public void Start()
         {
-            _playerControls = (IPlayerControlsBehaviour)GetComponent(typeof(IPlayerControlsBehaviour));
-            _actorMovementBehaviour = (IActorMovementBehaviour)GetComponent(typeof(IActorMovementBehaviour));
+            _playerControls = this.GetRequiredComponent<IPlayerControlsBehaviour>();
+            _actorMovementBehaviour = this.GetRequiredComponent<IActorMovementBehaviour>();
         }
 
         public void Update()

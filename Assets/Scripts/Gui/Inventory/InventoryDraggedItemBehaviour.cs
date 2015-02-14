@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Components;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -37,7 +38,7 @@ namespace Assets.Scripts.Gui.Inventory
         {
             if (IconImage == null)
             {
-                IconImage = gameObject.GetComponent<Image>();
+                IconImage = this.GetRequiredComponent<Image>();
             }
 
             IconImage.sprite = Icon;

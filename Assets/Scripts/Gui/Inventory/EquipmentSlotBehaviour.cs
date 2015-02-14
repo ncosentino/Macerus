@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Actors.Player;
+using Assets.Scripts.Components;
 using Assets.Scripts.Scenes;
 using ProjectXyz.Application.Core.Enchantments;
 using ProjectXyz.Application.Core.Items;
@@ -52,7 +53,7 @@ namespace Assets.Scripts.Gui.Inventory
 
             if (IconImage == null)
             {
-                IconImage = gameObject.GetComponent<Image>();
+                IconImage = this.GetRequiredComponent<Image>();
             }
 
             _exploreSceneManager = ExploreSceneManager.Instance;

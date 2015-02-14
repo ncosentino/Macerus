@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Assets.Scripts.Actors.Player;
+using Assets.Scripts.Components;
 using Assets.Scripts.Scenes;
 using ProjectXyz.Application.Core.Actors.ExtensionMethods;
 using ProjectXyz.Application.Interface.Actors;
@@ -11,7 +11,6 @@ using UnityEngine;
 
 namespace Assets.Scripts.Gui.Hud
 {
-    [RequireComponent(typeof(ICircularFillControlBehaviour))]
     public class HealthBarBehaviour : MonoBehaviour
     {
         #region Constants
@@ -36,7 +35,7 @@ namespace Assets.Scripts.Gui.Hud
             }
 
             _exploreSceneManager = ExploreSceneManager.Instance;
-            _circularFillControlBehaviour = (ICircularFillControlBehaviour)gameObject.GetComponent(typeof(ICircularFillControlBehaviour));
+            _circularFillControlBehaviour = this.GetRequiredComponent<ICircularFillControlBehaviour>();
 
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered += PlayerBehaviourRegistrar_PlayerRegistered;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered += PlayerBehaviourRegistrar_PlayerUnregistered;
