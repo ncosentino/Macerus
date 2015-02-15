@@ -6,6 +6,7 @@ using Assets.Scripts.Actors;
 using Assets.Scripts.Actors.Player;
 using Assets.Scripts.Components;
 using Assets.Scripts.Scenes;
+using Assets.Scripts.Scenes.Explore;
 using UnityEngine;
 
 namespace Assets.Scripts.Camera

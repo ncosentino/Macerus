@@ -5,6 +5,7 @@ using System.Linq;
 using Assets.Scripts.Actors.Player;
 using Assets.Scripts.Components;
 using Assets.Scripts.Scenes;
+using Assets.Scripts.Scenes.Explore;
 using ProjectXyz.Application.Core.Actors.ExtensionMethods;
 using ProjectXyz.Application.Interface.Actors;
 using UnityEngine;

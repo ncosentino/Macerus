@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
-namespace Assets.Scripts.Actors.Player
+namespace Assets.Scripts.Scenes.Explore.Input
 {
-    public class PlayerControlsBehaviour : MonoBehaviour, IPlayerControlsBehaviour
+    public class KeyboardControls : IKeyboardControls
     {
         #region Properties
         /// <inheritdoc />
@@ -31,6 +30,12 @@ namespace Assets.Scripts.Actors.Player
         public KeyCode MoveDown
         {
             get { return KeyCode.S; }
+        }
+
+        /// <inheritdoc />
+        public KeyCode ToggleInventory
+        {
+            get { return KeyCode.I; }
         }
         #endregion
     }

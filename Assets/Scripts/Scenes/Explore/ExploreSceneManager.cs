@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Assets.Scripts.Actors;
 using Assets.Scripts.Actors.Player;
+using Assets.Scripts.Components;
 using Assets.Scripts.Maps;
+using Assets.Scripts.Scenes.Explore.Gui;
+using Assets.Scripts.Scenes.Explore.Input;
 using Mono.Data.SqliteClient;
 using ProjectXyz.Application.Core.Enchantments;
 using ProjectXyz.Application.Core.Maps;
@@ -13,7 +15,7 @@ using ProjectXyz.Application.Interface.Actors;
 using ProjectXyz.Data.Sql;
 using UnityEngine;
 
-namespace Assets.Scripts.Scenes
+namespace Assets.Scripts.Scenes.Explore
 {
     public sealed class ExploreSceneManager : SingletonBehaviour<ExploreSceneManager, IExploreSceneManager>, IExploreSceneManager
     {
@@ -21,9 +23,20 @@ namespace Assets.Scripts.Scenes
         private readonly IManager _manager;
         private readonly IActorContext _actorContext;
         private readonly IPlayerBehaviourRegistrar _playerBehaviourRegistrar;
+        private readonly IKeyboardControls _keyboardControls;
 
         private GameObject _map;
         private IMapLoader _mapLoader;
+
+        private IHudController _hudController;
+        private IPlayerInputController _playerInputController;
+        private IGuiInputController _guiInputController;
+        #endregion
+
+        #region Unity Properties
+        public Transform CanvasTransform;
+
+        public Transform InventoryWindowTransform;
         #endregion
 
         #region Constructors
@@ -32,7 +45,11 @@ namespace Assets.Scripts.Scenes
         /// </summary>
         private ExploreSceneManager()
         {
+            _keyboardControls = new KeyboardControls();
+
             _playerBehaviourRegistrar = new PlayerBehaviourRegistrar();
+            _playerBehaviourRegistrar.PlayerRegistered += PlayerBehaviourRegistrar_PlayerRegistered;
+            _playerBehaviourRegistrar.PlayerUnregistered += PlayerBehaviourRegistrar_PlayerUnregistered;
 
             var connectionString = "URI=file::memory:,version=3";
             var connection = new SqliteConnection(connectionString);
@@ -79,12 +96,56 @@ namespace Assets.Scripts.Scenes
             var mapAssetPath = _manager.Maps.GetMapById(Guid.NewGuid(), mapContext).ResourceName;
             var mapLoadProperties = new LoadMapProperties(mapAssetPath);
             _mapLoader.LoadMap(mapLoadProperties);
+
+            _hudController = new HudController(CanvasTransform, InventoryWindowTransform);
+            _hudController.ShowInventory(false);
+
+            _guiInputController = new GuiInputController(_keyboardControls, _hudController);
+        }
+
+        public void Update()
+        {
+            _guiInputController.Update(Time.deltaTime);
+
+            if (_playerInputController != null)
+            {
+                _playerInputController.Update(Time.deltaTime);
+            }
         }
 
         public void LoadMap(ILoadMapProperties loadMapProperties)
         {
             _playerBehaviourRegistrar.UnregisterPlayer(null);
             _mapLoader.LoadMap(loadMapProperties);
+        }
+
+        private void OnDestroy()
+        {
+            _playerBehaviourRegistrar.PlayerRegistered -= PlayerBehaviourRegistrar_PlayerRegistered;
+            _playerBehaviourRegistrar.PlayerUnregistered -= PlayerBehaviourRegistrar_PlayerUnregistered;
+        }
+        #endregion
+
+        #region Event Handlers
+        private void PlayerBehaviourRegistrar_PlayerUnregistered(object sender, PlayerBehaviourRegisteredEventArgs e)
+        {
+            Debug.Log("Player unregistered. Destroying movement controls.");
+            _playerInputController = null;
+        }
+
+        private void PlayerBehaviourRegistrar_PlayerRegistered(object sender, PlayerBehaviourRegisteredEventArgs e)
+        {
+            Debug.Log("Player registered.");
+            var actorMovementBehaviour = e.PlayerBehaviour.ActorGameObject.GetRequiredComponent<IActorMovementBehaviour>();
+            
+            Debug.Log("Making movement controls.");
+            _playerInputController = new PlayerInputController(
+                _keyboardControls,
+                actorMovementBehaviour);
+
+            // TODO: remove this test code.
+            Debug.Log("Setting some test state.");
+            e.PlayerBehaviour.Player.Inventory.ItemCapacity = 100;
         }
         #endregion
     }    

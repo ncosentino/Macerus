@@ -5,6 +5,7 @@ using System.Text;
 using Assets.Scripts.Encounters;
 using Assets.Scripts.Maps;
 using Assets.Scripts.Scenes;
+using Assets.Scripts.Scenes.Explore;
 using Assets.Scripts.Triggers.Teleporters;
 using ProjectXyz.Application.Core.Actors;
 using ProjectXyz.Application.Interface.Actors;

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
-namespace Assets.Scripts.Actors.Player
+namespace Assets.Scripts.Scenes.Explore.Input
 {
-    public interface IPlayerControlsBehaviour
+    public interface IKeyboardControls
     {
         #region Properties
         KeyCode MoveLeft { get; }
@@ -16,6 +15,8 @@ namespace Assets.Scripts.Actors.Player
         KeyCode MoveUp { get; }
 
         KeyCode MoveDown { get; }
+
+        KeyCode ToggleInventory { get; }
         #endregion
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Actors.Player;
 using Assets.Scripts.Scenes;
+using Assets.Scripts.Scenes.Explore;
 
 namespace Assets.Scripts.Gui.Inventory
 {
