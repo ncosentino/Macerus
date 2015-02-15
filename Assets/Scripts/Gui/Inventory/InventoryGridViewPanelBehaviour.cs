@@ -60,7 +60,6 @@ namespace Assets.Scripts.Gui.Inventory
             }
 
             inventory.CapacityChanged += Inventory_CapacityChanged;
-            inventory.CollectionChanged += Inventory_CollectionChanged;
         }
 
         private void UnhookInventoryEvents(IInventory inventory)
@@ -71,7 +70,6 @@ namespace Assets.Scripts.Gui.Inventory
             }
 
             inventory.CapacityChanged -= Inventory_CapacityChanged;
-            inventory.CollectionChanged -= Inventory_CollectionChanged;
         }
 
         private void PopulateItemSlots(IMutableInventory inventory, ScrollRect itemCollectionScrollRect)
@@ -125,11 +123,6 @@ namespace Assets.Scripts.Gui.Inventory
         #endregion
 
         #region Event Handlers
-        private void Inventory_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            PopulateItemSlots((IMutableInventory)sender, ItemCollectionScrollRect);
-        }
-
         private void Inventory_CapacityChanged(object sender, EventArgs e)
         {
             PopulateItemSlots((IMutableInventory)sender, ItemCollectionScrollRect);

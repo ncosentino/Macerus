@@ -24,7 +24,7 @@ namespace Assets.Scripts.Gui.Inventory
 
         public IItem Item
         {
-            get { return Inventory[InventoryIndex]; }
+            get { return Inventory == null ? null : Inventory[InventoryIndex]; }
         }
         #endregion
 
@@ -41,10 +41,9 @@ namespace Assets.Scripts.Gui.Inventory
                 EmptySprite = IconImage.sprite;
             }
 
-            if (Item != null)
-            {
-                IconImage.sprite = Resources.Load<Sprite>(Item.InventoryGraphicResource);
-            }
+            IconImage.sprite = Item == null
+                ? EmptySprite
+                : Resources.Load<Sprite>(Item.InventoryGraphicResource);
         }
 
         public bool CanRemoveItem()
