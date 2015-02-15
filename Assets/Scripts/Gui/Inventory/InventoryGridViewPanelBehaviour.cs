@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using Assets.Scripts.Components;
 using ProjectXyz.Application.Interface.Items;
 using ProjectXyz.Application.Interface.Items.ExtensionMethods;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.Gui.Inventory
 {
@@ -18,7 +16,7 @@ namespace Assets.Scripts.Gui.Inventory
         #endregion
 
         #region Unity Properties
-        public ScrollRect ItemCollectionScrollRect;
+        public RectTransform ScrollRectContent;
 
         public GameObject InventorySlotPrefab;
 
@@ -41,7 +39,7 @@ namespace Assets.Scripts.Gui.Inventory
                 _inventory = value;
                 HookInventoryEvents(_inventory);
 
-                PopulateItemSlots(_inventory, ItemCollectionScrollRect);
+                PopulateItemSlots(_inventory, ScrollRectContent);
             }
         }
         #endregion
@@ -72,10 +70,15 @@ namespace Assets.Scripts.Gui.Inventory
             inventory.CapacityChanged -= Inventory_CapacityChanged;
         }
 
-        private void PopulateItemSlots(IMutableInventory inventory, ScrollRect itemCollectionScrollRect)
+        private void PopulateItemSlots(IMutableInventory inventory, RectTransform scrollRectContent)
         {
-            (from Transform child 
-             in itemCollectionScrollRect.transform
+            if (scrollRectContent == null)
+            {
+                return;
+            }
+
+            (from Transform child
+             in scrollRectContent
              select child.gameObject)
                 .ToList()
                 .ForEach(Destroy);
@@ -85,8 +88,8 @@ namespace Assets.Scripts.Gui.Inventory
                 return;
             }
 
-            int columnCount = (int)(itemCollectionScrollRect.content.rect.width / SlotWidth);
-            float stretchedSlotWidth = SlotWidth + (itemCollectionScrollRect.content.rect.width - columnCount * SlotWidth) / columnCount;
+            int columnCount = (int)(scrollRectContent.rect.width / SlotWidth);
+            float stretchedSlotWidth = SlotWidth + (scrollRectContent.rect.width - columnCount * SlotWidth) / columnCount;
 
             int lastUsedSlot;
             inventory.TryGetLastUsedSlot(out lastUsedSlot);
@@ -95,12 +98,12 @@ namespace Assets.Scripts.Gui.Inventory
 
             Debug.Log(string.Format("Inventory: {0}x{1}", columnCount, rowCount));
 
-            for (int x = 0; x < columnCount; x++)
+            for (int y = 0; y < rowCount; y++) 
             {
-                for (int y = 0; y < rowCount; y++)
+                for (int x = 0; x < columnCount; x++)
                 {
                     var slot = (GameObject)PrefabUtility.InstantiatePrefab(InventorySlotPrefab);
-                    slot.transform.SetParent(itemCollectionScrollRect.content.transform);
+                    slot.transform.SetParent(scrollRectContent);
 
                     var slotRectTransform = slot.GetRequiredComponent<RectTransform>();
                     slotRectTransform.SetInsetAndSizeFromParentEdge(
@@ -119,13 +122,15 @@ namespace Assets.Scripts.Gui.Inventory
                     inventorySlotBehaviour.InventoryIndex = x + columnCount * y;
                 }
             }
+
+            scrollRectContent.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, rowCount * SlotHeight);
         }
         #endregion
 
         #region Event Handlers
         private void Inventory_CapacityChanged(object sender, EventArgs e)
         {
-            PopulateItemSlots((IMutableInventory)sender, ItemCollectionScrollRect);
+            PopulateItemSlots((IMutableInventory)sender, ScrollRectContent);
         }
         #endregion
     }
