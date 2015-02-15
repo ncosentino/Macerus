@@ -55,6 +55,8 @@ namespace Assets.Scripts.Gui.Inventory
                 return;
             }
 
+            BorderImage.color = DefaultBorderColor;
+
             var item = draggedItem.HasItemBehaviour.Item;
             if (!_canAddItemBehaviour.CanAddItem(item))
             {
@@ -63,7 +65,6 @@ namespace Assets.Scripts.Gui.Inventory
 
             draggedItem.Source.CanRemoveItemBehaviour.RemoveItem();
             _canAddItemBehaviour.AddItem(item);
-            BorderImage.color = DefaultBorderColor;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
