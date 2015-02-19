@@ -7,18 +7,16 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{160994C6-3D7A-F9F8-235E-288A96CD2854}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
-    <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
+    <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>4.6.1f1</UnityVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -27,7 +25,7 @@
     <OutputPath>Temp\UnityVS_bin\Debug\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_64;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,7 +33,7 @@
     <OutputPath>Temp\UnityVS_bin\Release\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_64;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+    <DefineConstants>TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -55,40 +53,40 @@
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Contracts">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Application.Core\Microsoft.Contracts.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Application.Core\Microsoft.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Application.Core">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Application.Core\ProjectXyz.Application.Core.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Application.Core\ProjectXyz.Application.Core.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Application.Interface">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Application.Core\ProjectXyz.Application.Interface.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Application.Core\ProjectXyz.Application.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Data.Core">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Application.Core\ProjectXyz.Data.Core.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Application.Core\ProjectXyz.Data.Core.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Data.Interface">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Application.Core\ProjectXyz.Data.Interface.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Application.Core\ProjectXyz.Data.Interface.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Contracts">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.Core\Microsoft.Contracts.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Data.Core\Microsoft.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Data.Core">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.Core\ProjectXyz.Data.Core.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Data.Core\ProjectXyz.Data.Core.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Data.Interface">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.Core\ProjectXyz.Data.Interface.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Data.Core\ProjectXyz.Data.Interface.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Contracts">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.Sql\Microsoft.Contracts.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Data.Sql\Microsoft.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Data.Core">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.Sql\ProjectXyz.Data.Core.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Data.Sql\ProjectXyz.Data.Core.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Data.Interface">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.Sql\ProjectXyz.Data.Interface.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Data.Sql\ProjectXyz.Data.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Data.Sql">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz.Data.Sql\ProjectXyz.Data.Sql.dll</HintPath>
+      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Data.Sql\ProjectXyz.Data.Sql.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Contracts">
       <HintPath>Assets\Dependencies\bin\Tiled.Net\Microsoft.Contracts.dll</HintPath>
@@ -116,26 +114,13 @@
     <Compile Include="Assets\Scripts\Actors\IActorMovementState.cs" />
     <Compile Include="Assets\Scripts\Actors\Player\IPlayerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Actors\Player\IPlayerBehaviourRegistrar.cs" />
-    <Compile Include="Assets\Scripts\Gui\DoubleClickBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Gui\IDoubleClickBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Gui\Inventory\DoubleClickPlayerUseItemBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Gui\Inventory\DoubleClickUseItemBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Scenes\Explore\Input\IGuiInputController.cs" />
-    <Compile Include="Assets\Scripts\Scenes\Explore\Input\GuiInputController.cs" />
-    <Compile Include="Assets\Scripts\Scenes\Explore\Gui\HudController.cs" />
-    <Compile Include="Assets\Scripts\Scenes\Explore\Gui\IHudController.cs" />
-    <Compile Include="Assets\Scripts\Scenes\Explore\Input\IKeyboardControls.cs" />
-    <Compile Include="Assets\Scripts\Scenes\Explore\Input\IPlayerInputController.cs" />
     <Compile Include="Assets\Scripts\Actors\Player\PlayerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Actors\Player\PlayerBehaviourRegisteredEventArgs.cs" />
     <Compile Include="Assets\Scripts\Actors\Player\PlayerBehaviourRegistrar.cs" />
-    <Compile Include="Assets\Scripts\Scenes\Explore\Input\KeyboardControls.cs" />
-    <Compile Include="Assets\Scripts\Scenes\Explore\Input\PlayerInputController.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFindPlayerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraFollowBehaviour.cs" />
     <Compile Include="Assets\Scripts\Camera\ICameraTargetting.cs" />
     <Compile Include="Assets\Scripts\Components\ComponentExtensionMethods.cs" />
-    <Compile Include="Assets\Scripts\GameObjects\GameObjectExtensionMethods.cs" />
     <Compile Include="Assets\Scripts\Encounters\EncounterProperties.cs" />
     <Compile Include="Assets\Scripts\Encounters\EncounterableBehaviour.cs" />
     <Compile Include="Assets\Scripts\Encounters\EncountererBehaviour.cs" />
@@ -144,14 +129,15 @@
     <Compile Include="Assets\Scripts\Encounters\IEncounterableBehaviour.cs" />
     <Compile Include="Assets\Scripts\Encounters\ITryEncounterProperties.cs" />
     <Compile Include="Assets\Scripts\Encounters\TryEncounterProperties.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\GameObjectExtensionMethods.cs" />
     <Compile Include="Assets\Scripts\Gui\CircularFillControlBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\ClosableWindowBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\DoubleClickBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\DraggableWindowBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Hud\HealthBarBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Gui\Inventory\PlayerInventoryGridViewPanelBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Gui\Inventory\IInventoryGridViewPanelBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Gui\Inventory\IInventorySlotBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Gui\Inventory\InventorySlotBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\IDoubleClickBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\DoubleClickPlayerUseItemBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\DoubleClickUseItemBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\EquipmentSlotBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\ICanAddItemBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\ICanRemoveItemBehaviour.cs" />
@@ -159,11 +145,15 @@
     <Compile Include="Assets\Scripts\Gui\Inventory\IHasItemBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\IInventoryDragItemSourceBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\IInventoryDraggedItemBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\IInventoryGridViewPanelBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\IInventorySlotBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventoryDragItemSourceBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventoryDraggedItemBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventoryDropItemTargetBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventoryGridViewPanelBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\InventorySlotBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventoryWindowBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\PlayerInventoryGridViewPanelBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\MainMenuNavigationBehaviour.cs" />
     <Compile Include="Assets\Scripts\Maps\ILoadMapProperties.cs" />
     <Compile Include="Assets\Scripts\Maps\IMapLoader.cs" />
@@ -172,7 +162,15 @@
     <Compile Include="Assets\Scripts\Maps\Tiled\TiledMapPopulator.cs" />
     <Compile Include="Assets\Scripts\Maps\TilesetTileResource.cs" />
     <Compile Include="Assets\Scripts\Scenes\Explore\ExploreSceneManager.cs" />
+    <Compile Include="Assets\Scripts\Scenes\Explore\Gui\HudController.cs" />
+    <Compile Include="Assets\Scripts\Scenes\Explore\Gui\IHudController.cs" />
     <Compile Include="Assets\Scripts\Scenes\Explore\IExploreSceneManager.cs" />
+    <Compile Include="Assets\Scripts\Scenes\Explore\Input\GuiInputController.cs" />
+    <Compile Include="Assets\Scripts\Scenes\Explore\Input\IGuiInputController.cs" />
+    <Compile Include="Assets\Scripts\Scenes\Explore\Input\IKeyboardControls.cs" />
+    <Compile Include="Assets\Scripts\Scenes\Explore\Input\IPlayerInputController.cs" />
+    <Compile Include="Assets\Scripts\Scenes\Explore\Input\KeyboardControls.cs" />
+    <Compile Include="Assets\Scripts\Scenes\Explore\Input\PlayerInputController.cs" />
     <Compile Include="Assets\Scripts\SingletonBehaviour.cs" />
     <Compile Include="Assets\Scripts\Spawners\BaseSpawnerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Spawners\CollisionSpawnerBehaviour.cs" />
@@ -183,6 +181,5 @@
     <Compile Include="Assets\Scripts\Triggers\Teleporters\ITeleportProperties.cs" />
     <Compile Include="Assets\Scripts\Triggers\Teleporters\TeleportProperties.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2012\UnityVS.CSharp.targets" />
 </Project>
