@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Actors.Player;
-using Assets.Scripts.Scenes;
 using Assets.Scripts.Scenes.Explore;
 
 namespace Assets.Scripts.Gui.Inventory
@@ -19,12 +18,22 @@ namespace Assets.Scripts.Gui.Inventory
             _exploreSceneManager = ExploreSceneManager.Instance;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered += PlayerBehaviourRegistrar_PlayerRegistered;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered += PlayerBehaviourRegistrar_PlayerUnregistered;
+
+            if (_exploreSceneManager.PlayerBehaviourRegistrar.PlayerBehaviour != null)
+            {
+                RegisterPlayer(_exploreSceneManager.PlayerBehaviourRegistrar.PlayerBehaviour);
+            }
         }
 
         private void OnDestroy()
         {
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered -= PlayerBehaviourRegistrar_PlayerRegistered;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered -= PlayerBehaviourRegistrar_PlayerUnregistered;
+        }
+
+        private void RegisterPlayer(IPlayerBehaviour playerBehaviour)
+        {
+            Inventory = playerBehaviour.Player.Inventory;
         }
         #endregion
 
@@ -36,7 +45,7 @@ namespace Assets.Scripts.Gui.Inventory
 
         private void PlayerBehaviourRegistrar_PlayerRegistered(object sender, PlayerBehaviourRegisteredEventArgs e)
         {
-            Inventory = e.PlayerBehaviour.Player.Inventory;
+            RegisterPlayer(e.PlayerBehaviour);
         }
         #endregion
     }

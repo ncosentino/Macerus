@@ -12,6 +12,10 @@ namespace Assets.Scripts.Actors.Player
 
         event EventHandler<PlayerBehaviourRegisteredEventArgs> PlayerUnregistered;
         #endregion
+        
+        #region Properties
+        IPlayerBehaviour PlayerBehaviour { get; }
+        #endregion
 
         #region Methods
         void RegisterPlayer(IPlayerBehaviour player);

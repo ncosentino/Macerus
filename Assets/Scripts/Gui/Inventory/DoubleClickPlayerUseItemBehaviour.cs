@@ -2,32 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Actors.Player;
-using Assets.Scripts.Components;
 using Assets.Scripts.Scenes.Explore;
-using UnityEngine;
+using ProjectXyz.Application.Interface.Items;
 
-namespace Assets.Scripts.Camera
+namespace Assets.Scripts.Gui.Inventory
 {
-    public sealed class CameraFindPlayerBehaviour : MonoBehaviour
+    public class DoubleClickPlayerUseItemBehaviour : DoubleClickUseItemBehaviour
     {
         #region Fields
-        private ICameraTargetting _cameraTargetting;
+        private ICanUseItem _target;
         private IExploreSceneManager _exploreSceneManager;
         #endregion
-        
-        #region Methods
-        public void Start()
+
+        #region Properties
+        protected override ICanUseItem Target
         {
-            _cameraTargetting = this.GetRequiredComponent<ICameraTargetting>();
+            get { return _target; }
+        }
+        #endregion
+
+        #region Methods
+        public override void Start()
+        {
+            base.Start();
 
             _exploreSceneManager = ExploreSceneManager.Instance;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered += PlayerBehaviourRegistrar_PlayerRegistered;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered += PlayerBehaviourRegistrar_PlayerUnregistered;
-
-            if (_exploreSceneManager.PlayerBehaviourRegistrar.PlayerBehaviour != null)
-            {
-                SetTarget(_exploreSceneManager.PlayerBehaviourRegistrar.PlayerBehaviour);
-            }
+            RegisterPlayerBehaviour(_exploreSceneManager.PlayerBehaviourRegistrar.PlayerBehaviour);
         }
 
         private void OnDestroy()
@@ -36,21 +38,21 @@ namespace Assets.Scripts.Camera
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered -= PlayerBehaviourRegistrar_PlayerUnregistered;
         }
 
-        private void SetTarget(IPlayerBehaviour playerBehaviour)
+        private void RegisterPlayerBehaviour(IPlayerBehaviour playerBehaviour)
         {
-            _cameraTargetting.SetTarget(playerBehaviour.ActorGameObject.transform);
+            _target = playerBehaviour.Player;
         }
         #endregion
 
         #region Event Handlers
         private void PlayerBehaviourRegistrar_PlayerRegistered(object sender, PlayerBehaviourRegisteredEventArgs e)
         {
-            SetTarget(e.PlayerBehaviour);
+            RegisterPlayerBehaviour(e.PlayerBehaviour);
         }
 
         private void PlayerBehaviourRegistrar_PlayerUnregistered(object sender, PlayerBehaviourRegisteredEventArgs e)
         {
-            _cameraTargetting.SetTarget(null);
+            _target = null;
         }
         #endregion
     }

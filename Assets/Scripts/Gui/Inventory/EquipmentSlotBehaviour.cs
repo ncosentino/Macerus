@@ -61,6 +61,11 @@ namespace Assets.Scripts.Gui.Inventory
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered += PlayerBehaviourRegistrar_PlayerRegistered;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered += PlayerBehaviourRegistrar_PlayerUnregistered;
 
+            if (_exploreSceneManager.PlayerBehaviourRegistrar.PlayerBehaviour != null)
+            {
+                RegisterPlayer(_exploreSceneManager.PlayerBehaviourRegistrar.PlayerBehaviour);
+            }
+
             IconImage.sprite = EmptySprite;
         }
 
@@ -77,7 +82,7 @@ namespace Assets.Scripts.Gui.Inventory
             var item = _unequippable.Unequip(EquipmentSlotType);
             Debug.Log(string.Format("Unequipped {0} from {1}.", item, EquipmentSlotType));
 
-            IconImage.sprite = EmptySprite;
+            RefreshItemGraphic(null);
             return item;
         }
 
@@ -97,7 +102,7 @@ namespace Assets.Scripts.Gui.Inventory
         public void AddItem(IItem item)
         {
             _equippable.Equip(item, EquipmentSlotType);
-            IconImage.sprite = Resources.Load<Sprite>(item.InventoryGraphicResource);
+            RefreshItemGraphic(item);
 
             Debug.Log(string.Format("Equipped {0} to {1}.", item, EquipmentSlotType));
         }
@@ -107,14 +112,22 @@ namespace Assets.Scripts.Gui.Inventory
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered -= PlayerBehaviourRegistrar_PlayerRegistered;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered -= PlayerBehaviourRegistrar_PlayerUnregistered;
         }
-        #endregion
 
-        #region Event Handlers
-        private void PlayerBehaviourRegistrar_PlayerRegistered(object sender, PlayerBehaviourRegisteredEventArgs e)
+        private void RefreshItemGraphic(IItem item)
         {
-            _equippable = e.PlayerBehaviour.Player;
-            _unequippable = e.PlayerBehaviour.Player;
-            _getItemForSlotCallback = slot => e.PlayerBehaviour.Player.Equipment[slot];
+            IconImage.sprite = item == null
+                ? EmptySprite
+                : Resources.Load<Sprite>(item.InventoryGraphicResource);
+        }
+
+        private void RegisterPlayer(IPlayerBehaviour playerBehaviour)
+        {
+            _equippable = playerBehaviour.Player;
+            _unequippable = playerBehaviour.Player;
+            _getItemForSlotCallback = slot => playerBehaviour.Player.Equipment[slot];
+            
+            // hook events
+            playerBehaviour.Player.Equipment.EquipmentChanged += Equipment_EquipmentChanged;
 
             if (EquipmentSlotType == "Gloves")
             {
@@ -126,12 +139,32 @@ namespace Assets.Scripts.Gui.Inventory
                 AddItem(item);
             }
         }
+        #endregion
+
+        #region Event Handlers
+        private void PlayerBehaviourRegistrar_PlayerRegistered(object sender, PlayerBehaviourRegisteredEventArgs e)
+        {
+            RegisterPlayer(e.PlayerBehaviour);
+        }
 
         private void PlayerBehaviourRegistrar_PlayerUnregistered(object sender, PlayerBehaviourRegisteredEventArgs e)
         {
             _equippable = null;
             _unequippable = null;
             _getItemForSlotCallback = null;
+
+            // unhook events
+            e.PlayerBehaviour.Player.Equipment.EquipmentChanged -= Equipment_EquipmentChanged;
+        }
+
+        private void Equipment_EquipmentChanged(object sender, EquipmentChangedEventArgs e)
+        {
+            if (e.Slot != EquipmentSlotType)
+            {
+                return;
+            }
+
+            RefreshItemGraphic(((IObservableEquipment)sender)[e.Slot]);
         }
         #endregion
     }

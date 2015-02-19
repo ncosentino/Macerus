@@ -116,6 +116,10 @@
     <Compile Include="Assets\Scripts\Actors\IActorMovementState.cs" />
     <Compile Include="Assets\Scripts\Actors\Player\IPlayerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Actors\Player\IPlayerBehaviourRegistrar.cs" />
+    <Compile Include="Assets\Scripts\Gui\DoubleClickBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\IDoubleClickBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\DoubleClickPlayerUseItemBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\DoubleClickUseItemBehaviour.cs" />
     <Compile Include="Assets\Scripts\Scenes\Explore\Input\IGuiInputController.cs" />
     <Compile Include="Assets\Scripts\Scenes\Explore\Input\GuiInputController.cs" />
     <Compile Include="Assets\Scripts\Scenes\Explore\Gui\HudController.cs" />

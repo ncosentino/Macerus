@@ -40,6 +40,11 @@ namespace Assets.Scripts.Gui.Hud
 
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered += PlayerBehaviourRegistrar_PlayerRegistered;
             _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered += PlayerBehaviourRegistrar_PlayerUnregistered;
+
+            if (_exploreSceneManager.PlayerBehaviourRegistrar.PlayerBehaviour != null)
+            {
+                StartCoroutine(UpdateHealthBar(_exploreSceneManager.PlayerBehaviourRegistrar.PlayerBehaviour.Player));    
+            }
         }
 
         private void OnDestroy()

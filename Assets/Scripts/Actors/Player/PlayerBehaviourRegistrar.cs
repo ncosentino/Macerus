@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Scripts.Actors.Player
 {
@@ -17,6 +18,13 @@ namespace Assets.Scripts.Actors.Player
         public event EventHandler<PlayerBehaviourRegisteredEventArgs> PlayerUnregistered;
         #endregion
 
+        #region Properties
+        public IPlayerBehaviour PlayerBehaviour
+        {
+            get { return _player; }
+        }
+        #endregion
+
         #region Methods
         public void UnregisterPlayer(IPlayerBehaviour player)
         {
@@ -26,6 +34,7 @@ namespace Assets.Scripts.Actors.Player
             }
 
             _player = null;
+            Debug.Log("Player has been unregistered.");
 
             var handler = PlayerUnregistered;
             if (handler != null)
@@ -42,6 +51,7 @@ namespace Assets.Scripts.Actors.Player
             }
 
             _player = player;
+            Debug.Log("Player has been registered.");
 
             var handler = PlayerRegistered;
             if (handler != null)

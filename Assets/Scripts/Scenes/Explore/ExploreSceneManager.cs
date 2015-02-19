@@ -135,7 +135,6 @@ namespace Assets.Scripts.Scenes.Explore
 
         private void PlayerBehaviourRegistrar_PlayerRegistered(object sender, PlayerBehaviourRegisteredEventArgs e)
         {
-            Debug.Log("Player registered.");
             var actorMovementBehaviour = e.PlayerBehaviour.ActorGameObject.GetRequiredComponent<IActorMovementBehaviour>();
             
             Debug.Log("Making movement controls.");
