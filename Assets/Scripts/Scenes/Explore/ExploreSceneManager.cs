@@ -4,6 +4,7 @@ using System.Linq;
 using Assets.Scripts.Actors;
 using Assets.Scripts.Actors.Player;
 using Assets.Scripts.Components;
+using Assets.Scripts.GameObjects;
 using Assets.Scripts.Maps;
 using Assets.Scripts.Scenes.Explore.Gui;
 using Assets.Scripts.Scenes.Explore.Input;

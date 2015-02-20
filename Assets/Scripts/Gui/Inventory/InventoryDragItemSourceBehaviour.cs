@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Components;
+using Assets.Scripts.GameObjects;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,6 +19,8 @@ namespace Assets.Scripts.Gui.Inventory
 
         #region Unity Properties
         public Image IconImage;
+
+        public GameObject DraggingItemPrefab;
         #endregion
 
         #region Properties
@@ -38,6 +41,16 @@ namespace Assets.Scripts.Gui.Inventory
             _canRemoveItemBehaviour = this.GetRequiredComponent<ICanRemoveItemBehaviour>();
             _hasItemBehaviour = this.GetRequiredComponent<IHasItemBehaviour>();
 
+            if (DraggingItemPrefab == null)
+            {
+                throw new InvalidOperationException("The prefab for the dragging item must be set.");
+            }
+
+            if (!DraggingItemPrefab.HasRequiredComponent<IInventoryDraggedItemBehaviour>())
+            {
+                throw new InvalidOperationException(string.Format("The prefab for the dragging must have '{0}' as a component.", typeof(IInventoryDraggedItemBehaviour)));
+            }
+
             if (IconImage == null)
             {
                 IconImage = this.GetRequiredComponent<Image>();
@@ -51,8 +64,7 @@ namespace Assets.Scripts.Gui.Inventory
                 return;
             }
 
-            var prefab = (GameObject)Resources.Load("Prefabs/Gui/Inventory/DraggedInventoryItem");
-            var dragItem = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+            var dragItem = (GameObject)PrefabUtility.InstantiatePrefab(DraggingItemPrefab);
             dragItem.name = "Dragged Item";
             dragItem.transform.SetParent(this.GetRequiredComponentInParent<Canvas>().transform);
             dragItem.transform.position = eventData.position;

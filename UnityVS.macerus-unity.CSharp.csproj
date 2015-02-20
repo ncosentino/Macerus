@@ -7,14 +7,16 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{160994C6-3D7A-F9F8-235E-288A96CD2854}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>4.6.1f1</UnityVersion>
@@ -136,6 +138,8 @@
     <Compile Include="Assets\Scripts\Gui\DraggableWindowBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Hud\HealthBarBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\IDoubleClickBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\IItemDetailsBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\ItemDetailsBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\DoubleClickPlayerUseItemBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\DoubleClickUseItemBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\EquipmentSlotBehaviour.cs" />
@@ -153,6 +157,7 @@
     <Compile Include="Assets\Scripts\Gui\Inventory\InventoryGridViewPanelBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventorySlotBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventoryWindowBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\CanShowItemDetailsBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\PlayerInventoryGridViewPanelBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\MainMenuNavigationBehaviour.cs" />
     <Compile Include="Assets\Scripts\Maps\ILoadMapProperties.cs" />
