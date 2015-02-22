@@ -81,8 +81,12 @@ namespace Assets.Scripts.Maps
             var xmlMapContents = File.ReadAllText(loadMapProperties.MapAssetPath);
             var tmxMap = new XmlTmxMapParser().ReadXml(xmlMapContents);
 
+            const string TILE_PREFAB_PATH = "Prefabs/Maps/tile";
+
             var mapPopulator = new TiledMapPopulator(
                 "/Resources/",
+                "maps/",
+                TILE_PREFAB_PATH,
                 ApplyTileProperties,
                 ApplyMapObjectProperties)
             {

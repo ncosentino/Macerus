@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using Assets.Scripts.GameObjects;
 using Tiled.Net.Layers;
 using Tiled.Net.Maps;
 using Tiled.Net.Tilesets;
@@ -12,18 +14,24 @@ namespace Assets.Scripts.Maps.Tiled
     public class TiledMapPopulator
     {
         #region Fields
-        private readonly string _resourceDirectory;
+        private readonly string _resourcesPath;
+        private readonly string _mapsResourceDirectory;
+        private readonly string _tilePrefrabPath;
         private readonly Action<GameObject, TilesetTileResource> _transformTile;
         private readonly Action<GameObject, ITiledMapObject> _transformMapObject;
         #endregion
 
         #region Constructors
         public TiledMapPopulator(
-            string resourceDirectory,
+            string resourcesPath,
+            string mapsResourceDirectory,
+            string tilePrefrabPath,
             Action<GameObject, TilesetTileResource> transformTile,
             Action<GameObject, ITiledMapObject> transformMapObject)
         {
-            _resourceDirectory = resourceDirectory;
+            _resourcesPath = resourcesPath;
+            _mapsResourceDirectory = mapsResourceDirectory;
+            _tilePrefrabPath = tilePrefrabPath;
             _transformTile = transformTile;
             _transformMapObject = transformMapObject;
         }
@@ -44,7 +52,7 @@ namespace Assets.Scripts.Maps.Tiled
         #region Methods
         public void PopulateMap(GameObject mapObject, ITiledMap map)
         {
-            var resources = BuildResources(map.Tilesets, "Assets/Resources/Maps/");
+            var resources = BuildResources(map.Tilesets, _mapsResourceDirectory);
 
             var tilesContainerTransform = mapObject.transform.FindChild("Tiles");
             var tilesContainer = tilesContainerTransform == null
@@ -79,18 +87,27 @@ namespace Assets.Scripts.Maps.Tiled
                             continue;
                         }
 
-                        var tileResource = resources[tile.Gid];
+                        var originalPrefab = Resources.Load(_tilePrefrabPath);
+                        if (originalPrefab == null)
+                        {
+                            Debug.LogWarning(string.Format("Prefab does not exist at '{0}'.", _tilePrefrabPath));
+                            continue;
+                        }
 
-                        var tileObject = new GameObject();
+                        var tileObject = (GameObject)UnityEngine.Object.Instantiate(
+                            originalPrefab,
+                            new Vector3(
+                                columnIndex * SpriteSpacingMultiplier * (FlipHorizontalPlacement ? -1 : 1),
+                                rowIndex * SpriteSpacingMultiplier * (FlipVerticalPlacement ? -1 : 1),
+                                0),
+                            Quaternion.identity);
+
                         tileObject.transform.parent = layerContainer.transform;
-                        var renderer = tileObject.AddComponent<SpriteRenderer>();
+                        var renderer = tileObject.GetRequiredComponent<SpriteRenderer>();
 
+                        var tileResource = resources[tile.Gid];
                         renderer.sprite = tileResource.Sprite;
                         renderer.transform.localScale *= SpriteScaleMultiplier;
-                        renderer.transform.Translate(
-                            columnIndex * SpriteSpacingMultiplier * (FlipHorizontalPlacement ? -1 : 1),
-                            rowIndex * SpriteSpacingMultiplier * (FlipVerticalPlacement ? -1 : 1),
-                            0);
                         renderer.sortingLayerName = layerContainer.name;
 
                         tileObject.name = renderer.sprite.name;
@@ -195,8 +212,11 @@ namespace Assets.Scripts.Maps.Tiled
 
         private string ResourcePathFromSourcePath(string mapResourceRoot, string tilesetImageSourcePath)
         {
+            mapResourceRoot = Path.Combine(_resourcesPath, mapResourceRoot);
+            Debug.Log("Qualified map resource root: " + mapResourceRoot);
+
             var resourcePath = CollapsePath(mapResourceRoot + tilesetImageSourcePath);
-            resourcePath = resourcePath.Substring(resourcePath.IndexOf(_resourceDirectory, StringComparison.OrdinalIgnoreCase) + _resourceDirectory.Length);
+            resourcePath = resourcePath.Substring(resourcePath.IndexOf(_resourcesPath, StringComparison.OrdinalIgnoreCase) + _resourcesPath.Length);
 
             var lastPeriodIndex = resourcePath.LastIndexOf(".", StringComparison.Ordinal);
             if (lastPeriodIndex != -1)
