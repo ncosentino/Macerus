@@ -12,7 +12,7 @@ namespace Assets.Scripts.Triggers.Teleporters
         #region Unity Properties
         public float Radius;
 
-        public string MapAssetPath;
+        public string TargetMapId;
         #endregion
 
         #region Methods
@@ -28,7 +28,7 @@ namespace Assets.Scripts.Triggers.Teleporters
 
         public void OnTriggerEnter2D(Collider2D collider)
         {
-            var teleportProperties = new TeleportProperties(MapAssetPath);
+            var teleportProperties = new TeleportProperties(new Guid(TargetMapId));
 
             var teleporter = (ICanTeleport)collider.gameObject.GetComponent(typeof(ICanTeleport));
             if (teleporter == null)

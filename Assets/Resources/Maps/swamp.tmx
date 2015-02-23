@@ -20119,7 +20119,7 @@
  <objectgroup name="Object Layer 1">
   <object id="9" name="teleporter" type="Prefabs/Triggers/Teleporters/CollisionTeleporter" x="1024" y="781.333" width="104" height="94.6667">
    <properties>
-    <property name="CollisionTeleporterBehaviour_MapAssetPath" value="Assets/Resources/Maps/Swamp.tmx"/>
+    <property name="CollisionTeleporterBehaviour_TargetMapId" value="7c8a542a-300d-402b-a692-247ee32388dd"/>
    </properties>
    <ellipse/>
   </object>

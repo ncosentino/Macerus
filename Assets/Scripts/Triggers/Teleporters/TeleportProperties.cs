@@ -8,20 +8,20 @@ namespace Assets.Scripts.Triggers.Teleporters
     public class TeleportProperties : ITeleportProperties
     {
         #region Fields
-        private readonly string _mapAssetPath;
+        private readonly Guid _mapId;
         #endregion
 
         #region Constructors
-        public TeleportProperties(string mapAssetPath)
+        public TeleportProperties(Guid mapId)
         {
-            _mapAssetPath = mapAssetPath;
+            _mapId = mapId;
         }
         #endregion
 
         #region Properties
-        public string MapAssetPath
+        public Guid MapId
         {
-            get { return _mapAssetPath; }
+            get { return _mapId; }
         }
         #endregion
     }

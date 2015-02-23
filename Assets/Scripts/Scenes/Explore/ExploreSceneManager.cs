@@ -13,6 +13,8 @@ using ProjectXyz.Application.Core.Enchantments;
 using ProjectXyz.Application.Core.Maps;
 using ProjectXyz.Application.Interface;
 using ProjectXyz.Application.Interface.Actors;
+using ProjectXyz.Application.Interface.Maps;
+using ProjectXyz.Application.Interface.Time;
 using ProjectXyz.Data.Sql;
 using UnityEngine;
 
@@ -26,8 +28,11 @@ namespace Assets.Scripts.Scenes.Explore
         private readonly IPlayerBehaviourRegistrar _playerBehaviourRegistrar;
         private readonly IKeyboardControls _keyboardControls;
 
+        private IMutableCalendar _calendar;
+
         private GameObject _map;
         private IMapLoader _mapLoader;
+        private IMapContext _mapContext;
 
         private IHudController _hudController;
         private IPlayerInputController _playerInputController;
@@ -87,16 +92,17 @@ namespace Assets.Scripts.Scenes.Explore
         #region Methods
         public void Start()
         {
+            var initialDateTime = ProjectXyz.Application.Core.Time.DateTime.Create(0, 0, 0, 0, 0, 0);
+            _calendar = ProjectXyz.Application.Core.Time.Calendar.Create(initialDateTime);
+
+            _mapContext = MapContext.Create(_calendar);
+
             _map = new GameObject();
             _map.name = "Map";
             _map.transform.parent = this.transform;
 
             _mapLoader = _map.AddComponent<MapBehaviour>();
-            
-            var mapContext = MapContext.Create();
-            var mapAssetPath = _manager.Maps.GetMapById(Guid.NewGuid(), mapContext).ResourceName;
-            var mapLoadProperties = new LoadMapProperties(mapAssetPath);
-            _mapLoader.LoadMap(mapLoadProperties);
+            LoadMap(Guid.NewGuid());
 
             _hudController = new HudController(CanvasTransform, InventoryWindowTransform);
             _hudController.ShowInventory(false);
@@ -112,12 +118,19 @@ namespace Assets.Scripts.Scenes.Explore
             {
                 _playerInputController.Update(Time.deltaTime);
             }
+
+            _calendar.UpdateElapsedTime(TimeSpan.FromSeconds(Time.deltaTime));
         }
 
-        public void LoadMap(ILoadMapProperties loadMapProperties)
-        {
-            _playerBehaviourRegistrar.UnregisterPlayer(null);
-            _mapLoader.LoadMap(loadMapProperties);
+        public void LoadMap(Guid mapId)
+        {            
+            _playerBehaviourRegistrar.UnregisterPlayer(_playerBehaviourRegistrar.PlayerBehaviour);
+
+            var mapLoadProperties = new LoadMapProperties(
+                _manager,
+                _mapContext,
+                mapId);
+            _mapLoader.LoadMap(mapLoadProperties);
         }
 
         private void OnDestroy()

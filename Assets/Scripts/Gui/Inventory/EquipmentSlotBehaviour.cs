@@ -154,7 +154,10 @@ namespace Assets.Scripts.Gui.Inventory
             _getItemForSlotCallback = null;
 
             // unhook events
-            e.PlayerBehaviour.Player.Equipment.EquipmentChanged -= Equipment_EquipmentChanged;
+            if (e.PlayerBehaviour != null)
+            {
+                e.PlayerBehaviour.Player.Equipment.EquipmentChanged -= Equipment_EquipmentChanged;
+            }
         }
 
         private void Equipment_EquipmentChanged(object sender, EquipmentChangedEventArgs e)

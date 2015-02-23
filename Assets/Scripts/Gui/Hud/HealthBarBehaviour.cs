@@ -73,7 +73,7 @@ namespace Assets.Scripts.Gui.Hud
 
         private void PlayerBehaviourRegistrar_PlayerUnregistered(object sender, PlayerBehaviourRegisteredEventArgs e)
         {
-            StopCoroutine(UpdateHealthBar(e.PlayerBehaviour.Player));
+            StopCoroutine(UpdateHealthBar(e.PlayerBehaviour == null ? null : e.PlayerBehaviour.Player));
         }
         #endregion
     }

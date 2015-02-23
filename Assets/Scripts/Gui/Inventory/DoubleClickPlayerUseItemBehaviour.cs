@@ -4,6 +4,7 @@ using System.Linq;
 using Assets.Scripts.Actors.Player;
 using Assets.Scripts.Scenes.Explore;
 using ProjectXyz.Application.Interface.Items;
+using UnityEngine;
 
 namespace Assets.Scripts.Gui.Inventory
 {
@@ -34,8 +35,12 @@ namespace Assets.Scripts.Gui.Inventory
 
         private void OnDestroy()
         {
-            _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered -= PlayerBehaviourRegistrar_PlayerRegistered;
-            _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered -= PlayerBehaviourRegistrar_PlayerUnregistered;
+            if (_exploreSceneManager != null)
+            {
+                _exploreSceneManager.PlayerBehaviourRegistrar.PlayerRegistered -= PlayerBehaviourRegistrar_PlayerRegistered;
+                _exploreSceneManager.PlayerBehaviourRegistrar.PlayerUnregistered -= PlayerBehaviourRegistrar_PlayerUnregistered;
+                _exploreSceneManager = null;
+            }
         }
 
         private void RegisterPlayerBehaviour(IPlayerBehaviour playerBehaviour)

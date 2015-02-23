@@ -8,7 +8,7 @@ namespace Assets.Scripts.Triggers.Teleporters
     public interface ITeleportProperties
     {
         #region Properties
-        string MapAssetPath { get; }
+        Guid MapId { get; }
         #endregion
     }
 }

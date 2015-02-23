@@ -7,6 +7,8 @@ using System.Text;
 using UnityEngine;
 
 using Assets.Scripts.Maps.Tiled;
+using ProjectXyz.Application.Core.Maps;
+using ProjectXyz.Application.Interface.Maps;
 using Tiled.Net.Layers;
 using Tiled.Net.Parsers;
 
@@ -19,7 +21,50 @@ namespace Assets.Scripts.Maps
         private const float SPRITE_TO_UNITY_SCALE_MULTIPLIER = SPRITE_TO_UNITY_SPACING_MULTIPLIER + 0.001f;
         #endregion
 
+        #region Fields
+        private IMap _map;
+        #endregion
+
         #region Methods
+        public void LoadMap(ILoadMapProperties loadMapProperties)
+        {
+            _map = loadMapProperties.Manager.Maps.GetMapById(
+                loadMapProperties.MapId,
+                loadMapProperties.MapContext);
+
+            var xmlMapContents = File.ReadAllText(_map.ResourceName);
+            var tmxMap = new XmlTmxMapParser().ReadXml(xmlMapContents);
+
+            const string TILE_PREFAB_PATH = "Prefabs/Maps/tile";
+
+            var mapPopulator = new TiledMapPopulator(
+                "/Resources/",
+                "maps/",
+                TILE_PREFAB_PATH,
+                ApplyTileProperties,
+                ApplyMapObjectProperties)
+            {
+                SpriteScaleMultiplier = SPRITE_TO_UNITY_SCALE_MULTIPLIER,
+                SpriteSpacingMultiplier = SPRITE_TO_UNITY_SPACING_MULTIPLIER,
+                FlipHorizontalPlacement = false,
+                FlipVerticalPlacement = true,
+                CenterAlignGameObjects = true,
+            };
+
+            mapPopulator.PopulateMap(gameObject, tmxMap);
+        }
+
+        public void Update()
+        {
+            _map.UpdateElapsedTime(TimeSpan.FromSeconds(Time.deltaTime));
+
+            RenderSettings.ambientLight = new Color(
+                _map.AmbientLight.Red,
+                _map.AmbientLight.Green,
+                _map.AmbientLight.Blue,
+                _map.AmbientLight.Alpha);
+        }
+
         private void ApplyTileProperties(GameObject tileObject, TilesetTileResource tileResource)
         {
             if (string.Equals("false", tileResource.GetPropertyValue("Walkable"), StringComparison.OrdinalIgnoreCase))
@@ -74,30 +119,6 @@ namespace Assets.Scripts.Maps
                     field.SetValue(component, propertyValue);    
                 }
             }
-        }
-
-        public void LoadMap(ILoadMapProperties loadMapProperties)
-        {
-            var xmlMapContents = File.ReadAllText(loadMapProperties.MapAssetPath);
-            var tmxMap = new XmlTmxMapParser().ReadXml(xmlMapContents);
-
-            const string TILE_PREFAB_PATH = "Prefabs/Maps/tile";
-
-            var mapPopulator = new TiledMapPopulator(
-                "/Resources/",
-                "maps/",
-                TILE_PREFAB_PATH,
-                ApplyTileProperties,
-                ApplyMapObjectProperties)
-            {
-                SpriteScaleMultiplier = SPRITE_TO_UNITY_SCALE_MULTIPLIER,
-                SpriteSpacingMultiplier = SPRITE_TO_UNITY_SPACING_MULTIPLIER,
-                FlipHorizontalPlacement = false,
-                FlipVerticalPlacement = true,
-                CenterAlignGameObjects = true,
-            };
-
-            mapPopulator.PopulateMap(gameObject, tmxMap);
         }
         #endregion
     }

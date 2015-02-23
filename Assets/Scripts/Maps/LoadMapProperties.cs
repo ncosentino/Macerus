@@ -2,26 +2,42 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ProjectXyz.Application.Interface;
+using ProjectXyz.Application.Interface.Maps;
 
 namespace Assets.Scripts.Maps
 {
     public class LoadMapProperties : ILoadMapProperties
     {
         #region Fields
-        private readonly string _mapAssetPath;
+        private readonly IMapContext _mapContext;
+        private readonly IManager _manager;
+        private readonly Guid _mapId;
         #endregion
 
         #region Constructors
-        public LoadMapProperties(string mapAssetPath)
+        public LoadMapProperties(IManager manager, IMapContext mapContext, Guid mapId)
         {
-            _mapAssetPath = mapAssetPath;
+            _manager = manager;
+            _mapContext = mapContext;
+            _mapId = mapId;
         }
         #endregion
 
         #region Properties
-        public string MapAssetPath
+        public Guid MapId
         {
-            get { return _mapAssetPath; }
+            get { return _mapId; }
+        }
+
+        public IManager Manager
+        {
+            get { return _manager; }
+        }
+
+        public IMapContext MapContext
+        {
+            get { return _mapContext; }
         }
         #endregion
     }

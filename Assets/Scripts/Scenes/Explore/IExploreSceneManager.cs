@@ -8,7 +8,7 @@ using ProjectXyz.Application.Interface.Actors;
 
 namespace Assets.Scripts.Scenes.Explore
 {
-    public interface IExploreSceneManager : IMapLoader
+    public interface IExploreSceneManager
     {
         #region Properties
         IPlayerBehaviourRegistrar PlayerBehaviourRegistrar { get; }
@@ -19,6 +19,7 @@ namespace Assets.Scripts.Scenes.Explore
         #endregion
 
         #region Methods
+        void LoadMap(Guid mapId);
         #endregion
     }
 }

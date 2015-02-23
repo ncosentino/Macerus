@@ -32,10 +32,9 @@ namespace Assets.Scripts.Actors.Player
 
         public void Teleport(ITeleportProperties teleportProperties)
         {
-            Debug.Log(string.Format("Player wants to teleport to '{0}'.", teleportProperties.MapAssetPath));
+            Debug.Log(string.Format("Player wants to teleport to '{0}'.", teleportProperties.MapId));
             
-            var loadMapProperties = new LoadMapProperties(teleportProperties.MapAssetPath);
-            ExploreSceneManager.Instance.LoadMap(loadMapProperties);
+            ExploreSceneManager.Instance.LoadMap(teleportProperties.MapId);
         }
 
         public void Encounter(IEncounterProperties encounterProperties)
