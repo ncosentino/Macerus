@@ -29,6 +29,17 @@ namespace Assets.Scripts.Components
 
             return (TComponent)childComponent;
         }
+
+        public static TComponent GetRequiredComponentInChildren<TComponent>(this Component component)
+        {
+            var childComponent = (object)component.GetComponentInChildren(typeof(TComponent));
+            if (childComponent == null)
+            {
+                throw new InvalidOperationException(string.Format("Could not get component of type '{0}' from children of component '{1}'.", typeof(TComponent), component));
+            }
+
+            return (TComponent)childComponent;
+        }
         #endregion
     }
 }

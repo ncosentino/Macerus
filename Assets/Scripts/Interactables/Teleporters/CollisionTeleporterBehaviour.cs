@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using UnityEngine;
 
-namespace Assets.Scripts.Triggers.Teleporters
+namespace Assets.Scripts.Interactables.Teleporters
 {
     public class CollisionTeleporterBehaviour : MonoBehaviour
     {

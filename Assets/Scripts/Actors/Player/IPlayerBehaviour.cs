@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Assets.Scripts.Encounters;
-using Assets.Scripts.Triggers.Teleporters;
+using Assets.Scripts.Interactables;
+using Assets.Scripts.Interactables.Teleporters;
 using ProjectXyz.Application.Interface.Actors;
-using UnityEngine;
 
 namespace Assets.Scripts.Actors.Player
 {
-    public interface IPlayerBehaviour : IActorBehaviour, ICanTeleport, ICanEncounter
+    public interface IPlayerBehaviour : IActorBehaviour, ICanTeleport, ICanEncounter, ICanInteract
     {
         #region Properties
         IActor Player { get; }

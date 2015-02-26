@@ -33,6 +33,12 @@ namespace Assets.Scripts.Scenes.Explore.Input
         }
 
         /// <inheritdoc />
+        public KeyCode Interact
+        {
+            get { return KeyCode.Space; }
+        }
+
+        /// <inheritdoc />
         public KeyCode ToggleInventory
         {
             get { return KeyCode.I; }

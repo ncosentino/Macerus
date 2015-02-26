@@ -154,7 +154,8 @@ namespace Assets.Scripts.Scenes.Explore
             Debug.Log("Making movement controls.");
             _playerInputController = new PlayerInputController(
                 _keyboardControls,
-                actorMovementBehaviour);
+                actorMovementBehaviour,
+                e.PlayerBehaviour);
 
             // TODO: remove this test code.
             Debug.Log("Setting some test state.");

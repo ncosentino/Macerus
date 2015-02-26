@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="10">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="15">
  <tileset firstgid="1" name="swamp" tilewidth="32" tileheight="32">
   <image source="../Graphics/Tilesets/Exterior/swamp.png" trans="ff00ff" width="224" height="96"/>
   <tile id="0">
@@ -1752,117 +1752,17 @@
    <tile gid="8"/>
    <tile gid="8"/>
    <tile gid="8"/>
-   <tile gid="17"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="14"/>
-   <tile gid="8"/>
-   <tile gid="8"/>
-   <tile gid="8"/>
-   <tile gid="8"/>
-   <tile gid="17"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
+   <tile gid="11"/>
+   <tile gid="4"/>
+   <tile gid="4"/>
+   <tile gid="4"/>
+   <tile gid="4"/>
+   <tile gid="4"/>
+   <tile gid="4"/>
+   <tile gid="4"/>
+   <tile gid="4"/>
+   <tile gid="4"/>
+   <tile gid="18"/>
    <tile gid="21"/>
    <tile gid="21"/>
    <tile gid="21"/>
@@ -1952,17 +1852,17 @@
    <tile gid="8"/>
    <tile gid="8"/>
    <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
    <tile gid="17"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
-   <tile gid="21"/>
    <tile gid="21"/>
    <tile gid="21"/>
    <tile gid="21"/>
@@ -2052,10 +1952,88 @@
    <tile gid="8"/>
    <tile gid="8"/>
    <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
    <tile gid="17"/>
    <tile gid="21"/>
    <tile gid="21"/>
    <tile gid="21"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="21"/>
    <tile gid="21"/>
    <tile gid="21"/>
@@ -2063,6 +2041,28 @@
    <tile gid="21"/>
    <tile gid="21"/>
    <tile gid="21"/>
+   <tile gid="21"/>
+   <tile gid="21"/>
+   <tile gid="21"/>
+   <tile gid="21"/>
+   <tile gid="21"/>
+   <tile gid="21"/>
+   <tile gid="14"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="6"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="7"/>
    <tile gid="21"/>
    <tile gid="21"/>
    <tile gid="21"/>
@@ -20117,7 +20117,13 @@
   </data>
  </layer>
  <objectgroup name="Object Layer 1">
-  <object id="9" name="teleporter" type="Prefabs/Triggers/Teleporters/CollisionTeleporter" x="1024" y="781.333" width="104" height="94.6667">
+  <object id="9" name="teleporter" type="Prefabs/Interactables/Teleporters/CollisionTeleporter" x="907" y="783.333" width="104" height="94.6667">
+   <properties>
+    <property name="CollisionTeleporterBehaviour_TargetMapId" value="7c8a542a-300d-402b-a692-247ee32388dd"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="11" name="teleporter" type="Prefabs/Interactables/Teleporters/CollisionTeleporter" x="1579" y="522.167" width="104" height="94.6667">
    <properties>
     <property name="CollisionTeleporterBehaviour_TargetMapId" value="7c8a542a-300d-402b-a692-247ee32388dd"/>
    </properties>
@@ -20126,13 +20132,23 @@
  </objectgroup>
  <objectgroup color="#a0a0a4" name="Spawns">
   <object id="3" name="playerSpawnLocation" type="Prefabs/Spawners/PlayerSpawner" gid="15" x="1259" y="592"/>
-  <object id="6" name="enemySpawner" type="Prefabs/Spawners/CollisionSpawner" x="1232" y="820" width="90.6663" height="73.3337">
+  <object id="6" name="enemySpawner" type="Prefabs/Spawners/CollisionSpawner" x="1231.5" y="843.5" width="90.6663" height="73.3337">
    <properties>
     <property name="CollisionSpawnerBehaviour_PrefabPath" value="Prefabs/Actors/Enemy"/>
     <property name="CollisionSpawnerBehaviour_SpawnName" value="Enemy"/>
    </properties>
    <ellipse/>
   </object>
+  <object id="10" name="enemySpawner" type="Prefabs/Spawners/CollisionSpawner" x="1360.67" y="538.833" width="90.6663" height="73.3337">
+   <properties>
+    <property name="CollisionSpawnerBehaviour_PrefabPath" value="Prefabs/Actors/Enemy"/>
+    <property name="CollisionSpawnerBehaviour_SpawnName" value="Enemy"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="12" name="testEncounter" type="Prefabs/Encounters/Encounter" x="1019" y="789" width="178.5" height="79.5"/>
+  <object id="13" name="testEncounter" type="Prefabs/Encounters/Encounter" x="1241.25" y="662.25" width="77" height="84.5"/>
+  <object id="14" name="testEncounter" type="Prefabs/Encounters/Encounter" x="1464.5" y="533.25" width="99" height="82"/>
  </objectgroup>
  <objectgroup color="#a0a0a4" name="Encounters">
   <object id="8" name="testEncounter" type="Prefabs/Encounters/Encounter" x="1361.33" y="785.333" width="276" height="88"/>

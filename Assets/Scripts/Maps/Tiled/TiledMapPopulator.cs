@@ -200,7 +200,7 @@ namespace Assets.Scripts.Maps.Tiled
                 Debug.Log("Tile count: " + tileset.Tiles.Count());
                 foreach (var tilesetTile in tileset.Tiles)
                 {
-                    Debug.Log("Resource for GID: " + gid);
+                    Debug.Log("Resource for GID: " + gid +", Tile Id: " + tilesetTile.Id);
                     resources[gid++] = new TilesetTileResource(
                         sprites[tilesetTile.Id],
                         tilesetTile.Properties);

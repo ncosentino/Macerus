@@ -123,6 +123,7 @@
     <Compile Include="Assets\Scripts\Camera\CameraFollowBehaviour.cs" />
     <Compile Include="Assets\Scripts\Camera\ICameraTargetting.cs" />
     <Compile Include="Assets\Scripts\Components\ComponentExtensionMethods.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Doors\DoorBehaviour.cs" />
     <Compile Include="Assets\Scripts\Encounters\EncounterProperties.cs" />
     <Compile Include="Assets\Scripts\Encounters\EncounterableBehaviour.cs" />
     <Compile Include="Assets\Scripts\Encounters\EncountererBehaviour.cs" />
@@ -138,8 +139,7 @@
     <Compile Include="Assets\Scripts\Gui\DraggableWindowBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Hud\HealthBarBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\IDoubleClickBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Gui\Inventory\IItemDetailsBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Gui\Inventory\ItemDetailsBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\CanShowItemDetailsBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\DoubleClickPlayerUseItemBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\DoubleClickUseItemBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\EquipmentSlotBehaviour.cs" />
@@ -151,15 +151,19 @@
     <Compile Include="Assets\Scripts\Gui\Inventory\IInventoryDraggedItemBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\IInventoryGridViewPanelBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\IInventorySlotBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\IItemDetailsBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventoryDragItemSourceBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventoryDraggedItemBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventoryDropItemTargetBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventoryGridViewPanelBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventorySlotBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\InventoryWindowBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Gui\Inventory\CanShowItemDetailsBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Inventory\ItemDetailsBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\PlayerInventoryGridViewPanelBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\MainMenuNavigationBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Interactables\ICanInteract.cs" />
+    <Compile Include="Assets\Scripts\Interactables\IInteractableBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Interactables\InteractableColliderBehaviour.cs" />
     <Compile Include="Assets\Scripts\Maps\ILoadMapProperties.cs" />
     <Compile Include="Assets\Scripts\Maps\IMapLoader.cs" />
     <Compile Include="Assets\Scripts\Maps\LoadMapProperties.cs" />
@@ -181,10 +185,11 @@
     <Compile Include="Assets\Scripts\Spawners\CollisionSpawnerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Spawners\IntervalSpawnerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Spawners\Spawner.cs" />
-    <Compile Include="Assets\Scripts\Triggers\Teleporters\CollisionTeleporterBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Triggers\Teleporters\ICanTeleport.cs" />
-    <Compile Include="Assets\Scripts\Triggers\Teleporters\ITeleportProperties.cs" />
-    <Compile Include="Assets\Scripts\Triggers\Teleporters\TeleportProperties.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Teleporters\CollisionTeleporterBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Teleporters\ICanTeleport.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Teleporters\ITeleportProperties.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Teleporters\TeleportProperties.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2012\UnityVS.CSharp.targets" />
 </Project>

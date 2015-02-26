@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Scripts.Encounters;
-using Assets.Scripts.Triggers.Teleporters;
 using ProjectXyz.Application.Interface.Actors;
 using UnityEngine;
 

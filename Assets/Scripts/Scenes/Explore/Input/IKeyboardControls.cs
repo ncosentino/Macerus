@@ -16,6 +16,8 @@ namespace Assets.Scripts.Scenes.Explore.Input
 
         KeyCode MoveDown { get; }
 
+        KeyCode Interact { get; }
+
         KeyCode ToggleInventory { get; }
         #endregion
     }
