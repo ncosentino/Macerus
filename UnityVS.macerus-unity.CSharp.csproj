@@ -169,7 +169,7 @@
     <Compile Include="Assets\Scripts\Maps\LoadMapProperties.cs" />
     <Compile Include="Assets\Scripts\Maps\MapBehaviour.cs" />
     <Compile Include="Assets\Scripts\Maps\Tiled\TiledMapPopulator.cs" />
-    <Compile Include="Assets\Scripts\Maps\TilesetTileResource.cs" />
+    <Compile Include="Assets\Scripts\Maps\Tiled\TilesetTileResource.cs" />
     <Compile Include="Assets\Scripts\Scenes\Explore\ExploreSceneManager.cs" />
     <Compile Include="Assets\Scripts\Scenes\Explore\Gui\HudController.cs" />
     <Compile Include="Assets\Scripts\Scenes\Explore\Gui\IHudController.cs" />

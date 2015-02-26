@@ -19,6 +19,14 @@ namespace Assets.Scripts.Maps
         #region Constants
         private const float SPRITE_TO_UNITY_SPACING_MULTIPLIER = 0.32f;
         private const float SPRITE_TO_UNITY_SCALE_MULTIPLIER = SPRITE_TO_UNITY_SPACING_MULTIPLIER + 0.001f;
+
+        private static Dictionary<int, int> CORNER_TO_COLLISION_VERTEX = new Dictionary<int, int>()
+        {
+            { 0, 0 },
+            { 1, 2 },
+            { 2, 6 },
+            { 3, 4 },
+        };
         #endregion
 
         #region Fields
@@ -67,14 +75,37 @@ namespace Assets.Scripts.Maps
 
         private void ApplyTileProperties(GameObject tileObject, TilesetTileResource tileResource)
         {
-            if (string.Equals("false", tileResource.GetPropertyValue("Walkable"), StringComparison.OrdinalIgnoreCase))
+            var corners = new Vector2[8];
+            corners[0] = new Vector2(0, 0);
+            corners[1] = new Vector2(0.5f, 0);
+            corners[2] = new Vector2(1f, 0);
+            corners[3] = new Vector2(1f, -0.5f);
+            corners[4] = new Vector2(1f, -1f);
+            corners[5] = new Vector2(0.5f, -1f);
+            corners[6] = new Vector2(0, -1f);
+            corners[7] = new Vector2(0f, -0.5f);
+
+            int walkableCount = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                var terrainType = tileResource.GetCornerTerrainType(i);
+                if (terrainType != null && terrainType.Name == "Walkable")
+                {
+                    corners[CORNER_TO_COLLISION_VERTEX[i]] = new Vector2(0.5f, -0.5f);
+                    walkableCount++;
+                }
+            }
+
+            // if the whole thing is walkable... no collisions please.
+            if (walkableCount != 4)
             {
                 var rigidBody = tileObject.AddComponent<Rigidbody2D>();
                 rigidBody.gravityScale = 0;
                 rigidBody.fixedAngle = false;
                 rigidBody.isKinematic = true;
 
-                tileObject.AddComponent<BoxCollider2D>();
+                var collider = tileObject.AddComponent<PolygonCollider2D>();
+                collider.SetPath(0, corners);
             }
         }
 

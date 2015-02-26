@@ -6,6 +6,7 @@ using System.Text;
 using Assets.Scripts.GameObjects;
 using Tiled.Net.Layers;
 using Tiled.Net.Maps;
+using Tiled.Net.Terrain;
 using Tiled.Net.Tilesets;
 using UnityEngine;
 
@@ -191,6 +192,12 @@ namespace Assets.Scripts.Maps.Tiled
             {
                 int gid = tileset.FirstGid;
 
+                var terrainLookup = new Dictionary<int, ITerrainType>();
+                foreach (var terrainType in tileset.TerrainTypes)
+                {
+                    terrainLookup[terrainType.Id] = terrainType;
+                }
+                
                 var tilesetImage = tileset.Images.First();
                 var resourcePath = ResourcePathFromSourcePath(mapResourceRoot, tilesetImage.SourcePath);
                 Debug.Log("Resource at: " + resourcePath);
@@ -201,8 +208,19 @@ namespace Assets.Scripts.Maps.Tiled
                 foreach (var tilesetTile in tileset.Tiles)
                 {
                     Debug.Log("Resource for GID: " + gid +", Tile Id: " + tilesetTile.Id);
+
+                    var cornerTerrains = new ITerrainType[4];
+                    for (int i = 0; i < cornerTerrains.Length; ++i)
+                    {
+                        var terrainType = tilesetTile.GetTerrainId(i);
+                        cornerTerrains[i] = terrainType < 0
+                            ? null
+                            : terrainLookup[terrainType];
+                    }
+
                     resources[gid++] = new TilesetTileResource(
                         sprites[tilesetTile.Id],
+                        cornerTerrains,
                         tilesetTile.Properties);
                 }
             }

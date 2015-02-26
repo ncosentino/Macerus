@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Tiled.Net.Terrain;
 using UnityEngine;
 
-namespace Assets.Scripts.Maps
+namespace Assets.Scripts.Maps.Tiled
 {
     public class TilesetTileResource
     {
         #region Fields
         private readonly Sprite _sprite;
         private readonly Dictionary<string, string> _properties;
+        private readonly List<ITerrainType> _cornerTerrains;
         #endregion
 
         #region Constructors
-        public TilesetTileResource(Sprite sprite, IEnumerable<KeyValuePair<string, string>> properties)
+        public TilesetTileResource(Sprite sprite, IEnumerable<ITerrainType> cornerTerrains, IEnumerable<KeyValuePair<string, string>> properties)
         {
             _sprite = sprite;
-            _properties = new Dictionary<string, string>();
+            _cornerTerrains = new List<ITerrainType>(cornerTerrains);
 
+            _properties = new Dictionary<string, string>();
             foreach (var property in properties)
             {
                 _properties[property.Key] = property.Value;
@@ -44,6 +46,11 @@ namespace Assets.Scripts.Maps
             return _properties.ContainsKey(propertyName)
                 ? _properties[propertyName]
                 : null;
+        }
+
+        public ITerrainType GetCornerTerrainType(int cornerIndex)
+        {
+            return _cornerTerrains[cornerIndex];
         }
         #endregion
     }
