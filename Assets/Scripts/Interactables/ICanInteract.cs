@@ -11,11 +11,5 @@ namespace Assets.Scripts.Interactables
         #region Properties
         IEnumerable<IInteractable> Interactables { get; }
         #endregion
-
-        #region Methods
-        void AddInteractable(IInteractable interactable);
-
-        void RemoveInteractable(IInteractable interactable);
-        #endregion
     }
 }

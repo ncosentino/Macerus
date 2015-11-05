@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using ProjectXyz.Application.Interface;
 using ProjectXyz.Application.Interface.Maps;
+using ProjectXyz.Game.Interface;
 
 namespace Assets.Scripts.Maps
 {
     public interface ILoadMapProperties
     {
         #region Properties
-        IManager Manager { get; }
+        IGameManager Manager { get; }
 
         IMapContext MapContext { get; }
 

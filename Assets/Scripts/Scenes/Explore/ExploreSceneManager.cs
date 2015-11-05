@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Actors;
 using Assets.Scripts.Actors.Player;
-using Assets.Scripts.Components;
 using Assets.Scripts.GameObjects;
 using Assets.Scripts.Maps;
 using Assets.Scripts.Scenes.Explore.Gui;
 using Assets.Scripts.Scenes.Explore.Input;
-using Mono.Data.SqliteClient;
-using ProjectXyz.Application.Core.Enchantments;
+using Mono.Data.Sqlite;
 using ProjectXyz.Application.Core.Maps;
-using ProjectXyz.Application.Interface;
 using ProjectXyz.Application.Interface.Actors;
+using ProjectXyz.Application.Interface.Enchantments;
+using ProjectXyz.Application.Interface.Items;
 using ProjectXyz.Application.Interface.Maps;
 using ProjectXyz.Application.Interface.Time;
 using ProjectXyz.Data.Sql;
+using ProjectXyz.Game.Core;
+using ProjectXyz.Game.Interface;
 using UnityEngine;
 
 namespace Assets.Scripts.Scenes.Explore
@@ -23,7 +24,9 @@ namespace Assets.Scripts.Scenes.Explore
     public sealed class ExploreSceneManager : SingletonBehaviour<ExploreSceneManager, IExploreSceneManager>, IExploreSceneManager
     {
         #region Fields
-        private readonly IManager _manager;
+        private readonly IGameManager _manager;
+        private readonly IEnchantmentContext _enchantmentContext;
+        private readonly IItemContext _itemContext;
         private readonly IActorContext _actorContext;
         private readonly IPlayerBehaviourRegistrar _playerBehaviourRegistrar;
         private readonly IKeyboardControls _keyboardControls;
@@ -63,12 +66,22 @@ namespace Assets.Scripts.Scenes.Explore
             
             var database = SqlDatabase.Create(connection, true);
             var upgrader = SqlDatabaseUpgrader.Create();
-            var dataStore = SqlDataStore.Create(database, upgrader);
+            var dataManager = SqlDataManager.Create(
+                database,
+                upgrader);
+            
+            _manager = GameManager.Create(
+                database,
+                dataManager,
+                Enumerable.Empty<string>());
 
-            _manager = ProjectXyz.Application.Core.Manager.Create(dataStore);
-
-            var enchantmentCalculator = EnchantmentCalculator.Create();
-            _actorContext = ProjectXyz.Application.Core.Actors.ActorContext.Create(enchantmentCalculator);
+            // FIXME: initializing these contexts here seems like a shit sandwich
+            _enchantmentContext = ProjectXyz.Application.Core.Enchantments.EnchantmentContext.Create();
+            ////_itemContext = ProjectXyz.Application.Core.Items.ItemContext.Create(
+            ////    enchantmentCalculator,
+            ////    _manager.ApplicationManager.Enchantments.Factories.Enchantments,
+            ////    dataManager.Items.StatSocketTypes);
+            _actorContext = ProjectXyz.Application.Core.Actors.ActorContext.Create(_manager.ApplicationManager.Enchantments.EnchantmentCalculator);
         }
         #endregion
 
@@ -78,7 +91,7 @@ namespace Assets.Scripts.Scenes.Explore
             get { return _playerBehaviourRegistrar; }
         }
 
-        public IManager Manager
+        public IGameManager Manager
         {
             get { return _manager; }
         }
@@ -86,6 +99,16 @@ namespace Assets.Scripts.Scenes.Explore
         public IActorContext ActorContext
         {
             get { return _actorContext; }
+        }
+
+        public IItemContext ItemContext
+        {
+            get { return _itemContext; }
+        }
+
+        public IEnchantmentContext EnchantmentContext
+        {
+            get { return _enchantmentContext; }
         }
         #endregion
 

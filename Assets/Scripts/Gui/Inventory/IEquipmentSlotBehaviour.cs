@@ -8,7 +8,7 @@ namespace Assets.Scripts.Gui.Inventory
     public interface IEquipmentSlotBehaviour : ICanAddItemBehaviour, ICanRemoveItemBehaviour, IHasItemBehaviour
     {
         #region Properties
-        string EquipmentSlotType { get; }
+        Guid EquipmentSlotType { get; }
         #endregion
     }
 }

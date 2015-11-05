@@ -1,5 +1,1 @@
-obj/*
-Temp/*
-*.suo
-Library/*
-Assets/Dependencies/bin/*
+/[Ll]ibrary/

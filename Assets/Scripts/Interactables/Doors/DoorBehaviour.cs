@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Components;
-using ProjectXyz.Application.Core.GameObjects;
 using ProjectXyz.Application.Core.GameObjects.Doors;
 using UnityEngine;
 

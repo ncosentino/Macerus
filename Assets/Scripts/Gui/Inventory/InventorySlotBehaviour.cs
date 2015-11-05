@@ -41,9 +41,10 @@ namespace Assets.Scripts.Gui.Inventory
                 EmptySprite = IconImage.sprite;
             }
 
-            IconImage.sprite = Item == null
-                ? EmptySprite
-                : Resources.Load<Sprite>(Item.InventoryGraphicResource);
+            // FIXME: load the graphical resource
+            //IconImage.sprite = Item == null
+            //    ? EmptySprite
+            //    : Resources.Load<Sprite>(Item.InventoryGraphicResource);
         }
 
         public bool CanRemoveItem()
@@ -81,7 +82,8 @@ namespace Assets.Scripts.Gui.Inventory
         public void AddItem(IItem item)
         {
             Inventory.Add(item, InventoryIndex);
-            IconImage.sprite = Resources.Load<Sprite>(item.InventoryGraphicResource);
+            // FIXME: load the graphical resource
+            //IconImage.sprite = Resources.Load<Sprite>(item.InventoryGraphicResource);
 
             Debug.Log(string.Format("Added {0}.", item));
         }

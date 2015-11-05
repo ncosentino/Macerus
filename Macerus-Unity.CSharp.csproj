@@ -5,37 +5,39 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{160994C6-3D7A-F9F8-235E-288A96CD2854}</ProjectGuid>
+    <ProjectGuid>{1BF23DFA-6429-1484-8D54-0FE3190F2570}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>
-    </RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
-    <UnityVersion>4.6.1f1</UnityVersion>
+    <UnityVersion>5.2.2f1</UnityVersion>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\UnityVS_bin\Debug\</OutputPath>
+    <IntermediateOutputPath>Temp\UnityVS_obj\Debug\</IntermediateOutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_2_2;UNITY_5_2;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_REFLECTION_BUFFERS;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_LOG_MIXED_STACKTRACE;ENABLE_UNITYWEBREQUEST;ENABLE_EVENT_QUEUE;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\UnityVS_bin\Release\</OutputPath>
+    <IntermediateOutputPath>Temp\UnityVS_obj\Release\</IntermediateOutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+    <DefineConstants>TRACE;UNITY_5_2_2;UNITY_5_2;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_REFLECTION_BUFFERS;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_LOG_MIXED_STACKTRACE;ENABLE_UNITYWEBREQUEST;ENABLE_EVENT_QUEUE;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -44,66 +46,100 @@
     <Reference Include="System.Core" />
     <Reference Include="Boo.Lang" />
     <Reference Include="UnityScript.Lang" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    <Reference Include="Mono.Cecil">
+      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Contracts">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Application.Core\Microsoft.Contracts.dll</HintPath>
+      <HintPath>Assets\Dependencies\Microsoft\Microsoft.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>Assets\Dependencies\Microsoft\System.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Data.Sqlite">
+      <HintPath>Assets\Dependencies\Mono.Data.Sqlite\Mono.Data.Sqlite.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Application.Core">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Application.Core\ProjectXyz.Application.Core.dll</HintPath>
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Application.Core.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Application.Interface">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Application.Core\ProjectXyz.Application.Interface.dll</HintPath>
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Application.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Application.Shared">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Application.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Application.Tests.Integration">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Application.Tests.Integration.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Data.Core">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Application.Core\ProjectXyz.Data.Core.dll</HintPath>
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Data.Core.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Data.Interface">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Application.Core\ProjectXyz.Data.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Contracts">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Data.Core\Microsoft.Contracts.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Data.Core">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Data.Core\ProjectXyz.Data.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Data.Interface">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Data.Core\ProjectXyz.Data.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Contracts">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Data.Sql\Microsoft.Contracts.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Data.Core">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Data.Sql\ProjectXyz.Data.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Data.Interface">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Data.Sql\ProjectXyz.Data.Interface.dll</HintPath>
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Data.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Data.Sql">
-      <HintPath>Assets\Dependencies\bin\ProjectXyz\ProjectXyz.Data.Sql\ProjectXyz.Data.Sql.dll</HintPath>
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Data.Sql.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Contracts">
-      <HintPath>Assets\Dependencies\bin\Tiled.Net\Microsoft.Contracts.dll</HintPath>
+    <Reference Include="ProjectXyz.Game.Core">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Game.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Game.Interface">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Game.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Interface">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Plugins.Enchantments">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Plugins.Enchantments.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Plugins.Enchantments.Expression 1">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Plugins.Enchantments.Expression 1.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Plugins.Enchantments.Expression">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Plugins.Enchantments.Expression.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Plugins.Enchantments.OneShotNegate 1">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Plugins.Enchantments.OneShotNegate 1.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Plugins.Enchantments.OneShotNegate">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Plugins.Enchantments.OneShotNegate.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Plugins.Interface">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Plugins.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Plugins.Items.Magic">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Plugins.Items.Magic.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Plugins.Items.Normal">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Plugins.Items.Normal.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Plugins.Items.Rare">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Plugins.Items.Rare.dll</HintPath>
     </Reference>
     <Reference Include="Tiled.Net">
-      <HintPath>Assets\Dependencies\bin\Tiled.Net\Tiled.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Data.SqliteClient">
-      <HintPath>Assets\Dependencies\Mono.Data.Sqlite\Mono.Data.SqliteClient.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data">
-      <HintPath>Assets\Dependencies\Mono.Data.Sqlite\System.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data">
-      <HintPath>Assets\Dependencies\System.Data.dll</HintPath>
+      <HintPath>Assets\Dependencies\Tiled.Net\Tiled.Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -123,7 +159,6 @@
     <Compile Include="Assets\Scripts\Camera\CameraFollowBehaviour.cs" />
     <Compile Include="Assets\Scripts\Camera\ICameraTargetting.cs" />
     <Compile Include="Assets\Scripts\Components\ComponentExtensionMethods.cs" />
-    <Compile Include="Assets\Scripts\Interactables\Doors\DoorBehaviour.cs" />
     <Compile Include="Assets\Scripts\Encounters\EncounterProperties.cs" />
     <Compile Include="Assets\Scripts\Encounters\EncounterableBehaviour.cs" />
     <Compile Include="Assets\Scripts\Encounters\EncountererBehaviour.cs" />
@@ -138,6 +173,7 @@
     <Compile Include="Assets\Scripts\Gui\DoubleClickBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\DraggableWindowBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Hud\HealthBarBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\Hud\HudDropItemBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\IDoubleClickBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\CanShowItemDetailsBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\DoubleClickPlayerUseItemBehaviour.cs" />
@@ -161,9 +197,15 @@
     <Compile Include="Assets\Scripts\Gui\Inventory\ItemDetailsBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\Inventory\PlayerInventoryGridViewPanelBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\MainMenuNavigationBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Doors\DoorBehaviour.cs" />
     <Compile Include="Assets\Scripts\Interactables\ICanInteract.cs" />
     <Compile Include="Assets\Scripts\Interactables\IInteractableBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Interactables\InteractableColliderBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Interactables\InteractableBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Loot\LootDropBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Teleporters\CollisionTeleporterBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Teleporters\ICanTeleport.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Teleporters\ITeleportProperties.cs" />
+    <Compile Include="Assets\Scripts\Interactables\Teleporters\TeleportProperties.cs" />
     <Compile Include="Assets\Scripts\Maps\ILoadMapProperties.cs" />
     <Compile Include="Assets\Scripts\Maps\IMapLoader.cs" />
     <Compile Include="Assets\Scripts\Maps\LoadMapProperties.cs" />
@@ -185,11 +227,6 @@
     <Compile Include="Assets\Scripts\Spawners\CollisionSpawnerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Spawners\IntervalSpawnerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Spawners\Spawner.cs" />
-    <Compile Include="Assets\Scripts\Interactables\Teleporters\CollisionTeleporterBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Interactables\Teleporters\ICanTeleport.cs" />
-    <Compile Include="Assets\Scripts\Interactables\Teleporters\ITeleportProperties.cs" />
-    <Compile Include="Assets\Scripts\Interactables\Teleporters\TeleportProperties.cs" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2012\UnityVS.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

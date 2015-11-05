@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Actors.Player;
-using Assets.Scripts.Maps;
 using ProjectXyz.Application.Interface;
 using ProjectXyz.Application.Interface.Actors;
+using ProjectXyz.Application.Interface.Enchantments;
+using ProjectXyz.Application.Interface.Items;
+using ProjectXyz.Application.Interface.Maps;
+using ProjectXyz.Game.Interface;
 
 namespace Assets.Scripts.Scenes.Explore
 {
@@ -13,9 +16,13 @@ namespace Assets.Scripts.Scenes.Explore
         #region Properties
         IPlayerBehaviourRegistrar PlayerBehaviourRegistrar { get; }
 
-        IManager Manager { get; }
+        IGameManager Manager { get; }
 
         IActorContext ActorContext { get; }
+
+        IItemContext ItemContext { get; }
+
+        IEnchantmentContext EnchantmentContext { get; }
         #endregion
 
         #region Methods

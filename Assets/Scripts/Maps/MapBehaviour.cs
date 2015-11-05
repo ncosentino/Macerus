@@ -36,7 +36,7 @@ namespace Assets.Scripts.Maps
         #region Methods
         public void LoadMap(ILoadMapProperties loadMapProperties)
         {
-            _map = loadMapProperties.Manager.Maps.GetMapById(
+            _map = loadMapProperties.Manager.ApplicationManager.Maps.GetMapById(
                 loadMapProperties.MapId,
                 loadMapProperties.MapContext);
 

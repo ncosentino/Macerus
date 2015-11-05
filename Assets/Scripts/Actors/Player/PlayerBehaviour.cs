@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Scripts.Encounters;
+using Assets.Scripts.Interactables;
 using Assets.Scripts.Interactables.Teleporters;
 using Assets.Scripts.Maps;
 using Assets.Scripts.Scenes;
@@ -18,13 +19,13 @@ namespace Assets.Scripts.Actors.Player
     public class PlayerBehaviour : ActorBehaviour, IPlayerBehaviour
     {
         #region Fields
-        private readonly HashSet<IInteractable> _interactables;
+        private readonly Dictionary<IInteractable, GameObject> _interactables;
         #endregion
 
         #region Constructors
         public PlayerBehaviour()
         {
-            _interactables = new HashSet<IInteractable>();
+            _interactables = new Dictionary<IInteractable, GameObject>();
         }
         #endregion
 
@@ -36,7 +37,21 @@ namespace Assets.Scripts.Actors.Player
 
         public IEnumerable<IInteractable> Interactables
         {
-            get { return _interactables; }
+            get
+            {
+                var interactables = _interactables.Keys.ToArray();
+                foreach (var interactable in interactables)
+                {
+                    if (_interactables[interactable] == null)
+                    {
+                        Debug.Log("Pruning " + interactable);
+                        _interactables.Remove(interactable);
+                        continue;
+                    }
+
+                    yield return interactable;
+                }
+            }
         }
         #endregion
 
@@ -60,14 +75,26 @@ namespace Assets.Scripts.Actors.Player
             Debug.Log("Player has encountered something!!!");
         }
 
-        public void AddInteractable(IInteractable interactable)
+        public void OnTriggerEnter2D(Collider2D collider)
         {
-            _interactables.Add(interactable);
+            var interactableBehaviour = (IInteractableBehaviour)collider.gameObject.GetComponent(typeof(IInteractableBehaviour));
+            if (interactableBehaviour == null)
+            {
+                return;
+            }
+
+            _interactables.Add(interactableBehaviour.Interactable, collider.gameObject);
         }
 
-        public void RemoveInteractable(IInteractable interactable)
+        public void OnTriggerExit2D(Collider2D collider)
         {
-            _interactables.Remove(interactable);
+            var interactableBehaviour = (IInteractableBehaviour)collider.gameObject.GetComponent(typeof(IInteractableBehaviour));
+            if (interactableBehaviour == null)
+            {
+                return;
+            }
+
+            _interactables.Remove(interactableBehaviour.Interactable);
         }
         #endregion
     }

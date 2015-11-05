@@ -26,7 +26,7 @@ namespace Assets.Scripts.Actors
         #region Methods
         public virtual void Start()
         {
-            Actor = ExploreSceneManager.Instance.Manager.Actors.GetActorById(
+            Actor = ExploreSceneManager.Instance.Manager.ApplicationManager.Actors.GetActorById(
                 Guid.NewGuid(),
                 ExploreSceneManager.Instance.ActorContext);
         }

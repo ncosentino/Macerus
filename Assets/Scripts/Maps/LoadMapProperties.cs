@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ProjectXyz.Application.Interface;
 using ProjectXyz.Application.Interface.Maps;
+using ProjectXyz.Game.Interface;
 
 namespace Assets.Scripts.Maps
 {
@@ -11,12 +12,12 @@ namespace Assets.Scripts.Maps
     {
         #region Fields
         private readonly IMapContext _mapContext;
-        private readonly IManager _manager;
+        private readonly IGameManager _manager;
         private readonly Guid _mapId;
         #endregion
 
         #region Constructors
-        public LoadMapProperties(IManager manager, IMapContext mapContext, Guid mapId)
+        public LoadMapProperties(IGameManager manager, IMapContext mapContext, Guid mapId)
         {
             _manager = manager;
             _mapContext = mapContext;
@@ -30,7 +31,7 @@ namespace Assets.Scripts.Maps
             get { return _mapId; }
         }
 
-        public IManager Manager
+        public IGameManager Manager
         {
             get { return _manager; }
         }

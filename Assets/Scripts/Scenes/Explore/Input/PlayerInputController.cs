@@ -51,8 +51,16 @@ namespace Assets.Scripts.Scenes.Explore.Input
                 var interaction = _playerBehaviour.Interactables
                     .SelectMany(x => x.GetPossibleInteractions(null, _playerBehaviour.Player))
                     .FirstOrDefault();
-                interaction.Interact(null, _playerBehaviour.Player);
-                Debug.Log(interaction.ToString());
+
+                if (interaction != null)
+                {
+                    interaction.Interact(null, _playerBehaviour.Player);
+                    Debug.Log(interaction.ToString());
+                }
+                else
+                {
+                    Debug.Log("Nothing to do here.");
+                }
             }
         }
         #endregion

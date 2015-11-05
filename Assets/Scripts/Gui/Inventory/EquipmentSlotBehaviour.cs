@@ -6,6 +6,7 @@ using Assets.Scripts.Components;
 using Assets.Scripts.Scenes;
 using Assets.Scripts.Scenes.Explore;
 using ProjectXyz.Application.Core.Enchantments;
+using ProjectXyz.Application.Core.Enchantments.Calculations;
 using ProjectXyz.Application.Core.Items;
 using ProjectXyz.Application.Interface.Items;
 using UnityEngine;
@@ -19,11 +20,11 @@ namespace Assets.Scripts.Gui.Inventory
         private IExploreSceneManager _exploreSceneManager;
         private ICanEquip _equippable;
         private ICanUnequip _unequippable;
-        private Func<string, IItem> _getItemForSlotCallback;
+        private Func<Guid, IItem> _getItemForSlotCallback;
         #endregion
 
         #region Unity Properties
-        public string DefaultEquipmentSlotType;
+        public Guid DefaultEquipmentSlotType;
 
         public Image IconImage;
 
@@ -31,7 +32,7 @@ namespace Assets.Scripts.Gui.Inventory
         #endregion
         
         #region Properties
-        public string EquipmentSlotType { get; private set; }
+        public Guid EquipmentSlotType { get; private set; }
 
         public IItem Item
         {
@@ -47,10 +48,11 @@ namespace Assets.Scripts.Gui.Inventory
         #region Methods
         public void Start()
         {
-            if (string.IsNullOrEmpty(EquipmentSlotType))
-            {
-                EquipmentSlotType = DefaultEquipmentSlotType;
-            }
+            // FIXME: Get this working again
+            ////if (string.IsNullOrEmpty(EquipmentSlotType))
+            ////{
+            ////    EquipmentSlotType = DefaultEquipmentSlotType;
+            ////}
 
             if (IconImage == null)
             {
@@ -115,9 +117,10 @@ namespace Assets.Scripts.Gui.Inventory
 
         private void RefreshItemGraphic(IItem item)
         {
-            IconImage.sprite = item == null
-                ? EmptySprite
-                : Resources.Load<Sprite>(item.InventoryGraphicResource);
+            // FIXME: Get this working again
+            ////IconImage.sprite = item == null
+            ////    ? EmptySprite
+            ////    : Resources.Load<Sprite>(item.InventoryGraphicResource);
         }
 
         private void RegisterPlayer(IPlayerBehaviour playerBehaviour)
@@ -129,15 +132,16 @@ namespace Assets.Scripts.Gui.Inventory
             // hook events
             playerBehaviour.Player.Equipment.EquipmentChanged += Equipment_EquipmentChanged;
 
-            if (EquipmentSlotType == "Gloves")
-            {
-                var enchantmentCalculator = EnchantmentCalculator.Create();
-                var enchantmentContext = EnchantmentContext.Create();
-                var itemContext = ItemContext.Create(enchantmentCalculator, enchantmentContext);
-                var item = ExploreSceneManager.Instance.Manager.Items.GetItemById(Guid.NewGuid(), itemContext);
+            // FIXME: Get this working again
+            ////if (EquipmentSlotType == "Gloves")
+            ////{
+            ////    var enchantmentCalculator = EnchantmentCalculator.Create();
+            ////    var enchantmentContext = EnchantmentContext.Create();
+            ////    var itemContext = ItemContext.Create(enchantmentCalculator, enchantmentContext);
+            ////    var item = ExploreSceneManager.Instance.Manager.Items.GetItemById(Guid.NewGuid(), itemContext);
 
-                AddItem(item);
-            }
+            ////    AddItem(item);
+            ////}
         }
         #endregion
 
@@ -162,12 +166,12 @@ namespace Assets.Scripts.Gui.Inventory
 
         private void Equipment_EquipmentChanged(object sender, EquipmentChangedEventArgs e)
         {
-            if (e.Slot != EquipmentSlotType)
+            if (e.SlotId != EquipmentSlotType)
             {
                 return;
             }
 
-            RefreshItemGraphic(((IObservableEquipment)sender)[e.Slot]);
+            RefreshItemGraphic(((IObservableEquipment)sender)[e.SlotId]);
         }
         #endregion
     }
