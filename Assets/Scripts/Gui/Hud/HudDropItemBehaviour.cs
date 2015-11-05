@@ -44,7 +44,7 @@ namespace Assets.Scripts.Gui.Hud
 
         public void AddItem(IItem item)
         {
-            var dropLocation = ExploreSceneManager.Instance.PlayerBehaviourRegistrar.PlayerBehaviour.ActorGameObject.transform.position;
+            ////var dropLocation = ExploreSceneManager.Instance.PlayerBehaviourRegistrar.PlayerBehaviour.ActorGameObject.transform.position;
 
             throw new NotImplementedException();
             ////var lootDrop = ExploreSceneManager.Instance.GameObjectFactory.CreateLootDrop(item);
