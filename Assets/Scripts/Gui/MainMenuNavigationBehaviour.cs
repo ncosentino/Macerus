@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FullSerializer;
+using Newtonsoft.Json;
 using ProjectXyz.Api.Messaging.Core.Initialization;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -47,10 +47,7 @@ namespace Assets.Scripts.Gui
                     PlayerId = Guid.NewGuid(),
                 };
 
-                var jsonSerializer = new fsSerializer();
-                fsData serializedRequest;
-                jsonSerializer.TrySerialize(request, out serializedRequest);
-                var requestData = fsJsonPrinter.PrettyJson(serializedRequest);
+                var requestData = JsonConvert.SerializeObject(request);
                 Debug.Log(requestData);
 
                 channel.BasicPublish(

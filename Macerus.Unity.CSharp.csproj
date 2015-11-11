@@ -51,17 +51,11 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Analytics">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
@@ -81,59 +75,15 @@
     <Reference Include="RabbitMQ.Client">
       <HintPath>Assets\Dependencies\RabbitMQ\RabbitMQ.Client.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\Dependencies\Newtonsoft\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\Unity\AnimationCurve_DirectConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\Unity\Bounds_DirectConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\Unity\Gradient_DirectConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\Unity\Keyframe_DirectConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\Unity\LayerMask_DirectConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\Unity\Rect_DirectConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\fsArrayConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\fsDateConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\fsDictionaryConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\fsEnumConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\fsForwardConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\fsGuidConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\fsIEnumerableConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\fsKeyValuePairConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\fsNullableConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\fsPrimitiveConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\fsReflectedConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\fsTypeConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Converters\fsWeakReferenceConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Internal\fsCyclicReferenceManager.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Internal\fsOption.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Internal\fsPortableReflection.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Internal\fsTypeExtensions.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Internal\fsVersionManager.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Internal\fsVersionedType.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Reflection\fsMetaProperty.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Reflection\fsMetaType.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Reflection\fsReflectionUtility.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\Reflection\fsTypeLookup.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsAotCompilationManager.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsBaseConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsConfig.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsContext.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsConverterRegistrar.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsData.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsDirectConverter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsExceptions.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsISerializationCallbacks.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsIgnoreAttribute.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsJsonParser.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsJsonPrinter.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsMemberSerialization.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsObjectAttribute.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsObjectProcessor.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsPropertyAttribute.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsResult.cs" />
-    <Compile Include="Assets\Dependencies\FullSerializer\Source\fsSerializer.cs" />
     <Compile Include="Assets\Scripts\Gui\MainMenuNavigationBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Dependencies\Newtonsoft\Newtonsoft.Json.xml" />
     <None Include="Assets\Dependencies\RabbitMQ\RabbitMQ.Client.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
