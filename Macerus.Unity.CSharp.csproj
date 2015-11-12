@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.2.2f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -66,6 +68,9 @@
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\Dependencies\Newtonsoft\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="ProjectXyz.Api.Messaging.Core">
       <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Api.Messaging.Core.dll</HintPath>
     </Reference>
@@ -75,16 +80,33 @@
     <Reference Include="RabbitMQ.Client">
       <HintPath>Assets\Dependencies\RabbitMQ\RabbitMQ.Client.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Assets\Dependencies\Newtonsoft\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="ProjectXyz.Api.Messaging.Serialization.Interface">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Api.Messaging.Serialization.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Api.Messaging.Serialization.Json">
+      <HintPath>Assets\Dependencies\ProjectXyz\ProjectXyz.Api.Messaging.Serialization.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Api\IRpcClient.cs" />
+    <Compile Include="Assets\Scripts\Api\IRequestSender.cs" />
+    <Compile Include="Assets\Scripts\Api\IResponseReceiver.cs" />
+    <Compile Include="Assets\Scripts\Api\IResponseFactory.cs" />
+    <Compile Include="Assets\Scripts\Api\ChannelWriter.cs" />
+    <Compile Include="Assets\Scripts\Api\IChannelWriter.cs" />
+    <Compile Include="Assets\Scripts\Api\IMessageDiscoverer.cs" />
     <Compile Include="Assets\Scripts\Gui\MainMenuNavigationBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Api\RpcClient.cs" />
+    <Compile Include="Assets\Scripts\Api\RequestSender.cs" />
+    <Compile Include="Assets\Scripts\Api\ResponseReceiver.cs" />
+    <Compile Include="Assets\Scripts\Api\ResponseReceivedEventArgs.cs" />
+    <Compile Include="Assets\Scripts\Api\ResponseFactory.cs" />
+    <Compile Include="Assets\Scripts\Api\MessageDiscoverer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Dependencies\Newtonsoft\Newtonsoft.Json.xml" />
     <None Include="Assets\Dependencies\RabbitMQ\RabbitMQ.Client.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
+using Assets.Scripts.Api;
+using ProjectXyz.Api.Messaging.Core.General;
 using ProjectXyz.Api.Messaging.Core.Initialization;
+using ProjectXyz.Api.Messaging.Interface;
+using ProjectXyz.Api.Messaging.Serialization.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using RabbitMQ.Client.Framing;
 using UnityEngine;
 
 namespace Assets.Scripts.Gui
@@ -47,39 +47,43 @@ namespace Assets.Scripts.Gui
                     PlayerId = Guid.NewGuid(),
                 };
 
-                var requestData = JsonConvert.SerializeObject(request);
-                Debug.Log(requestData);
+                var messageDiscoverer = MessageDiscoverer.Create();
+                var requestTypeMapping = messageDiscoverer.Discover<IRequest>(AppDomain.CurrentDomain.GetAssemblies());
+                var inverseRequestTypeMapping = requestTypeMapping.ToDictionary(x => x.Value, x => x.Key);
+                var responseTypeMapping = messageDiscoverer.Discover<IResponse>(AppDomain.CurrentDomain.GetAssemblies());
+                var inverseResponseTypeMapping = responseTypeMapping.ToDictionary(x => x.Value, x => x.Key);
 
-                channel.BasicPublish(
-                    exchange: "",
-                    routingKey: ROUTING_KEY,
-                    basicProperties: new BasicProperties()
-                    {
-                        Headers = new Dictionary<string, object>()
-                        {
-                            { "Type", "InitializeWorldRequest" }
-                        },
-                        CorrelationId = request.Id.ToString(),
-                        ReplyTo = ROUTING_KEY,
-                    },
-                    body: Encoding.UTF8.GetBytes(requestData));
+                var consumer = new EventingBasicConsumer(channel);
 
-                var consumer = new QueueingBasicConsumer(channel);
-                channel.BasicConsume(queue: replyQueueName,
-                                     noAck: true,
-                                     consumer: consumer);
+                var responseReader = JsonResponseReader.Create();
+                var requestWriter = JsonRequestWriter.Create();
+                var channelWriter = ChannelWriter.Create(
+                    channel,
+                    ROUTING_KEY);
 
-                string answer;
-                while (true)
-                {
-                    var ea = (BasicDeliverEventArgs)consumer.Queue.Dequeue();
-                    if (ea.BasicProperties.CorrelationId == request.Id.ToString())
-                    {
-                        answer = Encoding.UTF8.GetString(ea.Body);
-                        Debug.Log("Got server response: " + answer);
-                        break;
-                    }
-                }
+                var responseFactory = ResponseFactory.Create(
+                    responseReader,
+                    responseTypeMapping);
+                var responseReceiver = ResponseReceiver.Create(
+                    consumer,
+                    responseFactory);
+
+                var requestSender = RequestSender.Create(
+                    requestWriter,
+                    channelWriter,
+                    inverseRequestTypeMapping);
+                var rpcClient = RpcClient.Create(
+                    requestSender,
+                    responseReceiver);
+
+                channel.BasicConsume(
+                    queue: replyQueueName,
+                    noAck: true,
+                    consumer: consumer);
+
+                var response = rpcClient.Send<InitializeWorldRequest, BooleanResultResponse>(
+                    request, 
+                    TimeSpan.FromSeconds(5));
 
                 Application.LoadLevel("Explore");
             }
