@@ -34,6 +34,51 @@ namespace Assets.Scripts.Api
             return client;
         }
 
+        public bool TrySend<TRequest, TResponse>(
+            TRequest request, 
+            TimeSpan timeout, 
+            out TResponse response) 
+            where TRequest : IRequest 
+            where TResponse : IResponse
+        {
+            try
+            {
+                response = Send<TRequest, TResponse>(
+                    request,
+                    timeout);
+            }
+            catch (Exception)
+            {
+                response = default(TResponse);
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool TrySend<TRequest, TResponse>(
+            TRequest request,
+            TimeSpan timeout,
+            Action<TResponse> callback)
+            where TRequest : IRequest
+            where TResponse : IResponse
+        {
+            TResponse response;
+            try
+            {
+                response = Send<TRequest, TResponse>(
+                    request,
+                    timeout);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            callback.Invoke(response);
+            return true;
+        }
+
         public TResponse Send<TRequest, TResponse>(
             TRequest request, 
             TimeSpan timeout)

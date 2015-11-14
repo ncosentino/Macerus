@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>5.2.2f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -93,18 +95,27 @@
     <Compile Include="Assets\Scripts\Api\IResponseFactory.cs" />
     <Compile Include="Assets\Scripts\Api\IResponseReceiver.cs" />
     <Compile Include="Assets\Scripts\Api\IRpcClient.cs" />
+    <Compile Include="Assets\Scripts\Api\IRpcContainer.cs" />
     <Compile Include="Assets\Scripts\Api\MessageDiscoverer.cs" />
     <Compile Include="Assets\Scripts\Api\RequestSender.cs" />
     <Compile Include="Assets\Scripts\Api\ResponseFactory.cs" />
     <Compile Include="Assets\Scripts\Api\ResponseReceivedEventArgs.cs" />
     <Compile Include="Assets\Scripts\Api\ResponseReceiver.cs" />
     <Compile Include="Assets\Scripts\Api\RpcClient.cs" />
+    <Compile Include="Assets\Scripts\Api\RpcContainer.cs" />
+    <Compile Include="Assets\Scripts\Gui\IRpcBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\MainMenuNavigationBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\MessageBoxes\BeingToFrontBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\MessageBoxes\DialogBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\MessageBoxes\IModalDialogManagerBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\MessageBoxes\ModalDialogManagerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\NewCharacterNavigationBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\RpcBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Dependencies\Newtonsoft\Newtonsoft.Json.xml" />
     <None Include="Assets\Dependencies\RabbitMQ\RabbitMQ.Client.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

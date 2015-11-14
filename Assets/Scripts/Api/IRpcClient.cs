@@ -6,6 +6,20 @@ namespace Assets.Scripts.Api
     public interface IRpcClient
     {
         #region Methods
+        bool TrySend<TRequest, TResponse>(
+            TRequest request, 
+            TimeSpan timeout,
+            out TResponse response)
+            where TRequest : IRequest
+            where TResponse : IResponse;
+
+        bool TrySend<TRequest, TResponse>(
+            TRequest request,
+            TimeSpan timeout,
+            Action<TResponse> callback)
+            where TRequest : IRequest
+            where TResponse : IResponse;
+
         TResponse Send<TRequest, TResponse>(TRequest request, TimeSpan timeout)
             where TRequest : IRequest
             where TResponse : IResponse;

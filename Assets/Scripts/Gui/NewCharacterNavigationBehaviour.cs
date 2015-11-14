@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Assets.Scripts.Api;
+using Assets.Scripts.Gui.MessageBoxes;
 using ProjectXyz.Api.Messaging.Core.General;
 using ProjectXyz.Api.Messaging.Core.Initialization;
 using ProjectXyz.Api.Messaging.Interface;
@@ -8,85 +9,69 @@ using ProjectXyz.Api.Messaging.Serialization.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Gui
 {
     public sealed class NewCharacterNavigationBehaviour : MonoBehaviour
     {
+        #region Unity Properties
+        public RpcBehaviour Rpc;
+
+        public ModalDialogManagerBehaviour ModalDialogManager;
+        #endregion
+
         #region Methods
         private void RequestInitialization()
         {
-            var factory = new ConnectionFactory()
+            var characterNameInputField = GetComponentsInChildren<InputField>()
+                .FirstOrDefault(x => x.name == "CharacterNameInputField");
+
+            if (string.IsNullOrEmpty(characterNameInputField.text))
             {
-                //HostName = startupParameters.HostName,
-                //Port = startupParameters.Port,
-            };
+                ModalDialogManager.ShowMessage("Please enter a name for the character.", _ =>
+                {
+                    characterNameInputField.ActivateInputField();
+                });
+                return;
+            }
 
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
+            var maleGenderToggle = GetComponentsInChildren<Toggle>()
+                .FirstOrDefault(x => x.name == "MaleGenderToggle");
+
+            BooleanResultResponse createResponse;
+            if (!Rpc.Client.TrySend(
+                new CreateCharacterRequest()
+                {
+                    Name = characterNameInputField.text,
+                    Male = maleGenderToggle.isOn,
+                    RaceId = Guid.NewGuid(),
+                    ClassId = Guid.NewGuid(),
+                },
+                TimeSpan.FromSeconds(5),
+                out createResponse) ||
+                !createResponse.Result)
             {
-                const string ROUTING_KEY = "hello";
-                channel.QueueDeclare(
-                    queue: ROUTING_KEY,
-                    durable: false,
-                    exclusive: false,
-                    autoDelete: false,
-                    arguments: null);
+                ModalDialogManager.ShowMessage("The character could not be created.");
+                return;
+            }
 
-                var replyQueueName =
-                    channel.QueueDeclare(
-                    queue: "Responses To Player",
-                    durable: false,
-                    exclusive: false,
-                    autoDelete: false,
-                    arguments: null);
-
-                var request = new InitializeWorldRequest()
+            BooleanResultResponse initializeResponse;
+            if (!Rpc.Client.TrySend(
+                new InitializeWorldRequest()
                 {
                     Id = Guid.NewGuid(),
                     PlayerId = Guid.NewGuid(),
-                };
-
-                var messageDiscoverer = MessageDiscoverer.Create();
-                var requestTypeMapping = messageDiscoverer.Discover<IRequest>(AppDomain.CurrentDomain.GetAssemblies());
-                var inverseRequestTypeMapping = requestTypeMapping.ToDictionary(x => x.Value, x => x.Key);
-                var responseTypeMapping = messageDiscoverer.Discover<IResponse>(AppDomain.CurrentDomain.GetAssemblies());
-                var inverseResponseTypeMapping = responseTypeMapping.ToDictionary(x => x.Value, x => x.Key);
-
-                var consumer = new EventingBasicConsumer(channel);
-
-                var responseReader = JsonResponseReader.Create();
-                var requestWriter = JsonRequestWriter.Create();
-                var channelWriter = ChannelWriter.Create(
-                    channel,
-                    ROUTING_KEY);
-
-                var responseFactory = ResponseFactory.Create(
-                    responseReader,
-                    responseTypeMapping);
-                var responseReceiver = ResponseReceiver.Create(
-                    consumer,
-                    responseFactory);
-
-                var requestSender = RequestSender.Create(
-                    requestWriter,
-                    channelWriter,
-                    inverseRequestTypeMapping);
-                var rpcClient = RpcClient.Create(
-                    requestSender,
-                    responseReceiver);
-
-                channel.BasicConsume(
-                    queue: replyQueueName,
-                    noAck: true,
-                    consumer: consumer);
-
-                var response = rpcClient.Send<InitializeWorldRequest, BooleanResultResponse>(
-                    request, 
-                    TimeSpan.FromSeconds(5));
-
-                Application.LoadLevel("Explore");
+                }, 
+                TimeSpan.FromSeconds(5),
+                out initializeResponse) ||
+                !initializeResponse.Result)
+            {
+                ModalDialogManager.ShowMessage("The world could not be initialized.");
+                return;
             }
+            
+            Application.LoadLevel("Explore");
         }
         #endregion
 
