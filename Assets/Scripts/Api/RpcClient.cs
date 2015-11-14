@@ -34,7 +34,9 @@ namespace Assets.Scripts.Api
             return client;
         }
 
-        public TResponse Send<TRequest, TResponse>(TRequest request, TimeSpan timeout)
+        public TResponse Send<TRequest, TResponse>(
+            TRequest request, 
+            TimeSpan timeout)
             where TRequest : IRequest
             where TResponse : IResponse
         {
@@ -78,6 +80,40 @@ namespace Assets.Scripts.Api
 
             Debug.Log("Got server response: " + JsonConvert.SerializeObject(response));
             return response;
+        }
+
+        public TResponse Send<TRequest, TResponse>(TRequest request)
+            where TRequest : IRequest 
+            where TResponse : IResponse
+        {
+            return Send<TRequest, TResponse>(
+                request, 
+                TimeSpan.FromMilliseconds(-1));
+        }
+
+        public void Send<TRequest, TResponse>(
+            TRequest request,
+            TimeSpan timeout, 
+            Action<TResponse> callback)
+            where TRequest : IRequest 
+            where TResponse : IResponse
+        {
+            var response = Send<TRequest, TResponse>(
+                request,
+                timeout);
+            callback.Invoke(response);
+        }
+
+        public void Send<TRequest, TResponse>(
+            TRequest request,
+            Action<TResponse> callback) 
+            where TRequest : IRequest
+            where TResponse : IResponse
+        {
+            Send<TRequest, TResponse>(
+                request,
+                TimeSpan.FromMilliseconds(-1),
+                callback);
         }
         #endregion
     }
