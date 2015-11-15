@@ -14,14 +14,15 @@ namespace Assets.Scripts.Gui
         #region Properties
         public IRpcClient Client
         {
-            get { return _rpcContainer.Client; }
-        }
-        #endregion
+            get
+            {
+                if (_rpcContainer == null)
+                {
+                    _rpcContainer = RpcContainer.Create();
+                }
 
-        #region Methods
-        private void Start()
-        {
-            _rpcContainer = RpcContainer.Create();
+                return _rpcContainer.Client;
+            }
         }
         #endregion
     }
