@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>5.2.2f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,11 +53,17 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
@@ -102,8 +110,9 @@
     <Compile Include="Assets\Scripts\Api\RpcClient.cs" />
     <Compile Include="Assets\Scripts\Api\RpcContainer.cs" />
     <Compile Include="Assets\Scripts\Gui\CharacterCreation\INewCharacterController.cs" />
+    <Compile Include="Assets\Scripts\Gui\CharacterCreation\INewCharacterView.cs" />
     <Compile Include="Assets\Scripts\Gui\CharacterCreation\NewCharacterController.cs" />
-    <Compile Include="Assets\Scripts\Gui\CharacterCreation\NewCharacterNavigationBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Gui\CharacterCreation\NewCharacterBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\IRpcBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\MainMenuNavigationBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gui\MessageBoxes\BeingToFrontBehaviour.cs" />

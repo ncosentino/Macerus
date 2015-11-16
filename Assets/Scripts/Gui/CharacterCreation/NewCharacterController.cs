@@ -1,41 +1,43 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Api;
 using Assets.Scripts.Gui.MessageBoxes;
 using ProjectXyz.Api.Messaging.Core.CharacterCreation;
 using ProjectXyz.Api.Messaging.Core.General;
 using ProjectXyz.Api.Messaging.Core.Initialization;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Assets.Scripts.Gui
+namespace Assets.Scripts.Gui.CharacterCreation
 {
     public sealed class NewCharacterController : INewCharacterController
     {
         #region Fields
         private readonly IRpcClient _rpcClient;
         private readonly IModalDialogManagerBehaviour _modalDialogManagerBehaviour;
-        private readonly InputField _characterNameInputField;
-        private readonly List<Toggle> _genderToggles;
-        private readonly int _minimumCharacterName;
-        private readonly int _maximumCharacterName;
+        private readonly INewCharacterView _newCharacterView;
+
+        private int _minimumCharacterNameLength;
+        private int _maximumCharacterNameLength;
         #endregion
 
         #region Constructors
         private NewCharacterController(
             IRpcClient rpcClient,
             IModalDialogManagerBehaviour modalDialogManagerBehaviour,
-            InputField characterNameInputField,
-            IEnumerable<Toggle> genderToggles,
-            int minimumCharacterName,
-            int maximumCharacterName)
+            INewCharacterView newCharacterView)
         {
             _rpcClient = rpcClient;
             _modalDialogManagerBehaviour = modalDialogManagerBehaviour;
-            _characterNameInputField = characterNameInputField;
-            _genderToggles = new List<Toggle>(genderToggles);
-            _minimumCharacterName = minimumCharacterName;
-            _maximumCharacterName = maximumCharacterName;
+
+            _newCharacterView = newCharacterView;
+            _newCharacterView.Create += NewCharacterView_Create;
+            _newCharacterView.Cancel += NewCharacterView_Cancel;
+        }
+
+        ~NewCharacterController()
+        {
+            Dispose(false);
         }
         #endregion
 
@@ -43,53 +45,82 @@ namespace Assets.Scripts.Gui
         public static INewCharacterController Create(
             IRpcClient rpcClient,
             IModalDialogManagerBehaviour modalDialogManagerBehaviour,
-            InputField characterNameInputField,
-            IEnumerable<Toggle> genderToggles,
-            int minimumCharacterName,
-            int maximumCharacterName)
+            INewCharacterView newCharacterView)
         {
             var controller = new NewCharacterController(
                 rpcClient,
                 modalDialogManagerBehaviour,
-                characterNameInputField,
-                genderToggles,
-                minimumCharacterName,
-                maximumCharacterName);
+                newCharacterView);
             return controller;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public void Initialize()
+        {
+            GetNewCharacterOptionsResponse response;
+            if (!_rpcClient.TrySend(
+                new GetNewCharacterOptionsRequest(),
+                TimeSpan.FromSeconds(5),
+                out response))
+            {
+                _modalDialogManagerBehaviour.ShowMessage("Could not get the character creation options.");
+                return;
+            }
+
+            _newCharacterView.SetRaceOptions(response
+                .Races
+                .Select(x => new KeyValuePair<Guid, string>(
+                    x.RaceId,
+                    // TODO: look up this resource string somehow...
+                    x.NameStringResourceId.ToString())));
+            _newCharacterView.SetClassOptions(response
+                .Classes
+                .Select(x => new KeyValuePair<Guid, string>(
+                    x.ClassId,
+                    // TODO: look up this resource string somehow...
+                    x.NameStringResourceId.ToString())));
+            _newCharacterView.SetRaceOptions(response
+                .Genders
+                .Select(x => new KeyValuePair<Guid, string>(
+                    x.GenderId,
+                    // TODO: look up this resource string somehow...
+                    x.NameStringResourceId.ToString())));
+
+            _minimumCharacterNameLength = response.MinimumCharacterNameLength;
+            _maximumCharacterNameLength = response.MaximumCharacterNameLength;
         }
 
         public bool TryCreateCharacter()
         {
-            if (_characterNameInputField.text == null ||
-                _characterNameInputField.text.Length < _minimumCharacterName || 
-                _characterNameInputField.text.Length > _maximumCharacterName)
+            if (_newCharacterView.CharacterName == null ||
+                _newCharacterView.CharacterName.Length < _minimumCharacterNameLength ||
+                _newCharacterView.CharacterName.Length > _maximumCharacterNameLength)
             {
                 _modalDialogManagerBehaviour.ShowMessage(
                     string.Format(
                         "Please enter a name for the character between {0} and {1} characters in length.",
-                        _minimumCharacterName,
-                        _maximumCharacterName),
+                        _minimumCharacterNameLength,
+                        _maximumCharacterNameLength),
                     _ =>
                     {
-                        _characterNameInputField.ActivateInputField();
+                        _newCharacterView.FocusCharacterName();
                     });
                 return false;
             }
-
-            // TODO: pull race information
-
-            // TODO: pull class information
-
-            // TODO: pull gender information
-
+            
             BooleanResultResponse createResponse;
             if (!_rpcClient.TrySend(
                 new CreateCharacterRequest()
                 {
-                    Name = _characterNameInputField.text,
-                    Male = true,
-                    RaceId = Guid.NewGuid(),
-                    ClassId = Guid.NewGuid(),
+                    Name = _newCharacterView.CharacterName,
+                    GenderId = _newCharacterView.SelectedGenderId,
+                    RaceId = _newCharacterView.SelectedRaceId,
+                    ClassId = _newCharacterView.SelectedClassId,
                 },
                 TimeSpan.FromSeconds(5),
                 out createResponse) ||
@@ -116,6 +147,29 @@ namespace Assets.Scripts.Gui
 
             Application.LoadLevel(2);
             return true;
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                return;
+            }
+
+            _newCharacterView.Create -= NewCharacterView_Create;
+            _newCharacterView.Cancel -= NewCharacterView_Cancel;
+        }
+        #endregion
+
+        #region Event Handlers
+        private void NewCharacterView_Cancel(object sender, EventArgs e)
+        {
+            Application.LoadLevel(0);
+        }
+
+        private void NewCharacterView_Create(object sender, EventArgs e)
+        {
+            TryCreateCharacter();
         }
         #endregion
     }
