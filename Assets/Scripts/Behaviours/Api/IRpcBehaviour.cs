@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Api;
 
-namespace Assets.Scripts.Gui
+namespace Assets.Scripts.Behaviours.Api
 {
     public interface IRpcBehaviour
     {

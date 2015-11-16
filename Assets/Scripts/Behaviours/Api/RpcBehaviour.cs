@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Api;
 using UnityEngine;
 
-namespace Assets.Scripts.Gui
+namespace Assets.Scripts.Behaviours.Api
 {
     public sealed class RpcBehaviour : 
         MonoBehaviour, 

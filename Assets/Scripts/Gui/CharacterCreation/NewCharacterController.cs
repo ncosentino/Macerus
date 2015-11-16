@@ -6,15 +6,21 @@ using Assets.Scripts.Gui.MessageBoxes;
 using ProjectXyz.Api.Messaging.Core.CharacterCreation;
 using ProjectXyz.Api.Messaging.Core.General;
 using ProjectXyz.Api.Messaging.Core.Initialization;
+using ProjectXyz.Data.Resources.Interface;
 using UnityEngine;
 
 namespace Assets.Scripts.Gui.CharacterCreation
 {
     public sealed class NewCharacterController : INewCharacterController
     {
+        #region Constants
+        // FIXME: remove this... just for demonstration purposes...
+        private static readonly Guid TIMEOUT_ERROR_STRING_ID = Guid.NewGuid();
+        #endregion
+
         #region Fields
         private readonly IRpcClient _rpcClient;
-        private readonly IModalDialogManagerBehaviour _modalDialogManagerBehaviour;
+        private readonly IModalDialogManagerBehaviour _modalDialogManager;
         private readonly INewCharacterView _newCharacterView;
 
         private int _minimumCharacterNameLength;
@@ -24,11 +30,11 @@ namespace Assets.Scripts.Gui.CharacterCreation
         #region Constructors
         private NewCharacterController(
             IRpcClient rpcClient,
-            IModalDialogManagerBehaviour modalDialogManagerBehaviour,
+            IModalDialogManagerBehaviour modalDialogManager,
             INewCharacterView newCharacterView)
         {
             _rpcClient = rpcClient;
-            _modalDialogManagerBehaviour = modalDialogManagerBehaviour;
+            _modalDialogManager = modalDialogManager;
 
             _newCharacterView = newCharacterView;
             _newCharacterView.Create += NewCharacterView_Create;
@@ -44,12 +50,12 @@ namespace Assets.Scripts.Gui.CharacterCreation
         #region Methods
         public static INewCharacterController Create(
             IRpcClient rpcClient,
-            IModalDialogManagerBehaviour modalDialogManagerBehaviour,
+            IModalDialogManagerBehaviour modalDialogManager,
             INewCharacterView newCharacterView)
         {
             var controller = new NewCharacterController(
                 rpcClient,
-                modalDialogManagerBehaviour,
+                modalDialogManager,
                 newCharacterView);
             return controller;
         }
@@ -68,7 +74,7 @@ namespace Assets.Scripts.Gui.CharacterCreation
                 TimeSpan.FromSeconds(5),
                 out response))
             {
-                _modalDialogManagerBehaviour.ShowMessage("Could not get the character creation options.");
+                _modalDialogManager.ShowMessage(TIMEOUT_ERROR_STRING_ID);
                 return;
             }
 
@@ -101,11 +107,15 @@ namespace Assets.Scripts.Gui.CharacterCreation
                 _newCharacterView.CharacterName.Length < _minimumCharacterNameLength ||
                 _newCharacterView.CharacterName.Length > _maximumCharacterNameLength)
             {
-                _modalDialogManagerBehaviour.ShowMessage(
-                    string.Format(
-                        "Please enter a name for the character between {0} and {1} characters in length.",
+                // FIXME: remove this... just for demonstration purposes...
+                Guid NAME_LENGTH_ERROR_STRING_ID = Guid.NewGuid();
+                _modalDialogManager.ShowMessage(
+                    NAME_LENGTH_ERROR_STRING_ID,
+                    new object[]
+                    {
                         _minimumCharacterNameLength,
-                        _maximumCharacterNameLength),
+                        _maximumCharacterNameLength
+                    },
                     _ =>
                     {
                         _newCharacterView.FocusCharacterName();
@@ -126,7 +136,9 @@ namespace Assets.Scripts.Gui.CharacterCreation
                 out createResponse) ||
                 !createResponse.Result)
             {
-                _modalDialogManagerBehaviour.ShowMessage("The character could not be created.");
+                _modalDialogManager.ShowMessage(createResponse == null
+                    ? TIMEOUT_ERROR_STRING_ID
+                    : createResponse.ErrorStringResourceId);
                 return false;
             }
 
@@ -141,7 +153,9 @@ namespace Assets.Scripts.Gui.CharacterCreation
                 out initializeResponse) ||
                 !initializeResponse.Result)
             {
-                _modalDialogManagerBehaviour.ShowMessage("The world could not be initialized.");
+                _modalDialogManager.ShowMessage(createResponse == null
+                    ? TIMEOUT_ERROR_STRING_ID
+                    : createResponse.ErrorStringResourceId);
                 return false;
             }
 

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Linq;
+using Assets.Scripts.Behaviours.Data;
 
 namespace Assets.Scripts.Gui.MessageBoxes
 {
@@ -14,24 +15,64 @@ namespace Assets.Scripts.Gui.MessageBoxes
         public string PrefabResourcePath;
 
         public Canvas Canvas;
+
+        public DataManagerBehaviour DataManager;
         #endregion
 
         #region Methods
-        public void ShowMessage(string message)
+        public void ShowMessage(Guid stringResourceId)
         {
-            ShowMessage(message, _ => { });
+            ShowMessage(
+                stringResourceId,
+                (object[])null);
         }
 
-        public void ShowMessage(string message, Action<ModalDialogButton> handler)
+        public void ShowMessage(
+            Guid stringResourceId,
+            object[] stringParameters)
         {
-            ShowMessage(message, new ModalDialogButtonHandler()
+            ShowMessage(
+                stringResourceId,
+                stringParameters,
+                _ => { });
+        }
+
+        public void ShowMessage(
+            Guid stringResourceId, 
+            Action<ModalDialogButton> handler)
+        {
+            ShowMessage(
+                stringResourceId, 
+                null, 
+                handler);
+        }
+
+        public void ShowMessage(
+            Guid stringResourceId,
+            object[] stringParameters,
+            Action<ModalDialogButton> handler)
+        {
+            ShowMessage(stringResourceId, stringParameters, new ModalDialogButtonHandler()
             {
                 Button = ModalDialogButton.Okay,
                 Handler = handler,
             });
         }
 
-        public void ShowMessage(string message, params IModalDialogButtonHandler[] handlers)
+        public void ShowMessage(
+            Guid stringResourceId, 
+            params IModalDialogButtonHandler[] handlers)
+        {
+            ShowMessage(
+                stringResourceId,
+                null,
+                handlers);
+        }
+
+        public void ShowMessage(
+            Guid stringResourceId,
+            object[] stringParameters,
+            params IModalDialogButtonHandler[] handlers)
         {
             var dialog = Instantiate(Resources.Load(PrefabResourcePath, typeof(GameObject))) as GameObject;
             
@@ -45,6 +86,13 @@ namespace Assets.Scripts.Gui.MessageBoxes
             {
                 dialog.AddComponent(typeof(BringToFrontBehaviour));
             }
+
+            var message = DataManager
+                .ResourcesDataManager
+                .StringResources
+                .GetById(stringResourceId)
+                .Value;
+            message = string.Format(message, stringParameters);
 
             dialogBehaviour.Message.text = message;
             dialog.SetActive(true);
