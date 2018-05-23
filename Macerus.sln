@@ -3,8 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{02697BA7-B9A9-4A86-BF6F-E0727BCA4850}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Features", "Features", "{33A6C169-52DA-446B-A241-FEC05722752A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus", "Macerus\Macerus.csproj", "{8F665659-A11D-4B52-8401-294615AC2636}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F665659-A11D-4B52-8401-294615AC2636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F665659-A11D-4B52-8401-294615AC2636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F665659-A11D-4B52-8401-294615AC2636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F665659-A11D-4B52-8401-294615AC2636}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{33A6C169-52DA-446B-A241-FEC05722752A} = {02697BA7-B9A9-4A86-BF6F-E0727BCA4850}
 	EndGlobalSection
 EndGlobal
