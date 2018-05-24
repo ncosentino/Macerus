@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8F665659-A11D-4B52-8401-294615AC2636}</ProjectGuid>
+    <ProjectGuid>{00526E0F-D916-4AFA-8ACD-4976C3271BFE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Macerus</RootNamespace>
-    <AssemblyName>Macerus</AssemblyName>
+    <RootNamespace>Macerus.Game.GameObjects.Autofac</RootNamespace>
+    <AssemblyName>Macerus.Game.GameObjects.Autofac</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -31,43 +31,31 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameObjectsModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj">
-      <Project>{5f24115e-512f-48ba-ad4a-282e5daa7dc6}</Project>
-      <Name>Macerus.Api.Behaviors</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj">
       <Project>{1c464d4f-a13f-46ee-86a5-d38cb2a0c3b6}</Project>
       <Name>Macerus.Api.GameObjects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Macerus.Game.GameObjects.Autofac\Macerus.Game.GameObjects.Autofac.csproj">
-      <Project>{00526e0f-d916-4afa-8acd-4976c3271bfe}</Project>
-      <Name>Macerus.Game.GameObjects.Autofac</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Macerus.Game.GameObjects\Macerus.Game.GameObjects.csproj">
-      <Project>{a0eb2a74-18cd-4256-afcd-6785561f96cb}</Project>
+      <Project>{A0EB2A74-18CD-4256-AFCD-6785561F96CB}</Project>
       <Name>Macerus.Game.GameObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj">
-      <Project>{9b52b191-530a-48cf-a712-78aebc2e9e46}</Project>
-      <Name>Macerus.Plugins.Features.GameObjects.Actors</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj">
-      <Project>{8367961f-d4ec-4265-95a3-b4008af9ecc6}</Project>
-      <Name>Macerus.Shared.Behaviors</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>robocopy /R:0 /E "C:\dev\nexus\products\macerus\macerus-game\..\..\..\libraries\projectxyz\ConsoleApplication1\bin\Debug" "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
-set rce=%25errorlevel%25
-if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
