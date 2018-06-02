@@ -38,6 +38,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IObservableWorldLocationBehavior.cs" />
     <Compile Include="IReadOnlyWorldLocationBehavior.cs" />
     <Compile Include="IWorldLocationBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

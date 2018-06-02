@@ -1,6 +1,6 @@
 ﻿namespace Macerus.Api.Behaviors
 {
-    public interface IWorldLocationBehavior : IReadOnlyWorldLocationBehavior
+    public interface IWorldLocationBehavior : IObservableWorldLocationBehavior
     {
         new double X { get; set; }
 
