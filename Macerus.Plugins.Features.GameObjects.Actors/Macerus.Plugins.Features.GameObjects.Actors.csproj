@@ -42,8 +42,18 @@
     <Reference Include="ProjectXyz.Api.Framework">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="ProjectXyz.Api.Framework.Entities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="ProjectXyz.Api.GameObjects">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Api.Systems">
+      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Systems.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Framework.Entities.Extensions">
+      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Framework.Entities.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Framework.Extensions">
+      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Framework.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Actors.Api">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Plugins.Features.GameObjects.Actors.Api.dll</HintPath>
@@ -58,6 +68,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActorMovementSystem.cs" />
     <Compile Include="ActorRepository.cs" />
     <Compile Include="ActorsModule.cs" />
     <Compile Include="IActorRepository.cs" />

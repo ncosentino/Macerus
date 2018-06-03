@@ -12,6 +12,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         public IEnumerable<IBehavior> GetBehaviors(IGameObject gameObject)
         {
             yield return new WorldLocationBehavior();
+            yield return new MovementBehavior();
         }
     }
 }

@@ -14,6 +14,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 .RegisterType<AdditionalActorBehaviorsProvider>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<ActorMovementSystem>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
 
             var actorTypeId = new StringIdentifier("actor");
             builder
