@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using Macerus.Api.Behaviors;
-using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
