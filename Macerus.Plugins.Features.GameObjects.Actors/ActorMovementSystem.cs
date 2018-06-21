@@ -60,6 +60,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         {
             // TODO: load this from stats?
             const double SPEED = 2.5f;
+            const double MAX_THROTTLE_RANGE = 1;
+            const double MIN_THROTTLE_RANGE = -1;
+            const double MIN_THROTTLE_ABS_VALUE = 0.01;
 
             // TODO: the rate of decel could be affected by the type of tile you're on?
             // ice might have a way lower rate, etc...
@@ -68,18 +71,55 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             var throttleX = movementBehavior.ThrottleX;
             var throttleY = movementBehavior.ThrottleY;
 
-            throttleX = throttleX > 0
-                ? (throttleX - timeAdjustedDecelerate)
-                : (throttleX + timeAdjustedDecelerate);
-            throttleY = throttleY > 0
-                ? (throttleY - timeAdjustedDecelerate)
-                : (throttleY + timeAdjustedDecelerate);
+            if (throttleX >= MIN_THROTTLE_ABS_VALUE)
+            {
+                throttleX = throttleX - timeAdjustedDecelerate;
+            }
+            else if (throttleX < -1 * MIN_THROTTLE_ABS_VALUE)
+            {
+                throttleX = throttleX + timeAdjustedDecelerate;
+            }
+            else
+            {
+                throttleX = 0;
+            }
+
+            throttleX = Math.Abs(throttleX) <= MIN_THROTTLE_ABS_VALUE
+                ? 0
+                : Math.Max(MIN_THROTTLE_RANGE, Math.Min(MAX_THROTTLE_RANGE, throttleX));
+
+            if (throttleY >= MIN_THROTTLE_ABS_VALUE)
+            {
+                throttleY = throttleY - timeAdjustedDecelerate;
+            }
+            else if (throttleY < -1 * MIN_THROTTLE_ABS_VALUE)
+            {
+                throttleY = throttleY + timeAdjustedDecelerate;
+            }
+            else
+            {
+                throttleY = 0;
+            }
+
+            throttleY = Math.Abs(throttleY) <= MIN_THROTTLE_ABS_VALUE
+                ? 0
+                : Math.Max(MIN_THROTTLE_RANGE, Math.Min(MAX_THROTTLE_RANGE, throttleY));
 
             movementBehavior.ThrottleX = throttleX;
             movementBehavior.ThrottleY = throttleY;
 
-            worldLocationBehavior.X += SPEED * elapsedSeconds * throttleX;
-            worldLocationBehavior.Y += SPEED * elapsedSeconds * throttleY;
+            var xAdjust = SPEED * elapsedSeconds * throttleX;
+            var yAdjust = SPEED * elapsedSeconds * throttleY;
+
+            if (Math.Abs(xAdjust) > double.Epsilon)
+            {
+                worldLocationBehavior.X += xAdjust;
+            }
+
+            if (Math.Abs(yAdjust) > double.Epsilon)
+            {
+                worldLocationBehavior.Y += yAdjust;
+            }
         }
     }
 }
