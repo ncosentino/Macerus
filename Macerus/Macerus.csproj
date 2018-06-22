@@ -57,6 +57,18 @@
       <Project>{9b52b191-530a-48cf-a712-78aebc2e9e46}</Project>
       <Name>Macerus.Plugins.Features.GameObjects.Actors</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.csproj">
+      <Project>{44903c45-7032-47ca-848a-598419014884}</Project>
+      <Name>Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.csproj">
+      <Project>{c7178837-d3d5-481e-b3c9-487a7cd41d8e}</Project>
+      <Name>Macerus.Plugins.Features.GameObjects.Items.Generation.Magic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal.csproj">
+      <Project>{308ae277-4c15-4cb0-be86-566cdbbb60e2}</Project>
+      <Name>Macerus.Plugins.Features.GameObjects.Items.Generation.Normal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj">
       <Project>{8367961f-d4ec-4265-95a3-b4008af9ecc6}</Project>
       <Name>Macerus.Shared.Behaviors</Name>
