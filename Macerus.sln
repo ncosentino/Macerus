@@ -27,6 +27,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{355D6E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Shared.Behaviors", "Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj", "{8367961F-D4EC-4265-95A3-B4008AF9ECC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Items.Generation.Normal", "Macerus.Plugins.Features.GameObjects.Items.Generation.Normal\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal.csproj", "{308AE277-4C15-4CB0-BE86-566CDBBB60E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Items.Generation.Magic", "Macerus.Plugins.Features.GameObjects.Items.Generation.Magic\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.csproj", "{C7178837-D3D5-481E-B3C9-487A7CD41D8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic", "Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.csproj", "{44903C45-7032-47CA-848A-598419014884}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +67,18 @@ Global
 		{8367961F-D4EC-4265-95A3-B4008AF9ECC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8367961F-D4EC-4265-95A3-B4008AF9ECC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8367961F-D4EC-4265-95A3-B4008AF9ECC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{308AE277-4C15-4CB0-BE86-566CDBBB60E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{308AE277-4C15-4CB0-BE86-566CDBBB60E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{308AE277-4C15-4CB0-BE86-566CDBBB60E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{308AE277-4C15-4CB0-BE86-566CDBBB60E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7178837-D3D5-481E-B3C9-487A7CD41D8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7178837-D3D5-481E-B3C9-487A7CD41D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7178837-D3D5-481E-B3C9-487A7CD41D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7178837-D3D5-481E-B3C9-487A7CD41D8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44903C45-7032-47CA-848A-598419014884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44903C45-7032-47CA-848A-598419014884}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44903C45-7032-47CA-848A-598419014884}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44903C45-7032-47CA-848A-598419014884}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,5 +91,8 @@ Global
 		{9B52B191-530A-48CF-A712-78AEBC2E9E46} = {33A6C169-52DA-446B-A241-FEC05722752A}
 		{5F24115E-512F-48BA-AD4A-282E5DAA7DC6} = {BD27FEF7-8B20-4566-B91D-CF69AFF7EDD0}
 		{8367961F-D4EC-4265-95A3-B4008AF9ECC6} = {355D6ED1-147F-4ABD-B1F4-CD41E62D3A90}
+		{308AE277-4C15-4CB0-BE86-566CDBBB60E2} = {33A6C169-52DA-446B-A241-FEC05722752A}
+		{C7178837-D3D5-481E-B3C9-487A7CD41D8E} = {33A6C169-52DA-446B-A241-FEC05722752A}
+		{44903C45-7032-47CA-848A-598419014884} = {33A6C169-52DA-446B-A241-FEC05722752A}
 	EndGlobalSection
 EndGlobal
