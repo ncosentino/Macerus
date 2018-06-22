@@ -55,6 +55,9 @@
     <Reference Include="ProjectXyz.Framework.Extensions">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Framework.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="ProjectXyz.Plugins.Features.CommonBehaviors">
+      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Plugins.Features.CommonBehaviors.dll</HintPath>
+    </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.CommonBehaviors.Api">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Plugins.Features.CommonBehaviors.Api.dll</HintPath>
     </Reference>
