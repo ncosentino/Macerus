@@ -35,7 +35,6 @@
       <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="ProjectXyz.Api.Framework">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Framework.dll</HintPath>
     </Reference>
@@ -45,8 +44,8 @@
     <Reference Include="ProjectXyz.Api.GameObjects.Generation">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.Generation.dll</HintPath>
     </Reference>
-    <Reference Include="ProjectXyz.Api.GameObjects.Items">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.Items.dll</HintPath>
+    <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Items.Api">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Plugins.Features.GameObjects.Items.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Shared.Framework">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Framework.dll</HintPath>

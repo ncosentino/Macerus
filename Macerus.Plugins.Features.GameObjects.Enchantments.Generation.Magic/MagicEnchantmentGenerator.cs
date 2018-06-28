@@ -25,7 +25,10 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
 
         public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; } = new IGeneratorAttribute[]
         {
-            new GeneratorAttribute(new StringIdentifier("affix-type"), new StringGeneratorAttributeValue("magic")),
+            new GeneratorAttribute(
+                new StringIdentifier("affix-type"),
+                new StringGeneratorAttributeValue("magic"),
+                false),
         };
     }
 }

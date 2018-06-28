@@ -3,8 +3,8 @@ using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Api.GameObjects.Generation.Attributes;
-using ProjectXyz.Api.GameObjects.Items.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
 using ProjectXyz.Shared.Framework;
 using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
@@ -50,7 +50,10 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 
         public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; } = new IGeneratorAttribute[]
         {
-            new GeneratorAttribute(new StringIdentifier("affix-type"), new StringGeneratorAttributeValue("magic")),
+            new GeneratorAttribute(
+                new StringIdentifier("affix-type"),
+                new StringGeneratorAttributeValue("magic"),
+                false),
         };
     }
 }
