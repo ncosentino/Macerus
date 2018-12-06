@@ -28,7 +28,7 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
             new GeneratorAttribute(
                 new StringIdentifier("affix-type"),
                 new StringGeneratorAttributeValue("magic"),
-                false),
+                true),
         };
     }
 }

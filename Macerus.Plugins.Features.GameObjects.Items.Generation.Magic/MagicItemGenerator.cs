@@ -1,33 +1,53 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
+using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Api.GameObjects.Generation.Attributes;
+using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
 using ProjectXyz.Shared.Framework;
+using ProjectXyz.Shared.Game.GameObjects.Generation;
 using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 {
-    public sealed class MagicItemGenerator : IItemGenerator
+    public sealed class MagicItemGenerator : IDiscoverableItemGenerator
     {
         private readonly IBaseItemGenerator _baseItemGenerator;
         private readonly IEnchantmentGenerator _enchantmentGenerator;
+        private readonly IItemFactory _itemFactory;
+        private readonly IActiveEnchantmentManagerFactory _activeEnchantmentManagerFactory;
 
         public MagicItemGenerator(
             IBaseItemGenerator baseItemGenerator,
-            IEnchantmentGenerator enchantmentGenerator)
+            IEnchantmentGenerator enchantmentGenerator,
+            IItemFactory itemFactory,
+            IActiveEnchantmentManagerFactory activeEnchantmentManagerFactory)
         {
             _baseItemGenerator = baseItemGenerator;
             _enchantmentGenerator = enchantmentGenerator;
+            _itemFactory = itemFactory;
+            _activeEnchantmentManagerFactory = activeEnchantmentManagerFactory;
         }
 
         public IEnumerable<IGameObject> GenerateItems(IGeneratorContext generatorContext)
         {
-            var items = _baseItemGenerator.GenerateItems(generatorContext);
+            var magicGeneratorContext = new GeneratorContext(
+                generatorContext.MinimumGenerateCount,
+                generatorContext.MaximumGenerateCount,
+                generatorContext
+                    .Attributes
+                    .Where(x => !SupportedAttributes.Any(s => s.Id.Equals(x.Id)))
+                    .Concat(SupportedAttributes));
+            var baseItems = _baseItemGenerator.GenerateItems(magicGeneratorContext);
 
-            foreach (var item in items)
+            foreach (var baseItem in baseItems)
             {
                 // TODO: we may need to create a NEW context here to add even more specific information.
                 // i.e.
@@ -37,14 +57,25 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                 //   item was at one end of that range, it might mean better or
                 //    worse enchantments given the item level.
 
+                var additionalBehaviors = new List<IBehavior>()
+                {
+                    new HasInventoryDisplayColor(0, 0, 255, 255),
+                };
+
+                IEnchantableBehavior enchantable;
+                if ((enchantable = baseItem
+                    .Get<IEnchantableBehavior>()
+                    .SingleOrDefault()) == null)
+                {
+                    enchantable = new EnchantableBehavior(_activeEnchantmentManagerFactory.Create());
+                    additionalBehaviors.Add(enchantable);
+                }
+
                 var enchantments = _enchantmentGenerator.GenerateEnchantments(generatorContext);
+                enchantable.Enchant(enchantments);
 
-                // TODO: do we just assume that items MUST have this behavior on them?
-                item
-                    .GetOnly<IEnchantableBehavior>()
-                    .Enchant(enchantments);
-
-                yield return item;
+                var magicItem = _itemFactory.Create(baseItem.Behaviors.Concat(additionalBehaviors));
+                yield return magicItem;
             }
         }
 
@@ -53,7 +84,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             new GeneratorAttribute(
                 new StringIdentifier("affix-type"),
                 new StringGeneratorAttributeValue("magic"),
-                false),
+                true),
         };
     }
 }

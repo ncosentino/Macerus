@@ -53,6 +53,10 @@
       <Project>{a0eb2a74-18cd-4256-afcd-6785561f96cb}</Project>
       <Name>Macerus.Game.GameObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Macerus.Plugins.Content.Wip\Macerus.Plugins.Content.Wip.csproj">
+      <Project>{b8283e32-83c3-4128-971b-c399058dc732}</Project>
+      <Name>Macerus.Plugins.Content.Wip</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj">
       <Project>{9b52b191-530a-48cf-a712-78aebc2e9e46}</Project>
       <Name>Macerus.Plugins.Features.GameObjects.Actors</Name>

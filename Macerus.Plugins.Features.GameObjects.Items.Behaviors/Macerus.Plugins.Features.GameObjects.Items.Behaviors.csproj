@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{44903C45-7032-47CA-848A-598419014884}</ProjectGuid>
+    <ProjectGuid>{9B17885E-B486-431E-B59B-078A9BE6BDD2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic</RootNamespace>
-    <AssemblyName>Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic</AssemblyName>
+    <RootNamespace>Macerus.Plugins.Features.GameObjects.Items.Behaviors</RootNamespace>
+    <AssemblyName>Macerus.Plugins.Features.GameObjects.Items.Behaviors</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -31,42 +31,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ProjectXyz.Api.Behaviors">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Behaviors.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="ProjectXyz.Api.Enchantments">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Enchantments.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.Enchantments.Generation">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Enchantments.Generation.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.Framework">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.GameObjects.Generation">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.Generation.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Items.Api">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Plugins.Features.GameObjects.Items.Api.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Shared.Framework">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Shared.Game.GameObjects.Generation">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Game.GameObjects.Generation.dll</HintPath>
+    <Reference Include="ProjectXyz.Shared.Game.Behaviors">
+      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Game.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MagicEnchantmentGenerator.cs" />
+    <Compile Include="HasInventoryDisplayColor.cs" />
+    <Compile Include="HasInventoryDisplayName.cs" />
+    <Compile Include="IHasInventoryDisplayColor.cs" />
+    <Compile Include="IHasInventoryDisplayName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProvidedImplementationsModule.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
