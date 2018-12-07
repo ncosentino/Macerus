@@ -46,6 +46,12 @@
     <Reference Include="ProjectXyz.Api.GameObjects.Generation">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.Generation.dll</HintPath>
     </Reference>
+    <Reference Include="ProjectXyz.Plugins.Features.CommonBehaviors">
+      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Plugins.Features.CommonBehaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Plugins.Features.CommonBehaviors.Api">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Plugins.Features.CommonBehaviors.Api.dll</HintPath>
+    </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Items.Api">
       <HintPath>..\Dependencies\projectxyz\ProjectXyz.Plugins.Features.GameObjects.Items.Api.dll</HintPath>
     </Reference>
