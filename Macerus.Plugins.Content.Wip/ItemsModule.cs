@@ -38,8 +38,22 @@ namespace Macerus.Plugins.Content.Wip
                             },
                             new IGeneratorComponent[]
                             {
-                               new NameGeneratorComponent("Normal Item"),
-                               new EquippableGeneratorComponent(new[] { new StringIdentifier("body") }), 
+                               new NameGeneratorComponent("Normal Gloves"),
+                               new IconGeneratorComponent(@"graphics\items\gloves\leather gloves"), 
+                               new EquippableGeneratorComponent(new[] { new StringIdentifier("hands") }), 
+                            }),
+                        new ItemDefinition(
+                            new[]
+                            {
+                                new GeneratorAttribute(
+                                    new StringIdentifier("affix-type"),
+                                    new StringGeneratorAttributeValue("normal"),
+                                    true),
+                            },
+                            new IGeneratorComponent[]
+                            {
+                                new NameGeneratorComponent("Normal Helm"),
+                                new EquippableGeneratorComponent(new[] { new StringIdentifier("head") }),
                             }),
                         new ItemDefinition(
                             new[]
@@ -51,7 +65,7 @@ namespace Macerus.Plugins.Content.Wip
                             },
                             new[]
                             {
-                                new NameGeneratorComponent("Magic Item"),
+                                new NameGeneratorComponent("Magic Junk"),
                             }),
                     };
                     var itemDefinitionRepository = new InMemoryItemDefinitionRepository(
@@ -67,6 +81,10 @@ namespace Macerus.Plugins.Content.Wip
                 .SingleInstance();
             builder
                 .RegisterType<EquippableGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<IconGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }
@@ -115,6 +133,29 @@ namespace Macerus.Plugins.Content.Wip
         {
             var nameGeneratorComponent = (NameGeneratorComponent)generatorComponent;
             yield return new HasInventoryDisplayName(nameGeneratorComponent.DisplayName);
+        }
+    }
+
+    public sealed class IconGeneratorComponent : IGeneratorComponent
+    {
+        public IconGeneratorComponent(string iconResource)
+        {
+            IconResource = iconResource;
+        }
+
+        public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; } = Enumerable.Empty<IGeneratorAttribute>();
+
+        public string IconResource { get; }
+    }
+
+    public sealed class IconGeneratorComponentToBehaviorConverter : IDiscoverableGeneratorComponentToBehaviorConverter
+    {
+        public Type ComponentType { get; } = typeof(IconGeneratorComponent);
+
+        public IEnumerable<IBehavior> Convert(IGeneratorComponent generatorComponent)
+        {
+            var iconGeneratorComponent = (IconGeneratorComponent)generatorComponent;
+            yield return new HasInventoryIcon(iconGeneratorComponent.IconResource);
         }
     }
 }

@@ -48,8 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HasInventoryDisplayColor.cs" />
+    <Compile Include="HasInventoryIcon.cs" />
     <Compile Include="HasInventoryDisplayName.cs" />
     <Compile Include="IHasInventoryDisplayColor.cs" />
+    <Compile Include="IHasInventoryIcon.cs" />
     <Compile Include="IHasInventoryDisplayName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
