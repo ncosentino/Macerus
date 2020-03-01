@@ -45,12 +45,24 @@ namespace Macerus.Tests.Plugins.Features.Items
                     item.GetOnly<IHasEnchantmentsBehavior>().Enchantments.Count,
                     1,
                     2);
+                // TODO: check that the enchantments are allowed to exist with each other
+                // i.e. generating two enchantments that add + life when it might not be allowed
+
+                var inventoryDisplayNames = item
+                    .Get<IHasInventoryDisplayName>()
+                    .ToArray();
                 Assert.True(
-                    item.Has<IHasInventoryDisplayName>(),
-                    $"Expecting to have behavior '{typeof(IHasInventoryDisplayName)}'.");
+                    2 == inventoryDisplayNames.Length,
+                    $"Expecting to have two '{typeof(IHasInventoryDisplayName)}' (one for base name, one for magic name).");
                 Assert.True(
-                    !string.IsNullOrWhiteSpace(item.GetOnly<IHasInventoryDisplayName>().DisplayName),
-                    $"Expecting '{nameof(IHasInventoryDisplayName.DisplayName)}' to be populated.");
+                    !string.IsNullOrWhiteSpace(inventoryDisplayNames[0].DisplayName),
+                    $"Expecting '{inventoryDisplayNames[0]}' (base name) to have a populated display name.");
+                Assert.True(
+                    !string.IsNullOrWhiteSpace(inventoryDisplayNames[1].DisplayName),
+                    $"Expecting '{inventoryDisplayNames[1]}' (magic name) to have a populated display name.");
+                Assert.Contains(
+                    inventoryDisplayNames[0].DisplayName,
+                    inventoryDisplayNames[1].DisplayName);
             }
         }
     }

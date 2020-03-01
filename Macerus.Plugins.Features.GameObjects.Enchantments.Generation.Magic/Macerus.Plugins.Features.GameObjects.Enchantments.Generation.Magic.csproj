@@ -21,7 +21,13 @@
     <PackageReference Include="Autofac" Version="4.9.4" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.Api\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.Api.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="ProjectXyz.Api.Behaviors">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Behaviors.dll</HintPath>
+    </Reference>
     <Reference Include="ProjectXyz.Api.Enchantments">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Enchantments.dll</HintPath>
     </Reference>
@@ -42,6 +48,9 @@
     </Reference>
     <Reference Include="ProjectXyz.Shared.Framework">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Shared.Game.Behaviors">
+      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Game.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Shared.Game.GameObjects.Generation">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Game.GameObjects.Generation.dll</HintPath>

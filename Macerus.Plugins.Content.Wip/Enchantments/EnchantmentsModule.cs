@@ -25,7 +25,9 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
                             },
                             new IGeneratorComponent[]
                             {
-                                new HasStatGeneratorComponent(StatDefinitions.MaximumLife)
+                                new HasStatGeneratorComponent(StatDefinitions.MaximumLife),
+                                new HasPrefixGeneratorComponent(Affixes.Prefixes.Lively),
+                                new HasSuffixGeneratorComponent(Affixes.Suffixes.OfLife),
                             }),
                         new EnchantmentDefinition(
                             new[]
@@ -34,7 +36,9 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
                             },
                             new IGeneratorComponent[]
                             {
-                                new HasStatGeneratorComponent(StatDefinitions.MaximumMana)
+                                new HasStatGeneratorComponent(StatDefinitions.MaximumMana),
+                                new HasPrefixGeneratorComponent(Affixes.Prefixes.Magic),
+                                new HasSuffixGeneratorComponent(Affixes.Suffixes.OfMana),
                             }),
                     };
                     var repository = new InMemoryEnchantmentDefinitionRepository(
@@ -46,6 +50,14 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
                 .AsImplementedInterfaces();
             builder
                 .RegisterType<HasStatGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<HasPrefixGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<HasSuffixGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
