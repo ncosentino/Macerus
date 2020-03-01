@@ -1,13 +1,12 @@
 ﻿using Autofac;
+using ProjectXyz.Framework.Autofac;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 {
-    public sealed class ProvidedImplementationsModule : Module
+    public sealed class ProvidedImplementationsModule : SingleRegistrationModule
     {
-        protected override void Load(ContainerBuilder builder)
+        protected override void SafeLoad(ContainerBuilder builder)
         {
-            base.Load(builder);
-
             builder
                 .RegisterType<MagicItemGenerator>()
                 .AsImplementedInterfaces()

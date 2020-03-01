@@ -18,10 +18,15 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Autofac" Version="4.9.4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
     <ProjectReference Include="..\Macerus.Game.GameObjects\Macerus.Game.GameObjects.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ProjectXyz.Framework.Autofac">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Framework.Autofac.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

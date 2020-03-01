@@ -1,13 +1,12 @@
 ﻿using Autofac;
+using ProjectXyz.Framework.Autofac;
 
 namespace Macerus.Game.GameObjects.Autofac
 {
-    public class GameObjectsModule : Module
+    public class GameObjectsModule : SingleRegistrationModule
     {
-        protected override void Load(ContainerBuilder builder)
+        protected override void SafeLoad(ContainerBuilder builder)
         {
-            base.Load(builder);
-
             builder
                 .RegisterType<GameObjectRepositoryFacade>()
                 .AsImplementedInterfaces()

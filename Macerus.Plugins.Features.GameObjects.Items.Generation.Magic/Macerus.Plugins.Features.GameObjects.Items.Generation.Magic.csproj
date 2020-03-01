@@ -18,7 +18,7 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Autofac" Version="4.9.4" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ProjectXyz.Api.Behaviors">
@@ -38,6 +38,9 @@
     </Reference>
     <Reference Include="ProjectXyz.Api.GameObjects.Generation">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.Generation.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Framework.Autofac">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Framework.Autofac.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.CommonBehaviors">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Plugins.Features.CommonBehaviors.dll</HintPath>

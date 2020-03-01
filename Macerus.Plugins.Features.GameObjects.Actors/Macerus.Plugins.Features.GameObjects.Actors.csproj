@@ -18,7 +18,7 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Autofac" Version="4.9.4" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ProjectXyz.Api.Behaviors, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -28,18 +28,17 @@
     <Reference Include="ProjectXyz.Api.Framework">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="ProjectXyz.Api.Framework.Entities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="ProjectXyz.Api.Framework.Entities">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Framework.Entities.dll</HintPath>
+    </Reference>
     <Reference Include="ProjectXyz.Api.GameObjects">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.Systems">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Systems.dll</HintPath>
     </Reference>
-    <Reference Include="ProjectXyz.Framework.Entities.Extensions">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Framework.Entities.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Framework.Extensions">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Framework.Extensions.dll</HintPath>
+    <Reference Include="ProjectXyz.Framework.Autofac">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Framework.Autofac.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.CommonBehaviors">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Plugins.Features.CommonBehaviors.dll</HintPath>

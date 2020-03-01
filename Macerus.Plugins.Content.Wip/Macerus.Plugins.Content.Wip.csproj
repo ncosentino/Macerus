@@ -18,12 +18,15 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Autofac" Version="4.9.4" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ProjectXyz.Api.Behaviors, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Behaviors.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ProjectXyz.Api.Enchantments.Generation">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Enchantments.Generation.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.Framework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Framework.dll</HintPath>
@@ -32,11 +35,23 @@
     <Reference Include="ProjectXyz.Api.GameObjects.Generation">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.Generation.dll</HintPath>
     </Reference>
+    <Reference Include="ProjectXyz.Framework.Autofac">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Framework.Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Game.Interface">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Game.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Plugins.Features.BoundedStats.Api">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Plugins.Features.BoundedStats.Api.dll</HintPath>
+    </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.CommonBehaviors">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Plugins.Features.CommonBehaviors.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.CommonBehaviors.Api">
       <HintPath>..\Dependencies\projectxyz\ProjectXyz.Plugins.Features.CommonBehaviors.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Plugins.Features.ExpressionEnchantments.Api">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Plugins.Features.ExpressionEnchantments.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Items.Api">
       <HintPath>..\Dependencies\projectxyz\ProjectXyz.Plugins.Features.GameObjects.Items.Api.dll</HintPath>
@@ -47,11 +62,17 @@
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory">
       <HintPath>..\Dependencies\projectxyz\ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory.dll</HintPath>
     </Reference>
+    <Reference Include="ProjectXyz.Plugins.Features.StateEnchantments.Api">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Plugins.Features.StateEnchantments.Api.dll</HintPath>
+    </Reference>
     <Reference Include="ProjectXyz.Shared.Framework">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Framework.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Shared.Game.Behaviors">
       <HintPath>..\Dependencies\projectxyz\ProjectXyz.Shared.Game.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Shared.Game.GameObjects.Enchantments.Generation.InMemory">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Shared.Game.GameObjects.Enchantments.Generation.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Shared.Game.GameObjects.Generation">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Game.GameObjects.Generation.dll</HintPath>

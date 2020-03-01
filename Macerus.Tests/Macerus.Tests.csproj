@@ -1,0 +1,118 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{6B69D281-5E82-4A6A-8E28-5161E34B47C1}</ProjectGuid>
+    <TargetFramework>net46</TargetFramework>
+    <AssemblyTitle>Macerus.Tests</AssemblyTitle>
+    <Product>Macerus.Tests</Product>
+    <Copyright>Copyright ©  2020</Copyright>
+    <AssemblyTitle>Macerus.Tests</AssemblyTitle>
+    <Product>Macerus.Tests</Product>
+    <Copyright>Copyright ©  2020</Copyright>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent />
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent />
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="Castle.Core" Version="4.4.0" />
+    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.0" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.abstractions" Version="2.0.3" />
+    <PackageReference Include="xunit.analyzers" Version="0.10.0" />
+    <PackageReference Include="xunit.assert" Version="2.4.1" />
+    <PackageReference Include="xunit.core" Version="2.4.1" />
+    <PackageReference Include="xunit.extensibility.core" Version="2.4.1" />
+    <PackageReference Include="xunit.extensibility.execution" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ProjectXyz.Api.Behaviors, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Behaviors.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ProjectXyz.Api.Enchantments">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Enchantments.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Api.Framework">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Api.GameObjects">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.GameObjects.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Api.GameObjects.Generation, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.Generation.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ProjectXyz.Api.Logging, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Logging.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ProjectXyz.Framework.Autofac, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Framework.Autofac.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ProjectXyz.Game.Core.Autofac, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Game.Core.Autofac.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ProjectXyz.Plugins.Features.CommonBehaviors.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Plugins.Features.CommonBehaviors.Api.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Items.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Plugins.Features.GameObjects.Items.Api.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ProjectXyz.Shared.Framework, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Framework.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ProjectXyz.Shared.Framework.Autofac, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Shared.Framework.Autofac.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ProjectXyz.Shared.Game.GameObjects.Generation, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Game.GameObjects.Generation.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
+    <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
+    <ProjectReference Include="..\Macerus.Game.GameObjects.Autofac\Macerus.Game.GameObjects.Autofac.csproj" />
+    <ProjectReference Include="..\Macerus.Game.GameObjects\Macerus.Game.GameObjects.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Content.Wip\Macerus.Plugins.Content.Wip.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Behaviors\Macerus.Plugins.Features.GameObjects.Items.Behaviors.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal.csproj" />
+    <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj" />
+    <ProjectReference Include="..\Macerus\Macerus.csproj" />
+  </ItemGroup>
+</Project>

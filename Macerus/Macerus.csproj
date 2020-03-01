@@ -10,22 +10,10 @@
     <Copyright>Copyright ©  2018</Copyright>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputPath>bin\$(Configuration)\</OutputPath>
-    <PreBuildEvent>rmdir /S /Q "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
-mkdir "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
+    <PreBuildEvent>rmdir /S /Q "$(SolutionDir)Dependencies\projectxyz"
+mkdir "$(SolutionDir)Dependencies\projectxyz"
 
-robocopy /R:0 /E "C:\dev\nexus\products\macerus\macerus-game\..\..\..\libraries\projectxyz\ConsoleApplication1\bin\Debug" "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
-set rce=%25errorlevel%25
-if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
-    <PreBuildEvent>rmdir /S /Q "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
-mkdir "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
-
-robocopy /R:0 /E "C:\dev\nexus\products\macerus\macerus-game\..\..\..\libraries\projectxyz\ConsoleApplication1\bin\Debug" "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
-set rce=%25errorlevel%25
-if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
-    <PreBuildEvent>rmdir /S /Q "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
-mkdir "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
-
-robocopy /R:0 /E "C:\dev\nexus\products\macerus\macerus-game\..\..\..\libraries\projectxyz\ConsoleApplication1\bin\Debug" "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
+robocopy /R:0 /E "$(SolutionDir)..\..\..\libraries\projectxyz\ConsoleApplication1\bin\Debug\net46" "$(SolutionDir)Dependencies\projectxyz"
 set rce=%25errorlevel%25
 if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
   </PropertyGroup>
@@ -36,10 +24,10 @@ if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>rmdir /S /Q "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
-mkdir "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
+    <PreBuildEvent>rmdir /S /Q "$(SolutionDir)Dependencies\projectxyz"
+mkdir "$(SolutionDir)Dependencies\projectxyz"
 
-robocopy /R:0 /E "C:\dev\nexus\products\macerus\macerus-game\..\..\..\libraries\projectxyz\ConsoleApplication1\bin\Debug" "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
+robocopy /R:0 /E "$(SolutionDir)..\..\..\libraries\projectxyz\ConsoleApplication1\bin\Debug\net46" "$(SolutionDir)Dependencies\projectxyz"
 set rce=%25errorlevel%25
 if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
   </PropertyGroup>

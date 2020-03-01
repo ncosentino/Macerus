@@ -38,14 +38,14 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 
         public IEnumerable<IGameObject> GenerateItems(IGeneratorContext generatorContext)
         {
-            var magicGeneratorContext = new GeneratorContext(
+            var magicItemGeneratorContext = new GeneratorContext(
                 generatorContext.MinimumGenerateCount,
                 generatorContext.MaximumGenerateCount,
                 generatorContext
                     .Attributes
                     .Where(x => !SupportedAttributes.Any(s => s.Id.Equals(x.Id)))
                     .Concat(SupportedAttributes));
-            var baseItems = _baseItemGenerator.GenerateItems(magicGeneratorContext);
+            var baseItems = _baseItemGenerator.GenerateItems(magicItemGeneratorContext);
 
             foreach (var baseItem in baseItems)
             {
@@ -62,17 +62,27 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                     new HasInventoryDisplayColor(0, 0, 255, 255),
                 };
 
-                IEnchantableBehavior enchantable;
+                IBuffableBehavior enchantable;
                 if ((enchantable = baseItem
-                    .Get<IEnchantableBehavior>()
+                    .Get<IBuffableBehavior>()
                     .SingleOrDefault()) == null)
                 {
-                    enchantable = new EnchantableBehavior(_activeEnchantmentManagerFactory.Create());
+                    var activeEnchantmentManager = _activeEnchantmentManagerFactory.Create();
+                    enchantable = new BuffableBehavior(activeEnchantmentManager);
                     additionalBehaviors.Add(enchantable);
+                    additionalBehaviors.Add(new HasEnchantmentsBehavior(activeEnchantmentManager));
                 }
 
-                var enchantments = _enchantmentGenerator.GenerateEnchantments(generatorContext);
-                enchantable.Enchant(enchantments);
+                var enchantmentGeneratorContext = new GeneratorContext(
+                    1,
+                    2,
+                    magicItemGeneratorContext
+                        .Attributes
+                        .Where(x => !SupportedAttributes.Any(s => s.Id.Equals(x.Id)))
+                        .Concat(SupportedAttributes));
+
+                var enchantments = _enchantmentGenerator.GenerateEnchantments(enchantmentGeneratorContext);
+                enchantable.AddEnchantments(enchantments);
 
                 var magicItem = _itemFactory.Create(baseItem.Behaviors.Concat(additionalBehaviors));
                 yield return magicItem;

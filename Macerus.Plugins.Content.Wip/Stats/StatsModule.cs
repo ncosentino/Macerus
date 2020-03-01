@@ -1,14 +1,14 @@
 ﻿using Autofac;
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Normal
+namespace Macerus.Plugins.Content.Wip.Stats
 {
-    public sealed class ProvidedImplementationsModule : SingleRegistrationModule
+    public sealed class StatsModule : SingleRegistrationModule
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<NormalItemGenerator>()
+                .RegisterType<StatDefinitionIdToBoundsMappingRepository>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

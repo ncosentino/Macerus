@@ -8,7 +8,7 @@ using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
 {
-    public sealed class MagicEnchantmentGenerator : IEnchantmentGenerator
+    public sealed class MagicEnchantmentGenerator : IDiscoverableEnchantmentGenerator
     {
         private readonly IBaseEnchantmentGenerator _baseEnchantmentGenerator;
 

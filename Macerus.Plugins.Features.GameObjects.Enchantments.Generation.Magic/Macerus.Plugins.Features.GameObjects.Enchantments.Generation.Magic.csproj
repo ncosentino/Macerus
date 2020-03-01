@@ -18,7 +18,7 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Autofac" Version="4.9.4" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -33,6 +33,9 @@
     </Reference>
     <Reference Include="ProjectXyz.Api.GameObjects.Generation">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.Generation.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Framework.Autofac">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Framework.Autofac.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Items.Api">
       <HintPath>..\Dependencies\projectxyz\ProjectXyz.Plugins.Features.GameObjects.Items.Api.dll</HintPath>
