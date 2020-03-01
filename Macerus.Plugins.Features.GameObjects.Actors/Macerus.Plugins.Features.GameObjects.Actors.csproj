@@ -1,43 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{9B52B191-530A-48CF-A712-78AEBC2E9E46}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Macerus.Plugins.Features.GameObjects.Actors</RootNamespace>
-    <AssemblyName>Macerus.Plugins.Features.GameObjects.Actors</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFramework>net46</TargetFramework>
+    <AssemblyTitle>Macerus.Plugins.Features.GameObjects.Actors</AssemblyTitle>
+    <Product>Macerus.Plugins.Features.GameObjects.Actors</Product>
+    <Copyright>Copyright ©  2018</Copyright>
+    <AssemblyTitle>Macerus.Plugins.Features.GameObjects.Actors</AssemblyTitle>
+    <Product>Macerus.Plugins.Features.GameObjects.Actors</Product>
+    <Copyright>Copyright ©  2018</Copyright>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <PackageReference Include="Autofac" Version="4.8.1" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="ProjectXyz.Api.Behaviors, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Behaviors.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="ProjectXyz.Api.Framework">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Framework.dll</HintPath>
@@ -70,40 +56,10 @@
     <Reference Include="ProjectXyz.Shared.Game.Behaviors">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Game.Behaviors.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActorMovementSystem.cs" />
-    <Compile Include="ActorRepository.cs" />
-    <Compile Include="ActorsModule.cs" />
-    <Compile Include="IActorRepository.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AdditionalActorBehaviorsProvider.cs" />
+    <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
+    <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
+    <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj">
-      <Project>{5f24115e-512f-48ba-ad4a-282e5daa7dc6}</Project>
-      <Name>Macerus.Api.Behaviors</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj">
-      <Project>{1C464D4F-A13F-46EE-86A5-D38CB2A0C3B6}</Project>
-      <Name>Macerus.Api.GameObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj">
-      <Project>{8367961F-D4EC-4265-95A3-B4008AF9ECC6}</Project>
-      <Name>Macerus.Shared.Behaviors</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

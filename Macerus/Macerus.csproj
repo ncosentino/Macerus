@@ -1,84 +1,40 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8F665659-A11D-4B52-8401-294615AC2636}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Macerus</RootNamespace>
-    <AssemblyName>Macerus</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFramework>net46</TargetFramework>
+    <AssemblyTitle>Macerus</AssemblyTitle>
+    <Product>Macerus</Product>
+    <Copyright>Copyright ©  2018</Copyright>
+    <AssemblyTitle>Macerus</AssemblyTitle>
+    <Product>Macerus</Product>
+    <Copyright>Copyright ©  2018</Copyright>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <PreBuildEvent>rmdir /S /Q "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
+mkdir "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
+
+robocopy /R:0 /E "C:\dev\nexus\products\macerus\macerus-game\..\..\..\libraries\projectxyz\ConsoleApplication1\bin\Debug" "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
+set rce=%25errorlevel%25
+if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
+    <PreBuildEvent>rmdir /S /Q "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
+mkdir "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
+
+robocopy /R:0 /E "C:\dev\nexus\products\macerus\macerus-game\..\..\..\libraries\projectxyz\ConsoleApplication1\bin\Debug" "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
+set rce=%25errorlevel%25
+if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
+    <PreBuildEvent>rmdir /S /Q "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
+mkdir "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
+
+robocopy /R:0 /E "C:\dev\nexus\products\macerus\macerus-game\..\..\..\libraries\projectxyz\ConsoleApplication1\bin\Debug" "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
+set rce=%25errorlevel%25
+if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System.Core" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj">
-      <Project>{5f24115e-512f-48ba-ad4a-282e5daa7dc6}</Project>
-      <Name>Macerus.Api.Behaviors</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj">
-      <Project>{1c464d4f-a13f-46ee-86a5-d38cb2a0c3b6}</Project>
-      <Name>Macerus.Api.GameObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Game.GameObjects.Autofac\Macerus.Game.GameObjects.Autofac.csproj">
-      <Project>{00526e0f-d916-4afa-8acd-4976c3271bfe}</Project>
-      <Name>Macerus.Game.GameObjects.Autofac</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Game.GameObjects\Macerus.Game.GameObjects.csproj">
-      <Project>{a0eb2a74-18cd-4256-afcd-6785561f96cb}</Project>
-      <Name>Macerus.Game.GameObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Plugins.Content.Wip\Macerus.Plugins.Content.Wip.csproj">
-      <Project>{b8283e32-83c3-4128-971b-c399058dc732}</Project>
-      <Name>Macerus.Plugins.Content.Wip</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj">
-      <Project>{9b52b191-530a-48cf-a712-78aebc2e9e46}</Project>
-      <Name>Macerus.Plugins.Features.GameObjects.Actors</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.csproj">
-      <Project>{44903c45-7032-47ca-848a-598419014884}</Project>
-      <Name>Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.csproj">
-      <Project>{c7178837-d3d5-481e-b3c9-487a7cd41d8e}</Project>
-      <Name>Macerus.Plugins.Features.GameObjects.Items.Generation.Magic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal.csproj">
-      <Project>{308ae277-4c15-4cb0-be86-566cdbbb60e2}</Project>
-      <Name>Macerus.Plugins.Features.GameObjects.Items.Generation.Normal</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj">
-      <Project>{8367961f-d4ec-4265-95a3-b4008af9ecc6}</Project>
-      <Name>Macerus.Shared.Behaviors</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>rmdir /S /Q "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
 mkdir "C:\dev\nexus\products\macerus\macerus-game\Dependencies\projectxyz"
@@ -87,11 +43,16 @@ robocopy /R:0 /E "C:\dev\nexus\products\macerus\macerus-game\..\..\..\libraries\
 set rce=%25errorlevel%25
 if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
+    <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
+    <ProjectReference Include="..\Macerus.Game.GameObjects.Autofac\Macerus.Game.GameObjects.Autofac.csproj" />
+    <ProjectReference Include="..\Macerus.Game.GameObjects\Macerus.Game.GameObjects.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Content.Wip\Macerus.Plugins.Content.Wip.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal.csproj" />
+    <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj" />
+  </ItemGroup>
 </Project>
