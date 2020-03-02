@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ProjectXyz.Api.Framework;
@@ -10,6 +11,18 @@ namespace Macerus.Plugins.Content.Wip.Stats
 {
     public static class StatDefinitions
     {
+        private static Lazy<IReadOnlyCollection<IIdentifier>> _lazyAllStats = new Lazy<IReadOnlyCollection<IIdentifier>>(() =>
+            {
+                return typeof(StatDefinitions)
+                    .GetProperties(BindingFlags.Static | BindingFlags.Public)
+                    .Where(p => p.PropertyType == typeof(IIdentifier))
+                    .Select(p => p.GetValue(null))
+                    .Cast<IIdentifier>()
+                    .ToArray();
+            });
+
+        public static IReadOnlyCollection<IIdentifier> All => _lazyAllStats.Value;
+
         public static IIdentifier MaximumLife { get; } = new StringIdentifier("Maximum Life");
 
         public static IIdentifier CurrentLife { get; } = new StringIdentifier("Current Life");

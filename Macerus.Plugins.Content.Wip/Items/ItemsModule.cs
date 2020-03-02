@@ -4,8 +4,8 @@ using ProjectXyz.Api.GameObjects.Generation.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 using ProjectXyz.Framework.Autofac;
+using Macerus.Plugins.Content.Wip.Enchantments;
 
 namespace Macerus.Plugins.Content.Wip.Items
 {
@@ -21,41 +21,32 @@ namespace Macerus.Plugins.Content.Wip.Items
                         new ItemDefinition(
                             new[]
                             {
-                                new GeneratorAttribute(
-                                    new StringIdentifier("affix-type"),
-                                    new StringGeneratorAttributeValue("normal"),
-                                    true),
+                                EnchantmentGeneratorAttributes.AllowsMagicAffix,
                             },
                             new IGeneratorComponent[]
                             {
-                               new NameGeneratorComponent("Normal Gloves"),
+                               new NameGeneratorComponent("Gloves"),
                                new IconGeneratorComponent(@"graphics\items\gloves\leather gloves"),
                                new EquippableGeneratorComponent(new[] { new StringIdentifier("hands") }),
                             }),
                         new ItemDefinition(
                             new[]
                             {
-                                new GeneratorAttribute(
-                                    new StringIdentifier("affix-type"),
-                                    new StringGeneratorAttributeValue("normal"),
-                                    true),
+                                EnchantmentGeneratorAttributes.AllowsMagicAffix,
                             },
                             new IGeneratorComponent[]
                             {
-                                new NameGeneratorComponent("Normal Helm"),
+                                new NameGeneratorComponent("Helm"),
                                 new EquippableGeneratorComponent(new[] { new StringIdentifier("head") }),
                             }),
                         new ItemDefinition(
                             new[]
                             {
-                                new GeneratorAttribute(
-                                    new StringIdentifier("affix-type"),
-                                    new StringGeneratorAttributeValue("magic"),
-                                    true),
+                                EnchantmentGeneratorAttributes.RequiresNormalAffix
                             },
                             new[]
                             {
-                                new NameGeneratorComponent("Magic Junk"),
+                                new NameGeneratorComponent("Junk"),
                             }),
                     };
                     var itemDefinitionRepository = new InMemoryItemDefinitionRepository(

@@ -1,11 +1,10 @@
 ﻿using Autofac;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Api.GameObjects.Generation.Attributes;
-using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Shared.Game.GameObjects.Enchantments.Generation.InMemory;
 using Macerus.Plugins.Content.Wip.Stats;
+using ProjectXyz.Shared.Game.GameObjects.Enchantments.Calculations;
 
 namespace Macerus.Plugins.Content.Wip.Enchantments
 {
@@ -16,6 +15,14 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
             builder
                 .Register(c =>
                 {
+                    // FIXME: it's totally a smell that we have a stat
+                    // definition ID per enchantment when we have things like
+                    // expressions that are responsible for that stat ID.
+                    // notice the double reference to a stat ID per
+                    // enchantment (but i guess this is because the expression
+                    // must get assigned to only one stat id).
+                    // See this class for related comments:
+                    // ProjectXyz.Shared.Game.GameObjects.Enchantments.EnchantmentFactory
                     var enchantmentDefinitions = new[]
                     {
                         new EnchantmentDefinition(
@@ -28,6 +35,11 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
                                 new HasStatGeneratorComponent(StatDefinitions.MaximumLife),
                                 new HasPrefixGeneratorComponent(Affixes.Prefixes.Lively),
                                 new HasSuffixGeneratorComponent(Affixes.Suffixes.OfLife),
+                                new RandomRangeExpressionGeneratorComponent(
+                                    StatDefinitions.MaximumLife,
+                                    "+",
+                                    new CalculationPriority<int>(1),
+                                    1, 10)
                             }),
                         new EnchantmentDefinition(
                             new[]
@@ -39,6 +51,11 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
                                 new HasStatGeneratorComponent(StatDefinitions.MaximumMana),
                                 new HasPrefixGeneratorComponent(Affixes.Prefixes.Magic),
                                 new HasSuffixGeneratorComponent(Affixes.Suffixes.OfMana),
+                                new RandomRangeExpressionGeneratorComponent(
+                                    StatDefinitions.MaximumMana,
+                                    "+",
+                                    new CalculationPriority<int>(1),
+                                    1, 10)
                             }),
                     };
                     var repository = new InMemoryEnchantmentDefinitionRepository(
@@ -61,6 +78,10 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
+                .RegisterType<RandomRangeExpressionGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<ValueMapperRepository>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
@@ -69,13 +90,5 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
                .AsImplementedInterfaces()
                .SingleInstance();
         }
-    }
-
-    public static class EnchantmentGeneratorAttributes
-    {
-        public static IGeneratorAttribute RequiresMagicAffix { get; } = new GeneratorAttribute(
-            new StringIdentifier("affix-type"),
-            new StringGeneratorAttributeValue("magic"),
-            true);
     }
 }

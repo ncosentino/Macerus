@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ProjectXyz.Plugins.Features.ExpressionEnchantments.Api;
 
-namespace Macerus.Plugins.Content.Wip
+namespace Macerus.Plugins.Content.Wip.Enchantments
 {
     public sealed class ValueMapperRepository : IValueMapperRepository
     {

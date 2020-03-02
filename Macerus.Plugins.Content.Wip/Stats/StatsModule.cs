@@ -11,6 +11,10 @@ namespace Macerus.Plugins.Content.Wip.Stats
                 .RegisterType<StatDefinitionIdToBoundsMappingRepository>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<StatDefinitionToTermMappingRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

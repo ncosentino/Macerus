@@ -25,6 +25,9 @@
       <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Behaviors.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="ProjectXyz.Api.Enchantments">
+      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Enchantments.dll</HintPath>
+    </Reference>
     <Reference Include="ProjectXyz.Api.Enchantments.Generation">
       <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Enchantments.Generation.dll</HintPath>
     </Reference>
@@ -34,6 +37,9 @@
     </Reference>
     <Reference Include="ProjectXyz.Api.GameObjects.Generation">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.Generation.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Api.Stats">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Stats.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Framework.Autofac">
       <HintPath>..\Dependencies\projectxyz\ProjectXyz.Framework.Autofac.dll</HintPath>
@@ -70,6 +76,9 @@
     </Reference>
     <Reference Include="ProjectXyz.Shared.Game.Behaviors">
       <HintPath>..\Dependencies\projectxyz\ProjectXyz.Shared.Game.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="ProjectXyz.Shared.Game.GameObjects.Enchantments">
+      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Shared.Game.GameObjects.Enchantments.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Shared.Game.GameObjects.Enchantments.Generation.InMemory">
       <HintPath>..\Dependencies\projectxyz\ProjectXyz.Shared.Game.GameObjects.Enchantments.Generation.InMemory.dll</HintPath>
