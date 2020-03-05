@@ -5,6 +5,10 @@ using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Shared.Game.GameObjects.Enchantments.Generation.InMemory;
 using Macerus.Plugins.Content.Wip.Stats;
 using ProjectXyz.Shared.Game.GameObjects.Enchantments.Calculations;
+using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
+using ProjectXyz.Shared.Framework;
+using ProjectXyz.Api.Enchantments.Generation;
+using ProjectXyz.Api.Framework;
 
 namespace Macerus.Plugins.Content.Wip.Enchantments
 {
@@ -25,38 +29,30 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
                     // ProjectXyz.Shared.Game.GameObjects.Enchantments.EnchantmentFactory
                     var enchantmentDefinitions = new[]
                     {
-                        new EnchantmentDefinition(
-                            new[]
-                            {
-                                EnchantmentGeneratorAttributes.RequiresMagicAffix,
-                            },
-                            new IGeneratorComponent[]
-                            {
-                                new HasStatGeneratorComponent(StatDefinitions.MaximumLife),
-                                new HasPrefixGeneratorComponent(Affixes.Prefixes.Lively),
-                                new HasSuffixGeneratorComponent(Affixes.Suffixes.OfLife),
-                                new RandomRangeExpressionGeneratorComponent(
-                                    StatDefinitions.MaximumLife,
-                                    "+",
-                                    new CalculationPriority<int>(1),
-                                    1, 10)
-                            }),
-                        new EnchantmentDefinition(
-                            new[]
-                            {
-                                EnchantmentGeneratorAttributes.RequiresMagicAffix,
-                            },
-                            new IGeneratorComponent[]
-                            {
-                                new HasStatGeneratorComponent(StatDefinitions.MaximumMana),
-                                new HasPrefixGeneratorComponent(Affixes.Prefixes.Magic),
-                                new HasSuffixGeneratorComponent(Affixes.Suffixes.OfMana),
-                                new RandomRangeExpressionGeneratorComponent(
-                                    StatDefinitions.MaximumMana,
-                                    "+",
-                                    new CalculationPriority<int>(1),
-                                    1, 10)
-                            }),
+                        EnchantmentTemplate.CreateMagicRangeEnchantment(
+                            StatDefinitions.MaximumLife,
+                            Affixes.Prefixes.Lively,
+                            Affixes.Suffixes.OfLife,
+                            1,
+                            15,
+                            0,
+                            20),
+                        EnchantmentTemplate.CreateMagicRangeEnchantment(
+                            StatDefinitions.MaximumLife,
+                            Affixes.Prefixes.Hearty,
+                            Affixes.Suffixes.OfHeart,
+                            16,
+                            50,
+                            10,
+                            30),
+                        EnchantmentTemplate.CreateMagicRangeEnchantment(
+                            StatDefinitions.MaximumMana,
+                            Affixes.Prefixes.Magic,
+                            Affixes.Suffixes.OfMana,
+                            1,
+                            15,
+                            0,
+                            10),
                     };
                     var repository = new InMemoryEnchantmentDefinitionRepository(
                         c.Resolve<IAttributeFilterer>(),
@@ -89,6 +85,41 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
                .RegisterType<StateIdToTermRepo>()
                .AsImplementedInterfaces()
                .SingleInstance();
+        }
+    }
+
+    public static class EnchantmentTemplate
+    {
+        public static IEnchantmentDefinition CreateMagicRangeEnchantment(
+            IIdentifier statDefinitionId,
+            IIdentifier prefixId,
+            IIdentifier suffixId,
+            double minValue,
+            double maxValue,
+            double minLevel,
+            double maxLevel)
+        {
+            var enchantmentDefinition = new EnchantmentDefinition(
+                new[]
+                {
+                    EnchantmentGeneratorAttributes.RequiresMagicAffix,
+                    new GeneratorAttribute(
+                        new StringIdentifier("item-level"),
+                        new RangeGeneratorAttributeValue(minLevel, maxLevel),
+                        true),
+                },
+                new IGeneratorComponent[]
+                {
+                    new HasStatGeneratorComponent(statDefinitionId),
+                    new HasPrefixGeneratorComponent(prefixId),
+                    new HasSuffixGeneratorComponent(suffixId),
+                    new RandomRangeExpressionGeneratorComponent(
+                        statDefinitionId,
+                        "+",
+                        new CalculationPriority<int>(1),
+                        minValue, maxValue)
+                });
+            return enchantmentDefinition;
         }
     }
 }

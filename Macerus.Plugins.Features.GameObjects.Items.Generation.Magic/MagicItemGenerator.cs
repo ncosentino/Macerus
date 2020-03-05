@@ -6,6 +6,7 @@ using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.Framework.Collections;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Api.GameObjects.Generation.Attributes;
@@ -21,6 +22,15 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 {
     public sealed class MagicItemGenerator : IDiscoverableItemGenerator
     {
+        private static readonly IGeneratorAttribute RequiresMagicAffix = new GeneratorAttribute(
+            new StringIdentifier("affix-type"),
+            new StringGeneratorAttributeValue("magic"),
+            true);
+        private static readonly IGeneratorAttribute RequiresNormalAffix = new GeneratorAttribute(
+            new StringIdentifier("affix-type"),
+            new StringGeneratorAttributeValue("normal"),
+            true);
+
         private readonly IRandomNumberGenerator _randomNumberGenerator;
         private readonly IBaseItemGenerator _baseItemGenerator;
         private readonly IEnchantmentGenerator _enchantmentGenerator;
@@ -49,7 +59,9 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                 generatorContext
                     .Attributes
                     .Where(x => !SupportedAttributes.Any(s => s.Id.Equals(x.Id)))
-                    .Concat(SupportedAttributes));
+                    .Concat(SupportedAttributes)
+                    .Where(x => x != RequiresMagicAffix)
+                    .Append(RequiresNormalAffix));
             var baseItems = _baseItemGenerator.GenerateItems(magicItemGeneratorContext);
 
             foreach (var baseItem in baseItems)
@@ -102,10 +114,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 
         public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; } = new IGeneratorAttribute[]
         {
-            new GeneratorAttribute(
-                new StringIdentifier("affix-type"),
-                new StringGeneratorAttributeValue("magic"),
-                true),
+            RequiresMagicAffix,
         };
 
         private IHasInventoryDisplayName GenerateName(

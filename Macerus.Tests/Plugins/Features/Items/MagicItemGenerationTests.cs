@@ -35,7 +35,11 @@ namespace Macerus.Tests.Plugins.Features.Items
                 new GeneratorAttribute(
                     new StringIdentifier("affix-type"),
                     new StringGeneratorAttributeValue("magic"),
-                    false));
+                    true),
+                new GeneratorAttribute(
+                    new StringIdentifier("item-level"),
+                    new DoubleGeneratorAttributeValue(5),
+                    true));
             var generatedItems = itemGenerator
                 .GenerateItems(itemGenerationContext)
                 .ToArray();
