@@ -1,48 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  
   <PropertyGroup>
-    <ProjectGuid>{8F665659-A11D-4B52-8401-294615AC2636}</ProjectGuid>
     <TargetFramework>net46</TargetFramework>
-    <AssemblyTitle>Macerus</AssemblyTitle>
-    <Product>Macerus</Product>
-    <Copyright>Copyright ©  2018</Copyright>
-    <AssemblyTitle>Macerus</AssemblyTitle>
-    <Product>Macerus</Product>
-    <Copyright>Copyright ©  2018</Copyright>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <PreBuildEvent>rmdir /S /Q "$(SolutionDir)Dependencies\projectxyz"
-mkdir "$(SolutionDir)Dependencies\projectxyz"
-
-robocopy /R:0 /E "$(SolutionDir)..\..\..\libraries\projectxyz\ConsoleApplication1\bin\Debug\net46" "$(SolutionDir)Dependencies\projectxyz"
-set rce=%25errorlevel%25
-if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
-    <PreBuildEvent>rmdir /S /Q "$(SolutionDir)Dependencies\projectxyz"
-mkdir "$(SolutionDir)Dependencies\projectxyz"
-
-robocopy /R:0 /E "$(SolutionDir)..\..\..\libraries\projectxyz\ConsoleApplication1\bin\Debug\net46" "$(SolutionDir)Dependencies\projectxyz"
-set rce=%25errorlevel%25
-if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
-    <PreBuildEvent>rmdir /S /Q "$(SolutionDir)Dependencies\projectxyz"
-mkdir "$(SolutionDir)Dependencies\projectxyz"
-
-robocopy /R:0 /E "$(SolutionDir)..\..\..\libraries\projectxyz\ConsoleApplication1\bin\Debug\net46" "$(SolutionDir)Dependencies\projectxyz"
-set rce=%25errorlevel%25
-if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <Deterministic>true</Deterministic>
+    <Authors>Nexus Software Labs</Authors>
+    <Copyright>Copyright © Nexus Software Labs 2020</Copyright>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>rmdir /S /Q "$(SolutionDir)Dependencies\projectxyz"
-mkdir "$(SolutionDir)Dependencies\projectxyz"
 
-robocopy /R:0 /E "$(SolutionDir)..\..\..\libraries\projectxyz\ConsoleApplication1\bin\Debug\net46" "$(SolutionDir)Dependencies\projectxyz"
-set rce=%25errorlevel%25
-if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
-  </PropertyGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="REM ------&#xD;&#xA;REM This approach packs directly to your local nuget repo&#xD;&#xA;REM ------&#xD;&#xA;nuget pack $(ProjectFileName) -Symbols -IncludeReferencedProjects -OutputDirectory &quot;$(SolutionDir)..\..\..\nuget-repo&quot; -properties Configuration=$(ConfigurationName)" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="ProjectXyz" Version="1.0.0" />
+  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
     <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
@@ -55,4 +36,5 @@ if not %25rce%25==1 exit %25rce%25 else exit 0</PreBuildEvent>
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal.csproj" />
     <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj" />
   </ItemGroup>
+
 </Project>

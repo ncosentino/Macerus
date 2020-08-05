@@ -40,7 +40,9 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="Castle.Core" Version="4.4.0" />
+    <PackageReference Include="Jace" Version="0.8.7" />
     <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="ProjectXyz" Version="1.0.0" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.0" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -55,55 +57,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ProjectXyz.Api.Behaviors, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Behaviors.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.Enchantments">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Enchantments.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.Framework">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.GameObjects">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.GameObjects.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.GameObjects.Generation, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.Generation.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.Logging, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Logging.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="ProjectXyz.Framework.Autofac, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Framework.Autofac.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="ProjectXyz.Game.Core.Autofac, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Game.Core.Autofac.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="ProjectXyz.Plugins.Features.CommonBehaviors.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Plugins.Features.CommonBehaviors.Api.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Items.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Plugins.Features.GameObjects.Items.Api.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="ProjectXyz.Shared.Framework, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Framework.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="ProjectXyz.Shared.Framework.Autofac, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Shared.Framework.Autofac.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="ProjectXyz.Shared.Game.GameObjects.Generation, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Game.GameObjects.Generation.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
