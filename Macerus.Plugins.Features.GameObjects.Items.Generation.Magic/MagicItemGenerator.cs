@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
@@ -90,17 +91,23 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                     additionalBehaviors.Add(new HasEnchantmentsBehavior(activeEnchantmentManager));
                 }
 
+                var attributes = magicItemGeneratorContext
+                    .Attributes
+                    .Where(x => !SupportedAttributes.Any(s => s.Id.Equals(x.Id)))
+                    .Concat(SupportedAttributes);
                 var enchantmentGeneratorContext = new GeneratorContext(
                     1,
                     2,
-                    magicItemGeneratorContext
-                        .Attributes
-                        .Where(x => !SupportedAttributes.Any(s => s.Id.Equals(x.Id)))
-                        .Concat(SupportedAttributes));
-
+                    attributes);
                 var enchantments = _enchantmentGenerator
                     .GenerateEnchantments(enchantmentGeneratorContext)
                     .ToArray();
+                if (!enchantments.Any())
+                {
+                    throw new InvalidOperationException(
+                        $"No enchantments were added to the base item.");
+                }
+
                 enchantable.AddEnchantments(enchantments);
 
                 additionalBehaviors.Add(GenerateName(

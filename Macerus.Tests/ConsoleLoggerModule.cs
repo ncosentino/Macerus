@@ -21,10 +21,10 @@ namespace Macerus.Tests
 
             public void Debug(string message, object data)
             {
-                Console.WriteLine($"DEBUG: {message}");
+                System.Diagnostics.Debug.WriteLine($"DEBUG: {message}");
                 if (data != null)
                 {
-                    Console.WriteLine($"\t{data}");
+                    System.Diagnostics.Debug.WriteLine($"\t{data}");
                 }
             }
 
