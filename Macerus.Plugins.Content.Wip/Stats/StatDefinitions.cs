@@ -30,5 +30,15 @@ namespace Macerus.Plugins.Content.Wip.Stats
         public static IIdentifier MaximumMana { get; } = new StringIdentifier("Maximum Mana");
 
         public static IIdentifier CurrentMana { get; } = new StringIdentifier("Current Mana");
+
+        public static IIdentifier LightRadiusRadius { get; } = new StringIdentifier("Light Radius Radius");
+
+        public static IIdentifier LightRadiusIntensity { get; } = new StringIdentifier("Light Radius Intensity");
+
+        public static IIdentifier LightRadiusRed { get; } = new StringIdentifier("Light Radius Red");
+
+        public static IIdentifier LightRadiusGreen { get; } = new StringIdentifier("Light Radius Green");
+
+        public static IIdentifier LightRadiusBlue { get; } = new StringIdentifier("Light Radius Blue");
     }
 }

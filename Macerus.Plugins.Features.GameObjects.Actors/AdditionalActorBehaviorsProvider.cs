@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+
 using Macerus.Shared.Behaviors;
+
 using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.Framework.Collections;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
@@ -16,14 +19,22 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             yield return new MovementBehavior();
             yield return new ItemContainerBehavior(new StringIdentifier("Inventory"));
             yield return new ItemContainerBehavior(new StringIdentifier("Belt"));
-            yield return new LightRadiusBehavior()
+            yield return new CanEquipBehavior(new[]
             {
-                Red = 1,
-                Green = 0,
-                Blue = 1,
-                Radius = 10,
-                Intensity = 0.5,
-            };
+                new StringIdentifier("head"),
+                new StringIdentifier("body"),
+                new StringIdentifier("left hand"),
+                new StringIdentifier("right hand"),
+                new StringIdentifier("amulet"),
+                new StringIdentifier("ring1"),
+                new StringIdentifier("ring2"),
+                new StringIdentifier("shoulders"),
+                new StringIdentifier("hands"),
+                new StringIdentifier("waist"),
+                new StringIdentifier("feet"),
+                new StringIdentifier("legs"),
+                new StringIdentifier("back"),
+            });
         }
     }
 }

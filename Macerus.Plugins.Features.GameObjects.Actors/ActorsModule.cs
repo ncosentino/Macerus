@@ -14,6 +14,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
+                .RegisterType<ActorBehaviorsInterceptor>()
+                .AsImplementedInterfaces()
+                .SingleInstance();            
+            builder
                 .RegisterType<ActorMovementSystem>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
