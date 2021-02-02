@@ -1,7 +1,6 @@
 ﻿using System;
 
-using Macerus.Plugins.Features.Data.Api;
-
+using ProjectXyz.Api.Data.Databases;
 using ProjectXyz.Api.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.MySql
