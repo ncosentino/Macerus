@@ -19,7 +19,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-    <PackageReference Include="ProjectXyz" Version="1.0.0" />
+    <PackageReference Include="ProjectXyz" Version="1.0.0.14231" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ProjectXyz.Api.Behaviors">
