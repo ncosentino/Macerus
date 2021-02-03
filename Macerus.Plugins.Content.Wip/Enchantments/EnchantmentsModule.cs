@@ -9,6 +9,8 @@ using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 using ProjectXyz.Shared.Framework;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Macerus.Plugins.Content.Wip.Enchantments
 {
@@ -120,6 +122,21 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
                         minValue, maxValue)
                 });
             return enchantmentDefinition;
+        }
+
+        public sealed class EnchantmentDefinition : IEnchantmentDefinition
+        {
+            public EnchantmentDefinition(
+                IEnumerable<IGeneratorAttribute> attributes,
+                IEnumerable<IGeneratorComponent> generatorComponents)
+            {
+                SupportedAttributes = attributes.ToArray();
+                GeneratorComponents = generatorComponents.ToArray();
+            }
+
+            public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; }
+
+            public IEnumerable<IGeneratorComponent> GeneratorComponents { get; }
         }
     }
 }

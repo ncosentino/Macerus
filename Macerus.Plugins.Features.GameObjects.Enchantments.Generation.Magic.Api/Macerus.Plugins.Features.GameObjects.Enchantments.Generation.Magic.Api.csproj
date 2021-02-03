@@ -18,12 +18,9 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ProjectXyz.Api.Behaviors">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Behaviors.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.Framework">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Framework.dll</HintPath>
-    </Reference>
+    <PackageReference Include="ProjectXyz" Version="1.0.0.14411" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
