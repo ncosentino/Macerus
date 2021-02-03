@@ -21,36 +21,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="ProjectXyz.Api.Behaviors, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Behaviors.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.Framework">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.GameObjects">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.GameObjects.Generation">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.Generation.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Framework.Autofac">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Framework.Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Items.Api">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Plugins.Features.GameObjects.Items.Api.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Shared.Framework">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Shared.Game.Behaviors">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Shared.Game.Behaviors.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Shared.Game.GameObjects.Generation">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Game.GameObjects.Generation.dll</HintPath>
-    </Reference>
+    <PackageReference Include="ProjectXyz" Version="1.0.0.40403" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Behaviors\Macerus.Plugins.Features.GameObjects.Items.Behaviors.csproj" />

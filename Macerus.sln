@@ -47,6 +47,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Enchantments", "Enchantment
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.Api", "Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.Api\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.Api.csproj", "{DB7D1C3F-7E73-4AB5-BE7B-9ED75A782A0C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Data.MySql", "Macerus.Plugins.Data.MySql\Macerus.Plugins.Data.MySql.csproj", "{1F88ADFE-4E7D-4E0B-BADC-ACDB9E730741}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{547493C6-791A-4655-9C7D-DC86A7B09F52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +113,10 @@ Global
 		{DB7D1C3F-7E73-4AB5-BE7B-9ED75A782A0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB7D1C3F-7E73-4AB5-BE7B-9ED75A782A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB7D1C3F-7E73-4AB5-BE7B-9ED75A782A0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F88ADFE-4E7D-4E0B-BADC-ACDB9E730741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F88ADFE-4E7D-4E0B-BADC-ACDB9E730741}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F88ADFE-4E7D-4E0B-BADC-ACDB9E730741}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F88ADFE-4E7D-4E0B-BADC-ACDB9E730741}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,6 +138,8 @@ Global
 		{9B17885E-B486-431E-B59B-078A9BE6BDD2} = {DBB8AA2F-D157-4B10-9EE8-4179D4019FB6}
 		{49F8D13C-7B94-4AD4-9D4E-5B8F15485981} = {33A6C169-52DA-446B-A241-FEC05722752A}
 		{DB7D1C3F-7E73-4AB5-BE7B-9ED75A782A0C} = {49F8D13C-7B94-4AD4-9D4E-5B8F15485981}
+		{1F88ADFE-4E7D-4E0B-BADC-ACDB9E730741} = {547493C6-791A-4655-9C7D-DC86A7B09F52}
+		{547493C6-791A-4655-9C7D-DC86A7B09F52} = {02697BA7-B9A9-4A86-BF6F-E0727BCA4850}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}

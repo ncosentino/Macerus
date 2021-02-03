@@ -19,42 +19,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="ProjectXyz.Api.Behaviors, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Behaviors.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.Framework">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.Framework.Entities">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Api.Framework.Entities.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.GameObjects">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.GameObjects.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Api.Systems">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Systems.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Framework.Autofac">
-      <HintPath>..\Dependencies\projectxyz\ProjectXyz.Framework.Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Plugins.Features.CommonBehaviors">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Plugins.Features.CommonBehaviors.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Plugins.Features.CommonBehaviors.Api">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Plugins.Features.CommonBehaviors.Api.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Actors.Api">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Plugins.Features.GameObjects.Actors.Api.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Shared.Framework">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectXyz.Shared.Game.Behaviors">
-      <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Shared.Game.Behaviors.dll</HintPath>
-    </Reference>
+    <PackageReference Include="ProjectXyz" Version="1.0.0.40403" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
