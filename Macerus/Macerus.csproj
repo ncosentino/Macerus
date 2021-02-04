@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net46</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.0.*</AssemblyVersion>
-    <Deterministic>false</Deterministic>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Deterministic>true</Deterministic>
     <Authors>Nexus Software Labs</Authors>
     <Copyright>Copyright © Nexus Software Labs 2020</Copyright>
   </PropertyGroup>
@@ -21,11 +21,11 @@
       <Output TaskParameter="Assemblies" ItemName="CurrentAssembly" />
     </GetAssemblyIdentity>
     <!--NOTE: editing this following block in VS visual editor can break the formatting.-->
-    <Exec Command="REM ------&#xD;&#xA;REM This approach packs to your bin, then copies&#xD;&#xA;REM ------&#xD;&#xA;REM del &quot;$(TargetDir)*.nupkg&quot;&#xD;&#xA;REM nuget pack $(ProjectFileName) -Symbols -IncludeReferencedProjects -OutputDirectory &quot;$(OutDir)\&quot; -properties Configuration=$(ConfigurationName)&#xD;&#xA;REM xcopy &quot;$(TargetDir)*.nupkg&quot; &quot;$(SolutionDir)..\..\nuget-repo&quot; /C /Y&#xD;&#xA;&#xD;&#xA;REM ------&#xD;&#xA;REM This approach packs directly to your local nuget repo&#xD;&#xA;REM ------&#xD;&#xA;nuget pack $(ProjectFileName) -Symbols -IncludeReferencedProjects -OutputDirectory &quot;$(SolutionDir)..\..\..\nuget-repo&quot; -Version %(CurrentAssembly.Version) -properties Configuration=$(ConfigurationName)" />
+    <Exec Command="FOR /F &quot;tokens=* USEBACKQ&quot; %25%25F IN (`$(ProjectDir)GenerateProjectAssemblyVersion.exe $(ProjectDir)$(ProjectFileName)`) DO (&#xD;&#xA;SET generatedVersion=%25%25F&#xD;&#xA;)&#xD;&#xA;ECHO Generated Version: %25generatedVersion%25&#xD;&#xA;&#xD;&#xA;nuget pack $(ProjectFileName) -Symbols -IncludeReferencedProjects -OutputDirectory &quot;$(SolutionDir)..\..\..\nuget-repo&quot; -Version %25generatedVersion%25 -properties Configuration=$(ConfigurationName)" />
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.0.40403" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7705.30907" />
   </ItemGroup>
   
   <ItemGroup>

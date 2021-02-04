@@ -18,7 +18,7 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.0.40403" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7705.30907" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />
