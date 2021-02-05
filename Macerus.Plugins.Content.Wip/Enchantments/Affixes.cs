@@ -15,7 +15,7 @@ namespace Macerus.Plugins.Content.Wip.Stats
         {
             private static Lazy<IReadOnlyCollection<IIdentifier>> _lazyAll = new Lazy<IReadOnlyCollection<IIdentifier>>(() =>
             {
-                return typeof(StatDefinitions)
+                return typeof(Prefixes)
                     .GetProperties(BindingFlags.Static | BindingFlags.Public)
                     .Where(p => p.PropertyType == typeof(IIdentifier))
                     .Select(p => p.GetValue(null))
@@ -36,7 +36,7 @@ namespace Macerus.Plugins.Content.Wip.Stats
         {
             private static Lazy<IReadOnlyCollection<IIdentifier>> _lazyAll = new Lazy<IReadOnlyCollection<IIdentifier>>(() =>
             {
-                return typeof(StatDefinitions)
+                return typeof(Suffixes)
                     .GetProperties(BindingFlags.Static | BindingFlags.Public)
                     .Where(p => p.PropertyType == typeof(IIdentifier))
                     .Select(p => p.GetValue(null))

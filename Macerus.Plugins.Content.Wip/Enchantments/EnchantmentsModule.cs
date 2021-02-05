@@ -18,51 +18,51 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
-            builder
-                .Register(c =>
-                {
-                    // FIXME: it's totally a smell that we have a stat
-                    // definition ID per enchantment when we have things like
-                    // expressions that are responsible for that stat ID.
-                    // notice the double reference to a stat ID per
-                    // enchantment (but i guess this is because the expression
-                    // must get assigned to only one stat id).
-                    // See this class for related comments:
-                    // ProjectXyz.Shared.Game.GameObjects.Enchantments.EnchantmentFactory
-                    var enchantmentDefinitions = new[]
-                    {
-                        EnchantmentTemplate.CreateMagicRangeEnchantment(
-                            StatDefinitions.MaximumLife,
-                            Affixes.Prefixes.Lively,
-                            Affixes.Suffixes.OfLife,
-                            1,
-                            15,
-                            0,
-                            20),
-                        EnchantmentTemplate.CreateMagicRangeEnchantment(
-                            StatDefinitions.MaximumLife,
-                            Affixes.Prefixes.Hearty,
-                            Affixes.Suffixes.OfHeart,
-                            16,
-                            50,
-                            10,
-                            30),
-                        EnchantmentTemplate.CreateMagicRangeEnchantment(
-                            StatDefinitions.MaximumMana,
-                            Affixes.Prefixes.Magic,
-                            Affixes.Suffixes.OfMana,
-                            1,
-                            15,
-                            0,
-                            10),
-                    };
-                    var repository = new InMemoryEnchantmentDefinitionRepository(
-                        c.Resolve<IAttributeFilterer>(),
-                        enchantmentDefinitions);
-                    return repository;
-                })
-                .SingleInstance()
-                .AsImplementedInterfaces();
+            ////builder
+            ////    .Register(c =>
+            ////    {
+            ////        // FIXME: it's totally a smell that we have a stat
+            ////        // definition ID per enchantment when we have things like
+            ////        // expressions that are responsible for that stat ID.
+            ////        // notice the double reference to a stat ID per
+            ////        // enchantment (but i guess this is because the expression
+            ////        // must get assigned to only one stat id).
+            ////        // See this class for related comments:
+            ////        // ProjectXyz.Shared.Game.GameObjects.Enchantments.EnchantmentFactory
+            ////        var enchantmentDefinitions = new[]
+            ////        {
+            ////            EnchantmentTemplate.CreateMagicRangeEnchantment(
+            ////                StatDefinitions.MaximumLife,
+            ////                Affixes.Prefixes.Lively,
+            ////                Affixes.Suffixes.OfLife,
+            ////                1,
+            ////                15,
+            ////                0,
+            ////                20),
+            ////            EnchantmentTemplate.CreateMagicRangeEnchantment(
+            ////                StatDefinitions.MaximumLife,
+            ////                Affixes.Prefixes.Hearty,
+            ////                Affixes.Suffixes.OfHeart,
+            ////                16,
+            ////                50,
+            ////                10,
+            ////                30),
+            ////            EnchantmentTemplate.CreateMagicRangeEnchantment(
+            ////                StatDefinitions.MaximumMana,
+            ////                Affixes.Prefixes.Magic,
+            ////                Affixes.Suffixes.OfMana,
+            ////                1,
+            ////                15,
+            ////                0,
+            ////                10),
+            ////        };
+            ////        var repository = new InMemoryEnchantmentDefinitionRepository(
+            ////            c.Resolve<IAttributeFilterer>(),
+            ////            enchantmentDefinitions);
+            ////        return repository;
+            ////    })
+            ////    .SingleInstance()
+            ////    .AsImplementedInterfaces();
             builder
                 .RegisterType<HasStatGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
@@ -129,14 +129,19 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
             public EnchantmentDefinition(
                 IEnumerable<IGeneratorAttribute> attributes,
                 IEnumerable<IGeneratorComponent> generatorComponents)
+                : this()
             {
                 SupportedAttributes = attributes.ToArray();
                 GeneratorComponents = generatorComponents.ToArray();
             }
 
-            public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; }
+            public EnchantmentDefinition() // serialization constructor
+            {
+            }
 
-            public IEnumerable<IGeneratorComponent> GeneratorComponents { get; }
+            public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; set; }
+
+            public IEnumerable<IGeneratorComponent> GeneratorComponents { get; set; }
         }
     }
 }

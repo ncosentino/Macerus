@@ -13,8 +13,8 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
             StatDefinitionId = statDefinitionId;
         }
 
-        public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; } = Enumerable.Empty<IGeneratorAttribute>();
+        public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; set; } = Enumerable.Empty<IGeneratorAttribute>();
 
-        public IIdentifier StatDefinitionId { get; }
+        public IIdentifier StatDefinitionId { get; set; }
     }
 }

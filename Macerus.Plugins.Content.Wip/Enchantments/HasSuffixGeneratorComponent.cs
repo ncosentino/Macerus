@@ -13,8 +13,8 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
             SuffixId = suffixId;
         }
 
-        public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; } = Enumerable.Empty<IGeneratorAttribute>();
+        public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; set; } = Enumerable.Empty<IGeneratorAttribute>();
 
-        public IIdentifier SuffixId { get; }
+        public IIdentifier SuffixId { get; set; }
     }
 }

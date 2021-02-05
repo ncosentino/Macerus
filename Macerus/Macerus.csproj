@@ -25,7 +25,7 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.7705.30907" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7706.12485" />
   </ItemGroup>
   
   <ItemGroup>

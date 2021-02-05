@@ -1,39 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ProjectXyz.Api.Framework;
+
+using ProjectXyz.Api.Data.Databases;
 using ProjectXyz.Api.Stats;
+using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Wip.Stats
 {
     public sealed class StatDefinitionToTermMappingRepository : IStatDefinitionToTermMappingRepository
     {
-        private static readonly Lazy<IReadOnlyCollection<IStatDefinitionToTermMapping>> _mapping = new Lazy<IReadOnlyCollection<IStatDefinitionToTermMapping>>(() =>
+        private readonly IConnectionFactory _connectionFactory;
+        private readonly Lazy<IReadOnlyCollection<IStatDefinitionToTermMapping>> _lazyCache;
+
+        public StatDefinitionToTermMappingRepository(IConnectionFactory connectionFactory)
         {
-            return StatDefinitions
-                .All
-                .Select(x => new StatDefinitionToTermMapping(
-                    x,
-                    Convert(x)))
-                .ToArray();
-        });
+            _connectionFactory = connectionFactory;
+            _lazyCache = new Lazy<IReadOnlyCollection<IStatDefinitionToTermMapping>>(() =>
+                ReadAll().ToArray());
+        }        
 
-        public IEnumerable<IStatDefinitionToTermMapping> GetStatDefinitionIdToTermMappings() => _mapping.Value;
+        public IEnumerable<IStatDefinitionToTermMapping> GetStatDefinitionIdToTermMappings() => _lazyCache.Value;
 
-        public static string Convert(IIdentifier statDefinitionId) =>
-            statDefinitionId.ToString().Replace(" ", string.Empty);
-
-        private sealed class StatDefinitionToTermMapping : IStatDefinitionToTermMapping
+        private IEnumerable<IStatDefinitionToTermMapping> ReadAll()
         {
-            public StatDefinitionToTermMapping(IIdentifier stateDefinitionId, string term)
+            using (var connection = _connectionFactory.OpenNew())
+            using (var command = connection.CreateCommand())
             {
-                StatDefinitionId = stateDefinitionId;
-                Term = term;
+                command.CommandText = @"
+                SELECT
+                    id,
+                    term
+                FROM
+                    stat_definitions
+                ;";
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var id = reader.GetInt32(reader.GetOrdinal("id"));
+                        var term = reader.GetString(reader.GetOrdinal("term"));
+                        var mapping = new StatDefinitionToTermMapping(
+                            new IntIdentifier(id),
+                            term);
+                        yield return mapping;
+                    }
+                }
             }
-
-            public IIdentifier StatDefinitionId { get; }
-
-            public string Term { get; }
         }
     }
 }
