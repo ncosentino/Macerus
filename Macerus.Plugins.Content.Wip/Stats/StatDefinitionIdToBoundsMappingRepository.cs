@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 
 using ProjectXyz.Api.Data.Databases;
@@ -39,12 +40,15 @@ namespace Macerus.Plugins.Content.Wip.Stats
 
                 using (var reader = command.ExecuteReader())
                 {
+                    var statDefinitionIdColumn = reader.GetOrdinal("stat_definition_id");
+                    var minimumExpressionColumn = reader.GetOrdinal("minimum_expression");
+                    var maximumExpressionColumn = reader.GetOrdinal("maximum_expression");
+
                     while (reader.Read())
                     {
-                        var id = reader.GetInt32(reader.GetOrdinal("id"));
-                        var statDefinitionId = reader.GetInt32(reader.GetOrdinal("stat_definition_id"));
-                        var minimumExpression = reader.GetString(reader.GetOrdinal("minimum_expression"));
-                        var maximumExpression = reader.GetString(reader.GetOrdinal("maximum_expression"));
+                        var statDefinitionId = reader.GetInt32(statDefinitionIdColumn);
+                        var minimumExpression = reader.GetNullableString(minimumExpressionColumn);
+                        var maximumExpression = reader.GetNullableString(maximumExpressionColumn);
                         var mapping = new StatDefinitionIdToBoundsMapping(
                             new IntIdentifier(statDefinitionId),
                             new StatBounds(
