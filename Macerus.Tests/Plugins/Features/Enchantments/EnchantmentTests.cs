@@ -26,7 +26,7 @@ namespace Macerus.Tests.Plugins.Features.Items
             _container = new MacerusContainer();
         }
 
-        [Fact(Skip = "FIXME: this was helpful to prove things out... transform this into validation for what exists"]
+        [Fact(Skip = "FIXME: this was helpful to prove things out... transform this into validation for what exists")]
         public void EnchantmentDefinitions_WriteToRepository_ReadBackFromRepository()
         {
             var statDefinitionToTermMappingRepositories = _container.Resolve<IEnumerable<IStatDefinitionToTermMappingRepository>>();
