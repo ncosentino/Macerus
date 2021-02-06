@@ -30,7 +30,7 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
             var randomRangeExpressionGeneratorComponent = (RandomRangeExpressionGeneratorComponent)generatorComponent;
             var value = _random.NextDouble(
                 randomRangeExpressionGeneratorComponent.MinimumInclusive,
-                randomRangeExpressionGeneratorComponent.MaximumInclusive + 1);
+                randomRangeExpressionGeneratorComponent.MaximumInclusive);
             var term = _statDefinitionToTermConverter[randomRangeExpressionGeneratorComponent.StatDefinitionId];
             var @operator = randomRangeExpressionGeneratorComponent.Operator;
             var expression = $"{term}{@operator}{value}";

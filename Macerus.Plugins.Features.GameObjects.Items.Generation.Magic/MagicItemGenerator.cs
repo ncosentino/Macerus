@@ -62,7 +62,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                     .Where(x => !SupportedAttributes.Any(s => s.Id.Equals(x.Id)))
                     .Concat(SupportedAttributes)
                     .Where(x => x != RequiresMagicAffix)
-                    .Append(RequiresNormalAffix));
+                    .AppendSingle(RequiresNormalAffix));
             var baseItems = _baseItemGenerator.GenerateItems(magicItemGeneratorContext);
 
             foreach (var baseItem in baseItems)
