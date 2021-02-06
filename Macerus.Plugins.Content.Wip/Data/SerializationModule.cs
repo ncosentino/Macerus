@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Autofac;
 
@@ -63,20 +64,6 @@ namespace Macerus.Plugins.Content.Wip.Data
             yield return new KeyValuePair<Type, string>(
                 typeof(IReadOnlyList<T>),
                 $"{shortened}[ReadOnlyList]");
-        }
-    }
-
-    // FIXME: get this from NexusLabs.Collections.Generic nuget package
-    public static class DictionaryExtensions
-    {
-        public static void AddRange<TKey, TValue>(
-            this IDictionary<TKey, TValue> dictionary,
-            IEnumerable<KeyValuePair<TKey, TValue>> items)
-        {
-            foreach (var kvp in items)
-            {
-                dictionary.Add(kvp);
-            }
         }
     }
 }

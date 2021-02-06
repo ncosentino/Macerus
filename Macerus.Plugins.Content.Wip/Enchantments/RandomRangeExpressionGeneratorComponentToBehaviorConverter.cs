@@ -1,4 +1,6 @@
-﻿using ProjectXyz.Api.Behaviors;
+﻿using NexusLabs.Framework;
+
+using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Api.Stats;
@@ -10,14 +12,14 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
 {
     public sealed class RandomRangeExpressionGeneratorComponentToBehaviorConverter : IDiscoverableGeneratorComponentToBehaviorConverter
     {
-        private readonly IRandomNumberGenerator _randomNumberGenerator;
+        private readonly IRandom _random;
         private readonly IStatDefinitionToTermConverter _statDefinitionToTermConverter;
 
         public RandomRangeExpressionGeneratorComponentToBehaviorConverter(
-            IRandomNumberGenerator randomNumberGenerator,
+            IRandom random,
             IStatDefinitionToTermConverter statDefinitionToTermConverter)
         {
-            _randomNumberGenerator = randomNumberGenerator;
+            _random = random;
             _statDefinitionToTermConverter = statDefinitionToTermConverter;
         }
 
@@ -26,9 +28,9 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
         public IEnumerable<IBehavior> Convert(IGeneratorComponent generatorComponent)
         {
             var randomRangeExpressionGeneratorComponent = (RandomRangeExpressionGeneratorComponent)generatorComponent;
-            var value = _randomNumberGenerator.NextInRange(
+            var value = _random.NextDouble(
                 randomRangeExpressionGeneratorComponent.MinimumInclusive,
-                randomRangeExpressionGeneratorComponent.MaximumInclusive);
+                randomRangeExpressionGeneratorComponent.MaximumInclusive + 1);
             var term = _statDefinitionToTermConverter[randomRangeExpressionGeneratorComponent.StatDefinitionId];
             var @operator = randomRangeExpressionGeneratorComponent.Operator;
             var expression = $"{term}{@operator}{value}";

@@ -4,6 +4,8 @@ using System.Linq;
 using Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
+using NexusLabs.Framework;
+
 using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
@@ -12,14 +14,14 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 {
     public sealed class MagicItemNameGenerator : IMagicItemNameGenerator
     {
-        private readonly IRandomNumberGenerator _randomNumberGenerator;
+        private readonly IRandom _random;
         private readonly IMagicAffixRepository _magicAffixRepository;
 
         public MagicItemNameGenerator(
-            IRandomNumberGenerator randomNumberGenerator,
+            IRandom random,
             IMagicAffixRepository magicAffixRepository)
         {
-            _randomNumberGenerator = randomNumberGenerator;
+            _random = random;
             _magicAffixRepository = magicAffixRepository;
         }
 
@@ -42,12 +44,12 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             var baseDisplayName = baseItem.GetOnly<IHasInventoryDisplayName>();
             if (enchantments.Count == 1)
             {
-                return new HasInventoryDisplayName(_randomNumberGenerator.NextDouble() >= 0.5
+                return new HasInventoryDisplayName(_random.NextDouble(0, 1) >= 0.5
                     ? $"{baseDisplayName.DisplayName} {_magicAffixRepository.GetAffix(suffixes.Single().Value.SuffixId)}"
                     : $"{_magicAffixRepository.GetAffix(prefixes.Single().Value.PrefixId)} {baseDisplayName.DisplayName}");
             }
 
-            var prefixEnchantmentIndex = _randomNumberGenerator.NextInRange(0, 1);
+            var prefixEnchantmentIndex = _random.Next(0, 2);
             var suffixEnchantmentIndex = prefixEnchantmentIndex == 0
                 ? 1
                 : 0;
