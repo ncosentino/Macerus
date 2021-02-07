@@ -9,7 +9,7 @@ using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Wip.Stats
 {
-    public sealed class StatDefinitionIdToBoundsMappingRepository : IStatDefinitionIdToBoundsMappingRepository
+    public sealed class StatDefinitionIdToBoundsMappingRepository : IDiscoverableReadOnlyStatDefinitionIdToBoundsMappingRepository
     {
         private readonly IConnectionFactory _connectionFactory;
         private readonly Lazy<IReadOnlyCollection<IStatDefinitionIdToBoundsMapping>> _lazyCache;

@@ -9,7 +9,7 @@ using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Wip.Stats
 {
-    public sealed class StatDefinitionToTermMappingRepository : IStatDefinitionToTermMappingRepository
+    public sealed class StatDefinitionToTermMappingRepository : IDiscoverableReadOnlyStatDefinitionToTermMappingRepository
     {
         private readonly IConnectionFactory _connectionFactory;
         private readonly List<IStatDefinitionToTermMapping> _definitionCache;

@@ -2,8 +2,6 @@
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Api.GameObjects.Generation.Attributes;
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Shared.Game.GameObjects.Enchantments.Generation.InMemory;
-using Macerus.Plugins.Content.Wip.Stats;
 using ProjectXyz.Shared.Game.GameObjects.Enchantments.Calculations;
 using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 using ProjectXyz.Shared.Framework;
