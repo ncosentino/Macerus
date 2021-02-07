@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 
 using ProjectXyz.Api.Data.Databases;
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Stats;
 using ProjectXyz.Shared.Framework;
 
@@ -32,6 +33,73 @@ namespace Macerus.Plugins.Content.Wip.Stats
             }
 
             return _definitionCache;
+        }
+
+        public IStatDefinitionToTermMapping GetStatDefinitionToTermMappingById(IIdentifier statDefinitionId)
+        {
+            using (var connection = _connectionFactory.OpenNew())
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = @"
+                SELECT
+                    id,
+                    term
+                FROM
+                    stat_definitions
+                WHERE
+                    id=@id
+                ;";
+                var numericId = Convert.ToInt32(
+                    statDefinitionId,
+                    CultureInfo.InvariantCulture);
+                command.AddParameter("@id", numericId);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (!reader.Read())
+                    {
+                        return null;
+                    }
+
+                    var term = reader.GetString(reader.GetOrdinal("term"));
+                    var mapping = new StatDefinitionToTermMapping(
+                        statDefinitionId,
+                        term);
+                    return mapping;
+                }
+            }
+        }
+
+        public IStatDefinitionToTermMapping GetStatDefinitionToTermMappingByTerm(string term)
+        {
+            using (var connection = _connectionFactory.OpenNew())
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = @"
+                SELECT
+                    id,
+                    term
+                FROM
+                    stat_definitions
+                WHERE
+                    term=@term
+                ;";
+                command.AddParameter("@term", term);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (!reader.Read())
+                    {
+                        return null;
+                    }
+
+                    var id = reader.GetInt32(reader.GetOrdinal("id"));
+                    var mapping = new StatDefinitionToTermMapping(
+                        new IntIdentifier(id),
+                        term);
+                    return mapping;
+                }
+            }
         }
 
         public void WriteStatDefinitionIdToTermMappings(IEnumerable<IStatDefinitionToTermMapping> statDefinitionToTermMappings)
