@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using Macerus.Plugins.Content.Wip.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.GameObjects;
@@ -27,9 +29,10 @@ namespace Macerus.Tests.Plugins.Features.Items
         public void GenerateMagicItems_StressTest()
         {
             var itemGenerator = _container.Resolve<IItemGeneratorFacade>();
+            var itemDefinitionRepository = _container.Resolve<IItemDefinitionRepository>();
 
-            var itemGenerationContextFactory = _container.Resolve<IGeneratorContextFactory>();
-            var itemGenerationContext = itemGenerationContextFactory.CreateGeneratorContext(
+            var generatorContextFactory = _container.Resolve<IGeneratorContextFactory>();
+            var itemGenerationContext = generatorContextFactory.CreateGeneratorContext(
                 10000,
                 10000,
                 new GeneratorAttribute(
@@ -40,6 +43,18 @@ namespace Macerus.Tests.Plugins.Features.Items
                     new StringIdentifier("item-level"),
                     new DoubleGeneratorAttributeValue(5),
                     true));
+            var normalOnlyItems = itemDefinitionRepository
+                .LoadItemDefinitions(generatorContextFactory.CreateGeneratorContext(
+                    0,
+                    int.MaxValue,
+                    new GeneratorAttribute(
+                        new StringIdentifier("affix-type"),
+                        new StringGeneratorAttributeValue("normal"),
+                        true)))
+                .ToDictionary(
+                    x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
+                    x => x);
+
             var generatedItems = itemGenerator
                 .GenerateItems(itemGenerationContext)
                 .ToArray();
@@ -67,6 +82,10 @@ namespace Macerus.Tests.Plugins.Features.Items
                 Assert.Contains(
                     inventoryDisplayNames[0].DisplayName,
                     inventoryDisplayNames[1].DisplayName);
+
+                Assert.False(
+                    normalOnlyItems.ContainsKey(inventoryDisplayNames[0].DisplayName),
+                    $"Expecting that '{inventoryDisplayNames[0].DisplayName}' (base name) is required to have normal affixes.");
             }
         }
     }

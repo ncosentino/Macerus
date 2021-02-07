@@ -41,7 +41,7 @@
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="Castle.Core" Version="4.4.0" />
     <PackageReference Include="Jace" Version="0.8.7" />
-    <PackageReference Include="Macerus" Version="1.0.7708.36449" />
+    <PackageReference Include="Macerus" Version="1.0.7708.37201" />
     <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.5" />
     <PackageReference Include="ProjectXyz" Version="1.0.7708.33195" />

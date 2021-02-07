@@ -7,7 +7,6 @@ using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Generation;
-using ProjectXyz.Api.Framework.Collections;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Api.GameObjects.Generation.Attributes;
@@ -27,10 +26,6 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             new StringIdentifier("affix-type"),
             new StringGeneratorAttributeValue("magic"),
             true);
-        private static readonly IGeneratorAttribute AllowsMagicAffix = new GeneratorAttribute(
-            new StringIdentifier("affix-type"),
-            new StringGeneratorAttributeValue("magic"),
-            false);
 
         private readonly IBaseItemGenerator _baseItemGenerator;
         private readonly IEnchantmentGenerator _enchantmentGenerator;
@@ -57,12 +52,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             var magicItemGeneratorContext = new GeneratorContext(
                 generatorContext.MinimumGenerateCount,
                 generatorContext.MaximumGenerateCount,
-                generatorContext
-                    .Attributes
-                    .Where(x => !SupportedAttributes.Any(s => s.Id.Equals(x.Id)))
-                    .Concat(SupportedAttributes)
-                    .Where(x => x != RequiresMagicAffix)
-                    .AppendSingle(AllowsMagicAffix));
+                generatorContext.Attributes);
             var baseItems = _baseItemGenerator.GenerateItems(magicItemGeneratorContext);
 
             foreach (var baseItem in baseItems)
