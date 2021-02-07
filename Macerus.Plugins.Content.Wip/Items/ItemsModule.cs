@@ -42,7 +42,7 @@ namespace Macerus.Plugins.Content.Wip.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentGeneratorAttributes.RequiresNormalAffix
+                                EnchantmentGeneratorAttributes.RequiresNormalAffix,
                             },
                             new[]
                             {
