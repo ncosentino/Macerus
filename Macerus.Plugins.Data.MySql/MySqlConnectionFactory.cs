@@ -11,7 +11,7 @@ namespace Macerus.Plugins.Features.Data.MySql
         public IDbConnection Create()
         {
             var connection = new MySqlConnection(
-                $"Server=localhost;" +
+                $"Server=127.0.0.1;" +
                 $"Database=macerus;" +
                 $"Uid=macerus;" +
                 $"Pwd=macerus;");
