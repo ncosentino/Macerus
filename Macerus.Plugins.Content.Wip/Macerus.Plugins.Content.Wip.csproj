@@ -20,7 +20,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.5" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7708.33195" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7709.12229" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />

@@ -16,6 +16,11 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
             new StringGeneratorAttributeValue("normal"),
             true);
 
+        public static IGeneratorAttribute AllowsNormalAndMagicAffix { get; } = new GeneratorAttribute(
+            new StringIdentifier("affix-type"),
+            new AnyStringCollectionGeneratorAttributeValue("normal", "magic"),
+            false);
+
         public static IGeneratorAttribute AllowsMagicAffix { get; } = new GeneratorAttribute(
             new StringIdentifier("affix-type"),
             new StringGeneratorAttributeValue("magic"),

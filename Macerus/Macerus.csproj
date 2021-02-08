@@ -25,7 +25,7 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.7708.33195" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7709.12229" />
   </ItemGroup>
   
   <ItemGroup>
@@ -38,6 +38,8 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.Api\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Affixes\Macerus.Plugins.Features.GameObjects.Items.Affixes.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Behaviors\Macerus.Plugins.Features.GameObjects.Items.Behaviors.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal.csproj" />

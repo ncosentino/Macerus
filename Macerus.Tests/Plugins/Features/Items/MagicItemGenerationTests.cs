@@ -43,13 +43,13 @@ namespace Macerus.Tests.Plugins.Features.Items
                     new StringIdentifier("item-level"),
                     new DoubleGeneratorAttributeValue(5),
                     true));
-            var normalOnlyItems = itemDefinitionRepository
+            var nonMagicItems = itemDefinitionRepository
                 .LoadItemDefinitions(generatorContextFactory.CreateGeneratorContext(
                     0,
                     int.MaxValue,
                     new GeneratorAttribute(
                         new StringIdentifier("affix-type"),
-                        new StringGeneratorAttributeValue("normal"),
+                        new NotGeneratorAttributeValue(new StringGeneratorAttributeValue("normal")),
                         true)))
                 .ToDictionary(
                     x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
@@ -84,8 +84,8 @@ namespace Macerus.Tests.Plugins.Features.Items
                     inventoryDisplayNames[1].DisplayName);
 
                 Assert.False(
-                    normalOnlyItems.ContainsKey(inventoryDisplayNames[0].DisplayName),
-                    $"Expecting that '{inventoryDisplayNames[0].DisplayName}' (base name) is required to have normal affixes.");
+                    nonMagicItems.ContainsKey(inventoryDisplayNames[0].DisplayName),
+                    $"Expecting that '{inventoryDisplayNames[0].DisplayName}' (base name) cannot have magic affixes.");
             }
         }
     }

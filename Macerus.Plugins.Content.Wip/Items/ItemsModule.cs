@@ -21,7 +21,7 @@ namespace Macerus.Plugins.Content.Wip.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentGeneratorAttributes.AllowsMagicAffix,
+                                EnchantmentGeneratorAttributes.AllowsNormalAndMagicAffix,
                             },
                             new IGeneratorComponent[]
                             {
@@ -32,7 +32,7 @@ namespace Macerus.Plugins.Content.Wip.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentGeneratorAttributes.AllowsMagicAffix,
+                                EnchantmentGeneratorAttributes.AllowsNormalAndMagicAffix,
                             },
                             new IGeneratorComponent[]
                             {

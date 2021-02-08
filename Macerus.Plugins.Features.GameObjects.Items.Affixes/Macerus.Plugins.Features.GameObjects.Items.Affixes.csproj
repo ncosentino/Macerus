@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1F88ADFE-4E7D-4E0B-BADC-ACDB9E730741}</ProjectGuid>
+    <ProjectGuid>{92ABF0BC-0EE0-49ED-AFAD-D4A440529145}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Macerus.Plugins.Features.Data.MySql</RootNamespace>
-    <AssemblyName>Macerus.Plugins.Features.Data.MySql</AssemblyName>
+    <RootNamespace>Macerus.Plugins.Features.GameObjects.Items.Affixes</RootNamespace>
+    <AssemblyName>Macerus.Plugins.Features.GameObjects.Items.Affixes</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -34,24 +34,6 @@
     <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
-      <HintPath>..\packages\BouncyCastle.1.8.5\lib\BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Protobuf, Version=3.11.4.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Protobuf.3.11.4\lib\net45\Google.Protobuf.dll</HintPath>
-    </Reference>
-    <Reference Include="K4os.Compression.LZ4, Version=1.1.11.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
-      <HintPath>..\packages\K4os.Compression.LZ4.1.1.11\lib\net46\K4os.Compression.LZ4.dll</HintPath>
-    </Reference>
-    <Reference Include="K4os.Compression.LZ4.Streams, Version=1.1.11.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
-      <HintPath>..\packages\K4os.Compression.LZ4.Streams.1.1.11\lib\net46\K4os.Compression.LZ4.Streams.dll</HintPath>
-    </Reference>
-    <Reference Include="K4os.Hash.xxHash, Version=1.0.6.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
-      <HintPath>..\packages\K4os.Hash.xxHash.1.0.6\lib\net46\K4os.Hash.xxHash.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data, Version=8.0.23.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.8.0.23\lib\net452\MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -65,268 +47,250 @@
       <HintPath>..\packages\NexusLabs.Framework.0.0.5\lib\net46\NexusLabs.Framework.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.Behaviors, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.Behaviors.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.Data.Databases, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.Data.Databases.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.Data.Databases.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.Data.Serialization, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.Data.Serialization.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.Data.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.Enchantments, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.Enchantments.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.Enchantments.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.Enchantments.Generation, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.Enchantments.Generation.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.Enchantments.Generation.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.Enchantments.Stats, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.Enchantments.Stats.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.Enchantments.Stats.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.Framework, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.Framework.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.Framework.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.Framework.Entities, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.Framework.Entities.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.Framework.Entities.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.GameObjects, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.GameObjects.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.GameObjects.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.GameObjects.Generation, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.GameObjects.Generation.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.GameObjects.Generation.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.Logging, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.Logging.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.Logging.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.States, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.States.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.States.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.Stats, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.Stats.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.Stats.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.Systems, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.Systems.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.Systems.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Api.Triggering, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Api.Triggering.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Api.Triggering.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Framework.Autofac, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Framework.Autofac.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Framework.Autofac.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Framework.Contracts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Framework.Contracts.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Framework.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Framework.ViewWelding, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Framework.ViewWelding.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Framework.ViewWelding.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Framework.ViewWelding.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Framework.ViewWelding.Api.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Framework.ViewWelding.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Game.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Game.Core.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Game.Core.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Game.Core.Autofac, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Game.Core.Autofac.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Game.Core.Autofac.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Game.Interface, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Game.Interface.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Game.Interface.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Data.Newtonsoft, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Data.Newtonsoft.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Data.Newtonsoft.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Data.Newtonsoft.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Data.Newtonsoft.Api.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Data.Newtonsoft.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Enchantments.Calculations.Multiple, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Enchantments.Calculations.Multiple.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Enchantments.Calculations.Multiple.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Enchantments.Calculations.State, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Enchantments.Calculations.State.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Enchantments.Calculations.State.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Enchantments.Stats.StatExpressions, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Enchantments.Stats.StatExpressions.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Enchantments.Stats.StatExpressions.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Enchantments.StatToTerm, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Enchantments.StatToTerm.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Enchantments.StatToTerm.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.BaseStatEnchantments, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.BaseStatEnchantments.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.BaseStatEnchantments.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.BaseStatEnchantments.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.BaseStatEnchantments.Api.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.BaseStatEnchantments.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.BoundedStats, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.BoundedStats.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.BoundedStats.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.BoundedStats.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.BoundedStats.Api.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.BoundedStats.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.CommonBehaviors, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.CommonBehaviors.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.CommonBehaviors.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.CommonBehaviors.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.CommonBehaviors.Api.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.CommonBehaviors.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.ElapsedTime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.ElapsedTime.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.ElapsedTime.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.ElapsedTime.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.ElapsedTime.Api.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.ElapsedTime.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.ElapsedTime.Autofac, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.ElapsedTime.Autofac.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.ElapsedTime.Autofac.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.Enchantments.Generation, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.Enchantments.Generation.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.Enchantments.Generation.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.Enchantments.Generation.InMemory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.Enchantments.Generation.InMemory.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.Enchantments.Generation.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.Enchantments.Generation.MySql, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.Enchantments.Generation.MySql.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.Enchantments.Generation.MySql.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.ExpiringEnchantments, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.ExpiringEnchantments.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.ExpiringEnchantments.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.ExpressionEnchantments, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.ExpressionEnchantments.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.ExpressionEnchantments.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.ExpressionEnchantments.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.ExpressionEnchantments.Api.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.ExpressionEnchantments.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Actors, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.GameObjects.Actors.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.GameObjects.Actors.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Actors.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.GameObjects.Actors.Api.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.GameObjects.Actors.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Generation.InMemory, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.GameObjects.Generation.InMemory.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.GameObjects.Generation.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Items, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.GameObjects.Items.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.GameObjects.Items.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Items.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.GameObjects.Items.Api.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.GameObjects.Items.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Items.Generation, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.GameObjects.Items.Generation.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.GameObjects.Items.Generation.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.StatCalculation, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.GameObjects.StatCalculation.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.GameObjects.StatCalculation.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Handlers.Default, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Handlers.Default.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Handlers.Default.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.StateEnchantments.Api, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.StateEnchantments.Api.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.StateEnchantments.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.StateEnchantments.Shared, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.StateEnchantments.Shared.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.StateEnchantments.Shared.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.TimeOfDay, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.TimeOfDay.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.TimeOfDay.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.TimeOfDay.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.TimeOfDay.Api.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.TimeOfDay.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.UnhandledExceptionHandling, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.UnhandledExceptionHandling.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.UnhandledExceptionHandling.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.Weather, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.Weather.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.Weather.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Features.Weather.Api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Features.Weather.Api.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Features.Weather.Api.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Framework.Math.Jace, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Framework.Math.Jace.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Framework.Math.Jace.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Framework.NexusLabs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Framework.NexusLabs.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Framework.NexusLabs.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.StatCalculations, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.StatCalculations.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.StatCalculations.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Plugins.Stats, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Plugins.Stats.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Plugins.Stats.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Shared.Behaviors, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Shared.Behaviors.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Shared.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Shared.Data.Serialization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Shared.Data.Serialization.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Shared.Data.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Shared.Framework, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Shared.Framework.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Shared.Framework.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Shared.Framework.Entities, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Shared.Framework.Entities.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Shared.Framework.Entities.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Shared.Game.Behaviors, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Shared.Game.Behaviors.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Shared.Game.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Shared.Game.GameObjects.Enchantments, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Shared.Game.GameObjects.Enchantments.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Shared.Game.GameObjects.Enchantments.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Shared.Game.GameObjects.Generation, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Shared.Game.GameObjects.Generation.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Shared.Game.GameObjects.Generation.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Shared.States, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Shared.States.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Shared.States.dll</HintPath>
     </Reference>
     <Reference Include="ProjectXyz.Shared.Triggering, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ProjectXyz.1.0.7709.12229\lib\net46\ProjectXyz.Shared.Triggering.dll</HintPath>
-    </Reference>
-    <Reference Include="Renci.SshNet, Version=2020.0.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
-      <HintPath>..\packages\SSH.NET.2020.0.0\lib\net40\Renci.SshNet.dll</HintPath>
+      <HintPath>..\packages\ProjectXyz.1.0.7708.33195\lib\net46\ProjectXyz.Shared.Triggering.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\netstandard1.1\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard1.1\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Ubiety.Dns.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.8.0.23\lib\net452\Ubiety.Dns.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Zstandard.Net, Version=1.1.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.8.0.23\lib\net452\Zstandard.Net.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Autofac\MySqlModule.cs" />
-    <Compile Include="MySqlConnectionFactory.cs" />
+    <Compile Include="AffixType.cs" />
+    <Compile Include="MySql\AffixTypeRepository.cs" />
+    <Compile Include="Autofac\AffixesModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api.csproj">
+      <Project>{3741e28a-723d-4bf8-9dae-8ff0aec4d637}</Project>
+      <Name>Macerus.Plugins.Features.GameObjects.Items.Affixes.Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
