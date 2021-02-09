@@ -3,7 +3,6 @@
 using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
-using ProjectXyz.Api.Framework.Collections;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
@@ -17,6 +16,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         {
             yield return new WorldLocationBehavior();
             yield return new MovementBehavior();
+            yield return new AnimationBehavior();
             yield return new ItemContainerBehavior(new StringIdentifier("Inventory"));
             yield return new ItemContainerBehavior(new StringIdentifier("Belt"));
             yield return new CanEquipBehavior(new[]
