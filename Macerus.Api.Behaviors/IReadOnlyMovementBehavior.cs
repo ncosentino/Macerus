@@ -8,6 +8,8 @@ namespace Macerus.Api.Behaviors
 
         double ThrottleY { get; }
 
-        double RateOfDeceleration { get; }
+        double VelocityX { get; }
+
+        double VelocityY { get; }
     }
 }
