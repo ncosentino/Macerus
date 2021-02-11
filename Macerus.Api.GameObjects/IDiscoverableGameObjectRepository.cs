@@ -7,5 +7,9 @@ namespace Macerus.Api.GameObjects
         bool CanLoad(
             IIdentifier typeId,
             IIdentifier objectId);
+
+        bool CanCreateFromTemplate(
+            IIdentifier typeId,
+            IIdentifier templateId);
     }
 }

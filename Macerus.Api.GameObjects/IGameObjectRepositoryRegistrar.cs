@@ -5,5 +5,9 @@
         void RegisterRepository(
             CanLoadGameObjectDelegate canLoadCallback,
             LoadGameObjectDelegate loadCallback);
+
+        void RegisterRepository(
+            CanCreateFromTemplateDelegate canCreateFromTemplateCallback,
+            CreateObjectFromTemplateDelegate createObjectFromTemplateCallback);
     }
 }

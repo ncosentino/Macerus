@@ -27,6 +27,9 @@ namespace Macerus.Game.GameObjects.Autofac
                         facade.RegisterRepository(
                             repository.CanLoad,
                             repository.Load);
+                        facade.RegisterRepository(
+                            repository.CanCreateFromTemplate,
+                            repository.CreateFromTemplate);
                     }
                 });
         }

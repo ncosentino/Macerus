@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Macerus.Api.Behaviors;
 using Macerus.Api.GameObjects;
 
@@ -21,25 +23,38 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             _actorFactory = actorFactory;
         }
 
-        public bool CanLoad(IIdentifier typeId, IIdentifier objectId)
+        public bool CanCreateFromTemplate(
+            IIdentifier typeId,
+            IIdentifier templateId)
         {
-            var canLoad = typeId.Equals(ACTOR_TYPE_ID) && objectId is StringIdentifier;
+            var canLoad = typeId.Equals(ACTOR_TYPE_ID) && templateId is StringIdentifier;
             return canLoad;
         }
 
-        public IGameObject Load(IIdentifier typeId, IIdentifier objectId)
+        public bool CanLoad(IIdentifier typeId, IIdentifier objectId) => false; // FIXE: implement this
+
+        public IGameObject CreateFromTemplate(
+            IIdentifier typeId,
+            IIdentifier templateId,
+            IReadOnlyDictionary<string, object> properties)
         {
             // TODO: actually load one up based on the ID instead of generating a new one :)
             var actor = _actorFactory.Create();
 
             var identifier = actor.Behaviors.Get<IIdentifierBehavior>().Single();
-            identifier.Id = objectId;
+            // FIXME: this is just a hack to prove a point
+            identifier.Id = new StringIdentifier(properties["PlayerName"].ToString());
 
             var location = actor.Behaviors.Get<IWorldLocationBehavior>().Single();
             location.X = 40;
             location.Y = -25;
 
             return actor;
+        }
+
+        public IGameObject Load(IIdentifier typeId, IIdentifier objectId)
+        {
+            throw new NotImplementedException("FIXME: implement this");
         }
     }
 }

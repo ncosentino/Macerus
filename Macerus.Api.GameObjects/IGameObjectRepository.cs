@@ -1,4 +1,6 @@
-﻿using ProjectXyz.Api.Framework;
+﻿using System.Collections.Generic;
+
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Api.GameObjects
@@ -8,5 +10,10 @@ namespace Macerus.Api.GameObjects
         IGameObject Load(
             IIdentifier typeId,
             IIdentifier objectId);
+
+        IGameObject CreateFromTemplate(
+            IIdentifier typeId,
+            IIdentifier templateId,
+            IReadOnlyDictionary<string, object> properties);
     }
 }
