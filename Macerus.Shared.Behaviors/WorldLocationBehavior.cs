@@ -10,9 +10,13 @@ namespace Macerus.Shared.Behaviors
     {
         private double _x;
         private double _y;
+        private double _width;
+        private double _height;
         private bool _disableEventChange;
 
         public event EventHandler<EventArgs> WorldLocationChanged;
+
+        public event EventHandler<EventArgs> SizeChanged;
 
         public double X
         {
@@ -48,6 +52,40 @@ namespace Macerus.Shared.Behaviors
             }
         }
 
+        public double Width
+        {
+            get { return _width; }
+            set
+            {
+                if (!SetWidthIfChanged(value))
+                {
+                    return;
+                }
+
+                if (!_disableEventChange)
+                {
+                    SizeChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+
+        public double Height
+        {
+            get { return _height; }
+            set
+            {
+                if (!SetHeightIfChanged(value))
+                {
+                    return;
+                }
+
+                if (!_disableEventChange)
+                {
+                    SizeChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+
         public void SetLocation(double x, double y)
         {
             try
@@ -59,6 +97,25 @@ namespace Macerus.Shared.Behaviors
                 if (changed)
                 {
                     WorldLocationChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+            finally
+            {
+                _disableEventChange = false;
+            }
+        }
+
+        public void SetSize(double width, double height)
+        {
+            try
+            {
+                _disableEventChange = true;
+                var changed = SetWidthIfChanged(width);
+                changed |= SetHeightIfChanged(height);
+
+                if (changed)
+                {
+                    SizeChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
             finally
@@ -86,6 +143,28 @@ namespace Macerus.Shared.Behaviors
             }
 
             _y = value;
+            return true;
+        }
+
+        private bool SetWidthIfChanged(double value)
+        {
+            if (Math.Abs(_width - value) < double.Epsilon)
+            {
+                return false;
+            }
+
+            _width = value;
+            return true;
+        }
+
+        private bool SetHeightIfChanged(double value)
+        {
+            if (Math.Abs(_height - value) < double.Epsilon)
+            {
+                return false;
+            }
+
+            _height = value;
             return true;
         }
     }

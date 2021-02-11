@@ -6,6 +6,12 @@
 
         new double Y { get; set; }
 
+        new double Width { get; set; }
+
+        new double Height { get; set; }
+
         void SetLocation(double x, double y);
+
+        void SetSize(double width, double height);
     }
 }
