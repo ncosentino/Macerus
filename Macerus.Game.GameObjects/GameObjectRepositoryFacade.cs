@@ -4,16 +4,19 @@ using System.Linq;
 using Macerus.Api.GameObjects;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.Logging;
 
 namespace Macerus.Game.GameObjects
 {
     public sealed class GameObjectRepositoryFacade : IGameObjectRepositoryFacade
     {
         private readonly List<Tuple<CanLoadGameObjectDelegate, LoadGameObjectDelegate>> _repositoryMapping;
+        private readonly ILogger _logger;
 
-        public GameObjectRepositoryFacade()
+        public GameObjectRepositoryFacade(ILogger logger)
         {
             _repositoryMapping = new List<Tuple<CanLoadGameObjectDelegate, LoadGameObjectDelegate>>();
+            _logger = logger;
         }
 
         public IGameObject Load(IIdentifier typeId, IIdentifier objectId)
@@ -28,7 +31,10 @@ namespace Macerus.Game.GameObjects
                     $"type '{typeId}'.");
             }
 
-            return repository.Item2(objectId);
+            _logger.Debug(
+                $"Using repository '{repository}' to load object of type " +
+                $"'{typeId}' with id '{objectId}'.");
+            return repository.Item2(typeId, objectId);
         }
 
         public void RegisterRepository(

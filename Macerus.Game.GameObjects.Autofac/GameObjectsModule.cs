@@ -1,4 +1,9 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+
+using Autofac;
+
+using Macerus.Api.GameObjects;
+
 using ProjectXyz.Framework.Autofac;
 
 namespace Macerus.Game.GameObjects.Autofac
@@ -10,7 +15,20 @@ namespace Macerus.Game.GameObjects.Autofac
             builder
                 .RegisterType<GameObjectRepositoryFacade>()
                 .AsImplementedInterfaces()
-                .SingleInstance();
+                .SingleInstance()
+                .OnActivated(x =>
+                {
+                    var facade = x.Instance;
+                    var discoverableRepositories = x
+                        .Context
+                        .Resolve<IEnumerable<IDiscoverableGameObjectRepository>>();
+                    foreach (var repository in discoverableRepositories)
+                    {
+                        facade.RegisterRepository(
+                            repository.CanLoad,
+                            repository.Load);
+                    }
+                });
         }
     }
 }

@@ -21,22 +21,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 .RegisterType<ActorMovementSystem>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
-
-            var actorTypeId = new StringIdentifier("actor");
             builder
                 .RegisterType<ActorRepository>()
                 .AsImplementedInterfaces()
-                .AsSelf()
-                .AutoActivate()
-                .OnActivated(x =>
-                {
-                    var registrar = x
-                        .Context
-                        .Resolve<IGameObjectRepositoryRegistrar>();
-                    registrar.RegisterRepository(
-                        (typeId, objectId) => typeId.Equals(actorTypeId) && objectId is StringIdentifier,
-                        objectId => x.Instance.Load(objectId));
-                });
+                .SingleInstance();
         }
     }
 }
