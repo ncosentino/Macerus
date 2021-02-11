@@ -21,7 +21,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7710.10479" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7712.12620" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Behaviors\Macerus.Plugins.Features.GameObjects.Items.Behaviors.csproj" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Macerus.Api.Behaviors;
 using Macerus.Api.GameObjects;
@@ -38,16 +39,15 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             IIdentifier templateId,
             IReadOnlyDictionary<string, object> properties)
         {
-            // TODO: actually load one up based on the ID instead of generating a new one :)
             var actor = _actorFactory.Create();
 
-            var identifier = actor.Behaviors.Get<IIdentifierBehavior>().Single();
+            var identifier = actor.Get<IIdentifierBehavior>().Single();
             // FIXME: this is just a hack to prove a point
             identifier.Id = new StringIdentifier(properties["PlayerName"].ToString());
 
-            var location = actor.Behaviors.Get<IWorldLocationBehavior>().Single();
-            location.X = 40;
-            location.Y = -25;
+            var location = actor.Get<IWorldLocationBehavior>().Single();
+            location.X = Convert.ToDouble(properties["X"], CultureInfo.InvariantCulture);
+            location.Y = Convert.ToDouble(properties["Y"], CultureInfo.InvariantCulture);
 
             return actor;
         }
