@@ -32,7 +32,8 @@ namespace Macerus.Plugins.Features.GameObjects.Static
             IReadOnlyTypeIdentifierBehavior typeIdentifierBehavior,
             IReadOnlyTemplateIdentifierBehavior templateIdentifierBehavior,
             IReadOnlyIdentifierBehavior identifierBehavior,
-            IReadOnlyWorldLocationBehavior worldLocationBehavior)
+            IReadOnlyWorldLocationBehavior worldLocationBehavior,
+            IReadOnlyStaticGameObjectPropertiesBehavior propertiesBehavior)
         {
             var baseBehaviours = new IBehavior[]
             {
@@ -40,6 +41,7 @@ namespace Macerus.Plugins.Features.GameObjects.Static
                 templateIdentifierBehavior,
                 identifierBehavior,
                 worldLocationBehavior,
+                propertiesBehavior,
             };
             var additionalBehaviors = _staticGameObjectBehaviorsProviderFacade.GetBehaviors(baseBehaviours);
             var allBehaviors = _behaviorCollectionFactory

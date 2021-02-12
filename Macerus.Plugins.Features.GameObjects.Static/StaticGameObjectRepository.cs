@@ -61,7 +61,8 @@ namespace Macerus.Plugins.Features.GameObjects.Static
                     Y = Convert.ToDouble(properties["Y"], CultureInfo.InvariantCulture),
                     Width = Convert.ToDouble(properties["Width"], CultureInfo.InvariantCulture),
                     Height = Convert.ToDouble(properties["Height"], CultureInfo.InvariantCulture),
-                });
+                },
+                new StaticGameObjectPropertiesBehavior(properties));
             return staticGameObject;
         }
 

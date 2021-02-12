@@ -1,4 +1,5 @@
 ﻿using Macerus.Api.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Static.Api;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
@@ -11,6 +12,7 @@ namespace Macerus.Plugins.Features.GameObjects.Static
             IReadOnlyTypeIdentifierBehavior typeIdentifierBehavior,
             IReadOnlyTemplateIdentifierBehavior templateIdentifierBehavior,
             IReadOnlyIdentifierBehavior identifierBehavior,
-            IReadOnlyWorldLocationBehavior worldLocationBehavior);
+            IReadOnlyWorldLocationBehavior worldLocationBehavior,
+            IReadOnlyStaticGameObjectPropertiesBehavior propertiesBehavior);
     }
 }

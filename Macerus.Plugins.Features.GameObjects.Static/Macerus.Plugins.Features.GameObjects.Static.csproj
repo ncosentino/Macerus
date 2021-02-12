@@ -283,6 +283,7 @@
     <Compile Include="StaticGameObjectBehaviorsInterceptorFacade.cs" />
     <Compile Include="StaticGameObjectBehaviorsProviderFacade.cs" />
     <Compile Include="StaticGameObjectFactory.cs" />
+    <Compile Include="StaticGameObjectPropertiesBehavior.cs" />
     <Compile Include="StaticGameObjectRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticGameObject.cs" />

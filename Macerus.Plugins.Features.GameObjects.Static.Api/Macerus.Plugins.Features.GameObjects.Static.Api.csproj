@@ -284,6 +284,7 @@
     <Compile Include="IStaticGameObjectBehaviorsInterceptorFacade.cs" />
     <Compile Include="IStaticGameObjectBehaviorsProvider.cs" />
     <Compile Include="IStaticGameObjectBehaviorsProviderFacade.cs" />
+    <Compile Include="IReadOnlyStaticGameObjectPropertiesBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
