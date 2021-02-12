@@ -7,6 +7,7 @@ using Macerus.Api.GameObjects;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Shared.Framework;
@@ -39,11 +40,20 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             IIdentifier templateId,
             IReadOnlyDictionary<string, object> properties)
         {
-            var actor = _actorFactory.Create();
-
-            var identifier = actor.Get<IIdentifierBehavior>().Single();
-            // FIXME: this is just a hack to prove a point
-            identifier.Id = new StringIdentifier(properties["PlayerName"].ToString());
+            var actor = _actorFactory.Create(
+                new TypeIdentifierBehavior()
+                {
+                    TypeId = typeId
+                },
+                new TemplateIdentifierBehavior()
+                {
+                    TemplateId = typeId
+                },
+                // FIXME: this is just a hack to prove a point
+                new IdentifierBehavior()
+                {
+                    Id = new StringIdentifier(properties["PlayerName"].ToString())
+                });
 
             var location = actor.Get<IWorldLocationBehavior>().Single();
             location.X = Convert.ToDouble(properties["X"], CultureInfo.InvariantCulture);

@@ -8,7 +8,7 @@ using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
-    public sealed class ActorBehaviorsInterceptor : IActorBehaviorsInterceptor
+    public sealed class ActorBehaviorsInterceptor : IDiscoverableActorBehaviorsInterceptor
     {
         private readonly IReadOnlyStatDefinitionToTermMappingRepository _statDefinitionToTermMappingRepository;
 
@@ -17,7 +17,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             _statDefinitionToTermMappingRepository = statDefinitionToTermMappingRepository;
         }
 
-        public void Intercept(ICollection<IBehavior> behaviors)
+        public void Intercept(IReadOnlyCollection<IBehavior> behaviors)
         {
             var mutableStats = behaviors.GetOnly<IHasMutableStatsBehavior>();
             mutableStats.MutateStats(stats =>

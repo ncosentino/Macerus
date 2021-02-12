@@ -57,6 +57,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Ga
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameObjects", "GameObjects", "{00A2FCF7-72A1-4031-AD5F-42345BA13DE3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Static", "Static", "{9F93EA1D-5824-4011-B1F9-78A3FC854E1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Static", "Macerus.Plugins.Features.GameObjects.Static\Macerus.Plugins.Features.GameObjects.Static.csproj", "{975CA395-7960-4CEE-9AEF-C1E1485A8886}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Static.Api", "Macerus.Plugins.Features.GameObjects.Static.Api\Macerus.Plugins.Features.GameObjects.Static.Api.csproj", "{3849012D-A66E-4A0B-ADCE-91538E2B0ACC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +137,14 @@ Global
 		{3741E28A-723D-4BF8-9DAE-8FF0AEC4D637}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3741E28A-723D-4BF8-9DAE-8FF0AEC4D637}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3741E28A-723D-4BF8-9DAE-8FF0AEC4D637}.Release|Any CPU.Build.0 = Release|Any CPU
+		{975CA395-7960-4CEE-9AEF-C1E1485A8886}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{975CA395-7960-4CEE-9AEF-C1E1485A8886}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{975CA395-7960-4CEE-9AEF-C1E1485A8886}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{975CA395-7960-4CEE-9AEF-C1E1485A8886}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3849012D-A66E-4A0B-ADCE-91538E2B0ACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3849012D-A66E-4A0B-ADCE-91538E2B0ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3849012D-A66E-4A0B-ADCE-91538E2B0ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3849012D-A66E-4A0B-ADCE-91538E2B0ACC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -157,6 +171,9 @@ Global
 		{92ABF0BC-0EE0-49ED-AFAD-D4A440529145} = {DBB8AA2F-D157-4B10-9EE8-4179D4019FB6}
 		{3741E28A-723D-4BF8-9DAE-8FF0AEC4D637} = {DBB8AA2F-D157-4B10-9EE8-4179D4019FB6}
 		{00A2FCF7-72A1-4031-AD5F-42345BA13DE3} = {33A6C169-52DA-446B-A241-FEC05722752A}
+		{9F93EA1D-5824-4011-B1F9-78A3FC854E1D} = {00A2FCF7-72A1-4031-AD5F-42345BA13DE3}
+		{975CA395-7960-4CEE-9AEF-C1E1485A8886} = {9F93EA1D-5824-4011-B1F9-78A3FC854E1D}
+		{3849012D-A66E-4A0B-ADCE-91538E2B0ACC} = {9F93EA1D-5824-4011-B1F9-78A3FC854E1D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}

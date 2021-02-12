@@ -10,9 +10,9 @@ using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
-    public sealed class AdditionalActorBehaviorsProvider : IAdditionalActorBehaviorsProvider
+    public sealed class ActorBehaviorsProvider : IDiscoverableActorBehaviorsProvider
     {
-        public IEnumerable<IBehavior> GetBehaviors(IGameObject gameObject)
+        public IEnumerable<IBehavior> GetBehaviors(IReadOnlyCollection<IBehavior> baseBehaviors)
         {
             yield return new WorldLocationBehavior();
             yield return new MovementBehavior();

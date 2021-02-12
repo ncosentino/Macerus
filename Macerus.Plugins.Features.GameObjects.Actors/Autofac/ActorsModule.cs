@@ -1,22 +1,24 @@
 ﻿using Autofac;
+
 using Macerus.Api.GameObjects;
+
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Features.GameObjects.Actors
+namespace Macerus.Plugins.Features.GameObjects.Actors.Autofac
 {
     public sealed class ActorsModule : SingleRegistrationModule
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<AdditionalActorBehaviorsProvider>()
+                .RegisterType<ActorBehaviorsProvider>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
                 .RegisterType<ActorBehaviorsInterceptor>()
                 .AsImplementedInterfaces()
-                .SingleInstance();            
+                .SingleInstance();
             builder
                 .RegisterType<ActorMovementSystem>()
                 .AsImplementedInterfaces()
