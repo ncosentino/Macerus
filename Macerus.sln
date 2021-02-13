@@ -63,6 +63,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Ga
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Static.Api", "Macerus.Plugins.Features.GameObjects.Static.Api\Macerus.Plugins.Features.GameObjects.Static.Api.csproj", "{3849012D-A66E-4A0B-ADCE-91538E2B0ACC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Containers", "Containers", "{8989A7CB-427A-4954-8118-238604017FE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Containers", "Macerus.Plugins.Features.GameObjects.Containers\Macerus.Plugins.Features.GameObjects.Containers.csproj", "{429F081F-B87D-4F9D-977C-579DB8C98F29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Containers.Api", "Macerus.Plugins.Features.GameObjects.Containers.Api\Macerus.Plugins.Features.GameObjects.Containers.Api.csproj", "{489FBF59-F50E-4D18-8F3D-6900555D91F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -145,6 +151,14 @@ Global
 		{3849012D-A66E-4A0B-ADCE-91538E2B0ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3849012D-A66E-4A0B-ADCE-91538E2B0ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3849012D-A66E-4A0B-ADCE-91538E2B0ACC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{429F081F-B87D-4F9D-977C-579DB8C98F29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{429F081F-B87D-4F9D-977C-579DB8C98F29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{429F081F-B87D-4F9D-977C-579DB8C98F29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{429F081F-B87D-4F9D-977C-579DB8C98F29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{489FBF59-F50E-4D18-8F3D-6900555D91F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{489FBF59-F50E-4D18-8F3D-6900555D91F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{489FBF59-F50E-4D18-8F3D-6900555D91F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{489FBF59-F50E-4D18-8F3D-6900555D91F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -174,6 +188,9 @@ Global
 		{9F93EA1D-5824-4011-B1F9-78A3FC854E1D} = {00A2FCF7-72A1-4031-AD5F-42345BA13DE3}
 		{975CA395-7960-4CEE-9AEF-C1E1485A8886} = {9F93EA1D-5824-4011-B1F9-78A3FC854E1D}
 		{3849012D-A66E-4A0B-ADCE-91538E2B0ACC} = {9F93EA1D-5824-4011-B1F9-78A3FC854E1D}
+		{8989A7CB-427A-4954-8118-238604017FE8} = {00A2FCF7-72A1-4031-AD5F-42345BA13DE3}
+		{429F081F-B87D-4F9D-977C-579DB8C98F29} = {8989A7CB-427A-4954-8118-238604017FE8}
+		{489FBF59-F50E-4D18-8F3D-6900555D91F2} = {8989A7CB-427A-4954-8118-238604017FE8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}

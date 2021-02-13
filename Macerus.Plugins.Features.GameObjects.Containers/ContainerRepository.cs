@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 
 using Macerus.Api.GameObjects;
+using Macerus.Plugins.Features.GameObjects.Containers.Api;
 using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Framework;
@@ -10,24 +11,28 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Features.GameObjects.Static
+namespace Macerus.Plugins.Features.GameObjects.Containers
 {
-    public sealed class StaticGameObjectRepository : IDiscoverableGameObjectRepository
+    public sealed class ContainerRepository :
+        IContainerRepository,
+        IDiscoverableGameObjectRepository
     {
-        private static readonly IIdentifier STATIC_TYPE_ID = new StringIdentifier("static");
+        private static readonly IIdentifier CONTAINER_TYPE_ID = new StringIdentifier("container");
         
-        private readonly IStaticGameObjectFactory _staticGameObjectFactory;
+        private readonly IContainerFactory _containerFactory;
 
-        public StaticGameObjectRepository(IStaticGameObjectFactory staticGameObjectFactory)
+        public ContainerRepository(IContainerFactory containerFactory)
         {
-            _staticGameObjectFactory = staticGameObjectFactory;
+            _containerFactory = containerFactory;
         }
+
+        public static IIdentifier ContainerTypeId => CONTAINER_TYPE_ID;
 
         public bool CanCreateFromTemplate(
             IIdentifier typeId,
             IIdentifier templateId)
         {
-            var canCreateFromTemplate = typeId.Equals(STATIC_TYPE_ID) && templateId is StringIdentifier;
+            var canCreateFromTemplate = typeId.Equals(CONTAINER_TYPE_ID) && templateId is StringIdentifier;
             return canCreateFromTemplate;
         }
 
@@ -40,7 +45,7 @@ namespace Macerus.Plugins.Features.GameObjects.Static
             IIdentifier templateId,
             IReadOnlyDictionary<string, object> properties)
         {
-            var staticGameObject = _staticGameObjectFactory.Create(
+            var container = _containerFactory.Create(
                 new TypeIdentifierBehavior()
                 {
                     TypeId = typeId
@@ -60,8 +65,13 @@ namespace Macerus.Plugins.Features.GameObjects.Static
                     Width = Convert.ToDouble(properties["Width"], CultureInfo.InvariantCulture),
                     Height = Convert.ToDouble(properties["Height"], CultureInfo.InvariantCulture),
                 },
-                new StaticGameObjectPropertiesBehavior(properties));
-            return staticGameObject;
+                // FIXME: support checks for things like
+                // - drop table ID to use
+                // - whether or not it's deposit-supported or withdrawl-only
+                // - different graphics? or is that handled by the template check in the front-end?
+                new ContainerPropertiesBehavior(properties),
+                new ItemContainerBehavior(new StringIdentifier("Items")));
+            return container;
         }
 
         public IGameObject Load(
