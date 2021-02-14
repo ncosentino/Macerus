@@ -70,7 +70,8 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 // - whether or not it's deposit-supported or withdrawl-only
                 // - different graphics? or is that handled by the template check in the front-end?
                 new ContainerPropertiesBehavior(properties),
-                new ItemContainerBehavior(new StringIdentifier("Items")));
+                new ItemContainerBehavior(new StringIdentifier("Items")),
+                new InteractableBehavior());
             return container;
         }
 

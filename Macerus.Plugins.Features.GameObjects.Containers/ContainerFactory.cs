@@ -34,7 +34,8 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             IReadOnlyIdentifierBehavior identifierBehavior,
             IReadOnlyWorldLocationBehavior worldLocationBehavior,
             IReadOnlyContainerPropertiesBehavior propertiesBehavior,
-            IItemContainerBehavior itemContainerBehavior)
+            IItemContainerBehavior itemContainerBehavior,
+            IInteractableBehavior interactableBehavior)
         {
             var baseBehaviours = new IBehavior[]
             {
@@ -44,6 +45,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 worldLocationBehavior,
                 propertiesBehavior,
                 itemContainerBehavior,
+                interactableBehavior,
             };
             var additionalBehaviors = _ContainerBehaviorsProviderFacade.GetBehaviors(baseBehaviours);
             var allBehaviors = _behaviorCollectionFactory

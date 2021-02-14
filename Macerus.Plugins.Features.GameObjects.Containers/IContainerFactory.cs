@@ -14,6 +14,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             IReadOnlyIdentifierBehavior identifierBehavior,
             IReadOnlyWorldLocationBehavior worldLocationBehavior,
             IReadOnlyContainerPropertiesBehavior propertiesBehavior,
-            IItemContainerBehavior itemContainerBehavior);
+            IItemContainerBehavior itemContainerBehavior,
+            IInteractableBehavior interactableBehavior);
     }
 }
