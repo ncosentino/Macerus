@@ -46,6 +46,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
                     ["Y"] = worldY,
                     ["Width"] = 0.25, // FIXME: why is it that 1x1 tile looks huge
                     ["Height"] = 0.25,
+                    ["Collisions"] = false,
                     // FIXME: add additional properties defined in the maps
                 });
             var itemContainerBehavior = lootObject.GetOnly<IItemContainerBehavior>();
