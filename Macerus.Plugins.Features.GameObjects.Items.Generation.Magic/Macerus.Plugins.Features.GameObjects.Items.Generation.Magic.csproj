@@ -19,7 +19,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7713.9628" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7715.2330" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.Api\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.Api.csproj" />

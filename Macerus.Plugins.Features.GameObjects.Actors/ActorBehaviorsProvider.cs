@@ -15,26 +15,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         public IEnumerable<IBehavior> GetBehaviors(IReadOnlyCollection<IBehavior> baseBehaviors)
         {
             yield return new WorldLocationBehavior();
-            yield return new MovementBehavior();
             yield return new AnimationBehavior();
-            yield return new ItemContainerBehavior(new StringIdentifier("Inventory"));
-            yield return new ItemContainerBehavior(new StringIdentifier("Belt"));
-            yield return new CanEquipBehavior(new[]
-            {
-                new StringIdentifier("head"),
-                new StringIdentifier("body"),
-                new StringIdentifier("left hand"),
-                new StringIdentifier("right hand"),
-                new StringIdentifier("amulet"),
-                new StringIdentifier("ring1"),
-                new StringIdentifier("ring2"),
-                new StringIdentifier("shoulders"),
-                new StringIdentifier("hands"),
-                new StringIdentifier("waist"),
-                new StringIdentifier("feet"),
-                new StringIdentifier("legs"),
-                new StringIdentifier("back"),
-            });
+            yield return new MovementBehavior();
         }
     }
 }

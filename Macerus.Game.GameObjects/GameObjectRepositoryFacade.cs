@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Macerus.Api.GameObjects;
+
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 
 namespace Macerus.Game.GameObjects
 {
+
     public sealed class GameObjectRepositoryFacade : IGameObjectRepositoryFacade
     {
         private readonly List<Tuple<CanLoadGameObjectDelegate, LoadGameObjectDelegate>> _loadMapping;

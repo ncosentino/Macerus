@@ -4,11 +4,14 @@ using System.Globalization;
 using System.Linq;
 using Macerus.Api.Behaviors;
 using Macerus.Api.GameObjects;
+using Macerus.Shared.Behaviors;
 
+using NexusLabs.Contracts;
+
+using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Shared.Framework;
 
@@ -17,6 +20,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
     public sealed class ActorRepository : IDiscoverableGameObjectRepository
     {
         private static readonly IIdentifier ACTOR_TYPE_ID = new StringIdentifier("actor");
+        private static readonly IIdentifier PLAYER_TEMPLATE_ID = new StringIdentifier("player");
 
         private readonly IActorFactory _actorFactory;
 
@@ -40,6 +44,32 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             IIdentifier templateId,
             IReadOnlyDictionary<string, object> properties)
         {
+            Contract.Requires(
+                ACTOR_TYPE_ID.Equals(typeId),
+                $"Expecting to only support templates for type ID '{typeId}'.");
+
+            if (PLAYER_TEMPLATE_ID.Equals(templateId))
+            {
+                return CreatePlayer(
+                    typeId,
+                    templateId,
+                    properties);
+            }
+
+            throw new NotSupportedException(
+                $"FIXME: currently no support for templates of type '{templateId}'.");
+        }
+
+        public IGameObject Load(IIdentifier typeId, IIdentifier objectId)
+        {
+            throw new NotImplementedException("FIXME: implement this");
+        }
+
+        private IGameObject CreatePlayer(
+            IIdentifier typeId,
+            IIdentifier templateId,
+            IReadOnlyDictionary<string, object> properties)
+        {
             var actor = _actorFactory.Create(
                 new TypeIdentifierBehavior()
                 {
@@ -47,12 +77,33 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 },
                 new TemplateIdentifierBehavior()
                 {
-                    TemplateId = typeId
+                    TemplateId = templateId
                 },
-                // FIXME: this is just a hack to prove a point
                 new IdentifierBehavior()
                 {
-                    Id = new StringIdentifier(properties["PlayerName"].ToString())
+                    Id = new StringIdentifier("Player"),
+                },
+                new IBehavior[]
+                {
+                    new PlayerControlledBehavior(),
+                    new ItemContainerBehavior(new StringIdentifier("Inventory")),
+                    new ItemContainerBehavior(new StringIdentifier("Belt")),
+                    new CanEquipBehavior(new[]
+                    {
+                        new StringIdentifier("head"),
+                        new StringIdentifier("body"),
+                        new StringIdentifier("left hand"),
+                        new StringIdentifier("right hand"),
+                        new StringIdentifier("amulet"),
+                        new StringIdentifier("ring1"),
+                        new StringIdentifier("ring2"),
+                        new StringIdentifier("shoulders"),
+                        new StringIdentifier("hands"),
+                        new StringIdentifier("waist"),
+                        new StringIdentifier("feet"),
+                        new StringIdentifier("legs"),
+                        new StringIdentifier("back"),
+                    }),
                 });
 
             var location = actor.Get<IWorldLocationBehavior>().Single();
@@ -60,11 +111,6 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             location.Y = Convert.ToDouble(properties["Y"], CultureInfo.InvariantCulture);
 
             return actor;
-        }
-
-        public IGameObject Load(IIdentifier typeId, IIdentifier objectId)
-        {
-            throw new NotImplementedException("FIXME: implement this");
         }
     }
 }
