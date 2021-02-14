@@ -106,9 +106,11 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                     }),
                 });
 
-            var location = actor.Get<IWorldLocationBehavior>().Single();
-            location.X = Convert.ToDouble(properties["X"], CultureInfo.InvariantCulture);
-            location.Y = Convert.ToDouble(properties["Y"], CultureInfo.InvariantCulture);
+            var worldLocation = actor.Get<IWorldLocationBehavior>().Single();
+            worldLocation.X = Convert.ToDouble(properties["X"], CultureInfo.InvariantCulture);
+            worldLocation.Y = Convert.ToDouble(properties["Y"], CultureInfo.InvariantCulture);
+            worldLocation.Width = Convert.ToDouble(properties["Width"], CultureInfo.InvariantCulture);
+            worldLocation.Height = Convert.ToDouble(properties["Height"], CultureInfo.InvariantCulture);
 
             return actor;
         }
