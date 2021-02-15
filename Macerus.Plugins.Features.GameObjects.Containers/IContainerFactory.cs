@@ -1,6 +1,9 @@
-﻿using Macerus.Api.Behaviors;
+﻿using System.Collections.Generic;
+
+using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
 
+using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 
@@ -15,6 +18,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             IReadOnlyWorldLocationBehavior worldLocationBehavior,
             IReadOnlyContainerPropertiesBehavior propertiesBehavior,
             IItemContainerBehavior itemContainerBehavior,
-            IInteractableBehavior interactableBehavior);
+            IInteractableBehavior interactableBehavior,
+            IEnumerable<IBehavior> additionalBehaviors);
     }
 }

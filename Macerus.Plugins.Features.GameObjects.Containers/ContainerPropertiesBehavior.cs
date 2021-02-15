@@ -30,25 +30,33 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         public bool DestroyOnUse => RawProperties
             .TryGetValue(
                 "DestroyOnUse",
-                out var rawDestroyOnUse) == true &&
+                out var rawValue) == true &&
             Convert.ToBoolean(
-                rawDestroyOnUse,
+                rawValue,
                 CultureInfo.InvariantCulture);
 
         public bool AutomaticInteraction => RawProperties
             .TryGetValue(
                 "AutomaticInteraction",
-                out var rawDestroyOnUse) == true &&
+                out var rawValue) == true &&
             Convert.ToBoolean(
-                rawDestroyOnUse,
+                rawValue,
                 CultureInfo.InvariantCulture);
 
         public bool Collisions => RawProperties
             .TryGetValue(
                 "Collisions",
-                out var rawDestroyOnUse) == true &&
+                out var rawValue) == true &&
             Convert.ToBoolean(
-                rawDestroyOnUse,
+                rawValue,
+                CultureInfo.InvariantCulture);
+
+        public bool GenerateItems => RawProperties
+            .TryGetValue(
+                "GenerateItems",
+                out var rawValue) == true &&
+            Convert.ToBoolean(
+                rawValue,
                 CultureInfo.InvariantCulture);
     }
 }

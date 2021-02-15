@@ -21,5 +21,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.Api
         bool AutomaticInteraction { get; }
 
         bool Collisions { get; }
+
+        bool GenerateItems { get; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
@@ -35,7 +36,8 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             IReadOnlyWorldLocationBehavior worldLocationBehavior,
             IReadOnlyContainerPropertiesBehavior propertiesBehavior,
             IItemContainerBehavior itemContainerBehavior,
-            IInteractableBehavior interactableBehavior)
+            IInteractableBehavior interactableBehavior,
+            IEnumerable<IBehavior> additionalBehaviors)
         {
             var baseBehaviours = new IBehavior[]
             {
@@ -46,11 +48,13 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 propertiesBehavior,
                 itemContainerBehavior,
                 interactableBehavior,
-            };
-            var additionalBehaviors = _ContainerBehaviorsProviderFacade.GetBehaviors(baseBehaviours);
+            }
+            .Concat(additionalBehaviors)
+            .ToArray();
+            var providerBehaviors = _ContainerBehaviorsProviderFacade.GetBehaviors(baseBehaviours);
             var allBehaviors = _behaviorCollectionFactory
                 .Create(baseBehaviours
-                .Concat(additionalBehaviors));
+                .Concat(providerBehaviors));
             _ContainerBehaviorsInterceptorFacade.Intercept(allBehaviors);
 
             var Container = new Container(allBehaviors);

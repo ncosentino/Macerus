@@ -5,6 +5,7 @@ using Macerus.Api.GameObjects;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
 using Macerus.Shared.Behaviors;
 
+using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
@@ -52,6 +53,13 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             var containerInteractionBehavior = _containerInteractableBehaviorFactory
                 .Invoke(containerBehaviorProperties.AutomaticInteraction);
 
+            var additionalBehaviors = new List<IBehavior>();
+            if (containerBehaviorProperties.GenerateItems)
+            {
+                var dropTableId = new StringIdentifier("FIXME: how do we get this populated properly?");
+                additionalBehaviors.Add(new ContainerGenerateItemsBehavior(dropTableId));
+            }
+
             var container = _containerFactory.Create(
                 new TypeIdentifierBehavior()
                 {
@@ -78,7 +86,8 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 // - different graphics? or is that handled by the template check in the front-end?
                 containerBehaviorProperties,
                 new ItemContainerBehavior(new StringIdentifier("Items")),
-                containerInteractionBehavior);
+                containerInteractionBehavior,
+                additionalBehaviors);
             return container;
         }
 
