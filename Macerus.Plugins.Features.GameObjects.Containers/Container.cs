@@ -1,4 +1,5 @@
-﻿using ProjectXyz.Api.Behaviors;
+﻿
+using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers

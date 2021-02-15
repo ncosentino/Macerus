@@ -23,16 +23,19 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
         public IGameObject CreateLoot(
             double worldX,
             double worldY,
+            bool automaticInteraction,
             IGameObject item,
             params IGameObject[] items) =>
             CreateLoot(
                 worldX,
                 worldY,
+                automaticInteraction,
                 item.Yield().Concat(items ?? new IGameObject[0]));
 
         public IGameObject CreateLoot(
             double worldX,
             double worldY,
+            bool automaticInteraction,
             IEnumerable<IGameObject> items)
         {
             var lootObject = _containerRepository.CreateFromTemplate(
@@ -47,8 +50,10 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
                     ["Width"] = 0.25, // FIXME: why is it that 1x1 tile looks huge
                     ["Height"] = 0.25,
                     ["Collisions"] = false,
+                    ["DestroyOnUse"] = true,
+                    ["AutomaticInteraction"] = automaticInteraction
                     // FIXME: add additional properties defined in the maps
-                });
+                }); ;
             var itemContainerBehavior = lootObject.GetOnly<IItemContainerBehavior>();
             foreach (var item in items)
             {

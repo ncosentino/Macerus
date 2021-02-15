@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 using Macerus.Api.GameObjects;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
@@ -20,10 +19,14 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         private static readonly IIdentifier CONTAINER_TYPE_ID = new StringIdentifier("container");
         
         private readonly IContainerFactory _containerFactory;
+        private readonly ContainerInteractableBehavior.Factory _containerInteractableBehaviorFactory;
 
-        public ContainerRepository(IContainerFactory containerFactory)
+        public ContainerRepository(
+            IContainerFactory containerFactory,
+            ContainerInteractableBehavior.Factory containerInteractableBehaviorFactory)
         {
             _containerFactory = containerFactory;
+            _containerInteractableBehaviorFactory = containerInteractableBehaviorFactory;
         }
 
         public static IIdentifier ContainerTypeId => CONTAINER_TYPE_ID;
@@ -45,6 +48,10 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             IIdentifier templateId,
             IReadOnlyDictionary<string, object> properties)
         {
+            var containerBehaviorProperties = new ContainerPropertiesBehavior(properties);
+            var containerInteractionBehavior = _containerInteractableBehaviorFactory
+                .Invoke(containerBehaviorProperties.AutomaticInteraction);
+
             var container = _containerFactory.Create(
                 new TypeIdentifierBehavior()
                 {
@@ -60,18 +67,18 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 },
                 new WorldLocationBehavior()
                 {
-                    X = Convert.ToDouble(properties["X"], CultureInfo.InvariantCulture),
-                    Y = Convert.ToDouble(properties["Y"], CultureInfo.InvariantCulture),
-                    Width = Convert.ToDouble(properties["Width"], CultureInfo.InvariantCulture),
-                    Height = Convert.ToDouble(properties["Height"], CultureInfo.InvariantCulture),
+                    X = containerBehaviorProperties.X,
+                    Y = containerBehaviorProperties.Y,
+                    Width = containerBehaviorProperties.Width,
+                    Height = containerBehaviorProperties.Height,
                 },
                 // FIXME: support checks for things like
                 // - drop table ID to use
                 // - whether or not it's deposit-supported or withdrawl-only
                 // - different graphics? or is that handled by the template check in the front-end?
-                new ContainerPropertiesBehavior(properties),
+                containerBehaviorProperties,
                 new ItemContainerBehavior(new StringIdentifier("Items")),
-                new InteractableBehavior());
+                containerInteractionBehavior);
             return container;
         }
 

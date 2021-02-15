@@ -30,6 +30,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.Autofac
               .RegisterType<LootDropFactory>()
               .AsImplementedInterfaces()
               .SingleInstance();
+            builder.RegisterType<ContainerInteractableBehavior>(); // for factory
         }
     }
 }

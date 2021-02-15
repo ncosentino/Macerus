@@ -293,6 +293,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj">
+      <Project>{5F24115E-512F-48BA-AD4A-282E5DAA7DC6}</Project>
+      <Name>Macerus.Api.Behaviors</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj">
       <Project>{1C464D4F-A13F-46EE-86A5-D38CB2A0C3B6}</Project>
       <Name>Macerus.Api.GameObjects</Name>

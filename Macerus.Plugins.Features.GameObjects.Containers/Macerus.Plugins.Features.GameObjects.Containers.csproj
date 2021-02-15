@@ -279,6 +279,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Autofac\ContainersModule.cs" />
+    <Compile Include="ContainerInteractableBehavior.cs" />
     <Compile Include="IContainerFactory.cs" />
     <Compile Include="LootDrops\LootDropFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
