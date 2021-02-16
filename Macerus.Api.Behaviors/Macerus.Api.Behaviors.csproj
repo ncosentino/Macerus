@@ -18,6 +18,6 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.7716.41969" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7717.6633" />
   </ItemGroup>
 </Project>
