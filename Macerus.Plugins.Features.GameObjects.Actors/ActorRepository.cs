@@ -29,6 +29,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             _actorFactory = actorFactory;
         }
 
+        public static IIdentifier ActorTypeId => ACTOR_TYPE_ID;
+
         public bool CanCreateFromTemplate(
             IIdentifier typeId,
             IIdentifier templateId)

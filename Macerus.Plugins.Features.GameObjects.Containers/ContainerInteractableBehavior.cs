@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
 
 using Macerus.Api.Behaviors;
@@ -11,10 +10,11 @@ using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables;
 using ProjectXyz.Shared.Framework;
 using ProjectXyz.Shared.Game.Behaviors;
+using ProjectXyz.Shared.Game.GameObjects.Generation;
+using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers
 {
@@ -25,16 +25,19 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         private readonly IMutableGameObjectManager _gameObjectManager;
         private readonly ILootGenerator _lootGenerator;
         private readonly IGeneratorContextProvider _generatorContextProvider;
+        private readonly IDropTableRepositoryFacade _dropTableRepository;
 
         public ContainerInteractableBehavior(
             IMutableGameObjectManager gameObjectManager,
             ILootGenerator lootGenerator,
             IGeneratorContextProvider generatorContextProvider,
+            IDropTableRepositoryFacade dropTableRepository,
             bool automaticInteraction)
         {
             _gameObjectManager = gameObjectManager;
             _lootGenerator = lootGenerator;
             _generatorContextProvider = generatorContextProvider;
+            _dropTableRepository = dropTableRepository;
             AutomaticInteraction = automaticInteraction;
         }
 
@@ -56,16 +59,28 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 actorInventory,
                 $"'{Owner}' did not have a single '{typeof(IItemContainerBehavior)}'.");
 
-            IGeneratorContext generatorContext = null;
+            var properties = Owner.GetOnly<IReadOnlyContainerPropertiesBehavior>();
+
+            IGeneratorContext baseGeneratorContext = null;
             foreach (var containerGenerateItemsBehavior in Owner.Get<IReadOnlyContainerGenerateItemsBehavior>())
             {
-                if (generatorContext == null)
+                if (baseGeneratorContext == null)
                 {
-                    // FIXME: how do we take properties from this container to 
-                    // influence the loot that we're dropping? How do we modify
-                    // this context to support this?
-                    generatorContext = _generatorContextProvider.GetGeneratorContext();
+                    baseGeneratorContext = _generatorContextProvider.GetGeneratorContext();
                 }
+
+                var dropTableId = containerGenerateItemsBehavior.DropTableId;
+                var dropTable = _dropTableRepository.GetForDropTableId(dropTableId);
+                var dropTableAttribute = new GeneratorAttribute(
+                    new StringIdentifier("drop-table"),
+                    new IdentifierGeneratorAttributeValue(dropTableId),
+                    true);
+
+                var generatorContext = baseGeneratorContext
+                    .WithAdditionalAttributes(new[] { dropTableAttribute })
+                    .WithGenerateCountRange(
+                        dropTable.MinimumGenerateCount,
+                        dropTable.MaximumGenerateCount);
 
                 var generatedItems = _lootGenerator.GenerateLoot(generatorContext);
                 foreach (var generatedItem in generatedItems)
@@ -83,9 +98,9 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 // behavior the next time this is interacted with
             }
 
-            if (AutomaticInteraction)
+            // need a copy so we can iterate + remove
+            if (properties.TransferItemsOnActivate)
             {
-                // need a copy so we can iterate + remove
                 var itemsToTake = sourceItemContainer
                     .Items
                     .ToArray();
@@ -96,7 +111,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 }
             }
 
-            if (Owner.GetOnly<IReadOnlyContainerPropertiesBehavior>().DestroyOnUse)
+            if (properties.DestroyOnUse)
             {
                 _gameObjectManager.MarkForRemoval((IGameObject)Owner); // FIXME: whyyyyy this terrible casting
             }

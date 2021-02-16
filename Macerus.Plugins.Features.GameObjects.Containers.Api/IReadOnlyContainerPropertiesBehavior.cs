@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers.Api
 {
@@ -22,6 +23,8 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.Api
 
         bool Collisions { get; }
 
-        bool GenerateItems { get; }
+        bool TransferItemsOnActivate { get; }
+
+        IIdentifier DropTableId { get; }
     }
 }

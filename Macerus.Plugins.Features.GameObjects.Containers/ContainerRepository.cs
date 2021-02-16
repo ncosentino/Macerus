@@ -49,15 +49,14 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             IIdentifier templateId,
             IReadOnlyDictionary<string, object> properties)
         {
-            var containerBehaviorProperties = new ContainerPropertiesBehavior(properties);
+            var containerPropertiesBehavior = new ContainerPropertiesBehavior(properties);
             var containerInteractionBehavior = _containerInteractableBehaviorFactory
-                .Invoke(containerBehaviorProperties.AutomaticInteraction);
+                .Invoke(containerPropertiesBehavior.AutomaticInteraction);
 
             var additionalBehaviors = new List<IBehavior>();
-            if (containerBehaviorProperties.GenerateItems)
+            if (containerPropertiesBehavior.DropTableId != null)
             {
-                var dropTableId = new StringIdentifier("FIXME: how do we get this populated properly?");
-                additionalBehaviors.Add(new ContainerGenerateItemsBehavior(dropTableId));
+                additionalBehaviors.Add(new ContainerGenerateItemsBehavior(containerPropertiesBehavior.DropTableId));
             }
 
             var container = _containerFactory.Create(
@@ -75,16 +74,16 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 },
                 new WorldLocationBehavior()
                 {
-                    X = containerBehaviorProperties.X,
-                    Y = containerBehaviorProperties.Y,
-                    Width = containerBehaviorProperties.Width,
-                    Height = containerBehaviorProperties.Height,
+                    X = containerPropertiesBehavior.X,
+                    Y = containerPropertiesBehavior.Y,
+                    Width = containerPropertiesBehavior.Width,
+                    Height = containerPropertiesBehavior.Height,
                 },
                 // FIXME: support checks for things like
                 // - drop table ID to use
                 // - whether or not it's deposit-supported or withdrawl-only
                 // - different graphics? or is that handled by the template check in the front-end?
-                containerBehaviorProperties,
+                containerPropertiesBehavior,
                 new ItemContainerBehavior(new StringIdentifier("Items")),
                 containerInteractionBehavior,
                 additionalBehaviors);

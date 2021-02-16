@@ -69,6 +69,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Ga
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Containers.Api", "Macerus.Plugins.Features.GameObjects.Containers.Api\Macerus.Plugins.Features.GameObjects.Containers.Api.csproj", "{489FBF59-F50E-4D18-8F3D-6900555D91F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables", "Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables\Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables.csproj", "{7F656455-14D3-474E-9DAC-7B75E2289C42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +161,10 @@ Global
 		{489FBF59-F50E-4D18-8F3D-6900555D91F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{489FBF59-F50E-4D18-8F3D-6900555D91F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{489FBF59-F50E-4D18-8F3D-6900555D91F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F656455-14D3-474E-9DAC-7B75E2289C42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F656455-14D3-474E-9DAC-7B75E2289C42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F656455-14D3-474E-9DAC-7B75E2289C42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F656455-14D3-474E-9DAC-7B75E2289C42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -191,6 +197,7 @@ Global
 		{8989A7CB-427A-4954-8118-238604017FE8} = {00A2FCF7-72A1-4031-AD5F-42345BA13DE3}
 		{429F081F-B87D-4F9D-977C-579DB8C98F29} = {8989A7CB-427A-4954-8118-238604017FE8}
 		{489FBF59-F50E-4D18-8F3D-6900555D91F2} = {8989A7CB-427A-4954-8118-238604017FE8}
+		{7F656455-14D3-474E-9DAC-7B75E2289C42} = {DBB8AA2F-D157-4B10-9EE8-4179D4019FB6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}

@@ -51,8 +51,8 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
                     ["Height"] = 0.25,
                     ["Collisions"] = false,
                     ["DestroyOnUse"] = true,
-                    ["AutomaticInteraction"] = automaticInteraction
-                    // FIXME: add additional properties defined in the maps
+                    ["AutomaticInteraction"] = automaticInteraction,
+                    ["TransferItemsOnActivate"] = true,
                 }); ;
             var itemContainerBehavior = lootObject.GetOnly<IItemContainerBehavior>();
             foreach (var item in items)

@@ -4,6 +4,8 @@ using System.Globalization;
 
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
 
+using ProjectXyz.Api.Framework;
+using ProjectXyz.Shared.Framework;
 using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers
@@ -51,12 +53,30 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 rawValue,
                 CultureInfo.InvariantCulture);
 
-        public bool GenerateItems => RawProperties
+        public bool TransferItemsOnActivate => RawProperties
             .TryGetValue(
-                "GenerateItems",
+                "TransferItemsOnActivate",
                 out var rawValue) == true &&
             Convert.ToBoolean(
                 rawValue,
                 CultureInfo.InvariantCulture);
+
+        public IIdentifier DropTableId
+        {
+            get
+            {
+                if (!RawProperties.TryGetValue(
+                    "DropTableId",
+                    out var rawValue))
+                {
+                    return null;
+                }
+                
+                var id = new StringIdentifier(Convert.ToString(
+                    rawValue,
+                    CultureInfo.InvariantCulture));
+                return id;
+            }
+        }
     }
 }
