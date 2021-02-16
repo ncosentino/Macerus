@@ -7,7 +7,7 @@ namespace Macerus.Tests
 {
     public sealed class MacerusContainer
     {
-        private static Lazy<ILifetimeScope> _lazyContainer = new Lazy<ILifetimeScope>(() =>
+        private Lazy<ILifetimeScope> _lazyContainer = new Lazy<ILifetimeScope>(() =>
         {
             var moduleDiscoverer = new ModuleDiscoverer();
             var modules = moduleDiscoverer
@@ -21,7 +21,7 @@ namespace Macerus.Tests
             return lifetimeScope;
         });
 
-        private static ILifetimeScope Instance => _lazyContainer.Value;
+        private ILifetimeScope Instance => _lazyContainer.Value;
 
         public T Resolve<T>() => Instance.Resolve<T>();
     }
