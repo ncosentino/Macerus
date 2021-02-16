@@ -25,7 +25,7 @@ namespace Macerus.Plugins.Content.Wip.Items
                             },
                             new IGeneratorComponent[]
                             {
-                               new NameGeneratorComponent("Gloves"),
+                               new NameGeneratorComponent("Leather Gloves"),
                                new IconGeneratorComponent(@"graphics\items\gloves\leather gloves"),
                                new EquippableGeneratorComponent(new[] { new StringIdentifier("hands") }),
                             }),
@@ -36,8 +36,20 @@ namespace Macerus.Plugins.Content.Wip.Items
                             },
                             new IGeneratorComponent[]
                             {
-                                new NameGeneratorComponent("Helm"),
+                                new NameGeneratorComponent("Cloth Hood"),
+                                new IconGeneratorComponent(@"graphics\items\helms\hood"),
                                 new EquippableGeneratorComponent(new[] { new StringIdentifier("head") }),
+                            }),
+                        new ItemDefinition(
+                            new[]
+                            {
+                                EnchantmentGeneratorAttributes.AllowsNormalAndMagicAffix,
+                            },
+                            new IGeneratorComponent[]
+                            {
+                                new NameGeneratorComponent("Cloth Armor"),
+                                new IconGeneratorComponent(@"graphics\items\body\cloth_armor"),
+                                new EquippableGeneratorComponent(new[] { new StringIdentifier("body") }),
                             }),
                         new ItemDefinition(
                             new[]
