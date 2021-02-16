@@ -6,5 +6,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
     public interface IReadOnlyContainerGenerateItemsBehavior : IBehavior
     {
         IIdentifier DropTableId { get; }
+
+        bool HasGeneratedItems { get; }
     }
 }

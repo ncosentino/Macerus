@@ -5,13 +5,15 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
 {
     public sealed class ContainerGenerateItemsBehavior :
         BaseBehavior,
-        IReadOnlyContainerGenerateItemsBehavior
+        IContainerGenerateItemsBehavior
     {
         public ContainerGenerateItemsBehavior(IIdentifier dropTableId)
         {
             DropTableId = dropTableId;
         }
 
-        public IIdentifier DropTableId { get; }
+        public IIdentifier DropTableId { get; set; }
+
+        public bool HasGeneratedItems { get; set; }
     }
 }

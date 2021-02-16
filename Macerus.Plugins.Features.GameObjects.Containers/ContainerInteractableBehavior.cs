@@ -60,10 +60,41 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 $"'{Owner}' did not have a single '{typeof(IItemContainerBehavior)}'.");
 
             var properties = Owner.GetOnly<IReadOnlyContainerPropertiesBehavior>();
+            Contract.RequiresNotNull(
+                actorInventory,
+                $"'{Owner}' did not have a single '{typeof(IReadOnlyContainerPropertiesBehavior)}'.");
 
-            IGeneratorContext baseGeneratorContext = null;
-            foreach (var containerGenerateItemsBehavior in Owner.Get<IReadOnlyContainerGenerateItemsBehavior>())
+            GenerateNecessaryLoot(sourceItemContainer);
+
+            // need a copy so we can iterate + remove
+            if (properties.TransferItemsOnActivate)
             {
+                var itemsToTake = sourceItemContainer
+                    .Items
+                    .ToArray();
+                foreach (var item in itemsToTake)
+                {
+                    sourceItemContainer.TryRemoveItem(item);
+                    actorInventory.TryAddItem(item);
+                }
+            }
+
+            if (properties.DestroyOnUse)
+            {
+                _gameObjectManager.MarkForRemoval((IGameObject)Owner); // FIXME: whyyyyy this terrible casting
+            }
+        }
+
+        private void GenerateNecessaryLoot(IItemContainerBehavior sourceItemContainer)
+        {
+            IGeneratorContext baseGeneratorContext = null;
+            foreach (var containerGenerateItemsBehavior in Owner.Get<IContainerGenerateItemsBehavior>())
+            {
+                if (containerGenerateItemsBehavior.HasGeneratedItems)
+                {
+                    continue;
+                }
+
                 if (baseGeneratorContext == null)
                 {
                     baseGeneratorContext = _generatorContextProvider.GetGeneratorContext();
@@ -94,26 +125,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                     }
                 }
 
-                // FIXME: we need a way to prevent item generation using this 
-                // behavior the next time this is interacted with
-            }
-
-            // need a copy so we can iterate + remove
-            if (properties.TransferItemsOnActivate)
-            {
-                var itemsToTake = sourceItemContainer
-                    .Items
-                    .ToArray();
-                foreach (var item in itemsToTake)
-                {
-                    sourceItemContainer.TryRemoveItem(item);
-                    actorInventory.TryAddItem(item);
-                }
-            }
-
-            if (properties.DestroyOnUse)
-            {
-                _gameObjectManager.MarkForRemoval((IGameObject)Owner); // FIXME: whyyyyy this terrible casting
+                containerGenerateItemsBehavior.HasGeneratedItems = true;
             }
         }
     }

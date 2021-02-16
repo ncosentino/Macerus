@@ -275,6 +275,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IContainerGenerateItemsBehavior.cs" />
     <Compile Include="IReadOnlyContainerGenerateItemsBehavior.cs" />
     <Compile Include="IContainerRepository.cs" />
     <Compile Include="IDiscoverableContainerBehaviorsInterceptor.cs" />
