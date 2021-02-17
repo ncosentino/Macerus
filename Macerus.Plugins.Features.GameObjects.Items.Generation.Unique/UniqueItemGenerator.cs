@@ -15,38 +15,33 @@ using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
 using ProjectXyz.Shared.Framework;
+using ProjectXyz.Shared.Game.GameObjects.Generation;
 using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
-namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
+namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
 {
-    public sealed class MagicItemGenerator : IDiscoverableItemGenerator
+    public sealed class UniqueItemGenerator : IDiscoverableItemGenerator
     {
-        private static readonly IGeneratorAttribute RequiresMagicAffix = new GeneratorAttribute(
+        private static readonly IGeneratorAttribute RequiresUniqueAffix = new GeneratorAttribute(
             new StringIdentifier("affix-type"),
-            new StringGeneratorAttributeValue("magic"),
+            new StringGeneratorAttributeValue("unique"),
             true);
 
         private readonly IBaseItemGenerator _baseItemGenerator;
         private readonly IEnchantmentGenerator _enchantmentGenerator;
         private readonly IItemFactory _itemFactory;
         private readonly IActiveEnchantmentManagerFactory _activeEnchantmentManagerFactory;
-        private readonly IMagicItemNameGenerator _magicItemNameGenerator;
-        private readonly IGeneratorContextFactory _generatorContextFactory;
 
-        public MagicItemGenerator(
+        public UniqueItemGenerator(
             IBaseItemGenerator baseItemGenerator,
             IEnchantmentGenerator enchantmentGenerator,
             IItemFactory itemFactory,
-            IActiveEnchantmentManagerFactory activeEnchantmentManagerFactory,
-            IMagicItemNameGenerator magicItemNameGenerator,
-            IGeneratorContextFactory generatorContextFactory)
+            IActiveEnchantmentManagerFactory activeEnchantmentManagerFactory)
         {
             _baseItemGenerator = baseItemGenerator;
             _enchantmentGenerator = enchantmentGenerator;
             _itemFactory = itemFactory;
             _activeEnchantmentManagerFactory = activeEnchantmentManagerFactory;
-            _magicItemNameGenerator = magicItemNameGenerator;
-            _generatorContextFactory = generatorContextFactory;
         }
 
         public IEnumerable<IGameObject> GenerateItems(IGeneratorContext generatorContext)
@@ -58,7 +53,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             var generatorRequired = SupportedAttributes
                 .Where(attr => attr.Required)
                 .ToDictionary(x => x.Id, x => x);
-            var magicItemGeneratorContext = _generatorContextFactory.CreateGeneratorContext(
+            var magicItemGeneratorContext = new GeneratorContext(
                 generatorContext.MinimumGenerateCount,
                 generatorContext.MaximumGenerateCount,
                 generatorContext
@@ -72,18 +67,10 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 
             foreach (var baseItem in baseItems)
             {
-                // TODO: we may need to create a NEW context here to add even more specific information.
-                // i.e.
-                // - original context says items can be "any armor", but we
-                //   generate a helm... we might want helm specific enchantments
-                // - original context has a range for item level, but if our 
-                //   item was at one end of that range, it might mean better or
-                //    worse enchantments given the item level.
-
                 var additionalBehaviors = new List<IBehavior>()
                 {
-                    new HasInventoryDisplayColor(0, 0, 255, 255),
-                    new HasAffixType(new StringIdentifier("magic")),
+                    new HasInventoryDisplayColor(255, 215, 0, 255),
+                    new HasAffixType(new StringIdentifier("unique")),
                 };
 
                 IBuffableBehavior enchantable;
@@ -97,28 +84,28 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                     additionalBehaviors.Add(new HasEnchantmentsBehavior(activeEnchantmentManager));
                 }
 
-                var attributes = magicItemGeneratorContext
-                    .Attributes
-                    .Where(x => !SupportedAttributes.Any(s => s.Id.Equals(x.Id)))
-                    .Concat(SupportedAttributes);
-                var enchantmentGeneratorContext = _generatorContextFactory.CreateGeneratorContext(
-                    1,
-                    2,
-                    attributes);
-                var enchantments = _enchantmentGenerator
-                    .GenerateEnchantments(enchantmentGeneratorContext)
-                    .ToArray();
-                if (!enchantments.Any())
-                {
-                    throw new InvalidOperationException(
-                        $"No enchantments were added to the base item.");
-                }
+                // FIXME: actually implement unique item enchantments
+                ////var attributes = magicItemGeneratorContext
+                ////    .Attributes
+                ////    .Where(x => !SupportedAttributes.Any(s => s.Id.Equals(x.Id)))
+                ////    .Concat(SupportedAttributes);
+                ////var enchantmentGeneratorContext = new GeneratorContext(
+                ////    4,
+                ////    4,
+                ////    attributes);
+                ////var enchantments = _enchantmentGenerator
+                ////    .GenerateEnchantments(enchantmentGeneratorContext)
+                ////    .ToArray();
+                ////if (!enchantments.Any())
+                ////{
+                ////    throw new InvalidOperationException(
+                ////        $"No enchantments were added to the base item.");
+                ////}
 
-                enchantable.AddEnchantments(enchantments);
+                ////enchantable.AddEnchantments(enchantments);
 
-                additionalBehaviors.Add(_magicItemNameGenerator.GenerateName(
-                    baseItem,
-                    enchantments));
+                // FIXME: actually implement unique item names
+                additionalBehaviors.Add(new HasInventoryDisplayName("This is unqiue"));
 
                 var magicItem = _itemFactory.Create(baseItem.Behaviors.Concat(additionalBehaviors));
                 yield return magicItem;
@@ -127,7 +114,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 
         public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; } = new IGeneratorAttribute[]
         {
-            RequiresMagicAffix,
+            RequiresUniqueAffix,
         };
     }
 }
