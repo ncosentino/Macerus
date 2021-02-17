@@ -28,7 +28,7 @@ namespace Macerus.Tests.Plugins.Features.Items
         public void GenerateMagicItems_StressTest()
         {
             var itemGenerator = _container.Resolve<IItemGeneratorFacade>();
-            var itemDefinitionRepository = _container.Resolve<IItemDefinitionRepository>();
+            var itemDefinitionRepository = _container.Resolve<IItemDefinitionRepositoryFacade>();
 
             var generatorContextFactory = _container.Resolve<IGeneratorContextFactory>();
             var itemGenerationContext = generatorContextFactory.CreateGeneratorContext(
@@ -59,6 +59,10 @@ namespace Macerus.Tests.Plugins.Features.Items
                 .ToArray();
             foreach (var item in generatedItems.Cast<IHasBehaviors>())
             {
+                AssertionHelpers.AssertAffix(
+                    item,
+                    new StringIdentifier("magic"));
+
                 Assert.InRange(
                     item.GetOnly<IHasEnchantmentsBehavior>().Enchantments.Count,
                     1,
@@ -85,6 +89,8 @@ namespace Macerus.Tests.Plugins.Features.Items
                 Assert.False(
                     nonMagicItems.ContainsKey(inventoryDisplayNames[0].DisplayName),
                     $"Expecting that '{inventoryDisplayNames[0].DisplayName}' (base name) cannot have magic affixes.");
+
+                AssertionHelpers.AssertSocketBehaviors(item);
             }
         }
     }

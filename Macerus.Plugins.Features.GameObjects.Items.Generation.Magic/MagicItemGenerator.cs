@@ -49,10 +49,23 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 
         public IEnumerable<IGameObject> GenerateItems(IGeneratorContext generatorContext)
         {
+            // create our new context by keeping information about attributes 
+            // from our caller, but acknowledging that any that were required
+            // are now fulfilled up until this point. we then cobine in the
+            // newly provided attributes from the drop table.
+            var generatorRequired = SupportedAttributes
+                .Where(attr => attr.Required)
+                .ToDictionary(x => x.Id, x => x);
             var magicItemGeneratorContext = new GeneratorContext(
                 generatorContext.MinimumGenerateCount,
                 generatorContext.MaximumGenerateCount,
-                generatorContext.Attributes);
+                generatorContext
+                    .Attributes
+                    .Where(x => !generatorRequired.ContainsKey(x.Id))
+                    .Select(x => x.Required
+                        ? x.CopyWithRequired(false)
+                        : x)
+                    .Concat(generatorRequired.Values));
             var baseItems = _baseItemGenerator.GenerateItems(magicItemGeneratorContext);
 
             foreach (var baseItem in baseItems)
@@ -68,6 +81,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                 var additionalBehaviors = new List<IBehavior>()
                 {
                     new HasInventoryDisplayColor(0, 0, 255, 255),
+                    new HasAffixType(new StringIdentifier("magic")),
                 };
 
                 IBuffableBehavior enchantable;

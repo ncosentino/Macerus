@@ -47,6 +47,10 @@ namespace Macerus.Tests.Plugins.Features.Items
                 .ToArray();
             foreach (var item in generatedItems.Cast<IHasBehaviors>())
             {
+                AssertionHelpers.AssertAffix(
+                    item,
+                    new StringIdentifier("normal"));
+
                 var enchantmentBehaviors = item
                     .Get<IHasEnchantmentsBehavior>()
                     .ToArray();
@@ -66,23 +70,8 @@ namespace Macerus.Tests.Plugins.Features.Items
                     !string.IsNullOrWhiteSpace(inventoryDisplayNames[0].DisplayName),
                     $"Expecting '{inventoryDisplayNames[0]}' to have a populated display name.");
 
-                var canBeSocketedBehaviors = item
-                    .Get<ICanBeSocketedBehavior>()
-                    .ToArray();
-                Assert.InRange(canBeSocketedBehaviors.Length, 0, 1);
-                if (canBeSocketedBehaviors.Length > 0)
-                {
-                    Assert.InRange(
-                        canBeSocketedBehaviors.Single().TotalSockets.Sum(x => x.Value),
-                        1,
-                        8); // current max limit we're interested in
-                    Assert.Equal(
-                        canBeSocketedBehaviors.Single().TotalSockets.Sum(x => x.Value),
-                        canBeSocketedBehaviors.Single().AvailableSockets.Sum(x => x.Value));
-                    Assert.Equal(0, canBeSocketedBehaviors.Single().OccupiedSockets.Count);
-                    Assert.Single(item.Get<IApplySocketEnchantmentsBehavior>());
-                }
+                AssertionHelpers.AssertSocketBehaviors(item);
             }
-        }
+        }        
     }
 }

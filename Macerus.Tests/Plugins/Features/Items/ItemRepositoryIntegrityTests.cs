@@ -24,7 +24,7 @@ namespace Macerus.Tests.Plugins.Features.Items
         [Fact]
         public void AllItemDefinitions_QueriedByAffix_NoRequiredAttributeCollisions()
         {
-            var itemDefinitionRepository = _container.Resolve<IItemDefinitionRepository>();
+            var itemDefinitionRepository = _container.Resolve<IItemDefinitionRepositoryFacade>();
             var generatorContextFactory = _container.Resolve<IGeneratorContextFactory>();
             var affixTypeRepository = _container.Resolve<IAffixTypeRepository>();
 

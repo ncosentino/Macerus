@@ -39,6 +39,22 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables
                             new DoubleGeneratorAttributeValue(0),
                             true),
                     }),
+                new ItemDropTable(
+                    new StringIdentifier("any_normal_magic_10x_lvl10"),
+                    10,
+                    10,
+                    Enumerable.Empty<IGeneratorAttribute>(),
+                    new[]
+                    {
+                        new GeneratorAttribute(
+                            new StringIdentifier("affix-type"),
+                            new AnyStringCollectionGeneratorAttributeValue("normal", "magic"),
+                            true),
+                        new GeneratorAttribute(
+                            new StringIdentifier("item-level"),
+                            new DoubleGeneratorAttributeValue(0),
+                            true),
+                    }),
             };
 
             builder
