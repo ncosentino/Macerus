@@ -1,11 +1,16 @@
-﻿using Autofac;
+﻿using System;
+
+using Autofac;
+
+using Macerus.Plugins.Content.Wip.Enchantments;
+
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Api.GameObjects.Generation.Attributes;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
-using ProjectXyz.Shared.Framework;
 using ProjectXyz.Framework.Autofac;
-using Macerus.Plugins.Content.Wip.Enchantments;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory;
+using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Wip.Items
 {
@@ -28,6 +33,10 @@ namespace Macerus.Plugins.Content.Wip.Items
                                new NameGeneratorComponent("Leather Gloves"),
                                new IconGeneratorComponent(@"graphics\items\gloves\leather gloves"),
                                new EquippableGeneratorComponent(new[] { new StringIdentifier("hands") }),
+                               new SocketGeneratorComponent(new[]
+                                {
+                                    KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 4)),
+                                })
                             }),
                         new ItemDefinition(
                             new[]
@@ -39,6 +48,10 @@ namespace Macerus.Plugins.Content.Wip.Items
                                 new NameGeneratorComponent("Cloth Hood"),
                                 new IconGeneratorComponent(@"graphics\items\helms\hood"),
                                 new EquippableGeneratorComponent(new[] { new StringIdentifier("head") }),
+                                new SocketGeneratorComponent(new[]
+                                {
+                                    KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 4)),
+                                })
                             }),
                         new ItemDefinition(
                             new[]
@@ -50,6 +63,10 @@ namespace Macerus.Plugins.Content.Wip.Items
                                 new NameGeneratorComponent("Cloth Armor"),
                                 new IconGeneratorComponent(@"graphics\items\body\cloth_armor"),
                                 new EquippableGeneratorComponent(new[] { new StringIdentifier("body") }),
+                                new SocketGeneratorComponent(new[]
+                                {
+                                    KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 6)),
+                                })
                             }),
                         new ItemDefinition(
                             new[]
@@ -59,6 +76,16 @@ namespace Macerus.Plugins.Content.Wip.Items
                             new[]
                             {
                                 new NameGeneratorComponent("Junk"),
+                            }),
+                        new ItemDefinition(
+                            new[]
+                            {
+                                EnchantmentGeneratorAttributes.RequiresNormalAffix,
+                            },
+                            new IGeneratorComponent[]
+                            {
+                                new NameGeneratorComponent("Ruby"),
+                                new CanFitSocketGeneratorComponent(new StringIdentifier("gem"), 1),
                             }),
                     };
                     var itemDefinitionRepository = new InMemoryItemDefinitionRepository(
@@ -78,6 +105,14 @@ namespace Macerus.Plugins.Content.Wip.Items
                 .SingleInstance();
             builder
                 .RegisterType<IconGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<SocketGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<CanFitSocketGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

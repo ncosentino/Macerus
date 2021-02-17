@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 using Macerus.Plugins.Content.Wip.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
+
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
@@ -12,6 +10,7 @@ using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
 using ProjectXyz.Shared.Framework;
 using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
+
 using Xunit;
 
 namespace Macerus.Tests.Plugins.Features.Items
