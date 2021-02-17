@@ -31,6 +31,8 @@ namespace Macerus.Plugins.Content.Wip.Items
         public IEnumerable<IBehavior> Convert(IGeneratorComponent generatorComponent)
         {
             var socketGeneratorComponent = (SocketGeneratorComponent)generatorComponent;
+
+            // FIXME: we'll want to look at randomizing the order of these...
             var generatedSockets = socketGeneratorComponent
                 .SocketRanges
                 .SelectMany(kvp => Enumerable
@@ -39,6 +41,7 @@ namespace Macerus.Plugins.Content.Wip.Items
                     _random.Next(
                         kvp.Value.Item1,
                         kvp.Value.Item2)))
+                .Take(socketGeneratorComponent.MaximumSockets)
                 .ToArray();
             if (generatedSockets.Length < 1)
             {
