@@ -40,7 +40,7 @@ namespace Macerus.Tests.Plugins.Features.Items
                 new GeneratorAttribute(
                     new StringIdentifier("item-level"),
                     new DoubleGeneratorAttributeValue(5),
-                    true));
+                    false));
 
             var generatedItems = itemGenerator
                 .GenerateItems(itemGenerationContext)

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 using Autofac;
 
-using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects.Generation.Attributes;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables;
@@ -37,7 +32,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables
                         new GeneratorAttribute(
                             new StringIdentifier("item-level"),
                             new DoubleGeneratorAttributeValue(0),
-                            true),
+                            false),
                     }),
                 new ItemDropTable(
                     new StringIdentifier("any_normal_magic_10x_lvl10"),
@@ -53,7 +48,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables
                         new GeneratorAttribute(
                             new StringIdentifier("item-level"),
                             new DoubleGeneratorAttributeValue(0),
-                            true),
+                            false),
                     }),
             };
 

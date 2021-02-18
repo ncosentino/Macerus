@@ -41,7 +41,7 @@ namespace Macerus.Tests.Plugins.Features.Items
                 new GeneratorAttribute(
                     new StringIdentifier("item-level"),
                     new DoubleGeneratorAttributeValue(5),
-                    true));
+                    false));
             var nonMagicItems = itemDefinitionRepository
                 .LoadItemDefinitions(generatorContextFactory.CreateGeneratorContext(
                     0,
