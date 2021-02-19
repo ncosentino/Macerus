@@ -29,19 +29,19 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
 
         private readonly IBaseItemGenerator _baseItemGenerator;
         private readonly IEnchantmentGenerator _enchantmentGenerator;
-        private readonly IItemFactory _itemFactory;
         private readonly IActiveEnchantmentManagerFactory _activeEnchantmentManagerFactory;
+        private readonly IGeneratorContextFactory _generatorContextFactory;
 
         public UniqueItemGenerator(
             IBaseItemGenerator baseItemGenerator,
             IEnchantmentGenerator enchantmentGenerator,
-            IItemFactory itemFactory,
-            IActiveEnchantmentManagerFactory activeEnchantmentManagerFactory)
+            IActiveEnchantmentManagerFactory activeEnchantmentManagerFactory,
+            IGeneratorContextFactory generatorContextFactory)
         {
             _baseItemGenerator = baseItemGenerator;
             _enchantmentGenerator = enchantmentGenerator;
-            _itemFactory = itemFactory;
             _activeEnchantmentManagerFactory = activeEnchantmentManagerFactory;
+            _generatorContextFactory = generatorContextFactory;
         }
 
         public IEnumerable<IGameObject> GenerateItems(IGeneratorContext generatorContext)
@@ -53,7 +53,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
             var generatorRequired = SupportedAttributes
                 .Where(attr => attr.Required)
                 .ToDictionary(x => x.Id, x => x);
-            var magicItemGeneratorContext = new GeneratorContext(
+            var uniqueItemGeneratorContext = _generatorContextFactory.CreateGeneratorContext(
                 generatorContext.MinimumGenerateCount,
                 generatorContext.MaximumGenerateCount,
                 generatorContext
@@ -63,25 +63,58 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
                         ? x.CopyWithRequired(false)
                         : x)
                     .Concat(generatorRequired.Values));
-            var baseItems = _baseItemGenerator.GenerateItems(magicItemGeneratorContext);
-
-            foreach (var baseItem in baseItems)
+            var uniqueBehaviorSets = _baseItemGenerator.GenerateItems(uniqueItemGeneratorContext);
+            
+            foreach (var uniqueBehaviorSet in uniqueBehaviorSets)
             {
+                var baseItemId = uniqueBehaviorSet
+                    .GetOnly<UniqueBaseItemBehavior>()
+                    .BaseItemId;
+
+                var baseItemGeneratorContext = _generatorContextFactory.CreateGeneratorContext(
+                    1,
+                    1,
+                    new GeneratorAttribute(
+                        new StringIdentifier("item-id"),
+                        new IdentifierGeneratorAttributeValue(baseItemId),
+                        true));
+                var baseItemBehaviorSet = _baseItemGenerator
+                    .GenerateItems(baseItemGeneratorContext)
+                    .Single();
+
                 var additionalBehaviors = new List<IBehavior>()
                 {
                     new HasInventoryDisplayColor(255, 215, 0, 255),
                     new HasAffixType(new StringIdentifier("unique")),
                 };
 
+                // FIXME: we need a way to filter out dupes here
+                var combinedBehaviors = uniqueBehaviorSet
+                    .Behaviors
+                    .Concat(baseItemBehaviorSet
+                    .Behaviors
+                    .Where(b => !uniqueBehaviorSet
+                    .Behaviors
+                    .Any(u => u.GetType() != b.GetType())))
+                    .Concat(additionalBehaviors)
+                    .Where(x => !(x is IHasInventoryDisplayName))
+                    .AppendSingle(baseItemBehaviorSet
+                    .Behaviors
+                    .Single<IHasInventoryDisplayName>())
+                    .AppendSingle(uniqueBehaviorSet
+                    .Behaviors
+                    .Single<IHasInventoryDisplayName>())
+                    .ToList();
+
                 IBuffableBehavior enchantable;
-                if ((enchantable = baseItem
+                if ((enchantable = baseItemBehaviorSet
                     .Get<IBuffableBehavior>()
                     .SingleOrDefault()) == null)
                 {
                     var activeEnchantmentManager = _activeEnchantmentManagerFactory.Create();
                     enchantable = new BuffableBehavior(activeEnchantmentManager);
-                    additionalBehaviors.Add(enchantable);
-                    additionalBehaviors.Add(new HasEnchantmentsBehavior(activeEnchantmentManager));
+                    combinedBehaviors.Add(enchantable);
+                    combinedBehaviors.Add(new HasEnchantmentsBehavior(activeEnchantmentManager));
                 }
 
                 // FIXME: actually implement unique item enchantments
@@ -104,11 +137,8 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
 
                 ////enchantable.AddEnchantments(enchantments);
 
-                // FIXME: actually implement unique item names
-                additionalBehaviors.Add(new HasInventoryDisplayName("This is unqiue"));
-
-                var magicItem = _itemFactory.Create(baseItem.Behaviors.Concat(additionalBehaviors));
-                yield return magicItem;
+                var uniqueItem = new UniqueItem(combinedBehaviors);
+                yield return uniqueItem;
             }
         }
 

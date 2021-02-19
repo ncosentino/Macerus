@@ -28,6 +28,10 @@ namespace Macerus.Plugins.Content.Wip.Items
                             new[]
                             {
                                 EnchantmentGeneratorAttributes.AllowsNormalAndMagicAffix,
+                                new GeneratorAttribute(
+                                    new StringIdentifier("item-id"),
+                                    new IdentifierGeneratorAttributeValue(new StringIdentifier("leather-gloves")),
+                                    false)
                             },
                             new IGeneratorComponent[]
                             {
@@ -43,6 +47,10 @@ namespace Macerus.Plugins.Content.Wip.Items
                             new[]
                             {
                                 EnchantmentGeneratorAttributes.AllowsNormalAndMagicAffix,
+                                new GeneratorAttribute(
+                                    new StringIdentifier("item-id"),
+                                    new IdentifierGeneratorAttributeValue(new StringIdentifier("cloth-hood")),
+                                    false)
                             },
                             new IGeneratorComponent[]
                             {
@@ -58,6 +66,10 @@ namespace Macerus.Plugins.Content.Wip.Items
                             new[]
                             {
                                 EnchantmentGeneratorAttributes.AllowsNormalAndMagicAffix,
+                                new GeneratorAttribute(
+                                    new StringIdentifier("item-id"),
+                                    new IdentifierGeneratorAttributeValue(new StringIdentifier("cloth-armor")),
+                                    false)
                             },
                             new IGeneratorComponent[]
                             {
@@ -73,6 +85,10 @@ namespace Macerus.Plugins.Content.Wip.Items
                             new[]
                             {
                                 EnchantmentGeneratorAttributes.RequiresNormalAffix,
+                                new GeneratorAttribute(
+                                    new StringIdentifier("item-id"),
+                                    new IdentifierGeneratorAttributeValue(new StringIdentifier("junk")),
+                                    false)
                             },
                             new[]
                             {
@@ -82,29 +98,15 @@ namespace Macerus.Plugins.Content.Wip.Items
                             new[]
                             {
                                 EnchantmentGeneratorAttributes.RequiresNormalAffix,
+                                new GeneratorAttribute(
+                                    new StringIdentifier("item-id"),
+                                    new IdentifierGeneratorAttributeValue(new StringIdentifier("ruby")),
+                                    false)
                             },
                             new IGeneratorComponent[]
                             {
                                 new NameGeneratorComponent("Ruby"),
                                 new CanFitSocketGeneratorComponent(new StringIdentifier("gem"), 1),
-                            }),
-                        new ItemDefinition(
-                            new[]
-                            {
-                                new GeneratorAttribute(
-                                    new StringIdentifier("affix-type"),
-                                    new StringGeneratorAttributeValue("unique"),
-                                    true)
-                            },
-                            new IGeneratorComponent[]
-                            {
-                                new NameGeneratorComponent("Unique Cloth Armor"),
-                                new IconGeneratorComponent(@"graphics\items\body\cloth_armor"),
-                                new EquippableGeneratorComponent(new[] { new StringIdentifier("body") }),
-                                new SocketGeneratorComponent(new[]
-                                {
-                                    KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 6)),
-                                })
                             }),
                     };
                     var itemDefinitionRepository = new InMemoryItemDefinitionRepository(
