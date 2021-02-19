@@ -28,7 +28,6 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 
         private readonly IBaseItemGenerator _baseItemGenerator;
         private readonly IEnchantmentGenerator _enchantmentGenerator;
-        private readonly IItemFactory _itemFactory;
         private readonly IActiveEnchantmentManagerFactory _activeEnchantmentManagerFactory;
         private readonly IMagicItemNameGenerator _magicItemNameGenerator;
         private readonly IGeneratorContextFactory _generatorContextFactory;
@@ -36,14 +35,12 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
         public MagicItemGenerator(
             IBaseItemGenerator baseItemGenerator,
             IEnchantmentGenerator enchantmentGenerator,
-            IItemFactory itemFactory,
             IActiveEnchantmentManagerFactory activeEnchantmentManagerFactory,
             IMagicItemNameGenerator magicItemNameGenerator,
             IGeneratorContextFactory generatorContextFactory)
         {
             _baseItemGenerator = baseItemGenerator;
             _enchantmentGenerator = enchantmentGenerator;
-            _itemFactory = itemFactory;
             _activeEnchantmentManagerFactory = activeEnchantmentManagerFactory;
             _magicItemNameGenerator = magicItemNameGenerator;
             _generatorContextFactory = generatorContextFactory;
@@ -120,7 +117,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                     baseItem,
                     enchantments));
 
-                var magicItem = _itemFactory.Create(baseItem.Behaviors.Concat(additionalBehaviors));
+                var magicItem = new MagicItem(baseItem.Behaviors.Concat(additionalBehaviors));
                 yield return magicItem;
             }
         }

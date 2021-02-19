@@ -11,18 +11,15 @@ namespace Macerus.Plugins.Features.GameObjects.Static
 {
     public sealed class StaticGameObjectFactory : IStaticGameObjectFactory
     {
-        private readonly IBehaviorCollectionFactory _behaviorCollectionFactory;
         private readonly IBehaviorManager _behaviorManager;
         private readonly IStaticGameObjectBehaviorsProviderFacade _staticGameObjectBehaviorsProviderFacade;
         private readonly IStaticGameObjectBehaviorsInterceptorFacade _staticGameObjectBehaviorsInterceptorFacade;
 
         public StaticGameObjectFactory(
-            IBehaviorCollectionFactory behaviorCollectionFactory,
             IBehaviorManager behaviorManager,
             IStaticGameObjectBehaviorsProviderFacade staticGameObjectBehaviorsProviderFacade,
             IStaticGameObjectBehaviorsInterceptorFacade staticGameObjectBehaviorsInterceptorFacade)
         {
-            _behaviorCollectionFactory = behaviorCollectionFactory;
             _behaviorManager = behaviorManager;
             _staticGameObjectBehaviorsProviderFacade = staticGameObjectBehaviorsProviderFacade;
             _staticGameObjectBehaviorsInterceptorFacade = staticGameObjectBehaviorsInterceptorFacade;
@@ -44,9 +41,9 @@ namespace Macerus.Plugins.Features.GameObjects.Static
                 propertiesBehavior,
             };
             var additionalBehaviors = _staticGameObjectBehaviorsProviderFacade.GetBehaviors(baseBehaviours);
-            var allBehaviors = _behaviorCollectionFactory
-                .Create(baseBehaviours
-                .Concat(additionalBehaviors));
+            var allBehaviors = baseBehaviours
+                .Concat(additionalBehaviors)
+                .ToArray();
             _staticGameObjectBehaviorsInterceptorFacade.Intercept(allBehaviors);
 
             var staticGameObject = new StaticGameObject(allBehaviors);

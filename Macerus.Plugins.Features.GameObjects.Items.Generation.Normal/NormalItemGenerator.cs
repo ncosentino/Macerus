@@ -18,13 +18,10 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Normal
     public sealed class NormalItemGenerator : IDiscoverableItemGenerator
     {
         private readonly IBaseItemGenerator _baseItemGenerator;
-        private readonly IItemFactory _itemFactory;
 
-        public NormalItemGenerator(
-            IBaseItemGenerator baseItemGenerator, IItemFactory itemFactory)
+        public NormalItemGenerator(IBaseItemGenerator baseItemGenerator)
         {
             _baseItemGenerator = baseItemGenerator;
-            _itemFactory = itemFactory;
         }
 
         public IEnumerable<IGameObject> GenerateItems(IGeneratorContext generatorContext)
@@ -47,7 +44,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Normal
                         : x)
                     .Concat(generatorRequired.Values));
             var baseItems = _baseItemGenerator.GenerateItems(normalGeneratorContext);
-            var items = baseItems.Select(baseItem => _itemFactory.Create(baseItem.Behaviors.Concat(new IBehavior[]
+            var items = baseItems.Select(baseItem => new NormalItem(baseItem.Behaviors.Concat(new IBehavior[]
             {
                 new HasInventoryDisplayColor(255, 255, 255, 255),
                 new HasAffixType(new StringIdentifier("normal")),

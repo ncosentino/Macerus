@@ -4,11 +4,11 @@ using System.Linq;
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.GameObjects;
 
-namespace Macerus.Plugins.Features.GameObjects.Static
+namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Normal
 {
-    public sealed class StaticGameObject : IGameObject
+    public sealed class NormalItem : IGameObject
     {
-        public StaticGameObject(IEnumerable<IBehavior> behaviors)
+        public NormalItem(IEnumerable<IBehavior> behaviors)
         {
             Behaviors = behaviors.ToArray();
         }

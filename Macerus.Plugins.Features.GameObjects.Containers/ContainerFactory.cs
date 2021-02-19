@@ -12,18 +12,15 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
 {
     public sealed class ContainerFactory : IContainerFactory
     {
-        private readonly IBehaviorCollectionFactory _behaviorCollectionFactory;
         private readonly IBehaviorManager _behaviorManager;
         private readonly IContainerBehaviorsProviderFacade _ContainerBehaviorsProviderFacade;
         private readonly IContainerBehaviorsInterceptorFacade _ContainerBehaviorsInterceptorFacade;
 
         public ContainerFactory(
-            IBehaviorCollectionFactory behaviorCollectionFactory,
             IBehaviorManager behaviorManager,
             IContainerBehaviorsProviderFacade ContainerBehaviorsProviderFacade,
             IContainerBehaviorsInterceptorFacade ContainerBehaviorsInterceptorFacade)
         {
-            _behaviorCollectionFactory = behaviorCollectionFactory;
             _behaviorManager = behaviorManager;
             _ContainerBehaviorsProviderFacade = ContainerBehaviorsProviderFacade;
             _ContainerBehaviorsInterceptorFacade = ContainerBehaviorsInterceptorFacade;
@@ -52,9 +49,9 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             .Concat(additionalBehaviors)
             .ToArray();
             var providerBehaviors = _ContainerBehaviorsProviderFacade.GetBehaviors(baseBehaviours);
-            var allBehaviors = _behaviorCollectionFactory
-                .Create(baseBehaviours
-                .Concat(providerBehaviors));
+            var allBehaviors = baseBehaviours
+                .Concat(providerBehaviors)
+                .ToArray();
             _ContainerBehaviorsInterceptorFacade.Intercept(allBehaviors);
 
             var Container = new Container(allBehaviors);
