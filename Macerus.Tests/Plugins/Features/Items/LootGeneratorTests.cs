@@ -8,10 +8,8 @@ using Macerus.Plugins.Content.Wip.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Api.GameObjects.Generation.Attributes;
-using ProjectXyz.Api.Stats;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
@@ -21,9 +19,9 @@ using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.DropTables.Implementations.Item;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory.DropTables;
+using ProjectXyz.Shared.Behaviors.Filtering;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 using Xunit;
 using Xunit.Sdk;
@@ -36,7 +34,7 @@ namespace Macerus.Tests.Plugins.Features.Items
         private static readonly Lazy<Dictionary<string, IItemDefinition>> _lazyAllowNormalItems;
         private static readonly Lazy<Dictionary<string, IItemDefinition>> _lazyAllowMagicItems;
         private static readonly ILootGenerator _lootGenerator;
-        private static readonly IGeneratorContextProvider _generatorContextProvider;
+        private static readonly IFilterContextProvider _filterContextProvider;
         private static readonly IMutableGameObjectManager _gameObjectManager;
         private static readonly IActorFactory _actorFactory;
 
@@ -45,41 +43,41 @@ namespace Macerus.Tests.Plugins.Features.Items
             _container = new MacerusContainer();
             _lazyAllowNormalItems = new Lazy<Dictionary<string, IItemDefinition>>(() =>
             {
-                var generatorContextFactory = _container.Resolve<IGeneratorContextFactory>();
+                var filterContextFactory = _container.Resolve<IFilterContextFactory>();
                 var itemDefinitionRepository = _container.Resolve<IItemDefinitionRepositoryFacade>();
                 var normalitems = itemDefinitionRepository
-                    .LoadItemDefinitions(generatorContextFactory.CreateGeneratorContext(
+                    .LoadItemDefinitions(filterContextFactory.CreateContext(
                         0,
                         int.MaxValue,
-                        new GeneratorAttribute(
+                        new FilterAttribute(
                             new StringIdentifier("affix-type"),
-                            new StringGeneratorAttributeValue("normal"),
+                            new StringFilterAttributeValue("normal"),
                             true)))
                     .ToDictionary(
-                        x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
+                        x => ((NameFilterComponent)x.FilterComponents.Single(c => c is NameFilterComponent)).DisplayName,
                         x => x);
                 return normalitems;
             });
             _lazyAllowMagicItems = new Lazy<Dictionary<string, IItemDefinition>>(() =>
             {
-                var generatorContextFactory = _container.Resolve<IGeneratorContextFactory>();
+                var filterContextFactory = _container.Resolve<IFilterContextFactory>();
                 var itemDefinitionRepository = _container.Resolve<IItemDefinitionRepositoryFacade>();
                 var allowMagicItems = itemDefinitionRepository
-                    .LoadItemDefinitions(generatorContextFactory.CreateGeneratorContext(
+                    .LoadItemDefinitions(filterContextFactory.CreateContext(
                         0,
                         int.MaxValue,
-                        new GeneratorAttribute(
+                        new FilterAttribute(
                             new StringIdentifier("affix-type"),
-                            new StringGeneratorAttributeValue("magic"),
+                            new StringFilterAttributeValue("magic"),
                             true)))
                     .ToDictionary(
-                        x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
+                        x => ((NameFilterComponent)x.FilterComponents.Single(c => c is NameFilterComponent)).DisplayName,
                         x => x);
                 return allowMagicItems;
             });
 
             _lootGenerator = _container.Resolve<ILootGenerator>();
-            _generatorContextProvider = _container.Resolve<IGeneratorContextProvider>();
+            _filterContextProvider = _container.Resolve<IFilterContextProvider>();
             _gameObjectManager = _container.Resolve<IMutableGameObjectManager>();
             _actorFactory = _container.Resolve<IActorFactory>();
         }
@@ -93,18 +91,18 @@ namespace Macerus.Tests.Plugins.Features.Items
         [Fact]
         public void GenerateLootStressTest_NormalAndMagicTable_ItemsMeetAffixRequirements()
         {
-            var generatorContext = _generatorContextProvider.GetGeneratorContext();
-            generatorContext = new GeneratorContext(
+            var filterContext = _filterContextProvider.GetContext();
+            filterContext = new FilterContext(
                 10000,
                 10000,
-                generatorContext
+                filterContext
                     .Attributes
-                    .AppendSingle(new GeneratorAttribute(
+                    .AppendSingle(new FilterAttribute(
                         new StringIdentifier("drop-table"),
-                        new IdentifierGeneratorAttributeValue(new StringIdentifier("any_normal_magic_10x_lvl10")),
+                        new IdentifierFilterAttributeValue(new StringIdentifier("any_normal_magic_10x_lvl10")),
                         true)));
 
-            foreach (var item in _lootGenerator.GenerateLoot(generatorContext))
+            foreach (var item in _lootGenerator.GenerateLoot(filterContext))
             {
                 var affixTypeId = item
                    .GetOnly<IHasAffixType>()
@@ -145,14 +143,14 @@ namespace Macerus.Tests.Plugins.Features.Items
                     .GetOnly<IHasMutableStatsBehavior>()
                     .MutateStats(stats => stats[new IntIdentifier(1)] = 15);
 
-                var context = _generatorContextProvider
-                    .GetGeneratorContext()
-                    .WithGenerateCountRange(1, 1)
+                var context = _filterContextProvider
+                    .GetContext()
+                    .WithRange(1, 1)
                     .WithAdditionalAttributes(new[]
                     {
-                        new GeneratorAttribute(
+                        new FilterAttribute(
                             new StringIdentifier("drop-table"),
-                            new IdentifierGeneratorAttributeValue(new StringIdentifier("GenerateLoot_PlayerStatsRequiredPlayerPresentStatsMet_ExpectedDropTable")),
+                            new IdentifierFilterAttributeValue(new StringIdentifier("GenerateLoot_PlayerStatsRequiredPlayerPresentStatsMet_ExpectedDropTable")),
                             true),
                     });
                 var results = _lootGenerator
@@ -171,14 +169,14 @@ namespace Macerus.Tests.Plugins.Features.Items
                     .GetOnly<IHasMutableStatsBehavior>()
                     .MutateStats(stats => stats[new IntIdentifier(1)] = 5);
 
-                var context = _generatorContextProvider
-                    .GetGeneratorContext()
-                    .WithGenerateCountRange(1, 1)
+                var context = _filterContextProvider
+                    .GetContext()
+                    .WithRange(1, 1)
                     .WithAdditionalAttributes(new[]
                     {
-                        new GeneratorAttribute(
+                        new FilterAttribute(
                             new StringIdentifier("drop-table"),
-                            new IdentifierGeneratorAttributeValue(new StringIdentifier("GenerateLoot_PlayerStatsRequiredPlayerPresentStatsMet_ExpectedDropTable")),
+                            new IdentifierFilterAttributeValue(new StringIdentifier("GenerateLoot_PlayerStatsRequiredPlayerPresentStatsMet_ExpectedDropTable")),
                             true),
                     });
 
@@ -230,9 +228,9 @@ namespace Macerus.Tests.Plugins.Features.Items
                         3,
                         new[]
                         {
-                            new GeneratorAttribute(
+                            new FilterAttribute(
                             new StringIdentifier("actor-stats"),
-                            new ActorStatGeneratorAttributeValue(
+                            new ActorStatFilterAttributeValue(
                                 new StringIdentifier("player"),
                                 new IntIdentifier(1),
                                 10,
@@ -241,13 +239,13 @@ namespace Macerus.Tests.Plugins.Features.Items
                         },
                         new[]
                         {
-                            new GeneratorAttribute(
+                            new FilterAttribute(
                                 new StringIdentifier("affix-type"),
-                                new StringGeneratorAttributeValue("magic"),
+                                new StringFilterAttributeValue("magic"),
                                 true),
-                            new GeneratorAttribute(
+                            new FilterAttribute(
                                 new StringIdentifier("item-level"),
-                                new DoubleGeneratorAttributeValue(0),
+                                new DoubleFilterAttributeValue(0),
                                 false),
                         }),
                 };

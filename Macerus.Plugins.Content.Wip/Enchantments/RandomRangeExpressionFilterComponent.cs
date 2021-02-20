@@ -1,15 +1,16 @@
-﻿using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Api.GameObjects.Generation.Attributes;
-using ProjectXyz.Api.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+
+using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments.Calculations;
+using ProjectXyz.Api.Framework;
 
 namespace Macerus.Plugins.Content.Wip.Enchantments
 {
-    public sealed class RandomRangeExpressionGeneratorComponent : IGeneratorComponent
+    public sealed class RandomRangeExpressionFilterComponent : IFilterComponent
     {
-        public RandomRangeExpressionGeneratorComponent(
+        public RandomRangeExpressionFilterComponent(
             IIdentifier statDefinitionId,
             string @operator,
             ICalculationPriority priority,
@@ -23,7 +24,7 @@ namespace Macerus.Plugins.Content.Wip.Enchantments
             MaximumInclusive = maximumInclusive;
         }
 
-        public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; } = Enumerable.Empty<IGeneratorAttribute>();
+        public IEnumerable<IFilterAttribute> SupportedAttributes { get; } = Enumerable.Empty<IFilterAttribute>();
         
         public IIdentifier StatDefinitionId { get; }
         

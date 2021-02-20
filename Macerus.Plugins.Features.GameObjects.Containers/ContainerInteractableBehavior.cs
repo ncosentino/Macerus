@@ -7,14 +7,14 @@ using Macerus.Plugins.Features.GameObjects.Containers.Api;
 using NexusLabs.Contracts;
 
 using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables;
+using ProjectXyz.Shared.Behaviors.Filtering;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
 using ProjectXyz.Shared.Game.Behaviors;
-using ProjectXyz.Shared.Game.GameObjects.Generation;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers
 {
@@ -24,19 +24,19 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
     {
         private readonly IMutableGameObjectManager _gameObjectManager;
         private readonly ILootGenerator _lootGenerator;
-        private readonly IGeneratorContextProvider _generatorContextProvider;
+        private readonly IFilterContextProvider _filterContextProvider;
         private readonly IDropTableRepositoryFacade _dropTableRepository;
 
         public ContainerInteractableBehavior(
             IMutableGameObjectManager gameObjectManager,
             ILootGenerator lootGenerator,
-            IGeneratorContextProvider generatorContextProvider,
+            IFilterContextProvider filterContextProvider,
             IDropTableRepositoryFacade dropTableRepository,
             bool automaticInteraction)
         {
             _gameObjectManager = gameObjectManager;
             _lootGenerator = lootGenerator;
-            _generatorContextProvider = generatorContextProvider;
+            _filterContextProvider = filterContextProvider;
             _dropTableRepository = dropTableRepository;
             AutomaticInteraction = automaticInteraction;
         }
@@ -87,7 +87,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
 
         private void GenerateNecessaryLoot(IItemContainerBehavior sourceItemContainer)
         {
-            IGeneratorContext baseGeneratorContext = null;
+            IFilterContext baseGeneratorContext = null;
             foreach (var containerGenerateItemsBehavior in Owner.Get<IContainerGenerateItemsBehavior>())
             {
                 if (containerGenerateItemsBehavior.HasGeneratedItems)
@@ -97,23 +97,23 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
 
                 if (baseGeneratorContext == null)
                 {
-                    baseGeneratorContext = _generatorContextProvider.GetGeneratorContext();
+                    baseGeneratorContext = _filterContextProvider.GetContext();
                 }
 
                 var dropTableId = containerGenerateItemsBehavior.DropTableId;
                 var dropTable = _dropTableRepository.GetForDropTableId(dropTableId);
-                var dropTableAttribute = new GeneratorAttribute(
+                var dropTableAttribute = new FilterAttribute(
                     new StringIdentifier("drop-table"),
-                    new IdentifierGeneratorAttributeValue(dropTableId),
+                    new IdentifierFilterAttributeValue(dropTableId),
                     true);
 
-                var generatorContext = baseGeneratorContext
+                var filterContext = baseGeneratorContext
                     .WithAdditionalAttributes(new[] { dropTableAttribute })
-                    .WithGenerateCountRange(
+                    .WithRange(
                         dropTable.MinimumGenerateCount,
                         dropTable.MaximumGenerateCount);
 
-                var generatedItems = _lootGenerator.GenerateLoot(generatorContext);
+                var generatedItems = _lootGenerator.GenerateLoot(filterContext);
                 foreach (var generatedItem in generatedItems)
                 {
                     if (!sourceItemContainer.TryAddItem(generatedItem))

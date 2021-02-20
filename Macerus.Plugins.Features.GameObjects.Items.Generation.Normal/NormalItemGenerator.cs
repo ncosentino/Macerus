@@ -4,27 +4,29 @@ using System.Linq;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Api.GameObjects.Generation.Attributes;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Normal
 {
     public sealed class NormalItemGenerator : IDiscoverableItemGenerator
     {
         private readonly IBaseItemGenerator _baseItemGenerator;
+        private readonly IFilterContextFactory _filterContextFactory;
 
-        public NormalItemGenerator(IBaseItemGenerator baseItemGenerator)
+        public NormalItemGenerator(
+            IBaseItemGenerator baseItemGenerator,
+            IFilterContextFactory filterContextFactory)
         {
             _baseItemGenerator = baseItemGenerator;
+            _filterContextFactory = filterContextFactory;
         }
 
-        public IEnumerable<IGameObject> GenerateItems(IGeneratorContext generatorContext)
+        public IEnumerable<IGameObject> GenerateItems(IFilterContext filterContext)
         {
             // create our new context by keeping information about attributes 
             // from our caller, but acknowledging that any that were required
@@ -33,10 +35,10 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Normal
             var generatorRequired = SupportedAttributes
                 .Where(attr => attr.Required)
                 .ToDictionary(x => x.Id, x => x);
-            var normalGeneratorContext = new GeneratorContext(
-                generatorContext.MinimumGenerateCount,
-                generatorContext.MaximumGenerateCount,
-                generatorContext
+            var normalGeneratorContext = _filterContextFactory.CreateContext(
+                filterContext.MinimumCount,
+                filterContext.MaximumCount,
+                filterContext
                     .Attributes
                     .Where(x => !generatorRequired.ContainsKey(x.Id))
                     .Select(x => x.Required
@@ -52,11 +54,11 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Normal
             return items;
         }
 
-        public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; } = new IGeneratorAttribute[]
+        public IEnumerable<IFilterAttribute> SupportedAttributes { get; } = new IFilterAttribute[]
         {
-            new GeneratorAttribute(
+            new FilterAttribute(
                 new StringIdentifier("affix-type"),
-                new StringGeneratorAttributeValue("normal"),
+                new StringFilterAttributeValue("normal"),
                 true),
         };
     }

@@ -5,48 +5,47 @@ using System.Linq;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Api.GameObjects.Generation.Attributes;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 {
     public sealed class MagicItemGenerator : IDiscoverableItemGenerator
     {
-        private static readonly IGeneratorAttribute RequiresMagicAffix = new GeneratorAttribute(
+        private static readonly IFilterAttribute RequiresMagicAffix = new FilterAttribute(
             new StringIdentifier("affix-type"),
-            new StringGeneratorAttributeValue("magic"),
+            new StringFilterAttributeValue("magic"),
             true);
 
         private readonly IBaseItemGenerator _baseItemGenerator;
         private readonly IEnchantmentGenerator _enchantmentGenerator;
         private readonly IActiveEnchantmentManagerFactory _activeEnchantmentManagerFactory;
         private readonly IMagicItemNameGenerator _magicItemNameGenerator;
-        private readonly IGeneratorContextFactory _generatorContextFactory;
+        private readonly IFilterContextFactory _filterContextFactory;
 
         public MagicItemGenerator(
             IBaseItemGenerator baseItemGenerator,
             IEnchantmentGenerator enchantmentGenerator,
             IActiveEnchantmentManagerFactory activeEnchantmentManagerFactory,
             IMagicItemNameGenerator magicItemNameGenerator,
-            IGeneratorContextFactory generatorContextFactory)
+            IFilterContextFactory filterContextFactory)
         {
             _baseItemGenerator = baseItemGenerator;
             _enchantmentGenerator = enchantmentGenerator;
             _activeEnchantmentManagerFactory = activeEnchantmentManagerFactory;
             _magicItemNameGenerator = magicItemNameGenerator;
-            _generatorContextFactory = generatorContextFactory;
+            _filterContextFactory = filterContextFactory;
         }
 
-        public IEnumerable<IGameObject> GenerateItems(IGeneratorContext generatorContext)
+        public IEnumerable<IGameObject> GenerateItems(IFilterContext filterContext)
         {
             // create our new context by keeping information about attributes 
             // from our caller, but acknowledging that any that were required
@@ -55,10 +54,10 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             var generatorRequired = SupportedAttributes
                 .Where(attr => attr.Required)
                 .ToDictionary(x => x.Id, x => x);
-            var magicItemGeneratorContext = _generatorContextFactory.CreateGeneratorContext(
-                generatorContext.MinimumGenerateCount,
-                generatorContext.MaximumGenerateCount,
-                generatorContext
+            var magicItemGeneratorContext = _filterContextFactory.CreateContext(
+                filterContext.MinimumCount,
+                filterContext.MaximumCount,
+                filterContext
                     .Attributes
                     .Where(x => !generatorRequired.ContainsKey(x.Id))
                     .Select(x => x.Required
@@ -98,7 +97,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                     .Attributes
                     .Where(x => !SupportedAttributes.Any(s => s.Id.Equals(x.Id)))
                     .Concat(SupportedAttributes);
-                var enchantmentGeneratorContext = _generatorContextFactory.CreateGeneratorContext(
+                var enchantmentGeneratorContext = _filterContextFactory.CreateContext(
                     1,
                     2,
                     attributes);
@@ -122,7 +121,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             }
         }
 
-        public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; } = new IGeneratorAttribute[]
+        public IEnumerable<IFilterAttribute> SupportedAttributes { get; } = new IFilterAttribute[]
         {
             RequiresMagicAffix,
         };

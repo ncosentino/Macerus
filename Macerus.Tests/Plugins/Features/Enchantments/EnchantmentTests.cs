@@ -4,14 +4,14 @@ using System.Linq;
 using Macerus.Plugins.Content.Wip.Enchantments;
 using Macerus.Plugins.Content.Wip.Stats;
 
+using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
-using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Api.Stats;
 using ProjectXyz.Plugins.Features.Enchantments.Generation.MySql;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
 using ProjectXyz.Shared.Game.GameObjects.Enchantments.Calculations;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 using Xunit;
 
@@ -64,11 +64,11 @@ namespace Macerus.Tests.Plugins.Features.Items
             };
             
             var enchantmentDefinitionRepository = _container.Resolve<IEnchantmentDefinitionRepository>();
-            var generatorContextProvider = _container.Resolve<IGeneratorContextProvider>();
+            var filterContextProvider = _container.Resolve<IFilterContextProvider>();
             
             enchantmentDefinitionRepository.WriteEnchantmentDefinitions(enchantmentDefinitions);
             var results = enchantmentDefinitionRepository
-                .ReadEnchantmentDefinitions(generatorContextProvider.GetGeneratorContext())
+                .ReadEnchantmentDefinitions(filterContextProvider.GetContext())
                 .ToArray();
         }
 
@@ -86,18 +86,18 @@ namespace Macerus.Tests.Plugins.Features.Items
                 var enchantmentDefinition = new EnchantmentDefinition(
                     new[]
                     {
-                    EnchantmentGeneratorAttributes.RequiresMagicAffix,
-                    new GeneratorAttribute(
+                    EnchantmentFilterAttributes.RequiresMagicAffix,
+                    new FilterAttribute(
                         new StringIdentifier("item-level"),
-                        new RangeGeneratorAttributeValue(minLevel, maxLevel),
+                        new RangeFilterAttributeValue(minLevel, maxLevel),
                         true),
                     },
-                    new IGeneratorComponent[]
+                    new IFilterComponent[]
                     {
-                    new HasStatGeneratorComponent(statDefinitionId),
-                    new HasPrefixGeneratorComponent(prefixId),
-                    new HasSuffixGeneratorComponent(suffixId),
-                    new RandomRangeExpressionGeneratorComponent(
+                    new HasStatFilterComponent(statDefinitionId),
+                    new HasPrefixFilterComponent(prefixId),
+                    new HasSuffixFilterComponent(suffixId),
+                    new RandomRangeExpressionFilterComponent(
                         statDefinitionId,
                         "+",
                         new CalculationPriority<int>(1),

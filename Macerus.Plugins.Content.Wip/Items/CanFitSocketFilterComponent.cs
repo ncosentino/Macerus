@@ -7,15 +7,18 @@ using ProjectXyz.Api.Framework;
 
 namespace Macerus.Plugins.Content.Wip.Items
 {
-    public sealed class UniqueBaseItemFilterComponent : IFilterComponent
+    public sealed class CanFitSocketFilterComponent : IFilterComponent
     {
-        public UniqueBaseItemFilterComponent(IIdentifier identifier)
+        public CanFitSocketFilterComponent(IIdentifier socketId, int size)
         {
-            Identifier = identifier;
+            SocketId = socketId;
+            Size = size;
         }
 
         public IEnumerable<IFilterAttribute> SupportedAttributes { get; } = Enumerable.Empty<IFilterAttribute>();
         
-        public IIdentifier Identifier { get; }
+        public IIdentifier SocketId { get; }
+        
+        public int Size { get; }
     }
 }

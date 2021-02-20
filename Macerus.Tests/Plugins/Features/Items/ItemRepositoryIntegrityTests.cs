@@ -3,10 +3,10 @@
 using Macerus.Plugins.Content.Wip.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Affixes.Api;
 
-using ProjectXyz.Api.GameObjects.Generation;
+using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 using Xunit;
 
@@ -25,7 +25,7 @@ namespace Macerus.Tests.Plugins.Features.Items
         public void AllItemDefinitions_QueriedByAffix_NoRequiredAttributeCollisions()
         {
             var itemDefinitionRepository = _container.Resolve<IItemDefinitionRepositoryFacade>();
-            var generatorContextFactory = _container.Resolve<IGeneratorContextFactory>();
+            var filterContextFactory = _container.Resolve<IFilterContextFactory>();
             var affixTypeRepository = _container.Resolve<IAffixTypeRepository>();
 
             var allAffixes = affixTypeRepository
@@ -33,15 +33,15 @@ namespace Macerus.Tests.Plugins.Features.Items
                 .Select(x => x.Name) // FIXME: this should be by id
                 .ToArray();
             var allItems = itemDefinitionRepository
-                .LoadItemDefinitions(generatorContextFactory.CreateGeneratorContext(
+                .LoadItemDefinitions(filterContextFactory.CreateContext(
                     0,
                     int.MaxValue,
-                    new GeneratorAttribute(
+                    new FilterAttribute(
                         new StringIdentifier("affix-type"),
-                        new AnyStringCollectionGeneratorAttributeValue(allAffixes),
+                        new AnyStringCollectionFilterAttributeValue(allAffixes),
                         true)))
                 .ToDictionary(
-                    x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
+                    x => ((NameFilterComponent)x.FilterComponents.Single(c => c is NameFilterComponent)).DisplayName,
                     x => x);
 
             foreach (var entry in allItems)

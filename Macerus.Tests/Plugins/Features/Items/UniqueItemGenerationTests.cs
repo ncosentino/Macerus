@@ -3,14 +3,12 @@
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Api.GameObjects.Generation.Attributes;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Socketing.Api;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 using Xunit;
 
@@ -29,40 +27,40 @@ namespace Macerus.Tests.Plugins.Features.Items
         public void GenerateUniqueItems_StressTest()
         {
             var itemGenerator = _container.Resolve<IItemGeneratorFacade>();
-            var generatorContextFactory = _container.Resolve<IGeneratorContextFactory>();
+            var filterContextFactory = _container.Resolve<IFilterContextFactory>();
 
             var allUniqueItemIds = _container
                 .Resolve<IItemDefinitionRepositoryFacade>()
-                .LoadItemDefinitions(generatorContextFactory.CreateGeneratorContext(
+                .LoadItemDefinitions(filterContextFactory.CreateContext(
                     0,
                     int.MaxValue,
-                    new GeneratorAttribute(
+                    new FilterAttribute(
                         new StringIdentifier("affix-type"),
-                        new StringGeneratorAttributeValue("unique"),
+                        new StringFilterAttributeValue("unique"),
                         true)))
                 .Select(x => x
                 .SupportedAttributes
                 .SingleOrDefault(attr => attr.Id.Equals(new StringIdentifier("item-id")))
                 .Value)
-                .Select(x => ((IdentifierGeneratorAttributeValue)x).Value)
+                .Select(x => ((IdentifierFilterAttributeValue)x).Value)
                 .ToHashSet();
 
             foreach (var uniqueItemId in allUniqueItemIds)
             {
-                var itemGenerationContext = generatorContextFactory.CreateGeneratorContext(
+                var itemGenerationContext = filterContextFactory.CreateContext(
                     1,
                     1,
-                    new GeneratorAttribute(
+                    new FilterAttribute(
                         new StringIdentifier("affix-type"),
-                        new StringGeneratorAttributeValue("unique"),
+                        new StringFilterAttributeValue("unique"),
                         true),
-                    new GeneratorAttribute(
+                    new FilterAttribute(
                         new StringIdentifier("item-id"),
-                        new IdentifierGeneratorAttributeValue(uniqueItemId),
+                        new IdentifierFilterAttributeValue(uniqueItemId),
                         false),
-                    new GeneratorAttribute(
+                    new FilterAttribute(
                         new StringIdentifier("item-level"),
-                        new DoubleGeneratorAttributeValue(double.MaxValue),
+                        new DoubleFilterAttributeValue(double.MaxValue),
                         false));
 
                 var generatedItems = itemGenerator

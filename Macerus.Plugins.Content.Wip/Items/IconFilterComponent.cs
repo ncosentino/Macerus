@@ -3,19 +3,18 @@ using System.Linq;
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
-using ProjectXyz.Api.Framework;
 
 namespace Macerus.Plugins.Content.Wip.Items
 {
-    public sealed class UniqueBaseItemFilterComponent : IFilterComponent
+    public sealed class IconFilterComponent : IFilterComponent
     {
-        public UniqueBaseItemFilterComponent(IIdentifier identifier)
+        public IconFilterComponent(string iconResource)
         {
-            Identifier = identifier;
+            IconResource = iconResource;
         }
 
         public IEnumerable<IFilterAttribute> SupportedAttributes { get; } = Enumerable.Empty<IFilterAttribute>();
-        
-        public IIdentifier Identifier { get; }
+
+        public string IconResource { get; }
     }
 }

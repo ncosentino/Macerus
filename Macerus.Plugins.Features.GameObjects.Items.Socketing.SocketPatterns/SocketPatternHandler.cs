@@ -1,26 +1,26 @@
 ﻿using System.Linq;
 
+using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.SocketPatterns.Api;
+using ProjectXyz.Shared.Behaviors.Filtering;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns
 {
     public sealed class SocketPatternHandler : IDiscoverableSocketPatternHandler
     {
         private readonly IItemGeneratorFacade _itemGenerator;
-        private readonly IGeneratorContextProvider _generatorContextProvider;
+        private readonly IFilterContextProvider _filterContextProvider;
 
         public SocketPatternHandler(
             IItemGeneratorFacade itemGenerator,
-            IGeneratorContextProvider generatorContextProvider)
+            IFilterContextProvider filterContextProvider)
         {
             _itemGenerator = itemGenerator;
-            _generatorContextProvider = generatorContextProvider;
+            _filterContextProvider = filterContextProvider;
         }
 
         public bool TryHandle(
@@ -30,18 +30,18 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns
             // FIXME: this is just a hack to test things out
             if (socketableInfo.OccupiedSockets.Count == 1)
             {
-                var generatorContext = _generatorContextProvider
-                    .GetGeneratorContext()
+                var filterContext = _filterContextProvider
+                    .GetContext()
                     .WithAdditionalAttributes(new[]
                     {
-                        new GeneratorAttribute(
+                        new FilterAttribute(
                             new StringIdentifier("affix-type"),
-                            new StringGeneratorAttributeValue("unique"),
+                            new StringFilterAttributeValue("unique"),
                             true)
                     })
-                    .WithGenerateCountRange(1, 1);
+                    .WithRange(1, 1);
                 newItem = _itemGenerator
-                    .GenerateItems(generatorContext)
+                    .GenerateItems(filterContext)
                     .Single();
                 return true;
             }

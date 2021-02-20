@@ -4,14 +4,14 @@ using Autofac;
 
 using Macerus.Plugins.Content.Wip.Items;
 
+using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
-using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Api.GameObjects.Generation.Attributes;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique.Autofac
 {
@@ -27,22 +27,22 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique.Autofac
                         new ItemDefinition(
                             new[]
                             {
-                                new GeneratorAttribute(
+                                new FilterAttribute(
                                     new StringIdentifier("affix-type"),
-                                    new StringGeneratorAttributeValue("unique"),
+                                    new StringFilterAttributeValue("unique"),
                                     true),
-                                new GeneratorAttribute(
+                                new FilterAttribute(
                                     new StringIdentifier("item-id"),
-                                    new IdentifierGeneratorAttributeValue(new StringIdentifier("tfos")),
+                                    new IdentifierFilterAttributeValue(new StringIdentifier("tfos")),
                                     false)
                             },
-                            new IGeneratorComponent[]
+                            new IFilterComponent[]
                             {
-                                new UniqueBaseItemGeneratorComponent(new StringIdentifier("cloth-armor")),
-                                new NameGeneratorComponent("Torn Flesh of Souls"),
-                                new IconGeneratorComponent(@"graphics\items\body\cloth_armor"),
-                                new EquippableGeneratorComponent(new[] { new StringIdentifier("body") }),
-                                new SocketGeneratorComponent(new[]
+                                new UniqueBaseItemFilterComponent(new StringIdentifier("cloth-armor")),
+                                new NameFilterComponent("Torn Flesh of Souls"),
+                                new IconFilterComponent(@"graphics\items\body\cloth_armor"),
+                                new EquippableFilterComponent(new[] { new StringIdentifier("body") }),
+                                new SocketFilterComponent(new[]
                                 {
                                     KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 6)),
                                 })
@@ -60,7 +60,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<UniqueBaseItemGeneratorComponentToBehaviorConverter>()
+                .RegisterType<UniqueBaseItemFilterComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

@@ -7,15 +7,15 @@ using ProjectXyz.Api.Framework;
 
 namespace Macerus.Plugins.Content.Wip.Items
 {
-    public sealed class UniqueBaseItemFilterComponent : IFilterComponent
+    public sealed class EquippableFilterComponent : IFilterComponent
     {
-        public UniqueBaseItemFilterComponent(IIdentifier identifier)
+        public EquippableFilterComponent(IEnumerable<IIdentifier> allowedEquipSlots)
         {
-            Identifier = identifier;
+            AllowedEquipSlots = allowedEquipSlots.ToArray();
         }
 
         public IEnumerable<IFilterAttribute> SupportedAttributes { get; } = Enumerable.Empty<IFilterAttribute>();
-        
-        public IIdentifier Identifier { get; }
+
+        public IReadOnlyCollection<IIdentifier> AllowedEquipSlots { get; }
     }
 }

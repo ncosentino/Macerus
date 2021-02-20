@@ -3,13 +3,12 @@
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Socketing.Api;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 using Xunit;
 
@@ -29,17 +28,17 @@ namespace Macerus.Tests.Plugins.Features.Items
         {
             var itemGenerator = _container.Resolve<IItemGeneratorFacade>();
 
-            var generatorContextFactory = _container.Resolve<IGeneratorContextFactory>();
-            var itemGenerationContext = generatorContextFactory.CreateGeneratorContext(
+            var filterContextFactory = _container.Resolve<IFilterContextFactory>();
+            var itemGenerationContext = filterContextFactory.CreateContext(
                 100000,
                 100000,
-                new GeneratorAttribute(
+                new FilterAttribute(
                     new StringIdentifier("affix-type"),
-                    new StringGeneratorAttributeValue("normal"),
+                    new StringFilterAttributeValue("normal"),
                     true),
-                new GeneratorAttribute(
+                new FilterAttribute(
                     new StringIdentifier("item-level"),
-                    new DoubleGeneratorAttributeValue(5),
+                    new DoubleFilterAttributeValue(5),
                     false));
 
             var generatedItems = itemGenerator

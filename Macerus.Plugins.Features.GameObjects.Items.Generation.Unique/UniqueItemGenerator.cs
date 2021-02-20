@@ -1,50 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Api.GameObjects.Generation.Attributes;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
 {
     public sealed class UniqueItemGenerator : IDiscoverableItemGenerator
     {
-        private static readonly IGeneratorAttribute RequiresUniqueAffix = new GeneratorAttribute(
+        private static readonly IFilterAttribute RequiresUniqueAffix = new FilterAttribute(
             new StringIdentifier("affix-type"),
-            new StringGeneratorAttributeValue("unique"),
+            new StringFilterAttributeValue("unique"),
             true);
 
         private readonly IBaseItemGenerator _baseItemGenerator;
         private readonly IEnchantmentGenerator _enchantmentGenerator;
         private readonly IActiveEnchantmentManagerFactory _activeEnchantmentManagerFactory;
-        private readonly IGeneratorContextFactory _generatorContextFactory;
+        private readonly IFilterContextFactory _filterContextFactory;
 
         public UniqueItemGenerator(
             IBaseItemGenerator baseItemGenerator,
             IEnchantmentGenerator enchantmentGenerator,
             IActiveEnchantmentManagerFactory activeEnchantmentManagerFactory,
-            IGeneratorContextFactory generatorContextFactory)
+            IFilterContextFactory filterContextFactory)
         {
             _baseItemGenerator = baseItemGenerator;
             _enchantmentGenerator = enchantmentGenerator;
             _activeEnchantmentManagerFactory = activeEnchantmentManagerFactory;
-            _generatorContextFactory = generatorContextFactory;
+            _filterContextFactory = filterContextFactory;
         }
 
-        public IEnumerable<IGameObject> GenerateItems(IGeneratorContext generatorContext)
+        public IEnumerable<IGameObject> GenerateItems(IFilterContext filterContext)
         {
             // create our new context by keeping information about attributes 
             // from our caller, but acknowledging that any that were required
@@ -53,10 +50,10 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
             var generatorRequired = SupportedAttributes
                 .Where(attr => attr.Required)
                 .ToDictionary(x => x.Id, x => x);
-            var uniqueItemGeneratorContext = _generatorContextFactory.CreateGeneratorContext(
-                generatorContext.MinimumGenerateCount,
-                generatorContext.MaximumGenerateCount,
-                generatorContext
+            var uniqueItemGeneratorContext = _filterContextFactory.CreateContext(
+                filterContext.MinimumCount,
+                filterContext.MaximumCount,
+                filterContext
                     .Attributes
                     .Where(x => !generatorRequired.ContainsKey(x.Id))
                     .Select(x => x.Required
@@ -71,12 +68,12 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
                     .GetOnly<UniqueBaseItemBehavior>()
                     .BaseItemId;
 
-                var baseItemGeneratorContext = _generatorContextFactory.CreateGeneratorContext(
+                var baseItemGeneratorContext = _filterContextFactory.CreateContext(
                     1,
                     1,
-                    new GeneratorAttribute(
+                    new FilterAttribute(
                         new StringIdentifier("item-id"),
-                        new IdentifierGeneratorAttributeValue(baseItemId),
+                        new IdentifierFilterAttributeValue(baseItemId),
                         true));
                 var baseItemBehaviorSet = _baseItemGenerator
                     .GenerateItems(baseItemGeneratorContext)
@@ -142,7 +139,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
             }
         }
 
-        public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; } = new IGeneratorAttribute[]
+        public IEnumerable<IFilterAttribute> SupportedAttributes { get; } = new IFilterAttribute[]
         {
             RequiresUniqueAffix,
         };

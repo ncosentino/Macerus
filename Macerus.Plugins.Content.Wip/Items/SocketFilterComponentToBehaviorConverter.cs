@@ -5,18 +5,18 @@ using System.Linq;
 using NexusLabs.Framework;
 
 using ProjectXyz.Api.Behaviors;
-using ProjectXyz.Api.GameObjects.Generation;
+using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Socketing.Api;
 
 namespace Macerus.Plugins.Content.Wip.Items
 {
-    public sealed class SocketGeneratorComponentToBehaviorConverter : IDiscoverableGeneratorComponentToBehaviorConverter
+    public sealed class SocketFilterComponentToBehaviorConverter : IDiscoverableFilterComponentToBehaviorConverter
     {
         private readonly IApplySocketEnchantmentsBehaviorFactory _applySocketEnchantmentsBehaviorFactory;
         private readonly ICanBeSocketedBehaviorFactory _canBeSocketedBehaviorFactory;
         private readonly IRandom _random;
 
-        public SocketGeneratorComponentToBehaviorConverter(
+        public SocketFilterComponentToBehaviorConverter(
             ICanBeSocketedBehaviorFactory canBeSocketedBehaviorFactory,
             IRandom random,
             IApplySocketEnchantmentsBehaviorFactory applySocketEnchantmentsBehaviorFactory)
@@ -26,14 +26,14 @@ namespace Macerus.Plugins.Content.Wip.Items
             _applySocketEnchantmentsBehaviorFactory = applySocketEnchantmentsBehaviorFactory;
         }
 
-        public Type ComponentType { get; } = typeof(SocketGeneratorComponent);
+        public Type ComponentType { get; } = typeof(SocketFilterComponent);
 
-        public IEnumerable<IBehavior> Convert(IGeneratorComponent generatorComponent)
+        public IEnumerable<IBehavior> Convert(IFilterComponent FilterComponent)
         {
-            var socketGeneratorComponent = (SocketGeneratorComponent)generatorComponent;
+            var socketFilterComponent = (SocketFilterComponent)FilterComponent;
 
             // FIXME: we'll want to look at randomizing the order of these...
-            var generatedSockets = socketGeneratorComponent
+            var generatedSockets = socketFilterComponent
                 .SocketRanges
                 .SelectMany(kvp => Enumerable
                 .Repeat(
@@ -41,7 +41,7 @@ namespace Macerus.Plugins.Content.Wip.Items
                     _random.Next(
                         kvp.Value.Item1,
                         kvp.Value.Item2)))
-                .Take(socketGeneratorComponent.MaximumSockets)
+                .Take(socketFilterComponent.MaximumSockets)
                 .ToArray();
             if (generatedSockets.Length < 1)
             {

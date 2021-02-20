@@ -2,13 +2,13 @@
 
 using Autofac;
 
-using ProjectXyz.Api.GameObjects.Generation.Attributes;
+using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.DropTables.Implementations.Item;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory.DropTables;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables
 {
@@ -22,32 +22,32 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables
                     new StringIdentifier("any_magic_1-10_lvl10"),
                     1,
                     10,
-                    Enumerable.Empty<IGeneratorAttribute>(),
+                    Enumerable.Empty<IFilterAttribute>(),
                     new[]
                     {
-                        new GeneratorAttribute(
+                        new FilterAttribute(
                             new StringIdentifier("affix-type"),
-                            new StringGeneratorAttributeValue("magic"),
+                            new StringFilterAttributeValue("magic"),
                             true),
-                        new GeneratorAttribute(
+                        new FilterAttribute(
                             new StringIdentifier("item-level"),
-                            new DoubleGeneratorAttributeValue(0),
+                            new DoubleFilterAttributeValue(0),
                             false),
                     }),
                 new ItemDropTable(
                     new StringIdentifier("any_normal_magic_10x_lvl10"),
                     10,
                     10,
-                    Enumerable.Empty<IGeneratorAttribute>(),
+                    Enumerable.Empty<IFilterAttribute>(),
                     new[]
                     {
-                        new GeneratorAttribute(
+                        new FilterAttribute(
                             new StringIdentifier("affix-type"),
-                            new AnyStringCollectionGeneratorAttributeValue("normal", "magic"),
+                            new AnyStringCollectionFilterAttributeValue("normal", "magic"),
                             true),
-                        new GeneratorAttribute(
+                        new FilterAttribute(
                             new StringIdentifier("item-level"),
-                            new DoubleGeneratorAttributeValue(0),
+                            new DoubleFilterAttributeValue(0),
                             false),
                     }),
             };

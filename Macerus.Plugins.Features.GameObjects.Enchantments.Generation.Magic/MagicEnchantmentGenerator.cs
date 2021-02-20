@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+
+using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Generation;
-using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Api.GameObjects.Generation.Attributes;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
 {
@@ -17,17 +18,17 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
             _baseEnchantmentGenerator = baseEnchantmentGenerator;
         }
 
-        public IEnumerable<IEnchantment> GenerateEnchantments(IGeneratorContext generatorContext)
+        public IEnumerable<IEnchantment> GenerateEnchantments(IFilterContext filterContext)
         {
-            var enchantments = _baseEnchantmentGenerator.GenerateEnchantments(generatorContext);
+            var enchantments = _baseEnchantmentGenerator.GenerateEnchantments(filterContext);
             return enchantments;
         }
 
-        public IEnumerable<IGeneratorAttribute> SupportedAttributes { get; } = new IGeneratorAttribute[]
+        public IEnumerable<IFilterAttribute> SupportedAttributes { get; } = new IFilterAttribute[]
         {
-            new GeneratorAttribute(
+            new FilterAttribute(
                 new StringIdentifier("affix-type"),
-                new StringGeneratorAttributeValue("magic"),
+                new StringFilterAttributeValue("magic"),
                 true),
         };
     }

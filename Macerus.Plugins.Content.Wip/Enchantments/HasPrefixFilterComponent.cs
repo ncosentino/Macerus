@@ -5,17 +5,17 @@ using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
 
-namespace Macerus.Plugins.Content.Wip.Items
+namespace Macerus.Plugins.Content.Wip.Enchantments
 {
-    public sealed class UniqueBaseItemFilterComponent : IFilterComponent
+    public sealed class HasPrefixFilterComponent : IFilterComponent
     {
-        public UniqueBaseItemFilterComponent(IIdentifier identifier)
+        public HasPrefixFilterComponent(IIdentifier prefixId)
         {
-            Identifier = identifier;
+            PrefixId = prefixId;
         }
 
         public IEnumerable<IFilterAttribute> SupportedAttributes { get; } = Enumerable.Empty<IFilterAttribute>();
-        
-        public IIdentifier Identifier { get; }
+
+        public IIdentifier PrefixId { get; }
     }
 }

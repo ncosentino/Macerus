@@ -6,14 +6,14 @@ using Autofac;
 
 using Macerus.Plugins.Content.Wip.Enchantments;
 
-using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Api.GameObjects.Generation.Attributes;
+using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Enchantments.Generation.MySql;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Data.Serialization;
 using ProjectXyz.Shared.Framework;
 using ProjectXyz.Shared.Game.GameObjects.Enchantments.Calculations;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 namespace Macerus.Plugins.Content.Wip.Data
 {
@@ -27,19 +27,19 @@ namespace Macerus.Plugins.Content.Wip.Data
                     var mapping = new Dictionary<Type, string>()
                     {
                         [typeof(EnchantmentDefinition)] = "EnchantmentDefinition",
-                        [typeof(RandomRangeExpressionGeneratorComponent)] = "RandomRangeExpressionGeneratorComponent",
-                        [typeof(HasStatGeneratorComponent)] = "HasStatGeneratorComponent",
-                        [typeof(HasPrefixGeneratorComponent)] = "HasPrefixGeneratorComponent",
-                        [typeof(HasSuffixGeneratorComponent)] = "HasSuffixGeneratorComponent",
-                        [typeof(GeneratorAttribute)] = "GeneratorAttribute",
-                        [typeof(StringGeneratorAttributeValue)] = "StringGeneratorAttributeValue",
-                        [typeof(RangeGeneratorAttributeValue)] = "RangeGeneratorAttributeValue",
+                        [typeof(RandomRangeExpressionFilterComponent)] = "RandomRangeExpressionFilterComponent",
+                        [typeof(HasStatFilterComponent)] = "HasStatFilterComponent",
+                        [typeof(HasPrefixFilterComponent)] = "HasPrefixFilterComponent",
+                        [typeof(HasSuffixFilterComponent)] = "HasSuffixFilterComponent",
+                        [typeof(FilterAttribute)] = "FilterAttribute",
+                        [typeof(StringFilterAttributeValue)] = "StringFilterAttributeValue",
+                        [typeof(RangeFilterAttributeValue)] = "RangeFilterAttributeValue",
                         [typeof(CalculationPriority<int>)] = "IntCalculationPriority",
                     };
                     mapping.AddRange(WithCollectionMappings<StringIdentifier>("sid"));
                     mapping.AddRange(WithCollectionMappings<IntIdentifier>("iid"));
-                    mapping.AddRange(WithCollectionMappings<IGeneratorAttribute>("IGeneratorAttribute"));
-                    mapping.AddRange(WithCollectionMappings<IGeneratorComponent>("IGeneratorComponent"));
+                    mapping.AddRange(WithCollectionMappings<IFilterAttribute>("IFilterAttribute"));
+                    mapping.AddRange(WithCollectionMappings<IFilterComponent>("IFilterComponent"));
                     var serializableIdShorterner = new SerializableIdShorterner(mapping);
                     return serializableIdShorterner;
                 })

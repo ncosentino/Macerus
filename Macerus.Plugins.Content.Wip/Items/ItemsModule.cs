@@ -4,14 +4,14 @@ using Autofac;
 
 using Macerus.Plugins.Content.Wip.Enchantments;
 
+using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
-using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Api.GameObjects.Generation.Attributes;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 namespace Macerus.Plugins.Content.Wip.Items
 {
@@ -27,18 +27,18 @@ namespace Macerus.Plugins.Content.Wip.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentGeneratorAttributes.AllowsNormalAndMagicAffix,
-                                new GeneratorAttribute(
+                                EnchantmentFilterAttributes.AllowsNormalAndMagicAffix,
+                                new FilterAttribute(
                                     new StringIdentifier("item-id"),
-                                    new IdentifierGeneratorAttributeValue(new StringIdentifier("leather-gloves")),
+                                    new IdentifierFilterAttributeValue(new StringIdentifier("leather-gloves")),
                                     false)
                             },
-                            new IGeneratorComponent[]
+                            new IFilterComponent[]
                             {
-                               new NameGeneratorComponent("Leather Gloves"),
-                               new IconGeneratorComponent(@"graphics\items\gloves\leather gloves"),
-                               new EquippableGeneratorComponent(new[] { new StringIdentifier("hands") }),
-                               new SocketGeneratorComponent(new[]
+                               new NameFilterComponent("Leather Gloves"),
+                               new IconFilterComponent(@"graphics\items\gloves\leather gloves"),
+                               new EquippableFilterComponent(new[] { new StringIdentifier("hands") }),
+                               new SocketFilterComponent(new[]
                                 {
                                     KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 4)),
                                 })
@@ -46,18 +46,18 @@ namespace Macerus.Plugins.Content.Wip.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentGeneratorAttributes.AllowsNormalAndMagicAffix,
-                                new GeneratorAttribute(
+                                EnchantmentFilterAttributes.AllowsNormalAndMagicAffix,
+                                new FilterAttribute(
                                     new StringIdentifier("item-id"),
-                                    new IdentifierGeneratorAttributeValue(new StringIdentifier("cloth-hood")),
+                                    new IdentifierFilterAttributeValue(new StringIdentifier("cloth-hood")),
                                     false)
                             },
-                            new IGeneratorComponent[]
+                            new IFilterComponent[]
                             {
-                                new NameGeneratorComponent("Cloth Hood"),
-                                new IconGeneratorComponent(@"graphics\items\helms\hood"),
-                                new EquippableGeneratorComponent(new[] { new StringIdentifier("head") }),
-                                new SocketGeneratorComponent(new[]
+                                new NameFilterComponent("Cloth Hood"),
+                                new IconFilterComponent(@"graphics\items\helms\hood"),
+                                new EquippableFilterComponent(new[] { new StringIdentifier("head") }),
+                                new SocketFilterComponent(new[]
                                 {
                                     KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 4)),
                                 })
@@ -65,18 +65,18 @@ namespace Macerus.Plugins.Content.Wip.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentGeneratorAttributes.AllowsNormalAndMagicAffix,
-                                new GeneratorAttribute(
+                                EnchantmentFilterAttributes.AllowsNormalAndMagicAffix,
+                                new FilterAttribute(
                                     new StringIdentifier("item-id"),
-                                    new IdentifierGeneratorAttributeValue(new StringIdentifier("cloth-armor")),
+                                    new IdentifierFilterAttributeValue(new StringIdentifier("cloth-armor")),
                                     false)
                             },
-                            new IGeneratorComponent[]
+                            new IFilterComponent[]
                             {
-                                new NameGeneratorComponent("Cloth Armor"),
-                                new IconGeneratorComponent(@"graphics\items\body\cloth_armor"),
-                                new EquippableGeneratorComponent(new[] { new StringIdentifier("body") }),
-                                new SocketGeneratorComponent(new[]
+                                new NameFilterComponent("Cloth Armor"),
+                                new IconFilterComponent(@"graphics\items\body\cloth_armor"),
+                                new EquippableFilterComponent(new[] { new StringIdentifier("body") }),
+                                new SocketFilterComponent(new[]
                                 {
                                     KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 6)),
                                 })
@@ -84,29 +84,29 @@ namespace Macerus.Plugins.Content.Wip.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentGeneratorAttributes.RequiresNormalAffix,
-                                new GeneratorAttribute(
+                                EnchantmentFilterAttributes.RequiresNormalAffix,
+                                new FilterAttribute(
                                     new StringIdentifier("item-id"),
-                                    new IdentifierGeneratorAttributeValue(new StringIdentifier("junk")),
+                                    new IdentifierFilterAttributeValue(new StringIdentifier("junk")),
                                     false)
                             },
                             new[]
                             {
-                                new NameGeneratorComponent("Junk"),
+                                new NameFilterComponent("Junk"),
                             }),
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentGeneratorAttributes.RequiresNormalAffix,
-                                new GeneratorAttribute(
+                                EnchantmentFilterAttributes.RequiresNormalAffix,
+                                new FilterAttribute(
                                     new StringIdentifier("item-id"),
-                                    new IdentifierGeneratorAttributeValue(new StringIdentifier("ruby")),
+                                    new IdentifierFilterAttributeValue(new StringIdentifier("ruby")),
                                     false)
                             },
-                            new IGeneratorComponent[]
+                            new IFilterComponent[]
                             {
-                                new NameGeneratorComponent("Ruby"),
-                                new CanFitSocketGeneratorComponent(new StringIdentifier("gem"), 1),
+                                new NameFilterComponent("Ruby"),
+                                new CanFitSocketFilterComponent(new StringIdentifier("gem"), 1),
                             }),
                     };
                     var itemDefinitionRepository = new InMemoryItemDefinitionRepository(
@@ -117,23 +117,23 @@ namespace Macerus.Plugins.Content.Wip.Items
                 .SingleInstance()
                 .AsImplementedInterfaces();
             builder
-                .RegisterType<NameGeneratorComponentToBehaviorConverter>()
+                .RegisterType<NameFilterComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<EquippableGeneratorComponentToBehaviorConverter>()
+                .RegisterType<EquippableFilterComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<IconGeneratorComponentToBehaviorConverter>()
+                .RegisterType<IconFilterComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<SocketGeneratorComponentToBehaviorConverter>()
+                .RegisterType<SocketFilterComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<CanFitSocketGeneratorComponentToBehaviorConverter>()
+                .RegisterType<CanFitSocketFilterComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

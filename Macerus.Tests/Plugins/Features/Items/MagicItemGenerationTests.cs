@@ -4,12 +4,12 @@ using Macerus.Plugins.Content.Wip.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
+using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Generation.Attributes;
 
 using Xunit;
 
@@ -30,28 +30,28 @@ namespace Macerus.Tests.Plugins.Features.Items
             var itemGenerator = _container.Resolve<IItemGeneratorFacade>();
             var itemDefinitionRepository = _container.Resolve<IItemDefinitionRepositoryFacade>();
 
-            var generatorContextFactory = _container.Resolve<IGeneratorContextFactory>();
-            var itemGenerationContext = generatorContextFactory.CreateGeneratorContext(
+            var filterContextFactory = _container.Resolve<IFilterContextFactory>();
+            var itemGenerationContext = filterContextFactory.CreateContext(
                 10000,
                 10000,
-                new GeneratorAttribute(
+                new FilterAttribute(
                     new StringIdentifier("affix-type"),
-                    new StringGeneratorAttributeValue("magic"),
+                    new StringFilterAttributeValue("magic"),
                     true),
-                new GeneratorAttribute(
+                new FilterAttribute(
                     new StringIdentifier("item-level"),
-                    new DoubleGeneratorAttributeValue(5),
+                    new DoubleFilterAttributeValue(5),
                     false));
             var nonMagicItems = itemDefinitionRepository
-                .LoadItemDefinitions(generatorContextFactory.CreateGeneratorContext(
+                .LoadItemDefinitions(filterContextFactory.CreateContext(
                     0,
                     int.MaxValue,
-                    new GeneratorAttribute(
+                    new FilterAttribute(
                         new StringIdentifier("affix-type"),
-                        new NotGeneratorAttributeValue(new StringGeneratorAttributeValue("normal")),
+                        new NotFilterAttributeValue(new StringFilterAttributeValue("normal")),
                         true)))
                 .ToDictionary(
-                    x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
+                    x => ((NameFilterComponent)x.FilterComponents.Single(c => c is NameFilterComponent)).DisplayName,
                     x => x);
 
             var generatedItems = itemGenerator
