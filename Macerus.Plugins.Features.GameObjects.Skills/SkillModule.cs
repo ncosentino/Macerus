@@ -31,7 +31,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills
                             },
                             new Dictionary<IIdentifier, double>()
                             {
-                                [new IntIdentifier(8)] = 128, // green light radius
+                                [new IntIdentifier(8)] = 1, // green light radius
                             },
                             new IFilterAttribute[]
                             {
