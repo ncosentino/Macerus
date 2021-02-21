@@ -26,18 +26,18 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
 
         private readonly IBaseItemGenerator _baseItemGenerator;
         private readonly IEnchantmentGenerator _enchantmentGenerator;
-        private readonly IActiveEnchantmentManagerFactory _activeEnchantmentManagerFactory;
+        private readonly IHasEnchantmentsBehaviorFactory _hasEnchantmentsBehaviorFactory;
         private readonly IFilterContextFactory _filterContextFactory;
 
         public UniqueItemGenerator(
             IBaseItemGenerator baseItemGenerator,
             IEnchantmentGenerator enchantmentGenerator,
-            IActiveEnchantmentManagerFactory activeEnchantmentManagerFactory,
+            IHasEnchantmentsBehaviorFactory hasEnchantmentsBehaviorFactory,
             IFilterContextFactory filterContextFactory)
         {
             _baseItemGenerator = baseItemGenerator;
             _enchantmentGenerator = enchantmentGenerator;
-            _activeEnchantmentManagerFactory = activeEnchantmentManagerFactory;
+            _hasEnchantmentsBehaviorFactory = hasEnchantmentsBehaviorFactory;
             _filterContextFactory = filterContextFactory;
         }
 
@@ -79,10 +79,27 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
                     .GenerateItems(baseItemGeneratorContext)
                     .Single();
 
+                IHasEnchantmentsBehavior hasEnchantmentsBehavior;
+                if ((hasEnchantmentsBehavior = baseItemBehaviorSet
+                    .Get<IHasEnchantmentsBehavior>()
+                    .SingleOrDefault()) == null)
+                {
+                    hasEnchantmentsBehavior = _hasEnchantmentsBehaviorFactory.Create();
+
+                    IHasReadOnlyEnchantmentsBehavior hasReadOnlyEnchantmentsBehavior;
+                    if ((hasReadOnlyEnchantmentsBehavior = baseItemBehaviorSet
+                        .Get<IHasReadOnlyEnchantmentsBehavior>()
+                        .SingleOrDefault()) != null)
+                    {
+                        hasEnchantmentsBehavior.AddEnchantments(hasReadOnlyEnchantmentsBehavior.Enchantments);
+                    }
+                }
+
                 var additionalBehaviors = new List<IBehavior>()
                 {
                     new HasInventoryDisplayColor(255, 215, 0, 255),
                     new HasAffixType(new StringIdentifier("unique")),
+                    hasEnchantmentsBehavior,
                 };
 
                 // FIXME: we need a way to filter out dupes here
@@ -90,9 +107,11 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
                     .Behaviors
                     .Concat(baseItemBehaviorSet
                     .Behaviors
-                    .Where(b => !uniqueBehaviorSet
-                    .Behaviors
-                    .Any(u => u.GetType() != b.GetType())))
+                    .Where(b => 
+                        !(b is IHasReadOnlyEnchantmentsBehavior) &&
+                        !uniqueBehaviorSet
+                            .Behaviors
+                            .Any(u => u.GetType() != b.GetType())))
                     .Concat(additionalBehaviors)
                     .Where(x => !(x is IHasInventoryDisplayName))
                     .AppendSingle(baseItemBehaviorSet
@@ -103,16 +122,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
                     .Single<IHasInventoryDisplayName>())
                     .ToList();
 
-                IBuffableBehavior enchantable;
-                if ((enchantable = baseItemBehaviorSet
-                    .Get<IBuffableBehavior>()
-                    .SingleOrDefault()) == null)
-                {
-                    var activeEnchantmentManager = _activeEnchantmentManagerFactory.Create();
-                    enchantable = new BuffableBehavior(activeEnchantmentManager);
-                    combinedBehaviors.Add(enchantable);
-                    combinedBehaviors.Add(new HasEnchantmentsBehavior(activeEnchantmentManager));
-                }
+                
 
                 // FIXME: actually implement unique item enchantments
                 ////var attributes = magicItemGeneratorContext

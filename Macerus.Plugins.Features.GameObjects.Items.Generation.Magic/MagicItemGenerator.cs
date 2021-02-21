@@ -27,20 +27,20 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 
         private readonly IBaseItemGenerator _baseItemGenerator;
         private readonly IEnchantmentGenerator _enchantmentGenerator;
-        private readonly IActiveEnchantmentManagerFactory _activeEnchantmentManagerFactory;
+        private readonly IHasEnchantmentsBehaviorFactory _hasEnchantmentsBehaviorFactory;
         private readonly IMagicItemNameGenerator _magicItemNameGenerator;
         private readonly IFilterContextFactory _filterContextFactory;
 
         public MagicItemGenerator(
             IBaseItemGenerator baseItemGenerator,
             IEnchantmentGenerator enchantmentGenerator,
-            IActiveEnchantmentManagerFactory activeEnchantmentManagerFactory,
+            IHasEnchantmentsBehaviorFactory hasEnchantmentsBehaviorFactory,
             IMagicItemNameGenerator magicItemNameGenerator,
             IFilterContextFactory filterContextFactory)
         {
             _baseItemGenerator = baseItemGenerator;
             _enchantmentGenerator = enchantmentGenerator;
-            _activeEnchantmentManagerFactory = activeEnchantmentManagerFactory;
+            _hasEnchantmentsBehaviorFactory = hasEnchantmentsBehaviorFactory;
             _magicItemNameGenerator = magicItemNameGenerator;
             _filterContextFactory = filterContextFactory;
         }
@@ -82,15 +82,20 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                     new HasAffixType(new StringIdentifier("magic")),
                 };
 
-                IBuffableBehavior enchantable;
-                if ((enchantable = baseItem
-                    .Get<IBuffableBehavior>()
+                IHasEnchantmentsBehavior hasEnchantmentsBehavior;
+                if ((hasEnchantmentsBehavior = baseItem
+                    .Get<IHasEnchantmentsBehavior>()
                     .SingleOrDefault()) == null)
                 {
-                    var activeEnchantmentManager = _activeEnchantmentManagerFactory.Create();
-                    enchantable = new BuffableBehavior(activeEnchantmentManager);
-                    additionalBehaviors.Add(enchantable);
-                    additionalBehaviors.Add(new HasEnchantmentsBehavior(activeEnchantmentManager));
+                    hasEnchantmentsBehavior = _hasEnchantmentsBehaviorFactory.Create();
+
+                    IHasReadOnlyEnchantmentsBehavior hasReadOnlyEnchantmentsBehavior;
+                    if ((hasReadOnlyEnchantmentsBehavior = baseItem
+                        .Get<IHasReadOnlyEnchantmentsBehavior>()
+                        .SingleOrDefault()) != null)
+                    {
+                        hasEnchantmentsBehavior.AddEnchantments(hasReadOnlyEnchantmentsBehavior.Enchantments);
+                    }
                 }
 
                 var attributes = magicItemGeneratorContext
@@ -110,13 +115,18 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                         $"No enchantments were added to the base item.");
                 }
 
-                enchantable.AddEnchantments(enchantments);
+                hasEnchantmentsBehavior.AddEnchantments(enchantments);
 
                 additionalBehaviors.Add(_magicItemNameGenerator.GenerateName(
                     baseItem,
                     enchantments));
 
-                var magicItem = new MagicItem(baseItem.Behaviors.Concat(additionalBehaviors));
+                var baseItemBehaviorsToUse = baseItem
+                    .Behaviors
+                    .Where(x => !(x is IHasReadOnlyEnchantmentsBehavior));
+                var magicItemBehaviors = baseItemBehaviorsToUse
+                    .Concat(additionalBehaviors);
+                var magicItem = new MagicItem(magicItemBehaviors);
                 yield return magicItem;
             }
         }
