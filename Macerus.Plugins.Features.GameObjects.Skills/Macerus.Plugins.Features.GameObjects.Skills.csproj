@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{92ABF0BC-0EE0-49ED-AFAD-D4A440529145}</ProjectGuid>
+    <ProjectGuid>{0E65B42E-E2B3-4C8F-B47A-D896FE0D1B39}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Macerus.Plugins.Features.GameObjects.Items.Affixes</RootNamespace>
-    <AssemblyName>Macerus.Plugins.Features.GameObjects.Items.Affixes</AssemblyName>
+    <RootNamespace>Macerus.Plugins.Features.GameObjects.Skills</RootNamespace>
+    <AssemblyName>Macerus.Plugins.Features.GameObjects.Skills</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -37,8 +37,8 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NexusLabs.Collections.Generic, Version=0.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NexusLabs.Collections.Generic.0.0.6\lib\net46\NexusLabs.Collections.Generic.dll</HintPath>
+    <Reference Include="NexusLabs.Collections.Generic, Version=0.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NexusLabs.Collections.Generic.0.0.5\lib\net46\NexusLabs.Collections.Generic.dll</HintPath>
     </Reference>
     <Reference Include="NexusLabs.Contracts, Version=0.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NexusLabs.Contracts.0.0.3\lib\net46\NexusLabs.Contracts.dll</HintPath>
@@ -290,19 +290,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AffixType.cs" />
-    <Compile Include="MySql\AffixTypeRepository.cs" />
-    <Compile Include="Autofac\AffixesModule.cs" />
+    <Compile Include="SkillModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api.csproj">
-      <Project>{3741e28a-723d-4bf8-9dae-8ff0aec4d637}</Project>
-      <Name>Macerus.Plugins.Features.GameObjects.Items.Affixes.Api</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

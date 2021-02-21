@@ -13,6 +13,7 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
@@ -90,6 +91,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                     new PlayerControlledBehavior(),
                     new ItemContainerBehavior(new StringIdentifier("Inventory")),
                     new ItemContainerBehavior(new StringIdentifier("Belt")),
+                    new HasSkillsBehavior(),
                     new CanEquipBehavior(new[]
                     {
                         new StringIdentifier("head"),
