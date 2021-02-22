@@ -1,21 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Deterministic>true</Deterministic>
-    <Authors>Nexus Software Labs</Authors>
+    <TargetFramework>net46</TargetFramework>
+    <Authors>$author$</Authors>
     <Copyright>Copyright © Nexus Software Labs 2020</Copyright>
+    <PackageId>$title$</PackageId>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
-
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
       <Output TaskParameter="Assemblies" ItemName="CurrentAssembly" />
@@ -23,11 +20,9 @@
     <!--NOTE: editing this following block in VS visual editor can break the formatting.-->
     <Exec Command="FOR /F &quot;tokens=* USEBACKQ&quot; %25%25F IN (`$(ProjectDir)GenerateProjectAssemblyVersion.exe $(ProjectDir)$(ProjectFileName)`) DO (&#xD;&#xA;SET generatedVersion=%25%25F&#xD;&#xA;)&#xD;&#xA;ECHO Generated Version: %25generatedVersion%25&#xD;&#xA;&#xD;&#xA;nuget pack $(ProjectFileName) -Symbols -IncludeReferencedProjects -OutputDirectory &quot;$(SolutionDir)..\..\..\nuget-repo&quot; -Version %25generatedVersion%25 -properties Configuration=$(ConfigurationName)" />
   </Target>
-
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.7723.3245" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7723.4025" />
   </ItemGroup>
-  
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
     <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
@@ -54,5 +49,4 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Static\Macerus.Plugins.Features.GameObjects.Static.csproj" />
     <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj" />
   </ItemGroup>
-
 </Project>

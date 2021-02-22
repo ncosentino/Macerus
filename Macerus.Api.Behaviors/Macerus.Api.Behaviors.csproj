@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{5F24115E-512F-48BA-AD4A-282E5DAA7DC6}</ProjectGuid>
     <TargetFramework>net46</TargetFramework>
     <AssemblyTitle>Macerus.Api.Behaviors</AssemblyTitle>
     <Product>Macerus.Api.Behaviors</Product>
@@ -18,6 +17,6 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.7723.3245" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7723.4025" />
   </ItemGroup>
 </Project>

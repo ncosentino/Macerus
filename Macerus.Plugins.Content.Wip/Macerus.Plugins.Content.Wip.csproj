@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{B8283E32-83C3-4128-971B-C399058DC732}</ProjectGuid>
     <TargetFramework>net46</TargetFramework>
     <AssemblyTitle>Macerus.Plugins.Content.Wip</AssemblyTitle>
     <Product>Macerus.Plugins.Content.Wip</Product>
@@ -19,8 +18,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-    <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.6" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7723.3245" />
+    <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.5" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7723.4025" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />

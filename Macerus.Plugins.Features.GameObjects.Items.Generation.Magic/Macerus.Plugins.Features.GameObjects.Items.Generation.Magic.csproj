@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{C7178837-D3D5-481E-B3C9-487A7CD41D8E}</ProjectGuid>
     <TargetFramework>net46</TargetFramework>
     <AssemblyTitle>Macerus.Plugins.Features.GameObjects.Items.Generation.Magic</AssemblyTitle>
     <Product>Macerus.Plugins.Features.GameObjects.Items.Generation.Magic</Product>
@@ -19,7 +18,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7723.3245" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7723.4025" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments\Macerus.Plugins.Features.GameObjects.Enchantments.csproj" />

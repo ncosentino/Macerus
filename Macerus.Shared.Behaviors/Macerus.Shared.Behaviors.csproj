@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{8367961F-D4EC-4265-95A3-B4008AF9ECC6}</ProjectGuid>
     <TargetFramework>net46</TargetFramework>
     <AssemblyTitle>Macerus.Shared.Behaviors</AssemblyTitle>
     <Product>Macerus.Shared.Behaviors</Product>

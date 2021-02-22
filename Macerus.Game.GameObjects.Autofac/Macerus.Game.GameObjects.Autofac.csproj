@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{00526E0F-D916-4AFA-8ACD-4976C3271BFE}</ProjectGuid>
     <TargetFramework>net46</TargetFramework>
     <AssemblyTitle>Macerus.Game.GameObjects.Autofac</AssemblyTitle>
     <Product>Macerus.Game.GameObjects.Autofac</Product>

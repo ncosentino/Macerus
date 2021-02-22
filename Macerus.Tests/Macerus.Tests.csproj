@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{6B69D281-5E82-4A6A-8E28-5161E34B47C1}</ProjectGuid>
     <TargetFramework>net46</TargetFramework>
     <AssemblyTitle>Macerus.Tests</AssemblyTitle>
     <Product>Macerus.Tests</Product>
@@ -10,6 +9,22 @@
     <Copyright>Copyright ©  2020</Copyright>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputPath>bin\$(Configuration)\</OutputPath>
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <PreBuildEvent />
+    <PostBuildEvent />
+    <PreBuildEvent />
+    <PostBuildEvent />
     <PreBuildEvent />
     <PostBuildEvent />
     <PreBuildEvent />
@@ -43,8 +58,9 @@
     <PackageReference Include="Jace" Version="0.8.7" />
     <PackageReference Include="Macerus" Version="1.0.7723.3608" />
     <PackageReference Include="Moq" Version="4.13.1" />
-    <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.6" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7723.3245" />
+    <PackageReference Include="MySql.Data" Version="8.0.23" />
+    <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.5" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7723.4025" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.abstractions" Version="2.0.3" />
