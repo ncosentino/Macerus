@@ -18,7 +18,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7723.5023" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7723.7617" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />

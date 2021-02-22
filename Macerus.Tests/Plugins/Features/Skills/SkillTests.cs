@@ -45,10 +45,17 @@ namespace Macerus.Tests.Plugins.Features.Skills
             {
                 Assert.True(
                     skill.Get<IHasEnchantmentsBehavior>().Count() == 1,
-                    $"Expecting that skill '{skill}' has exactly one {typeof(IHasEnchantmentsBehavior)} behavior.");
-                Assert.True(
-                    skill.Get<IEnchantmentTargetBehavior>().Count() == 1,
-                    $"Expecting that skill '{skill}' has exactly one {typeof(IEnchantmentTargetBehavior)} behavior.");
+                    $"Expecting that skill '{skill}' has exactly one " +
+                    $"{typeof(IHasEnchantmentsBehavior)} behavior.");
+                foreach (var enchantment in skill
+                    .GetOnly<IHasReadOnlyEnchantmentsBehavior>()
+                    .Enchantments)
+                {
+                    Assert.True(
+                        enchantment.Get<IEnchantmentTargetBehavior>().Count() == 1,
+                        $"Expecting that skill '{enchantment}' has exactly one " +
+                        $"{typeof(IEnchantmentTargetBehavior)} behavior.");
+                }
             }
         }
     }
