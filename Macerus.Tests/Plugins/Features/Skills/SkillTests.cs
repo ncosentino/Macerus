@@ -26,7 +26,7 @@ namespace Macerus.Tests.Plugins.Features.Skills
             _container = new MacerusContainer();
         }
 
-        [Fact(Skip = "FIXME: fix skill loading")]
+        [Fact]
         public void SkillRepository_IntegrityTest()
         {
             var skillRepository = _container.Resolve<ISkillRepository>();
@@ -42,6 +42,9 @@ namespace Macerus.Tests.Plugins.Features.Skills
                 .ToArray();
             foreach (var skill in allSkills.Cast<IHasBehaviors>())
             {
+                Assert.True(
+                    skill.Get<IHasEnchantmentsBehavior>().Count() == 1,
+                    $"Expecting that skill '{skill}' has exactly one {typeof(IHasEnchantmentsBehavior)} behavior.");
             }
         }
     }

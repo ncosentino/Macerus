@@ -21,7 +21,7 @@
     <Exec Command="FOR /F &quot;tokens=* USEBACKQ&quot; %25%25F IN (`$(ProjectDir)GenerateProjectAssemblyVersion.exe $(ProjectDir)$(ProjectFileName)`) DO (&#xD;&#xA;SET generatedVersion=%25%25F&#xD;&#xA;)&#xD;&#xA;ECHO Generated Version: %25generatedVersion%25&#xD;&#xA;&#xD;&#xA;nuget pack $(ProjectFileName) -Symbols -IncludeReferencedProjects -OutputDirectory &quot;$(SolutionDir)..\..\..\nuget-repo&quot; -Version %25generatedVersion%25 -properties Configuration=$(ConfigurationName)" />
   </Target>
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.7723.4025" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7723.5023" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
