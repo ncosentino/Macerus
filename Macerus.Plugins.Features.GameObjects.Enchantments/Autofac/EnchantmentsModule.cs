@@ -8,7 +8,10 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Autofac
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
-
+            builder
+                .RegisterType<EnchantmentTargetFilterComponentConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
             builder
                 .RegisterType<HasStatFilterComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
@@ -18,9 +21,9 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-           .RegisterType<EnchantmentsGenerator>()
-               .AsImplementedInterfaces()
-               .SingleInstance();
+               .RegisterType<EnchantmentsGenerator>()
+                   .AsImplementedInterfaces()
+                   .SingleInstance();
         }
     }
 }

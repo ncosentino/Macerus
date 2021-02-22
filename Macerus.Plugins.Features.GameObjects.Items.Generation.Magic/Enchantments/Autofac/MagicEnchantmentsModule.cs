@@ -104,6 +104,7 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
                 },
                 new IFilterComponent[]
                 {
+                    new EnchantmentTargetFilterComponent(new StringIdentifier("self")),
                     new HasStatFilterComponent(statDefinitionId),
                     new HasPrefixFilterComponent(prefixId),
                     new HasSuffixFilterComponent(suffixId),

@@ -60,6 +60,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                 },
                 new IFilterComponent[]
                 {
+                    new EnchantmentTargetFilterComponent(new StringIdentifier("self")),
                     new HasStatFilterComponent(statDefinitionId),
                     new RandomRangeExpressionFilterComponent(
                         statDefinitionId,

@@ -6,6 +6,7 @@ using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
+using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
@@ -45,6 +46,9 @@ namespace Macerus.Tests.Plugins.Features.Skills
                 Assert.True(
                     skill.Get<IHasEnchantmentsBehavior>().Count() == 1,
                     $"Expecting that skill '{skill}' has exactly one {typeof(IHasEnchantmentsBehavior)} behavior.");
+                Assert.True(
+                    skill.Get<IEnchantmentTargetBehavior>().Count() == 1,
+                    $"Expecting that skill '{skill}' has exactly one {typeof(IEnchantmentTargetBehavior)} behavior.");
             }
         }
     }
