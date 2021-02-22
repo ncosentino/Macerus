@@ -76,12 +76,6 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                 //   item was at one end of that range, it might mean better or
                 //    worse enchantments given the item level.
 
-                var additionalBehaviors = new List<IBehavior>()
-                {
-                    new HasInventoryDisplayColor(0, 0, 255, 255),
-                    new HasAffixType(new StringIdentifier("magic")),
-                };
-
                 IHasEnchantmentsBehavior hasEnchantmentsBehavior;
                 if ((hasEnchantmentsBehavior = baseItem
                     .Get<IHasEnchantmentsBehavior>()
@@ -97,6 +91,13 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                         hasEnchantmentsBehavior.AddEnchantments(hasReadOnlyEnchantmentsBehavior.Enchantments);
                     }
                 }
+
+                var additionalBehaviors = new List<IBehavior>()
+                {
+                    new HasInventoryDisplayColor(0, 0, 255, 255),
+                    new HasAffixType(new StringIdentifier("magic")),
+                    hasEnchantmentsBehavior,
+                };
 
                 var attributes = magicItemGeneratorContext
                     .Attributes

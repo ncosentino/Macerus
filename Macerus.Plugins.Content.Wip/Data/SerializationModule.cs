@@ -5,6 +5,8 @@ using System.Linq;
 using Autofac;
 
 using Macerus.Plugins.Content.Wip.Enchantments;
+using Macerus.Plugins.Features.GameObjects.Enchantments;
+using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;

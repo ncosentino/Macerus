@@ -4,7 +4,7 @@ using System.Linq;
 
 using Autofac;
 
-using Macerus.Plugins.Content.Wip.Items;
+using Macerus.Plugins.Features.GameObjects.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
 using ProjectXyz.Api.Behaviors;

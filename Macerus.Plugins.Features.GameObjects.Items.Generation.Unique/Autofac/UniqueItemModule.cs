@@ -3,6 +3,7 @@
 using Autofac;
 
 using Macerus.Plugins.Content.Wip.Items;
+using Macerus.Plugins.Features.GameObjects.Items.Socketing;
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;

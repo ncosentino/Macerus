@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
 
 using NexusLabs.Framework;
 

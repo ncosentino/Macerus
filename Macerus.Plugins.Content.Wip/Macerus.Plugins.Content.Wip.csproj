@@ -20,7 +20,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.6" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7722.37154" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7722.40146" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />
@@ -28,7 +28,8 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments\Macerus.Plugins.Features.GameObjects.Enchantments.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Behaviors\Macerus.Plugins.Features.GameObjects.Items.Behaviors.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.csproj" />
   </ItemGroup>
 </Project>
