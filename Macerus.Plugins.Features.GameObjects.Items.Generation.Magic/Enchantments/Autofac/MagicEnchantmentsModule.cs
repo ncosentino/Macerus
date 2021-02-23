@@ -11,6 +11,7 @@ using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
+using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.Enchantments.Generation.InMemory;
 using ProjectXyz.Shared.Framework;
@@ -70,15 +71,7 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
             builder
                 .RegisterType<MagicEnchantmentGenerator>()
                 .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
-                .RegisterType<HasPrefixFilterComponentToBehaviorConverter>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
-                .RegisterType<HasSuffixFilterComponentToBehaviorConverter>()
-                .AsImplementedInterfaces()
-                .SingleInstance();            
+                .SingleInstance();      
         }
     }
 
@@ -106,8 +99,10 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
                 {
                     new EnchantmentTargetFilterComponent(new StringIdentifier("self")),
                     new HasStatFilterComponent(statDefinitionId),
-                    new HasPrefixFilterComponent(prefixId),
-                    new HasSuffixFilterComponent(suffixId),
+                    new BehaviorFilterComponent(
+                        new IFilterAttribute[] { },
+                        new HasPrefixBehavior(prefixId),
+                        new HasSuffixBehavior(suffixId)),
                     new RandomRangeExpressionFilterComponent(
                         statDefinitionId,
                         "+",

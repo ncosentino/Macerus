@@ -4,13 +4,12 @@ using System.Linq;
 
 using Autofac;
 
-using Macerus.Plugins.Content.Wip.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
-using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Framework.Autofac;
+using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.Enchantments.Generation.MySql;
 using ProjectXyz.Shared.Data.Serialization;
@@ -31,8 +30,7 @@ namespace Macerus.Plugins.Content.Wip.Data
                         [typeof(EnchantmentDefinition)] = "EnchantmentDefinition",
                         [typeof(RandomRangeExpressionFilterComponent)] = "RandomRangeExpressionFilterComponent",
                         [typeof(HasStatFilterComponent)] = "HasStatFilterComponent",
-                        [typeof(HasPrefixFilterComponent)] = "HasPrefixFilterComponent",
-                        [typeof(HasSuffixFilterComponent)] = "HasSuffixFilterComponent",
+                        [typeof(BehaviorFilterComponent)] = "BehaviorFilterComponent",
                         [typeof(FilterAttribute)] = "FilterAttribute",
                         [typeof(StringFilterAttributeValue)] = "StringFilterAttributeValue",
                         [typeof(RangeFilterAttributeValue)] = "RangeFilterAttributeValue",
