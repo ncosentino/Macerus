@@ -8,6 +8,7 @@ using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments.A
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
+using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
@@ -15,7 +16,6 @@ using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.Enchantments.Generation.InMemory;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Enchantments.Calculations;
 
 namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
 {
@@ -26,6 +26,8 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
             builder
                 .Register(c =>
                 {
+                    var enchantmentTemplate = new EnchantmentTemplate(c.Resolve<ICalculationPriorityFactory>());
+
                     // FIXME: it's totally a smell that we have a stat
                     // definition ID per enchantment when we have things like
                     // expressions that are responsible for that stat ID.
@@ -36,7 +38,7 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
                     // ProjectXyz.Shared.Game.GameObjects.Enchantments.EnchantmentFactory
                     var enchantmentDefinitions = new[]
                     {
-                        EnchantmentTemplate.CreateMagicRangeEnchantment(
+                        enchantmentTemplate.CreateMagicRangeEnchantment(
                             new IntIdentifier(1), // max life
                             Affixes.Prefixes.Lively,
                             Affixes.Suffixes.OfLife,
@@ -44,7 +46,7 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
                             15,
                             0,
                             20),
-                        EnchantmentTemplate.CreateMagicRangeEnchantment(
+                        enchantmentTemplate.CreateMagicRangeEnchantment(
                             new IntIdentifier(1), // max life
                             Affixes.Prefixes.Hearty,
                             Affixes.Suffixes.OfHeart,
@@ -52,7 +54,7 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
                             50,
                             10,
                             30),
-                        EnchantmentTemplate.CreateMagicRangeEnchantment(
+                        enchantmentTemplate.CreateMagicRangeEnchantment(
                             new IntIdentifier(3), // max life
                             Affixes.Prefixes.Magic,
                             Affixes.Suffixes.OfMana,
@@ -75,9 +77,16 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
         }
     }
 
-    public static class EnchantmentTemplate
+    public sealed class EnchantmentTemplate
     {
-        public static IEnchantmentDefinition CreateMagicRangeEnchantment(
+        private readonly ICalculationPriorityFactory _calculationPriorityFactory;
+
+        public EnchantmentTemplate(ICalculationPriorityFactory calculationPriorityFactory)
+        {
+            _calculationPriorityFactory = calculationPriorityFactory;
+        }
+
+        public IEnchantmentDefinition CreateMagicRangeEnchantment(
             IIdentifier statDefinitionId,
             IIdentifier prefixId,
             IIdentifier suffixId,
@@ -106,7 +115,7 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
                     new RandomRangeExpressionFilterComponent(
                         statDefinitionId,
                         "+",
-                        new CalculationPriority<int>(1),
+                        _calculationPriorityFactory.Create<int>(1),
                         minValue, maxValue)
                 });
             return enchantmentDefinition;

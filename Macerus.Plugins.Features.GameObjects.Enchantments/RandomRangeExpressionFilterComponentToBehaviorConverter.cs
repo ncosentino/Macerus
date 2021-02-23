@@ -6,7 +6,7 @@ using NexusLabs.Framework;
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Stats;
-using ProjectXyz.Shared.Game.GameObjects.Enchantments.Calculations;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations; // FIXME: dependency on non-API
 
 namespace Macerus.Plugins.Features.GameObjects.Enchantments
 {

@@ -12,9 +12,9 @@ using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.Enchantments.Generation.MySql;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Shared.Data.Serialization;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Enchantments.Calculations;
 
 namespace Macerus.Plugins.Content.Wip.Data
 {

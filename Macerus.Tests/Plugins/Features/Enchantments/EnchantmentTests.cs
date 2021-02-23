@@ -5,14 +5,18 @@ using Macerus.Plugins.Features.GameObjects.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments.Autofac;
 
+using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Api.Behaviors.Filtering.Attributes;
+using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Stats;
+using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.Enchantments.Generation.MySql;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Enchantments.Calculations;
 
 using Xunit;
 
@@ -30,6 +34,7 @@ namespace Macerus.Tests.Plugins.Features.Items
         [Fact(Skip = "FIXME: this was helpful to prove things out... transform this into validation for what exists")]
         public void EnchantmentDefinitions_WriteToRepository_ReadBackFromRepository()
         {
+            var enchantmentTemplate = new EnchantmentTemplate(_container.Resolve<ICalculationPriorityFactory>());
             var statDefinitionToTermMappingRepositories = _container.Resolve<IEnumerable<IStatDefinitionToTermMappingRepository>>();
             var statDefinitionTermMapping = statDefinitionToTermMappingRepositories
                 .SelectMany(x => x.GetStatDefinitionIdToTermMappings())
@@ -38,7 +43,7 @@ namespace Macerus.Tests.Plugins.Features.Items
                     x => x);
             var enchantmentDefinitions = new[]
             {
-                EnchantmentTemplate.CreateMagicRangeEnchantment(
+                enchantmentTemplate.CreateMagicRangeEnchantment(
                     statDefinitionTermMapping["LIFE_MAXIMUM"].StatDefinitionId,
                     Affixes.Prefixes.Lively,
                     Affixes.Suffixes.OfLife,
@@ -46,7 +51,7 @@ namespace Macerus.Tests.Plugins.Features.Items
                     15,
                     0,
                     20),
-                EnchantmentTemplate.CreateMagicRangeEnchantment(
+                enchantmentTemplate.CreateMagicRangeEnchantment(
                     statDefinitionTermMapping["LIFE_MAXIMUM"].StatDefinitionId,
                     Affixes.Prefixes.Hearty,
                     Affixes.Suffixes.OfHeart,
@@ -54,7 +59,7 @@ namespace Macerus.Tests.Plugins.Features.Items
                     50,
                     10,
                     30),
-                EnchantmentTemplate.CreateMagicRangeEnchantment(
+                enchantmentTemplate.CreateMagicRangeEnchantment(
                     statDefinitionTermMapping["MANA_MAXIMUM"].StatDefinitionId,
                     Affixes.Prefixes.Magic,
                     Affixes.Suffixes.OfMana,
@@ -73,9 +78,16 @@ namespace Macerus.Tests.Plugins.Features.Items
                 .ToArray();
         }
 
-        public static class EnchantmentTemplate
+        public sealed class EnchantmentTemplate
         {
-            public static IEnchantmentDefinition CreateMagicRangeEnchantment(
+            private readonly ICalculationPriorityFactory _calculationPriorityFactory;
+
+            public EnchantmentTemplate(ICalculationPriorityFactory calculationPriorityFactory)
+            {
+                _calculationPriorityFactory = calculationPriorityFactory;
+            }
+
+            public IEnchantmentDefinition CreateMagicRangeEnchantment(
                 IIdentifier statDefinitionId,
                 IIdentifier prefixId,
                 IIdentifier suffixId,
@@ -96,12 +108,17 @@ namespace Macerus.Tests.Plugins.Features.Items
                     new IFilterComponent[]
                     {
                     new HasStatFilterComponent(statDefinitionId),
-                    new HasPrefixFilterComponent(prefixId),
-                    new HasSuffixFilterComponent(suffixId),
+                    new BehaviorFilterComponent(
+                        new IFilterAttribute[] { },
+                        new IBehavior[]
+                        {
+                            new HasPrefixBehavior(prefixId),
+                            new HasSuffixBehavior(suffixId),
+                        }),
                     new RandomRangeExpressionFilterComponent(
                         statDefinitionId,
                         "+",
-                        new CalculationPriority<int>(1),
+                        _calculationPriorityFactory.Create<int>(1),
                         minValue, maxValue)
                     });
                 return enchantmentDefinition;

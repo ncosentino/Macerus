@@ -7,13 +7,13 @@ using Macerus.Plugins.Features.GameObjects.Enchantments;
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
+using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.Enchantments.Generation.InMemory;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.GameObjects.Enchantments.Calculations;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
 {
@@ -24,9 +24,10 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
             builder
                 .Register(c =>
                 {
+                    var enchantmentTemplate = new EnchantmentTemplate(c.Resolve<ICalculationPriorityFactory>());
                     var enchantmentDefinitions = new[]
                     {
-                        EnchantmentTemplate.CreateSkillEnchantment(
+                        enchantmentTemplate.CreateSkillEnchantment(
                             new StringIdentifier("green-glow"),
                             new IntIdentifier(8), // green light radius
                             1,
@@ -42,9 +43,16 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
         }
     }
 
-    public static class EnchantmentTemplate
+    public sealed class EnchantmentTemplate
     {
-        public static IEnchantmentDefinition CreateSkillEnchantment(
+        private readonly ICalculationPriorityFactory _calculationPriorityFactory;
+
+        public EnchantmentTemplate(ICalculationPriorityFactory calculationPriorityFactory)
+        {
+            _calculationPriorityFactory = calculationPriorityFactory;
+        }
+
+        public IEnchantmentDefinition CreateSkillEnchantment(
             IIdentifier skillDefinitionId,
             IIdentifier statDefinitionId,
             double minValue,
@@ -65,7 +73,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                     new RandomRangeExpressionFilterComponent(
                         statDefinitionId,
                         "+",
-                        new CalculationPriority<int>(1),
+                        _calculationPriorityFactory.Create<int>(1),
                         minValue, maxValue)
                 });
             return enchantmentDefinition;
