@@ -9,10 +9,7 @@ using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
-using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
-using ProjectXyz.Shared.Framework;
 
 using Xunit;
 

@@ -1,5 +1,5 @@
 ﻿using ProjectXyz.Api.Behaviors.Filtering.Attributes;
-using ProjectXyz.Shared.Behaviors.Filtering.Attributes;
+using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments.Autofac
