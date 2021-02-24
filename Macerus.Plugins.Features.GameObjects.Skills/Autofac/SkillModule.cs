@@ -4,6 +4,7 @@ using Autofac;
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
+using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
@@ -19,8 +20,10 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
             builder
                 .Register(c =>
                 {
+                    var calculationPriorityFactory = c.Resolve<ICalculationPriorityFactory>();
                     var definitions = new[]
                     {
+                        // Passive Enchantment, Stat-Based
                         new SkillDefinition(
                             new StringIdentifier("green-glow"),
                             new StringIdentifier("self"),
@@ -38,11 +41,34 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             {
                                 new BehaviorFilterComponent(
                                     new IFilterAttribute[] { },
+                                    new PassiveSkillBehavior(),
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())
                             }),
+                        // Passive Enchantment, Enchantment-Definition-Based
                         new SkillDefinition(
                             new StringIdentifier("green-glow-ench"),
+                            new StringIdentifier("self"),
+                            new IIdentifier[]
+                            {
+                            },
+                            new Dictionary<IIdentifier, double>()
+                            {
+                            },
+                            new IFilterAttribute[]
+                            {
+                            },
+                            new IFilterComponent[]
+                            {
+                                new BehaviorFilterComponent(
+                                    new IFilterAttribute[] { },
+                                    new PassiveSkillBehavior(),
+                                    new UseInCombatSkillBehavior(),
+                                    new UseOutOfCombatSkillBehavior())
+                            }),
+                        // Castable, Enchantment-Definition-Based
+                        new SkillDefinition(
+                            new StringIdentifier("heal-self"),
                             new StringIdentifier("self"),
                             new IIdentifier[]
                             {
