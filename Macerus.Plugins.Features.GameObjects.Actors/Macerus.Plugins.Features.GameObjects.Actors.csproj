@@ -19,7 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="NexusLabs.Contracts" Version="0.0.3" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7725.5683" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7726.7090" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />

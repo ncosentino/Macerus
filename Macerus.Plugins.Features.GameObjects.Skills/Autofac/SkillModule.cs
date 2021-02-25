@@ -5,6 +5,7 @@ using Autofac;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments.Calculations;
+using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
@@ -44,7 +45,8 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                                     new PassiveSkillBehavior(),
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())
-                            }),
+                            },
+                            new Dictionary<IIdentifier, double>() { }),
                         // Passive Enchantment, Enchantment-Definition-Based
                         new SkillDefinition(
                             new StringIdentifier("green-glow-ench"),
@@ -65,7 +67,8 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                                     new PassiveSkillBehavior(),
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())
-                            }),
+                            },
+                            new Dictionary<IIdentifier, double>() { }),
                         // Castable, Enchantment-Definition-Based
                         new SkillDefinition(
                             new StringIdentifier("heal-self"),
@@ -85,13 +88,21 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                                     new IFilterAttribute[] { },
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())
+                            },
+                            new Dictionary<IIdentifier, double>()
+                            {
+                                [new IntIdentifier(4)] = 75, // mana current
                             }),
                     };
 
                     var attributeFilter = c.Resolve<IAttributeFilterer>();
+                    var filterContextFactory = c.Resolve<IFilterContextFactory>();
+                    var enchantmentLoader = c.Resolve<IEnchantmentLoader>();
                     var repository = new InMemorySkillDefinitionRepository(
                         attributeFilter,
-                        definitions);
+                        definitions,
+                        filterContextFactory,
+                        enchantmentLoader);
                     return repository;
                 })
                 .AsImplementedInterfaces()
