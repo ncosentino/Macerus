@@ -18,7 +18,7 @@
     <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.5" />
     <PackageReference Include="NexusLabs.Contracts" Version="0.0.3" />
     <PackageReference Include="NexusLabs.Framework" Version="0.0.5" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7726.7090" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7727.6323" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />

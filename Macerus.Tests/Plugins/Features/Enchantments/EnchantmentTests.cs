@@ -2,6 +2,7 @@
 using System.Linq;
 
 using Macerus.Plugins.Features.GameObjects.Enchantments;
+using Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments.Autofac;
 
@@ -14,8 +15,6 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Stats;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
-using ProjectXyz.Plugins.Features.Enchantments.Generation.MySql;
-using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;

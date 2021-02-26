@@ -5,13 +5,13 @@ using System.Linq;
 using Autofac;
 
 using Macerus.Plugins.Features.GameObjects.Enchantments;
+using Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql;
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
-using ProjectXyz.Plugins.Features.Enchantments.Generation.MySql;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Shared.Data.Serialization;
 using ProjectXyz.Shared.Framework;

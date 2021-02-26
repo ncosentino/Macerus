@@ -22,7 +22,7 @@
     <Exec Command="FOR /F &quot;tokens=* USEBACKQ&quot; %25%25F IN (`$(ProjectDir)GenerateProjectAssemblyVersion.exe $(ProjectDir)$(ProjectFileName)`) DO (&#xD;&#xA;SET generatedVersion=%25%25F&#xD;&#xA;)&#xD;&#xA;ECHO Generated Version: %25generatedVersion%25&#xD;&#xA;&#xD;&#xA;nuget pack $(ProjectFileName) -Symbols -IncludeReferencedProjects -OutputDirectory &quot;$(SolutionDir)..\..\..\nuget-repo&quot; -Version %25generatedVersion%25 -properties Configuration=$(ConfigurationName)" />
   </Target>
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.7726.7090" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7727.6323" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
@@ -34,6 +34,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Containers.Api\Macerus.Plugins.Features.GameObjects.Containers.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Containers\Macerus.Plugins.Features.GameObjects.Containers.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments\Macerus.Plugins.Features.GameObjects.Enchantments.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Affixes\Macerus.Plugins.Features.GameObjects.Items.Affixes.csproj" />

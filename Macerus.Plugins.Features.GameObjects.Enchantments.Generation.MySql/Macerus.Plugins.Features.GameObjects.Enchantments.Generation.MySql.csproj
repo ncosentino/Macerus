@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net46</TargetFramework>
-    <AssemblyTitle>Macerus.Plugins.Features.GameObjects.Static.Api</AssemblyTitle>
-    <Product>Macerus.Plugins.Features.GameObjects.Static.Api</Product>
+    <AssemblyTitle>ProjectXyz.Plugins.Features.Enchantments.Generation.MySql</AssemblyTitle>
+    <Product>ProjectXyz.Plugins.Features.Enchantments.Generation.MySql</Product>
     <Copyright>Copyright ©  2021</Copyright>
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
@@ -14,11 +14,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.5" />
-    <PackageReference Include="NexusLabs.Contracts" Version="0.0.3" />
-    <PackageReference Include="NexusLabs.Framework" Version="0.0.5" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7727.6323" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7726.37418" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />

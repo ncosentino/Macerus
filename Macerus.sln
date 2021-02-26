@@ -43,45 +43,47 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Tests", "Macerus.Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Enchantments", "Enchantments", "{49F8D13C-7B94-4AD4-9D4E-5B8F15485981}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Data.MySql", "Macerus.Plugins.Data.MySql\Macerus.Plugins.Data.MySql.csproj", "{1F88ADFE-4E7D-4E0B-BADC-ACDB9E730741}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Data.MySql", "Macerus.Plugins.Data.MySql\Macerus.Plugins.Data.MySql.csproj", "{1F88ADFE-4E7D-4E0B-BADC-ACDB9E730741}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{547493C6-791A-4655-9C7D-DC86A7B09F52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Items.Affixes", "Macerus.Plugins.Features.GameObjects.Items.Affixes\Macerus.Plugins.Features.GameObjects.Items.Affixes.csproj", "{92ABF0BC-0EE0-49ED-AFAD-D4A440529145}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Items.Affixes", "Macerus.Plugins.Features.GameObjects.Items.Affixes\Macerus.Plugins.Features.GameObjects.Items.Affixes.csproj", "{92ABF0BC-0EE0-49ED-AFAD-D4A440529145}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Items.Affixes.Api", "Macerus.Plugins.Features.GameObjects.Items.Affixes.Api\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api.csproj", "{3741E28A-723D-4BF8-9DAE-8FF0AEC4D637}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Items.Affixes.Api", "Macerus.Plugins.Features.GameObjects.Items.Affixes.Api\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api.csproj", "{3741E28A-723D-4BF8-9DAE-8FF0AEC4D637}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameObjects", "GameObjects", "{00A2FCF7-72A1-4031-AD5F-42345BA13DE3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Static", "Static", "{9F93EA1D-5824-4011-B1F9-78A3FC854E1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Static", "Macerus.Plugins.Features.GameObjects.Static\Macerus.Plugins.Features.GameObjects.Static.csproj", "{975CA395-7960-4CEE-9AEF-C1E1485A8886}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Static", "Macerus.Plugins.Features.GameObjects.Static\Macerus.Plugins.Features.GameObjects.Static.csproj", "{975CA395-7960-4CEE-9AEF-C1E1485A8886}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Static.Api", "Macerus.Plugins.Features.GameObjects.Static.Api\Macerus.Plugins.Features.GameObjects.Static.Api.csproj", "{3849012D-A66E-4A0B-ADCE-91538E2B0ACC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Static.Api", "Macerus.Plugins.Features.GameObjects.Static.Api\Macerus.Plugins.Features.GameObjects.Static.Api.csproj", "{3849012D-A66E-4A0B-ADCE-91538E2B0ACC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Containers", "Containers", "{8989A7CB-427A-4954-8118-238604017FE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Containers", "Macerus.Plugins.Features.GameObjects.Containers\Macerus.Plugins.Features.GameObjects.Containers.csproj", "{429F081F-B87D-4F9D-977C-579DB8C98F29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Containers", "Macerus.Plugins.Features.GameObjects.Containers\Macerus.Plugins.Features.GameObjects.Containers.csproj", "{429F081F-B87D-4F9D-977C-579DB8C98F29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Containers.Api", "Macerus.Plugins.Features.GameObjects.Containers.Api\Macerus.Plugins.Features.GameObjects.Containers.Api.csproj", "{489FBF59-F50E-4D18-8F3D-6900555D91F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Containers.Api", "Macerus.Plugins.Features.GameObjects.Containers.Api\Macerus.Plugins.Features.GameObjects.Containers.Api.csproj", "{489FBF59-F50E-4D18-8F3D-6900555D91F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables", "Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables\Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables.csproj", "{7F656455-14D3-474E-9DAC-7B75E2289C42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables", "Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables\Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables.csproj", "{7F656455-14D3-474E-9DAC-7B75E2289C42}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Socketing", "Socketing", "{3A6EC585-4595-4643-977E-65BE7A2A8EBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns", "Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns\Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns.csproj", "{E24195F7-AFA2-4550-9DCB-5D0FBD3A416D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns", "Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns\Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns.csproj", "{E24195F7-AFA2-4550-9DCB-5D0FBD3A416D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Items.Generation.Unique", "Macerus.Plugins.Features.GameObjects.Items.Generation.Unique\Macerus.Plugins.Features.GameObjects.Items.Generation.Unique.csproj", "{01BD3968-1BD6-4F5C-8CD1-FB4648DD868B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Items.Generation.Unique", "Macerus.Plugins.Features.GameObjects.Items.Generation.Unique\Macerus.Plugins.Features.GameObjects.Items.Generation.Unique.csproj", "{01BD3968-1BD6-4F5C-8CD1-FB4648DD868B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Skills", "Skills", "{86014C1C-18FA-4FC5-B76C-0FFD8D2A3E19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Skills", "Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.csproj", "{0E65B42E-E2B3-4C8F-B47A-D896FE0D1B39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Skills", "Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.csproj", "{0E65B42E-E2B3-4C8F-B47A-D896FE0D1B39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Enchantments", "Macerus.Plugins.Features.GameObjects.Enchantments\Macerus.Plugins.Features.GameObjects.Enchantments.csproj", "{F747205A-630F-42CC-ACEF-2766D71CE2BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Enchantments", "Macerus.Plugins.Features.GameObjects.Enchantments\Macerus.Plugins.Features.GameObjects.Enchantments.csproj", "{F747205A-630F-42CC-ACEF-2766D71CE2BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Items", "Macerus.Plugins.Features.GameObjects.Items\Macerus.Plugins.Features.GameObjects.Items.csproj", "{1010DD47-1016-4046-9F4E-C6E65BCB0A3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Items", "Macerus.Plugins.Features.GameObjects.Items\Macerus.Plugins.Features.GameObjects.Items.csproj", "{1010DD47-1016-4046-9F4E-C6E65BCB0A3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Items.Socketing", "Macerus.Plugins.Features.GameObjects.Items.Socketing\Macerus.Plugins.Features.GameObjects.Items.Socketing.csproj", "{AE7221C7-7840-41AE-98CE-92E41EB90BC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Items.Socketing", "Macerus.Plugins.Features.GameObjects.Items.Socketing\Macerus.Plugins.Features.GameObjects.Items.Socketing.csproj", "{AE7221C7-7840-41AE-98CE-92E41EB90BC1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql", "Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql.csproj", "{2608DB1E-43A6-4CEF-A7D6-B1990E5E8732}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -193,6 +195,10 @@ Global
 		{AE7221C7-7840-41AE-98CE-92E41EB90BC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE7221C7-7840-41AE-98CE-92E41EB90BC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE7221C7-7840-41AE-98CE-92E41EB90BC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2608DB1E-43A6-4CEF-A7D6-B1990E5E8732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2608DB1E-43A6-4CEF-A7D6-B1990E5E8732}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2608DB1E-43A6-4CEF-A7D6-B1990E5E8732}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2608DB1E-43A6-4CEF-A7D6-B1990E5E8732}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -232,6 +238,7 @@ Global
 		{F747205A-630F-42CC-ACEF-2766D71CE2BB} = {49F8D13C-7B94-4AD4-9D4E-5B8F15485981}
 		{1010DD47-1016-4046-9F4E-C6E65BCB0A3B} = {DBB8AA2F-D157-4B10-9EE8-4179D4019FB6}
 		{AE7221C7-7840-41AE-98CE-92E41EB90BC1} = {3A6EC585-4595-4643-977E-65BE7A2A8EBC}
+		{2608DB1E-43A6-4CEF-A7D6-B1990E5E8732} = {49F8D13C-7B94-4AD4-9D4E-5B8F15485981}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}
