@@ -3,7 +3,7 @@ using ProjectXyz.Plugins.Features.StateEnchantments.Api;
 
 namespace Macerus.Plugins.Content.Wip.Enchantments
 {
-    public sealed class StateIdToTermRepo : IStateIdToTermRepository
+    public sealed class StateIdToTermRepo : IDiscoverableStateIdToTermRepository
     {
         public IEnumerable<IStateIdToTermMapping> GetStateIdToTermMappings()
         {
