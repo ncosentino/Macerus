@@ -63,7 +63,7 @@
     <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.5" />
     <PackageReference Include="NexusLabs.Contracts" Version="0.0.3" />
     <PackageReference Include="NexusLabs.Framework" Version="0.0.5" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7728.36329" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7729.9218" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.abstractions" Version="2.0.3" />
