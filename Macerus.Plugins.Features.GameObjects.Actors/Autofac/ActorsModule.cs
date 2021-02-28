@@ -1,9 +1,6 @@
 ﻿using Autofac;
 
-using Macerus.Api.GameObjects;
-
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors.Autofac
 {
@@ -25,6 +22,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Autofac
                 .SingleInstance();
             builder
                 .RegisterType<ActorRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<ActorIdentifiers>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

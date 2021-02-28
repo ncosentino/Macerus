@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+
 using Macerus.Api.Behaviors;
 using Macerus.Api.GameObjects;
 using Macerus.Shared.Behaviors;
@@ -20,23 +21,26 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 {
     public sealed class ActorRepository : IDiscoverableGameObjectRepository
     {
-        private static readonly IIdentifier ACTOR_TYPE_ID = new StringIdentifier("actor");
         private static readonly IIdentifier PLAYER_TEMPLATE_ID = new StringIdentifier("player");
 
         private readonly IActorFactory _actorFactory;
+        private readonly IActorIdentifiers _actorIdentifiers;
 
-        public ActorRepository(IActorFactory actorFactory)
+        public ActorRepository(
+            IActorFactory actorFactory,
+            IActorIdentifiers actorIdentifiers)
         {
             _actorFactory = actorFactory;
+            _actorIdentifiers = actorIdentifiers;
         }
-
-        public static IIdentifier ActorTypeId => ACTOR_TYPE_ID;
 
         public bool CanCreateFromTemplate(
             IIdentifier typeId,
             IIdentifier templateId)
         {
-            var canLoad = typeId.Equals(ACTOR_TYPE_ID) && templateId is StringIdentifier;
+            var canLoad =
+                typeId.Equals(_actorIdentifiers.ActorTypeIdentifier) &&
+                templateId is StringIdentifier;
             return canLoad;
         }
 
@@ -48,7 +52,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             IReadOnlyDictionary<string, object> properties)
         {
             Contract.Requires(
-                ACTOR_TYPE_ID.Equals(typeId),
+                _actorIdentifiers.ActorTypeIdentifier.Equals(typeId),
                 $"Expecting to only support templates for type ID '{typeId}'.");
 
             if (PLAYER_TEMPLATE_ID.Equals(templateId))

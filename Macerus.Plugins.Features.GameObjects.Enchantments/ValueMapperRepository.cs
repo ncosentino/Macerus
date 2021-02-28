@@ -4,7 +4,7 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Plugins.Features.ExpressionEnchantments.Api;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Content.Wip.Enchantments
+namespace Macerus.Plugins.Features.GameObjects.Enchantments
 {
     public sealed class ValueMapperRepository : IValueMapperRepository
     {

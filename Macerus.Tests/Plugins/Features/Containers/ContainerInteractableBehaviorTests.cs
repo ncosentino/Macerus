@@ -3,11 +3,11 @@ using System.Linq;
 
 using Macerus.Api.Behaviors;
 using Macerus.Api.GameObjects;
-using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Containers;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;
@@ -18,11 +18,13 @@ namespace Macerus.Tests.Plugins.Features.Containers
     {
         private static readonly MacerusContainer _container;
         private static readonly IGameObjectRepositoryFacade _gameObjectRepository;
+        private static readonly IActorIdentifiers _actorIdentifiers;
 
         static ContainerInteractableBehaviorTests()
         {
             _container = new MacerusContainer();
             _gameObjectRepository = _container.Resolve<IGameObjectRepositoryFacade>();
+            _actorIdentifiers = _container.Resolve<IActorIdentifiers>();
         }
 
         [Fact]
@@ -41,7 +43,7 @@ namespace Macerus.Tests.Plugins.Features.Containers
                     ["TransferItemsOnActivate"] = true,
                 });
             var player = _gameObjectRepository.CreateFromTemplate(
-                ActorRepository.ActorTypeId,
+                _actorIdentifiers.ActorTypeIdentifier,
                 new StringIdentifier("player"),
                 new Dictionary<string, object>()
                 {

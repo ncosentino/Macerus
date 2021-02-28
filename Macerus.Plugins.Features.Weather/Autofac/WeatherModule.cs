@@ -16,6 +16,7 @@ namespace Macerus.Plugins.Features.Weather.Autofac
             builder
                 .Register(c =>
                 {
+                    var weatherIdentifiers = c.Resolve<IWeatherIdentifiers>();
                     var weatherTables = new IWeatherTable[]
                     {
                         new WeatherTable(
@@ -23,12 +24,12 @@ namespace Macerus.Plugins.Features.Weather.Autofac
                             new[]
                             {
                                 new WeightedWeatherTableEntry(
-                                    new StringIdentifier("rain"),
+                                    WeatherIds.Rain,
                                     1,
                                     new Interval<double>(10000),
                                     new Interval<double>(20000)),
                                 new WeightedWeatherTableEntry(
-                                    new StringIdentifier("clear"),
+                                    WeatherIds.Clear,
                                     3,
                                     new Interval<double>(10000),
                                     new Interval<double>(20000))
@@ -36,7 +37,7 @@ namespace Macerus.Plugins.Features.Weather.Autofac
                             new IFilterAttribute[]
                             {
                                 new FilterAttribute(
-                                    new StringIdentifier("id"),
+                                    weatherIdentifiers.WeatherIdentifier,
                                     new IdentifierFilterAttributeValue(new StringIdentifier("sample weather")),
                                     false),
                             })
@@ -50,6 +51,14 @@ namespace Macerus.Plugins.Features.Weather.Autofac
                 .SingleInstance();
             builder
                 .RegisterType<WeatherStateIdToTermRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<WeatherIdentifiers>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<WeatherModifiers>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

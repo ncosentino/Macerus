@@ -1,9 +1,4 @@
-﻿
-using System.Collections.Generic;
-
-using ProjectXyz.Api.Behaviors;
-using ProjectXyz.Api.Framework;
-using ProjectXyz.Plugins.Features.Weather.Api;
+﻿using ProjectXyz.Api.Framework;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.Weather

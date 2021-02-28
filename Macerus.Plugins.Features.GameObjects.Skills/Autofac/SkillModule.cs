@@ -5,7 +5,6 @@ using Autofac;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments.Calculations;
-using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
@@ -22,22 +21,20 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                 .Register(c =>
                 {
                     var calculationPriorityFactory = c.Resolve<ICalculationPriorityFactory>();
+                    var skillIdentifiers = c.Resolve<ISkillIdentifiers>();
                     var definitions = new[]
                     {
                         // Passive Enchantment, Stat-Based
                         new SkillDefinition(
                             new StringIdentifier("green-glow"),
                             new StringIdentifier("self"),
-                            new IIdentifier[]
-                            {
-                            },
+                            new IIdentifier[] { },
+                            new IIdentifier[] { },
                             new Dictionary<IIdentifier, double>()
                             {
                                 [new IntIdentifier(8)] = 1, // green light radius
                             },
-                            new IFilterAttribute[]
-                            {
-                            },
+                            new IFilterAttribute[] { },
                             new IFilterComponent[]
                             {
                                 new BehaviorFilterComponent(
@@ -46,20 +43,16 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())
                             },
-                            new Dictionary<IIdentifier, double>() { }),
+                            new Dictionary<IIdentifier, double>() { },
+                            skillIdentifiers),
                         // Passive Enchantment, Enchantment-Definition-Based
                         new SkillDefinition(
                             new StringIdentifier("green-glow-ench"),
                             new StringIdentifier("self"),
-                            new IIdentifier[]
-                            {
-                            },
-                            new Dictionary<IIdentifier, double>()
-                            {
-                            },
-                            new IFilterAttribute[]
-                            {
-                            },
+                            new IIdentifier[] { },
+                            new IIdentifier[] { new StringIdentifier("green-glow-ench") },
+                            new Dictionary<IIdentifier, double>() { },
+                            new IFilterAttribute[] { },
                             new IFilterComponent[]
                             {
                                 new BehaviorFilterComponent(
@@ -68,20 +61,16 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())
                             },
-                            new Dictionary<IIdentifier, double>() { }),
+                            new Dictionary<IIdentifier, double>() { },
+                            skillIdentifiers),
                         // Castable, Enchantment-Definition-Based
                         new SkillDefinition(
                             new StringIdentifier("heal-self"),
                             new StringIdentifier("self"),
-                            new IIdentifier[]
-                            {
-                            },
-                            new Dictionary<IIdentifier, double>()
-                            {
-                            },
-                            new IFilterAttribute[]
-                            {
-                            },
+                            new IIdentifier[] { },
+                            new IIdentifier[] { new StringIdentifier("heal-self") },
+                            new Dictionary<IIdentifier, double>() { },
+                            new IFilterAttribute[] { },
                             new IFilterComponent[]
                             {
                                 new BehaviorFilterComponent(
@@ -92,19 +81,38 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             new Dictionary<IIdentifier, double>()
                             {
                                 [new IntIdentifier(4)] = 75, // mana current
-                            }),
+                            },
+                            skillIdentifiers),
+                        // Passive, Weather
+                        new SkillDefinition(
+                            new StringIdentifier("passive-weather"),
+                            new StringIdentifier("self"),
+                            new IIdentifier[] { },
+                            new IIdentifier[] { new StringIdentifier("passive-weather") },
+                            new Dictionary<IIdentifier, double>() { },
+                            new IFilterAttribute[] { },
+                            new IFilterComponent[]
+                            {
+                                new BehaviorFilterComponent(
+                                    new IFilterAttribute[] { },
+                                    new PassiveSkillBehavior(),
+                                    new UseInCombatSkillBehavior(),
+                                    new UseOutOfCombatSkillBehavior())
+                            },
+                            new Dictionary<IIdentifier, double>(),
+                            skillIdentifiers),
                     };
 
                     var attributeFilter = c.Resolve<IAttributeFilterer>();
-                    var filterContextFactory = c.Resolve<IFilterContextFactory>();
-                    var enchantmentLoader = c.Resolve<IEnchantmentLoader>();
                     var repository = new InMemorySkillDefinitionRepository(
                         attributeFilter,
-                        definitions,
-                        filterContextFactory,
-                        enchantmentLoader);
+                        definitions);
                     return repository;
                 })
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<SkillIdentifiers>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

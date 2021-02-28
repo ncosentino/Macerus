@@ -22,8 +22,20 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Autofac
                 .SingleInstance();
             builder
                .RegisterType<EnchantmentsGenerator>()
-                   .AsImplementedInterfaces()
-                   .SingleInstance();
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<ValueMapperRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+               .RegisterType<StateIdToTermRepository>()
+               .AsImplementedInterfaces()
+               .SingleInstance();
+            builder
+              .RegisterType<EnchantmentIdentifiers>()
+              .AsImplementedInterfaces()
+              .SingleInstance();
         }
     }
 }

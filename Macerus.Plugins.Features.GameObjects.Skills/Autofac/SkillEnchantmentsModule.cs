@@ -8,6 +8,7 @@ using Macerus.Plugins.Features.GameObjects.Enchantments;
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
+using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
@@ -31,7 +32,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                 .Register(c =>
                 {
                     var calculationPriorityFactory = c.Resolve<ICalculationPriorityFactory>();
-                    var enchantmentTemplate = new EnchantmentTemplate(c.Resolve<ICalculationPriorityFactory>());
+                    var enchantmentTemplate = new EnchantmentTemplate(
+                        c.Resolve<ICalculationPriorityFactory>(),
+                        c.Resolve<IEnchantmentIdentifiers>());
                     var enchantmentDefinitions = new[]
                     {
                         enchantmentTemplate.CreateSkillEnchantment(
@@ -52,6 +55,18 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                                         new ExpiryTriggerBehavior(new DurationTriggerBehavior(new Interval<double>(5000))),
                                         new AppliesToBaseStat()
                                     }),
+                            }),
+                        enchantmentTemplate.CreateSkillEnchantment(
+                            new StringIdentifier("passive-weather"),
+                            new StringIdentifier("weather"),
+                            new IFilterComponent[]
+                            {
+                                new BehaviorFilterComponent(
+                                    new IFilterAttribute[] { },
+                                    new IBehavior[]
+                                    {
+                                        new AppliesToBaseStat()
+                                    }),
                             })
                     };
                     var repository = new InMemoryEnchantmentDefinitionRepository(
@@ -67,10 +82,14 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
     public sealed class EnchantmentTemplate
     {
         private readonly ICalculationPriorityFactory _calculationPriorityFactory;
+        private readonly IEnchantmentIdentifiers _enchantmentIdentifiers;
 
-        public EnchantmentTemplate(ICalculationPriorityFactory calculationPriorityFactory)
+        public EnchantmentTemplate(
+            ICalculationPriorityFactory calculationPriorityFactory,
+            IEnchantmentIdentifiers enchantmentIdentifiers)
         {
             _calculationPriorityFactory = calculationPriorityFactory;
+            _enchantmentIdentifiers = enchantmentIdentifiers;
         }
 
         public IEnchantmentDefinition CreateSkillEnchantment(
@@ -102,7 +121,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                 new[]
                 {
                     new FilterAttribute(
-                        new StringIdentifier("skill-definition-id"),
+                        _enchantmentIdentifiers.EnchantmentDefinitionId,
                         new IdentifierFilterAttributeValue(skillDefinitionId),
                         true),
                 },
