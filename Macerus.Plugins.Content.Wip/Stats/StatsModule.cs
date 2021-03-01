@@ -1,4 +1,5 @@
 ﻿using Autofac;
+
 using ProjectXyz.Framework.Autofac;
 
 namespace Macerus.Plugins.Content.Wip.Stats

@@ -85,11 +85,15 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             skillIdentifiers),
                         // Passive, Weather
                         new SkillDefinition(
-                            new StringIdentifier("passive-weather"),
+                            new StringIdentifier("passive-rain"),
                             new StringIdentifier("self"),
                             new IIdentifier[] { },
-                            new IIdentifier[] { new StringIdentifier("passive-weather") },
-                            new Dictionary<IIdentifier, double>() { },
+                            new IIdentifier[] { },
+                            new Dictionary<IIdentifier, double>()
+                            {
+                                [new StringIdentifier($"rain-duration-minimum")] = 30000,
+                                [new StringIdentifier($"rain-duration-maximum")] = 60000,
+                            },
                             new IFilterAttribute[] { },
                             new IFilterComponent[]
                             {

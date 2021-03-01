@@ -5,10 +5,12 @@ using System.Globalization;
 using ProjectXyz.Api.Data.Databases;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Stats;
+using ProjectXyz.Plugins.Stats;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Wip.Stats
 {
+
     public sealed class StatDefinitionToTermMappingRepository : IDiscoverableReadOnlyStatDefinitionToTermMappingRepository
     {
         private readonly IConnectionFactory _connectionFactory;
