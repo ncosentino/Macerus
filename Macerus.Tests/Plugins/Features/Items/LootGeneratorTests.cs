@@ -19,6 +19,7 @@ using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables.Standard;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.DropTables.Implementations.Item;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory.DropTables;
 using ProjectXyz.Shared.Framework;
@@ -220,38 +221,41 @@ namespace Macerus.Tests.Plugins.Features.Items
         {
             protected override void SafeLoad(ContainerBuilder builder)
             {
-                var dropTables = new IDropTable[]
-                {
-                    new ItemDropTable(
-                        new StringIdentifier("GenerateLoot_PlayerStatsRequiredPlayerPresentStatsMet_ExpectedDropTable"),
-                        3,
-                        3,
-                        new[]
-                        {
-                            new FilterAttribute(
-                            new StringIdentifier("actor-stats"),
-                            new ActorStatFilterAttributeValue(
-                                new StringIdentifier("player"),
-                                new IntIdentifier(1),
-                                10,
-                                20),
-                            true),
-                        },
-                        new[]
-                        {
-                            new FilterAttribute(
-                                new StringIdentifier("affix-type"),
-                                new StringFilterAttributeValue("magic"),
-                                true),
-                            new FilterAttribute(
-                                new StringIdentifier("item-level"),
-                                new DoubleFilterAttributeValue(0),
-                                false),
-                        }),
-                };
-
                 builder
-                    .Register(x => new InMemoryDropTableRepository(dropTables))
+                    .Register(x =>
+                    {
+                        var dropTableFactory = x.Resolve<IItemDropTableFactory>();
+                        var dropTables = new IDropTable[]
+                        {
+                            dropTableFactory.Create(
+                                new StringIdentifier("GenerateLoot_PlayerStatsRequiredPlayerPresentStatsMet_ExpectedDropTable"),
+                                3,
+                                3,
+                                new[]
+                                {
+                                    new FilterAttribute(
+                                    new StringIdentifier("actor-stats"),
+                                    new ActorStatFilterAttributeValue(
+                                        new StringIdentifier("player"),
+                                        new IntIdentifier(1),
+                                        10,
+                                        20),
+                                    true),
+                                },
+                                new[]
+                                {
+                                    new FilterAttribute(
+                                        new StringIdentifier("affix-type"),
+                                        new StringFilterAttributeValue("magic"),
+                                        true),
+                                    new FilterAttribute(
+                                        new StringIdentifier("item-level"),
+                                        new DoubleFilterAttributeValue(0),
+                                        false),
+                                }),
+                        };
+                        return new InMemoryDropTableRepository(dropTables);
+                    })
                     .AsImplementedInterfaces()
                     .SingleInstance();
             }
