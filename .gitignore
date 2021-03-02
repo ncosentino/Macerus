@@ -241,3 +241,6 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /Dependencies/ProjectXyz/*
+
+#Tool for rev'ing versions
+!/**/GenerateProjectAssemblyVersion.*
