@@ -88,12 +88,13 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             new StringIdentifier("passive-rain"),
                             new StringIdentifier("self"),
                             new IIdentifier[] { },
-                            new IIdentifier[] { },
-                            new Dictionary<IIdentifier, double>()
+                            new IIdentifier[] 
                             {
-                                [new StringIdentifier($"rain-duration-minimum")] = 30000,
-                                [new StringIdentifier($"rain-duration-maximum")] = 60000,
+                                new StringIdentifier($"passive-rain-weight"),
+                                new StringIdentifier($"passive-rain-min"),
+                                new StringIdentifier($"passive-rain-max"),
                             },
+                            new Dictionary<IIdentifier, double>(),
                             new IFilterAttribute[] { },
                             new IFilterComponent[]
                             {
@@ -119,6 +120,10 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                 .RegisterType<SkillIdentifiers>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+               .RegisterType<SkillAmenity>()
+               .AsImplementedInterfaces()
+               .SingleInstance();
         }
     }
 }

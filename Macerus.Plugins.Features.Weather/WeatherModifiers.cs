@@ -1,13 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
+using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Stats;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api;
+using ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api.Handlers;
 using ProjectXyz.Plugins.Features.Weather.Api;
 using ProjectXyz.Shared.Framework;
 
@@ -19,17 +24,23 @@ namespace Macerus.Plugins.Features.Weather
         private readonly IGameObjectManager _gameObjectManager;
         private readonly IStatCalculationService _statCalculationService;
         private readonly IStatCalculationContextFactory _statCalculationContextFactory;
+        private readonly IComponentsForTargetComponentFactory _componentsForTargetComponentFactory;
+        private readonly ILogger _logger;
 
         public WeatherModifiers(
             IGameObjectManager gameObjectManager,
             IStatCalculationService statCalculationService,
-            IStatCalculationContextFactory statCalculationContextFactory)
+            IStatCalculationContextFactory statCalculationContextFactory,
+            ILogger logger,
+            IComponentsForTargetComponentFactory componentsForTargetComponentFactory)
         {
             _hasStatsCache = new HashSet<IGameObject>();
             _gameObjectManager = gameObjectManager;
             _gameObjectManager.Synchronized += GameObjectManager_Synchronized;
             _statCalculationService = statCalculationService;
             _statCalculationContextFactory = statCalculationContextFactory;
+            _logger = logger;
+            _componentsForTargetComponentFactory = componentsForTargetComponentFactory;
         }
 
         private void GameObjectManager_Synchronized(
@@ -49,52 +60,131 @@ namespace Macerus.Plugins.Features.Weather
 
         public double GetMaximumDuration(IIdentifier weatherId, double baseMaximumDuration)
         {
-            // FIXME: how can we pass in the base maximum duration into the 
-            // calculation for things like x% longer rain
-            var context = _statCalculationContextFactory.Create(
-                new IComponent[] { },
-                new IEnchantment[] { });
             var statDefinitionId = new StringIdentifier(
                 $"{weatherId}-duration-maximum");
 
-            var accumulator = 0d;
+            // FIXME: design this so that people can only use multipliers 
+            // without direct add/subtract
+            var recursiveAccumulator = baseMaximumDuration;
             foreach (var gameObject in _hasStatsCache)
             {
-                accumulator += _statCalculationService.GetStatValue(
+                var context = CreateBaseValueFilterContext(
+                    gameObject,
+                    statDefinitionId,
+                    recursiveAccumulator);
+                recursiveAccumulator = _statCalculationService.GetStatValue(
                     gameObject,
                     statDefinitionId,
                     context);
             }
 
-            return baseMaximumDuration + accumulator;
+            _logger.Debug(
+                $"Maximum duration for '{weatherId}' set to {recursiveAccumulator} (base=" +
+                $"{baseMaximumDuration}).");
+            return recursiveAccumulator;
         }
 
-        public double GetMinimumDuration(IIdentifier weatherId, double baseMinimumDuration)
+        public double GetMinimumDuration(
+            IIdentifier weatherId,
+            double baseMinimumDuration,
+            double maximumDuration)
         {
-            // FIXME: how can we pass in the base minimum duration into the 
-            // calculation for things like x% longer rain
-            var context = _statCalculationContextFactory.Create(
-                new IComponent[] { },
-                new IEnchantment[] { });
-            var statDefinitionId = new StringIdentifier(
+            IIdentifier minimumStatDefinitionId = new StringIdentifier(
                 $"{weatherId}-duration-minimum");
+            IIdentifier maximumStatDefinitionId = new StringIdentifier(
+                $"{weatherId}-duration-maximum");
 
-            var accumulator = 0d;
+            // FIXME: design this so that people can only use multipliers 
+            // without direct add/subtract
+            var recursiveAccumulator = baseMinimumDuration;
             foreach (var gameObject in _hasStatsCache)
             {
-                accumulator += _statCalculationService.GetStatValue(
+                var context = CreateBaseValuesFilterContext(
                     gameObject,
-                    statDefinitionId,
+                    Tuple.Create(minimumStatDefinitionId, recursiveAccumulator),
+                    Tuple.Create(maximumStatDefinitionId, maximumDuration));
+                recursiveAccumulator = _statCalculationService.GetStatValue(
+                    gameObject,
+                    minimumStatDefinitionId,
                     context);
             }
 
-            return baseMinimumDuration + accumulator;
+            _logger.Debug(
+                $"Minimum duration for '{weatherId}' set to {recursiveAccumulator} (base=" +
+                $"{baseMinimumDuration}).");
+            return recursiveAccumulator;
         }
 
         public IReadOnlyDictionary<IIdentifier, double> GetWeights(IReadOnlyDictionary<IIdentifier, double> weatherWeights)
         {
-            // FIXME: use existing game objects to calculate their effect on this
-            return weatherWeights;
+            var newWeights = new Dictionary<IIdentifier, double>();
+
+            // FIXME: there's currently no way to tell the back-end that we 
+            // want an entirely new entry for a weather ID. Do we want that 
+            // flexibility? Can we let players make it rain in places where it 
+            // cannot rain?
+            foreach (var kvp in weatherWeights)
+            {
+                var weatherId = kvp.Key;
+                var baseWeight = kvp.Value;
+                var statDefinitionId = new StringIdentifier(
+                    $"{weatherId}-weight");
+
+                // FIXME: design this so that people can only use multipliers 
+                // without direct add/subtract
+                var recursiveAccumulator = baseWeight;
+                foreach (var gameObject in _hasStatsCache)
+                {
+                    var context = CreateBaseValueFilterContext(
+                        gameObject,
+                        statDefinitionId,
+                        recursiveAccumulator);
+                    recursiveAccumulator = _statCalculationService.GetStatValue(
+                        gameObject,
+                        statDefinitionId,
+                        context);
+                }
+
+                newWeights[weatherId] = recursiveAccumulator;
+
+                if (recursiveAccumulator != baseWeight)
+                {
+                    _logger.Debug(
+                        $"Weight for '{weatherId}' set to {recursiveAccumulator} (base=" +
+                        $"{baseWeight}).");
+                }
+            }
+
+            return newWeights;
+        }
+
+        private IStatCalculationContext CreateBaseValueFilterContext(
+            IGameObject target,
+            IIdentifier statDefinitionId,
+            double value)
+        {
+            var context = CreateBaseValuesFilterContext(
+                target,
+                Tuple.Create(statDefinitionId, value));
+            return context;
+        }
+
+        private IStatCalculationContext CreateBaseValuesFilterContext(
+            IGameObject target,
+            params Tuple<IIdentifier, double>[] stats)
+        {
+            var context = _statCalculationContextFactory.Create(
+                stats.Select(s => _componentsForTargetComponentFactory.Create(
+                    target,
+                    new[]
+                    {
+                        new OverrideBaseStatComponent(
+                        s.Item1,
+                        s.Item2,
+                        int.MinValue),
+                    })),
+                new IEnchantment[] { });
+            return context;
         }
     }
 }

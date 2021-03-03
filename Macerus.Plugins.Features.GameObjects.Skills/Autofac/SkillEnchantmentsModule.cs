@@ -57,15 +57,39 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                                     }),
                             }),
                         enchantmentTemplate.CreateSkillEnchantment(
-                            new StringIdentifier("passive-weather"),
-                            new StringIdentifier("weather"),
+                            new StringIdentifier("passive-rain-weight"),
+                            new StringIdentifier("rain-weight"),
                             new IFilterComponent[]
                             {
                                 new BehaviorFilterComponent(
                                     new IFilterAttribute[] { },
                                     new IBehavior[]
                                     {
-                                        new AppliesToBaseStat()
+                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "RAIN_WEIGHT * 10"),
+                                    }),
+                            }),
+                        enchantmentTemplate.CreateSkillEnchantment(
+                            new StringIdentifier("passive-rain-min"),
+                            new StringIdentifier("rain-duration-minimum"),
+                            new IFilterComponent[]
+                            {
+                                new BehaviorFilterComponent(
+                                    new IFilterAttribute[] { },
+                                    new IBehavior[]
+                                    {
+                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "RAIN_DURATION_MINIMUM * 2"),
+                                    }),
+                            }),
+                        enchantmentTemplate.CreateSkillEnchantment(
+                            new StringIdentifier("passive-rain-max"),
+                            new StringIdentifier("rain-duration-maximum"),
+                            new IFilterComponent[]
+                            {
+                                new BehaviorFilterComponent(
+                                    new IFilterAttribute[] { },
+                                    new IBehavior[]
+                                    {
+                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "RAIN_DURATION_MAXIMUM * 2.5"),
                                     }),
                             })
                     };
@@ -127,7 +151,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                 },
                 new IFilterComponent[]
                 {
-                    new EnchantmentTargetFilterComponent(new StringIdentifier("self")),
+                    new EnchantmentTargetFilterComponent(new StringIdentifier("owner")),
                     new HasStatFilterComponent(statDefinitionId),
                 }.Concat(components));
             return enchantmentDefinition;

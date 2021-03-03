@@ -79,6 +79,9 @@ namespace Macerus.Plugins.Features.Weather.Autofac
                         mapping.Add(
                             new StringIdentifier($"{weatherId}-duration-minimum"),
                             $"{weatherId.ToString().ToUpperInvariant()}_DURATION_MINIMUM");
+                        mapping.Add(
+                            new StringIdentifier($"{weatherId}-weight"),
+                            $"{weatherId.ToString().ToUpperInvariant()}_WEIGHT");
                     }
 
                     return new InMemoryStatDefinitionToTermMappingRepository(mapping);
