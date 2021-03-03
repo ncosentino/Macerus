@@ -106,6 +106,10 @@ namespace Macerus.Plugins.Features.Weather.Autofac
                 })
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<WeatherAmenity>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }
