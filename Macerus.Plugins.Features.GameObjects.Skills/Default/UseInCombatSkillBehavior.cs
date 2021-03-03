@@ -1,6 +1,8 @@
-﻿using ProjectXyz.Shared.Game.Behaviors;
+﻿using Macerus.Plugins.Features.GameObjects.Skills.Api;
 
-namespace Macerus.Plugins.Features.GameObjects.Skills
+using ProjectXyz.Shared.Game.Behaviors;
+
+namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
     public sealed class UseInCombatSkillBehavior :
         BaseBehavior,

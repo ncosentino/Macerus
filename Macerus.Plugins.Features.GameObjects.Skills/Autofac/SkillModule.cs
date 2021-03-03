@@ -2,6 +2,8 @@
 
 using Autofac;
 
+using Macerus.Plugins.Features.GameObjects.Skills.Default;
+
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments.Calculations;
@@ -122,6 +124,10 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                 .SingleInstance();
             builder
                .RegisterType<SkillAmenity>()
+               .AsImplementedInterfaces()
+               .SingleInstance();
+            builder
+               .RegisterType<SkillUsage>()
                .AsImplementedInterfaces()
                .SingleInstance();
         }

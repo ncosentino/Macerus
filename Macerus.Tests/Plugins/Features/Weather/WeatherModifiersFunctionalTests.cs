@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using Macerus.Api.GameObjects;
-using Macerus.Plugins.Features.GameObjects.Skills;
+using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Weather;
 
 using ProjectXyz.Api.Framework;

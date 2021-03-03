@@ -3,10 +3,7 @@
 using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
-using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
-using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {

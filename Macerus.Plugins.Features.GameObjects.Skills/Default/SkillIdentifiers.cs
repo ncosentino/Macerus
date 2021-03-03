@@ -2,7 +2,7 @@
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Features.GameObjects.Skills
+namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
     public sealed class SkillIdentifiers : ISkillIdentifiers
     {
