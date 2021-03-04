@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using Macerus.Api.Behaviors;
+
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
@@ -12,14 +14,14 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 {
     public sealed class ActorMovementSystem : ISystem
     {
-        private static readonly IIdentifier STAND_BACK_ANIMATION = new StringIdentifier("player_stand_back");
-        private static readonly IIdentifier STAND_FORWARD_ANIMATION = new StringIdentifier("player_stand_forward");
-        private static readonly IIdentifier STAND_LEFT_ANIMATION = new StringIdentifier("player_stand_left");
-        private static readonly IIdentifier STAND_RIGHT_ANIMATION = new StringIdentifier("player_stand_right");
-        private static readonly IIdentifier WALK_BACK_ANIMATION = new StringIdentifier("player_walk_back");
-        private static readonly IIdentifier WALK_FORWARD_ANIMATION = new StringIdentifier("player_walk_forward");
-        private static readonly IIdentifier WALK_LEFT_ANIMATION = new StringIdentifier("player_walk_left");
-        private static readonly IIdentifier WALK_RIGHT_ANIMATION = new StringIdentifier("player_walk_right");
+        private static readonly IIdentifier STAND_BACK_ANIMATION = new StringIdentifier("$actor$_stand_back");
+        private static readonly IIdentifier STAND_FORWARD_ANIMATION = new StringIdentifier("$actor$_stand_forward");
+        private static readonly IIdentifier STAND_LEFT_ANIMATION = new StringIdentifier("$actor$_stand_left");
+        private static readonly IIdentifier STAND_RIGHT_ANIMATION = new StringIdentifier("$actor$_stand_right");
+        private static readonly IIdentifier WALK_BACK_ANIMATION = new StringIdentifier("$actor$_walk_back");
+        private static readonly IIdentifier WALK_FORWARD_ANIMATION = new StringIdentifier("$actor$_walk_forward");
+        private static readonly IIdentifier WALK_LEFT_ANIMATION = new StringIdentifier("$actor$_walk_left");
+        private static readonly IIdentifier WALK_RIGHT_ANIMATION = new StringIdentifier("$actor$_walk_right");
 
         private readonly IBehaviorFinder _behaviorFinder;
         private readonly ILogger _logger;
@@ -55,11 +57,11 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             }
         }
 
-        private IEnumerable<Tuple<IWorldLocationBehavior, IMovementBehavior, IAnimationBehavior>> GetSupportedEntries(IEnumerable<IHasBehaviors> hasBehaviors)
+        private IEnumerable<Tuple<IWorldLocationBehavior, IMovementBehavior, IDynamicAnimationBehavior>> GetSupportedEntries(IEnumerable<IHasBehaviors> hasBehaviors)
         {
             foreach (var gameObject in hasBehaviors)
             {
-                Tuple<IWorldLocationBehavior, IMovementBehavior, IAnimationBehavior> requiredBehaviors;
+                Tuple<IWorldLocationBehavior, IMovementBehavior, IDynamicAnimationBehavior> requiredBehaviors;
                 if (!_behaviorFinder.TryFind(
                     gameObject,
                     out requiredBehaviors))
@@ -73,7 +75,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
         private void UpdateAnimation(
             IMovementBehavior movementBehavior,
-            IAnimationBehavior animationBehavior,
+            IDynamicAnimationBehavior animationBehavior,
             double elapsedSeconds)
         {
             // we use throttle to control the animation because it gives 
@@ -82,50 +84,50 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             // velocity in
             var throttleX = movementBehavior.ThrottleX;
             var throttleY = movementBehavior.ThrottleY;
-            var lastAnimationId = animationBehavior.CurrentAnimationId;
+            var lastAnimationId = animationBehavior.BaseAnimationId;
 
             if (throttleX > 0)
             {
-                animationBehavior.CurrentAnimationId = WALK_RIGHT_ANIMATION;
+                animationBehavior.BaseAnimationId = WALK_RIGHT_ANIMATION;
             }
             else if (throttleX < 0)
             {
-                animationBehavior.CurrentAnimationId = WALK_LEFT_ANIMATION;
+                animationBehavior.BaseAnimationId = WALK_LEFT_ANIMATION;
             }
             else if (throttleY > 0)
             {
-                animationBehavior.CurrentAnimationId = WALK_BACK_ANIMATION;
+                animationBehavior.BaseAnimationId = WALK_BACK_ANIMATION;
             }
             else if (throttleY < 0)
             {
-                animationBehavior.CurrentAnimationId = WALK_FORWARD_ANIMATION;
+                animationBehavior.BaseAnimationId = WALK_FORWARD_ANIMATION;
             }
-            else if (animationBehavior.CurrentAnimationId?.Equals(WALK_RIGHT_ANIMATION) == true)
+            else if (animationBehavior.BaseAnimationId?.Equals(WALK_RIGHT_ANIMATION) == true)
             {
-                animationBehavior.CurrentAnimationId = STAND_RIGHT_ANIMATION;
+                animationBehavior.BaseAnimationId = STAND_RIGHT_ANIMATION;
             }
-            else if (animationBehavior.CurrentAnimationId?.Equals(WALK_LEFT_ANIMATION) == true)
+            else if (animationBehavior.BaseAnimationId?.Equals(WALK_LEFT_ANIMATION) == true)
             {
-                animationBehavior.CurrentAnimationId = STAND_LEFT_ANIMATION;
+                animationBehavior.BaseAnimationId = STAND_LEFT_ANIMATION;
             }
-            else if (animationBehavior.CurrentAnimationId?.Equals(WALK_BACK_ANIMATION) == true)
+            else if (animationBehavior.BaseAnimationId?.Equals(WALK_BACK_ANIMATION) == true)
             {
-                animationBehavior.CurrentAnimationId = STAND_BACK_ANIMATION;
+                animationBehavior.BaseAnimationId = STAND_BACK_ANIMATION;
             }
-            else if (animationBehavior.CurrentAnimationId?.Equals(STAND_BACK_ANIMATION) != true &&
-                animationBehavior.CurrentAnimationId?.Equals(STAND_FORWARD_ANIMATION) != true &&
-                animationBehavior.CurrentAnimationId?.Equals(STAND_LEFT_ANIMATION) != true &&
-                animationBehavior.CurrentAnimationId?.Equals(STAND_RIGHT_ANIMATION) != true)
+            else if (animationBehavior.BaseAnimationId?.Equals(STAND_BACK_ANIMATION) != true &&
+                animationBehavior.BaseAnimationId?.Equals(STAND_FORWARD_ANIMATION) != true &&
+                animationBehavior.BaseAnimationId?.Equals(STAND_LEFT_ANIMATION) != true &&
+                animationBehavior.BaseAnimationId?.Equals(STAND_RIGHT_ANIMATION) != true)
             {
-                animationBehavior.CurrentAnimationId = STAND_FORWARD_ANIMATION;
+                animationBehavior.BaseAnimationId = STAND_FORWARD_ANIMATION;
             }
 
-            if (lastAnimationId != animationBehavior.CurrentAnimationId)
+            if (lastAnimationId != animationBehavior.BaseAnimationId)
             {
                 _logger.Debug(
-                    $"Switching animation to '{animationBehavior.CurrentAnimationId}' " +
-                    $"on game object '{animationBehavior.Owner}' with animation " +
-                    $"behavior.");
+                    $"Switching animation to '{animationBehavior.BaseAnimationId}' " +
+                    $"on game object '{animationBehavior.Owner}'. Current " +
+                    $"animation is '{animationBehavior.CurrentAnimationId}'.");
             }
         }
 

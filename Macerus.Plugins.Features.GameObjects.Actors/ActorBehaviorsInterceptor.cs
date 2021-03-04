@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+using Macerus.Plugins.Features.GameObjects.Actors.Api;
+
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Stats;
@@ -11,10 +13,14 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
     public sealed class ActorBehaviorsInterceptor : IDiscoverableActorBehaviorsInterceptor
     {
         private readonly IReadOnlyStatDefinitionToTermMappingRepository _statDefinitionToTermMappingRepository;
+        private readonly IDynamicAnimationIdentifiers _dynamicAnimationIdentifiers;
 
-        public ActorBehaviorsInterceptor(IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository)
+        public ActorBehaviorsInterceptor(
+            IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
+            IDynamicAnimationIdentifiers dynamicAnimationIdentifiers)
         {
             _statDefinitionToTermMappingRepository = statDefinitionToTermMappingRepository;
+            _dynamicAnimationIdentifiers = dynamicAnimationIdentifiers;
         }
 
         public void Intercept(IReadOnlyCollection<IBehavior> behaviors)
@@ -27,6 +33,12 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_RED").StatDefinitionId] = 1;
                 stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_GREEN").StatDefinitionId] = 0;
                 stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_BLUE").StatDefinitionId] = 1;
+                
+                stats[_dynamicAnimationIdentifiers.AnimationSpeedMultiplierStatId] = 1;
+                stats[_dynamicAnimationIdentifiers.RedMultiplierStatId] = 0.25;
+                stats[_dynamicAnimationIdentifiers.GreenMultiplierStatId] = 0.25;
+                stats[_dynamicAnimationIdentifiers.BlueMultiplierStatId] = 2;
+                stats[_dynamicAnimationIdentifiers.AlphaMultiplierStatId] = 0.6;
             });
         }
     }
