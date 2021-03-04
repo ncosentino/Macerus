@@ -59,6 +59,19 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Autofac
                 })
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .Register(c =>
+                {
+                    var mapping = new Dictionary<int, string>()
+                    {
+                        [0] = "player",
+                        [1] = "red_player",
+                    };
+
+                    return new InMemoryAnimationReplacementPatternRepository(mapping);
+                })
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

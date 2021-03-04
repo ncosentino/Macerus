@@ -108,6 +108,27 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             },
                             new Dictionary<IIdentifier, double>(),
                             skillIdentifiers),
+                        // Passive Animation, Stat-Based
+                        new SkillDefinition(
+                            new StringIdentifier("red-player"),
+                            new StringIdentifier("self"),
+                            new IIdentifier[] { },
+                            new IIdentifier[] { },
+                            new Dictionary<IIdentifier, double>()
+                            {
+                                [new StringIdentifier("animation_override")] = 1,
+                            },
+                            new IFilterAttribute[] { },
+                            new IFilterComponent[]
+                            {
+                                new BehaviorFilterComponent(
+                                    new IFilterAttribute[] { },
+                                    new PassiveSkillBehavior(),
+                                    new UseInCombatSkillBehavior(),
+                                    new UseOutOfCombatSkillBehavior())
+                            },
+                            new Dictionary<IIdentifier, double>() { },
+                            skillIdentifiers),
                     };
 
                     var attributeFilter = c.Resolve<IAttributeFilterer>();

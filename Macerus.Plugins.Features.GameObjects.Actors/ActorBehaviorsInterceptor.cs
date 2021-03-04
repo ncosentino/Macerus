@@ -39,6 +39,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 stats[_dynamicAnimationIdentifiers.GreenMultiplierStatId] = 0.25;
                 stats[_dynamicAnimationIdentifiers.BlueMultiplierStatId] = 2;
                 stats[_dynamicAnimationIdentifiers.AlphaMultiplierStatId] = 0.6;
+                stats[_dynamicAnimationIdentifiers.AnimationOverrideStatId] = 0;
             });
         }
     }

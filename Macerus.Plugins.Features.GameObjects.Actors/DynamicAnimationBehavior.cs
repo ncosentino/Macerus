@@ -14,15 +14,18 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         BaseBehavior,
         IDynamicAnimationBehavior
     {
+        private readonly IAnimationReplacementPatternRepository _animationReplacementPatternRepository;
         private readonly IStatCalculationService _statCalculationService;
         private readonly IDynamicAnimationIdentifiers _dynamicAnimationIdentifiers;
         private readonly string _sourcePattern;
 
         public DynamicAnimationBehavior(
+            IAnimationReplacementPatternRepository animationReplacementPatternRepository,
             IStatCalculationService statCalculationService,
             IDynamicAnimationIdentifiers dynamicAnimationIdentifiers,
             string sourcePattern)
         {
+            _animationReplacementPatternRepository = animationReplacementPatternRepository;
             _statCalculationService = statCalculationService;
             _dynamicAnimationIdentifiers = dynamicAnimationIdentifiers;
             _sourcePattern = sourcePattern;
@@ -66,8 +69,11 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
                 if (DateTime.UtcNow - _lastLookupdUtc > TimeSpan.FromSeconds(1))
                 {
-                    // FIXME: load this up
-                    _replacementPattern = "red_player";
+                    var overrideStatValue = _statCalculationService.GetStatValue(
+                        Owner,
+                        _dynamicAnimationIdentifiers.AnimationOverrideStatId);
+                    _replacementPattern = _animationReplacementPatternRepository
+                        .GetReplacementPattern((int)overrideStatValue);
                     _lastLookupdUtc = DateTime.UtcNow;
                 }
 

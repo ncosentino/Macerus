@@ -23,6 +23,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
         public IIdentifier AlphaMultiplierStatId { get; } = new StringIdentifier("animation_alpha_multiplier");
 
+        public IIdentifier AnimationOverrideStatId { get; } = new StringIdentifier("animation_override");
+
         public static IEnumerable<IIdentifier> GetAllStatDefinitionIds(IDynamicAnimationIdentifiers identifiers)
         {
             var properties = identifiers.GetType()
