@@ -1,0 +1,31 @@
+﻿using System.Collections.Generic;
+
+using Macerus.Plugins.Features.GameObjects.Static.Api;
+
+using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.Framework;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Shared.Framework;
+
+namespace Macerus.Plugins.Features.Encounters.GamObjects.Static.Triggers
+{
+    public sealed class EncounterBehaviorsProvider : IDiscoverableStaticGameObjectBehaviorsProvider
+    {
+        private static readonly IIdentifier ENCOUNTER_TRIGGER_TEMPLATE_ID = new StringIdentifier("rectangularencountertrigger");
+
+        public IEnumerable<IBehavior> GetBehaviors(IReadOnlyCollection<IBehavior> baseBehaviors)
+        {
+            if (!baseBehaviors
+                .GetOnly<IReadOnlyTemplateIdentifierBehavior>()
+                .TemplateId
+                .Equals(ENCOUNTER_TRIGGER_TEMPLATE_ID))
+            {
+                yield break;
+            }
+
+            var baseProperties = baseBehaviors.GetFirst<IReadOnlyStaticGameObjectPropertiesBehavior>();
+            var properties = new EncounterTriggerPropertiesBehavior(baseProperties);
+            yield return properties;
+        }
+    }
+}

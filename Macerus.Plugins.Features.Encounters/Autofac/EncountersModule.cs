@@ -1,15 +1,17 @@
 ﻿using Autofac;
 
+using Macerus.Plugins.Features.Encounters.GamObjects.Static.Triggers;
+
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Game.GameObjects.Autofac
+namespace Macerus.Plugins.Features.Encounters.Autofac
 {
-    public class GameObjectsModule : SingleRegistrationModule
+    public sealed class EncountersModule : SingleRegistrationModule
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<GameObjectRepositoryFacade>()
+                .RegisterType<EncounterBehaviorsProvider>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

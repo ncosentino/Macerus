@@ -10,18 +10,29 @@ using ProjectXyz.Api.Logging;
 
 namespace Macerus.Game.GameObjects
 {
-
     public sealed class GameObjectRepositoryFacade : IGameObjectRepositoryFacade
     {
         private readonly List<Tuple<CanLoadGameObjectDelegate, LoadGameObjectDelegate>> _loadMapping;
         private readonly List<Tuple<CanCreateFromTemplateDelegate, CreateObjectFromTemplateDelegate>> _createFromTemplateMapping;
         private readonly ILogger _logger;
 
-        public GameObjectRepositoryFacade(ILogger logger)
+        public GameObjectRepositoryFacade(
+            IEnumerable<IDiscoverableGameObjectRepository> discoverableGameObjectRepositories,
+            ILogger logger)
         {
             _loadMapping = new List<Tuple<CanLoadGameObjectDelegate, LoadGameObjectDelegate>>();
             _createFromTemplateMapping = new List<Tuple<CanCreateFromTemplateDelegate, CreateObjectFromTemplateDelegate>>();
             _logger = logger;
+
+            foreach (var repository in discoverableGameObjectRepositories)
+            {
+                RegisterRepository(
+                    repository.CanLoad,
+                    repository.Load);
+                RegisterRepository(
+                    repository.CanCreateFromTemplate,
+                    repository.CreateFromTemplate);
+            }
         }
 
         public IGameObject Load(

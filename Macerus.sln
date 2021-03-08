@@ -85,7 +85,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Ga
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql", "Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql.csproj", "{2608DB1E-43A6-4CEF-A7D6-B1990E5E8732}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Weather", "Macerus.Plugins.Features.Weather\Macerus.Plugins.Features.Weather.csproj", "{D4B0E083-D340-4910-A7CC-5CEE48FDD199}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Weather", "Macerus.Plugins.Features.Weather\Macerus.Plugins.Features.Weather.csproj", "{D4B0E083-D340-4910-A7CC-5CEE48FDD199}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Encounters", "Encounters", "{8F41D1F8-79D3-4366-9F46-402887730310}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Encounters", "Macerus.Plugins.Features.Encounters\Macerus.Plugins.Features.Encounters.csproj", "{313DBCF0-1EC4-4D81-AD0E-AC5978233B91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -205,6 +209,10 @@ Global
 		{D4B0E083-D340-4910-A7CC-5CEE48FDD199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4B0E083-D340-4910-A7CC-5CEE48FDD199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4B0E083-D340-4910-A7CC-5CEE48FDD199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{313DBCF0-1EC4-4D81-AD0E-AC5978233B91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{313DBCF0-1EC4-4D81-AD0E-AC5978233B91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{313DBCF0-1EC4-4D81-AD0E-AC5978233B91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{313DBCF0-1EC4-4D81-AD0E-AC5978233B91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -246,6 +254,8 @@ Global
 		{AE7221C7-7840-41AE-98CE-92E41EB90BC1} = {3A6EC585-4595-4643-977E-65BE7A2A8EBC}
 		{2608DB1E-43A6-4CEF-A7D6-B1990E5E8732} = {49F8D13C-7B94-4AD4-9D4E-5B8F15485981}
 		{D4B0E083-D340-4910-A7CC-5CEE48FDD199} = {33A6C169-52DA-446B-A241-FEC05722752A}
+		{8F41D1F8-79D3-4366-9F46-402887730310} = {33A6C169-52DA-446B-A241-FEC05722752A}
+		{313DBCF0-1EC4-4D81-AD0E-AC5978233B91} = {8F41D1F8-79D3-4366-9F46-402887730310}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}
