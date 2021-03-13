@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Api.GameObjects;
@@ -6,6 +7,7 @@ using Macerus.Api.GameObjects;
 using NexusLabs.Contracts;
 
 using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
 
@@ -96,6 +98,27 @@ namespace Macerus.Shared.Behaviors.Filtering
                 $"type '{typeof(IdentifierFilterAttributeValue)}'.");
             var value = ((IdentifierFilterAttributeValue)attribute.Value).Value;
             return value;
+        }
+
+        /// <inheritdoc />
+        public IFilterContext CreateSubContext(
+            IFilterContext sourceFilterContext,
+            IEnumerable<IFilterAttribute> filterAttributes)
+        {
+            var requiredAttributes = filterAttributes
+                .Where(attr => attr.Required)
+                .ToDictionary(x => x.Id, x => x);
+            var subFilterContext = _filterContextFactory.CreateContext(
+                sourceFilterContext.MinimumCount,
+                sourceFilterContext.MaximumCount,
+                sourceFilterContext
+                    .Attributes
+                    .Where(x => !requiredAttributes.ContainsKey(x.Id))
+                    .Select(x => x.Required
+                        ? x.CopyWithRequired(false)
+                        : x)
+                    .Concat(requiredAttributes.Values));
+            return subFilterContext;
         }
     }
 }

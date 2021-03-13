@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
@@ -16,35 +17,21 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Normal
     public sealed class NormalItemGenerator : IDiscoverableItemGenerator
     {
         private readonly IBaseItemGenerator _baseItemGenerator;
-        private readonly IFilterContextFactory _filterContextFactory;
+        private readonly IFilterContextAmenity _filterContextAmenity;
 
         public NormalItemGenerator(
             IBaseItemGenerator baseItemGenerator,
-            IFilterContextFactory filterContextFactory)
+            IFilterContextAmenity filterContextAmenity)
         {
             _baseItemGenerator = baseItemGenerator;
-            _filterContextFactory = filterContextFactory;
+            _filterContextAmenity = filterContextAmenity;
         }
 
         public IEnumerable<IGameObject> GenerateItems(IFilterContext filterContext)
         {
-            // create our new context by keeping information about attributes 
-            // from our caller, but acknowledging that any that were required
-            // are now fulfilled up until this point. we then cobine in the
-            // newly provided attributes from the drop table.
-            var generatorRequired = SupportedAttributes
-                .Where(attr => attr.Required)
-                .ToDictionary(x => x.Id, x => x);
-            var normalGeneratorContext = _filterContextFactory.CreateContext(
-                filterContext.MinimumCount,
-                filterContext.MaximumCount,
-                filterContext
-                    .Attributes
-                    .Where(x => !generatorRequired.ContainsKey(x.Id))
-                    .Select(x => x.Required
-                        ? x.CopyWithRequired(false)
-                        : x)
-                    .Concat(generatorRequired.Values));
+            var normalGeneratorContext = _filterContextAmenity.CreateSubContext(
+                filterContext,
+                SupportedAttributes);
             var baseItems = _baseItemGenerator.GenerateItems(normalGeneratorContext);
             var items = baseItems.Select(baseItem => new NormalItem(baseItem.Behaviors.Concat(new IBehavior[]
             {

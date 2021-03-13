@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
@@ -29,40 +30,29 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
         private readonly IHasEnchantmentsBehaviorFactory _hasEnchantmentsBehaviorFactory;
         private readonly IMagicItemNameGenerator _magicItemNameGenerator;
         private readonly IFilterContextFactory _filterContextFactory;
+        private readonly IFilterContextAmenity _filterContextAmenity;
 
         public MagicItemGenerator(
             IBaseItemGenerator baseItemGenerator,
             IEnchantmentGenerator enchantmentGenerator,
             IHasEnchantmentsBehaviorFactory hasEnchantmentsBehaviorFactory,
             IMagicItemNameGenerator magicItemNameGenerator,
-            IFilterContextFactory filterContextFactory)
+            IFilterContextFactory filterContextFactory,
+            IFilterContextAmenity filterContextAmenity)
         {
             _baseItemGenerator = baseItemGenerator;
             _enchantmentGenerator = enchantmentGenerator;
             _hasEnchantmentsBehaviorFactory = hasEnchantmentsBehaviorFactory;
             _magicItemNameGenerator = magicItemNameGenerator;
             _filterContextFactory = filterContextFactory;
+            _filterContextAmenity = filterContextAmenity;
         }
 
         public IEnumerable<IGameObject> GenerateItems(IFilterContext filterContext)
         {
-            // create our new context by keeping information about attributes 
-            // from our caller, but acknowledging that any that were required
-            // are now fulfilled up until this point. we then cobine in the
-            // newly provided attributes from the drop table.
-            var generatorRequired = SupportedAttributes
-                .Where(attr => attr.Required)
-                .ToDictionary(x => x.Id, x => x);
-            var magicItemGeneratorContext = _filterContextFactory.CreateContext(
-                filterContext.MinimumCount,
-                filterContext.MaximumCount,
-                filterContext
-                    .Attributes
-                    .Where(x => !generatorRequired.ContainsKey(x.Id))
-                    .Select(x => x.Required
-                        ? x.CopyWithRequired(false)
-                        : x)
-                    .Concat(generatorRequired.Values));
+            var magicItemGeneratorContext = _filterContextAmenity.CreateSubContext(
+                filterContext,
+                SupportedAttributes);
             var baseItems = _baseItemGenerator.GenerateItems(magicItemGeneratorContext);
 
             foreach (var baseItem in baseItems)
