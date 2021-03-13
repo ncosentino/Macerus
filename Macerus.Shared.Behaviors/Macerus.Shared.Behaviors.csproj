@@ -17,6 +17,10 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="NexusLabs.Contracts" Version="0.0.3" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="ProjectXyz.Api.Behaviors">
       <HintPath>..\Dependencies\ProjectXyz\ProjectXyz.Api.Behaviors.dll</HintPath>
     </Reference>
@@ -26,5 +30,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
+    <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
   </ItemGroup>
 </Project>

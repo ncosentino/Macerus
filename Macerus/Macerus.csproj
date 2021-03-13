@@ -22,12 +22,11 @@
     <Exec Command="FOR /F &quot;tokens=* USEBACKQ&quot; %25%25F IN (`$(ProjectDir)GenerateProjectAssemblyVersion.exe $(ProjectDir)$(ProjectFileName)`) DO (&#xD;&#xA;SET generatedVersion=%25%25F&#xD;&#xA;)&#xD;&#xA;ECHO Generated Version: %25generatedVersion%25&#xD;&#xA;&#xD;&#xA;nuget pack $(ProjectFileName) -Symbols -IncludeReferencedProjects -OutputDirectory &quot;$(SolutionDir)..\..\..\nuget-repo&quot; -Version %25generatedVersion%25 -properties Configuration=$(ConfigurationName)" />
   </Target>
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.7733.11920" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7741.16917" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
     <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
-    <ProjectReference Include="..\Macerus.Game.GameObjects.Autofac\Macerus.Game.GameObjects.Autofac.csproj" />
     <ProjectReference Include="..\Macerus.Game.GameObjects\Macerus.Game.GameObjects.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Content.Wip\Macerus.Plugins.Content.Wip.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Data.MySql\Macerus.Plugins.Data.MySql.csproj" />

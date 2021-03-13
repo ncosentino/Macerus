@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Macerus.Api.Behaviors.Filtering;
 using Macerus.Api.GameObjects;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
 using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
-using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Shared.Framework;
@@ -16,39 +18,40 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
     public sealed class ContainerRepository :
         IContainerRepository,
         IDiscoverableGameObjectRepository
-    {
-        private static readonly IIdentifier CONTAINER_TYPE_ID = new StringIdentifier("container");
-        
+    {       
         private readonly IContainerFactory _containerFactory;
+        private readonly IContainerIdentifiers _containerIdentifiers;
         private readonly ContainerInteractableBehavior.Factory _containerInteractableBehaviorFactory;
+        private readonly IFilterContextAmenity _filterContextAmenity;
+        private readonly IAttributeFilterer _attributeFilterer;
 
         public ContainerRepository(
             IContainerFactory containerFactory,
-            ContainerInteractableBehavior.Factory containerInteractableBehaviorFactory)
+            IContainerIdentifiers containerIdentifiers,
+            ContainerInteractableBehavior.Factory containerInteractableBehaviorFactory,
+            IFilterContextAmenity filterContextAmenity,
+            IAttributeFilterer attributeFilterer)
         {
             _containerFactory = containerFactory;
+            _containerIdentifiers = containerIdentifiers;
             _containerInteractableBehaviorFactory = containerInteractableBehaviorFactory;
+            _filterContextAmenity = filterContextAmenity;
+            _attributeFilterer = attributeFilterer;
         }
 
-        public static IIdentifier ContainerTypeId => CONTAINER_TYPE_ID;
-
-        public bool CanCreateFromTemplate(
-            IIdentifier typeId,
-            IIdentifier templateId)
-        {
-            var canCreateFromTemplate = typeId.Equals(CONTAINER_TYPE_ID) && templateId is StringIdentifier;
-            return canCreateFromTemplate;
-        }
-
-        public bool CanLoad(
-            IIdentifier typeId,
-            IIdentifier objectId) => false;
-
-        public IGameObject CreateFromTemplate(
-            IIdentifier typeId,
-            IIdentifier templateId,
+        public IEnumerable<IGameObject> CreateFromTemplate(
+            IFilterContext filterContext,
             IReadOnlyDictionary<string, object> properties)
         {
+            // FIXME: actually extend this for templates and use an attribute filterer
+            var typeId = _filterContextAmenity.GetGameObjectTypeIdFromContext(filterContext);
+            if (!_containerIdentifiers.ContainerTypeIdentifier.Equals(typeId))
+            {
+                yield break;
+            }
+
+            var templateId = _filterContextAmenity.GetGameObjectTemplateIdFromContext(filterContext);
+
             var containerPropertiesBehavior = new ContainerPropertiesBehavior(properties);
             var containerInteractionBehavior = _containerInteractableBehaviorFactory
                 .Invoke(containerPropertiesBehavior.AutomaticInteraction);
@@ -87,15 +90,13 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 new ItemContainerBehavior(new StringIdentifier("Items")),
                 containerInteractionBehavior,
                 additionalBehaviors);
-            return container;
+            yield return container;
         }
 
-        public IGameObject Load(
-            IIdentifier typeId,
-            IIdentifier objectId)
+        public IEnumerable<IGameObject> Load(IFilterContext filterContext)
         {
-            throw new NotSupportedException(
-                $"'{GetType()}' does not support '{nameof(Load)}'.");
+            // FIXME: implement this
+            yield break;
         }
     }
 }

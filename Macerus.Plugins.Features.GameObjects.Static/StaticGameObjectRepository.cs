@@ -2,44 +2,51 @@
 using System.Collections.Generic;
 using System.Globalization;
 
+using Macerus.Api.Behaviors.Filtering;
 using Macerus.Api.GameObjects;
 using Macerus.Shared.Behaviors;
 
-using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Static
 {
+
     public sealed class StaticGameObjectRepository : IDiscoverableGameObjectRepository
     {
-        private static readonly IIdentifier STATIC_TYPE_ID = new StringIdentifier("static");
-        
+        private readonly IStaticGameObjectIdentifiers _staticGameObjectIdentifiers;
         private readonly IStaticGameObjectFactory _staticGameObjectFactory;
+        private readonly IFilterContextAmenity _filterContextAmenity;
+        private readonly IAttributeFilterer _attributeFilterer;
 
-        public StaticGameObjectRepository(IStaticGameObjectFactory staticGameObjectFactory)
+        public StaticGameObjectRepository(
+            IStaticGameObjectIdentifiers staticGameObjectIdentifiers,
+            IStaticGameObjectFactory staticGameObjectFactory,
+            IFilterContextAmenity filterContextAmenity,
+            IAttributeFilterer attributeFilterer)
         {
+            _staticGameObjectIdentifiers = staticGameObjectIdentifiers;
             _staticGameObjectFactory = staticGameObjectFactory;
+            _filterContextAmenity = filterContextAmenity;
+            _attributeFilterer = attributeFilterer;
         }
 
-        public bool CanCreateFromTemplate(
-            IIdentifier typeId,
-            IIdentifier templateId)
-        {
-            var canCreateFromTemplate = typeId.Equals(STATIC_TYPE_ID) && templateId is StringIdentifier;
-            return canCreateFromTemplate;
-        }
-
-        public bool CanLoad(
-            IIdentifier typeId,
-            IIdentifier objectId) => false;
-
-        public IGameObject CreateFromTemplate(
-            IIdentifier typeId,
-            IIdentifier templateId,
+        public IEnumerable<IGameObject> CreateFromTemplate(
+            IFilterContext filterContext,
             IReadOnlyDictionary<string, object> properties)
         {
+            // FIXME: actually extend this for templates and use an attribute filterer
+            var typeId = _filterContextAmenity.GetGameObjectTypeIdFromContext(filterContext);
+            if (!_staticGameObjectIdentifiers.StaticGameObjectTypeIdentifier.Equals(typeId))
+            {
+                yield break;
+            }
+
+            var templateId = _filterContextAmenity.GetGameObjectTemplateIdFromContext(filterContext);
+
             var staticGameObject = _staticGameObjectFactory.Create(
                 new TypeIdentifierBehavior()
                 {
@@ -61,15 +68,13 @@ namespace Macerus.Plugins.Features.GameObjects.Static
                     Height = Convert.ToDouble(properties["Height"], CultureInfo.InvariantCulture),
                 },
                 new StaticGameObjectPropertiesBehavior(properties));
-            return staticGameObject;
+            yield return staticGameObject;
         }
 
-        public IGameObject Load(
-            IIdentifier typeId,
-            IIdentifier objectId)
+        public IEnumerable<IGameObject> Load(IFilterContext filterContext)
         {
-            throw new NotSupportedException(
-                $"'{GetType()}' does not support '{nameof(Load)}'.");
+            // FIXME: implement this
+            yield break;
         }
     }
 }

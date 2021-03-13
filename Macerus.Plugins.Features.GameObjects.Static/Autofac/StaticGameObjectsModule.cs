@@ -9,6 +9,10 @@ namespace Macerus.Plugins.Features.GameObjects.Static.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
+                .RegisterType<StaticGameObjectIdentifiers>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<StaticGameObjectRepository>()
                 .AsImplementedInterfaces()
                 .SingleInstance();

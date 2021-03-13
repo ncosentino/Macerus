@@ -3,7 +3,7 @@ using System.Linq;
 
 using Macerus.Api.Behaviors;
 using Macerus.Api.GameObjects;
-using Macerus.Plugins.Features.GameObjects.Containers;
+using Macerus.Plugins.Features.GameObjects.Containers.Api;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
@@ -17,21 +17,23 @@ namespace Macerus.Tests.Plugins.Features.Containers
     public sealed class ContainerInteractableBehaviorTests
     {
         private static readonly MacerusContainer _container;
-        private static readonly IGameObjectRepositoryFacade _gameObjectRepository;
+        private static readonly IGameObjectRepositoryAmenity _gameObjectRepositoryAmenity;
         private static readonly IActorIdentifiers _actorIdentifiers;
+        private static readonly IContainerIdentifiers _containerIdentifiers;
 
         static ContainerInteractableBehaviorTests()
         {
             _container = new MacerusContainer();
-            _gameObjectRepository = _container.Resolve<IGameObjectRepositoryFacade>();
+            _gameObjectRepositoryAmenity = _container.Resolve<IGameObjectRepositoryAmenity>();
             _actorIdentifiers = _container.Resolve<IActorIdentifiers>();
+            _containerIdentifiers = _container.Resolve<IContainerIdentifiers>();
         }
 
         [Fact]
         public void Interact_ContainerHasDropTableThatTransfers_PlayerGetsItems()
         {
-            var container = _gameObjectRepository.CreateFromTemplate(
-                ContainerRepository.ContainerTypeId,
+            var container = _gameObjectRepositoryAmenity.CreateGameObjectFromTemplate(
+                _containerIdentifiers.ContainerTypeIdentifier,
                 new StringIdentifier("some template"),
                 new Dictionary<string, object>()
                 {
@@ -42,7 +44,7 @@ namespace Macerus.Tests.Plugins.Features.Containers
                     ["DropTableId"] = "any_magic_1-10_lvl10",
                     ["TransferItemsOnActivate"] = true,
                 });
-            var player = _gameObjectRepository.CreateFromTemplate(
+            var player = _gameObjectRepositoryAmenity.CreateGameObjectFromTemplate(
                 _actorIdentifiers.ActorTypeIdentifier,
                 new StringIdentifier("player"),
                 new Dictionary<string, object>()

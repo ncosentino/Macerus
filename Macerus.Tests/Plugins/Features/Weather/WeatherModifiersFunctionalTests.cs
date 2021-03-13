@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using Macerus.Api.GameObjects;
+using Macerus.Game.GameObjects;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Weather;
 
@@ -9,6 +10,7 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
+using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Plugins.Features.Weather.Api;
 using ProjectXyz.Shared.Framework;
 
@@ -19,9 +21,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
     public sealed class WeatherModifiersFunctionalTests
     {
         private static readonly MacerusContainer _container;
-        private static readonly IMutableGameObjectManager _gameObjectManager;
+        private static readonly IMapGameObjectManager _mapGameObjectManager;
         private static readonly IWeatherModifiers _weatherModifiers;
-        private static readonly IGameObjectRepositoryFacade _gameObjectRepositoryFacade;
+        private static readonly IGameObjectRepositoryAmenity _gameObjectRepositoryAmenity;
         private static readonly IActorIdentifiers _actorIdentifiers;
         private static readonly ISkillAmenity _skillAmenity;
 
@@ -29,9 +31,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
         {
             _container = new MacerusContainer();
 
-            _gameObjectManager = _container.Resolve<IMutableGameObjectManager>();
+            _mapGameObjectManager = _container.Resolve<IMapGameObjectManager>();
             _weatherModifiers = _container.Resolve<IWeatherModifiers>();
-            _gameObjectRepositoryFacade = _container.Resolve<IGameObjectRepositoryFacade>();
+            _gameObjectRepositoryAmenity = _container.Resolve<IGameObjectRepositoryAmenity>();
             _actorIdentifiers = _container.Resolve<IActorIdentifiers>();
             _skillAmenity = _container.Resolve<ISkillAmenity>();
         }
@@ -46,8 +48,8 @@ namespace Macerus.Tests.Plugins.Features.Weather
                     .GetOnly<IHasSkillsBehavior>()
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
                 
-                _gameObjectManager.MarkForAddition(player);
-                _gameObjectManager.Synchronize();
+                _mapGameObjectManager.MarkForAddition(player);
+                _mapGameObjectManager.Synchronize();
 
                 var inputWeights = new Dictionary<IIdentifier, double>()
                 {
@@ -71,10 +73,10 @@ namespace Macerus.Tests.Plugins.Features.Weather
                     .GetOnly<IHasSkillsBehavior>()
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
 
-                _gameObjectManager.MarkForAddition(
+                _mapGameObjectManager.MarkForAddition(
                     player,
                     CreatePlayer());
-                _gameObjectManager.Synchronize();
+                _mapGameObjectManager.Synchronize();
 
                 var inputWeights = new Dictionary<IIdentifier, double>()
                 {
@@ -98,8 +100,8 @@ namespace Macerus.Tests.Plugins.Features.Weather
                     .GetOnly<IHasSkillsBehavior>()
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
 
-                _gameObjectManager.MarkForAddition(player);
-                _gameObjectManager.Synchronize();
+                _mapGameObjectManager.MarkForAddition(player);
+                _mapGameObjectManager.Synchronize();
 
                 var result = _weatherModifiers.GetMinimumDuration(
                     WeatherIds.Rain,
@@ -120,10 +122,10 @@ namespace Macerus.Tests.Plugins.Features.Weather
                     .GetOnly<IHasSkillsBehavior>()
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
 
-                _gameObjectManager.MarkForAddition(
+                _mapGameObjectManager.MarkForAddition(
                     player,
                     CreatePlayer());
-                _gameObjectManager.Synchronize();
+                _mapGameObjectManager.Synchronize();
 
                 var result = _weatherModifiers.GetMinimumDuration(
                     WeatherIds.Rain,
@@ -144,8 +146,8 @@ namespace Macerus.Tests.Plugins.Features.Weather
                     .GetOnly<IHasSkillsBehavior>()
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
 
-                _gameObjectManager.MarkForAddition(player);
-                _gameObjectManager.Synchronize();
+                _mapGameObjectManager.MarkForAddition(player);
+                _mapGameObjectManager.Synchronize();
 
                 var result = _weatherModifiers.GetMaximumDuration(WeatherIds.Rain, 10000);
 
@@ -163,10 +165,10 @@ namespace Macerus.Tests.Plugins.Features.Weather
                     .GetOnly<IHasSkillsBehavior>()
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
 
-                _gameObjectManager.MarkForAddition(
+                _mapGameObjectManager.MarkForAddition(
                     player,
                     CreatePlayer());
-                _gameObjectManager.Synchronize();
+                _mapGameObjectManager.Synchronize();
 
                 var result = _weatherModifiers.GetMaximumDuration(WeatherIds.Rain, 10000);
 
@@ -176,7 +178,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
 
         private IGameObject CreatePlayer()
         {
-            return _gameObjectRepositoryFacade.CreateFromTemplate(
+            return _gameObjectRepositoryAmenity.CreateGameObjectFromTemplate(
                 _actorIdentifiers.ActorTypeIdentifier,
                 new StringIdentifier("player"),
                 new Dictionary<string, object>()
@@ -190,16 +192,16 @@ namespace Macerus.Tests.Plugins.Features.Weather
 
         private void UsingCleanObjectManager(Action callback)
         {
-            _gameObjectManager.MarkForRemoval(_gameObjectManager.GameObjects);
-            _gameObjectManager.Synchronize();
+            _mapGameObjectManager.MarkForRemoval(_mapGameObjectManager.GameObjects);
+            _mapGameObjectManager.Synchronize();
             try
             {
                 callback.Invoke();
             }
             finally
             {
-                _gameObjectManager.MarkForRemoval(_gameObjectManager.GameObjects);
-                _gameObjectManager.Synchronize();
+                _mapGameObjectManager.MarkForRemoval(_mapGameObjectManager.GameObjects);
+                _mapGameObjectManager.Synchronize();
             }
         }
     }

@@ -13,6 +13,7 @@ using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default; // FIXME: depende
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables;
+using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Shared.Framework;
 using ProjectXyz.Shared.Game.Behaviors;
 
@@ -22,19 +23,19 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         BaseBehavior,
         IInteractableBehavior
     {
-        private readonly IMutableGameObjectManager _gameObjectManager;
+        private readonly IMapGameObjectManager _mapGameObjectManager;
         private readonly ILootGenerator _lootGenerator;
         private readonly IFilterContextProvider _filterContextProvider;
         private readonly IDropTableRepositoryFacade _dropTableRepository;
 
         public ContainerInteractableBehavior(
-            IMutableGameObjectManager gameObjectManager,
+            IMapGameObjectManager mapGameObjectManager,
             ILootGenerator lootGenerator,
             IFilterContextProvider filterContextProvider,
             IDropTableRepositoryFacade dropTableRepository,
             bool automaticInteraction)
         {
-            _gameObjectManager = gameObjectManager;
+            _mapGameObjectManager = mapGameObjectManager;
             _lootGenerator = lootGenerator;
             _filterContextProvider = filterContextProvider;
             _dropTableRepository = dropTableRepository;
@@ -81,7 +82,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
 
             if (properties.DestroyOnUse)
             {
-                _gameObjectManager.MarkForRemoval((IGameObject)Owner); // FIXME: whyyyyy this terrible casting
+                _mapGameObjectManager.MarkForRemoval((IGameObject)Owner); // FIXME: whyyyyy this terrible casting
             }
         }
 

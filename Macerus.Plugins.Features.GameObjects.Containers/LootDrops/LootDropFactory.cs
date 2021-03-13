@@ -2,22 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
 using Macerus.Plugins.Features.GameObjects.Containers.Api.LootDrops;
 
+using NexusLabs.Contracts;
+
+using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
 {
     public sealed class LootDropFactory : ILootDropFactory
     {
+        private readonly ILootDropIdentifiers _lootDropIdentifiers;
         private readonly IContainerRepository _containerRepository;
+        private readonly IContainerIdentifiers _containerIdentifiers;
+        private readonly IFilterContextFactory _filterContextFactory;
+        private readonly IFilterContextAmenity _filterContextAmenity;
 
-        public LootDropFactory(IContainerRepository containerRepository)
+        public LootDropFactory(
+            ILootDropIdentifiers lootDropIdentifiers,
+            IContainerRepository containerRepository,
+            IContainerIdentifiers containerIdentifiers,
+            IFilterContextFactory filterContextFactory,
+            IFilterContextAmenity filterContextAmenity)
         {
+            _lootDropIdentifiers = lootDropIdentifiers;
             _containerRepository = containerRepository;
+            _containerIdentifiers = containerIdentifiers;
+            _filterContextFactory = filterContextFactory;
+            _filterContextAmenity = filterContextAmenity;
         }
 
         public IGameObject CreateLoot(
@@ -38,11 +54,18 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
             bool automaticInteraction,
             IEnumerable<IGameObject> items)
         {
-            var lootObject = _containerRepository.CreateFromTemplate(
-                // note: if this seems redundant, it's because repos can handle 
-                // multiple types if they choose... don't forget it! :)
-                ContainerRepository.ContainerTypeId,
-                new StringIdentifier("LootDrop"),
+            var filterContext = _filterContextFactory.CreateFilterContextForSingle();
+            // note: if this seems redundant, it's because repos can handle 
+            // multiple types if they choose... don't forget it! :)
+            filterContext = _filterContextAmenity.ExtendWithGameObjectTypeIdFilter(
+                filterContext,
+                _containerIdentifiers.ContainerTypeIdentifier);
+            filterContext = _filterContextAmenity.ExtendWithGameObjectTypeIdFilter(
+                filterContext,
+                _lootDropIdentifiers.LootDropTemplateId);
+
+            var lootObjects = _containerRepository.CreateFromTemplate(
+                filterContext,
                 new Dictionary<string, object>()
                 {
                     ["X"] = worldX,
@@ -53,7 +76,14 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
                     ["DestroyOnUse"] = true,
                     ["AutomaticInteraction"] = automaticInteraction,
                     ["TransferItemsOnActivate"] = true,
-                }); ;
+                })
+                .ToArray();
+            Contract.Requires(
+                lootObjects.Length == 1,
+                $"Exactly one match was expected for the provided filter but " +
+                $"{lootObjects.Length} matches were found.");
+
+            var lootObject = lootObjects.Single();
             var itemContainerBehavior = lootObject.GetOnly<IItemContainerBehavior>();
             foreach (var item in items)
             {

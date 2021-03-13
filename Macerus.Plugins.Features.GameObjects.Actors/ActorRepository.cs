@@ -4,12 +4,13 @@ using System.Globalization;
 using System.Linq;
 
 using Macerus.Api.Behaviors;
+using Macerus.Api.Behaviors.Filtering;
 using Macerus.Api.GameObjects;
 using Macerus.Shared.Behaviors;
 
-using NexusLabs.Contracts;
-
 using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
@@ -25,66 +26,60 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
         private readonly IActorFactory _actorFactory;
         private readonly IActorIdentifiers _actorIdentifiers;
+        private readonly IAttributeFilterer _attributeFilterer;
+        private readonly IFilterContextAmenity _filterContextAmenity;
 
         public ActorRepository(
             IActorFactory actorFactory,
-            IActorIdentifiers actorIdentifiers)
+            IActorIdentifiers actorIdentifiers,
+            IFilterContextAmenity filterContextAmenity,
+            IAttributeFilterer attributeFilterer)
         {
             _actorFactory = actorFactory;
             _actorIdentifiers = actorIdentifiers;
+            _filterContextAmenity = filterContextAmenity;
+            _attributeFilterer = attributeFilterer;
         }
 
-        public bool CanCreateFromTemplate(
-            IIdentifier typeId,
-            IIdentifier templateId)
-        {
-            var canLoad =
-                typeId.Equals(_actorIdentifiers.ActorTypeIdentifier) &&
-                templateId is StringIdentifier;
-            return canLoad;
-        }
-
-        public bool CanLoad(IIdentifier typeId, IIdentifier objectId) => false; // FIXE: implement this
-
-        public IGameObject CreateFromTemplate(
-            IIdentifier typeId,
-            IIdentifier templateId,
+        public IEnumerable<IGameObject> CreateFromTemplate(
+            IFilterContext filterContext,
             IReadOnlyDictionary<string, object> properties)
         {
-            Contract.Requires(
-                _actorIdentifiers.ActorTypeIdentifier.Equals(typeId),
-                $"Expecting to only support templates for type ID '{typeId}'.");
-
-            if (PLAYER_TEMPLATE_ID.Equals(templateId))
+            // FIXME: actually extend this for templates and use an attribute filterer
+            var typeId = _filterContextAmenity.GetGameObjectTypeIdFromContext(filterContext);
+            if (!_actorIdentifiers.ActorTypeIdentifier.Equals(typeId))
             {
-                return CreatePlayer(
-                    typeId,
-                    templateId,
-                    properties);
+                yield break;
             }
 
-            throw new NotSupportedException(
-                $"FIXME: currently no support for templates of type '{templateId}'.");
+            var templateId = _filterContextAmenity.GetGameObjectTemplateIdFromContext(filterContext);
+            if (PLAYER_TEMPLATE_ID.Equals(templateId))
+            {
+                var player = CreatePlayer(
+                    filterContext,
+                    properties);
+                yield return player;
+            }
         }
 
-        public IGameObject Load(IIdentifier typeId, IIdentifier objectId)
+        public IEnumerable<IGameObject> Load(IFilterContext filterContext)
         {
-            throw new NotImplementedException("FIXME: implement this");
+            // FIXME: implement this
+            yield break;
         }
 
         private IGameObject CreatePlayer(
-            IIdentifier typeId,
-            IIdentifier templateId,
+            IFilterContext filterContext,
             IReadOnlyDictionary<string, object> properties)
         {
             var actor = _actorFactory.Create(
                 new TypeIdentifierBehavior()
                 {
-                    TypeId = typeId
+                    TypeId = _filterContextAmenity.GetGameObjectTypeIdFromContext(filterContext),
                 },
                 new TemplateIdentifierBehavior()
                 {
-                    TemplateId = templateId
+                    TemplateId = _filterContextAmenity.GetGameObjectTemplateIdFromContext(filterContext),
                 },
                 new IdentifierBehavior()
                 {
@@ -115,10 +110,18 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 });
 
             var worldLocation = actor.Get<IWorldLocationBehavior>().Single();
-            worldLocation.X = Convert.ToDouble(properties["X"], CultureInfo.InvariantCulture);
-            worldLocation.Y = Convert.ToDouble(properties["Y"], CultureInfo.InvariantCulture);
-            worldLocation.Width = Convert.ToDouble(properties["Width"], CultureInfo.InvariantCulture);
-            worldLocation.Height = Convert.ToDouble(properties["Height"], CultureInfo.InvariantCulture);
+            worldLocation.X = properties.TryGetValue("X", out var rawX)
+                ? Convert.ToDouble(rawX, CultureInfo.InvariantCulture)
+                : 0;
+            worldLocation.Y = properties.TryGetValue("Y", out var rawY)
+                ? Convert.ToDouble(rawY, CultureInfo.InvariantCulture)
+                : 0;
+            worldLocation.Width = properties.TryGetValue("Width", out var rawWidth)
+                ? Convert.ToDouble(rawWidth, CultureInfo.InvariantCulture)
+                : 1;
+            worldLocation.Height = properties.TryGetValue("Height", out var rawHeight)
+                ? Convert.ToDouble(rawHeight, CultureInfo.InvariantCulture)
+                : 1;
 
             return actor;
         }

@@ -1,15 +1,17 @@
 ﻿using Autofac;
 
+using Macerus.Shared.Behaviors.Filtering;
+
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Game.GameObjects.Autofac
+namespace Macerus.Shared.Behaviors.Autofac
 {
-    public class GameObjectsModule : SingleRegistrationModule
+    public sealed class BehaviorModule : SingleRegistrationModule
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<GameObjectRepositoryFacade>()
+                .RegisterType<FilterContextAmenity>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

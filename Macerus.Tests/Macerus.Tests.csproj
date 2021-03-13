@@ -26,14 +26,14 @@
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="Castle.Core" Version="4.4.0" />
     <PackageReference Include="Jace" Version="0.8.7" />
-    <PackageReference Include="Macerus" Version="1.0.7733.12077" />
+    <PackageReference Include="Macerus" Version="1.0.7742.3288" />
     <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="MySql.Data" Version="8.0.23" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.5" />
     <PackageReference Include="NexusLabs.Contracts" Version="0.0.3" />
     <PackageReference Include="NexusLabs.Framework" Version="0.0.5" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7733.11920" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7741.16917" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.abstractions" Version="2.0.3" />

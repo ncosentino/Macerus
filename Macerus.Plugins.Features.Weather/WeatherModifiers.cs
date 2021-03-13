@@ -13,6 +13,7 @@ using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api;
 using ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api.Handlers;
+using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Plugins.Features.Weather.Api;
 using ProjectXyz.Shared.Framework;
 
@@ -21,22 +22,22 @@ namespace Macerus.Plugins.Features.Weather
     public sealed class WeatherModifiers : IWeatherModifiers
     {
         private readonly HashSet<IGameObject> _hasStatsCache;
-        private readonly IGameObjectManager _gameObjectManager;
+        private readonly IReadOnlyMapGameObjectManager _mapGameObjectManager;
         private readonly IStatCalculationService _statCalculationService;
         private readonly IStatCalculationContextFactory _statCalculationContextFactory;
         private readonly IComponentsForTargetComponentFactory _componentsForTargetComponentFactory;
         private readonly ILogger _logger;
 
         public WeatherModifiers(
-            IGameObjectManager gameObjectManager,
+            IReadOnlyMapGameObjectManager mapGameObjectManager,
             IStatCalculationService statCalculationService,
             IStatCalculationContextFactory statCalculationContextFactory,
             ILogger logger,
             IComponentsForTargetComponentFactory componentsForTargetComponentFactory)
         {
             _hasStatsCache = new HashSet<IGameObject>();
-            _gameObjectManager = gameObjectManager;
-            _gameObjectManager.Synchronized += GameObjectManager_Synchronized;
+            _mapGameObjectManager = mapGameObjectManager;
+            _mapGameObjectManager.Synchronized += GameObjectManager_Synchronized;
             _statCalculationService = statCalculationService;
             _statCalculationContextFactory = statCalculationContextFactory;
             _logger = logger;

@@ -20,8 +20,8 @@ using ProjectXyz.Plugins.Features.GameObjects.Actors.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables.Standard;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.DropTables.Implementations.Item;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory.DropTables;
+using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;
@@ -36,7 +36,7 @@ namespace Macerus.Tests.Plugins.Features.Items
         private static readonly Lazy<Dictionary<string, IItemDefinition>> _lazyAllowMagicItems;
         private static readonly ILootGenerator _lootGenerator;
         private static readonly IFilterContextProvider _filterContextProvider;
-        private static readonly IMutableGameObjectManager _gameObjectManager;
+        private static readonly IMapGameObjectManager _mapGameObjectManager;
         private static readonly IActorFactory _actorFactory;
 
         static LootGeneratorTests()
@@ -79,7 +79,7 @@ namespace Macerus.Tests.Plugins.Features.Items
 
             _lootGenerator = _container.Resolve<ILootGenerator>();
             _filterContextProvider = _container.Resolve<IFilterContextProvider>();
-            _gameObjectManager = _container.Resolve<IMutableGameObjectManager>();
+            _mapGameObjectManager = _container.Resolve<IMapGameObjectManager>();
             _actorFactory = _container.Resolve<IActorFactory>();
         }
 
@@ -204,16 +204,16 @@ namespace Macerus.Tests.Plugins.Features.Items
                 },
                 Enumerable.Empty<IBehavior>());
 
-            _gameObjectManager.MarkForAddition(actor);
+            _mapGameObjectManager.MarkForAddition(actor);
             try
             {
-                _gameObjectManager.Synchronize();
+                _mapGameObjectManager.Synchronize();
                 callback.Invoke(actor);
             }
             finally
             {
-                _gameObjectManager.MarkForRemoval(actor);
-                _gameObjectManager.Synchronize();
+                _mapGameObjectManager.MarkForRemoval(actor);
+                _mapGameObjectManager.Synchronize();
             }
         }
 

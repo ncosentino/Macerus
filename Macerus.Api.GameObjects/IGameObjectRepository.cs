@@ -1,19 +1,16 @@
 ﻿using System.Collections.Generic;
 
-using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Api.GameObjects
 {
     public interface IGameObjectRepository
     {
-        IGameObject Load(
-            IIdentifier typeId,
-            IIdentifier objectId);
+        IEnumerable<IGameObject> Load(IFilterContext filterContext);
 
-        IGameObject CreateFromTemplate(
-            IIdentifier typeId,
-            IIdentifier templateId,
+        IEnumerable<IGameObject> CreateFromTemplate(
+            IFilterContext filterContext,
             IReadOnlyDictionary<string, object> properties);
     }
 }

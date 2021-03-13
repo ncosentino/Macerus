@@ -11,6 +11,10 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
+                .RegisterType<ContainerIdentifiers>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<ContainerRepository>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
@@ -24,6 +28,10 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.Autofac
                .SingleInstance();
             builder
               .RegisterType<ContainerFactory>()
+              .AsImplementedInterfaces()
+              .SingleInstance();
+            builder
+              .RegisterType<LootDropIdentifiers>()
               .AsImplementedInterfaces()
               .SingleInstance();
             builder
