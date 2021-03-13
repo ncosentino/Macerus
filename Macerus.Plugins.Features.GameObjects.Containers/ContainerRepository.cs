@@ -20,6 +20,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         IDiscoverableGameObjectRepository
     {       
         private readonly IContainerFactory _containerFactory;
+        private readonly IGameObjectIdentifiers _gameObjectIdentifiers;
         private readonly IContainerIdentifiers _containerIdentifiers;
         private readonly ContainerInteractableBehavior.Factory _containerInteractableBehaviorFactory;
         private readonly IFilterContextAmenity _filterContextAmenity;
@@ -27,17 +28,30 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
 
         public ContainerRepository(
             IContainerFactory containerFactory,
+            IGameObjectIdentifiers gameObjectIdentifiers,
             IContainerIdentifiers containerIdentifiers,
             ContainerInteractableBehavior.Factory containerInteractableBehaviorFactory,
             IFilterContextAmenity filterContextAmenity,
             IAttributeFilterer attributeFilterer)
         {
             _containerFactory = containerFactory;
+            _gameObjectIdentifiers = gameObjectIdentifiers;
             _containerIdentifiers = containerIdentifiers;
             _containerInteractableBehaviorFactory = containerInteractableBehaviorFactory;
             _filterContextAmenity = filterContextAmenity;
             _attributeFilterer = attributeFilterer;
+
+            SupportedAttributes = new[]
+            {
+                _filterContextAmenity.CreateSupportedAttribute(
+                    _gameObjectIdentifiers.FilterContextTypeId,
+                    _containerIdentifiers.ContainerTypeIdentifier),
+                _filterContextAmenity.CreateSupportedAlwaysMatchingAttribute(
+                    _gameObjectIdentifiers.FilterContextTemplateId),
+            };
         }
+
+        public IEnumerable<IFilterAttribute> SupportedAttributes { get; }
 
         public IEnumerable<IGameObject> CreateFromTemplate(
             IFilterContext filterContext,
@@ -45,11 +59,6 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         {
             // FIXME: actually extend this for templates and use an attribute filterer
             var typeId = _filterContextAmenity.GetGameObjectTypeIdFromContext(filterContext);
-            if (!_containerIdentifiers.ContainerTypeIdentifier.Equals(typeId))
-            {
-                yield break;
-            }
-
             var templateId = _filterContextAmenity.GetGameObjectTemplateIdFromContext(filterContext);
 
             var containerPropertiesBehavior = new ContainerPropertiesBehavior(properties);

@@ -12,10 +12,12 @@ namespace Macerus.Plugins.Content.Wip.Items
     {
         public Type ComponentType { get; } = typeof(UniqueBaseItemGeneratorComponent);
 
-        public IEnumerable<IBehavior> Convert(IGeneratorComponent generatorComponent)
+        public IEnumerable<IBehavior> Convert(
+            IEnumerable<IBehavior> baseBehaviors,
+            IGeneratorComponent generatorComponent)
         {
-            var identifierGeneratorComponent = (UniqueBaseItemGeneratorComponent)generatorComponent;
-            yield return new UniqueBaseItemBehavior(identifierGeneratorComponent.Identifier);
+            var uniqueBaseItemGeneratorComponent = (UniqueBaseItemGeneratorComponent)generatorComponent;
+            yield return new UniqueBaseItemBehavior(uniqueBaseItemGeneratorComponent.Identifier);
         }
     }
 }

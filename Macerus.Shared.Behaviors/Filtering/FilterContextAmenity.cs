@@ -120,5 +120,61 @@ namespace Macerus.Shared.Behaviors.Filtering
                     .Concat(requiredAttributes.Values));
             return subFilterContext;
         }
+
+        public IFilterAttribute CreateSupportedAttribute(
+            IIdentifier id,
+            IIdentifier value)
+        {
+            var filterAttribute = new FilterAttribute(
+                id,
+                new IdentifierFilterAttributeValue(value),
+                false);
+            return filterAttribute;
+        }
+
+        public IFilterAttribute CreateSupportedAttributeForAny(
+            IIdentifier id,
+            params IIdentifier[] value) =>
+            CreateSupportedAttributeForAny(
+                id,
+                (IEnumerable<IIdentifier>)value);
+
+        public IFilterAttribute CreateSupportedAttributeForAny(
+            IIdentifier id,
+            IEnumerable<IIdentifier> value)
+        {
+            var filterAttribute = new FilterAttribute(
+                id,
+                new AnyIdentifierCollectionFilterAttributeValue(value),
+                false);
+            return filterAttribute;
+        }
+
+        public IFilterAttribute CreateSupportedAttributeForAll(
+            IIdentifier id,
+            params IIdentifier[] value) =>
+            CreateSupportedAttributeForAll(
+                id,
+                (IEnumerable<IIdentifier>)value);
+
+        public IFilterAttribute CreateSupportedAttributeForAll(
+            IIdentifier id,
+            IEnumerable<IIdentifier> value)
+        {
+            var filterAttribute = new FilterAttribute(
+                id,
+                new AnyIdentifierCollectionFilterAttributeValue(value),
+                false);
+            return filterAttribute;
+        }
+
+        public IFilterAttribute CreateSupportedAlwaysMatchingAttribute(IIdentifier id)
+        {
+            var filterAttribute = new FilterAttribute(
+                id,
+                new TrueAttributeFilterValue(),
+                false);
+            return filterAttribute;
+        }
     }
 }

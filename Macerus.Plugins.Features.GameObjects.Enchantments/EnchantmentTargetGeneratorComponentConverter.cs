@@ -11,7 +11,9 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments
     {
         public Type ComponentType { get; } = typeof(EnchantmentTargetGeneratorComponent);
 
-        public IEnumerable<IBehavior> Convert(IGeneratorComponent generatorComponent)
+        public IEnumerable<IBehavior> Convert(
+            IEnumerable<IBehavior> baseBehaviors,
+            IGeneratorComponent generatorComponent)
         {
             var enchantmentTargetGeneratorComponent = (EnchantmentTargetGeneratorComponent)generatorComponent;
             yield return new EnchantmentTargetBehavior(enchantmentTargetGeneratorComponent.Target);

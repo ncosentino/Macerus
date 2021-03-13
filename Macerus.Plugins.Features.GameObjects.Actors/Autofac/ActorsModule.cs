@@ -3,6 +3,7 @@
 using Autofac;
 
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors.Player;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
@@ -28,6 +29,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Autofac
                 .SingleInstance();
             builder
                 .RegisterType<ActorRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<PlayerTemplateRepository>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder

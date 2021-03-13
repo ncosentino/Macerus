@@ -11,7 +11,9 @@ namespace Macerus.Plugins.Features.GameObjects.Items
     {
         public Type ComponentType { get; } = typeof(EquippableGeneratorComponent);
 
-        public IEnumerable<IBehavior> Convert(IGeneratorComponent generatorComponent)
+        public IEnumerable<IBehavior> Convert(
+            IEnumerable<IBehavior> baseBehaviors,
+            IGeneratorComponent generatorComponent)
         {
             var equippableGeneratorComponent = (EquippableGeneratorComponent)generatorComponent;
             yield return new CanBeEquippedBehavior(equippableGeneratorComponent.AllowedEquipSlots);

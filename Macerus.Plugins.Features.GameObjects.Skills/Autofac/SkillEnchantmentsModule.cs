@@ -47,7 +47,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             new IntIdentifier(2), // life current
                             new IGeneratorComponent[]
                             {
-                                new BehaviorGeneratorComponent(
+                                new StatefulBehaviorGeneratorComponent(() =>
                                     new IBehavior[]
                                     {
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "LIFE_CURRENT + (LIFE_MAXIMUM * 0.1 * $PER_TURN)"),
@@ -60,7 +60,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             new StringIdentifier("rain-weight"),
                             new IGeneratorComponent[]
                             {
-                                new BehaviorGeneratorComponent(
+                                new StatelessBehaviorGeneratorComponent(
                                     new IBehavior[]
                                     {
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "RAIN_WEIGHT * 10"),
@@ -71,7 +71,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             new StringIdentifier("rain-duration-minimum"),
                             new IGeneratorComponent[]
                             {
-                                new BehaviorGeneratorComponent(
+                                new StatelessBehaviorGeneratorComponent(
                                     new IBehavior[]
                                     {
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "RAIN_DURATION_MINIMUM * 2"),
@@ -82,7 +82,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             new StringIdentifier("rain-duration-maximum"),
                             new IGeneratorComponent[]
                             {
-                                new BehaviorGeneratorComponent(
+                                new StatelessBehaviorGeneratorComponent(
                                     new IBehavior[]
                                     {
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "RAIN_DURATION_MAXIMUM * 2.5"),

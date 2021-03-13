@@ -27,7 +27,7 @@ namespace Macerus.Api.Behaviors.Filtering
         /// <summary>
         /// Create our new context by keeping information about attributes 
         /// from our caller, but acknowledging that any that were required
-        /// are now fulfilled up until this point. we then cobine in the
+        /// are now fulfilled up until this point. We then combine in the
         /// newly provided attributes from the drop table.
         /// </summary>
         /// <param name="sourceFilterContext">
@@ -42,5 +42,27 @@ namespace Macerus.Api.Behaviors.Filtering
         IFilterContext CreateSubContext(
             IFilterContext sourceFilterContext,
             IEnumerable<IFilterAttribute> filterAttributes);
+
+        IFilterAttribute CreateSupportedAttribute(
+            IIdentifier id,
+            IIdentifier value);
+
+        IFilterAttribute CreateSupportedAttributeForAny(
+            IIdentifier id,
+            params IIdentifier[] value);
+
+        IFilterAttribute CreateSupportedAttributeForAny(
+            IIdentifier id,
+            IEnumerable<IIdentifier> value);
+
+        IFilterAttribute CreateSupportedAttributeForAll(
+            IIdentifier id,
+            params IIdentifier[] value);
+
+        IFilterAttribute CreateSupportedAttributeForAll(
+            IIdentifier id,
+            IEnumerable<IIdentifier> value);
+
+        IFilterAttribute CreateSupportedAlwaysMatchingAttribute(IIdentifier id);
     }
 }

@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.7743.4584" />
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7744.10550" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj" />
+    <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
+    <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj" />
   </ItemGroup>
 
 </Project>

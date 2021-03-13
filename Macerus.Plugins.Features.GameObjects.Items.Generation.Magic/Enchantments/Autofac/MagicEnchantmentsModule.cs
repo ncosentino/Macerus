@@ -108,7 +108,7 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
                 {
                     new EnchantmentTargetGeneratorComponent(new StringIdentifier("self")),
                     new HasStatGeneratorComponent(statDefinitionId),
-                    new BehaviorGeneratorComponent(
+                    new StatelessBehaviorGeneratorComponent(
                         new HasPrefixBehavior(prefixId),
                         new HasSuffixBehavior(suffixId)),
                     new RandomRangeExpressionGeneratorComponent(

@@ -39,7 +39,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             new IFilterAttribute[] { },
                             new IGeneratorComponent[]
                             {
-                                new BehaviorGeneratorComponent(
+                                new StatelessBehaviorGeneratorComponent(
                                     new PassiveSkillBehavior(),
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())
@@ -56,7 +56,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             new IFilterAttribute[] { },
                             new IGeneratorComponent[]
                             {
-                                new BehaviorGeneratorComponent(
+                                new StatelessBehaviorGeneratorComponent(
                                     new PassiveSkillBehavior(),
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())
@@ -73,7 +73,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             new IFilterAttribute[] { },
                             new IGeneratorComponent[]
                             {
-                                new BehaviorGeneratorComponent(
+                                new StatelessBehaviorGeneratorComponent(
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())
                             },
@@ -97,7 +97,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             new IFilterAttribute[] { },
                             new IGeneratorComponent[]
                             {
-                                new BehaviorGeneratorComponent(
+                                new StatelessBehaviorGeneratorComponent(
                                     new PassiveSkillBehavior(),
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())
@@ -117,7 +117,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             new IFilterAttribute[] { },
                             new IGeneratorComponent[]
                             {
-                                new BehaviorGeneratorComponent(
+                                new StatelessBehaviorGeneratorComponent(
                                     new PassiveSkillBehavior(),
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())

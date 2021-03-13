@@ -28,7 +28,9 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Socketing
 
         public Type ComponentType { get; } = typeof(SocketGeneratorComponent);
 
-        public IEnumerable<IBehavior> Convert(IGeneratorComponent generatorComponent)
+        public IEnumerable<IBehavior> Convert(
+            IEnumerable<IBehavior> baseBehaviors,
+            IGeneratorComponent generatorComponent)
         {
             var socketGeneratorComponent = (SocketGeneratorComponent)generatorComponent;
 

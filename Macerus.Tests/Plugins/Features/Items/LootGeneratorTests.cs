@@ -190,14 +190,6 @@ namespace Macerus.Tests.Plugins.Features.Items
         private void UsingPlayer(Action<IGameObject> callback)
         {
             var actor = _actorFactory.Create(
-                new TypeIdentifierBehavior()
-                {
-                    TypeId = new StringIdentifier("actor")
-                },
-                new TemplateIdentifierBehavior()
-                {
-                    TemplateId = new StringIdentifier("player-template")
-                },
                 new IdentifierBehavior()
                 {
                     Id = new StringIdentifier("player")

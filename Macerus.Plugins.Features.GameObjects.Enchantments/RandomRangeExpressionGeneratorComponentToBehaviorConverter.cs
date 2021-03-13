@@ -25,7 +25,9 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments
 
         public Type ComponentType { get; } = typeof(RandomRangeExpressionGeneratorComponent);
 
-        public IEnumerable<IBehavior> Convert(IGeneratorComponent generatorComponent)
+        public IEnumerable<IBehavior> Convert(
+            IEnumerable<IBehavior> baseBehaviors,
+            IGeneratorComponent generatorComponent)
         {
             var randomRangeExpressionGeneratorComponent = (RandomRangeExpressionGeneratorComponent)generatorComponent;
             var value = _random.NextDouble(

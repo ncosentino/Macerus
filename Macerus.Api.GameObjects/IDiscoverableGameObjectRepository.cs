@@ -1,6 +1,10 @@
-﻿namespace Macerus.Api.GameObjects
+﻿using ProjectXyz.Api.Behaviors.Filtering.Attributes;
+
+namespace Macerus.Api.GameObjects
 {
-    public interface IDiscoverableGameObjectRepository : IGameObjectRepository
+    public interface IDiscoverableGameObjectRepository :
+        IGameObjectRepository,
+        IHasFilterAttributes
     {
     }
 }

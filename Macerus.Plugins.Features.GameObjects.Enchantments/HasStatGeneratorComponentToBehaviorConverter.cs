@@ -11,7 +11,9 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments
     {
         public Type ComponentType { get; } = typeof(HasStatGeneratorComponent);
 
-        public IEnumerable<IBehavior> Convert(IGeneratorComponent generatorComponent)
+        public IEnumerable<IBehavior> Convert(
+            IEnumerable<IBehavior> baseBehaviors,
+            IGeneratorComponent generatorComponent)
         {
             var hasStatGeneratorComponent = (HasStatGeneratorComponent)generatorComponent;
             yield return new HasStatDefinitionIdBehavior()

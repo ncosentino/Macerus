@@ -12,7 +12,9 @@ namespace Macerus.Plugins.Features.GameObjects.Items
     {
         public Type ComponentType { get; } = typeof(IconGeneratorComponent);
 
-        public IEnumerable<IBehavior> Convert(IGeneratorComponent generatorComponent)
+        public IEnumerable<IBehavior> Convert(
+            IEnumerable<IBehavior> baseBehaviors,
+            IGeneratorComponent generatorComponent)
         {
             var iconGeneratorComponent = (IconGeneratorComponent)generatorComponent;
             yield return new HasInventoryIcon(iconGeneratorComponent.IconResource);

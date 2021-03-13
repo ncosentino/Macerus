@@ -17,22 +17,36 @@ namespace Macerus.Plugins.Features.GameObjects.Static
 
     public sealed class StaticGameObjectRepository : IDiscoverableGameObjectRepository
     {
+        private readonly IGameObjectIdentifiers _gameObjectIdentifiers;
         private readonly IStaticGameObjectIdentifiers _staticGameObjectIdentifiers;
         private readonly IStaticGameObjectFactory _staticGameObjectFactory;
         private readonly IFilterContextAmenity _filterContextAmenity;
         private readonly IAttributeFilterer _attributeFilterer;
 
         public StaticGameObjectRepository(
+            IGameObjectIdentifiers gameObjectIdentifiers,
             IStaticGameObjectIdentifiers staticGameObjectIdentifiers,
             IStaticGameObjectFactory staticGameObjectFactory,
             IFilterContextAmenity filterContextAmenity,
             IAttributeFilterer attributeFilterer)
         {
+            _gameObjectIdentifiers = gameObjectIdentifiers;
             _staticGameObjectIdentifiers = staticGameObjectIdentifiers;
             _staticGameObjectFactory = staticGameObjectFactory;
             _filterContextAmenity = filterContextAmenity;
             _attributeFilterer = attributeFilterer;
+
+            SupportedAttributes = new[]
+            {
+                _filterContextAmenity.CreateSupportedAttribute(
+                    _gameObjectIdentifiers.FilterContextTypeId,
+                    _staticGameObjectIdentifiers.StaticGameObjectTypeIdentifier),
+                _filterContextAmenity.CreateSupportedAlwaysMatchingAttribute(
+                    _gameObjectIdentifiers.FilterContextTemplateId),
+            };
         }
+
+        public IEnumerable<IFilterAttribute> SupportedAttributes { get; }
 
         public IEnumerable<IGameObject> CreateFromTemplate(
             IFilterContext filterContext,
@@ -40,11 +54,6 @@ namespace Macerus.Plugins.Features.GameObjects.Static
         {
             // FIXME: actually extend this for templates and use an attribute filterer
             var typeId = _filterContextAmenity.GetGameObjectTypeIdFromContext(filterContext);
-            if (!_staticGameObjectIdentifiers.StaticGameObjectTypeIdentifier.Equals(typeId))
-            {
-                yield break;
-            }
-
             var templateId = _filterContextAmenity.GetGameObjectTemplateIdFromContext(filterContext);
 
             var staticGameObject = _staticGameObjectFactory.Create(

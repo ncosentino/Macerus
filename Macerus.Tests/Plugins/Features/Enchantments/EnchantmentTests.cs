@@ -107,7 +107,7 @@ namespace Macerus.Tests.Plugins.Features.Items
                     new IGeneratorComponent[]
                     {
                         new HasStatGeneratorComponent(statDefinitionId),
-                        new BehaviorGeneratorComponent(
+                        new StatelessBehaviorGeneratorComponent(
                             new IBehavior[]
                             {
                                 new HasPrefixBehavior(prefixId),
