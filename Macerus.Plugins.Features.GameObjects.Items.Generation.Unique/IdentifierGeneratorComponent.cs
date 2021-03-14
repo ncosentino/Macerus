@@ -1,20 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-using ProjectXyz.Api.Behaviors.Filtering;
-using ProjectXyz.Api.Behaviors.Filtering.Attributes;
-using ProjectXyz.Api.Framework;
+﻿using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Generation;
 
 namespace Macerus.Plugins.Content.Wip.Items
 {
-    public sealed class UniqueBaseItemFilterComponent : IFilterComponent
+    public sealed class UniqueBaseItemGeneratorComponent : IGeneratorComponent
     {
-        public UniqueBaseItemFilterComponent(IIdentifier identifier)
+        public UniqueBaseItemGeneratorComponent(IIdentifier identifier)
         {
             Identifier = identifier;
         }
-
-        public IEnumerable<IFilterAttribute> SupportedAttributes { get; } = Enumerable.Empty<IFilterAttribute>();
         
         public IIdentifier Identifier { get; }
     }

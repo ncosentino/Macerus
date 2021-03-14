@@ -4,12 +4,12 @@ using Autofac;
 
 using Macerus.Plugins.Features.GameObjects.Skills.Default;
 
-using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
+using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Shared.Framework;
 
@@ -37,10 +37,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                                 [new IntIdentifier(8)] = 1, // green light radius
                             },
                             new IFilterAttribute[] { },
-                            new IFilterComponent[]
+                            new IGeneratorComponent[]
                             {
-                                new BehaviorFilterComponent(
-                                    new IFilterAttribute[] { },
+                                new BehaviorGeneratorComponent(
                                     new PassiveSkillBehavior(),
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())
@@ -55,10 +54,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             new IIdentifier[] { new StringIdentifier("green-glow-ench") },
                             new Dictionary<IIdentifier, double>() { },
                             new IFilterAttribute[] { },
-                            new IFilterComponent[]
+                            new IGeneratorComponent[]
                             {
-                                new BehaviorFilterComponent(
-                                    new IFilterAttribute[] { },
+                                new BehaviorGeneratorComponent(
                                     new PassiveSkillBehavior(),
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())
@@ -73,10 +71,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             new IIdentifier[] { new StringIdentifier("heal-self") },
                             new Dictionary<IIdentifier, double>() { },
                             new IFilterAttribute[] { },
-                            new IFilterComponent[]
+                            new IGeneratorComponent[]
                             {
-                                new BehaviorFilterComponent(
-                                    new IFilterAttribute[] { },
+                                new BehaviorGeneratorComponent(
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())
                             },
@@ -98,10 +95,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             },
                             new Dictionary<IIdentifier, double>(),
                             new IFilterAttribute[] { },
-                            new IFilterComponent[]
+                            new IGeneratorComponent[]
                             {
-                                new BehaviorFilterComponent(
-                                    new IFilterAttribute[] { },
+                                new BehaviorGeneratorComponent(
                                     new PassiveSkillBehavior(),
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())
@@ -119,10 +115,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                                 [new StringIdentifier("animation_override")] = 1,
                             },
                             new IFilterAttribute[] { },
-                            new IFilterComponent[]
+                            new IGeneratorComponent[]
                             {
-                                new BehaviorFilterComponent(
-                                    new IFilterAttribute[] { },
+                                new BehaviorGeneratorComponent(
                                     new PassiveSkillBehavior(),
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior())

@@ -55,7 +55,7 @@ namespace Macerus.Tests.Plugins.Features.Items
                             new StringFilterAttributeValue("normal"),
                             true)))
                     .ToDictionary(
-                        x => ((NameFilterComponent)x.FilterComponents.Single(c => c is NameFilterComponent)).DisplayName,
+                        x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
                         x => x);
                 return normalitems;
             });
@@ -72,7 +72,7 @@ namespace Macerus.Tests.Plugins.Features.Items
                             new StringFilterAttributeValue("magic"),
                             true)))
                     .ToDictionary(
-                        x => ((NameFilterComponent)x.FilterComponents.Single(c => c is NameFilterComponent)).DisplayName,
+                        x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
                         x => x);
                 return allowMagicItems;
             });

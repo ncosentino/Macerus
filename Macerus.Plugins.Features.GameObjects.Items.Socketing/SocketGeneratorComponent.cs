@@ -2,29 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using ProjectXyz.Api.Behaviors.Filtering;
-using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Generation;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Socketing
 {
-    public sealed class SocketFilterComponent : IFilterComponent
+    public sealed class SocketGeneratorComponent : IGeneratorComponent
     {
-
-        public SocketFilterComponent(IEnumerable<KeyValuePair<IIdentifier, Tuple<int, int>>> socketRanges)
+        public SocketGeneratorComponent(IEnumerable<KeyValuePair<IIdentifier, Tuple<int, int>>> socketRanges)
             : this(socketRanges, int.MaxValue)
         {
         }
 
-        public SocketFilterComponent(
+        public SocketGeneratorComponent(
             IEnumerable<KeyValuePair<IIdentifier, Tuple<int, int>>> socketRanges,
             int maximumSockets)
         {
             SocketRanges = socketRanges.ToDictionary();
             MaximumSockets = maximumSockets;
         }
-
-        public IEnumerable<IFilterAttribute> SupportedAttributes { get; } = Enumerable.Empty<IFilterAttribute>();
         
         public IReadOnlyDictionary<IIdentifier, Tuple<int, int>> SocketRanges { get; }
         

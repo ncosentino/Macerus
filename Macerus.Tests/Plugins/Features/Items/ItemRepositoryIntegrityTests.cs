@@ -41,7 +41,7 @@ namespace Macerus.Tests.Plugins.Features.Items
                         new AnyStringCollectionFilterAttributeValue(allAffixes),
                         true)))
                 .ToDictionary(
-                    x => ((NameFilterComponent)x.FilterComponents.Single(c => c is NameFilterComponent)).DisplayName,
+                    x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
                     x => x);
 
             foreach (var entry in allItems)

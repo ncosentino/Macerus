@@ -9,15 +9,15 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<EnchantmentTargetFilterComponentConverter>()
+                .RegisterType<EnchantmentTargetGeneratorComponentConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<HasStatFilterComponentToBehaviorConverter>()
+                .RegisterType<HasStatGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<RandomRangeExpressionFilterComponentToBehaviorConverter>()
+                .RegisterType<RandomRangeExpressionGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder

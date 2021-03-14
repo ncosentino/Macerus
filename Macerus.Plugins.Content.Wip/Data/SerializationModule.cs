@@ -7,12 +7,12 @@ using Autofac;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql;
 
-using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
+using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
+using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Shared.Data.Serialization;
 using ProjectXyz.Shared.Framework;
 
@@ -28,9 +28,9 @@ namespace Macerus.Plugins.Content.Wip.Data
                     var mapping = new Dictionary<Type, string>()
                     {
                         [typeof(EnchantmentDefinition)] = "EnchantmentDefinition",
-                        [typeof(RandomRangeExpressionFilterComponent)] = "RandomRangeExpressionFilterComponent",
-                        [typeof(HasStatFilterComponent)] = "HasStatFilterComponent",
-                        [typeof(BehaviorFilterComponent)] = "BehaviorFilterComponent",
+                        [typeof(RandomRangeExpressionGeneratorComponent)] = "RandomRangeExpressionFilterComponent",
+                        [typeof(HasStatGeneratorComponent)] = "HasStatFilterComponent",
+                        [typeof(BehaviorGeneratorComponent)] = "BehaviorGeneratorComponent",
                         [typeof(FilterAttribute)] = "FilterAttribute",
                         [typeof(StringFilterAttributeValue)] = "StringFilterAttributeValue",
                         [typeof(RangeFilterAttributeValue)] = "RangeFilterAttributeValue",
@@ -39,7 +39,7 @@ namespace Macerus.Plugins.Content.Wip.Data
                     mapping.AddRange(WithCollectionMappings<StringIdentifier>("sid"));
                     mapping.AddRange(WithCollectionMappings<IntIdentifier>("iid"));
                     mapping.AddRange(WithCollectionMappings<IFilterAttribute>("IFilterAttribute"));
-                    mapping.AddRange(WithCollectionMappings<IFilterComponent>("IFilterComponent"));
+                    mapping.AddRange(WithCollectionMappings<IGeneratorComponent>("IGeneratorComponent"));
                     var serializableIdShorterner = new SerializableIdShorterner(mapping);
                     return serializableIdShorterner;
                 })

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments.Generation;
+using ProjectXyz.Api.GameObjects.Generation;
 
 namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql
 {
@@ -11,14 +11,14 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql
     {
         public EnchantmentDefinition(
             IEnumerable<IFilterAttribute> supportedAttributes,
-            IEnumerable<IFilterComponent> filterComponents)
+            IEnumerable<IGeneratorComponent> generatorComponents)
         {
             SupportedAttributes = supportedAttributes.ToArray();
-            FilterComponents = filterComponents.ToArray();
+            GeneratorComponents = generatorComponents.ToArray();
         }
 
         public IEnumerable<IFilterAttribute> SupportedAttributes { get; }
 
-        public IEnumerable<IFilterComponent> FilterComponents { get; }
+        public IEnumerable<IGeneratorComponent> GeneratorComponents { get; }
     }
 }

@@ -9,11 +9,11 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Socketing.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<SocketFilterComponentToBehaviorConverter>()
+                .RegisterType<SocketGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<CanFitSocketFilterComponentToBehaviorConverter>()
+                .RegisterType<CanFitSocketGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

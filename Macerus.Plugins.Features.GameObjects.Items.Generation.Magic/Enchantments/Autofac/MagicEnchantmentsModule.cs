@@ -6,15 +6,15 @@ using Autofac;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments.Autofac;
 
-using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.Enchantments.Generation.InMemory;
+using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
@@ -104,15 +104,14 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
                         new RangeFilterAttributeValue(minLevel, maxLevel),
                         true),
                 },
-                new IFilterComponent[]
+                new IGeneratorComponent[]
                 {
-                    new EnchantmentTargetFilterComponent(new StringIdentifier("self")),
-                    new HasStatFilterComponent(statDefinitionId),
-                    new BehaviorFilterComponent(
-                        new IFilterAttribute[] { },
+                    new EnchantmentTargetGeneratorComponent(new StringIdentifier("self")),
+                    new HasStatGeneratorComponent(statDefinitionId),
+                    new BehaviorGeneratorComponent(
                         new HasPrefixBehavior(prefixId),
                         new HasSuffixBehavior(suffixId)),
-                    new RandomRangeExpressionFilterComponent(
+                    new RandomRangeExpressionGeneratorComponent(
                         statDefinitionId,
                         "+",
                         _calculationPriorityFactory.Create<int>(1),
@@ -125,11 +124,11 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
         {
             public EnchantmentDefinition(
                 IEnumerable<IFilterAttribute> attributes,
-                IEnumerable<IFilterComponent> filterComponents)
+                IEnumerable<IGeneratorComponent> generatorComponents)
                 : this()
             {
                 SupportedAttributes = attributes.ToArray();
-                FilterComponents = filterComponents.ToArray();
+                GeneratorComponents = generatorComponents.ToArray();
             }
 
             public EnchantmentDefinition() // serialization constructor
@@ -138,7 +137,7 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.Magic
 
             public IEnumerable<IFilterAttribute> SupportedAttributes { get; set; }
 
-            public IEnumerable<IFilterComponent> FilterComponents { get; set; }
+            public IEnumerable<IGeneratorComponent> GeneratorComponents { get; set; }
         }
     }
 }

@@ -4,9 +4,9 @@ using Autofac;
 
 using Macerus.Plugins.Features.GameObjects.Items.Socketing;
 
-using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
@@ -33,12 +33,12 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Autofac
                                     new IdentifierFilterAttributeValue(new StringIdentifier("leather-gloves")),
                                     false)
                             },
-                            new IFilterComponent[]
+                            new IGeneratorComponent[]
                             {
-                               new NameFilterComponent("Leather Gloves"),
-                               new IconFilterComponent(@"graphics\items\gloves\leather gloves"),
-                               new EquippableFilterComponent(new[] { new StringIdentifier("hands") }),
-                               new SocketFilterComponent(new[]
+                               new NameGeneratorComponent("Leather Gloves"),
+                               new IconGeneratorComponent(@"graphics\items\gloves\leather gloves"),
+                               new EquippableGeneratorComponent(new[] { new StringIdentifier("hands") }),
+                               new SocketGeneratorComponent(new[]
                                 {
                                     KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 4)),
                                 })
@@ -52,12 +52,12 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Autofac
                                     new IdentifierFilterAttributeValue(new StringIdentifier("cloth-hood")),
                                     false)
                             },
-                            new IFilterComponent[]
+                            new IGeneratorComponent[]
                             {
-                                new NameFilterComponent("Cloth Hood"),
-                                new IconFilterComponent(@"graphics\items\helms\hood"),
-                                new EquippableFilterComponent(new[] { new StringIdentifier("head") }),
-                                new SocketFilterComponent(new[]
+                                new NameGeneratorComponent("Cloth Hood"),
+                                new IconGeneratorComponent(@"graphics\items\helms\hood"),
+                                new EquippableGeneratorComponent(new[] { new StringIdentifier("head") }),
+                                new SocketGeneratorComponent(new[]
                                 {
                                     KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 4)),
                                 })
@@ -71,12 +71,12 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Autofac
                                     new IdentifierFilterAttributeValue(new StringIdentifier("cloth-armor")),
                                     false)
                             },
-                            new IFilterComponent[]
+                            new IGeneratorComponent[]
                             {
-                                new NameFilterComponent("Cloth Armor"),
-                                new IconFilterComponent(@"graphics\items\body\cloth_armor"),
-                                new EquippableFilterComponent(new[] { new StringIdentifier("body") }),
-                                new SocketFilterComponent(new[]
+                                new NameGeneratorComponent("Cloth Armor"),
+                                new IconGeneratorComponent(@"graphics\items\body\cloth_armor"),
+                                new EquippableGeneratorComponent(new[] { new StringIdentifier("body") }),
+                                new SocketGeneratorComponent(new[]
                                 {
                                     KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 6)),
                                 })
@@ -92,7 +92,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Autofac
                             },
                             new[]
                             {
-                                new NameFilterComponent("Junk"),
+                                new NameGeneratorComponent("Junk"),
                             }),
                         new ItemDefinition(
                             new[]
@@ -103,10 +103,10 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Autofac
                                     new IdentifierFilterAttributeValue(new StringIdentifier("ruby")),
                                     false)
                             },
-                            new IFilterComponent[]
+                            new IGeneratorComponent[]
                             {
-                                new NameFilterComponent("Ruby"),
-                                new CanFitSocketFilterComponent(new StringIdentifier("gem"), 1),
+                                new NameGeneratorComponent("Ruby"),
+                                new CanFitSocketGeneratorComponent(new StringIdentifier("gem"), 1),
                             }),
                     };
                     var itemDefinitionRepository = new InMemoryItemDefinitionRepository(
@@ -117,15 +117,15 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Autofac
                 .SingleInstance()
                 .AsImplementedInterfaces();
             builder
-                .RegisterType<NameFilterComponentToBehaviorConverter>()
+                .RegisterType<NameGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<EquippableFilterComponentToBehaviorConverter>()
+                .RegisterType<EquippableGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<IconFilterComponentToBehaviorConverter>()
+                .RegisterType<IconGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

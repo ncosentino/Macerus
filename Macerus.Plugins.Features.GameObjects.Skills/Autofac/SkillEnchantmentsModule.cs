@@ -6,20 +6,20 @@ using Autofac;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
 
 using ProjectXyz.Api.Behaviors;
-using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.BaseStatEnchantments.Enchantments;
-using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.ElapsedTime.Duration;
 using ProjectXyz.Plugins.Features.Enchantments.Generation.InMemory;
 using ProjectXyz.Plugins.Features.ExpiringEnchantments;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;  // FIXME: dependency on non-API
+using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
@@ -45,10 +45,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                         enchantmentTemplate.CreateSkillEnchantment(
                             new StringIdentifier("heal-self"),
                             new IntIdentifier(2), // life current
-                            new IFilterComponent[]
+                            new IGeneratorComponent[]
                             {
-                                new BehaviorFilterComponent(
-                                    new IFilterAttribute[] { },
+                                new BehaviorGeneratorComponent(
                                     new IBehavior[]
                                     {
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "LIFE_CURRENT + (LIFE_MAXIMUM * 0.1 * $PER_TURN)"),
@@ -59,10 +58,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                         enchantmentTemplate.CreateSkillEnchantment(
                             new StringIdentifier("passive-rain-weight"),
                             new StringIdentifier("rain-weight"),
-                            new IFilterComponent[]
+                            new IGeneratorComponent[]
                             {
-                                new BehaviorFilterComponent(
-                                    new IFilterAttribute[] { },
+                                new BehaviorGeneratorComponent(
                                     new IBehavior[]
                                     {
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "RAIN_WEIGHT * 10"),
@@ -71,10 +69,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                         enchantmentTemplate.CreateSkillEnchantment(
                             new StringIdentifier("passive-rain-min"),
                             new StringIdentifier("rain-duration-minimum"),
-                            new IFilterComponent[]
+                            new IGeneratorComponent[]
                             {
-                                new BehaviorFilterComponent(
-                                    new IFilterAttribute[] { },
+                                new BehaviorGeneratorComponent(
                                     new IBehavior[]
                                     {
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "RAIN_DURATION_MINIMUM * 2"),
@@ -83,10 +80,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                         enchantmentTemplate.CreateSkillEnchantment(
                             new StringIdentifier("passive-rain-max"),
                             new StringIdentifier("rain-duration-maximum"),
-                            new IFilterComponent[]
+                            new IGeneratorComponent[]
                             {
-                                new BehaviorFilterComponent(
-                                    new IFilterAttribute[] { },
+                                new BehaviorGeneratorComponent(
                                     new IBehavior[]
                                     {
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "RAIN_DURATION_MAXIMUM * 2.5"),
@@ -125,9 +121,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
             var enchantmentDefinition = CreateSkillEnchantment(
                 skillDefinitionId,
                 statDefinitionId,
-                new IFilterComponent[]
+                new IGeneratorComponent[]
                 {
-                    new RandomRangeExpressionFilterComponent(
+                    new RandomRangeExpressionGeneratorComponent(
                         statDefinitionId,
                         "+",
                         _calculationPriorityFactory.Create<int>(1),
@@ -139,7 +135,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
         public IEnchantmentDefinition CreateSkillEnchantment(
             IIdentifier skillDefinitionId,
             IIdentifier statDefinitionId,
-            IEnumerable<IFilterComponent> components)
+            IEnumerable<IGeneratorComponent> components)
         {
             var enchantmentDefinition = new EnchantmentDefinition(
                 new[]
@@ -149,10 +145,10 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                         new IdentifierFilterAttributeValue(skillDefinitionId),
                         true),
                 },
-                new IFilterComponent[]
+                new IGeneratorComponent[]
                 {
-                    new EnchantmentTargetFilterComponent(new StringIdentifier("owner")),
-                    new HasStatFilterComponent(statDefinitionId),
+                    new EnchantmentTargetGeneratorComponent(new StringIdentifier("owner")),
+                    new HasStatGeneratorComponent(statDefinitionId),
                 }.Concat(components));
             return enchantmentDefinition;
         }
@@ -161,11 +157,11 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
         {
             public EnchantmentDefinition(
                 IEnumerable<IFilterAttribute> attributes,
-                IEnumerable<IFilterComponent> filterComponents)
+                IEnumerable<IGeneratorComponent> generatorComponents)
                 : this()
             {
                 SupportedAttributes = attributes.ToArray();
-                FilterComponents = filterComponents.ToArray();
+                GeneratorComponents = generatorComponents.ToArray();
             }
 
             public EnchantmentDefinition() // serialization constructor
@@ -174,7 +170,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
 
             public IEnumerable<IFilterAttribute> SupportedAttributes { get; set; }
 
-            public IEnumerable<IFilterComponent> FilterComponents { get; set; }
+            public IEnumerable<IGeneratorComponent> GeneratorComponents { get; set; }
         }
     }
 }
