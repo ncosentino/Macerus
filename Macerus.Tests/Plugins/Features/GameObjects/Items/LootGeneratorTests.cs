@@ -27,7 +27,7 @@ using ProjectXyz.Shared.Framework;
 using Xunit;
 using Xunit.Sdk;
 
-namespace Macerus.Tests.Plugins.Features.Items
+namespace Macerus.Tests.Plugins.Features.GameObjects.Items
 {
     public sealed class LootGeneratorTests
     {

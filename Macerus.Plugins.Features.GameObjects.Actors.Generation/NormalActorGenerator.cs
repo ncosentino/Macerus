@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
+using Macerus.Api.GameObjects;
 
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
@@ -19,28 +20,32 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
     public sealed class NormalActorGenerator : IDiscoverableActorGenerator
     {
         private readonly IActorDefinitionRepositoryFacade _actorDefinitionRepositoryFacade;
-        private readonly IFilterContextFactory _filterContextFactory;
         private readonly IFilterContextAmenity _filterContextAmenity;
         private readonly IGeneratorComponentToBehaviorConverterFacade _generatorComponentToBehaviorConverter;
         private readonly IActorFactory _actorFactory;
 
         public NormalActorGenerator(
             IActorDefinitionRepositoryFacade actorDefinitionRepositoryFacade,
-            IFilterContextFactory filterContextFactory,
             IFilterContextAmenity filterContextAmenity,
             IGeneratorComponentToBehaviorConverterFacade generatorComponentToBehaviorConverter,
             IActorFactory actorFactory)
         {
             _actorDefinitionRepositoryFacade = actorDefinitionRepositoryFacade;
-            _filterContextFactory = filterContextFactory;
             _filterContextAmenity = filterContextAmenity;
             _generatorComponentToBehaviorConverter = generatorComponentToBehaviorConverter;
             _actorFactory = actorFactory;
+
+            SupportedAttributes = new IFilterAttribute[]
+            {
+                filterContextAmenity.CreateSupportedAttribute(
+                    new StringIdentifier("affix-type"),
+                    "normal"),
+            };
         }
 
         public IEnumerable<IGameObject> GenerateActors(IFilterContext filterContext)
         {
-            var normalGeneratorContext = _filterContextAmenity.CreateSubContext(
+            var normalGeneratorContext = _filterContextAmenity.ExtendWithSupported(
                 filterContext,
                 SupportedAttributes);
             var actorDefinitions = _actorDefinitionRepositoryFacade.GetActorDefinitions(normalGeneratorContext);
@@ -57,12 +62,6 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
             }
         }
 
-        public IEnumerable<IFilterAttribute> SupportedAttributes { get; } = new IFilterAttribute[]
-        {
-            ////new FilterAttribute(
-            ////    new StringIdentifier("affix-type"),
-            ////    new StringFilterAttributeValue("normal"),
-            ////    true),
-        };
+        public IEnumerable<IFilterAttribute> SupportedAttributes { get; }
     }
 }

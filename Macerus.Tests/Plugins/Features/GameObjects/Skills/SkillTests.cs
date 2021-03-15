@@ -13,7 +13,7 @@ using ProjectXyz.Plugins.Features.GameObjects.Skills;
 
 using Xunit;
 
-namespace Macerus.Tests.Plugins.Features.Skills
+namespace Macerus.Tests.Plugins.Features.GameObjects.Skills
 {
     public sealed class SkillTests
     {

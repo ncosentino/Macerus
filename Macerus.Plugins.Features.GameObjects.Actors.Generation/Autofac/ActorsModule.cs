@@ -8,10 +8,9 @@ using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
+using ProjectXyz.Plugins.Features.GameObjects.Generation.Default; // FIXME: non-API dependency here
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Shared.Framework;
 
@@ -36,6 +35,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation.Autofac
             builder
                 .Register(c =>
                 {
+                    var filterContextAmenity = c.Resolve<IFilterContextAmenity>();
                     var gameObjectIdentifiers = c.Resolve<IGameObjectIdentifiers>();
                     var actorIdentifiers = c.Resolve<IActorIdentifiers>();
                     var actorDefinitions = new IActorDefinition[]
@@ -70,14 +70,37 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation.Autofac
                             },
                             new IFilterAttribute[]
                             {
-                                new FilterAttribute(
+                                filterContextAmenity.CreateRequiredAttribute(
                                     gameObjectIdentifiers.FilterContextTypeId,
-                                    new IdentifierFilterAttributeValue(actorIdentifiers.ActorTypeIdentifier),
-                                    true),
-                                new FilterAttribute(
+                                    actorIdentifiers.ActorTypeIdentifier),
+                                filterContextAmenity.CreateRequiredAttribute(
                                     gameObjectIdentifiers.FilterContextTemplateId,
-                                    new IdentifierFilterAttributeValue(new StringIdentifier("player")),
-                                    true),
+                                    new StringIdentifier("player")),
+                                filterContextAmenity.CreateSupportedAttribute(
+                                    new StringIdentifier("affix-type"),
+                                    "normal"),
+                            }),
+                        new ActorDefinition(
+                            new IGeneratorComponent[]
+                            {
+                                new StatefulBehaviorGeneratorComponent(() =>
+                                    new IBehavior[]
+                                    {
+                                        new HasSkillsBehavior(),
+                                    }),
+                            },
+                            new IFilterAttribute[]
+                            {
+                                filterContextAmenity.CreateRequiredAttribute(
+                                    gameObjectIdentifiers.FilterContextTypeId,
+                                    actorIdentifiers.ActorTypeIdentifier),
+                                filterContextAmenity.CreateSupportedAttribute(
+                                    gameObjectIdentifiers.FilterContextTemplateId,
+                                    new StringIdentifier("test-skeleton")),
+                                filterContextAmenity.CreateSupportedAttributeForAny(
+                                    new StringIdentifier("affix-type"),
+                                    "normal",
+                                    "enhanced"),
                             }),
                     };
 

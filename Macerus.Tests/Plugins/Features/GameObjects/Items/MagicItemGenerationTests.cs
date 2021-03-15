@@ -13,7 +13,7 @@ using ProjectXyz.Shared.Framework;
 
 using Xunit;
 
-namespace Macerus.Tests.Plugins.Features.Items
+namespace Macerus.Tests.Plugins.Features.GameObjects.Items
 {
     public sealed class MagicItemGenerationTests
     {

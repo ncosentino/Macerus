@@ -12,7 +12,7 @@ using ProjectXyz.Shared.Framework;
 
 using Xunit;
 
-namespace Macerus.Tests.Plugins.Features.Containers
+namespace Macerus.Tests.Plugins.Features.GameObjects.Containers
 {
     public sealed class ContainerInteractableBehaviorTests
     {
