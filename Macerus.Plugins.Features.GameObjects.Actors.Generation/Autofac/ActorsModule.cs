@@ -97,7 +97,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation.Autofac
                                 filterContextAmenity.CreateSupportedAttribute(
                                     gameObjectIdentifiers.FilterContextTemplateId,
                                     new StringIdentifier("test-skeleton")),
-                                filterContextAmenity.CreateSupportedAttributeForAny(
+                                filterContextAmenity.CreateRequiredAttributeForAny(
                                     new StringIdentifier("affix-type"),
                                     "normal",
                                     "enhanced"),

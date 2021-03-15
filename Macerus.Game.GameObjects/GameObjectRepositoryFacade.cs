@@ -61,9 +61,17 @@ namespace Macerus.Game.GameObjects
                 filterContext.MaximumCount == 1,
                 $"Expecting maximum count to be 1 but was {filterContext.MaximumCount}.");
 
-            var filteredRepositories = _attributeFilterer.Filter(
-                _repositories,
-                filterContext);
+            var filteredRepositories = _attributeFilterer
+                .Filter(
+                    _repositories,
+                    filterContext)
+                .ToArray();
+            if (filteredRepositories.Length < 1)
+            {
+                throw new InvalidOperationException(
+                    $"Unable to create object from template. There were no " +
+                    $"repositories that matched filter context '{filterContext}'.");
+            }
 
             var results = filteredRepositories
                 .Select(x => x.CreateFromTemplate(

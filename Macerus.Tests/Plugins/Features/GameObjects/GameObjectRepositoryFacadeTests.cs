@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
@@ -45,6 +46,45 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
 
             Assert.NotNull(result);
             Assert.Single(result.Get<IPlayerControlledBehavior>());
+        }
+
+        [Fact]
+        private void CreateFromTemplate_RequiredRequestNormalTestSkeleton_SingleActor()
+        {
+            var filterContext = _filterContextAmenity.CreateFilterContextForSingle(
+                _filterContextAmenity.CreateRequiredAttribute(
+                    _gameObjectIdentifiers.FilterContextTypeId,
+                    _actorIdentifiers.ActorTypeIdentifier),
+                _filterContextAmenity.CreateRequiredAttribute(
+                    _gameObjectIdentifiers.FilterContextTemplateId,
+                    new StringIdentifier("test-skeleton")),
+                _filterContextAmenity.CreateSupportedAttribute(
+                    new StringIdentifier("affix-type"),
+                    "normal"));
+            var result = _gameObjectRepositoryFacade.CreateFromTemplate(
+                filterContext,
+                new Dictionary<string, object>());
+
+            Assert.NotNull(result);
+            Assert.Empty(result.Get<IPlayerControlledBehavior>());
+        }
+
+        [Fact]
+        private void CreateFromTemplate_RequiredRequestUnsupportedTestSkeleton_Throws()
+        {
+            var filterContext = _filterContextAmenity.CreateFilterContextForSingle(
+                _filterContextAmenity.CreateRequiredAttribute(
+                    _gameObjectIdentifiers.FilterContextTypeId,
+                    _actorIdentifiers.ActorTypeIdentifier),
+                _filterContextAmenity.CreateRequiredAttribute(
+                    _gameObjectIdentifiers.FilterContextTemplateId,
+                    new StringIdentifier("test-skeleton")),
+                _filterContextAmenity.CreateSupportedAttribute(
+                    new StringIdentifier("affix-type"),
+                    new StringIdentifier("not a valid affix type")));
+            Assert.Throws<InvalidOperationException>(() =>_gameObjectRepositoryFacade.CreateFromTemplate(
+                filterContext,
+                new Dictionary<string, object>()));
         }
     }
 }

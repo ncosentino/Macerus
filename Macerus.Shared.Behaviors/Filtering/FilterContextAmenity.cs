@@ -296,5 +296,33 @@ namespace Macerus.Shared.Behaviors.Filtering
                 true);
             return filterAttribute;
         }
+
+        public IFilterAttribute CreateRequiredAttribute(
+            IIdentifier id,
+            string value)
+        {
+            var filterAttribute = new FilterAttribute(
+                id,
+                new StringFilterAttributeValue(value),
+                true);
+            return filterAttribute;
+        }
+
+        public IFilterAttribute CreateRequiredAttributeForAny(
+            IIdentifier id,
+            params string[] value) => CreateRequiredAttributeForAny(
+                id,
+                (IEnumerable<string>)value);
+
+        public IFilterAttribute CreateRequiredAttributeForAny(
+            IIdentifier id,
+            IEnumerable<string> value)
+        {
+            var filterAttribute = new FilterAttribute(
+                id,
+                new AnyStringCollectionFilterAttributeValue(value),
+                true);
+            return filterAttribute;
+        }
     }
 }

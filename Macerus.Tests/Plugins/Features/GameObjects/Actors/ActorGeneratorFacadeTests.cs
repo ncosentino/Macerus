@@ -6,7 +6,6 @@ using Macerus.Api.GameObjects;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Shared.Framework;
 
@@ -87,7 +86,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                     new StringIdentifier("test-skeleton")),
                 _filterContextAmenity.CreateRequiredAttribute(
                     new StringIdentifier("affix-type"),
-                    new StringIdentifier("normal")));
+                    "normal"));
             var results = _actorGeneratorFacade
                 .GenerateActors(filterContext)
                 .ToArray();
@@ -110,7 +109,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                         new StringIdentifier("test-skeleton")),
                     _filterContextAmenity.CreateRequiredAttribute(
                         new StringIdentifier("affix-type"),
-                        new StringIdentifier("normal"))),
+                        "normal")),
                 3,
                 5);
             var results = _actorGeneratorFacade

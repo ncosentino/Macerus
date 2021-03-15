@@ -45,10 +45,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
 
         public IEnumerable<IGameObject> GenerateActors(IFilterContext filterContext)
         {
-            var normalGeneratorContext = _filterContextAmenity.ExtendWithSupported(
-                filterContext,
-                SupportedAttributes);
-            var actorDefinitions = _actorDefinitionRepositoryFacade.GetActorDefinitions(normalGeneratorContext);
+            var actorDefinitions = _actorDefinitionRepositoryFacade.GetActorDefinitions(filterContext);
 
             foreach (var actorDefinition in actorDefinitions)
             {
