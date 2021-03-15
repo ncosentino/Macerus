@@ -8,9 +8,25 @@ namespace Macerus.Api.Behaviors.Filtering
 {
     public interface IFilterContextAmenity
     {
-        IIdentifier GetGameObjectTypeIdFromContext(IFilterContext filterContext);
+        IFilterContext CreateFilterContextForSingle(
+            params IFilterAttribute[] attributes);
 
-        IIdentifier GetGameObjectTemplateIdFromContext(IFilterContext filterContext);
+        IFilterContext CreateFilterContextForSingle(
+            IEnumerable<IFilterAttribute> attributes);
+
+        IFilterContext CreateFilterContextForAnyAmount(
+            params IFilterAttribute[] attributes);
+
+        IFilterContext CreateFilterContextForAnyAmount(
+            IEnumerable<IFilterAttribute> attributes);
+
+        IFilterContext CreateNoneFilterContext();
+
+        IIdentifier GetGameObjectTypeIdFromContext(
+            IFilterContext filterContext);
+
+        IIdentifier GetGameObjectTemplateIdFromContext(
+            IFilterContext filterContext);
 
         IFilterContext ExtendWithGameObjectIdFilter(
             IFilterContext filterContext,
@@ -23,6 +39,10 @@ namespace Macerus.Api.Behaviors.Filtering
         IFilterContext ExtendWithGameObjectTemplateIdFilter(
             IFilterContext filterContext,
             IIdentifier templateId);
+
+        IFilterContext ExtendWithSupported(
+            IFilterContext filterContext,
+            IEnumerable<IFilterAttribute> filterContextToExtendWith);
 
         /// <summary>
         /// Create our new context by keeping information about attributes 
@@ -43,9 +63,17 @@ namespace Macerus.Api.Behaviors.Filtering
             IFilterContext sourceFilterContext,
             IEnumerable<IFilterAttribute> filterAttributes);
 
+        IFilterContext CreateRequiredContextForSet(
+            IFilterContext sourceFilterContext,
+            IEnumerable<IHasFilterAttributes> setOfFilterAttributes);
+
         IFilterAttribute CreateSupportedAttribute(
             IIdentifier id,
             IIdentifier value);
+
+        IFilterAttribute CreateSupportedAttribute(
+            IIdentifier id,
+            string value);
 
         IFilterAttribute CreateSupportedAttributeForAny(
             IIdentifier id,
@@ -54,6 +82,14 @@ namespace Macerus.Api.Behaviors.Filtering
         IFilterAttribute CreateSupportedAttributeForAny(
             IIdentifier id,
             IEnumerable<IIdentifier> value);
+
+        IFilterAttribute CreateSupportedAttributeForAny(
+            IIdentifier id,
+            params string[] value);
+
+        IFilterAttribute CreateSupportedAttributeForAny(
+            IIdentifier id,
+            IEnumerable<string> value);
 
         IFilterAttribute CreateSupportedAttributeForAll(
             IIdentifier id,
@@ -64,5 +100,9 @@ namespace Macerus.Api.Behaviors.Filtering
             IEnumerable<IIdentifier> value);
 
         IFilterAttribute CreateSupportedAlwaysMatchingAttribute(IIdentifier id);
+
+        IFilterAttribute CreateRequiredAttribute(
+            IIdentifier id,
+            IIdentifier value);
     }
 }

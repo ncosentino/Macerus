@@ -26,6 +26,25 @@ namespace Macerus.Shared.Behaviors.Filtering
             _gameObjectIdentifiers = gameObjectIdentifiers;
         }
 
+        public IFilterContext CreateFilterContextForSingle(
+            params IFilterAttribute[] attributes) =>
+            _filterContextFactory.CreateFilterContextForSingle(attributes);
+
+        public IFilterContext CreateFilterContextForSingle(
+            IEnumerable<IFilterAttribute> attributes) =>
+            _filterContextFactory.CreateFilterContextForSingle(attributes);
+
+        public IFilterContext CreateFilterContextForAnyAmount(
+            params IFilterAttribute[] attributes) =>
+            _filterContextFactory.CreateFilterContextForAnyAmount(attributes);
+
+        public IFilterContext CreateFilterContextForAnyAmount(
+            IEnumerable<IFilterAttribute> attributes) =>
+            _filterContextFactory.CreateFilterContextForAnyAmount(attributes);
+
+        public IFilterContext CreateNoneFilterContext() =>
+            _filterContextFactory.CreateNoneFilterContext();
+
         public IFilterContext ExtendWithGameObjectIdFilter(
             IFilterContext filterContext,
             IIdentifier id)
@@ -58,13 +77,31 @@ namespace Macerus.Shared.Behaviors.Filtering
             IFilterContext filterContext,
             IIdentifier templateId)
         {
-            var context = _filterContextFactory
-                .CreateContext(
+            var context = _filterContextFactory.CreateContext(
                 filterContext,
                 new FilterAttribute(
                     _gameObjectIdentifiers.FilterContextTemplateId,
                     new IdentifierFilterAttributeValue(templateId),
                     true));
+            return context;
+        }
+
+        public IFilterContext ExtendWithSupported(
+            IFilterContext filterContext,
+            IEnumerable<IFilterAttribute> attributes)
+        {
+            var supportedAttributes = attributes
+                .Select(x => x.Required
+                    ? x.CopyWithRequired(false)
+                    : x)
+                .ToDictionary(x => x.Id, x => x);
+            var context = _filterContextFactory.CreateContext(
+                filterContext.MinimumCount,
+                filterContext.MaximumCount,
+                filterContext
+                    .Attributes
+                    .Where(x => !supportedAttributes.ContainsKey(x.Id))
+                    .Concat(supportedAttributes.Values));
             return context;
         }
 
@@ -121,6 +158,24 @@ namespace Macerus.Shared.Behaviors.Filtering
             return subFilterContext;
         }
 
+        public IFilterContext CreateRequiredContextForSet(
+            IFilterContext sourceFilterContext,
+            IEnumerable<IHasFilterAttributes> setOfFilterAttributes)
+        {
+            var requiredAttributeIds = new HashSet<IIdentifier>(setOfFilterAttributes
+                .SelectMany(x => x.SupportedAttributes)
+                .Where(x => x.Required)
+                .Select(x => x.Id)
+                .Distinct());
+            var newFilterContext = _filterContextFactory.CreateContext(
+                sourceFilterContext.MinimumCount,
+                sourceFilterContext.MaximumCount,
+                sourceFilterContext
+                    .Attributes
+                    .Where(x => requiredAttributeIds.Contains(x.Id)));
+            return newFilterContext;
+        }
+
         public IFilterAttribute CreateSupportedAttribute(
             IIdentifier id,
             IIdentifier value)
@@ -128,6 +183,17 @@ namespace Macerus.Shared.Behaviors.Filtering
             var filterAttribute = new FilterAttribute(
                 id,
                 new IdentifierFilterAttributeValue(value),
+                false);
+            return filterAttribute;
+        }
+
+        public IFilterAttribute CreateSupportedAttribute(
+            IIdentifier id,
+            string value)
+        {
+            var filterAttribute = new FilterAttribute(
+                id,
+                new StringFilterAttributeValue(value),
                 false);
             return filterAttribute;
         }
@@ -146,6 +212,24 @@ namespace Macerus.Shared.Behaviors.Filtering
             var filterAttribute = new FilterAttribute(
                 id,
                 new AnyIdentifierCollectionFilterAttributeValue(value),
+                false);
+            return filterAttribute;
+        }
+
+        public IFilterAttribute CreateSupportedAttributeForAny(
+            IIdentifier id,
+            params string[] value) =>
+            CreateSupportedAttributeForAny(
+                id,
+                (IEnumerable<string>)value);
+
+        public IFilterAttribute CreateSupportedAttributeForAny(
+            IIdentifier id,
+            IEnumerable<string> value)
+        {
+            var filterAttribute = new FilterAttribute(
+                id,
+                new AnyStringCollectionFilterAttributeValue(value),
                 false);
             return filterAttribute;
         }
@@ -174,6 +258,17 @@ namespace Macerus.Shared.Behaviors.Filtering
                 id,
                 new TrueAttributeFilterValue(),
                 false);
+            return filterAttribute;
+        }
+
+        public IFilterAttribute CreateRequiredAttribute(
+            IIdentifier id,
+            IIdentifier value)
+        {
+            var filterAttribute = new FilterAttribute(
+                id,
+                new IdentifierFilterAttributeValue(value),
+                true);
             return filterAttribute;
         }
     }
