@@ -45,7 +45,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Player
 
         public IEnumerable<IFilterAttribute> SupportedAttributes { get; }
 
-        public IEnumerable<IGameObject> CreateFromTemplate(
+        public IGameObject CreateFromTemplate(
             IFilterContext filterContext,
             IReadOnlyDictionary<string, object> properties)
         {
@@ -89,7 +89,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Player
                 ? Convert.ToDouble(rawHeight, CultureInfo.InvariantCulture)
                 : 1;
 
-            yield return player;
+            return player;
         }
     }
 }

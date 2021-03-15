@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Macerus.Api.GameObjects;
+
+using NexusLabs.Contracts;
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
@@ -47,33 +50,35 @@ namespace Macerus.Game.GameObjects
             }
         }
 
-        public IEnumerable<IGameObject> CreateFromTemplate(
+        public IGameObject CreateFromTemplate(
             IFilterContext filterContext,
             IReadOnlyDictionary<string, object> properties)
         {
-            if (filterContext.MaximumCount < 1)
-            {
-                yield break;
-            }
+            Contract.Requires(
+                filterContext.MinimumCount == 1,
+                $"Expecting minimum count to be 1 but was {filterContext.MinimumCount}.");
+            Contract.Requires(
+                filterContext.MaximumCount == 1,
+                $"Expecting maximum count to be 1 but was {filterContext.MaximumCount}.");
 
             var filteredRepositories = _attributeFilterer.Filter(
                 _repositories,
                 filterContext);
 
-            var count = 0;
-            foreach (var result in filteredRepositories
-                .SelectMany(x => x.CreateFromTemplate(
+            var results = filteredRepositories
+                .Select(x => x.CreateFromTemplate(
                     filterContext,
-                    properties)))
-            {
-                yield return result;
+                    properties))
+                .ToArray();
 
-                count++;
-                if (count >= filterContext.MaximumCount)
-                {
-                    break;
-                }
+            if (results.Length != 1)
+            {
+                throw new InvalidOperationException(
+                    $"Expecting only one game object to be created from " +
+                    $"template but {results.Length} were created.");
             }
+
+            return results.Single();
         }
     }
 }

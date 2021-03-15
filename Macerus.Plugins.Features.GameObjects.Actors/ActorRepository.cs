@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
@@ -44,7 +45,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
         public IEnumerable<IFilterAttribute> SupportedAttributes { get; }
 
-        public IEnumerable<IGameObject> CreateFromTemplate(
+        public IGameObject CreateFromTemplate(
             IFilterContext filterContext,
             IReadOnlyDictionary<string, object> properties)
         {
@@ -55,10 +56,20 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             var filteredRepositories = _attributeFilterer.Filter(
                 _discoverableActorTemplateRepositories,
                 subFilterContext);
-            var results = filteredRepositories.SelectMany(x => x.CreateFromTemplate(
-                subFilterContext,
-                properties));
-            return results;
+            var results = filteredRepositories
+                .Select(x => x.CreateFromTemplate(
+                    subFilterContext,
+                    properties))
+                .ToArray();
+
+            if (results.Length != 1)
+            {
+                throw new InvalidOperationException(
+                    $"Expecting only one actor to be created from template but " +
+                    $"{results.Length} were created.");
+            }
+
+            return results.Single();
         }
 
         public IEnumerable<IGameObject> Load(IFilterContext filterContext)

@@ -47,7 +47,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Npc
 
         public IEnumerable<IFilterAttribute> SupportedAttributes { get; }
 
-        public IEnumerable<IGameObject> CreateFromTemplate(
+        public IGameObject CreateFromTemplate(
             IFilterContext filterContext,
             IReadOnlyDictionary<string, object> properties)
         {
@@ -58,38 +58,40 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Npc
             var generatedActors = _actorGeneratorFacade
                 .GenerateActors(subContext)
                 .ToArray();
-
-            // FIXME: is the API for this wrong now? should we ever be
-            // returning more than one thing here, especially if the use case
-            // is actually for populating things on a map?
-            foreach (var generatedActor in generatedActors)
+            if (generatedActors.Length != 1)
             {
-                var npc = new Npc(
-                    new IBehavior[]
-                    {
-                        new TemplateIdentifierBehavior()
-                        {
-                            TemplateId = _filterContextAmenity.GetGameObjectTemplateIdFromContext(filterContext),
-                        },
-                    }.Concat(generatedActor.Behaviors));
-                _behaviorManager.Register(npc, npc.Behaviors);
-
-                var worldLocation = npc.Get<IWorldLocationBehavior>().Single();
-                worldLocation.X = properties.TryGetValue("X", out var rawX)
-                    ? Convert.ToDouble(rawX, CultureInfo.InvariantCulture)
-                    : 0;
-                worldLocation.Y = properties.TryGetValue("Y", out var rawY)
-                    ? Convert.ToDouble(rawY, CultureInfo.InvariantCulture)
-                    : 0;
-                worldLocation.Width = properties.TryGetValue("Width", out var rawWidth)
-                    ? Convert.ToDouble(rawWidth, CultureInfo.InvariantCulture)
-                    : 1;
-                worldLocation.Height = properties.TryGetValue("Height", out var rawHeight)
-                    ? Convert.ToDouble(rawHeight, CultureInfo.InvariantCulture)
-                    : 1;
-
-                yield return npc;
+                throw new InvalidOperationException(
+                    $"Expecting only one actor to be generated but " +
+                    $"{generatedActors.Length} were generated.");
             }
+
+            var generatedActor = generatedActors.Single();
+
+            var npc = new Npc(
+                new IBehavior[]
+                {
+                    new TemplateIdentifierBehavior()
+                    {
+                        TemplateId = _filterContextAmenity.GetGameObjectTemplateIdFromContext(filterContext),
+                    },
+                }.Concat(generatedActor.Behaviors));
+            _behaviorManager.Register(npc, npc.Behaviors);
+
+            var worldLocation = npc.Get<IWorldLocationBehavior>().Single();
+            worldLocation.X = properties.TryGetValue("X", out var rawX)
+                ? Convert.ToDouble(rawX, CultureInfo.InvariantCulture)
+                : 0;
+            worldLocation.Y = properties.TryGetValue("Y", out var rawY)
+                ? Convert.ToDouble(rawY, CultureInfo.InvariantCulture)
+                : 0;
+            worldLocation.Width = properties.TryGetValue("Width", out var rawWidth)
+                ? Convert.ToDouble(rawWidth, CultureInfo.InvariantCulture)
+                : 1;
+            worldLocation.Height = properties.TryGetValue("Height", out var rawHeight)
+                ? Convert.ToDouble(rawHeight, CultureInfo.InvariantCulture)
+                : 1;
+
+            return npc;
         }
     }
 }

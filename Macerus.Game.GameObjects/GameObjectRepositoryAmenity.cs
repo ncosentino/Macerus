@@ -58,18 +58,11 @@ namespace Macerus.Game.GameObjects
                 filterContext,
                 typeId);
             filterContext = _filterContextAmenity.ExtendWithGameObjectTemplateIdFilter(
-                 filterContext,
-                 templateId);
-            var gameObjects = _gameObjectRepositoryFacade
-                .CreateFromTemplate(
-                    filterContext,
-                    properties)
-                .ToArray();
-            Contract.Requires(
-                gameObjects.Length == 1,
-                $"Expecting exactly 1 game object to match type ID '{typeId}' " +
-                $"and template ID '{templateId}' but there were {gameObjects.Length}.");
-            var gameObject = gameObjects[0];
+                filterContext,
+                templateId);
+            var gameObject = _gameObjectRepositoryFacade.CreateFromTemplate(
+                filterContext,
+                properties);
             return gameObject;
         }
     }

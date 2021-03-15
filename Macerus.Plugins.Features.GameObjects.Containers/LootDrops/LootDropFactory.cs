@@ -64,7 +64,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
                 filterContext,
                 _lootDropIdentifiers.LootDropTemplateId);
 
-            var lootObjects = _containerRepository.CreateFromTemplate(
+            var lootObject = _containerRepository.CreateFromTemplate(
                 filterContext,
                 new Dictionary<string, object>()
                 {
@@ -76,14 +76,8 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
                     ["DestroyOnUse"] = true,
                     ["AutomaticInteraction"] = automaticInteraction,
                     ["TransferItemsOnActivate"] = true,
-                })
-                .ToArray();
-            Contract.Requires(
-                lootObjects.Length == 1,
-                $"Exactly one match was expected for the provided filter but " +
-                $"{lootObjects.Length} matches were found.");
+                });
 
-            var lootObject = lootObjects.Single();
             var itemContainerBehavior = lootObject.GetOnly<IItemContainerBehavior>();
             foreach (var item in items)
             {

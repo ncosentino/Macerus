@@ -53,7 +53,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
 
         public IEnumerable<IFilterAttribute> SupportedAttributes { get; }
 
-        public IEnumerable<IGameObject> CreateFromTemplate(
+        public IGameObject CreateFromTemplate(
             IFilterContext filterContext,
             IReadOnlyDictionary<string, object> properties)
         {
@@ -99,7 +99,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 new ItemContainerBehavior(new StringIdentifier("Items")),
                 containerInteractionBehavior,
                 additionalBehaviors);
-            yield return container;
+            return container;
         }
 
         public IEnumerable<IGameObject> Load(IFilterContext filterContext)

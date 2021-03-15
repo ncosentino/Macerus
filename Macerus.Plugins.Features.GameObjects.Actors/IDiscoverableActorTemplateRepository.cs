@@ -8,7 +8,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 {
     public interface IDiscoverableActorTemplateRepository : IHasFilterAttributes
     {
-        IEnumerable<IGameObject> CreateFromTemplate(
+        IGameObject CreateFromTemplate(
             IFilterContext filterContext,
             IReadOnlyDictionary<string, object> properties);
     }

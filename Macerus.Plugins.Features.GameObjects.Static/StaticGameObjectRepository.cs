@@ -48,7 +48,7 @@ namespace Macerus.Plugins.Features.GameObjects.Static
 
         public IEnumerable<IFilterAttribute> SupportedAttributes { get; }
 
-        public IEnumerable<IGameObject> CreateFromTemplate(
+        public IGameObject CreateFromTemplate(
             IFilterContext filterContext,
             IReadOnlyDictionary<string, object> properties)
         {
@@ -77,7 +77,7 @@ namespace Macerus.Plugins.Features.GameObjects.Static
                     Height = Convert.ToDouble(properties["Height"], CultureInfo.InvariantCulture),
                 },
                 new StaticGameObjectPropertiesBehavior(properties));
-            yield return staticGameObject;
+            return staticGameObject;
         }
 
         public IEnumerable<IGameObject> Load(IFilterContext filterContext)

@@ -8,6 +8,15 @@ namespace Macerus.Api.Behaviors.Filtering
 {
     public interface IFilterContextAmenity
     {
+        IFilterContext CopyWithAdditionalAttributes(
+            IFilterContext filterContext,
+            IEnumerable<IFilterAttribute> additionalFilterAttributes);
+
+        IFilterContext CopyWithRange(
+            IFilterContext filterContext,
+            int minimumCount,
+            int maximumCount);
+
         IFilterContext CreateFilterContextForSingle(
             params IFilterAttribute[] attributes);
 

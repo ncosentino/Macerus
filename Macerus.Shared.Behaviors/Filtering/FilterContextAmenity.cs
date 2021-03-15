@@ -105,6 +105,31 @@ namespace Macerus.Shared.Behaviors.Filtering
             return context;
         }
 
+        public IFilterContext CopyWithAdditionalAttributes(
+            IFilterContext filterContext,
+            IEnumerable<IFilterAttribute> additionalFilterAttributes)
+        {
+            var newContext = _filterContextFactory.CreateContext(
+                filterContext.MinimumCount,
+                filterContext.MaximumCount,
+                filterContext
+                    .Attributes
+                    .Concat(additionalFilterAttributes));
+            return newContext;
+        }
+
+        public IFilterContext CopyWithRange(
+            IFilterContext filterContext,
+            int minimumCount,
+            int maximumCount)
+        {
+            var newContext = _filterContextFactory.CreateContext(
+                minimumCount,
+                maximumCount,
+                filterContext.Attributes);
+            return newContext;
+        }
+
         public IIdentifier GetGameObjectTypeIdFromContext(IFilterContext filterContext)
         {
             var attribute = filterContext

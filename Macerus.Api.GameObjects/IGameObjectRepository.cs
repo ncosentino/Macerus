@@ -9,7 +9,7 @@ namespace Macerus.Api.GameObjects
     {
         IEnumerable<IGameObject> Load(IFilterContext filterContext);
 
-        IEnumerable<IGameObject> CreateFromTemplate(
+        IGameObject CreateFromTemplate(
             IFilterContext filterContext,
             IReadOnlyDictionary<string, object> properties);
     }
