@@ -35,10 +35,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_BLUE").StatDefinitionId] = 1;
                 
                 stats[_dynamicAnimationIdentifiers.AnimationSpeedMultiplierStatId] = 1;
-                stats[_dynamicAnimationIdentifiers.RedMultiplierStatId] = 0.25;
-                stats[_dynamicAnimationIdentifiers.GreenMultiplierStatId] = 0.25;
-                stats[_dynamicAnimationIdentifiers.BlueMultiplierStatId] = 2;
-                stats[_dynamicAnimationIdentifiers.AlphaMultiplierStatId] = 0.6;
+                stats[_dynamicAnimationIdentifiers.RedMultiplierStatId] = 1;
+                stats[_dynamicAnimationIdentifiers.GreenMultiplierStatId] = 1;
+                stats[_dynamicAnimationIdentifiers.BlueMultiplierStatId] = 1;
+                stats[_dynamicAnimationIdentifiers.AlphaMultiplierStatId] = 1;
                 stats[_dynamicAnimationIdentifiers.AnimationOverrideStatId] = 0;
             });
         }

@@ -69,8 +69,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Autofac
                 {
                     var mapping = new Dictionary<int, string>()
                     {
-                        [0] = "player",
-                        [1] = "red_player",
+                        [0] = "player_male",
+                        [1] = "skeleton_basic",
                     };
 
                     return new InMemoryAnimationReplacementPatternRepository(mapping);

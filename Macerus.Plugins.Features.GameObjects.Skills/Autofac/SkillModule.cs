@@ -106,13 +106,14 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                             skillIdentifiers),
                         // Passive Animation, Stat-Based
                         new SkillDefinition(
-                            new StringIdentifier("red-player"),
+                            new StringIdentifier("skeleton-player"),
                             new StringIdentifier("self"),
                             new IIdentifier[] { },
                             new IIdentifier[] { },
                             new Dictionary<IIdentifier, double>()
                             {
                                 [new StringIdentifier("animation_override")] = 1,
+                                [new StringIdentifier("animation_alpha_multiplier")] = 0.5,
                             },
                             new IFilterAttribute[] { },
                             new IGeneratorComponent[]
