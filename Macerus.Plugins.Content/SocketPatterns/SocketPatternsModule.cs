@@ -2,7 +2,7 @@
 
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns.Autofac
+namespace Macerus.Plugins.Content.SocketPatterns
 {
     public sealed class SocketPatternsModule : SingleRegistrationModule
     {

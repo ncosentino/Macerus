@@ -12,11 +12,11 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 {
     public sealed class ActorBehaviorsInterceptor : IDiscoverableActorBehaviorsInterceptor
     {
-        private readonly IReadOnlyStatDefinitionToTermMappingRepository _statDefinitionToTermMappingRepository;
+        private readonly IReadOnlyStatDefinitionToTermMappingRepositoryFacade _statDefinitionToTermMappingRepository;
         private readonly IDynamicAnimationIdentifiers _dynamicAnimationIdentifiers;
 
         public ActorBehaviorsInterceptor(
-            IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
+            IReadOnlyStatDefinitionToTermMappingRepositoryFacade statDefinitionToTermMappingRepository,
             IDynamicAnimationIdentifiers dynamicAnimationIdentifiers)
         {
             _statDefinitionToTermMappingRepository = statDefinitionToTermMappingRepository;

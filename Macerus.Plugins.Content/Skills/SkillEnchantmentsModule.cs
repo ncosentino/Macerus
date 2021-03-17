@@ -3,6 +3,7 @@ using System.Linq;
 
 using Autofac;
 
+using Macerus.Plugins.Content.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
 
 using ProjectXyz.Api.Behaviors;
@@ -22,7 +23,7 @@ using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
+namespace Macerus.Plugins.Content.Skills
 {
     public sealed class MagicEnchantmentsModule : SingleRegistrationModule
     {
@@ -151,26 +152,6 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                     new HasStatGeneratorComponent(statDefinitionId),
                 }.Concat(components));
             return enchantmentDefinition;
-        }
-
-        public sealed class EnchantmentDefinition : IEnchantmentDefinition
-        {
-            public EnchantmentDefinition(
-                IEnumerable<IFilterAttribute> attributes,
-                IEnumerable<IGeneratorComponent> generatorComponents)
-                : this()
-            {
-                SupportedAttributes = attributes.ToArray();
-                GeneratorComponents = generatorComponents.ToArray();
-            }
-
-            public EnchantmentDefinition() // serialization constructor
-            {
-            }
-
-            public IEnumerable<IFilterAttribute> SupportedAttributes { get; set; }
-
-            public IEnumerable<IGeneratorComponent> GeneratorComponents { get; set; }
         }
     }
 }

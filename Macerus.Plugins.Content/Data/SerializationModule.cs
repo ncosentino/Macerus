@@ -5,18 +5,17 @@ using System.Linq;
 using Autofac;
 
 using Macerus.Plugins.Features.GameObjects.Enchantments;
-using Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql;
 
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
+using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Shared.Data.Serialization;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Content.Wip.Data
+namespace Macerus.Plugins.Content.Data
 {
     public sealed class SerializationModule : SingleRegistrationModule
     {
@@ -27,7 +26,8 @@ namespace Macerus.Plugins.Content.Wip.Data
                 {
                     var mapping = new Dictionary<Type, string>()
                     {
-                        [typeof(EnchantmentDefinition)] = "EnchantmentDefinition",
+                        [typeof(Enchantments.EnchantmentDefinition)] = "EnchantmentDefinition2",
+                        [typeof(Features.GameObjects.Enchantments.Generation.MySql.EnchantmentDefinition)] = "EnchantmentDefinition1",
                         [typeof(RandomRangeExpressionGeneratorComponent)] = "RandomRangeExpressionFilterComponent",
                         [typeof(HasStatGeneratorComponent)] = "HasStatFilterComponent",
                         [typeof(StatefulBehaviorGeneratorComponent)] = "StatefulBehaviorGeneratorComponent",

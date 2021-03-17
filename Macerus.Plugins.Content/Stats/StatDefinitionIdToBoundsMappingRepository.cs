@@ -8,7 +8,7 @@ using ProjectXyz.Plugins.Features.BoundedStats.Api;
 using ProjectXyz.Shared.Framework;
 using ProjectXyz.Plugins.Features.BoundedStats;
 
-namespace Macerus.Plugins.Content.Wip.Stats
+namespace Macerus.Plugins.Content.Stats
 {
     public sealed class StatDefinitionIdToBoundsMappingRepository : IDiscoverableReadOnlyStatDefinitionIdToBoundsMappingRepository
     {

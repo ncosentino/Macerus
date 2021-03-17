@@ -6,7 +6,7 @@ using ProjectXyz.Plugins.Features.StateEnchantments.Api;
 using ProjectXyz.Plugins.Features.StateEnchantments.Shared;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Features.Weather
+namespace Macerus.Plugins.Content.Weather
 {
     public sealed class WeatherStateIdToTermRepository : IDiscoverableStateIdToTermRepository
     {

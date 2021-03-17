@@ -8,7 +8,7 @@ using ProjectXyz.Api.Stats;
 using ProjectXyz.Plugins.Stats;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Content.Wip.Stats
+namespace Macerus.Plugins.Content.Stats
 {
 
     public sealed class StatDefinitionToTermMappingRepository : IDiscoverableReadOnlyStatDefinitionToTermMappingRepository

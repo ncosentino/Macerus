@@ -6,7 +6,7 @@ using System.Reflection;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments.Autofac
+namespace Macerus.Plugins.Content.Enchantments
 {
     public static class Affixes
     {

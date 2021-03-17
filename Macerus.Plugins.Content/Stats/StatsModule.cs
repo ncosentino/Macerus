@@ -2,7 +2,7 @@
 
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Plugins.Content.Wip.Stats
+namespace Macerus.Plugins.Content.Stats
 {
     public sealed class StatsModule : SingleRegistrationModule
     {

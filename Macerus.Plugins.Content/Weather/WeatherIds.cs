@@ -6,7 +6,7 @@ using System.Reflection;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Features.Weather
+namespace Macerus.Plugins.Content.Weather
 {
     public static class WeatherIds
     {

@@ -4,7 +4,7 @@ using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables
 {
-    public sealed class DropTablIdentifiers : IDropTableIdentifiers
+    public sealed class DropTableIdentifiers : IDropTableIdentifiers
     {
         public IIdentifier FilterContextDropTableIdentifier { get; } = new StringIdentifier("drop-table");
     }

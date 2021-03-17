@@ -8,7 +8,7 @@ using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.SocketPatterns.Api;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns
+namespace Macerus.Plugins.Content.SocketPatterns
 {
     public sealed class SocketPatternHandler : IDiscoverableSocketPatternHandler
     {

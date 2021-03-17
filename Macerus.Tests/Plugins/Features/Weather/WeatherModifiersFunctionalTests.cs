@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 
 using Macerus.Api.GameObjects;
-using Macerus.Game.GameObjects;
+using Macerus.Plugins.Content.Weather;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
-using Macerus.Plugins.Features.Weather;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
