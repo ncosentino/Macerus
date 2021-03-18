@@ -18,10 +18,12 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
     public sealed class MagicItemGenerationTests
     {
         private static readonly MacerusContainer _container;
+        private static readonly AssertionHelpers _assertionHelpers;
 
         static MagicItemGenerationTests()
         {
             _container = new MacerusContainer();
+            _assertionHelpers = new AssertionHelpers(_container);
         }
 
         [Fact]
@@ -59,7 +61,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                 .ToArray();
             foreach (var item in generatedItems.Cast<IHasBehaviors>())
             {
-                AssertionHelpers.AssertAffix(
+                _assertionHelpers.AssertAffix(
                     item,
                     new StringIdentifier("magic"));
 
@@ -90,7 +92,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                     nonMagicItems.ContainsKey(inventoryDisplayNames[0].DisplayName),
                     $"Expecting that '{inventoryDisplayNames[0].DisplayName}' (base name) cannot have magic affixes.");
 
-                AssertionHelpers.AssertSocketBehaviors(item);
+                _assertionHelpers.AssertSocketBehaviors(item);
             }
         }
     }

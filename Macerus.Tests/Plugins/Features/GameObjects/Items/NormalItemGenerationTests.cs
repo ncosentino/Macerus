@@ -17,10 +17,12 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
     public sealed class NormalItemGenerationTests
     {
         private static readonly MacerusContainer _container;
+        private static readonly AssertionHelpers _assertionHelpers;
 
         static NormalItemGenerationTests()
         {
             _container = new MacerusContainer();
+            _assertionHelpers = new AssertionHelpers(_container);
         }
 
         [Fact]
@@ -46,7 +48,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                 .ToArray();
             foreach (var item in generatedItems.Cast<IHasBehaviors>())
             {
-                AssertionHelpers.AssertAffix(
+                _assertionHelpers.AssertAffix(
                     item,
                     new StringIdentifier("normal"));
 
@@ -69,7 +71,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                     !string.IsNullOrWhiteSpace(inventoryDisplayNames[0].DisplayName),
                     $"Expecting '{inventoryDisplayNames[0]}' to have a populated display name.");
 
-                AssertionHelpers.AssertSocketBehaviors(item);
+                _assertionHelpers.AssertSocketBehaviors(item);
             }
         }        
     }

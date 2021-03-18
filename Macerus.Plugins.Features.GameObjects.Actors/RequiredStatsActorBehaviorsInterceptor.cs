@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 
@@ -10,12 +11,12 @@ using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
-    public sealed class ActorBehaviorsInterceptor : IDiscoverableActorBehaviorsInterceptor
+    public sealed class RequiredStatsActorBehaviorsInterceptor : IDiscoverableActorBehaviorsInterceptor
     {
         private readonly IReadOnlyStatDefinitionToTermMappingRepositoryFacade _statDefinitionToTermMappingRepository;
         private readonly IDynamicAnimationIdentifiers _dynamicAnimationIdentifiers;
 
-        public ActorBehaviorsInterceptor(
+        public RequiredStatsActorBehaviorsInterceptor(
             IReadOnlyStatDefinitionToTermMappingRepositoryFacade statDefinitionToTermMappingRepository,
             IDynamicAnimationIdentifiers dynamicAnimationIdentifiers)
         {
@@ -23,9 +24,13 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             _dynamicAnimationIdentifiers = dynamicAnimationIdentifiers;
         }
 
-        public void Intercept(IReadOnlyCollection<IBehavior> behaviors)
+        public int Priority => -10000;
+
+        IEnumerable<IBehavior> IActorBehaviorsInterceptor.Intercept(IReadOnlyCollection<IBehavior> behaviors)
         {
-            var mutableStats = behaviors.GetOnly<IHasMutableStatsBehavior>();
+            var mutableStats = behaviors
+                .Get<IHasMutableStatsBehavior>()
+                .First();
             mutableStats.MutateStats(stats =>
             {
                 stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_RADIUS").StatDefinitionId] = 10;
@@ -33,7 +38,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_RED").StatDefinitionId] = 1;
                 stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_GREEN").StatDefinitionId] = 0;
                 stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_BLUE").StatDefinitionId] = 1;
-                
+
                 stats[_dynamicAnimationIdentifiers.AnimationSpeedMultiplierStatId] = 1;
                 stats[_dynamicAnimationIdentifiers.RedMultiplierStatId] = 1;
                 stats[_dynamicAnimationIdentifiers.GreenMultiplierStatId] = 1;
@@ -41,6 +46,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 stats[_dynamicAnimationIdentifiers.AlphaMultiplierStatId] = 1;
                 stats[_dynamicAnimationIdentifiers.AnimationOverrideStatId] = 0;
             });
+            return behaviors;
         }
     }
 }

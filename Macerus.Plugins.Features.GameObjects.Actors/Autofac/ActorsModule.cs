@@ -15,7 +15,11 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<ActorBehaviorsInterceptor>()
+                .RegisterType<InitialStateActorBehaviorsInterceptor>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<RequiredStatsActorBehaviorsInterceptor>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder

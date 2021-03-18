@@ -59,6 +59,7 @@ namespace Macerus.Plugins.Content.Actors
             builder
                 .Register(c =>
                 {
+                    var hasMutableStatsBehaviorFactory = c.Resolve<IHasMutableStatsBehaviorFactory>();
                     var filterContextAmenity = c.Resolve<IFilterContextAmenity>();
                     var gameObjectIdentifiers = c.Resolve<IGameObjectIdentifiers>();
                     var actorIdentifiers = c.Resolve<IActorIdentifiers>();
@@ -112,6 +113,11 @@ namespace Macerus.Plugins.Content.Actors
                                     {
                                         new HasSkillsBehavior(),
                                     }),
+                                new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
+                                {
+                                    // FIXME: shouldn't need to rely on an override to set the animation?
+                                    [new StringIdentifier("animation_override")] = 1,
+                                }),
                             },
                             new IFilterAttribute[]
                             {

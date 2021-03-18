@@ -17,10 +17,12 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
     public sealed class UniqueItemGenerationTests
     {
         private static readonly MacerusContainer _container;
+        private static readonly AssertionHelpers _assertionHelpers;
 
         static UniqueItemGenerationTests()
         {
             _container = new MacerusContainer();
+            _assertionHelpers = new AssertionHelpers(_container);
         }
 
         [Fact]
@@ -69,7 +71,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                 Assert.Single(generatedItems);
                 var item = generatedItems.Single();
 
-                AssertionHelpers.AssertAffix(
+                _assertionHelpers.AssertAffix(
                     item,
                     new StringIdentifier("unique"));
 
@@ -96,7 +98,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                     inventoryDisplayNames[0].DisplayName,
                     inventoryDisplayNames[1].DisplayName);
 
-                AssertionHelpers.AssertSocketBehaviors(item);
+                _assertionHelpers.AssertSocketBehaviors(item);
             }
         }        
     }

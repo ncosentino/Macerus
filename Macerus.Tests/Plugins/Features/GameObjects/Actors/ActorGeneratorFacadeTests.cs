@@ -3,9 +3,11 @@
 using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Api.GameObjects;
+using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Shared.Framework;
 
@@ -16,18 +18,22 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
     public sealed class ActorGeneratorFacadeTests
     {
         private static readonly MacerusContainer _container;
+        private static readonly AssertionHelpers _assertionHelpers;
         private static readonly IActorGeneratorFacade _actorGeneratorFacade;
         private static readonly IFilterContextAmenity _filterContextAmenity;
         private static readonly IGameObjectIdentifiers _gameObjectIdentifiers;
         private static readonly IActorIdentifiers _actorIdentifiers;
+        private static readonly IDynamicAnimationIdentifiers _dynamicAnimationIdentifiers;
 
         static ActorGeneratorFacadeTests()
         {
             _container = new MacerusContainer();
+            _assertionHelpers = new AssertionHelpers(_container);
             _actorGeneratorFacade = _container.Resolve<IActorGeneratorFacade>();
             _filterContextAmenity = _container.Resolve<IFilterContextAmenity>();
             _gameObjectIdentifiers = _container.Resolve<IGameObjectIdentifiers>();
             _actorIdentifiers = _container.Resolve<IActorIdentifiers>();
+            _dynamicAnimationIdentifiers = _container.Resolve<IDynamicAnimationIdentifiers>();
         }
 
         [Fact]
@@ -48,6 +54,11 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
             var result = results.Single();
             Assert.NotNull(result);
             Assert.Single(result.Get<IPlayerControlledBehavior>());
+            _assertionHelpers.AssertActorRequirements(result);
+            _assertionHelpers.AssertStatValue(
+                result,
+                _dynamicAnimationIdentifiers.AnimationOverrideStatId,
+                0);
         }
 
         [Fact]
@@ -71,6 +82,11 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
             foreach (var result in results)
             {
                 Assert.Single(result.Get<IPlayerControlledBehavior>());
+                _assertionHelpers.AssertActorRequirements(result);
+                _assertionHelpers.AssertStatValue(
+                    result,
+                    _dynamicAnimationIdentifiers.AnimationOverrideStatId,
+                    0);
             }
         }
 
@@ -94,6 +110,13 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
             Assert.Single(results);
             var result = results.Single();
             Assert.NotNull(result);
+
+            Assert.Single(result.Get<IHasStatsBehavior>());
+            _assertionHelpers.AssertActorRequirements(result);
+            _assertionHelpers.AssertStatValue(
+                result,
+                _dynamicAnimationIdentifiers.AnimationOverrideStatId,
+                1);
         }
 
         [Fact]
@@ -119,8 +142,12 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
             Assert.InRange(results.Length, 3, 5);
             foreach (var result in results)
             {
-                // FIXME: we need a better assertion here :)
                 Assert.Empty(result.Get<IPlayerControlledBehavior>());
+                _assertionHelpers.AssertActorRequirements(result);
+                _assertionHelpers.AssertStatValue(
+                    result,
+                    _dynamicAnimationIdentifiers.AnimationOverrideStatId,
+                    1);
             }
         }
     }
