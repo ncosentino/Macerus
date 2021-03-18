@@ -20,6 +20,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
     public sealed class WeatherModifiersFunctionalTests
     {
         private static readonly MacerusContainer _container;
+        private static readonly TestAmenities _testAmenities;
         private static readonly IMapGameObjectManager _mapGameObjectManager;
         private static readonly IWeatherModifiers _weatherModifiers;
         private static readonly IGameObjectRepositoryAmenity _gameObjectRepositoryAmenity;
@@ -29,6 +30,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         static WeatherModifiersFunctionalTests()
         {
             _container = new MacerusContainer();
+            _testAmenities = new TestAmenities(_container);
 
             _mapGameObjectManager = _container.Resolve<IMapGameObjectManager>();
             _weatherModifiers = _container.Resolve<IWeatherModifiers>();
@@ -40,7 +42,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         [Fact]
         private void GetWeights_PlayerPassiveRainSkill_ExpectedWeights()
         {
-            UsingCleanObjectManager(() =>
+            _testAmenities.UsingCleanObjectManager(() =>
             {
                 var player = CreatePlayer();
                 player
@@ -65,7 +67,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         [Fact]
         private void GetWeights_TwoPlayersOnePassiveRain_ExpectedWeights()
         {
-            UsingCleanObjectManager(() =>
+            _testAmenities.UsingCleanObjectManager(() =>
             {
                 var player = CreatePlayer();
                 player
@@ -92,7 +94,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         [Fact]
         private void GetMinimumDuration_PlayerPassiveRainSkill_ExpectedValue()
         {
-            UsingCleanObjectManager(() =>
+            _testAmenities.UsingCleanObjectManager(() =>
             {
                 var player = CreatePlayer();
                 player
@@ -114,7 +116,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         [Fact]
         private void GetMinimumDuration_TwoPlayersOnePassiveRainSkill_ExpectedValue()
         {
-            UsingCleanObjectManager(() =>
+            _testAmenities.UsingCleanObjectManager(() =>
             {
                 var player = CreatePlayer();
                 player
@@ -138,7 +140,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         [Fact]
         private void GetMaximumDuration_PlayerPassiveRainSkill_ExpectedValue()
         {
-            UsingCleanObjectManager(() =>
+            _testAmenities.UsingCleanObjectManager(() =>
             {
                 var player = CreatePlayer();
                 player
@@ -157,7 +159,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         [Fact]
         private void GetMaximumDuration_TwoPlayersOnePassiveRainSkill_ExpectedValue()
         {
-            UsingCleanObjectManager(() =>
+            _testAmenities.UsingCleanObjectManager(() =>
             {
                 var player = CreatePlayer();
                 player
@@ -187,21 +189,6 @@ namespace Macerus.Tests.Plugins.Features.Weather
                     ["Width"] = 1,
                     ["Height"] = 1,
                 });
-        }
-
-        private void UsingCleanObjectManager(Action callback)
-        {
-            _mapGameObjectManager.MarkForRemoval(_mapGameObjectManager.GameObjects);
-            _mapGameObjectManager.Synchronize();
-            try
-            {
-                callback.Invoke();
-            }
-            finally
-            {
-                _mapGameObjectManager.MarkForRemoval(_mapGameObjectManager.GameObjects);
-                _mapGameObjectManager.Synchronize();
-            }
         }
     }
 }

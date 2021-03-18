@@ -7,7 +7,7 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Shared.Framework;
 using ProjectXyz.Shared.Game.Behaviors;
 
-namespace Macerus.Plugins.Features.Encounters.GamObjects.Static.Triggers
+namespace Macerus.Plugins.Features.Encounters.Triggers.GamObjects.Static
 {
     // FIXME: these properties should all be one-time lazy loaded!
     public sealed class EncounterTriggerPropertiesBehavior :

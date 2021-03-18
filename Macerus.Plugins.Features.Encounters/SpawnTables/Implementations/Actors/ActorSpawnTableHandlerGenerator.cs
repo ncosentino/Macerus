@@ -11,7 +11,7 @@ using NexusLabs.Contracts;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
 
-namespace ProjectXyz.Plugins.Features.GameObjects.Items.Generation.SpawnTables.Implementations.Item
+namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Actors
 {
     public sealed class ActorSpawnTableHandlerGenerator : IDiscoverableSpawnTableHandlerGenerator
     {

@@ -12,7 +12,7 @@ using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework.Collections;
 using ProjectXyz.Api.GameObjects;
 
-namespace ProjectXyz.Plugins.Features.GameObjects.Items.Generation.SpawnTables
+namespace Macerus.Plugins.Features.Encounters.SpawnTables
 {
     public sealed class ActorSpawner : IActorSpawner
     {

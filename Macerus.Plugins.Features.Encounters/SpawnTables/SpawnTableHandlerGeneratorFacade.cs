@@ -6,19 +6,15 @@ using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
 
-namespace ProjectXyz.Plugins.Features.GameObjects.Items.Generation.SpawnTables
+namespace Macerus.Plugins.Features.Encounters.SpawnTables
 {
     public sealed class SpawnTableHandlerGeneratorFacade : ISpawnTableHandlerGeneratorFacade
     {
         private readonly Dictionary<Type, ISpawnTableHandlerGenerator> _mapping;
 
-        public SpawnTableHandlerGeneratorFacade(IEnumerable<IDiscoverableSpawnTableHandlerGenerator> generators)
+        public SpawnTableHandlerGeneratorFacade()
         {
             _mapping = new Dictionary<Type, ISpawnTableHandlerGenerator>();
-            foreach (var generator in generators)
-            {
-                Register(generator.SpawnTableType, generator);
-            }
         }
 
         public IEnumerable<IGameObject> GenerateLoot(

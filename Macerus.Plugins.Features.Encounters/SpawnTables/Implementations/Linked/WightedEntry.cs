@@ -2,7 +2,7 @@
 
 using ProjectXyz.Api.Framework;
 
-namespace ProjectXyz.Plugins.Features.GameObjects.Items.Generation.SpawnTables.Implementations.Linked
+namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked
 {
     public sealed class WightedEntry : IWeightedEntry
     {

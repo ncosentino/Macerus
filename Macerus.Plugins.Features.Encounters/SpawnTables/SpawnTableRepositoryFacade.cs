@@ -5,7 +5,7 @@ using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 
 using ProjectXyz.Api.Framework;
 
-namespace ProjectXyz.Plugins.Features.GameObjects.Items.Generation.SpawnTables
+namespace Macerus.Plugins.Features.Encounters.SpawnTables
 {
     public sealed class SpawnTableRepositoryFacade : ISpawnTableRepositoryFacade
     {

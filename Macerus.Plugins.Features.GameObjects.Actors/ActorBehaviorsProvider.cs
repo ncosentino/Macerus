@@ -19,7 +19,11 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
         public IEnumerable<IBehavior> GetBehaviors(IReadOnlyCollection<IBehavior> baseBehaviors)
         {
-            yield return new WorldLocationBehavior();
+            yield return new WorldLocationBehavior()
+            {
+                Width = 1,
+                Height = 1,
+            };
             yield return _dynamicAnimationBehaviorFactory.Create("$actor$");
             yield return new MovementBehavior();
         }

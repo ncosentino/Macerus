@@ -7,9 +7,9 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Features.Encounters.GamObjects.Static.Triggers
+namespace Macerus.Plugins.Features.Encounters.Triggers.GamObjects.Static
 {
-    public sealed class EncounterBehaviorsProvider : IDiscoverableStaticGameObjectBehaviorsProvider
+    public sealed class EncounterTriggerBehaviorsProvider : IDiscoverableStaticGameObjectBehaviorsProvider
     {
         private static readonly IIdentifier ENCOUNTER_TRIGGER_TEMPLATE_ID = new StringIdentifier("rectangularencountertrigger");
 

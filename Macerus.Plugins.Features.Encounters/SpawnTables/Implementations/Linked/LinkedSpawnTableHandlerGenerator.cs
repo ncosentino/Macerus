@@ -12,7 +12,7 @@ using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 
-namespace ProjectXyz.Plugins.Features.GameObjects.Items.Generation.SpawnTables.Implementations.Linked
+namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked
 {
     public sealed class LinkedSpawnTableHandlerGenerator : IDiscoverableSpawnTableHandlerGenerator
     {
@@ -71,7 +71,7 @@ namespace ProjectXyz.Plugins.Features.GameObjects.Items.Generation.SpawnTables.I
             // calculate the total weight once
             var totalWeight = spawnTable.Entries.Sum(x => x.Weight);
 
-            for (int i = 0; i < generationCount; i++)
+            for (var i = 0; i < generationCount; i++)
             {
                 // pick an entry
                 var entry = PickWeightedEntry(

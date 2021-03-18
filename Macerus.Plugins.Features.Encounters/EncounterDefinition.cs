@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Plugins.Features.Encounters
 {
-    public sealed class EncounterDefinition : IHasFilterAttributes
+    public sealed class EncounterDefinition : IEncounterDefinition
     {
         public EncounterDefinition(
+            IIdentifier id,
             IEnumerable<IFilterAttribute> supportedAttributes,
             IEnumerable<IGeneratorComponent> generatorComponents)
         {
+            Id = id;
             SupportedAttributes = supportedAttributes;
             GeneratorComponents = generatorComponents.ToArray();
         }
@@ -21,24 +22,7 @@ namespace Macerus.Plugins.Features.Encounters
         public IEnumerable<IFilterAttribute> SupportedAttributes { get; }
 
         public IReadOnlyCollection<IGeneratorComponent> GeneratorComponents { get; }
-    }
 
-    public interface IEncounterMapFilterBehavior : IBehavior
-    {
-        IReadOnlyCollection<IFilterAttribute> ProvidedAttributes { get; }
-    }
-
-    public sealed class EncounterMapFilterBehavior :
-        BaseBehavior,
-        IEncounterMapFilterBehavior
-    {
-        public IReadOnlyCollection<IFilterAttribute> ProvidedAttributes { get; }
-    }
-
-    public sealed class EncounterActorGenerationFilterBehavior :
-        BaseBehavior,
-        IEncounterMapFilterBehavior
-    {
-        public IReadOnlyCollection<IFilterAttribute> ProvidedAttributes { get; }
+        public IIdentifier Id { get; }
     }
 }

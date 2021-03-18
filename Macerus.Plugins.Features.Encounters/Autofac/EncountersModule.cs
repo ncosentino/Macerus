@@ -1,12 +1,15 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using System.Linq;
 
-using Macerus.Plugins.Features.Encounters.GamObjects.Static.Triggers;
+using Autofac;
+
+using Macerus.Plugins.Features.Encounters.SpawnTables;
+using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
+using Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Actors;
+using Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked;
+using Macerus.Plugins.Features.Encounters.Triggers.GamObjects.Static;
 
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.SpawnTables;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.SpawnTables.Implementations.Item;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.SpawnTables.Implementations.Linked;
 
 namespace Macerus.Plugins.Features.Encounters.Autofac
 {
@@ -15,7 +18,39 @@ namespace Macerus.Plugins.Features.Encounters.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<EncounterBehaviorsProvider>()
+                .RegisterType<StartEncounterHandlerFacade>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<EncounterSpawnStartHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<EncounterRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<EncounterMapLoadStartHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<EncounterManager>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<EncounterGameObjectPlacer>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<EncounterDefinitionRepositoryFacade>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<EncounterTriggerBehaviorsProvider>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<EncounterSpawnLocationBehaviorsProvider>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
@@ -35,18 +70,6 @@ namespace Macerus.Plugins.Features.Encounters.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<ItemDefinitionRepositoryFacade>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
-                .RegisterType<NoneItemDefinitionRepository>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
-                .RegisterType<BaseItemGenerator>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
                  .RegisterType<ActorSpawner>()
                  .AsImplementedInterfaces()
                  .SingleInstance();
@@ -60,6 +83,20 @@ namespace Macerus.Plugins.Features.Encounters.Autofac
                 .SingleInstance();
             builder
                 .RegisterType<SpawnTableHandlerGeneratorFacade>()
+                .AsImplementedInterfaces()
+                .SingleInstance()
+                .OnActivated(x =>
+                {
+                    // NOTE: currently this needs to be OnActivated and not
+                    // done with autofac discovery because of a circular
+                    // dependency w/ classes that want ISpawnTableHandlerGeneratorFacade
+                    x
+                     .Context
+                     .Resolve<IEnumerable<IDiscoverableSpawnTableHandlerGenerator>>()
+                     .Foreach(d => x.Instance.Register(d.SpawnTableType, d));
+                });
+            builder
+                .RegisterType<SpawnTableIdentifiers>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

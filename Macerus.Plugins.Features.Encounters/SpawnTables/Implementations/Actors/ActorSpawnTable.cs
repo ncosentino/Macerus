@@ -6,7 +6,7 @@ using Macerus.Plugins.Features.Encounters.SpawnTables.Api.Standard;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
 
-namespace ProjectXyz.Plugins.Features.GameObjects.Items.Generation.SpawnTables.Implementations.Item
+namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Actors
 {
     public sealed class ActorSpawnTable : IActorSpawnTable
     {

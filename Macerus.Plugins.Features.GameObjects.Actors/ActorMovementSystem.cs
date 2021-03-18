@@ -124,10 +124,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
             if (lastAnimationId != animationBehavior.BaseAnimationId)
             {
-                _logger.Debug(
-                    $"Switching animation to '{animationBehavior.BaseAnimationId}' " +
-                    $"on game object '{animationBehavior.Owner}'. Current " +
-                    $"animation is '{animationBehavior.CurrentAnimationId}'.");
+                //_logger.Debug(
+                //    $"Switching animation to '{animationBehavior.BaseAnimationId}' " +
+                //    $"on game object '{animationBehavior.Owner}'. Current " +
+                //    $"animation is '{animationBehavior.CurrentAnimationId}'.");
             }
         }
 

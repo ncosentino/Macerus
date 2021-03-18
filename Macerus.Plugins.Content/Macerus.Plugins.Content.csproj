@@ -6,10 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7746.8115" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7747.5957" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Macerus.Plugins.Features.Encounters\Macerus.Plugins.Features.Encounters.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments\Macerus.Plugins.Features.GameObjects.Enchantments.csproj" />

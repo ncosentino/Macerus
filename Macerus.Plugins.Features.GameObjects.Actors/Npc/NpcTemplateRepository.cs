@@ -78,18 +78,20 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Npc
             _behaviorManager.Register(npc, npc.Behaviors);
 
             var worldLocation = npc.Get<IWorldLocationBehavior>().Single();
-            worldLocation.X = properties.TryGetValue("X", out var rawX)
-                ? Convert.ToDouble(rawX, CultureInfo.InvariantCulture)
-                : 0;
-            worldLocation.Y = properties.TryGetValue("Y", out var rawY)
-                ? Convert.ToDouble(rawY, CultureInfo.InvariantCulture)
-                : 0;
-            worldLocation.Width = properties.TryGetValue("Width", out var rawWidth)
-                ? Convert.ToDouble(rawWidth, CultureInfo.InvariantCulture)
-                : 1;
-            worldLocation.Height = properties.TryGetValue("Height", out var rawHeight)
-                ? Convert.ToDouble(rawHeight, CultureInfo.InvariantCulture)
-                : 1;
+            worldLocation.SetLocation(
+                properties.TryGetValue("X", out var rawX)
+                    ? Convert.ToDouble(rawX, CultureInfo.InvariantCulture)
+                    : 0,
+                properties.TryGetValue("Y", out var rawY)
+                    ? Convert.ToDouble(rawY, CultureInfo.InvariantCulture)
+                    : 0);
+            worldLocation.SetSize(
+                properties.TryGetValue("Width", out var rawWidth)
+                    ? Convert.ToDouble(rawWidth, CultureInfo.InvariantCulture)
+                    : 1,
+                properties.TryGetValue("Height", out var rawHeight)
+                    ? Convert.ToDouble(rawHeight, CultureInfo.InvariantCulture)
+                    : 1);
 
             return npc;
         }

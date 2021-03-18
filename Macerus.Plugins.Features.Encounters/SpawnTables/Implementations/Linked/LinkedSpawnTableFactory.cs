@@ -8,7 +8,7 @@ using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 
-namespace ProjectXyz.Plugins.Features.GameObjects.Items.Generation.SpawnTables.Implementations.Linked
+namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked
 {
     public sealed class LinkedSpawnTableFactory : ILinkedSpawnTableFactory
     {
