@@ -5,8 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Mapping\Maps\swamp_tmx.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7747.33885" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7749.11030" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +23,12 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Socketing\Macerus.Plugins.Features.GameObjects.Items.Socketing.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items\Macerus.Plugins.Features.GameObjects.Items.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Mapping\Maps\swamp_tmx.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

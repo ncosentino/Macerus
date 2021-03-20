@@ -28,17 +28,17 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Actors
 
         public Type SpawnTableType { get; } = typeof(ActorSpawnTable);
 
-        public IEnumerable<IGameObject> GenerateLoot(
+        public IEnumerable<IGameObject> GenerateActors(
             ISpawnTable spawnTable,
             IFilterContext filterContext)
         {
             Contract.Requires(
                 spawnTable.GetType() == SpawnTableType,
                 $"The provided spawn table '{spawnTable}' must have the type '{SpawnTableType}'.");
-            return GenerateLoot((IActorSpawnTable)spawnTable, filterContext);
+            return GenerateActors((IActorSpawnTable)spawnTable, filterContext);
         }
 
-        private IEnumerable<IGameObject> GenerateLoot(
+        private IEnumerable<IGameObject> GenerateActors(
             IActorSpawnTable spawnTable,
             IFilterContext filterContext)
         {

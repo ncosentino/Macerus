@@ -2,6 +2,7 @@
 using System.Linq;
 
 using Macerus.Api.Behaviors;
+using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
 
 using NexusLabs.Contracts;
@@ -10,7 +11,6 @@ using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default; // FIXME: dependency on non-API
-using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables;
 using ProjectXyz.Plugins.Features.Mapping.Api;
@@ -23,21 +23,27 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         BaseBehavior,
         IInteractableBehavior
     {
+        private readonly IDropTableIdentifiers _dropTableIdentifiers;
         private readonly IMapGameObjectManager _mapGameObjectManager;
         private readonly ILootGenerator _lootGenerator;
         private readonly IFilterContextProvider _filterContextProvider;
+        private readonly IFilterContextAmenity _filterContextAmenity;
         private readonly IDropTableRepositoryFacade _dropTableRepository;
 
         public ContainerInteractableBehavior(
+            IDropTableIdentifiers dropTableIdentifiers,
             IMapGameObjectManager mapGameObjectManager,
             ILootGenerator lootGenerator,
             IFilterContextProvider filterContextProvider,
+            IFilterContextAmenity filterContextAmenity,
             IDropTableRepositoryFacade dropTableRepository,
             bool automaticInteraction)
         {
+            _dropTableIdentifiers = dropTableIdentifiers;
             _mapGameObjectManager = mapGameObjectManager;
             _lootGenerator = lootGenerator;
             _filterContextProvider = filterContextProvider;
+            _filterContextAmenity = filterContextAmenity;
             _dropTableRepository = dropTableRepository;
             AutomaticInteraction = automaticInteraction;
         }
@@ -103,10 +109,9 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
 
                 var dropTableId = containerGenerateItemsBehavior.DropTableId;
                 var dropTable = _dropTableRepository.GetForDropTableId(dropTableId);
-                var dropTableAttribute = new FilterAttribute(
-                    new StringIdentifier("drop-table"),
-                    new IdentifierFilterAttributeValue(dropTableId),
-                    true);
+                var dropTableAttribute = _filterContextAmenity.CreateRequiredAttribute(
+                    _dropTableIdentifiers.FilterContextDropTableIdentifier,
+                    dropTableId);
 
                 var filterContext = baseGeneratorContext
                     .WithAdditionalAttributes(new[] { dropTableAttribute })

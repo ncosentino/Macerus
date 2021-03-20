@@ -35,7 +35,7 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked
 
         public Type SpawnTableType { get; } = typeof(LinkedSpawnTable);
 
-        public IEnumerable<IGameObject> GenerateLoot(
+        public IEnumerable<IGameObject> GenerateActors(
             ISpawnTable spawnTable,
             IFilterContext filterContext)
         {
@@ -89,7 +89,7 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked
                     currentSpawnContext.Attributes.Concat(linkedSpawnTable.ProvidedAttributes));
 
                 // delegate generation of this table to someone else
-                var generated = _spawnTableHandlerGeneratorFacade.GenerateLoot(
+                var generated = _spawnTableHandlerGeneratorFacade.GenerateActors(
                     linkedSpawnTable,
                     linkedSpawnContext);
                 foreach (var gameObject in generated)

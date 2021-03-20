@@ -35,12 +35,7 @@ namespace Macerus.Plugins.Content.Encounters
                                     {
                                         // FIXME: put a map here
                                     }),
-                                    new EncounterSpawnFilterBehavior(new IFilterAttribute[]
-                                    {
-                                        filterContextAmenity.CreateRequiredAttribute(
-                                            spawnTableIdentifiers.FilterContextSpawnTableIdentifier,
-                                            new StringIdentifier("test-multi-skeleton"))
-                                    })),
+                                    new EncounterSpawnTableIdBehavior(new StringIdentifier("test-multi-skeleton"))),
                             }),
                     };
                     var encounterDefinitionRepository = new InMemoryEncounterDefinitionRepository(

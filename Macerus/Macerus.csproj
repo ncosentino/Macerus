@@ -22,9 +22,12 @@
     <Exec Command="FOR /F &quot;tokens=* USEBACKQ&quot; %25%25F IN (`$(ProjectDir)GenerateProjectAssemblyVersion.exe $(ProjectDir)$(ProjectFileName)`) DO (&#xD;&#xA;SET generatedVersion=%25%25F&#xD;&#xA;)&#xD;&#xA;ECHO Generated Version: %25generatedVersion%25&#xD;&#xA;&#xD;&#xA;nuget pack $(ProjectFileName) -Symbols -IncludeReferencedProjects -OutputDirectory &quot;$(SolutionDir)..\..\..\nuget-repo&quot; -Version %25generatedVersion%25 -properties Configuration=$(ConfigurationName)" />
   </Target>
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.7747.33885" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7749.11030" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\libraries\Tiled.Net\Tiled.Net.Dto\Tiled.Net.Dto.csproj" />
+    <ProjectReference Include="..\..\..\..\libraries\Tiled.Net\Tiled.Net.Tmx.Xml\Tiled.Net.Tmx.Xml.csproj" />
+    <ProjectReference Include="..\..\..\..\libraries\Tiled.Net\Tiled.Net\Tiled.Net.csproj" />
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
     <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
     <ProjectReference Include="..\Macerus.Game.GameObjects\Macerus.Game.GameObjects.csproj" />
@@ -50,6 +53,8 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Static.Api\Macerus.Plugins.Features.GameObjects.Static.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Static\Macerus.Plugins.Features.GameObjects.Static.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Mapping.TiledNet\Macerus.Plugins.Features.Mapping.TiledNet.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Mapping\Macerus.Plugins.Features.Mapping.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Weather\Macerus.Plugins.Features.Weather.csproj" />
     <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj" />
   </ItemGroup>

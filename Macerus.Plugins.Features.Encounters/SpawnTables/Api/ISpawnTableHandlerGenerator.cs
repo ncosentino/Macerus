@@ -7,7 +7,7 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Api
 {
     public interface ISpawnTableHandlerGenerator
     {
-        IEnumerable<IGameObject> GenerateLoot(
+        IEnumerable<IGameObject> GenerateActors(
             ISpawnTable SpawnTable,
             IFilterContext filterContext);
     }

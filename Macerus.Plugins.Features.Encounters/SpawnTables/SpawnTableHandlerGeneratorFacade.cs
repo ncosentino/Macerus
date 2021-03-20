@@ -17,7 +17,7 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables
             _mapping = new Dictionary<Type, ISpawnTableHandlerGenerator>();
         }
 
-        public IEnumerable<IGameObject> GenerateLoot(
+        public IEnumerable<IGameObject> GenerateActors(
             ISpawnTable spawnTable,
             IFilterContext filterContext)
         {
@@ -29,7 +29,7 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables
                     $"No supported spawn table handler generator for type '{spawnTable.GetType()}'.");
             }
 
-            var generated = spawnTableHandlerGenerator.GenerateLoot(
+            var generated = spawnTableHandlerGenerator.GenerateActors(
                 spawnTable,
                 filterContext);
             return generated;

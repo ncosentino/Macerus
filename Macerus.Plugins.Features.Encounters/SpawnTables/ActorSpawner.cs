@@ -86,7 +86,7 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables
                 }
 
                 var generationCountBeforeSpawn = generationCount;
-                var generatedLoot = _spawnTableHandlerGeneratorFacade.GenerateLoot(
+                var generatedLoot = _spawnTableHandlerGeneratorFacade.GenerateActors(
                     spawnTable,
                     filterContext);
                 foreach (var loot in generatedLoot)
