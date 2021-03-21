@@ -17,7 +17,7 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.7762.25519" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7763.21778" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Plugins.Features.Animations.Api\Macerus.Plugins.Features.Animations.Api.csproj" />

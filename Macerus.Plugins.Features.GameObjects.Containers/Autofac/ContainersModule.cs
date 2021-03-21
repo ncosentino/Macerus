@@ -1,7 +1,7 @@
 ﻿using Autofac;
 
 using Macerus.Plugins.Features.GameObjects.Containers.LootDrops;
-
+using Macerus.Plugins.Features.GameObjects.Containers.Sounds;
 using ProjectXyz.Framework.Autofac;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers.Autofac
@@ -39,6 +39,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.Autofac
               .AsImplementedInterfaces()
               .SingleInstance();
             builder.RegisterType<ContainerInteractableBehavior>(); // for factory
+            builder.RegisterType<ContainerMakesNoiseBehavior>(); // for factory
         }
     }
 }

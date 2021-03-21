@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net46</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.7762.25519" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7763.21778" />
   </ItemGroup>
 
 </Project>

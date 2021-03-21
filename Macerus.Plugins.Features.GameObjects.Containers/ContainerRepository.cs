@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Api.GameObjects;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
+using Macerus.Plugins.Features.GameObjects.Containers.Sounds;
 using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
@@ -23,6 +24,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         private readonly IGameObjectIdentifiers _gameObjectIdentifiers;
         private readonly IContainerIdentifiers _containerIdentifiers;
         private readonly ContainerInteractableBehavior.Factory _containerInteractableBehaviorFactory;
+        private readonly ContainerMakesNoiseBehavior.Factory _containerMakesNoiseBehaviorFactory;
         private readonly IFilterContextAmenity _filterContextAmenity;
 
         public ContainerRepository(
@@ -30,12 +32,14 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             IGameObjectIdentifiers gameObjectIdentifiers,
             IContainerIdentifiers containerIdentifiers,
             ContainerInteractableBehavior.Factory containerInteractableBehaviorFactory,
+            ContainerMakesNoiseBehavior.Factory containerMakesNoiseBehaviorFactory,
             IFilterContextAmenity filterContextAmenity)
         {
             _containerFactory = containerFactory;
             _gameObjectIdentifiers = gameObjectIdentifiers;
             _containerIdentifiers = containerIdentifiers;
             _containerInteractableBehaviorFactory = containerInteractableBehaviorFactory;
+            _containerMakesNoiseBehaviorFactory = containerMakesNoiseBehaviorFactory;
             _filterContextAmenity = filterContextAmenity;
 
             SupportedAttributes = new[]
@@ -67,6 +71,9 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             {
                 additionalBehaviors.Add(new ContainerGenerateItemsBehavior(containerPropertiesBehavior.DropTableId));
             }
+
+            additionalBehaviors.Add(
+                _containerMakesNoiseBehaviorFactory.Invoke());
 
             var container = _containerFactory.Create(
                 new TypeIdentifierBehavior()
