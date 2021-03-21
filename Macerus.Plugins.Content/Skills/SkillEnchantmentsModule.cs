@@ -16,11 +16,11 @@ using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.BaseStatEnchantments.Enchantments;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
-using ProjectXyz.Plugins.Features.ElapsedTime.Duration;
 using ProjectXyz.Plugins.Features.Enchantments.Generation.InMemory;
 using ProjectXyz.Plugins.Features.ExpiringEnchantments;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;  // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
+using ProjectXyz.Plugins.Features.TurnBased.Duration;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Skills
@@ -52,7 +52,7 @@ namespace Macerus.Plugins.Content.Skills
                                     new IBehavior[]
                                     {
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "LIFE_CURRENT + (LIFE_MAXIMUM * 0.1 * $PER_TURN)"),
-                                        new ExpiryTriggerBehavior(new DurationTriggerBehavior(new Interval<double>(5000))),
+                                        new ExpiryTriggerBehavior(new DurationTriggerBehavior(5)),
                                         new AppliesToBaseStat()
                                     }),
                             }),

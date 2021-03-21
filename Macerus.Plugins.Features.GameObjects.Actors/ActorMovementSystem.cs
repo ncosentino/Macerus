@@ -12,7 +12,7 @@ using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
-    public sealed class ActorMovementSystem : ISystem
+    public sealed class ActorMovementSystem : IDiscoverableSystem
     {
         private readonly IBehaviorFinder _behaviorFinder;
         private readonly IActorIdentifiers _actorIdentifiers;
@@ -27,6 +27,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             _actorIdentifiers = actorIdentifiers;
             _logger = logger;
         }
+
+        public int? Priority => null;
 
         public void Update(
             ISystemUpdateContext systemUpdateContext,
