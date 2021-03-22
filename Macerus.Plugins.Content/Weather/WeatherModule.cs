@@ -32,13 +32,13 @@ namespace Macerus.Plugins.Content.Weather
                                 new WeightedWeatherTableEntry(
                                     WeatherIds.Rain,
                                     1,
-                                    new Interval<double>(10000),
-                                    new Interval<double>(20000)),
+                                    10,
+                                    20),
                                 new WeightedWeatherTableEntry(
                                     WeatherIds.Clear,
                                     3,
-                                    new Interval<double>(10000),
-                                    new Interval<double>(20000))
+                                    10,
+                                    20)
                             },
                             new IFilterAttribute[]
                             {
