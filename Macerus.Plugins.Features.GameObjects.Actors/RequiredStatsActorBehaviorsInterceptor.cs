@@ -8,6 +8,7 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Stats;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
+using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
@@ -45,6 +46,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 stats[_dynamicAnimationIdentifiers.BlueMultiplierStatId] = 1;
                 stats[_dynamicAnimationIdentifiers.AlphaMultiplierStatId] = 1;
                 stats[_dynamicAnimationIdentifiers.AnimationOverrideStatId] = 0;
+
+                stats[new StringIdentifier("speed")] = 10;
             });
             return behaviors;
         }

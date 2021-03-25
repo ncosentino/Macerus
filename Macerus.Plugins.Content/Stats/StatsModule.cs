@@ -1,6 +1,11 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
 
+using Autofac;
+
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
+using ProjectXyz.Plugins.Stats;
+using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Stats
 {
@@ -14,6 +19,21 @@ namespace Macerus.Plugins.Content.Stats
                 .SingleInstance();
             builder
                 .RegisterType<StatDefinitionToTermMappingRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .Register(c =>
+                {
+                    // FIXME: these are all temporary just for testing so we
+                    // don't need to keep updating the database while we are
+                    // iterating on features
+                    var mapping = new Dictionary<IIdentifier, string>()
+                    {
+                        [new StringIdentifier("speed")] = "SPEED",
+                    };
+                    var statDefinitionToTermRepository = new InMemoryStatDefinitionToTermMappingRepository(mapping);
+                    return statDefinitionToTermRepository;
+                })
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

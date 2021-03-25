@@ -26,6 +26,10 @@ namespace Macerus.Plugins.Features.Encounters.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
+                .RegisterType<EncounterCombatStartHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<EncounterRepository>()
                 .AsImplementedInterfaces()
                 .SingleInstance();

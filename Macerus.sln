@@ -91,11 +91,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Actors", "Actors", "{769A1D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Actors.Generation", "Macerus.Plugins.Features.GameObjects.Actors.Generation\Macerus.Plugins.Features.GameObjects.Actors.Generation.csproj", "{88A22115-4A6F-4272-A95B-4AFEBCE75B28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Content", "Macerus.Plugins.Content\Macerus.Plugins.Content.csproj", "{0E0E844C-DE57-49DE-968C-8E55F2E01BD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Content", "Macerus.Plugins.Content\Macerus.Plugins.Content.csproj", "{0E0E844C-DE57-49DE-968C-8E55F2E01BD6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mapping", "Mapping", "{32F65C4C-D4E1-4913-96FB-BF4371D26554}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Mapping.TiledNet", "Macerus.Plugins.Features.Mapping.TiledNet\Macerus.Plugins.Features.Mapping.TiledNet.csproj", "{6289DF2D-EE6D-4A94-8A78-2BC62C2E9CCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Mapping.TiledNet", "Macerus.Plugins.Features.Mapping.TiledNet\Macerus.Plugins.Features.Mapping.TiledNet.csproj", "{6289DF2D-EE6D-4A94-8A78-2BC62C2E9CCE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{F34D08E1-ED99-44EE-90B9-3E1A2C6A5525}"
 EndProject
@@ -107,7 +107,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tiled.Net.Dto", "..\..\..\l
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tiled.Net.Tmx.Xml", "..\..\..\libraries\Tiled.Net\Tiled.Net.Tmx.Xml\Tiled.Net.Tmx.Xml.csproj", "{EA09BA50-15E5-4F8F-ABD8-D3F6179089D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Mapping", "Macerus.Plugins.Features.Mapping\Macerus.Plugins.Features.Mapping.csproj", "{089E1C61-E974-4D64-81B7-7DAE52B61754}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Mapping", "Macerus.Plugins.Features.Mapping\Macerus.Plugins.Features.Mapping.csproj", "{089E1C61-E974-4D64-81B7-7DAE52B61754}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Combat", "Combat", "{9DFE0CE3-ECC8-4FCF-BE6A-94859F543B13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Combat.Default", "Macerus.Plugins.Features.Combat.Default\Macerus.Plugins.Features.Combat.Default.csproj", "{FE7CC77B-C311-4BC7-A2FB-FCCCDEF37B88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -251,6 +255,10 @@ Global
 		{089E1C61-E974-4D64-81B7-7DAE52B61754}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{089E1C61-E974-4D64-81B7-7DAE52B61754}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{089E1C61-E974-4D64-81B7-7DAE52B61754}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE7CC77B-C311-4BC7-A2FB-FCCCDEF37B88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE7CC77B-C311-4BC7-A2FB-FCCCDEF37B88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE7CC77B-C311-4BC7-A2FB-FCCCDEF37B88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE7CC77B-C311-4BC7-A2FB-FCCCDEF37B88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -302,6 +310,8 @@ Global
 		{EDF490F9-460E-468F-B6EE-7A8C52E4D231} = {84CD21F4-8F26-4CCB-9DE1-321C29BD268F}
 		{EA09BA50-15E5-4F8F-ABD8-D3F6179089D9} = {84CD21F4-8F26-4CCB-9DE1-321C29BD268F}
 		{089E1C61-E974-4D64-81B7-7DAE52B61754} = {32F65C4C-D4E1-4913-96FB-BF4371D26554}
+		{9DFE0CE3-ECC8-4FCF-BE6A-94859F543B13} = {33A6C169-52DA-446B-A241-FEC05722752A}
+		{FE7CC77B-C311-4BC7-A2FB-FCCCDEF37B88} = {9DFE0CE3-ECC8-4FCF-BE6A-94859F543B13}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}
