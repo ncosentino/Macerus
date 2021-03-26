@@ -33,6 +33,8 @@
     <ProjectReference Include="..\Macerus.Game.GameObjects\Macerus.Game.GameObjects.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Content\Macerus.Plugins.Content.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Data.MySql\Macerus.Plugins.Data.MySql.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Animations.Api\Macerus.Plugins.Features.Animations.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Animations.Default\Macerus.Plugins.Features.Animations.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Default\Macerus.Plugins.Features.Combat.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Encounters\Macerus.Plugins.Features.Encounters.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Generation\Macerus.Plugins.Features.GameObjects.Actors.Generation.csproj" />

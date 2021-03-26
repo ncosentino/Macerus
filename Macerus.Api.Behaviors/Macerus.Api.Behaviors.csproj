@@ -19,4 +19,7 @@
   <ItemGroup>
     <PackageReference Include="ProjectXyz" Version="1.0.7755.12011" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Macerus.Plugins.Features.Animations.Api\Macerus.Plugins.Features.Animations.Api.csproj" />
+  </ItemGroup>
 </Project>
