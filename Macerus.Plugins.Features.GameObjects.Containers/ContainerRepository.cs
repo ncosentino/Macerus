@@ -24,22 +24,19 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         private readonly IContainerIdentifiers _containerIdentifiers;
         private readonly ContainerInteractableBehavior.Factory _containerInteractableBehaviorFactory;
         private readonly IFilterContextAmenity _filterContextAmenity;
-        private readonly IAttributeFilterer _attributeFilterer;
 
         public ContainerRepository(
             IContainerFactory containerFactory,
             IGameObjectIdentifiers gameObjectIdentifiers,
             IContainerIdentifiers containerIdentifiers,
             ContainerInteractableBehavior.Factory containerInteractableBehaviorFactory,
-            IFilterContextAmenity filterContextAmenity,
-            IAttributeFilterer attributeFilterer)
+            IFilterContextAmenity filterContextAmenity)
         {
             _containerFactory = containerFactory;
             _gameObjectIdentifiers = gameObjectIdentifiers;
             _containerIdentifiers = containerIdentifiers;
             _containerInteractableBehaviorFactory = containerInteractableBehaviorFactory;
             _filterContextAmenity = filterContextAmenity;
-            _attributeFilterer = attributeFilterer;
 
             SupportedAttributes = new[]
             {

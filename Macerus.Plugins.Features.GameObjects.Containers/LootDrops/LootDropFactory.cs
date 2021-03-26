@@ -60,7 +60,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
             filterContext = _filterContextAmenity.ExtendWithGameObjectTypeIdFilter(
                 filterContext,
                 _containerIdentifiers.ContainerTypeIdentifier);
-            filterContext = _filterContextAmenity.ExtendWithGameObjectTypeIdFilter(
+            filterContext = _filterContextAmenity.ExtendWithGameObjectTemplateIdFilter(
                 filterContext,
                 _lootDropIdentifiers.LootDropTemplateId);
 
