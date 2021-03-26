@@ -9,6 +9,7 @@ using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
+using ProjectXyz.Plugins.Features.TurnBased.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
@@ -34,13 +35,12 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             ISystemUpdateContext systemUpdateContext,
             IEnumerable<IHasBehaviors> hasBehaviors)
         {
-            var elapsed = (IInterval<double>)systemUpdateContext
-                .GetFirst<IComponent<IElapsedTime>>()
-                .Value
-                .Interval;
-            var elapsedSeconds = elapsed.Value / 1000;
+            var turnInfo = systemUpdateContext
+                .GetFirst<IComponent<ITurnInfo>>()
+                .Value;
+            var elapsedSeconds = turnInfo.ElapsedTurns * 1.0d; // FIXME: we need a turn to time calculation
 
-            foreach (var supportedEntry in GetSupportedEntries(hasBehaviors))
+            foreach (var supportedEntry in GetSupportedEntries(turnInfo.ApplicableGameObjects))
             {
                 UpdatePosition(
                     supportedEntry.Item2,
