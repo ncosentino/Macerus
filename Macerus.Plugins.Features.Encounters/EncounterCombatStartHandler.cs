@@ -2,21 +2,25 @@
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.Combat.Api;
+using ProjectXyz.Plugins.Features.TurnBased.Api;
 
 namespace Macerus.Plugins.Features.Encounters
 {
     public sealed class EncounterCombatStartHandler : IDiscoverableStartEncounterHandler
     {
+        private readonly ITurnBasedManager _turnBasedManager;
         private readonly ICombatTurnManager _combatTurnManager;
         private readonly IFilterContextProvider _filterContextProvider;
         private readonly ILogger _logger;
 
         public EncounterCombatStartHandler(
             ICombatTurnManager combatTurnManager,
+            ITurnBasedManager turnBasedManager,
             IFilterContextProvider filterContextProvider,
             ILogger logger)
         {
             _combatTurnManager = combatTurnManager;
+            _turnBasedManager = turnBasedManager;
             _filterContextProvider = filterContextProvider;
             _logger = logger;
         }
@@ -27,6 +31,10 @@ namespace Macerus.Plugins.Features.Encounters
             IGameObject encounter,
             IFilterContext filterContext)
         {
+            _turnBasedManager.ClearApplicableOnUpdate = true;
+            _turnBasedManager.GlobalSync = false;
+            _turnBasedManager.SyncTurnsFromElapsedTime = false;
+
             _combatTurnManager.Reset();
 
             _logger.Debug("Initial combat order:");
