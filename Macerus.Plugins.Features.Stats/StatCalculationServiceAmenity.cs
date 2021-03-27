@@ -60,6 +60,16 @@ namespace Macerus.Plugins.Features.Stats
             IGameObject gameObject,
             IEnumerable<IIdentifier> statDefinitionIds)
         {
+            var results = GetStatValuesAsync(
+                gameObject,
+                statDefinitionIds).Result;
+            return results;
+        }
+
+        public async Task<IReadOnlyDictionary<IIdentifier, double>> GetStatValuesAsync(
+            IGameObject gameObject,
+            IEnumerable<IIdentifier> statDefinitionIds)
+        {
             var tasks = new List<Task<Tuple<IIdentifier, double>>>();
 
             foreach (var statDefinitionId in statDefinitionIds)
@@ -76,7 +86,7 @@ namespace Macerus.Plugins.Features.Stats
                 tasks.Add(statTast);
             }
 
-            Task.WaitAll(tasks.ToArray());
+            await Task.WhenAll(tasks);
 
             var results = tasks.ToDictionary(
                 x => x.Result.Item1,

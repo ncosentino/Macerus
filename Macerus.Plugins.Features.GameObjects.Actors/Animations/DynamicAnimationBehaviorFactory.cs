@@ -1,8 +1,7 @@
 ﻿using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Animations.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
-
-using ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api;
+using Macerus.Plugins.Features.Stats;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
@@ -10,18 +9,18 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
     {
         private readonly ISpriteAnimationRepository _spriteAnimationProvider;
         private readonly IAnimationReplacementPatternRepository _animationReplacementPatternRepository;
-        private readonly IStatCalculationService _statCalculationService;
+        private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
         private readonly IDynamicAnimationIdentifiers _dynamicAnimationIdentifiers;
 
         public DynamicAnimationBehaviorFactory(
             ISpriteAnimationRepository spriteAnimationProvider,
             IAnimationReplacementPatternRepository animationReplacementPatternRepository,
-            IStatCalculationService statCalculationService,
+            IStatCalculationServiceAmenity statCalculationServiceAmenity,
             IDynamicAnimationIdentifiers dynamicAnimationIdentifiers)
         {
             _spriteAnimationProvider = spriteAnimationProvider;
             _animationReplacementPatternRepository = animationReplacementPatternRepository;
-            _statCalculationService = statCalculationService;
+            _statCalculationServiceAmenity = statCalculationServiceAmenity;
             _dynamicAnimationIdentifiers = dynamicAnimationIdentifiers;
         }
 
@@ -30,7 +29,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             var behavior = new DynamicAnimationBehavior(
                 _spriteAnimationProvider,
                 _animationReplacementPatternRepository,
-                _statCalculationService,
+                _statCalculationServiceAmenity,
                 _dynamicAnimationIdentifiers,
                 sourcePattern);
             return behavior;

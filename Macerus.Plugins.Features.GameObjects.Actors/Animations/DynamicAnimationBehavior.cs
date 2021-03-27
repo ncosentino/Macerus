@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Animations.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.Stats;
 
 using ProjectXyz.Api.Framework;
-using ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api;
+using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Shared.Framework;
 using ProjectXyz.Shared.Game.Behaviors;
 
@@ -17,10 +19,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
     {
         private readonly ISpriteAnimationRepository _spriteAnimationRepository;
         private readonly IAnimationReplacementPatternRepository _animationReplacementPatternRepository;
-        private readonly IStatCalculationService _statCalculationService;
+        private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
         private readonly IDynamicAnimationIdentifiers _dynamicAnimationIdentifiers;
         private readonly string _sourcePattern;
-        
+
         private int _currentFrameIndex;
         private double _secondsElapsedOnFrame;
         private IIdentifier _lastAnimationId;
@@ -33,39 +35,19 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         public DynamicAnimationBehavior(
             ISpriteAnimationRepository spriteAnimationRepository,
             IAnimationReplacementPatternRepository animationReplacementPatternRepository,
-            IStatCalculationService statCalculationService,
+            IStatCalculationServiceAmenity statCalculationServiceAmenity,
             IDynamicAnimationIdentifiers dynamicAnimationIdentifiers,
             string sourcePattern)
         {
             _spriteAnimationRepository = spriteAnimationRepository;
             _animationReplacementPatternRepository = animationReplacementPatternRepository;
-            _statCalculationService = statCalculationService;
+            _statCalculationServiceAmenity = statCalculationServiceAmenity;
             _dynamicAnimationIdentifiers = dynamicAnimationIdentifiers;
             _sourcePattern = sourcePattern;
             _cachedAnimationSpeedMultiplier = 1;
         }
 
         public event EventHandler<AnimationFrameEventArgs> AnimationFrameChanged;
-
-        public double? AnimationSpeedMultiplier => _statCalculationService.GetStatValue(
-            Owner,
-            _dynamicAnimationIdentifiers.AnimationSpeedMultiplierStatId);
-
-        public double? RedMultiplier => _statCalculationService.GetStatValue(
-            Owner,
-            _dynamicAnimationIdentifiers.RedMultiplierStatId);
-
-        public double? GreenMultiplier => _statCalculationService.GetStatValue(
-            Owner,
-            _dynamicAnimationIdentifiers.GreenMultiplierStatId);
-
-        public double? BlueMultiplier => _statCalculationService.GetStatValue(
-            Owner,
-            _dynamicAnimationIdentifiers.BlueMultiplierStatId);
-
-        public double? AlphaMultiplier => _statCalculationService.GetStatValue(
-            Owner,
-            _dynamicAnimationIdentifiers.AlphaMultiplierStatId);
 
         public IIdentifier BaseAnimationId { get; set; }
 
@@ -80,8 +62,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
                 if (DateTime.UtcNow - _lastLookupdUtc > TimeSpan.FromSeconds(1))
                 {
-                    var overrideStatValue = _statCalculationService.GetStatValue(
-                        Owner,
+                    var overrideStatValue = _statCalculationServiceAmenity.GetStatValue(
+                        (IGameObject)Owner,
                         _dynamicAnimationIdentifiers.AnimationOverrideStatId);
                     _replacementPattern = _animationReplacementPatternRepository
                         .GetReplacementPattern((int)overrideStatValue);
@@ -102,7 +84,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             set => BaseAnimationId = value;
         }
 
-        public void UpdateAnimation(double secondsSinceLastFrame)
+        // FIXME: async void... start propagating this up!
+        public async void UpdateAnimation(double secondsSinceLastFrame)
         {
             var currentAnimationId = CurrentAnimationId;
             if (_lastAnimationId!= null && currentAnimationId == null)
@@ -113,7 +96,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 
                 AnimationFrameChanged?.Invoke(
                     this, 
-                    new AnimationFrameEventArgs(null));
+                    new AnimationFrameEventArgs(null, null));
                 return;
             }
 
@@ -187,12 +170,38 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 return;
             }
 
-            // update this on frame change to avoid abusive stat lookups
-            _cachedAnimationSpeedMultiplier = AnimationSpeedMultiplier ?? 1;
+            var animationMultipliers = await GetAnimationMultipliersAsync();
 
+            // cache this because we use it a lot internally
+            _cachedAnimationSpeedMultiplier = animationMultipliers.AnimationSpeedMultiplier;
+            
             AnimationFrameChanged?.Invoke(
                 this,
-                new AnimationFrameEventArgs(currentFrame));
+                new AnimationFrameEventArgs(
+                    currentFrame,
+                    animationMultipliers));
+        }
+
+        private async Task<IAnimationMultipliers> GetAnimationMultipliersAsync()
+        {
+            var multiplierStats = await _statCalculationServiceAmenity.GetStatValuesAsync(
+                (IGameObject)Owner,
+                new[]
+                {
+                    _dynamicAnimationIdentifiers.AnimationSpeedMultiplierStatId,
+                    _dynamicAnimationIdentifiers.RedMultiplierStatId,
+                    _dynamicAnimationIdentifiers.GreenMultiplierStatId,
+                    _dynamicAnimationIdentifiers.BlueMultiplierStatId,
+                    _dynamicAnimationIdentifiers.AlphaMultiplierStatId,
+                });
+
+            var multipliers = new AnimationMultipliers(
+                multiplierStats[_dynamicAnimationIdentifiers.AnimationSpeedMultiplierStatId],
+                multiplierStats[_dynamicAnimationIdentifiers.RedMultiplierStatId],
+                multiplierStats[_dynamicAnimationIdentifiers.GreenMultiplierStatId],
+                multiplierStats[_dynamicAnimationIdentifiers.BlueMultiplierStatId],
+                multiplierStats[_dynamicAnimationIdentifiers.AlphaMultiplierStatId]);
+            return multipliers;
         }
 
         private IIdentifier Transform(
