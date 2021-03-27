@@ -59,6 +59,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Static\Macerus.Plugins.Features.GameObjects.Static.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Mapping.TiledNet\Macerus.Plugins.Features.Mapping.TiledNet.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Mapping\Macerus.Plugins.Features.Mapping.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Weather\Macerus.Plugins.Features.Weather.csproj" />
     <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj" />
   </ItemGroup>

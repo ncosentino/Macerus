@@ -1,6 +1,7 @@
 ﻿using Autofac;
 
 using Macerus.Plugins.Features.GameObjects.Actors.Animations;
+using Macerus.Plugins.Features.GameObjects.Actors.LightRadius;
 using Macerus.Plugins.Features.GameObjects.Actors.Player;
 
 using ProjectXyz.Framework.Autofac;
@@ -11,6 +12,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Autofac
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
+            builder
+                .RegisterType<LightRadiusIdentifiers>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
             builder
                 .RegisterType<DynamicAnimationSystem>()
                 .AsImplementedInterfaces()
