@@ -8,13 +8,13 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 {
     public sealed class DynamicAnimationBehaviorFactory : IDynamicAnimationBehaviorFactory
     {
-        private readonly ISpriteAnimationProvider _spriteAnimationProvider;
+        private readonly ISpriteAnimationRepository _spriteAnimationProvider;
         private readonly IAnimationReplacementPatternRepository _animationReplacementPatternRepository;
         private readonly IStatCalculationService _statCalculationService;
         private readonly IDynamicAnimationIdentifiers _dynamicAnimationIdentifiers;
 
         public DynamicAnimationBehaviorFactory(
-            ISpriteAnimationProvider spriteAnimationProvider,
+            ISpriteAnimationRepository spriteAnimationProvider,
             IAnimationReplacementPatternRepository animationReplacementPatternRepository,
             IStatCalculationService statCalculationService,
             IDynamicAnimationIdentifiers dynamicAnimationIdentifiers)

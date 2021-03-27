@@ -5,12 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Graphics\Actors\LpcUniversal\player_male.png" />
+    <None Remove="Graphics\Actors\LpcUniversal\skeleton_basic.png" />
     <None Remove="Mapping\Maps\swamp_tmx.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7755.12011" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7756.2167" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +28,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Graphics\Actors\LpcUniversal\player_male.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\Actors\LpcUniversal\skeleton_basic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Mapping\Maps\swamp_tmx.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

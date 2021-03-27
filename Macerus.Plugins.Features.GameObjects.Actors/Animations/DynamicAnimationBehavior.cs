@@ -15,7 +15,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         BaseBehavior,
         IDynamicAnimationBehavior
     {
-        private readonly ISpriteAnimationProvider _spriteAnimationProvider;
+        private readonly ISpriteAnimationRepository _spriteAnimationRepository;
         private readonly IAnimationReplacementPatternRepository _animationReplacementPatternRepository;
         private readonly IStatCalculationService _statCalculationService;
         private readonly IDynamicAnimationIdentifiers _dynamicAnimationIdentifiers;
@@ -28,19 +28,21 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         private IIdentifier _lastSourceAnimationId;
         private IIdentifier _cachedTransformedAnimationId;
         private string _replacementPattern;
+        private double _cachedAnimationSpeedMultiplier; // we update this when changing frames
 
         public DynamicAnimationBehavior(
-            ISpriteAnimationProvider spriteAnimationProvider,
+            ISpriteAnimationRepository spriteAnimationRepository,
             IAnimationReplacementPatternRepository animationReplacementPatternRepository,
             IStatCalculationService statCalculationService,
             IDynamicAnimationIdentifiers dynamicAnimationIdentifiers,
             string sourcePattern)
         {
-            _spriteAnimationProvider = spriteAnimationProvider;
+            _spriteAnimationRepository = spriteAnimationRepository;
             _animationReplacementPatternRepository = animationReplacementPatternRepository;
             _statCalculationService = statCalculationService;
             _dynamicAnimationIdentifiers = dynamicAnimationIdentifiers;
             _sourcePattern = sourcePattern;
+            _cachedAnimationSpeedMultiplier = 1;
         }
 
         public event EventHandler<AnimationFrameEventArgs> AnimationFrameChanged;
@@ -124,7 +126,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 forceRefreshSprite = true;
             }
 
-            if (!_spriteAnimationProvider.TryGetAnimationById(
+            if (!_spriteAnimationRepository.TryGetAnimationById(
                 currentAnimationId,
                 out var currentAnimation))
             {
@@ -146,8 +148,6 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             ISpriteAnimationFrame currentFrame;
             var lastFrameIndex = _currentFrameIndex;
 
-            var animationSpeedMultiplier = AnimationSpeedMultiplier ?? 1;
-
             while (true)
             {
                 currentFrame = currentAnimation.Frames[_currentFrameIndex];
@@ -156,7 +156,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                     break;
                 }
 
-                var durationInSeconds = (float)(currentFrame.DurationInSeconds.Value / animationSpeedMultiplier);
+                var durationInSeconds = (float)(currentFrame.DurationInSeconds.Value /_cachedAnimationSpeedMultiplier);
                 if (_secondsElapsedOnFrame >= durationInSeconds)
                 {
                     _currentFrameIndex++;
@@ -186,6 +186,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             {
                 return;
             }
+
+            // update this on frame change to avoid abusive stat lookups
+            _cachedAnimationSpeedMultiplier = AnimationSpeedMultiplier ?? 1;
 
             AnimationFrameChanged?.Invoke(
                 this,
