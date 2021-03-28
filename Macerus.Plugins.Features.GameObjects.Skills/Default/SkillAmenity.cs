@@ -13,6 +13,7 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
+using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {

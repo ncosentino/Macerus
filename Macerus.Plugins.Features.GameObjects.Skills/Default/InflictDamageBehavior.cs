@@ -5,12 +5,9 @@ using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
-    public sealed class UseOutOfCombatSkillBehavior :
+    public sealed class InflictDamageBehavior :
         BaseBehavior,
-        IUseOutOfCombatSkillBehavior
+        IInflictDamageBehavior
     {
-        public UseOutOfCombatSkillBehavior()
-        {
-        }
     }
 }

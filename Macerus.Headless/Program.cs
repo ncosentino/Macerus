@@ -1,4 +1,5 @@
-﻿using Macerus.Api.Behaviors.Filtering;
+﻿
+using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 
 using ProjectXyz.Game.Interface.Engine;
@@ -22,14 +23,17 @@ namespace Macerus.Headless
                 filterContextAmenity.CreateRequiredAttribute(
                     spawnTableIdentifiers.FilterContextSpawnTableIdentifier,
                     new StringIdentifier("test-multi-skeleton")));
-            filterContext = filterContextAmenity.CopyWithRange(filterContext, 100, 100);
+            filterContext = filterContextAmenity.CopyWithRange(filterContext, 2, 2);
 
             mapGameObjectManager.MarkForAddition(actorSpawner.SpawnActors(filterContext));
+            mapGameObjectManager.Synchronize();
+
 
             while (true)
             {
                 gameEngine.Update();
             }
+
         }
     }
 }

@@ -22,6 +22,22 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
                .RegisterType<SkillUsage>()
                .AsImplementedInterfaces()
                .SingleInstance();
+            builder
+                .RegisterType<SkillHandlerFacade>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<EnchantSelfSkillHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<EnchantTargetsSkillHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<InflictDamageSkillHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

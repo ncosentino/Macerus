@@ -92,6 +92,13 @@ namespace Macerus.Plugins.Content.Actors
                                             new StringIdentifier("back"),
                                         }),
                                     }),
+                                new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
+                                {
+                                    [new IntIdentifier(0)] = 100,
+                                    [new IntIdentifier(1)] = 100,
+                                    [new IntIdentifier(2)] = 100,
+                                    [new IntIdentifier(3)] = 100,
+                                })
                             },
                             new IFilterAttribute[]
                             {
@@ -117,6 +124,11 @@ namespace Macerus.Plugins.Content.Actors
                                 {
                                     // FIXME: shouldn't need to rely on an override to set the animation?
                                     [new StringIdentifier("animation_override")] = 1,
+                                    // resources...
+                                    [new IntIdentifier(0)] = 15,
+                                    [new IntIdentifier(1)] = 15,
+                                    [new IntIdentifier(2)] = 10,
+                                    [new IntIdentifier(3)] = 10,
                                 }),
                             },
                             new IFilterAttribute[]

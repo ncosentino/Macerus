@@ -12,16 +12,13 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
     public sealed class SkillUsage : ISkillUsage
     {
-        private readonly ISkillAmenity _skillAmenity;
         private readonly IStatCalculationService _statCalculationService;
         private readonly ILogger _logger;
 
         public SkillUsage(
-            ISkillAmenity skillAmenity,
             IStatCalculationService statCalculationService,
             ILogger logger)
         {
-            _skillAmenity = skillAmenity;
             _statCalculationService = statCalculationService;
             _logger = logger;
         }
@@ -78,18 +75,6 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                     stats[requiredStatDefinitionId] -= requiredStatValue;
                 }
             });
-        }
-
-        public void ApplySkillEffectsToTarget(
-            IGameObject skill,
-            IGameObject target)
-        {
-            var targetEnchantmentsBehavior = target.GetOnly<IHasEnchantmentsBehavior>();
-            var skillDefinitionId = skill
-                .GetOnly<ITemplateIdentifierBehavior>()
-                .TemplateId;
-            var statefulEnchantments = _skillAmenity.GetStatefulEnchantmentsBySkillId(skillDefinitionId);
-            targetEnchantmentsBehavior.AddEnchantments(statefulEnchantments);
         }
     }
 }
