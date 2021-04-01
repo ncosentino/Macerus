@@ -98,6 +98,7 @@ namespace Macerus.Plugins.Content.Actors
                                     [new IntIdentifier(1)] = 100,
                                     [new IntIdentifier(2)] = 100,
                                     [new IntIdentifier(3)] = 100,
+                                    [new StringIdentifier("speed")] = 20, // FIXME: just for testing
                                 })
                             },
                             new IFilterAttribute[]
@@ -129,6 +130,7 @@ namespace Macerus.Plugins.Content.Actors
                                     [new IntIdentifier(1)] = 15,
                                     [new IntIdentifier(2)] = 10,
                                     [new IntIdentifier(3)] = 10,
+                                    [new StringIdentifier("speed")] = 10, // FIXME: just for testing
                                 }),
                             },
                             new IFilterAttribute[]
