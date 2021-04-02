@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.7755.12011" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7762.25519" />
   </ItemGroup>
 
 </Project>
