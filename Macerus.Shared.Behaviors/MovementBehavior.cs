@@ -6,7 +6,7 @@ using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Shared.Behaviors
 {
-    public class MovementBehavior :
+    public sealed class MovementBehavior :
         BaseBehavior,
         IMovementBehavior
     {

@@ -9,6 +9,14 @@ namespace Macerus.Plugins.Features.Combat.Default.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
+               .RegisterType<CombatSystem>()
+               .AsImplementedInterfaces()
+               .SingleInstance();
+            builder
+               .RegisterType<CombatAIManager>()
+               .AutoActivate()
+               .AsSelf();
+            builder
                 .RegisterType<CombatCalculations>()
                 .AsImplementedInterfaces()
                 .SingleInstance();

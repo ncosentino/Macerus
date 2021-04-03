@@ -7,13 +7,13 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.5" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7763.21778" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7763.29410" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\libraries\tiled.net\Tiled.Net.Dto\Tiled.Net.Dto.csproj" />
-    <ProjectReference Include="..\..\..\..\libraries\tiled.net\Tiled.Net.Tmx.Xml\Tiled.Net.Tmx.Xml.csproj" />
-    <ProjectReference Include="..\..\..\..\libraries\tiled.net\Tiled.Net\Tiled.Net.csproj" />
+    <ProjectReference Include="..\..\..\..\libraries\Tiled.Net\Tiled.Net.Dto\Tiled.Net.Dto.csproj" />
+    <ProjectReference Include="..\..\..\..\libraries\Tiled.Net\Tiled.Net.Tmx.Xml\Tiled.Net.Tmx.Xml.csproj" />
+    <ProjectReference Include="..\..\..\..\libraries\Tiled.Net\Tiled.Net\Tiled.Net.csproj" />
     <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Mapping\Macerus.Plugins.Features.Mapping.csproj" />
   </ItemGroup>

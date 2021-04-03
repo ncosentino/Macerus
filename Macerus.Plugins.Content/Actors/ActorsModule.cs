@@ -120,6 +120,7 @@ namespace Macerus.Plugins.Content.Actors
                                     new IBehavior[]
                                     {
                                         new HasSkillsBehavior(),
+                                        new CombatAIBehavior(),
                                     }),
                                 new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {

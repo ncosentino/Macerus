@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="NexusLabs.Framework" Version="0.0.5" />
-    <PackageReference Include="ProjectXyz" Version="1.0.7763.21778" />
+    <PackageReference Include="ProjectXyz" Version="1.0.7763.29410" />
   </ItemGroup>
 
   <ItemGroup>

@@ -10,18 +10,15 @@ namespace Macerus.Plugins.Features.Encounters
     {
         private readonly ITurnBasedManager _turnBasedManager;
         private readonly ICombatTurnManager _combatTurnManager;
-        private readonly IFilterContextProvider _filterContextProvider;
         private readonly ILogger _logger;
 
         public EncounterCombatStartHandler(
             ICombatTurnManager combatTurnManager,
             ITurnBasedManager turnBasedManager,
-            IFilterContextProvider filterContextProvider,
             ILogger logger)
         {
             _combatTurnManager = combatTurnManager;
             _turnBasedManager = turnBasedManager;
-            _filterContextProvider = filterContextProvider;
             _logger = logger;
         }
 
@@ -35,11 +32,11 @@ namespace Macerus.Plugins.Features.Encounters
             _turnBasedManager.GlobalSync = false;
             _turnBasedManager.SyncTurnsFromElapsedTime = false;
 
-            _combatTurnManager.Reset();
+            _combatTurnManager.StartCombat(filterContext);
 
             _logger.Debug("Initial combat order:");
             foreach (var actor in _combatTurnManager.GetSnapshot(
-                _filterContextProvider.GetContext(),
+                filterContext,
                 10))
             {
                 _logger.Debug($"\t{actor}");
