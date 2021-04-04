@@ -17,7 +17,7 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent />
+    <PreBuildEvent>dotnet restore --force $(ProjectPath)</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent />
