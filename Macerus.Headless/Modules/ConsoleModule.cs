@@ -23,10 +23,10 @@ namespace Macerus.Headless
 
             public void Debug(string message, object data)
             {
-                System.Diagnostics.Debug.WriteLine($"DEBUG: {message}");
+                Console.WriteLine($"DEBUG: {message}");
                 if (data != null)
                 {
-                    System.Diagnostics.Debug.WriteLine($"\t{data}");
+                    Console.WriteLine($"\t{data}");
                 }
             }
 
