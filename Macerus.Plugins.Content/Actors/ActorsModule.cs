@@ -4,6 +4,7 @@ using Autofac;
 
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Api.GameObjects;
+using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
@@ -63,6 +64,7 @@ namespace Macerus.Plugins.Content.Actors
                     var filterContextAmenity = c.Resolve<IFilterContextAmenity>();
                     var gameObjectIdentifiers = c.Resolve<IGameObjectIdentifiers>();
                     var actorIdentifiers = c.Resolve<IActorIdentifiers>();
+                    var combatTeamIdentifiers = c.Resolve<ICombatTeamIdentifiers>();
                     var actorDefinitions = new IActorDefinition[]
                     {
                         new ActorDefinition(
@@ -98,6 +100,7 @@ namespace Macerus.Plugins.Content.Actors
                                     [new IntIdentifier(1)] = 100,
                                     [new IntIdentifier(2)] = 100,
                                     [new IntIdentifier(3)] = 100,
+                                    [combatTeamIdentifiers.CombatTeamStatDefinitionId] = combatTeamIdentifiers.PlayerTeamStatValue,
                                     [new StringIdentifier("speed")] = 20, // FIXME: just for testing
                                 })
                             },

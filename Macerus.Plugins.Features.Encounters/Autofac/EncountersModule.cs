@@ -30,6 +30,10 @@ namespace Macerus.Plugins.Features.Encounters.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
+                .RegisterType<EncounterDebugPrinterStartHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<EncounterRepository>()
                 .AsImplementedInterfaces()
                 .SingleInstance();

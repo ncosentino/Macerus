@@ -12,6 +12,7 @@ using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Shared.Framework;
@@ -56,7 +57,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Npc
                     filterContext,
                     SupportedAttributes);
             var generatedActors = _actorGeneratorFacade
-                .GenerateActors(subContext)
+                .GenerateActors(
+                    subContext, 
+                    Enumerable.Empty<IGeneratorComponent>())
                 .ToArray();
             if (generatedActors.Length != 1)
             {

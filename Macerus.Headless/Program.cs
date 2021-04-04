@@ -1,5 +1,6 @@
 ﻿
 using Macerus.Api.Behaviors.Filtering;
+using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 
 using ProjectXyz.Game.Interface.Engine;
@@ -23,21 +24,23 @@ namespace Macerus.Headless
             var filterContextAmenity = container.Resolve<IFilterContextAmenity>();
             var combatTurnManager = container.Resolve<ICombatTurnManager>();
             var turnBasedManager = container.Resolve<ITurnBasedManager>();
+            var encounterManager = container.Resolve<IEncounterManager>();
 
-            var filterContext = filterContextAmenity.CreateFilterContextForSingle(
-                filterContextAmenity.CreateRequiredAttribute(
-                    spawnTableIdentifiers.FilterContextSpawnTableIdentifier,
-                    new StringIdentifier("test-multi-skeleton")));
-            filterContext = filterContextAmenity.CopyWithRange(filterContext, 2, 2);
+            //var filterContext = filterContextAmenity.CreateFilterContextForSingle(
+            //    filterContextAmenity.CreateRequiredAttribute(
+            //        spawnTableIdentifiers.FilterContextSpawnTableIdentifier,
+            //        new StringIdentifier("test-multi-skeleton")));
+            //filterContext = filterContextAmenity.CopyWithRange(filterContext, 2, 2);
 
-            mapGameObjectManager.MarkForAddition(actorSpawner.SpawnActors(filterContext));
-            mapGameObjectManager.Synchronize();
+            //mapGameObjectManager.MarkForAddition(actorSpawner.SpawnActors(filterContext));
+            //mapGameObjectManager.Synchronize();
 
-            turnBasedManager.ClearApplicableOnUpdate = true;
-            turnBasedManager.GlobalSync = false;
-            turnBasedManager.SyncTurnsFromElapsedTime = false;
+            //combatTurnManager.StartCombat(filterContext);
 
-            combatTurnManager.StartCombat(filterContext);
+            var filterContext = filterContextAmenity.CreateNoneFilterContext();
+            encounterManager.StartEncounter(
+                filterContext,
+                new StringIdentifier("test-encounter"));
 
             while (true)
             {

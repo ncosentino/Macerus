@@ -39,15 +39,20 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
             };
         }
 
-        public IEnumerable<IGameObject> GenerateActors(IFilterContext filterContext)
+        public IEnumerable<IGameObject> GenerateActors(
+            IFilterContext filterContext,
+            IEnumerable<IGeneratorComponent> additionalActorGeneratorComponents)
         {
             var actorDefinitions = _actorDefinitionRepositoryFacade.GetActorDefinitions(filterContext);
 
             foreach (var actorDefinition in actorDefinitions)
             {
+                var generatorComponents = actorDefinition
+                    .GeneratorComponents
+                    .Concat(additionalActorGeneratorComponents);
                 var definitionBehaviors = _generatorComponentToBehaviorConverter.Convert(
                     Enumerable.Empty<IBehavior>(),
-                    actorDefinition.GeneratorComponents);
+                    generatorComponents);
                 var actor = _actorFactory.Create(
                     new IdentifierBehavior(new StringIdentifier(Guid.NewGuid().ToString())), // FIXME: do we really need a guid here...
                     definitionBehaviors);

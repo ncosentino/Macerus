@@ -10,6 +10,7 @@ using NexusLabs.Framework;
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 
 namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked
@@ -37,17 +38,22 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked
 
         public IEnumerable<IGameObject> GenerateActors(
             ISpawnTable spawnTable,
-            IFilterContext filterContext)
+            IFilterContext filterContext,
+            IEnumerable<IGeneratorComponent> additionalActorGeneratorComponents)
         {
             Contract.Requires(
                 spawnTable.GetType() == SpawnTableType,
                 $"The provided spawn table '{spawnTable}' must have the type '{SpawnTableType}'.");
-            return GenerateLoot((ILinkedSpawnTable)spawnTable, filterContext);
+            return GenerateActors(
+                (ILinkedSpawnTable)spawnTable,
+                filterContext,
+                additionalActorGeneratorComponents);
         }
 
-        private IEnumerable<IGameObject> GenerateLoot(
+        private IEnumerable<IGameObject> GenerateActors(
             ILinkedSpawnTable spawnTable,
-            IFilterContext filterContext)
+            IFilterContext filterContext,
+            IEnumerable<IGeneratorComponent> additionalActorGeneratorComponents)
         {
             // get a random count for this spawn table
             var generationCount = GetGenerationCount(
@@ -89,9 +95,13 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked
                     currentSpawnContext.Attributes.Concat(linkedSpawnTable.ProvidedAttributes));
 
                 // delegate generation of this table to someone else
+                var generatorComponents = linkedSpawnTable
+                    .ProvidedGeneratorComponents
+                    .Concat(additionalActorGeneratorComponents);
                 var generated = _spawnTableHandlerGeneratorFacade.GenerateActors(
                     linkedSpawnTable,
-                    linkedSpawnContext);
+                    linkedSpawnContext,
+                    generatorComponents);
                 foreach (var gameObject in generated)
                 {
                     yield return gameObject;

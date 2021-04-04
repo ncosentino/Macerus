@@ -9,6 +9,7 @@ using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api.Standard;
 
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
+using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Shared.Framework;
@@ -44,7 +45,8 @@ namespace Macerus.Plugins.Content.SpawnTables
                                 filterContextAmenity.CreateRequiredAttribute(
                                     new StringIdentifier("affix-type"),
                                     "normal"),
-                            }),
+                            },
+                            new IGeneratorComponent[] { }),
                     };
                     return new InMemorySpawnTableRepository(dropTables);
                 })

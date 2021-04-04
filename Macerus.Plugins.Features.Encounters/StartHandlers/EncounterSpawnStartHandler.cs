@@ -39,12 +39,12 @@ namespace Macerus.Plugins.Features.Encounters
             IGameObject encounter,
             IFilterContext filterContext)
         {
-            if (!encounter.TryGetFirst<IEncounterSpawnTableIdBehavior>(out var encounterSpawnFilterBehavior))
+            if (!encounter.TryGetFirst<IEncounterSpawnTableIdBehavior>(out var encounterSpawnTableIdBehavior))
             {
                 return;
             }
 
-            var spawnTableId = encounterSpawnFilterBehavior.SpawnTableId;
+            var spawnTableId = encounterSpawnTableIdBehavior.SpawnTableId;
             var spawnTable = _spawnTableRepositoryFacade.GetForSpawnTableId(spawnTableId);
             var spawnTableAttribute = _filterContextAmenity.CreateRequiredAttribute(
                 _spawnTableIdentifiers.FilterContextSpawnTableIdentifier,
@@ -56,7 +56,9 @@ namespace Macerus.Plugins.Features.Encounters
                     spawnTable.MaximumGenerateCount);
 
             var actors = _actorSpawner
-                .SpawnActors(spawnFilterContext)
+                .SpawnActors(
+                    spawnFilterContext,
+                    encounterSpawnTableIdBehavior.AdditionalSpawnGeneratorComponents)
                 .ToArray();
             _encounterGameObjectPlacer.PlaceGameObjects(actors);
         }

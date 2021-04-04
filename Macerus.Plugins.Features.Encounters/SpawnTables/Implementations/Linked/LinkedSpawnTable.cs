@@ -5,6 +5,7 @@ using Macerus.Plugins.Features.Encounters.SpawnTables.Api.Linked;
 
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Generation;
 
 namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked
 {
@@ -16,7 +17,8 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked
             int maximumGenerateCount,
             IEnumerable<IWeightedEntry> entries,
             IEnumerable<IFilterAttribute> supportedAttributes,
-            IEnumerable<IFilterAttribute> providedAttributes)
+            IEnumerable<IFilterAttribute> providedAttributes,
+            IEnumerable<IGeneratorComponent> providedGeneratorComponents)
         {
             SpawnTableId = spawnTableId;
             MinimumGenerateCount = minimumGenerateCount;
@@ -24,6 +26,7 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked
             Entries = entries.ToArray();
             SupportedAttributes = supportedAttributes.ToArray();
             ProvidedAttributes = providedAttributes.ToArray();
+            ProvidedGeneratorComponents = providedGeneratorComponents.ToArray();
         }
 
         public IIdentifier SpawnTableId { get; }
@@ -37,5 +40,7 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked
         public IEnumerable<IFilterAttribute> ProvidedAttributes { get; }
 
         public IReadOnlyCollection<IWeightedEntry> Entries { get; }
+
+        public IReadOnlyCollection<IGeneratorComponent> ProvidedGeneratorComponents { get; }
     }
 }

@@ -2,6 +2,7 @@
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Generation;
 
 namespace Macerus.Plugins.Features.Encounters.SpawnTables.Api
 {
@@ -9,6 +10,7 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Api
     {
         IEnumerable<IGameObject> GenerateActors(
             ISpawnTable SpawnTable,
-            IFilterContext filterContext);
+            IFilterContext filterContext,
+            IEnumerable<IGeneratorComponent> additionalActorGeneratorComponents);
     }
 }

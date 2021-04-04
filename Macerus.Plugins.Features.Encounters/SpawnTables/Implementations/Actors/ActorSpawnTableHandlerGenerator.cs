@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
@@ -10,6 +11,7 @@ using NexusLabs.Contracts;
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Generation;
 
 namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Actors
 {
@@ -30,22 +32,32 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Actors
 
         public IEnumerable<IGameObject> GenerateActors(
             ISpawnTable spawnTable,
-            IFilterContext filterContext)
+            IFilterContext filterContext,
+            IEnumerable<IGeneratorComponent> additionalActorGeneratorComponents)
         {
             Contract.Requires(
                 spawnTable.GetType() == SpawnTableType,
                 $"The provided spawn table '{spawnTable}' must have the type '{SpawnTableType}'.");
-            return GenerateActors((IActorSpawnTable)spawnTable, filterContext);
+            return GenerateActors(
+                (IActorSpawnTable)spawnTable,
+                filterContext,
+                additionalActorGeneratorComponents);
         }
 
         private IEnumerable<IGameObject> GenerateActors(
             IActorSpawnTable spawnTable,
-            IFilterContext filterContext)
+            IFilterContext filterContext,
+            IEnumerable<IGeneratorComponent> additionalActorGeneratorComponents)
         {
             var currentSpawnContext = _filterContextAmenity.CreateSubContext(
                 filterContext,
                 spawnTable.ProvidedAttributes);
-            var generated = _actorGeneratorFacade.GenerateActors(currentSpawnContext);
+            var generatorComponents = spawnTable
+                .ProvidedGeneratorComponents
+                .Concat(additionalActorGeneratorComponents);
+            var generated = _actorGeneratorFacade.GenerateActors(
+                currentSpawnContext,
+                generatorComponents);
             return generated;
         }
     }

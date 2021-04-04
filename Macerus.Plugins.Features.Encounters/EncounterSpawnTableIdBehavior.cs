@@ -1,4 +1,8 @@
-﻿using ProjectXyz.Api.Framework;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Plugins.Features.Encounters
@@ -7,11 +11,16 @@ namespace Macerus.Plugins.Features.Encounters
         BaseBehavior,
         IEncounterSpawnTableIdBehavior
     {
-        public EncounterSpawnTableIdBehavior(IIdentifier spawnTableId)
+        public EncounterSpawnTableIdBehavior(
+            IIdentifier spawnTableId,
+            IEnumerable<IGeneratorComponent> additionalApawnGeneratorComponents)
         {
             SpawnTableId = spawnTableId;
+            AdditionalSpawnGeneratorComponents = additionalApawnGeneratorComponents.ToArray();
         }
 
-        public IIdentifier SpawnTableId { get; }        
+        public IIdentifier SpawnTableId { get; }
+
+        public IReadOnlyCollection<IGeneratorComponent> AdditionalSpawnGeneratorComponents { get; }
     }
 }

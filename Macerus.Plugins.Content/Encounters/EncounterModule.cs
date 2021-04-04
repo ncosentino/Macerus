@@ -1,6 +1,8 @@
 ﻿using Autofac;
 
 using Macerus.Api.Behaviors.Filtering;
+using Macerus.Plugins.Features.Combat.Api;
+using Macerus.Plugins.Features.Combat.Default;
 using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 
@@ -21,6 +23,7 @@ namespace Macerus.Plugins.Content.Encounters
                 {
                     var filterContextAmenity = c.Resolve<IFilterContextAmenity>();
                     var spawnTableIdentifiers = c.Resolve<ISpawnTableIdentifiers>();
+                    var combatTeamIdentifiers = c.Resolve<ICombatTeamIdentifiers>();
                     var encounterDefinitions = new IEncounterDefinition[]
                     {
                         new EncounterDefinition(
@@ -35,7 +38,12 @@ namespace Macerus.Plugins.Content.Encounters
                                     {
                                         // FIXME: put a map here
                                     }),
-                                    new EncounterSpawnTableIdBehavior(new StringIdentifier("test-multi-skeleton"))),
+                                    new EncounterSpawnTableIdBehavior(
+                                        new StringIdentifier("test-multi-skeleton"),
+                                        new[]
+                                        {
+                                            new CombatTeamGeneratorComponent(combatTeamIdentifiers.EnemyTeam1StatValue),
+                                        })),
                             }),
                     };
                     var encounterDefinitionRepository = new InMemoryEncounterDefinitionRepository(

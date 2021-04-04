@@ -5,6 +5,7 @@ using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Generation;
 
 namespace Macerus.Plugins.Features.Encounters.SpawnTables
 {
@@ -19,7 +20,8 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables
 
         public IEnumerable<IGameObject> GenerateActors(
             ISpawnTable spawnTable,
-            IFilterContext filterContext)
+            IFilterContext filterContext,
+            IEnumerable<IGeneratorComponent> additionalActorGeneratorComponents)
         {
             if (!_mapping.TryGetValue(
                 spawnTable.GetType(),
@@ -31,7 +33,8 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables
 
             var generated = spawnTableHandlerGenerator.GenerateActors(
                 spawnTable,
-                filterContext);
+                filterContext,
+                additionalActorGeneratorComponents);
             return generated;
         }
 

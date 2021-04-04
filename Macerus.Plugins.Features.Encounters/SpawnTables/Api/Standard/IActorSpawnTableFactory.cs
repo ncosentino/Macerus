@@ -2,6 +2,7 @@
 
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Generation;
 
 namespace Macerus.Plugins.Features.Encounters.SpawnTables.Api.Standard
 {
@@ -17,6 +18,7 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Api.Standard
             int minimumGenerateCount,
             int maximumGenerateCount,
             IEnumerable<IFilterAttribute> supportedAttributes,
-            IEnumerable<IFilterAttribute> providedAttributes);
+            IEnumerable<IFilterAttribute> providedAttributes,
+            IEnumerable<IGeneratorComponent> additionalActorGeneratorComponents);
     }
 }

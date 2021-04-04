@@ -24,6 +24,10 @@ namespace Macerus.Plugins.Features.Combat.Default.Autofac
                 .RegisterType<CombatGameObjectProvider>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+              .RegisterType<CombatTeamGeneratorComponentToStatsConverter>()
+              .AsImplementedInterfaces()
+              .SingleInstance();
         }
     }
 }

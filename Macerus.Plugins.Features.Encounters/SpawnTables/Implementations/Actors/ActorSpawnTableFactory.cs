@@ -6,6 +6,7 @@ using Macerus.Plugins.Features.Encounters.SpawnTables.Api.Standard;
 
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
 
 namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Actors
@@ -24,7 +25,8 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Actors
             int minimumGenerateCount,
             int maximumGenerateCount,
             IEnumerable<IFilterAttribute> supportedAttributes,
-            IEnumerable<IFilterAttribute> providedAttributes)
+            IEnumerable<IFilterAttribute> providedAttributes,
+            IEnumerable<IGeneratorComponent> additionalActorGeneratorComponents)
         {
             var spawnTable = new ActorSpawnTable(
                 spawnTableId,
@@ -36,7 +38,8 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Actors
                     false)
                     .Yield()
                     .Concat(supportedAttributes),
-                providedAttributes);
+                providedAttributes,
+                additionalActorGeneratorComponents);
             return spawnTable;
         }
 
@@ -50,7 +53,8 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Actors
                 minimumGenerateCount,
                 maximumGenerateCount,
                 Enumerable.Empty<IFilterAttribute>(),
-                Enumerable.Empty<IFilterAttribute>());
+                Enumerable.Empty<IFilterAttribute>(),
+                Enumerable.Empty<IGeneratorComponent>());
             return spawnTable;
         }
     }

@@ -10,6 +10,7 @@ using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework.Collections;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Generation;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
 {
@@ -32,7 +33,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
             _attributeFilterer = attributeFilterer;
         }
 
-        public IEnumerable<IGameObject> GenerateActors(IFilterContext filterContext)
+        public IEnumerable<IGameObject> GenerateActors(
+            IFilterContext filterContext,
+            IEnumerable<IGeneratorComponent> additionalActorGeneratorComponents)
         {
             var totalCount = GetGenerationCount(
                 filterContext.MinimumCount,
@@ -69,7 +72,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
                 var generator = elligibleGenerators.RandomOrDefault(_random);
                 var currentContext = _filterContextAmenity.CreateFilterContextForSingle(filterContext.Attributes);
 
-                var generatedActors = generator.GenerateActors(currentContext);
+                var generatedActors = generator.GenerateActors(
+                    currentContext,
+                    additionalActorGeneratorComponents);
                 var generatedAtLeastOne = false;
                 foreach (var generatedItem in generatedActors)
                 {

@@ -11,6 +11,7 @@ using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework.Collections;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Generation;
 
 namespace Macerus.Plugins.Features.Encounters.SpawnTables
 {
@@ -33,7 +34,9 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables
             _random = random;
         }
 
-        public IEnumerable<IGameObject> SpawnActors(IFilterContext filterContext)
+        public IEnumerable<IGameObject> SpawnActors(
+            IFilterContext filterContext,
+            IEnumerable<IGeneratorComponent> additionalSpawnGeneratorComponents)
         {
             // filter the spawn tables
             var allSpawnTables = _spawnTableRepository.GetAllSpawnTables();
@@ -86,17 +89,18 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables
                 }
 
                 var generationCountBeforeSpawn = generationCount;
-                var generatedLoot = _spawnTableHandlerGeneratorFacade.GenerateActors(
+                var generatedActors = _spawnTableHandlerGeneratorFacade.GenerateActors(
                     spawnTable,
-                    filterContext);
-                foreach (var loot in generatedLoot)
+                    filterContext,
+                    additionalSpawnGeneratorComponents);
+                foreach (var actor in generatedActors)
                 {
                     if (generationCount >= targetCount)
                     {
                         break;
                     }
 
-                    yield return loot;
+                    yield return actor;
                     generationCount++;
                 }
 
