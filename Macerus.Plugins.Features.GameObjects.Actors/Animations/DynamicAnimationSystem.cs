@@ -28,9 +28,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Animations
 
             Parallel.ForEach(
                 GetDynamicAnimationBehaviors(hasBehaviors),
-                dynamicAnimationBehavior =>
+                async dynamicAnimationBehavior =>
                 {
-                    dynamicAnimationBehavior.UpdateAnimation(elapsedSeconds);
+                    await dynamicAnimationBehavior.UpdateAnimationAsync(elapsedSeconds);
                 });
         }
 

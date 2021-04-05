@@ -23,6 +23,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         private readonly IDynamicAnimationIdentifiers _dynamicAnimationIdentifiers;
         private readonly string _sourcePattern;
 
+        private ISpriteAnimation _currentAnimation;
         private int _currentFrameIndex;
         private double _secondsElapsedOnFrame;
         private IIdentifier _lastAnimationId;
@@ -48,6 +49,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         }
 
         public event EventHandler<AnimationFrameEventArgs> AnimationFrameChanged;
+
+        public ISpriteAnimationFrame CurrentFrame => _currentAnimation == null
+            ? null
+            : _currentAnimation.Frames[_currentFrameIndex];
 
         public IIdentifier BaseAnimationId { get; set; }
 
@@ -84,8 +89,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             set => BaseAnimationId = value;
         }
 
-        // FIXME: async void... start propagating this up!
-        public async void UpdateAnimation(double secondsSinceLastFrame)
+        public async Task UpdateAnimationAsync(double secondsSinceLastFrame)
         {
             var currentAnimationId = CurrentAnimationId;
             if (_lastAnimationId!= null && currentAnimationId == null)
@@ -93,7 +97,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 _currentFrameIndex = 0;
                 _lastAnimationId = null;
                 _secondsElapsedOnFrame = 0;
-                
+                _currentAnimation = null;
+
                 AnimationFrameChanged?.Invoke(
                     this, 
                     new AnimationFrameEventArgs(null, null));
@@ -106,19 +111,20 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 _currentFrameIndex = 0;
                 _secondsElapsedOnFrame = 0;
                 _lastAnimationId = currentAnimationId;
+
+                if (!_spriteAnimationRepository.TryGetAnimationById(
+                    currentAnimationId,
+                    out _currentAnimation))
+                {
+                    throw new InvalidOperationException(
+                        $"The current animation ID '{currentAnimationId}' was not " +
+                        $"found for '{Owner}.{this}'.");
+                }
+
                 forceRefreshSprite = true;
             }
 
-            if (!_spriteAnimationRepository.TryGetAnimationById(
-                currentAnimationId,
-                out var currentAnimation))
-            {
-                throw new InvalidOperationException(
-                    $"The current animation ID '{currentAnimationId}' was not " +
-                    $"found for '{Owner}.{this}'.");
-            }
-
-            if (_currentFrameIndex >= currentAnimation.Frames.Count ||
+            if (_currentFrameIndex >= _currentAnimation.Frames.Count ||
                 _currentFrameIndex < 0)
             {
                 throw new InvalidOperationException(
@@ -133,7 +139,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
             while (true)
             {
-                currentFrame = currentAnimation.Frames[_currentFrameIndex];
+                currentFrame = _currentAnimation.Frames[_currentFrameIndex];
                 if (currentFrame.DurationInSeconds == null)
                 {
                     break;
@@ -145,9 +151,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                     _currentFrameIndex++;
                     _secondsElapsedOnFrame -= durationInSeconds;
 
-                    if (_currentFrameIndex == currentAnimation.Frames.Count)
+                    if (_currentFrameIndex == _currentAnimation.Frames.Count)
                     {
-                        if (currentAnimation.Repeat)
+                        if (_currentAnimation.Repeat)
                         {
                             _currentFrameIndex = 0;
                         }
@@ -182,7 +188,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                     animationMultipliers));
         }
 
-        private async Task<IAnimationMultipliers> GetAnimationMultipliersAsync()
+        public async Task<IAnimationMultipliers> GetAnimationMultipliersAsync()
         {
             var multiplierStats = await _statCalculationServiceAmenity.GetStatValuesAsync(
                 (IGameObject)Owner,

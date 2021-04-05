@@ -1,4 +1,6 @@
-﻿using ProjectXyz.Api.Framework;
+﻿using System.Threading.Tasks;
+
+using ProjectXyz.Api.Framework;
 
 namespace Macerus.Api.Behaviors
 {
@@ -8,6 +10,6 @@ namespace Macerus.Api.Behaviors
     {
         new IIdentifier BaseAnimationId { get; set; }
 
-        void UpdateAnimation(double secondsSinceLastFrame);
+        Task UpdateAnimationAsync(double secondsSinceLastFrame);
     }
 }
