@@ -40,14 +40,15 @@ namespace Macerus.Headless
                 throw new NotImplementedException();
             }
 
-            public void Info(string message)
-            {
-                throw new NotImplementedException();
-            }
+            public void Info(string message) => Info(message, null);
 
             public void Info(string message, object data)
             {
-                throw new NotImplementedException();
+                Console.WriteLine($"INFO: {message}");
+                if (data != null)
+                {
+                    Console.WriteLine($"\t{data}");
+                }
             }
 
             public void Warn(string message)

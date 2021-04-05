@@ -17,6 +17,10 @@ namespace Macerus.Plugins.Features.Combat.Default.Autofac
                .AutoActivate()
                .AsSelf();
             builder
+                .RegisterType<PrimitiveAttackCombatAI>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<CombatCalculations>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
@@ -25,9 +29,9 @@ namespace Macerus.Plugins.Features.Combat.Default.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-              .RegisterType<CombatTeamGeneratorComponentToStatsConverter>()
-              .AsImplementedInterfaces()
-              .SingleInstance();
+               .RegisterType<CombatTeamGeneratorComponentToStatsConverter>()
+               .AsImplementedInterfaces()
+               .SingleInstance();
         }
     }
 }

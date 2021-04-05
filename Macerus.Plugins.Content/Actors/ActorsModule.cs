@@ -122,7 +122,6 @@ namespace Macerus.Plugins.Content.Actors
                                 new StatefulBehaviorGeneratorComponent(() =>
                                     new IBehavior[]
                                     {
-                                        new HasSkillsBehavior(),
                                         new CombatAIBehavior(),
                                     }),
                                 new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
@@ -136,6 +135,10 @@ namespace Macerus.Plugins.Content.Actors
                                     [new IntIdentifier(3)] = 10,
                                     [new StringIdentifier("speed")] = 10, // FIXME: just for testing
                                 }),
+                                new HasSkillsGeneratorComponent(new Dictionary<IIdentifier, int>()
+                                {
+                                    [new StringIdentifier("test-attack")] = 1,
+                                })
                             },
                             new IFilterAttribute[]
                             {

@@ -4,7 +4,7 @@ using Macerus.Plugins.Features.GameObjects.Skills.Default;
 
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Plugins.Features.GameObjects.Skills.Autofac
+namespace Macerus.Plugins.Features.GameObjects.Skills.Default.Autofac
 {
     public sealed class SkillModule : SingleRegistrationModule
     {

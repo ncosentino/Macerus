@@ -11,6 +11,10 @@ namespace Macerus.Shared.Behaviors.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
+                .RegisterType<HasSkillsGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<HasMutableStatsGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();

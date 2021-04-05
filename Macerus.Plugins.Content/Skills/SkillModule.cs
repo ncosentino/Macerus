@@ -141,6 +141,22 @@ namespace Macerus.Plugins.Content.Skills
                             },
                             new Dictionary<IIdentifier, double>() { },
                             skillIdentifiers),
+                        // Test, Damaging single target
+                        new SkillDefinition(
+                            new StringIdentifier("test-attack"),
+                            new StringIdentifier("single-target"),
+                            new IIdentifier[] { },
+                            new IIdentifier[] { },
+                            new Dictionary<IIdentifier, double>() { },
+                            new IFilterAttribute[] { },
+                            new IGeneratorComponent[]
+                            {
+                                new StatelessBehaviorGeneratorComponent(
+                                    new InflictDamageBehavior(),
+                                    new UseInCombatSkillBehavior())
+                            },
+                            new Dictionary<IIdentifier, double>() { },
+                            skillIdentifiers),
                     };
 
                     var attributeFilter = c.Resolve<IAttributeFilterer>();

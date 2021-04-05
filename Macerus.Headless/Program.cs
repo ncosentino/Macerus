@@ -1,8 +1,13 @@
 ﻿
+using System.Linq;
+
+using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 
+using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.Logging;
 using ProjectXyz.Game.Interface.Engine;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
@@ -25,6 +30,7 @@ namespace Macerus.Headless
             var combatTurnManager = container.Resolve<ICombatTurnManager>();
             var turnBasedManager = container.Resolve<ITurnBasedManager>();
             var encounterManager = container.Resolve<IEncounterManager>();
+            var logger = container.Resolve<ILogger>();
 
             //var filterContext = filterContextAmenity.CreateFilterContextForSingle(
             //    filterContextAmenity.CreateRequiredAttribute(
@@ -45,6 +51,16 @@ namespace Macerus.Headless
             while (true)
             {
                 gameEngine.Update();
+                var actorWithCurrentTurn = combatTurnManager
+                    .GetSnapshot(
+                        filterContextAmenity.CreateNoneFilterContext(),
+                        1)
+                    .Single();
+                if (actorWithCurrentTurn.Has<IPlayerControlledBehavior>())
+                {
+                    turnBasedManager.SetApplicableObjects(new[] { actorWithCurrentTurn });
+                    logger.Info("Skipping player turn...");
+                }
             }
 
         }

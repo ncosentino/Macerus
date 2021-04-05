@@ -27,5 +27,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments\Macerus.Plugins.Features.GameObjects.Enchantments.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Skills.Api\Macerus.Plugins.Features.GameObjects.Skills.Api.csproj" />
   </ItemGroup>
 </Project>

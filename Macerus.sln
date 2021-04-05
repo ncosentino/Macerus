@@ -71,7 +71,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Ga
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Skills", "Skills", "{86014C1C-18FA-4FC5-B76C-0FFD8D2A3E19}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Skills", "Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.csproj", "{0E65B42E-E2B3-4C8F-B47A-D896FE0D1B39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Skills.Default", "Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.Default.csproj", "{0E65B42E-E2B3-4C8F-B47A-D896FE0D1B39}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Enchantments", "Macerus.Plugins.Features.GameObjects.Enchantments\Macerus.Plugins.Features.GameObjects.Enchantments.csproj", "{F747205A-630F-42CC-ACEF-2766D71CE2BB}"
 EndProject
@@ -129,7 +129,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tiled.Net.Tmx.Xml", "..\..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Containers.Sounds", "Macerus.Plugins.Features.GameObjects.Containers.Sounds\Macerus.Plugins.Features.GameObjects.Containers.Sounds.csproj", "{E7A60ECD-C140-44AD-8758-7B1250537188}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Combat.Api", "Macerus.Plugins.Features.Combat.Api\Macerus.Plugins.Features.Combat.Api.csproj", "{A4D54C37-D8E4-479C-8004-B029D7A3ED68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Combat.Api", "Macerus.Plugins.Features.Combat.Api\Macerus.Plugins.Features.Combat.Api.csproj", "{A4D54C37-D8E4-479C-8004-B029D7A3ED68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Skills.Api", "Macerus.Plugins.Features.GameObjects.Skills.Api\Macerus.Plugins.Features.GameObjects.Skills.Api.csproj", "{BAA67D56-CAFB-4A18-90A3-0EB097FD90C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -305,6 +307,10 @@ Global
 		{A4D54C37-D8E4-479C-8004-B029D7A3ED68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4D54C37-D8E4-479C-8004-B029D7A3ED68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4D54C37-D8E4-479C-8004-B029D7A3ED68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAA67D56-CAFB-4A18-90A3-0EB097FD90C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA67D56-CAFB-4A18-90A3-0EB097FD90C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA67D56-CAFB-4A18-90A3-0EB097FD90C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA67D56-CAFB-4A18-90A3-0EB097FD90C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -366,6 +372,7 @@ Global
 		{E3DB0874-FED3-4773-98DC-EA7E612EB6E7} = {84CD21F4-8F26-4CCB-9DE1-321C29BD268F}
 		{E7A60ECD-C140-44AD-8758-7B1250537188} = {8989A7CB-427A-4954-8118-238604017FE8}
 		{A4D54C37-D8E4-479C-8004-B029D7A3ED68} = {9DFE0CE3-ECC8-4FCF-BE6A-94859F543B13}
+		{BAA67D56-CAFB-4A18-90A3-0EB097FD90C4} = {86014C1C-18FA-4FC5-B76C-0FFD8D2A3E19}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}
