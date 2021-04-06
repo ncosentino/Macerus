@@ -13,11 +13,11 @@ namespace Macerus.Plugins.Features.Combat.Default.Autofac
                .AsImplementedInterfaces()
                .SingleInstance();
             builder
-               .RegisterType<CombatAIManager>()
-               .AutoActivate()
-               .AsSelf();
+               .RegisterType<CombatAISystem>()
+               .AsImplementedInterfaces()
+               .SingleInstance();
             builder
-                .RegisterType<PrimitiveAttackCombatAI>()
+                .RegisterType<CombatAIFactory>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder

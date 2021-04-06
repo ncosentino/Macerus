@@ -35,29 +35,28 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             ISystemUpdateContext systemUpdateContext,
             IEnumerable<IHasBehaviors> hasBehaviors)
         {
-            var turnInfo = systemUpdateContext
-                .GetFirst<IComponent<ITurnInfo>>()
+            var elapsedTime = systemUpdateContext
+                .GetFirst<IComponent<IElapsedTime>>()
                 .Value;
-            var elapsedSeconds = turnInfo.ElapsedTurns * 1.0d; // FIXME: we need a turn to time calculation
+            var elapsedSeconds = ((IInterval<double>)elapsedTime.Interval).Value / 1000;
 
-            foreach (var supportedEntry in GetSupportedEntries(turnInfo.ApplicableGameObjects))
+            foreach (var supportedEntry in GetSupportedEntries(hasBehaviors))
             {
-                UpdatePosition(
-                    supportedEntry.Item2,
+                UpdateVelocity(
                     supportedEntry.Item1,
                     elapsedSeconds);
                 UpdateAnimation(
+                    supportedEntry.Item1,
                     supportedEntry.Item2,
-                    supportedEntry.Item3,
                     elapsedSeconds);
             }
         }
 
-        private IEnumerable<Tuple<IWorldLocationBehavior, IMovementBehavior, IDynamicAnimationBehavior>> GetSupportedEntries(IEnumerable<IHasBehaviors> hasBehaviors)
+        private IEnumerable<Tuple<IMovementBehavior, IDynamicAnimationBehavior>> GetSupportedEntries(IEnumerable<IHasBehaviors> hasBehaviors)
         {
             foreach (var gameObject in hasBehaviors)
             {
-                Tuple<IWorldLocationBehavior, IMovementBehavior, IDynamicAnimationBehavior> requiredBehaviors;
+                Tuple<IMovementBehavior, IDynamicAnimationBehavior> requiredBehaviors;
                 if (!_behaviorFinder.TryFind(
                     gameObject,
                     out requiredBehaviors))
@@ -127,9 +126,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             }
         }
 
-        private void UpdatePosition(
+        private void UpdateVelocity(
             IMovementBehavior movementBehavior,
-            IWorldLocationBehavior worldLocationBehavior,
             double elapsedSeconds)
         {
             // TODO: load this from stats?
