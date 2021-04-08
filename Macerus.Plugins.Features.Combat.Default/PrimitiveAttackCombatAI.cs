@@ -185,9 +185,12 @@ namespace Macerus.Plugins.Features.Combat.Default
 
             var currentWalkPoint = pointsToWalk.Peek();
 
-            const double CLOSE_ENOUGH = 0.25;
+            // try to stay a little further on the last point so we don't slam into the target
+            double closeEnough = pointsToWalk.Count == 1
+                ? 0.50
+                : 0.25;
             if (Math.Abs(locationBehavior.X - currentWalkPoint.X) +
-                Math.Abs(locationBehavior.Y - currentWalkPoint.Y) < CLOSE_ENOUGH)
+                Math.Abs(locationBehavior.Y - currentWalkPoint.Y) < closeEnough)
             {
                 pointsToWalk.Dequeue();
 
