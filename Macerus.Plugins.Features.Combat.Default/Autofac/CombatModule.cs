@@ -32,6 +32,14 @@ namespace Macerus.Plugins.Features.Combat.Default.Autofac
                .RegisterType<CombatTeamGeneratorComponentToStatsConverter>()
                .AsImplementedInterfaces()
                .SingleInstance();
+            builder
+               .RegisterType<WinConditionHandlerFacade>()
+               .AsImplementedInterfaces()
+               .SingleInstance();
+            builder
+               .RegisterType<LastRemainingTeamWinConditionHandler>()
+               .AsImplementedInterfaces()
+               .SingleInstance();
         }
     }
 }

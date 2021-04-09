@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 
+using Macerus.Plugins.Features.Combat.Api;
+
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.TurnBased.Api;
@@ -14,13 +17,19 @@ namespace Macerus.Plugins.Features.Combat.Default
     {
         private readonly ICombatTurnManager _combatTurnManager;
         private readonly IFilterContextProvider _filterContextProvider;
+        private readonly IWinConditionHandlerFacade _winConditionHandler;
+        private readonly ILogger _logger;
 
         public CombatSystem(
             ICombatTurnManager combatTurnManager,
-            IFilterContextProvider filterContextProvider)
+            IFilterContextProvider filterContextProvider,
+            IWinConditionHandlerFacade winConditionHandler,
+            ILogger logger)
         {
             _combatTurnManager = combatTurnManager;
             _filterContextProvider = filterContextProvider;
+            _winConditionHandler = winConditionHandler;
+            _logger = logger;
         }
 
         public int? Priority => null;
@@ -41,7 +50,13 @@ namespace Macerus.Plugins.Features.Combat.Default
             _combatTurnManager.ProgressTurn(
                 filterContext,
                 1);
-        }
+
+            if (_winConditionHandler.TryGetWinningTeam(out var winningTeamId))
+            {
+                _logger.Debug(
+                    $"FIXME: handle winning team {winningTeamId}");
+            }
+        }        
 
         private bool InCombat(ITurnInfo turnInfo)
         {
