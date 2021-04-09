@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Numerics;
 
 using Macerus.Api.Behaviors;
 
@@ -10,11 +12,18 @@ namespace Macerus.Shared.Behaviors
         BaseBehavior,
         IMovementBehavior
     {
+        private readonly Queue<Vector2> _pointsToWalk;
+
         private double _throttleX;
         private double _throttleY;
         private double _velocityX;
         private double _velocityY;
         private bool _disableEventChange;
+
+        public MovementBehavior()
+        {
+            _pointsToWalk = new Queue<Vector2>();
+        }
 
         public event EventHandler<EventArgs> ThrottleChanged;
 
@@ -87,6 +96,8 @@ namespace Macerus.Shared.Behaviors
                 }
             }
         }
+
+        public IReadOnlyCollection<Vector2> PointsToWalk => _pointsToWalk;
 
         public void SetThrottle(double throttleX, double throttleY)
         {
@@ -168,6 +179,21 @@ namespace Macerus.Shared.Behaviors
 
             _velocityY = value;
             return true;
+        }
+
+        public void SetWalkPath(IEnumerable<Vector2> pointsToWalk)
+        {
+            _pointsToWalk.Clear();
+            foreach (var point in pointsToWalk)
+            {
+                _pointsToWalk.Enqueue(point);
+            }    
+        }
+
+        public Vector2 CompleteWalkPoint()
+        {
+            var lastWalkPoint = _pointsToWalk.Dequeue();
+            return lastWalkPoint;
         }
     }
 }

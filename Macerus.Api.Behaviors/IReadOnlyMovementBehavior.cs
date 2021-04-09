@@ -1,4 +1,7 @@
-﻿using ProjectXyz.Api.Behaviors;
+﻿using System.Collections.Generic;
+using System.Numerics;
+
+using ProjectXyz.Api.Behaviors;
 
 namespace Macerus.Api.Behaviors
 {
@@ -11,5 +14,7 @@ namespace Macerus.Api.Behaviors
         double VelocityX { get; }
 
         double VelocityY { get; }
+
+        IReadOnlyCollection<Vector2> PointsToWalk { get; }
     }
 }

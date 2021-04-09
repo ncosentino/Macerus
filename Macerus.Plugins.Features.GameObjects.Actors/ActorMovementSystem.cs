@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 
 using Macerus.Api.Behaviors;
 
@@ -42,21 +44,29 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
             foreach (var supportedEntry in GetSupportedEntries(hasBehaviors))
             {
+                var movementBehavior = supportedEntry.Item1;
+                var dynamicAnimationBehavior = supportedEntry.Item2;
+                var worldLocationBehavior = supportedEntry.Item3;
+
+                WalkPath(
+                    movementBehavior,
+                    worldLocationBehavior,
+                    elapsedSeconds);
                 UpdateVelocity(
-                    supportedEntry.Item1,
+                    movementBehavior,
                     elapsedSeconds);
                 UpdateAnimation(
-                    supportedEntry.Item1,
-                    supportedEntry.Item2,
+                    movementBehavior,
+                    dynamicAnimationBehavior,
                     elapsedSeconds);
             }
         }
 
-        private IEnumerable<Tuple<IMovementBehavior, IDynamicAnimationBehavior>> GetSupportedEntries(IEnumerable<IHasBehaviors> hasBehaviors)
+        private IEnumerable<Tuple<IMovementBehavior, IDynamicAnimationBehavior, IWorldLocationBehavior>> GetSupportedEntries(IEnumerable<IHasBehaviors> hasBehaviors)
         {
             foreach (var gameObject in hasBehaviors)
             {
-                Tuple<IMovementBehavior, IDynamicAnimationBehavior> requiredBehaviors;
+                Tuple<IMovementBehavior, IDynamicAnimationBehavior, IWorldLocationBehavior> requiredBehaviors;
                 if (!_behaviorFinder.TryFind(
                     gameObject,
                     out requiredBehaviors))
@@ -206,6 +216,81 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             movementBehavior.SetVelocity(
                 velocityX,
                 velocityY);
+        }
+
+        private void WalkPath(
+            IMovementBehavior movementBehavior,
+            IWorldLocationBehavior locationBehavior,
+            double elapsedSeconds)
+        {
+            if (movementBehavior.PointsToWalk.Count < 1)
+            {
+                return;
+            }
+
+            var currentWalkPoint = movementBehavior.PointsToWalk.First();
+
+            // try to stay a little further on the last point so we don't slam into the target
+            double closeEnough = movementBehavior.PointsToWalk.Count == 1
+                ? 0.50
+                : 0.25;
+            if (Math.Abs(locationBehavior.X - currentWalkPoint.X) +
+                Math.Abs(locationBehavior.Y - currentWalkPoint.Y) < closeEnough)
+            {
+                movementBehavior.CompleteWalkPoint();
+
+                if (movementBehavior.PointsToWalk.Count < 1)
+                {
+                    _logger.Debug(
+                        $"'{movementBehavior.Owner}' walked to their target at " +
+                        $"'({currentWalkPoint.X},{currentWalkPoint.Y})'.");
+                    movementBehavior.SetThrottle(0, 0);
+                    return;
+                }
+                else
+                {
+                    var nextWalkPoint = movementBehavior.PointsToWalk.First();
+                    _logger.Debug(
+                        $"'{movementBehavior.Owner}' walked to '({currentWalkPoint.X},{currentWalkPoint.Y})' " +
+                        $"and will walk to ({nextWalkPoint.X},{nextWalkPoint.Y}) next.");
+                    currentWalkPoint = nextWalkPoint;
+                }
+            }
+
+            const double DEBOUNCE = 0.1;
+            var previousThrottleX = movementBehavior.ThrottleX;
+            var previousThrottleY = movementBehavior.ThrottleY;
+            var throttleX = 0d;
+            var throttleY = 0d;
+            if (Math.Abs(locationBehavior.X - currentWalkPoint.X) < DEBOUNCE)
+            {
+                throttleX = 0;
+            }
+            else if (locationBehavior.X < currentWalkPoint.X)
+            {
+                throttleX = throttleX < 0 ? 0 : previousThrottleX + 0.1 * elapsedSeconds;
+            }
+            else if (locationBehavior.X > currentWalkPoint.X)
+            {
+                throttleX = throttleX > 0 ? 0 : previousThrottleX - 0.1 * elapsedSeconds;
+            }
+
+            if (Math.Abs(locationBehavior.Y - currentWalkPoint.Y) < DEBOUNCE)
+            {
+                throttleY = 0;
+            }
+            else if (locationBehavior.Y < currentWalkPoint.Y)
+            {
+                throttleY = throttleY < 0 ? 0 : previousThrottleY + 0.1 * elapsedSeconds;
+            }
+            else if (locationBehavior.Y > currentWalkPoint.Y)
+            {
+                throttleY = throttleY > 0 ? 0 : previousThrottleY - 0.1 * elapsedSeconds;
+            }
+
+            throttleX = throttleX > 1 ? 1 : throttleX < -1 ? -1 : throttleX;
+            throttleY = throttleY > 1 ? 1 : throttleY < -1 ? -1 : throttleY;
+            movementBehavior.SetThrottle(throttleX, throttleY);
         }
     }
 }

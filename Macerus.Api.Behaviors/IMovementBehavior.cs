@@ -1,4 +1,7 @@
-﻿namespace Macerus.Api.Behaviors
+﻿using System.Collections.Generic;
+using System.Numerics;
+
+namespace Macerus.Api.Behaviors
 {
     public interface IMovementBehavior : IObservableMovementBehavior
     {
@@ -13,5 +16,9 @@
         new double VelocityY { get; set; }
 
         void SetVelocity(double velocityX, double velocityY);
+
+        void SetWalkPath(IEnumerable<Vector2> pointsToWalk);
+
+        Vector2 CompleteWalkPoint();
     }
 }

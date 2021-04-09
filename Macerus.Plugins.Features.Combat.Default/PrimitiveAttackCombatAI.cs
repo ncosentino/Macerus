@@ -33,7 +33,6 @@ namespace Macerus.Plugins.Features.Combat.Default
 
         private CombatState _combatState;
         private IGameObject _combatTarget;
-        private Queue<Vector2> _pointsToWalk;
 
         public PrimitiveAttackCombatAI(
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
@@ -83,10 +82,7 @@ namespace Macerus.Plugins.Features.Combat.Default
                         _combatTarget);
                     break;
                 case CombatState.WalkToTarget:
-                    turnShouldEnd = WalkToTarget(
-                        actor,
-                        _pointsToWalk,
-                        elapsed.Value / 1000d);
+                    turnShouldEnd = WalkToTarget(actor);
                     break;
                 case CombatState.UseSkill:
                     turnShouldEnd = UseSkillOnTarget(
@@ -166,87 +162,19 @@ namespace Macerus.Plugins.Features.Combat.Default
             return false;
         }
 
-        private bool WalkToTarget(
-            IGameObject actor,
-            Queue<Vector2> pointsToWalk,
-            double elapsedSeconds)
+        private bool WalkToTarget(IGameObject actor)
         {
             Contract.RequiresNotNull(actor, $"{nameof(actor)} cannot be null.");
 
             var movementBehavior = actor.GetOnly<IMovementBehavior>();
-            var locationBehavior = actor.GetOnly<IReadOnlyWorldLocationBehavior>();
-
-            if (pointsToWalk.Count < 1)
+            if (movementBehavior.PointsToWalk.Count < 1)
             {
+                _logger.Info($"'{actor}' has completed their walk path.");
+
                 movementBehavior.SetThrottle(0, 0);
                 _combatState = CombatState.UseSkill;
-                return false;
             }
 
-            var currentWalkPoint = pointsToWalk.Peek();
-
-            // try to stay a little further on the last point so we don't slam into the target
-            double closeEnough = pointsToWalk.Count == 1
-                ? 0.50
-                : 0.25;
-            if (Math.Abs(locationBehavior.X - currentWalkPoint.X) +
-                Math.Abs(locationBehavior.Y - currentWalkPoint.Y) < closeEnough)
-            {
-                pointsToWalk.Dequeue();
-
-                if (pointsToWalk.Count < 1)
-                {
-                    _logger.Debug(
-                        $"'{actor}' walked to their target at " +
-                        $"'({currentWalkPoint.X},{currentWalkPoint.Y})'.");
-                    movementBehavior.SetThrottle(0, 0);
-                    _combatState = CombatState.UseSkill;
-                    return false;
-                }
-                else
-                {
-                    var nextWalkPoint = pointsToWalk.Peek();
-                    _logger.Debug(
-                        $"'{actor}' walked to '({currentWalkPoint.X},{currentWalkPoint.Y})' " +
-                        $"and will walk to ({nextWalkPoint.X},{nextWalkPoint.Y}) next.");
-                    currentWalkPoint = nextWalkPoint;
-                }
-            }
-
-            const double DEBOUNCE = 0.1;
-            var previousThrottleX = movementBehavior.ThrottleX;
-            var previousThrottleY = movementBehavior.ThrottleY;
-            var throttleX = 0d;
-            var throttleY = 0d;
-            if (Math.Abs(locationBehavior.X - currentWalkPoint.X) < DEBOUNCE)
-            {
-                throttleX = 0;
-            }
-            else if (locationBehavior.X < currentWalkPoint.X)
-            {
-                throttleX = throttleX < 0 ? 0 : previousThrottleX + 0.1 * elapsedSeconds; 
-            }
-            else if (locationBehavior.X > currentWalkPoint.X)
-            {
-                throttleX = throttleX > 0 ? 0 : previousThrottleX - 0.1 * elapsedSeconds;
-            }
-
-            if (Math.Abs(locationBehavior.Y - currentWalkPoint.Y) < DEBOUNCE)
-            {
-                throttleY = 0;
-            }
-            else if (locationBehavior.Y < currentWalkPoint.Y)
-            {
-                throttleY = throttleY < 0 ? 0 : previousThrottleY + 0.1 * elapsedSeconds;
-            }
-            else if (locationBehavior.Y > currentWalkPoint.Y)
-            {
-                throttleY = throttleY > 0 ? 0 : previousThrottleY - 0.1 * elapsedSeconds;
-            }
-
-            throttleX = throttleX > 1 ? 1 : throttleX < -1 ? -1 : throttleX;
-            throttleY = throttleY > 1 ? 1 : throttleY < -1 ? -1 : throttleY;
-            movementBehavior.SetThrottle(throttleX, throttleY);
             return false;
         }
 
@@ -272,16 +200,18 @@ namespace Macerus.Plugins.Features.Combat.Default
                 $"({targetLocation.X},{targetLocation.Y}).");
 
             var actorSize = new Vector2((float)actorLocationBehavior.Width, (float)actorLocationBehavior.Height);
-            _pointsToWalk = new Queue<Vector2>(_mapProvider
+            var pointsToWalk = new Queue<Vector2>(_mapProvider
                 .PathFinder
                 .FindPath(
                     actorLocation,
                     targetLocation,
                     actorSize));
-            _pointsToWalk.Enqueue(targetLocation);
+            pointsToWalk.Enqueue(targetLocation);
             _logger.Info(
                 $"Path:\r\n" +
-                string.Join("\r\n", _pointsToWalk.Select(p => $"\t({p.X},{p.Y})")));
+                string.Join("\r\n", pointsToWalk.Select(p => $"\t({p.X},{p.Y})")));
+            actor.GetOnly<IMovementBehavior>().SetWalkPath(pointsToWalk);
+
             _combatState = CombatState.WalkToTarget;
             return false;
         }
