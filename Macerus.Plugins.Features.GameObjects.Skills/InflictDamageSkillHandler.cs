@@ -1,15 +1,22 @@
 ﻿using System.Collections.Generic;
 
+using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
     public sealed class InflictDamageSkillHandler : IDiscoverableSkillHandler
     {
+        private readonly ICombatStatIdentifiers _combatStatIdentifiers;
+
+        public InflictDamageSkillHandler(ICombatStatIdentifiers combatStatIdentifiers)
+        {
+            _combatStatIdentifiers = combatStatIdentifiers;
+        }
+
         public void Handle(
             IGameObject user,
             IGameObject skill,
@@ -28,7 +35,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 // - status effects
                 // - chance to hit
                 var targetStatsBehavior = target.GetOnly<IHasMutableStatsBehavior>();
-                targetStatsBehavior.MutateStats(targetStats => targetStats[new IntIdentifier(1)] -= 10);
+                targetStatsBehavior.MutateStats(targetStats => targetStats[_combatStatIdentifiers.CurrentLifeStatId] -= 10);
             }
         }
     }

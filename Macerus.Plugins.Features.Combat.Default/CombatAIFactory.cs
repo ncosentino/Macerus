@@ -13,6 +13,7 @@ namespace Macerus.Plugins.Features.Combat.Default
         private readonly ISkillUsage _skillUsage;
         private readonly ISkillHandlerFacade _skillHandlerFacade;
         private readonly ICombatTeamIdentifiers _combatTeamIdentifiers;
+        private readonly ICombatStatIdentifiers _combatStatIdentifiers;
         private readonly IMapProvider _mapProvider;
         private readonly ILogger _logger;
 
@@ -21,6 +22,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             ISkillUsage skillUsage,
             ISkillHandlerFacade skillHandlerFacade,
             ICombatTeamIdentifiers combatTeamIdentifiers,
+            ICombatStatIdentifiers combatStatIdentifiers,
             IMapProvider mapProvider,
             ILogger logger)
         {
@@ -28,6 +30,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             _skillUsage = skillUsage;
             _skillHandlerFacade = skillHandlerFacade;
             _combatTeamIdentifiers = combatTeamIdentifiers;
+            _combatStatIdentifiers = combatStatIdentifiers;
             _mapProvider = mapProvider;
             _logger = logger;
         }
@@ -40,6 +43,7 @@ namespace Macerus.Plugins.Features.Combat.Default
                 _skillUsage,
                 _skillHandlerFacade,
                 _combatTeamIdentifiers,
+                _combatStatIdentifiers,
                 _mapProvider,
                 _logger);
             return combatAI;

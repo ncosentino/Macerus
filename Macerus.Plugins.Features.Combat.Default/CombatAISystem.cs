@@ -41,11 +41,12 @@ namespace Macerus.Plugins.Features.Combat.Default
             _combatTurnManager = combatTurnManager;
             _turnBasedManager = turnBasedManager;
             _logger = logger;
-            _combatTurnManager.TurnProgressed += CombatTurnManager_TurnProgressed;
-            _combatTurnManager.CombatStarted += CombatTurnManager_CombatStarted;
             _combatGameObjectProvider = combatGameObjectProvider;
             _combatAIFactory = combatAIFactory;
             _combatStatIdentifiers = combatStatIdentifiers;
+
+            _combatTurnManager.TurnProgressed += CombatTurnManager_TurnProgressed;
+            _combatTurnManager.CombatStarted += CombatTurnManager_CombatStarted;
         }
 
         public void Update(
