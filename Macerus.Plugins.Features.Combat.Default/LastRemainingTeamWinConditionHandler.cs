@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using Macerus.Plugins.Features.Combat.Api;
 
@@ -23,20 +24,26 @@ namespace Macerus.Plugins.Features.Combat.Default
             _combatTeamIdentifiers = combatTeamIdentifiers;
         }
 
-        public bool TryGetWinningTeam(out double winningTeamId)
+        public bool CheckWinConditions(
+            out IReadOnlyCollection<IGameObject> winningTeam,
+            out IReadOnlyDictionary<int, IReadOnlyCollection<IGameObject>> losingTeams)
         {
-            var mapping = _combatGameObjectProvider
+            var teamMapping = _combatGameObjectProvider
                 .GetGameObjects()
                 .GroupBy(actor =>
                 {
-                    var baseTeam = actor
+                    var baseTeam = (int)actor
                         .GetOnly<IHasStatsBehavior>()
                         .BaseStats[_combatTeamIdentifiers.CombatTeamStatDefinitionId];
                     return baseTeam;
                 })
                 .ToDictionary(
                     team => team.Key,
-                    team => team
+                    team => team.ToReadOnlyCollection());
+            var aliveTeamMapping = teamMapping
+                .ToDictionary(
+                    team => team.Key,
+                    team => team.Value
                         .Where(actor =>
                         {
                             var currentLife = actor
@@ -48,14 +55,24 @@ namespace Macerus.Plugins.Features.Combat.Default
                             return currentLife > 0;
                         })
                         .ToReadOnlyCollection());
-            var remainingTeams = mapping
+            var remainingTeams = aliveTeamMapping
                 .Where(team => team.Value.Count > 0)
                 .Select(x => x.Key)
                 .ToArray();
             var onlyOneRemainingTeam = remainingTeams.Length == 1;
-            winningTeamId = onlyOneRemainingTeam
-                ? remainingTeams.Single()
-                : -1;
+            if (onlyOneRemainingTeam)
+            {
+                winningTeam = teamMapping[remainingTeams.Single()];
+                losingTeams = teamMapping
+                    .Where(x => x.Key != remainingTeams.Single())
+                    .ToDictionary(x => x.Key, ProjectXyz => ProjectXyz.Value);
+            }
+            else
+            {
+                winningTeam = new IGameObject[0];
+                losingTeams = new Dictionary<int, IReadOnlyCollection<IGameObject>>();
+            }
+
             return onlyOneRemainingTeam;
         }
     }

@@ -98,9 +98,21 @@ namespace Macerus.Headless
             //    Console.WriteLine($"\t({point.X},{point.Y})");
             //}
 
-            while (true)
+            bool keepRunning = true;
+            combatTurnManager.CombatEnded += (s, e) =>
+            {
+                keepRunning = false;
+                logger.Info("Combat complete");
+            };
+
+            while (keepRunning)
             {
                 gameEngine.Update();
+                if (!keepRunning)
+                {
+                    break;
+                }
+
                 var actorWithCurrentTurn = combatTurnManager
                     .GetSnapshot(
                         filterContextAmenity.CreateNoneFilterContext(),
@@ -113,6 +125,12 @@ namespace Macerus.Headless
                 }
             }
 
+            Console.ReadLine();
+        }
+
+        private static void CombatTurnManager_CombatEnded(object sender, CombatEndedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private static Vector2 ClosestPosition(

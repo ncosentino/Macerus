@@ -49,10 +49,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             ISystemUpdateContext systemUpdateContext,
             IEnumerable<IHasBehaviors> hasBehaviors)
         {
-            var turnInfo = systemUpdateContext
-                .GetFirst<IComponent<ITurnInfo>>()
-                .Value;
-            if (!InCombat(turnInfo) ||
+            if (!_combatTurnManager.InCombat ||
                 _currentActor == null ||
                 _currentCombatAI == null)
             {
@@ -71,12 +68,6 @@ namespace Macerus.Plugins.Features.Combat.Default
             {
                 _turnBasedManager.SetApplicableObjects(new[] { _currentActor });
             }
-        }
-
-        private bool InCombat(ITurnInfo turnInfo)
-        {
-            // FIXME: we need a better way to check if we're in combat
-            return !turnInfo.GlobalSync;
         }
 
         private ICombatAI GetCombatAI(IGameObject currentActor)

@@ -3,6 +3,8 @@ using System.Linq;
 
 using Macerus.Plugins.Features.Combat.Api;
 
+using ProjectXyz.Api.GameObjects;
+
 namespace Macerus.Plugins.Features.Combat.Default
 {
     public sealed class WinConditionHandlerFacade : IWinConditionHandlerFacade
@@ -14,17 +16,22 @@ namespace Macerus.Plugins.Features.Combat.Default
             _winConditionHandlers = winConditionHandlers.ToArray();
         }
 
-        public bool TryGetWinningTeam(out double winningTeamId)
+        public bool CheckWinConditions(
+            out IReadOnlyCollection<IGameObject> winningTeam,
+            out IReadOnlyDictionary<int, IReadOnlyCollection<IGameObject>> losingTeams)
         {
-            winningTeamId = -1;
             foreach (var handler in _winConditionHandlers)
             {
-                if (handler.TryGetWinningTeam(out winningTeamId))
+                if (handler.CheckWinConditions(
+                    out winningTeam,
+                    out losingTeams))
                 {
                     return true;
                 }
             }
 
+            winningTeam = new IGameObject[0];
+            losingTeams = new Dictionary<int, IReadOnlyCollection<IGameObject>>();
             return false;
         }
     }

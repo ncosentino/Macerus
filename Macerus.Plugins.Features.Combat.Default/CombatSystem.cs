@@ -15,6 +15,7 @@ namespace Macerus.Plugins.Features.Combat.Default
 {
     public sealed class CombatSystem : IDiscoverableSystem
     {
+        private readonly ITurnBasedManager _turnBasedManager;
         private readonly ICombatTurnManager _combatTurnManager;
         private readonly IFilterContextProvider _filterContextProvider;
         private readonly IWinConditionHandlerFacade _winConditionHandler;
@@ -24,12 +25,14 @@ namespace Macerus.Plugins.Features.Combat.Default
             ICombatTurnManager combatTurnManager,
             IFilterContextProvider filterContextProvider,
             IWinConditionHandlerFacade winConditionHandler,
-            ILogger logger)
+            ILogger logger,
+            ITurnBasedManager turnBasedManager)
         {
             _combatTurnManager = combatTurnManager;
             _filterContextProvider = filterContextProvider;
             _winConditionHandler = winConditionHandler;
             _logger = logger;
+            _turnBasedManager = turnBasedManager;
         }
 
         public int? Priority => null;
@@ -41,7 +44,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             var turnInfo = systemUpdateContext
                 .GetFirst<IComponent<ITurnInfo>>()
                 .Value;
-            if (!InCombat(turnInfo))
+            if (!_combatTurnManager.InCombat || turnInfo.ElapsedTurns != 1)
             {
                 return;
             }
@@ -51,19 +54,16 @@ namespace Macerus.Plugins.Features.Combat.Default
                 filterContext,
                 1);
 
-            if (_winConditionHandler.TryGetWinningTeam(out var winningTeamId))
+            if (_winConditionHandler.CheckWinConditions(
+                out var winningTeam,
+                out var losingTeams))
             {
-                _logger.Debug(
-                    $"FIXME: handle winning team {winningTeamId}");
+                _turnBasedManager.GlobalSync = true;
+                _turnBasedManager.SyncTurnsFromElapsedTime = true;
+                _combatTurnManager.EndCombat(
+                    winningTeam,
+                    losingTeams);
             }
-        }        
-
-        private bool InCombat(ITurnInfo turnInfo)
-        {
-            // FIXME: we need a better way to check if we're in combat
-            return
-                turnInfo.ElapsedTurns == 1 &&
-                !turnInfo.GlobalSync;
         }
     }
 }
