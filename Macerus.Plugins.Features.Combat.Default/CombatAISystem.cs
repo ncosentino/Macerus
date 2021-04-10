@@ -12,6 +12,7 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Combat.Api;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.TurnBased.Api;
 
 namespace Macerus.Plugins.Features.Combat.Default
@@ -23,7 +24,7 @@ namespace Macerus.Plugins.Features.Combat.Default
         private readonly ILogger _logger;
         private readonly ICombatGameObjectProvider _combatGameObjectProvider;
         private readonly ICombatAIFactory _combatAIFactory;
-
+        private readonly ICombatStatIdentifiers _combatStatIdentifiers;
         private IGameObject _currentActor;
         private ICombatAI _currentCombatAI;
 
@@ -34,7 +35,8 @@ namespace Macerus.Plugins.Features.Combat.Default
             ITurnBasedManager turnBasedManager,
             ILogger logger, 
             ICombatGameObjectProvider combatGameObjectProvider,
-            ICombatAIFactory combatAIFactory)
+            ICombatAIFactory combatAIFactory,
+            ICombatStatIdentifiers combatStatIdentifiers)
         {
             _combatTurnManager = combatTurnManager;
             _turnBasedManager = turnBasedManager;
@@ -43,6 +45,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             _combatTurnManager.CombatStarted += CombatTurnManager_CombatStarted;
             _combatGameObjectProvider = combatGameObjectProvider;
             _combatAIFactory = combatAIFactory;
+            _combatStatIdentifiers = combatStatIdentifiers;
         }
 
         public void Update(
@@ -91,20 +94,40 @@ namespace Macerus.Plugins.Features.Combat.Default
             return combatAI;
         }
 
+        private void ConfigureForNextActor(IGameObject nextActor)
+        {
+            var nextActorCurrentLife = nextActor
+                .GetOnly<IHasStatsBehavior>()
+                // FIXME: do we need to consider a stat calc or
+                // can we assume base stat
+                .BaseStats[_combatStatIdentifiers.CurrentLifeStatId];
+
+            if (nextActorCurrentLife > 0)
+            {
+                _currentActor = nextActor;
+                _currentCombatAI = GetCombatAI(nextActor);
+            }
+            else
+            {
+                _currentActor = null;
+                _currentCombatAI = null;
+            }
+        }
+
         private void CombatTurnManager_TurnProgressed(
             object sender,
             TurnProgressedEventArgs e)
         {
-            _currentActor = e.ActorWithNextTurn;
-            _currentCombatAI = GetCombatAI(_currentActor);
+            var nextActor = e.ActorWithNextTurn;
+            ConfigureForNextActor(nextActor);
         }
 
         private void CombatTurnManager_CombatStarted(
             object sender,
             CombatStartedEventArgs e)
         {
-            _currentActor = e.ActorOrder.First();
-            _currentCombatAI = GetCombatAI(_currentActor);
+            var nextActor = e.ActorOrder.First();
+            ConfigureForNextActor(nextActor);
         }
     }
 }

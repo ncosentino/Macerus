@@ -12,6 +12,10 @@ namespace Macerus.Plugins.Content.Combat
                 .RegisterType<CombatTeamIdentifiers>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<CombatStatIdentifiers>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

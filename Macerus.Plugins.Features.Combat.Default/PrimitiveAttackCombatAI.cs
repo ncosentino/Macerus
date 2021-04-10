@@ -28,6 +28,7 @@ namespace Macerus.Plugins.Features.Combat.Default
         private readonly ISkillUsage _skillUsage;
         private readonly ISkillHandlerFacade _skillHandlerFacade;
         private readonly ICombatTeamIdentifiers _combatTeamIdentifiers;
+        private readonly ICombatStatIdentifiers _combatStatIdentifiers;
         private readonly IMapProvider _mapProvider;
         private readonly ILogger _logger;
 
@@ -39,6 +40,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             ISkillUsage skillUsage,
             ISkillHandlerFacade skillHandlerFacade,
             ICombatTeamIdentifiers combatTeamIdentifiers,
+            ICombatStatIdentifiers combatStatIdentifiers,
             IMapProvider mapProvider,
             ILogger logger)
         {
@@ -46,6 +48,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             _skillUsage = skillUsage;
             _skillHandlerFacade = skillHandlerFacade;
             _combatTeamIdentifiers = combatTeamIdentifiers;
+            _combatStatIdentifiers = combatStatIdentifiers;
             _mapProvider = mapProvider;
             _logger = logger;
         }
@@ -252,9 +255,10 @@ namespace Macerus.Plugins.Features.Combat.Default
                         return false;
                     }
 
+                    // FIXME: can we just use the base stat for this?
                     var targetLife = _statCalculationServiceAmenity.GetStatValue(
                         potentialTarget,
-                        new IntIdentifier(1)); // FIXME: no hardcoding! this is current life
+                        _combatStatIdentifiers.CurrentLifeStatId);
                     if (targetLife <= 0)
                     {
                         return false;

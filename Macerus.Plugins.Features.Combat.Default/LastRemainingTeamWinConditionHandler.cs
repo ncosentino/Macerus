@@ -15,13 +15,16 @@ namespace Macerus.Plugins.Features.Combat.Default
     {
         private readonly ICombatGameObjectProvider _combatGameObjectProvider;
         private readonly ICombatTeamIdentifiers _combatTeamIdentifiers;
+        private readonly ICombatStatIdentifiers _combatStatIdentifiers;
 
         public LastRemainingTeamWinConditionHandler(
             ICombatGameObjectProvider combatGameObjectProvider,
-            ICombatTeamIdentifiers combatTeamIdentifiers)
+            ICombatTeamIdentifiers combatTeamIdentifiers,
+            ICombatStatIdentifiers combatStatIdentifiers)
         {
             _combatGameObjectProvider = combatGameObjectProvider;
             _combatTeamIdentifiers = combatTeamIdentifiers;
+            _combatStatIdentifiers = combatStatIdentifiers;
         }
 
         public bool CheckWinConditions(
@@ -48,10 +51,9 @@ namespace Macerus.Plugins.Features.Combat.Default
                         {
                             var currentLife = actor
                                 .GetOnly<IHasStatsBehavior>()
-                                // FIXME: this is current life (also do we
-                                // need to consider a stat calc or can we assume
-                                // base stat)
-                                .BaseStats[new IntIdentifier(1)];
+                                // FIXME: do we need to consider a stat calc or
+                                // can we assume base stat
+                                .BaseStats[_combatStatIdentifiers.CurrentLifeStatId];
                             return currentLife > 0;
                         })
                         .ToReadOnlyCollection());
