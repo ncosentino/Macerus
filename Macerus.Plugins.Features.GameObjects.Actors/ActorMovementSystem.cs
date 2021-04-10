@@ -258,6 +258,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             }
 
             const double DEBOUNCE = 0.1;
+            const double DAMPENING_FACTOR = 0.1;
             var previousThrottleX = movementBehavior.ThrottleX;
             var previousThrottleY = movementBehavior.ThrottleY;
             var throttleX = 0d;
@@ -268,11 +269,11 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             }
             else if (locationBehavior.X < currentWalkPoint.X)
             {
-                throttleX = throttleX < 0 ? 0 : previousThrottleX + 0.1 * elapsedSeconds;
+                throttleX = throttleX < 0 ? 0 : previousThrottleX + DAMPENING_FACTOR * elapsedSeconds;
             }
             else if (locationBehavior.X > currentWalkPoint.X)
             {
-                throttleX = throttleX > 0 ? 0 : previousThrottleX - 0.1 * elapsedSeconds;
+                throttleX = throttleX > 0 ? 0 : previousThrottleX - DAMPENING_FACTOR * elapsedSeconds;
             }
 
             if (Math.Abs(locationBehavior.Y - currentWalkPoint.Y) < DEBOUNCE)
@@ -281,11 +282,11 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             }
             else if (locationBehavior.Y < currentWalkPoint.Y)
             {
-                throttleY = throttleY < 0 ? 0 : previousThrottleY + 0.1 * elapsedSeconds;
+                throttleY = throttleY < 0 ? 0 : previousThrottleY + DAMPENING_FACTOR * elapsedSeconds;
             }
             else if (locationBehavior.Y > currentWalkPoint.Y)
             {
-                throttleY = throttleY > 0 ? 0 : previousThrottleY - 0.1 * elapsedSeconds;
+                throttleY = throttleY > 0 ? 0 : previousThrottleY - DAMPENING_FACTOR * elapsedSeconds;
             }
 
             throttleX = throttleX > 1 ? 1 : throttleX < -1 ? -1 : throttleX;

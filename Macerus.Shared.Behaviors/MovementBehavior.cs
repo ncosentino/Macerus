@@ -183,11 +183,26 @@ namespace Macerus.Shared.Behaviors
 
         public void SetWalkPath(IEnumerable<Vector2> pointsToWalk)
         {
+            Vector2? currentWalkPoint = _pointsToWalk.Count > 0
+                ? _pointsToWalk.Peek()
+                : (Vector2?)null;
+
             _pointsToWalk.Clear();
             foreach (var point in pointsToWalk)
             {
                 _pointsToWalk.Enqueue(point);
-            }    
+            }
+
+            if (currentWalkPoint == null)
+            {
+                SetThrottle(0, 0);
+            }
+            else
+            {
+                // FIXME: try to put the throttle in the new direction... my
+                // math no good anymore so i'm putting this off
+                SetThrottle(_throttleX / 2, _throttleY / 2);
+            }
         }
 
         public Vector2 CompleteWalkPoint()
