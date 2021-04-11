@@ -7,6 +7,7 @@ using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Shared.Framework;
@@ -47,7 +48,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                     _gameObjectIdentifiers.FilterContextTemplateId,
                     new StringIdentifier("player")));
             var results = _actorGeneratorFacade
-                .GenerateActors(filterContext)
+                .GenerateActors(filterContext, Enumerable.Empty<IGeneratorComponent>())
                 .ToArray();
 
             Assert.Single(results);
@@ -75,7 +76,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                 3, 
                 5);
             var results = _actorGeneratorFacade
-                .GenerateActors(filterContext)
+                .GenerateActors(filterContext, Enumerable.Empty<IGeneratorComponent>())
                 .ToArray();
 
             Assert.InRange(results.Length, 3, 5);
@@ -104,7 +105,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                     new StringIdentifier("affix-type"),
                     "normal"));
             var results = _actorGeneratorFacade
-                .GenerateActors(filterContext)
+                .GenerateActors(filterContext, Enumerable.Empty<IGeneratorComponent>())
                 .ToArray();
 
             Assert.Single(results);
@@ -136,7 +137,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                 3,
                 5);
             var results = _actorGeneratorFacade
-                .GenerateActors(filterContext)
+                .GenerateActors(filterContext, Enumerable.Empty<IGeneratorComponent>())
                 .ToArray();
 
             Assert.InRange(results.Length, 3, 5);

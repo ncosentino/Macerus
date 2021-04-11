@@ -16,9 +16,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>dotnet restore --force $(ProjectPath)</PreBuildEvent>
-  </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <PostBuildEvent />
   </PropertyGroup>
