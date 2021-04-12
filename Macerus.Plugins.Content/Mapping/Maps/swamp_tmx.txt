@@ -20102,23 +20102,23 @@
     <property name="EncounterInterval" value="5000"/>
     <property name="MustBeMoving" value="true"/>
   </object>
-  <object id="12" name="tiled specific name" type="tiled specific type" x="1300" y="-512" width="32" height="32">
+  <object id="12" name="tiled specific name" type="tiled specific type" x="1216" y="-512" width="32" height="32">
     <property name="$typeId" value="static"/>
     <property name="$templateId" value="encounterspawn"/>
   </object>
-  <object id="13" name="tiled specific name" type="tiled specific type" x="1350" y="-512" width="32" height="32">
+  <object id="13" name="tiled specific name" type="tiled specific type" x="1344" y="-512" width="32" height="32">
     <property name="$typeId" value="static"/>
     <property name="$templateId" value="encounterspawn"/>
   </object>
-  <object id="14" name="tiled specific name" type="tiled specific type" x="1400" y="-512" width="32" height="32">
+  <object id="14" name="tiled specific name" type="tiled specific type" x="1408" y="-512" width="32" height="32">
     <property name="$typeId" value="static"/>
     <property name="$templateId" value="encounterspawn"/>
   </object>
-  <object id="15" name="tiled specific name" type="tiled specific type" x="1450" y="-512" width="32" height="32">
+  <object id="15" name="tiled specific name" type="tiled specific type" x="1472" y="-512" width="32" height="32">
     <property name="$typeId" value="static"/>
     <property name="$templateId" value="encounterspawn"/>
   </object>
-  <object id="16" name="tiled specific name" type="tiled specific type" x="1500" y="-512" width="32" height="32">
+  <object id="16" name="tiled specific name" type="tiled specific type" x="1536" y="-512" width="32" height="32">
     <property name="$typeId" value="static"/>
     <property name="$templateId" value="encounterspawn"/>
   </object>
