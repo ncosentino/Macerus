@@ -10,6 +10,7 @@ using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
+using Macerus.Plugins.Features.Inventory.Api;
 
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Framework;
@@ -97,6 +98,9 @@ namespace Macerus.Headless
             //{
             //    Console.WriteLine($"\t({point.X},{point.Y})");
             //}
+
+            var playerInventoryController = container.Resolve<IPlayerInventoryController>();
+            playerInventoryController.OpenInventory();
 
             bool keepRunning = true;
             combatTurnManager.CombatEnded += (s, e) =>
