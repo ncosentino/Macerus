@@ -2,6 +2,7 @@
 using System.Linq;
 
 using Macerus.Api.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Containers.Api.LootDrops;
 using Macerus.Plugins.Features.Inventory.Api;
 
 using NexusLabs.Contracts;
@@ -17,29 +18,36 @@ namespace Macerus.Plugins.Features.Inventory.Default
     {
         private readonly IPlayerInventoryViewModel _playerInventoryViewModel;
         private readonly IMapGameObjectManager _mapGameObjectManager;
+        private readonly ILootDropFactory _lootDropFactory;
         private readonly IItemSetController _itemSetController;
         private readonly IItemSlotCollectionViewModel _playerEquipmentItemSlotCollectionViewModel;
         private readonly IItemSlotCollectionViewModel _playerBagItemSlotCollectionViewModel;
+        private readonly IItemSlotCollectionViewModel _dropToMapItemSlotCollectionViewModel;
         private readonly IItemToItemSlotViewModelConverter _bagToItemSlotViewModelConverter;
         private readonly IItemToItemSlotViewModelConverter _equipmentToItemSlotViewModelConverter;
 
         private IItemSetToViewModelBinder _equipmentBinder;
         private IItemSetToViewModelBinder _bagBinder;
+        private IItemSetToViewModelBinder _dropToMapBinder;
 
         public PlayerInventoryController(
             IPlayerInventoryViewModel playerInventoryViewModel,
             IMapGameObjectManager mapGameObjectManager,
+            ILootDropFactory lootDropFactory,
             IItemSetController itemSetController,
             IItemSlotCollectionViewModel playerEquipmentItemSlotCollectionViewModel,
             IItemSlotCollectionViewModel playerBagItemSlotCollectionViewModel,
+            IItemSlotCollectionViewModel dropToMapItemSlotCollectionViewModel,
             IItemToItemSlotViewModelConverter equipmentToItemSlotViewModelConverter,
             IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter)
         {
             _playerInventoryViewModel = playerInventoryViewModel;
             _mapGameObjectManager = mapGameObjectManager;
+            _lootDropFactory = lootDropFactory;
             _itemSetController = itemSetController;
             _playerEquipmentItemSlotCollectionViewModel = playerEquipmentItemSlotCollectionViewModel;
             _playerBagItemSlotCollectionViewModel = playerBagItemSlotCollectionViewModel;
+            _dropToMapItemSlotCollectionViewModel = dropToMapItemSlotCollectionViewModel;
             _equipmentToItemSlotViewModelConverter = equipmentToItemSlotViewModelConverter;
             _bagToItemSlotViewModelConverter = bagToItemSlotViewModelConverter;
 
@@ -50,6 +58,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
         public delegate PlayerInventoryController Factory(
             IItemSlotCollectionViewModel playerEquipmentItemSlotCollectionViewModel,
             IItemSlotCollectionViewModel playerBagItemSlotCollectionViewModel,
+            IItemSlotCollectionViewModel dropToMapItemSlotCollectionViewModel,
             IItemToItemSlotViewModelConverter equipmentToItemSlotViewModelConverter,
             IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter);
 
@@ -67,6 +76,9 @@ namespace Macerus.Plugins.Features.Inventory.Default
             Contract.Requires(
                 _bagBinder == null,
                 $"Expecting '{nameof(_bagBinder)}' to be null.");
+            Contract.Requires(
+                _dropToMapBinder == null,
+                $"Expecting '{nameof(_dropToMapBinder)}' to be null.");
 
             var player = _mapGameObjectManager
                 .GameObjects
@@ -91,9 +103,16 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 _bagToItemSlotViewModelConverter,
                 new BagItemSet(playerInventoryBehavior),
                 _playerBagItemSlotCollectionViewModel);
+            _dropToMapBinder = new ItemSetToViewModelBinder(
+                _bagToItemSlotViewModelConverter,
+                new DropToMapItemSet(
+                    _lootDropFactory,
+                    _mapGameObjectManager),
+                _dropToMapItemSlotCollectionViewModel);
 
             _itemSetController.Register(_equipmentBinder);
             _itemSetController.Register(_bagBinder);
+            _itemSetController.Register(_dropToMapBinder);
 
             _equipmentBinder.RefreshViewModel();
             _bagBinder.RefreshViewModel();
@@ -109,9 +128,13 @@ namespace Macerus.Plugins.Features.Inventory.Default
             Contract.RequiresNotNull(
                 _bagBinder,
                 $"Expecting '{nameof(_bagBinder)}' to not be null.");
+            Contract.RequiresNotNull(
+                _dropToMapBinder,
+                $"Expecting '{nameof(_dropToMapBinder)}' to not be null.");
 
             _itemSetController.Unregister(_equipmentBinder);
             _itemSetController.Unregister(_bagBinder);
+            _itemSetController.Unregister(_dropToMapBinder);
 
             _equipmentBinder = null;
             _bagBinder = null;

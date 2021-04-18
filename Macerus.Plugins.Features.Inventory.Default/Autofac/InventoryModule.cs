@@ -12,6 +12,7 @@ namespace Macerus.Plugins.Features.Inventory.Default.Autofac
         {
             const string ITEM_SET_NAME_PLAYER_EQUIPMENT = "player equipment";
             const string ITEM_SET_NAME_PLAYER_BAG = "player bag";
+            const string ITEM_SET_NAME_DROP_TO_MAP = "drop to map";
             const string CONVERTER_NAME_EQUIPMENT = "equipment";
             const string CONVERTER_NAME_BAG = "bag";
 
@@ -26,6 +27,10 @@ namespace Macerus.Plugins.Features.Inventory.Default.Autofac
             builder
                 .RegisterType<ItemSlotCollectionViewModel>()
                 .Named<IItemSlotCollectionViewModel>(ITEM_SET_NAME_PLAYER_BAG)
+                .SingleInstance();
+            builder
+                .RegisterType<ItemSlotCollectionViewModel>()
+                .Named<IItemSlotCollectionViewModel>(ITEM_SET_NAME_DROP_TO_MAP)
                 .SingleInstance();
             builder
                 .RegisterType<EquipmentItemToItemSlotViewModelConverter>()
@@ -43,6 +48,7 @@ namespace Macerus.Plugins.Features.Inventory.Default.Autofac
                     var controller = factory(
                         x.ResolveNamed<IItemSlotCollectionViewModel>(ITEM_SET_NAME_PLAYER_EQUIPMENT),
                         x.ResolveNamed<IItemSlotCollectionViewModel>(ITEM_SET_NAME_PLAYER_BAG),
+                        x.ResolveNamed<IItemSlotCollectionViewModel>(ITEM_SET_NAME_DROP_TO_MAP),
                         x.ResolveNamed<IItemToItemSlotViewModelConverter>(CONVERTER_NAME_EQUIPMENT),
                         x.ResolveNamed<IItemToItemSlotViewModelConverter>(CONVERTER_NAME_BAG));
                     return controller;

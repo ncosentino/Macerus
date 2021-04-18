@@ -12,6 +12,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Containers.Api\Macerus.Plugins.Features.GameObjects.Containers.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Behaviors\Macerus.Plugins.Features.GameObjects.Items.Behaviors.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Inventory.Api\Macerus.Plugins.Features.Inventory.Api.csproj" />
   </ItemGroup>
