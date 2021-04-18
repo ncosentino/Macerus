@@ -37,6 +37,8 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.Animations.Api\Macerus.Plugins.Features.Animations.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Animations.Default\Macerus.Plugins.Features.Animations.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Animations.Lpc\Macerus.Plugins.Features.Animations.Lpc.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.CharacterSheet.Api\Macerus.Plugins.Features.CharacterSheet.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.CharacterSheet.Default\Macerus.Plugins.Features.CharacterSheet.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Api\Macerus.Plugins.Features.Combat.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Default\Macerus.Plugins.Features.Combat.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Encounters\Macerus.Plugins.Features.Encounters.csproj" />
