@@ -21,6 +21,10 @@ namespace Macerus.Plugins.Features.Inventory.Default.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
+                .RegisterType<BagItemSetFactory>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<ItemSlotCollectionViewModel>()
                 .Named<IItemSlotCollectionViewModel>(ITEM_SET_NAME_PLAYER_EQUIPMENT)
                 .SingleInstance();

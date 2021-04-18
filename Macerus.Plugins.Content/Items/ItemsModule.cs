@@ -92,9 +92,10 @@ namespace Macerus.Plugins.Content.Items
                                     new IdentifierFilterAttributeValue(new StringIdentifier("junk")),
                                     false)
                             },
-                            new[]
+                            new IGeneratorComponent[]
                             {
                                 new NameGeneratorComponent("Junk"),
+                                new IconGeneratorComponent(@"graphics\items\junk"),
                             }),
                         new ItemDefinition(
                             new[]
@@ -108,6 +109,7 @@ namespace Macerus.Plugins.Content.Items
                             new IGeneratorComponent[]
                             {
                                 new NameGeneratorComponent("Ruby"),
+                                new IconGeneratorComponent(@"graphics\items\gems\ruby"),
                                 new CanFitSocketGeneratorComponent(new StringIdentifier("gem"), 1),
                             }),
                     };

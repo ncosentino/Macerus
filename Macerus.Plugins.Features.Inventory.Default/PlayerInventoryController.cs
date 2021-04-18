@@ -16,6 +16,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
 {
     public sealed class PlayerInventoryController : IPlayerInventoryController
     {
+        private readonly IBagItemSetFactory _bagItemSetFactory;
         private readonly IPlayerInventoryViewModel _playerInventoryViewModel;
         private readonly IMapGameObjectManager _mapGameObjectManager;
         private readonly ILootDropFactory _lootDropFactory;
@@ -31,6 +32,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
         private IItemSetToViewModelBinder _dropToMapBinder;
 
         public PlayerInventoryController(
+            IBagItemSetFactory bagItemSetFactory,
             IPlayerInventoryViewModel playerInventoryViewModel,
             IMapGameObjectManager mapGameObjectManager,
             ILootDropFactory lootDropFactory,
@@ -41,6 +43,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             IItemToItemSlotViewModelConverter equipmentToItemSlotViewModelConverter,
             IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter)
         {
+            _bagItemSetFactory = bagItemSetFactory;
             _playerInventoryViewModel = playerInventoryViewModel;
             _mapGameObjectManager = mapGameObjectManager;
             _lootDropFactory = lootDropFactory;
@@ -101,7 +104,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 _playerEquipmentItemSlotCollectionViewModel);
             _bagBinder = new ItemSetToViewModelBinder(
                 _bagToItemSlotViewModelConverter,
-                new BagItemSet(playerInventoryBehavior),
+                _bagItemSetFactory.Create(playerInventoryBehavior),
                 _playerBagItemSlotCollectionViewModel);
             _dropToMapBinder = new ItemSetToViewModelBinder(
                 _bagToItemSlotViewModelConverter,
