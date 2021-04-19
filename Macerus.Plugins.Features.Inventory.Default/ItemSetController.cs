@@ -104,8 +104,15 @@ namespace Macerus.Plugins.Features.Inventory.Default
             if (dropTargetBinder.CanSwapItems(dropTargetSlot?.Id, draggedItem) &&
                 _dragSourceBinder.CanSwapItems(dragSourceSlot.Id, dropTargetItem))
             {
-                dropTargetBinder.SwapItems(dropTargetSlot?.Id, draggedItem);
-                _dragSourceBinder.SwapItems(dragSourceSlot.Id, dropTargetItem);
+                var swapResult = dropTargetBinder.SwapItems(
+                    dropTargetSlot?.Id,
+                    draggedItem);
+                if (swapResult == SwapResult.SuccessAndContinue)
+                {
+                    _dragSourceBinder.SwapItems(
+                        dragSourceSlot.Id,
+                        dropTargetItem);
+                }
             }
         }
 

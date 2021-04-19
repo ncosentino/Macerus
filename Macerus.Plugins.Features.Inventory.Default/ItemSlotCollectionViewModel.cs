@@ -65,7 +65,6 @@ namespace Macerus.Plugins.Features.Inventory.Default
             }
 
             OnPropertyChanged(nameof(ItemSlots));
-            OnPropertyChanged("Item[]");
         }
 
         public IItemSlotViewModel this[string id]

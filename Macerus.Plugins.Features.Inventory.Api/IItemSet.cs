@@ -16,6 +16,6 @@ namespace Macerus.Plugins.Features.Inventory.Api
 
         bool CanSwapItems(IIdentifier itemIdToSwapOut, IGameObject itemToSwapIn);
 
-        void SwapItems(IIdentifier itemIdToSwapOut, IGameObject itemToSwapIn);
+        SwapResult SwapItems(IIdentifier itemIdToSwapOut, IGameObject itemToSwapIn);
     }
 }

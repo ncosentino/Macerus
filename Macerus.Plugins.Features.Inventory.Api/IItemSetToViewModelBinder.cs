@@ -14,7 +14,7 @@ namespace Macerus.Plugins.Features.Inventory.Api
             TIdentifier viewModelItemIdToSwapOut,
             IGameObject itemToSwapIn);
 
-        void SwapItems<TIdentifier>(
+        SwapResult SwapItems<TIdentifier>(
             TIdentifier viewModelItemIdToSwapOut,
             IGameObject itemToSwapIn);
 

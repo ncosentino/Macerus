@@ -47,7 +47,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             return true;
         }
 
-        public void SwapItems(
+        public SwapResult SwapItems(
             IIdentifier itemIdToSwapOut,
             IGameObject itemToSwapIn)
         {
@@ -63,6 +63,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 {
                     itemToSwapIn
                 });
+            return SwapResult.SuccessAndContinue;
         }
     }
 }

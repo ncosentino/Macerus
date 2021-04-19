@@ -42,12 +42,15 @@ namespace Macerus.Plugins.Features.Inventory.Default
             return canSwap;
         }
 
-        public void SwapItems<TIdentifier>(
+        public SwapResult SwapItems<TIdentifier>(
             TIdentifier viewModelItemIdToSwapOut,
             IGameObject itemToSwapIn)
         {
             var backendId = ConvertViewModelToBackendId(viewModelItemIdToSwapOut);
-            ItemSet.SwapItems(backendId, itemToSwapIn);
+            var swapResult = ItemSet.SwapItems(
+                backendId,
+                itemToSwapIn);
+            return swapResult;
         }
 
         public void RefreshViewModel()

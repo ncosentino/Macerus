@@ -79,7 +79,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 (itemToSwapIn == null || _itemContainerBehavior.CanAddItem(itemToSwapIn));
         }
 
-        public void SwapItems(
+        public SwapResult SwapItems(
             IIdentifier itemIdToSwapOut,
             IGameObject itemToSwapIn)
         {
@@ -88,10 +88,10 @@ namespace Macerus.Plugins.Features.Inventory.Default
             // no-op
             if (itemToSwapIn == itemToSwapOut)
             {
-                return;
+                return SwapResult.SuccessAndStop;
             }
 
-            IgnoringBehaviorEvents(() =>
+            return IgnoringBehaviorEvents(() =>
             {
                 // this is adding!
                 if (itemToSwapOut == null)
@@ -103,16 +103,17 @@ namespace Macerus.Plugins.Features.Inventory.Default
                     }
 
                     ItemsChanged?.Invoke(this, EventArgs.Empty);
-                    return;
+                    return SwapResult.SuccessAndContinue;
                 }
 
                 if (itemToSwapIn != null &&
+                    _itemContainerBehavior.Items.Any(x => x == itemToSwapIn) &&
                     TrySocketItem(
                         itemToSwapIn,
                         itemToSwapOut))
                 {
                     ItemsChanged?.Invoke(this, EventArgs.Empty);
-                    return;
+                    return SwapResult.SuccessAndStop;
                 }
 
                 // this is either removing or swapping!
@@ -129,24 +130,25 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 }
 
                 ItemsChanged?.Invoke(this, EventArgs.Empty);
+                return SwapResult.SuccessAndContinue;
             });
         }
 
         private bool TrySocketItem(
-            IGameObject itemToSwapIn,
-            IGameObject itemToSwapOut)
+            IGameObject itemToBePlacedInsideSocket,
+            IGameObject itemToHaveSocketFilled)
         {
-            if (itemToSwapIn == itemToSwapOut)
+            if (itemToBePlacedInsideSocket == itemToHaveSocketFilled)
             {
                 return false;
             }
 
-            if (!itemToSwapOut.TryGetFirst<ICanBeSocketedBehavior>(out var canBeSocketedBehavior))
+            if (!itemToHaveSocketFilled.TryGetFirst<ICanBeSocketedBehavior>(out var canBeSocketedBehavior))
             {
                 return false;
             }
 
-            if (!itemToSwapIn.TryGetFirst<ICanFitSocketBehavior>(out var canFitSocketBehavior))
+            if (!itemToBePlacedInsideSocket.TryGetFirst<ICanFitSocketBehavior>(out var canFitSocketBehavior))
             {
                 return false;
             }
@@ -165,12 +167,12 @@ namespace Macerus.Plugins.Features.Inventory.Default
                     $"successful.");
             }
 
-            if (!_itemContainerBehavior.TryRemoveItem(itemToSwapIn))
+            if (!_itemContainerBehavior.TryRemoveItem(itemToBePlacedInsideSocket))
             {
                 throw new InvalidOperationException(
                     $"'{canFitSocketBehavior}' was socketed into " +
-                    $"'{canBeSocketedBehavior}', but could not remove the item " +
-                    $"from the source container.");
+                    $"'{canBeSocketedBehavior}', but could not remove " +
+                    $"'{itemToBePlacedInsideSocket}' from the source container.");
             }
 
             if (_socketPatternHandler.TryHandle(
@@ -179,6 +181,16 @@ namespace Macerus.Plugins.Features.Inventory.Default
                     canBeSocketedBehavior),
                 out var newSocketPatternItem))
             {
+                if (!_itemContainerBehavior.TryRemoveItem(itemToHaveSocketFilled))
+                {
+                    throw new InvalidOperationException(
+                        $"'{canFitSocketBehavior}' was socketed into " +
+                        $"'{canBeSocketedBehavior}' and created socket pattern " +
+                        $"item '{newSocketPatternItem}'. However, the original " +
+                        $"'{itemToHaveSocketFilled}' could not be removed from " +
+                        $"'{_itemContainerBehavior}'.");
+                }
+
                 if (!_itemContainerBehavior.TryAddItem(newSocketPatternItem))
                 {
                     throw new InvalidOperationException(
@@ -191,13 +203,14 @@ namespace Macerus.Plugins.Features.Inventory.Default
             return true;
         }
 
-        private void IgnoringBehaviorEvents(Action callback)
+        private SwapResult IgnoringBehaviorEvents(Func<SwapResult> callback)
         {
             var recall = _ignoreBehaviorEvents;
             try
             {
                 _ignoreBehaviorEvents = true;
-                callback();
+                var result = callback();
+                return result;
             }
             finally
             {

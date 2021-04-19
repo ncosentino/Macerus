@@ -82,7 +82,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 true);
         }
 
-        public void SwapItems(
+        public SwapResult SwapItems(
             IIdentifier itemIdToSwapOut,
             IGameObject itemToSwapIn)
         {
@@ -92,7 +92,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             // no-op
             if (itemToSwapIn == itemToSwapOut)
             {
-                return;
+                return SwapResult.SuccessAndStop;
             }
 
             var canBeEquippedBehavior = itemToSwapIn?.GetOnly<ICanBeEquippedBehavior>();
@@ -138,6 +138,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
 
                 ItemsChanged?.Invoke(this, EventArgs.Empty);
             });
+            return SwapResult.SuccessAndContinue;
         }
 
         private void IgnoringBehaviorEvents(Action callback)
