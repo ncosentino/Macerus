@@ -27,17 +27,20 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
         private readonly IEnchantmentGenerator _enchantmentGenerator;
         private readonly IHasEnchantmentsBehaviorFactory _hasEnchantmentsBehaviorFactory;
         private readonly IFilterContextFactory _filterContextFactory;
+        private readonly IBehaviorManager _behaviorManager;
 
         public UniqueItemGenerator(
             IBaseItemGenerator baseItemGenerator,
             IEnchantmentGenerator enchantmentGenerator,
             IHasEnchantmentsBehaviorFactory hasEnchantmentsBehaviorFactory,
-            IFilterContextFactory filterContextFactory)
+            IFilterContextFactory filterContextFactory,
+            IBehaviorManager behaviorManager)
         {
             _baseItemGenerator = baseItemGenerator;
             _enchantmentGenerator = enchantmentGenerator;
             _hasEnchantmentsBehaviorFactory = hasEnchantmentsBehaviorFactory;
             _filterContextFactory = filterContextFactory;
+            _behaviorManager = behaviorManager;
         }
 
         public IEnumerable<IGameObject> GenerateItems(IFilterContext filterContext)
@@ -96,7 +99,8 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
 
                 var additionalBehaviors = new List<IBehavior>()
                 {
-                    new HasInventoryDisplayColor(255, 215, 0, 255),
+                    new HasInventoryBackgroundColor(255, 215, 0),
+                    new HasInventoryIconColor(0.25f, 0x80, 0, 0, 0x40),
                     new HasAffixType(new StringIdentifier("unique")),
                     hasEnchantmentsBehavior,
                 };
@@ -144,6 +148,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
                 ////enchantable.AddEnchantments(enchantments);
 
                 var uniqueItem = new UniqueItem(combinedBehaviors);
+                _behaviorManager.Register(uniqueItem, combinedBehaviors);
                 yield return uniqueItem;
             }
         }

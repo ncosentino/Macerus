@@ -31,6 +31,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
         private readonly IMagicItemNameGenerator _magicItemNameGenerator;
         private readonly IFilterContextFactory _filterContextFactory;
         private readonly IFilterContextAmenity _filterContextAmenity;
+        private readonly IBehaviorManager _behaviorManager;
 
         public MagicItemGenerator(
             IBaseItemGenerator baseItemGenerator,
@@ -38,7 +39,8 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             IHasEnchantmentsBehaviorFactory hasEnchantmentsBehaviorFactory,
             IMagicItemNameGenerator magicItemNameGenerator,
             IFilterContextFactory filterContextFactory,
-            IFilterContextAmenity filterContextAmenity)
+            IFilterContextAmenity filterContextAmenity,
+            IBehaviorManager behaviorManager)
         {
             _baseItemGenerator = baseItemGenerator;
             _enchantmentGenerator = enchantmentGenerator;
@@ -46,6 +48,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             _magicItemNameGenerator = magicItemNameGenerator;
             _filterContextFactory = filterContextFactory;
             _filterContextAmenity = filterContextAmenity;
+            _behaviorManager = behaviorManager;
         }
 
         public IEnumerable<IGameObject> GenerateItems(IFilterContext filterContext)
@@ -83,7 +86,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 
                 var additionalBehaviors = new List<IBehavior>()
                 {
-                    new HasInventoryDisplayColor(0, 0, 255, 255),
+                    new HasInventoryBackgroundColor(0, 0, 255),
                     new HasAffixType(new StringIdentifier("magic")),
                     hasEnchantmentsBehavior,
                 };
@@ -115,8 +118,10 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                     .Behaviors
                     .Where(x => !(x is IHasReadOnlyEnchantmentsBehavior));
                 var magicItemBehaviors = baseItemBehaviorsToUse
-                    .Concat(additionalBehaviors);
+                    .Concat(additionalBehaviors)
+                    .ToArray();
                 var magicItem = new MagicItem(magicItemBehaviors);
+                _behaviorManager.Register(magicItem, magicItemBehaviors);
                 yield return magicItem;
             }
         }
