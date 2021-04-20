@@ -16,11 +16,17 @@ namespace Macerus.Plugins.Features.Inventory.Default
             object id,
             bool hasItem,
             IIdentifier iconResourceId,
+            float iconOpacity,
+            IColor iconColor,
+            IColor slotBackgroundColor,
             string slotLabel)
         {
             Id = id;
             HasItem = hasItem;
             IconResourceId = iconResourceId;
+            IconOpacity = iconOpacity;
+            IconColor = iconColor;
+            SlotBackgroundColor = slotBackgroundColor;
             SlotLabel = slotLabel;
             ShowLabel = !string.IsNullOrEmpty(slotLabel);
         }
@@ -30,6 +36,12 @@ namespace Macerus.Plugins.Features.Inventory.Default
         public bool HasItem { get; }
 
         public IIdentifier IconResourceId { get; }
+
+        public float IconOpacity { get; }
+
+        public IColor IconColor { get; }
+
+        public IColor SlotBackgroundColor { get; }
 
         public string SlotLabel { get; }
 

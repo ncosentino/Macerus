@@ -4,6 +4,7 @@ using Autofac;
 
 using Macerus.Plugins.Content.Wip.Items;
 using Macerus.Plugins.Features.GameObjects.Items;
+using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Items.Socketing;
 
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
@@ -11,6 +12,7 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
+using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory;
 using ProjectXyz.Shared.Framework;
@@ -47,7 +49,11 @@ namespace Macerus.Plugins.Content.Items
                                 new SocketGeneratorComponent(new[]
                                 {
                                     KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 6)),
-                                })
+                                }),
+                                new StatelessBehaviorGeneratorComponent(new[]
+                                {
+                                    new HasInventoryIconColor(0.5f, 0x80, 0, 0, 0x40),
+                                }),
                             }),
                     };
                     var itemDefinitionRepository = new InMemoryItemDefinitionRepository(

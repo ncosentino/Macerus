@@ -2,14 +2,12 @@
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Behaviors
 {
-    public interface IHasInventoryDisplayColor : IBehavior
+    public interface IHasInventoryBackgroundColor : IBehavior
     {
         int R { get; }
 
         int G { get; }
 
         int B { get; }
-
-        int A { get; }
     }
 }

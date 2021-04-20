@@ -99,8 +99,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
 
                 var additionalBehaviors = new List<IBehavior>()
                 {
-                    new HasInventoryBackgroundColor(255, 215, 0),
-                    new HasInventoryIconColor(0.25f, 0x80, 0, 0, 0x40),
+                    new HasInventoryBackgroundColor(0xd0, 0x81, 0x06),
                     new HasAffixType(new StringIdentifier("unique")),
                     hasEnchantmentsBehavior,
                 };

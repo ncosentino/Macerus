@@ -2,21 +2,25 @@
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Behaviors
 {
-    public sealed class HasInventoryDisplayColor :
+    public sealed class HasInventoryIconColor :
         BaseBehavior,
-        IHasInventoryDisplayColor
+        IHasInventoryIconColor
     {
-        public HasInventoryDisplayColor(
+        public HasInventoryIconColor(
+            float iconOpacity,
             int r,
             int g,
             int b,
             int a)
         {
+            IconOpacity = iconOpacity;
             R = r;
             G = g;
             B = b;
             A = a;
         }
+
+        public float IconOpacity { get; }
 
         public int R { get; }
 
@@ -27,6 +31,6 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Behaviors
         public int A { get; }
 
         public override string ToString() =>
-            $"RGBA({R}, {G}, {B}, {A})";
+            $"Opacity={IconOpacity}, RGBA({R}, {G}, {B}, {A})";
     }
 }

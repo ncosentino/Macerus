@@ -12,6 +12,12 @@ namespace Macerus.Plugins.Features.Inventory.Api
 
         IIdentifier IconResourceId { get; }
 
+        float IconOpacity { get; }
+
+        IColor IconColor { get; }
+
+        IColor SlotBackgroundColor { get; }
+
         string SlotLabel { get; }
 
         bool ShowLabel { get; }

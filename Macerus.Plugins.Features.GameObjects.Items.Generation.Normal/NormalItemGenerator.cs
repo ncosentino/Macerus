@@ -35,7 +35,6 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Normal
             var baseItems = _baseItemGenerator.GenerateItems(normalGeneratorContext);
             var items = baseItems.Select(baseItem => new NormalItem(baseItem.Behaviors.Concat(new IBehavior[]
             {
-                new HasInventoryDisplayColor(255, 255, 255, 255),
                 new HasAffixType(new StringIdentifier("normal")),
             })));
             return items;
