@@ -141,6 +141,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
 
             _equipmentBinder = null;
             _bagBinder = null;
+            _dropToMapBinder = null;
         }
     }
 }
