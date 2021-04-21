@@ -69,6 +69,20 @@ namespace Macerus.Plugins.Features.Inventory.Default
 
         public void CloseInventory() => _playerInventoryViewModel.Close();
 
+        public bool ToggleInventory()
+        {
+            if (_playerInventoryViewModel.IsOpen)
+            {
+                CloseInventory();
+            }
+            else
+            {
+                OpenInventory();
+            }
+
+            return _playerInventoryViewModel.IsOpen;
+        }
+
         private void PlayerInventoryViewModel_Opened(
             object sender,
             EventArgs e)

@@ -5,5 +5,7 @@
         void CloseInventory();
 
         void OpenInventory();
+
+        bool ToggleInventory();
     }
 }
