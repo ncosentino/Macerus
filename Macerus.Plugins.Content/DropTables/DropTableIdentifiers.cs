@@ -2,7 +2,7 @@
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables
+namespace Macerus.Plugins.Content.DropTables
 {
     public sealed class DropTableIdentifiers : IDropTableIdentifiers
     {

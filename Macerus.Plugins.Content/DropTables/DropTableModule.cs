@@ -59,6 +59,10 @@ namespace Macerus.Plugins.Content.DropTables
                 })
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<DropTableIdentifiers>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

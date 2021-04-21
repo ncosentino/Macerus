@@ -2,14 +2,14 @@
 
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Plugins.Features.GameObjects.Items.Generation.DropTables
+namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Default.Autofac
 {
-    public sealed class DropTableModule : SingleRegistrationModule
+    public sealed class ItemGenerationModule : SingleRegistrationModule
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<DropTableIdentifiers>()
+                .RegisterType<LootGeneratorAmenity>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }
