@@ -1,148 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{313DBCF0-1EC4-4D81-AD0E-AC5978233B91}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Macerus.Plugins.Features.Encounters</RootNamespace>
-    <AssemblyName>Macerus.Plugins.Features.Encounters</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <TargetFramework>net46</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="ProjectXyz" Version="1.0.*" />
+    <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.5" />
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="NexusLabs.Framework" Version="0.0.5" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Autofac\EncountersModule.cs" />
-    <Compile Include="Encounter.cs" />
-    <Compile Include="StartHandlers\EncounterCombatStartHandler.cs" />
-    <Compile Include="EncounterDefinition.cs" />
-    <Compile Include="EncounterDefinitionRepositoryFacade.cs" />
-    <Compile Include="EncounterGameObjectPlacer.cs" />
-    <Compile Include="EncounterManager.cs" />
-    <Compile Include="EncounterMapFilterBehavior.cs" />
-    <Compile Include="StartHandlers\EncounterDebugPrinterStartHandler.cs" />
-    <Compile Include="StartHandlers\EncounterMapLoadStartHandler.cs" />
-    <Compile Include="EncounterRepository.cs" />
-    <Compile Include="EncounterSpawnTableIdBehavior.cs" />
-    <Compile Include="EncounterSpawnLocationBehavior.cs" />
-    <Compile Include="StartHandlers\EncounterSpawnStartHandler.cs" />
-    <Compile Include="Triggers\EncounterTriggerHandler.cs" />
-    <Compile Include="Triggers\GameObjectTriggerEventArgs.cs" />
-    <Compile Include="Triggers\GamObjects\Static\EncounterSpawnLocationBehaviorsProvider.cs" />
-    <Compile Include="Triggers\GamObjects\Static\EncounterTriggerBehaviorsProvider.cs" />
-    <Compile Include="Triggers\GamObjects\Static\EncounterTriggerPropertiesBehavior.cs" />
-    <Compile Include="Triggers\GamObjects\Static\IReadOnlyEncounterTriggerPropertiesBehavior.cs" />
-    <Compile Include="IDiscoverableEncounterDefinitionRepository.cs" />
-    <Compile Include="StartHandlers\IDiscoverableStartEncounterHandler.cs" />
-    <Compile Include="IEncounterDefinition.cs" />
-    <Compile Include="IEncounterDefinitionRepository.cs" />
-    <Compile Include="IEncounterDefinitionRepositoryFacade.cs" />
-    <Compile Include="IEncounterGameObjectPlacer.cs" />
-    <Compile Include="IEncounterManager.cs" />
-    <Compile Include="IEncounterMapFilterBehavior.cs" />
-    <Compile Include="IEncounterRepository.cs" />
-    <Compile Include="IEncounterSpawnTableIdBehavior.cs" />
-    <Compile Include="IEncounterSpawnLocationBehavior.cs" />
-    <Compile Include="InMemoryEncounterDefinitionRepository.cs" />
-    <Compile Include="Triggers\IObservableEncounterTrigger.cs" />
-    <Compile Include="Triggers\IObservableEncounterTriggerHandler.cs" />
-    <Compile Include="StartHandlers\IStartEncounterHandler.cs" />
-    <Compile Include="StartHandlers\IStartEncounterHandlerFacade.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpawnTables\Api\IDiscoverableSpawnTableHandlerGenerator.cs" />
-    <Compile Include="SpawnTables\Api\IDiscoverableSpawnTableRepository.cs" />
-    <Compile Include="SpawnTables\Api\ISpawnTable.cs" />
-    <Compile Include="SpawnTables\Api\ISpawnTableHandlerGenerator.cs" />
-    <Compile Include="SpawnTables\Api\ISpawnTableHandlerGeneratorFacade.cs" />
-    <Compile Include="SpawnTables\Api\ISpawnTableHandlerGeneratorRegistrar.cs" />
-    <Compile Include="SpawnTables\Api\ISpawnTableIdentifiers.cs" />
-    <Compile Include="SpawnTables\Api\ISpawnTableRepository.cs" />
-    <Compile Include="SpawnTables\Api\ISpawnTableRepositoryFacade.cs" />
-    <Compile Include="SpawnTables\Api\Linked\ILinkedSpawnTable.cs" />
-    <Compile Include="SpawnTables\Api\Linked\ILinkedSpawnTableFactory.cs" />
-    <Compile Include="SpawnTables\Api\Linked\IWeightedEntry.cs" />
-    <Compile Include="SpawnTables\Api\Standard\IActorSpawnTable.cs" />
-    <Compile Include="SpawnTables\Api\Standard\IActorSpawnTableFactory.cs" />
-    <Compile Include="SpawnTables\Api\IActorSpawner.cs" />
-    <Compile Include="SpawnTables\InMemorySpawnTableRepository.cs" />
-    <Compile Include="SpawnTables\SpawnTableHandlerGeneratorFacade.cs" />
-    <Compile Include="SpawnTables\SpawnTableIdentifiers.cs" />
-    <Compile Include="SpawnTables\SpawnTableRepositoryFacade.cs" />
-    <Compile Include="SpawnTables\Implementations\Actors\ActorSpawnTable.cs" />
-    <Compile Include="SpawnTables\Implementations\Actors\ActorSpawnTableFactory.cs" />
-    <Compile Include="SpawnTables\Implementations\Actors\ActorSpawnTableHandlerGenerator.cs" />
-    <Compile Include="SpawnTables\Implementations\Linked\LinkedSpawnTable.cs" />
-    <Compile Include="SpawnTables\Implementations\Linked\LinkedSpawnTableFactory.cs" />
-    <Compile Include="SpawnTables\Implementations\Linked\LinkedSpawnTableHandlerGenerator.cs" />
-    <Compile Include="SpawnTables\Implementations\Linked\WightedEntry.cs" />
-    <Compile Include="SpawnTables\ActorSpawner.cs" />
-    <Compile Include="SpawnTables\NoneSpawnTableRepository.cs" />
-    <Compile Include="StartHandlers\StartEncounterHandlerFacade.cs" />
+    <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Generation\Macerus.Plugins.Features.GameObjects.Actors.Generation.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Static.Api\Macerus.Plugins.Features.GameObjects.Static.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj">
-      <Project>{5F24115E-512F-48BA-AD4A-282E5DAA7DC6}</Project>
-      <Name>Macerus.Api.Behaviors</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Api\Macerus.Plugins.Features.Combat.Api.csproj">
-      <Project>{A4D54C37-D8E4-479C-8004-B029D7A3ED68}</Project>
-      <Name>Macerus.Plugins.Features.Combat.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Generation\Macerus.Plugins.Features.GameObjects.Actors.Generation.csproj">
-      <Project>{88A22115-4A6F-4272-A95B-4AFEBCE75B28}</Project>
-      <Name>Macerus.Plugins.Features.GameObjects.Actors.Generation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Static.Api\Macerus.Plugins.Features.GameObjects.Static.Api.csproj">
-      <Project>{3849012D-A66E-4A0B-ADCE-91538E2B0ACC}</Project>
-      <Name>Macerus.Plugins.Features.GameObjects.Static.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj">
-      <Project>{176A983C-1EB2-4E3D-9657-8A41749FA341}</Project>
-      <Name>Macerus.Plugins.Features.Stats</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Autofac">
-      <Version>4.9.4</Version>
-    </PackageReference>
-    <PackageReference Include="NexusLabs.Collections.Generic">
-      <Version>0.0.5</Version>
-    </PackageReference>
-    <PackageReference Include="NexusLabs.Framework">
-      <Version>0.0.5</Version>
-    </PackageReference>
-    <PackageReference Include="ProjectXyz">
-      <Version>1.0.7763.29410</Version>
-    </PackageReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>
