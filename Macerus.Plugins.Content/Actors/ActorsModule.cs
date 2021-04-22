@@ -8,6 +8,7 @@ using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
+using Macerus.Plugins.Features.GameObjects.Actors.Npc;
 using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
@@ -128,6 +129,7 @@ namespace Macerus.Plugins.Content.Actors
                                         new CombatAIBehavior(),
                                         new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),
                                         new CanEquipBehavior(humanoidEquipSlotIds),
+                                        new CorpseInteractableBehavior(false),
                                     }),
                                 new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {

@@ -8,8 +8,12 @@ using Autofac;
 
 using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
+using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
+using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors.Npc;
+using Macerus.Plugins.Features.Interactions.Api;
 using Macerus.Plugins.Features.Inventory.Api;
 
 using ProjectXyz.Api.Behaviors;
@@ -35,6 +39,74 @@ namespace Macerus.Headless
         public static void Main(string[] args)
         {
             var container = new MacerusContainer();
+
+            new LootCorpseExercise().Go(container);
+        }
+
+        private static void CombatTurnManager_CombatEnded(object sender, CombatEndedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static Vector2 ClosestPosition(
+            Vector2 source,
+            IEnumerable<Vector2> candidates)
+        {
+            var closest = candidates
+                .OrderBy(x => Math.Abs(source.X - x.X) + Math.Abs(source.Y - x.Y))
+                .First();
+            return closest;
+        }
+    }
+
+    public sealed class LootCorpseExercise
+    {
+        public void Go(MacerusContainer container)
+        {
+            var gameEngine = container.Resolve<IGameEngine>();
+
+            var actorSpawner = container.Resolve<IActorSpawner>();
+            var spawnTableIdentifiers = container.Resolve<ISpawnTableIdentifiers>();
+            var mapGameObjectManager = container.Resolve<IMapGameObjectManager>();
+            var mapManager = container.Resolve<IMapManager>();
+            var filterContextAmenity = container.Resolve<IFilterContextAmenity>();
+            var combatStatIdentifiers = container.Resolve<ICombatStatIdentifiers>();
+            var turnBasedManager = container.Resolve<ITurnBasedManager>();
+            var encounterManager = container.Resolve<IEncounterManager>();
+            var logger = container.Resolve<ILogger>();
+            var actorIdentifiers = container.Resolve<IMacerusActorIdentifiers>();
+            var interactionHandler = container.Resolve<IInteractionHandlerFacade>();
+
+            var filterContext = filterContextAmenity.CreateNoneFilterContext();
+            encounterManager.StartEncounter(
+                filterContext,
+                new StringIdentifier("test-encounter"));
+
+            var player = mapGameObjectManager
+                .GameObjects
+                .FirstOrDefault(x => x.Has<IPlayerControlledBehavior>());
+
+            var skeleton = mapGameObjectManager
+                .GameObjects
+                .FirstOrDefault(x =>
+                    !x.Has<IPlayerControlledBehavior>() &&
+                    x.GetOnly<ITypeIdentifierBehavior>().TypeId.Equals(actorIdentifiers.ActorTypeIdentifier));
+
+            // should be no-op
+            interactionHandler.Interact(player, skeleton.GetOnly<CorpseInteractableBehavior>());
+
+            skeleton
+                .GetOnly<IHasMutableStatsBehavior>()
+                .MutateStats(stats => stats[combatStatIdentifiers.CurrentLifeStatId] = 0);
+            
+            interactionHandler.Interact(player, skeleton.GetOnly<CorpseInteractableBehavior>());
+        }
+    }
+
+    public sealed class CombatExercise
+    {
+        public void Go(MacerusContainer container)
+        {
             var gameEngine = container.Resolve<IGameEngine>();
 
             var actorSpawner = container.Resolve<IActorSpawner>();
@@ -47,57 +119,10 @@ namespace Macerus.Headless
             var encounterManager = container.Resolve<IEncounterManager>();
             var logger = container.Resolve<ILogger>();
 
-            //var filterContext = filterContextAmenity.CreateFilterContextForSingle(
-            //    filterContextAmenity.CreateRequiredAttribute(
-            //        spawnTableIdentifiers.FilterContextSpawnTableIdentifier,
-            //        new StringIdentifier("test-multi-skeleton")));
-            //filterContext = filterContextAmenity.CopyWithRange(filterContext, 2, 2);
-
-            //mapGameObjectManager.MarkForAddition(actorSpawner.SpawnActors(filterContext, new IGeneratorComponent[] { }));
-            //mapGameObjectManager.Synchronize();
-
-            //combatTurnManager.StartCombat(filterContext);
-
             var filterContext = filterContextAmenity.CreateNoneFilterContext();
             encounterManager.StartEncounter(
                 filterContext,
                 new StringIdentifier("test-encounter"));
-
-            //var actor1LocationBehavior = mapGameObjectManager
-            //    .GameObjects
-            //    .First(x => x.Has<IPlayerControlledBehavior>())
-            //    .GetOnly<IReadOnlyWorldLocationBehavior>();
-            //var actor2LocationBehavior = mapGameObjectManager
-            //    .GameObjects.First(x => 
-            //        x.GetOnly<ITypeIdentifierBehavior>().TypeId.Equals(new StringIdentifier("actor")) &&
-            //        !x.Has<IPlayerControlledBehavior>())
-            //    .GetOnly<IReadOnlyWorldLocationBehavior>();
-
-            //var startingPosition = new Vector2((float)actor1LocationBehavior.X, (float)actor1LocationBehavior.Y);
-
-            //var adjacentPositions = mapManager
-            //    .PathFinder
-            //    .GetAdjacentPositions(
-            //        new Vector2((int)actor2LocationBehavior.X, (int)actor2LocationBehavior.Y), // FIXME: note how this is INTEGER-based
-            //        true)
-            //    .ToArray();
-            //var destination = ClosestPosition(
-            //    startingPosition,
-            //    adjacentPositions);
-            //var path = mapManager
-            //    .PathFinder
-            //    .FindPath(
-            //        startingPosition,
-            //        destination,
-            //        new Vector2((float)actor1LocationBehavior.Width, (float)actor1LocationBehavior.Height))
-            //    .ToArray();
-            //Console.WriteLine(
-            //    $"Path from player ({actor1LocationBehavior.X},{actor1LocationBehavior.Y}) " +
-            //    $"to enemy ({actor2LocationBehavior.X},{actor2LocationBehavior.Y}) is:");
-            //foreach (var point in path)
-            //{
-            //    Console.WriteLine($"\t({point.X},{point.Y})");
-            //}
 
             var playerInventoryController = container.Resolve<IPlayerInventoryController>();
             playerInventoryController.OpenInventory();
@@ -130,21 +155,6 @@ namespace Macerus.Headless
             }
 
             Console.ReadLine();
-        }
-
-        private static void CombatTurnManager_CombatEnded(object sender, CombatEndedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static Vector2 ClosestPosition(
-            Vector2 source,
-            IEnumerable<Vector2> candidates)
-        {
-            var closest = candidates
-                .OrderBy(x => Math.Abs(source.X - x.X) + Math.Abs(source.Y - x.Y))
-                .First();
-            return closest;
         }
     }
 

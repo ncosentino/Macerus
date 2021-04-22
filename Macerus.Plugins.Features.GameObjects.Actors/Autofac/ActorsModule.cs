@@ -2,6 +2,7 @@
 
 using Macerus.Plugins.Features.GameObjects.Actors.Animations;
 using Macerus.Plugins.Features.GameObjects.Actors.LightRadius;
+using Macerus.Plugins.Features.GameObjects.Actors.Npc;
 using Macerus.Plugins.Features.GameObjects.Actors.Player;
 
 using ProjectXyz.Framework.Autofac;
@@ -50,6 +51,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Autofac
                 .SingleInstance();
             builder
                 .RegisterType<DynamicAnimationBehaviorFactory>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<CorpseInteractionHandler>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }
