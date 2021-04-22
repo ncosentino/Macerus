@@ -39,6 +39,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Api\Macerus.Plugins.Features.Combat.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Default\Macerus.Plugins.Features.Combat.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Encounters\Macerus.Plugins.Features.Encounters.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Api\Macerus.Plugins.Features.GameObjects.Actors.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Generation\Macerus.Plugins.Features.GameObjects.Actors.Generation.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Containers.Api\Macerus.Plugins.Features.GameObjects.Containers.Api.csproj" />
@@ -49,6 +50,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Affixes\Macerus.Plugins.Features.GameObjects.Items.Affixes.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Behaviors\Macerus.Plugins.Features.GameObjects.Items.Behaviors.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Api\Macerus.Plugins.Features.GameObjects.Items.Generation.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Default\Macerus.Plugins.Features.GameObjects.Items.Generation.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal.csproj" />

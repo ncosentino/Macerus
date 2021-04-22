@@ -63,7 +63,7 @@ namespace Macerus.Plugins.Content.Actors
                     var hasMutableStatsBehaviorFactory = c.Resolve<IHasMutableStatsBehaviorFactory>();
                     var filterContextAmenity = c.Resolve<IFilterContextAmenity>();
                     var gameObjectIdentifiers = c.Resolve<IGameObjectIdentifiers>();
-                    var actorIdentifiers = c.Resolve<IActorIdentifiers>();
+                    var actorIdentifiers = c.Resolve<IMacerusActorIdentifiers>();
                     var combatTeamIdentifiers = c.Resolve<ICombatTeamIdentifiers>();
                     var actorDefinitions = new IActorDefinition[]
                     {
@@ -74,8 +74,8 @@ namespace Macerus.Plugins.Content.Actors
                                     new IBehavior[]
                                     {
                                         new PlayerControlledBehavior(),
-                                        new ItemContainerBehavior(new StringIdentifier("Inventory")),
-                                        new ItemContainerBehavior(new StringIdentifier("Belt")),
+                                        new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),
+                                        new ItemContainerBehavior(actorIdentifiers.BeltIdentifier),
                                         new HasSkillsBehavior(),
                                         new CanEquipBehavior(new[]
                                         {
@@ -160,6 +160,10 @@ namespace Macerus.Plugins.Content.Actors
                         attributeFilterer,
                         actorDefinitions);
                 })
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<ActorIdentifiers>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

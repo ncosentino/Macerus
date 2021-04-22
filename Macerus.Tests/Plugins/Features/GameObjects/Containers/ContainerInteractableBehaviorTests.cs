@@ -3,6 +3,7 @@ using System.Linq;
 
 using Macerus.Api.Behaviors;
 using Macerus.Api.GameObjects;
+using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
 
 using ProjectXyz.Api.GameObjects;
@@ -18,14 +19,14 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Containers
     {
         private static readonly MacerusContainer _container;
         private static readonly IGameObjectRepositoryAmenity _gameObjectRepositoryAmenity;
-        private static readonly IActorIdentifiers _actorIdentifiers;
+        private static readonly IMacerusActorIdentifiers _actorIdentifiers;
         private static readonly IContainerIdentifiers _containerIdentifiers;
 
         static ContainerInteractableBehaviorTests()
         {
             _container = new MacerusContainer();
             _gameObjectRepositoryAmenity = _container.Resolve<IGameObjectRepositoryAmenity>();
-            _actorIdentifiers = _container.Resolve<IActorIdentifiers>();
+            _actorIdentifiers = _container.Resolve<IMacerusActorIdentifiers>();
             _containerIdentifiers = _container.Resolve<IContainerIdentifiers>();
         }
 
@@ -61,7 +62,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Containers
 
             var playerInventory = player
                 .Get<IReadOnlyItemContainerBehavior>()
-                .SingleOrDefault(x => x.ContainerId.Equals(new StringIdentifier("Inventory")));
+                .SingleOrDefault(x => x.ContainerId.Equals(_actorIdentifiers.InventoryIdentifier));
             Assert.InRange(
                 playerInventory.Items.Count,
                 1,

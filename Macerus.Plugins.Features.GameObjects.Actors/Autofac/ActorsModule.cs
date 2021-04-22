@@ -45,10 +45,6 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<ActorIdentifiers>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
                 .RegisterType<DynamicAnimationIdentifiers>()
                 .AsImplementedInterfaces()
                 .SingleInstance();

@@ -2,6 +2,7 @@
 using System.Linq;
 
 using Macerus.Api.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Api;
 
@@ -20,14 +21,17 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         BaseBehavior,
         IInteractableBehavior
     {
+        private readonly IMacerusActorIdentifiers _macerusActorIdentifiers;
         private readonly IMapGameObjectManager _mapGameObjectManager;
         private readonly ILootGeneratorAmenity _lootGeneratorAmenity;
 
         public ContainerInteractableBehavior(
+            IMacerusActorIdentifiers macerusActorIdentifiers,
             IMapGameObjectManager mapGameObjectManager,
             ILootGeneratorAmenity lootGeneratorAmenity,
             bool automaticInteraction)
         {
+            _macerusActorIdentifiers = macerusActorIdentifiers;
             _mapGameObjectManager = mapGameObjectManager;
             _lootGeneratorAmenity = lootGeneratorAmenity;
             AutomaticInteraction = automaticInteraction;
@@ -41,7 +45,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         {
             var actorInventory = actor
                 .Get<IItemContainerBehavior>()
-                .SingleOrDefault(x => x.ContainerId.Equals(new StringIdentifier("Inventory")));
+                .SingleOrDefault(x => x.ContainerId.Equals(_macerusActorIdentifiers.InventoryIdentifier));
             Contract.RequiresNotNull(
                 actorInventory,
                 $"'{actor}' did not have a matching '{typeof(IItemContainerBehavior)}'.");

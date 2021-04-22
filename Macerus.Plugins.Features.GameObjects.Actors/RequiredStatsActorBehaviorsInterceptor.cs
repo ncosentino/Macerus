@@ -8,7 +8,6 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Stats;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
-using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {

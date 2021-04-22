@@ -2,6 +2,7 @@
 using System.Linq;
 
 using Macerus.Api.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Containers.Api.LootDrops;
 using Macerus.Plugins.Features.Inventory.Api;
 
@@ -16,6 +17,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
 {
     public sealed class PlayerInventoryController : IPlayerInventoryController
     {
+        private readonly IMacerusActorIdentifiers _macerusActorIdentifiers;
         private readonly IBagItemSetFactory _bagItemSetFactory;
         private readonly IPlayerInventoryViewModel _playerInventoryViewModel;
         private readonly IMapGameObjectManager _mapGameObjectManager;
@@ -32,6 +34,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
         private IItemSetToViewModelBinder _dropToMapBinder;
 
         public PlayerInventoryController(
+            IMacerusActorIdentifiers macerusActorIdentifiers,
             IBagItemSetFactory bagItemSetFactory,
             IPlayerInventoryViewModel playerInventoryViewModel,
             IMapGameObjectManager mapGameObjectManager,
@@ -43,6 +46,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             IItemToItemSlotViewModelConverter equipmentToItemSlotViewModelConverter,
             IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter)
         {
+            _macerusActorIdentifiers = macerusActorIdentifiers;
             _bagItemSetFactory = bagItemSetFactory;
             _playerInventoryViewModel = playerInventoryViewModel;
             _mapGameObjectManager = mapGameObjectManager;
@@ -107,7 +111,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             var playerEquipmentBehavior = player.GetOnly<ICanEquipBehavior>();
             var playerInventoryBehavior = player
                 .Get<IItemContainerBehavior>()
-                .FirstOrDefault(x => x.ContainerId.Equals(new StringIdentifier("Inventory")));
+                .FirstOrDefault(x => x.ContainerId.Equals(_macerusActorIdentifiers.InventoryIdentifier));
             Contract.RequiresNotNull(
                 playerInventoryBehavior,
                 $"Expecting to find a matching behavior of type '{typeof(IItemContainerBehavior)}' on '{player}'.");

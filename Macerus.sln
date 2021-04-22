@@ -141,6 +141,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Items.Generation.Api", "Macerus.Plugins.Features.GameObjects.Items.Generation.Api\Macerus.Plugins.Features.GameObjects.Items.Generation.Api.csproj", "{E6955FDF-C37A-45D8-BD0C-FA86F3441CDA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Actors.Api", "Macerus.Plugins.Features.GameObjects.Actors.Api\Macerus.Plugins.Features.GameObjects.Actors.Api.csproj", "{44F38BAC-848A-4488-A6EA-E81643846A11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -331,6 +333,10 @@ Global
 		{E6955FDF-C37A-45D8-BD0C-FA86F3441CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6955FDF-C37A-45D8-BD0C-FA86F3441CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6955FDF-C37A-45D8-BD0C-FA86F3441CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44F38BAC-848A-4488-A6EA-E81643846A11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F38BAC-848A-4488-A6EA-E81643846A11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F38BAC-848A-4488-A6EA-E81643846A11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F38BAC-848A-4488-A6EA-E81643846A11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -397,6 +403,7 @@ Global
 		{13BA94FE-2A3F-4B35-85E3-B25CCA0BA87D} = {B94F2FF0-9DA5-44F6-BDA6-FE49EBEF391D}
 		{64262726-579A-46A7-B6C0-DB2D6B37869A} = {B94F2FF0-9DA5-44F6-BDA6-FE49EBEF391D}
 		{E6955FDF-C37A-45D8-BD0C-FA86F3441CDA} = {DBB8AA2F-D157-4B10-9EE8-4179D4019FB6}
+		{44F38BAC-848A-4488-A6EA-E81643846A11} = {769A1D7D-526E-4C9F-AB5D-689886FDED74}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}

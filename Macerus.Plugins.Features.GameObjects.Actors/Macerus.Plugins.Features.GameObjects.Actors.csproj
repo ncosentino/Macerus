@@ -1,32 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>net46</TargetFramework>
-    <AssemblyTitle>Macerus.Plugins.Features.GameObjects.Actors</AssemblyTitle>
-    <Product>Macerus.Plugins.Features.GameObjects.Actors</Product>
-    <Copyright>Copyright ©  2018</Copyright>
-    <AssemblyTitle>Macerus.Plugins.Features.GameObjects.Actors</AssemblyTitle>
-    <Product>Macerus.Plugins.Features.GameObjects.Actors</Product>
-    <Copyright>Copyright ©  2018</Copyright>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="NexusLabs.Contracts" Version="0.0.3" />
     <PackageReference Include="ProjectXyz" Version="1.0.*" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
     <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.Animations.Api\Macerus.Plugins.Features.Animations.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Api\Macerus.Plugins.Features.GameObjects.Actors.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Generation\Macerus.Plugins.Features.GameObjects.Actors.Generation.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj" />
     <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj" />
   </ItemGroup>
+
 </Project>
