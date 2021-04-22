@@ -126,6 +126,10 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                     .ContainerId
                     .Equals(_actorIdentifiers.InventoryIdentifier)));
             Assert.Equal(3, inventoryBehavior.Items.Count);
+
+            // spawn with equipment
+            var equipmentBehavior = Assert.Single(result.Get<ICanEquipBehavior>());
+            Assert.InRange(equipmentBehavior.GetEquippedItems().Count(), 0, 3);
         }
 
         [Fact]

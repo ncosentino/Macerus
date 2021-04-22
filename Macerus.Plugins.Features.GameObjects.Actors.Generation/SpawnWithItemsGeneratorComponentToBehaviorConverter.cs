@@ -33,7 +33,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
             IEnumerable<IBehavior> baseBehaviors,
             IGeneratorComponent generatorComponent)
         {
-            var spawnWithItemsBehavior = (SpawnWithItemsGeneratorComponent)generatorComponent;
+            var spawnWithItemsComponent = (SpawnWithItemsGeneratorComponent)generatorComponent;
             var inventoryBehavior = baseBehaviors
                 .Get<IItemContainerBehavior>()
                 .FirstOrDefault(x => x.ContainerId.Equals(_actorIdentifiers.InventoryIdentifier));
@@ -43,7 +43,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
                 $"'{_actorIdentifiers.InventoryIdentifier}' when converting " +
                 $"'{generatorComponent}'.");
 
-            var generatedItems = _lootGeneratorAmenity.GenerateLoot(spawnWithItemsBehavior.DropTableId);
+            var generatedItems = _lootGeneratorAmenity.GenerateLoot(spawnWithItemsComponent.DropTableId);
             foreach (var generatedItem in generatedItems)
             {
                 if (!inventoryBehavior.TryAddItem(generatedItem))

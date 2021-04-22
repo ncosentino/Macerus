@@ -24,6 +24,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation.Autofac
                 .RegisterType<SpawnWithItemsGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<SpawnWithEquipmentGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

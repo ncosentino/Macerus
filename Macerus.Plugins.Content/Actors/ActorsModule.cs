@@ -65,6 +65,24 @@ namespace Macerus.Plugins.Content.Actors
                     var gameObjectIdentifiers = c.Resolve<IGameObjectIdentifiers>();
                     var actorIdentifiers = c.Resolve<IMacerusActorIdentifiers>();
                     var combatTeamIdentifiers = c.Resolve<ICombatTeamIdentifiers>();
+
+                    IReadOnlyCollection<IIdentifier> humanoidEquipSlotIds = new[]
+                    {
+                        new StringIdentifier("head"),
+                        new StringIdentifier("body"),
+                        new StringIdentifier("left hand"),
+                        new StringIdentifier("right hand"),
+                        new StringIdentifier("amulet"),
+                        new StringIdentifier("ring1"),
+                        new StringIdentifier("ring2"),
+                        new StringIdentifier("shoulders"),
+                        new StringIdentifier("hands"),
+                        new StringIdentifier("waist"),
+                        new StringIdentifier("feet"),
+                        new StringIdentifier("legs"),
+                        new StringIdentifier("back"),
+                    };
+
                     var actorDefinitions = new IActorDefinition[]
                     {
                         new ActorDefinition(
@@ -77,22 +95,7 @@ namespace Macerus.Plugins.Content.Actors
                                         new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),
                                         new ItemContainerBehavior(actorIdentifiers.BeltIdentifier),
                                         new HasSkillsBehavior(),
-                                        new CanEquipBehavior(new[]
-                                        {
-                                            new StringIdentifier("head"),
-                                            new StringIdentifier("body"),
-                                            new StringIdentifier("left hand"),
-                                            new StringIdentifier("right hand"),
-                                            new StringIdentifier("amulet"),
-                                            new StringIdentifier("ring1"),
-                                            new StringIdentifier("ring2"),
-                                            new StringIdentifier("shoulders"),
-                                            new StringIdentifier("hands"),
-                                            new StringIdentifier("waist"),
-                                            new StringIdentifier("feet"),
-                                            new StringIdentifier("legs"),
-                                            new StringIdentifier("back"),
-                                        }),
+                                        new CanEquipBehavior(humanoidEquipSlotIds),
                                     }),
                                 new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
@@ -124,6 +127,7 @@ namespace Macerus.Plugins.Content.Actors
                                     {
                                         new CombatAIBehavior(),
                                         new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),
+                                        new CanEquipBehavior(humanoidEquipSlotIds),
                                     }),
                                 new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
@@ -141,6 +145,10 @@ namespace Macerus.Plugins.Content.Actors
                                     [new StringIdentifier("test-attack")] = 1,
                                 }),
                                 new SpawnWithItemsGeneratorComponent(new StringIdentifier("test-skeleton-drop")),
+                                new SpawnWithEquipmentGeneratorComponent(
+                                    new StringIdentifier("test-skeleton-drop"),
+                                    true,
+                                    null),
                             },
                             new IFilterAttribute[]
                             {
