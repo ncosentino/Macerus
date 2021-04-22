@@ -23,6 +23,22 @@ namespace Macerus.Plugins.Content.DropTables
                     var dropTables = new IDropTable[]
                     {
                         dropTableFactory.Create(
+                            new StringIdentifier("test-skeleton-drop"),
+                            3,
+                            3,
+                            Enumerable.Empty<IFilterAttribute>(),
+                            new[]
+                            {
+                                new FilterAttribute(
+                                    new StringIdentifier("affix-type"),
+                                    new AnyStringCollectionFilterAttributeValue("normal", "magic"),
+                                    true),
+                                new FilterAttribute(
+                                    new StringIdentifier("item-level"),
+                                    new DoubleFilterAttributeValue(0),
+                                    false),
+                            }),
+                        dropTableFactory.Create(
                             new StringIdentifier("any_magic_1-10_lvl10"),
                             1,
                             10,

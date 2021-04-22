@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
+using Macerus.Plugins.Features.GameObjects.Actors.Api;
 
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
@@ -12,6 +13,7 @@ using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Shared.Framework;
+using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
 {

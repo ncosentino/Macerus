@@ -102,7 +102,7 @@ namespace Macerus.Plugins.Content.Actors
                                     [new IntIdentifier(3)] = 100,
                                     [combatTeamIdentifiers.CombatTeamStatDefinitionId] = combatTeamIdentifiers.PlayerTeamStatValue,
                                     [new StringIdentifier("speed")] = 20, // FIXME: just for testing
-                                })
+                                }),
                             },
                             new IFilterAttribute[]
                             {
@@ -123,6 +123,7 @@ namespace Macerus.Plugins.Content.Actors
                                     new IBehavior[]
                                     {
                                         new CombatAIBehavior(),
+                                        new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),
                                     }),
                                 new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
@@ -138,7 +139,8 @@ namespace Macerus.Plugins.Content.Actors
                                 new HasSkillsGeneratorComponent(new Dictionary<IIdentifier, int>()
                                 {
                                     [new StringIdentifier("test-attack")] = 1,
-                                })
+                                }),
+                                new SpawnWithItemsGeneratorComponent(new StringIdentifier("test-skeleton-drop")),
                             },
                             new IFilterAttribute[]
                             {

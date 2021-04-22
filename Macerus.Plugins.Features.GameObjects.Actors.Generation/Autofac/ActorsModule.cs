@@ -20,6 +20,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation.Autofac
                 .RegisterType<ActorGeneratorFacade>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<SpawnWithItemsGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

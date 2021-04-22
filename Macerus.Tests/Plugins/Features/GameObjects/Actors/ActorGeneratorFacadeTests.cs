@@ -23,7 +23,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
         private static readonly IActorGeneratorFacade _actorGeneratorFacade;
         private static readonly IFilterContextAmenity _filterContextAmenity;
         private static readonly IGameObjectIdentifiers _gameObjectIdentifiers;
-        private static readonly IActorIdentifiers _actorIdentifiers;
+        private static readonly IMacerusActorIdentifiers _actorIdentifiers;
         private static readonly IDynamicAnimationIdentifiers _dynamicAnimationIdentifiers;
 
         static ActorGeneratorFacadeTests()
@@ -33,7 +33,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
             _actorGeneratorFacade = _container.Resolve<IActorGeneratorFacade>();
             _filterContextAmenity = _container.Resolve<IFilterContextAmenity>();
             _gameObjectIdentifiers = _container.Resolve<IGameObjectIdentifiers>();
-            _actorIdentifiers = _container.Resolve<IActorIdentifiers>();
+            _actorIdentifiers = _container.Resolve<IMacerusActorIdentifiers>();
             _dynamicAnimationIdentifiers = _container.Resolve<IDynamicAnimationIdentifiers>();
         }
 
@@ -118,6 +118,14 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                 result,
                 _dynamicAnimationIdentifiers.AnimationOverrideStatId,
                 1);
+
+            // spawn with items
+            var inventoryBehavior = Assert.Single(result
+                .Get<IItemContainerBehavior>()
+                .Where(x => x
+                    .ContainerId
+                    .Equals(_actorIdentifiers.InventoryIdentifier)));
+            Assert.Equal(3, inventoryBehavior.Items.Count);
         }
 
         [Fact]
