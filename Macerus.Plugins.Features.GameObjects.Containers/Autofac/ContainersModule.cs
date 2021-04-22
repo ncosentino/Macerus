@@ -35,10 +35,13 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.Autofac
               .AsImplementedInterfaces()
               .SingleInstance();
             builder
-              .RegisterType<LootDropFactory>()
-              .AsImplementedInterfaces()
-              .SingleInstance();
-            builder.RegisterType<ContainerInteractableBehavior>(); // for factory
+                .RegisterType<LootDropFactory>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<ContainerInteractionHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
             builder.RegisterType<ContainerMakesNoiseBehavior>(); // for factory
         }
     }

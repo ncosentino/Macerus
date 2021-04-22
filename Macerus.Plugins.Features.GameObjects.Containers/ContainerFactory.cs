@@ -3,6 +3,7 @@ using System.Linq;
 
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
+using Macerus.Plugins.Features.Interactions.Api;
 
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.GameObjects;

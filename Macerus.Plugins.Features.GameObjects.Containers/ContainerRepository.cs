@@ -23,7 +23,6 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         private readonly IContainerFactory _containerFactory;
         private readonly IGameObjectIdentifiers _gameObjectIdentifiers;
         private readonly IContainerIdentifiers _containerIdentifiers;
-        private readonly ContainerInteractableBehavior.Factory _containerInteractableBehaviorFactory;
         private readonly ContainerMakesNoiseBehavior.Factory _containerMakesNoiseBehaviorFactory;
         private readonly IFilterContextAmenity _filterContextAmenity;
 
@@ -31,14 +30,12 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             IContainerFactory containerFactory,
             IGameObjectIdentifiers gameObjectIdentifiers,
             IContainerIdentifiers containerIdentifiers,
-            ContainerInteractableBehavior.Factory containerInteractableBehaviorFactory,
             ContainerMakesNoiseBehavior.Factory containerMakesNoiseBehaviorFactory,
             IFilterContextAmenity filterContextAmenity)
         {
             _containerFactory = containerFactory;
             _gameObjectIdentifiers = gameObjectIdentifiers;
             _containerIdentifiers = containerIdentifiers;
-            _containerInteractableBehaviorFactory = containerInteractableBehaviorFactory;
             _containerMakesNoiseBehaviorFactory = containerMakesNoiseBehaviorFactory;
             _filterContextAmenity = filterContextAmenity;
 
@@ -63,8 +60,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             var templateId = _filterContextAmenity.GetGameObjectTemplateIdFromContext(filterContext);
 
             var containerPropertiesBehavior = new ContainerPropertiesBehavior(properties);
-            var containerInteractionBehavior = _containerInteractableBehaviorFactory
-                .Invoke(containerPropertiesBehavior.AutomaticInteraction);
+            var containerInteractableBehavior = new ContainerInteractableBehavior(containerPropertiesBehavior.AutomaticInteraction);
 
             var additionalBehaviors = new List<IBehavior>();
             if (containerPropertiesBehavior.DropTableId != null)
@@ -101,7 +97,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 // - different graphics? or is that handled by the template check in the front-end?
                 containerPropertiesBehavior,
                 new ItemContainerBehavior(new StringIdentifier("Items")),
-                containerInteractionBehavior,
+                containerInteractableBehavior,
                 additionalBehaviors);
             return container;
         }
