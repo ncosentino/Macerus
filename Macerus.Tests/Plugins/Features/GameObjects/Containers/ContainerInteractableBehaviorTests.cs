@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using Macerus.Api.Behaviors;
 using Macerus.Api.GameObjects;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
+using Macerus.Plugins.Features.Interactions.Api;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;
@@ -21,6 +20,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Containers
         private static readonly IGameObjectRepositoryAmenity _gameObjectRepositoryAmenity;
         private static readonly IMacerusActorIdentifiers _actorIdentifiers;
         private static readonly IContainerIdentifiers _containerIdentifiers;
+        private static readonly IInteractionHandlerFacade _interactionHandler;
 
         static ContainerInteractableBehaviorTests()
         {
@@ -28,6 +28,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Containers
             _gameObjectRepositoryAmenity = _container.Resolve<IGameObjectRepositoryAmenity>();
             _actorIdentifiers = _container.Resolve<IMacerusActorIdentifiers>();
             _containerIdentifiers = _container.Resolve<IContainerIdentifiers>();
+            _interactionHandler = _container.Resolve<IInteractionHandlerFacade>();
         }
 
         [Fact]
@@ -56,9 +57,9 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Containers
                     ["Height"] = 1,
                 });
 
-            container
-                .GetOnly<IInteractableBehavior>()
-                .Interact(player);
+            _interactionHandler.Interact(
+                player,
+                container.GetOnly<IInteractableBehavior>());
 
             var playerInventory = player
                 .Get<IReadOnlyItemContainerBehavior>()
