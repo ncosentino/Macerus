@@ -1,4 +1,4 @@
-﻿namespace Macerus.Plugins.Features.Inventory.Api
+﻿namespace Macerus.Plugins.Features.Gui.Api
 {
     public interface IColor
     {

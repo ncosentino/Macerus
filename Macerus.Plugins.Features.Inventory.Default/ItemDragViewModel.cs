@@ -1,4 +1,5 @@
-﻿using Macerus.Plugins.Features.Inventory.Api;
+﻿using Macerus.Plugins.Features.Gui.Default;
+using Macerus.Plugins.Features.Inventory.Api;
 
 namespace Macerus.Plugins.Features.Inventory.Default
 {

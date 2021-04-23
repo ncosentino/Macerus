@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="ProjectXyz" Version="1.0.*" />
+    <PackageReference Include="NexusLabs.Contracts" Version="0.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Macerus.Game.Api\Macerus.Game.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Gui.Default\Macerus.Plugins.Features.Gui.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.MainMenu.Api\Macerus.Plugins.Features.MainMenu.Api.csproj" />
+  </ItemGroup>
+
+</Project>

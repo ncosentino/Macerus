@@ -1,4 +1,6 @@
-﻿using Macerus.Plugins.Features.Inventory.Api;
+﻿using Macerus.Plugins.Features.Gui.Api;
+using Macerus.Plugins.Features.Gui.Default;
+using Macerus.Plugins.Features.Inventory.Api;
 
 using ProjectXyz.Api.Framework;
 

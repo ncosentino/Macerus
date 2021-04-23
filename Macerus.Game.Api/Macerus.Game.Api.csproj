@@ -8,8 +8,4 @@
     <PackageReference Include="ProjectXyz" Version="1.0.*" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Macerus.Plugins.Features.Gui.Api\Macerus.Plugins.Features.Gui.Api.csproj" />
-  </ItemGroup>
-
 </Project>

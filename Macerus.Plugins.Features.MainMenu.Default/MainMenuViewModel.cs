@@ -1,19 +1,28 @@
 ﻿using System;
 
 using Macerus.Plugins.Features.Gui.Default;
-using Macerus.Plugins.Features.Inventory.Api;
+using Macerus.Plugins.Features.MainMenu.Api;
 
-namespace Macerus.Plugins.Features.Inventory.Default
+using ProjectXyz.Api.Framework;
+using ProjectXyz.Shared.Framework;
+
+namespace Macerus.Plugins.Features.MainMenu.Default
 {
-    public sealed class PlayerInventoryViewModel :
+    public sealed class MainMenuViewModel :
         NotifierBase,
-        IPlayerInventoryViewModel
+        IMainMenuViewModel
     {
         private bool _isOpen;
 
         public event EventHandler<EventArgs> Opened;
 
         public event EventHandler<EventArgs> Closed;
+
+        public event EventHandler<EventArgs> RequestNewGame;
+
+        public event EventHandler<EventArgs> RequestOptions;
+
+        public event EventHandler<EventArgs> RequestExit;
 
         public bool IsOpen
         {
@@ -37,8 +46,17 @@ namespace Macerus.Plugins.Features.Inventory.Default
             }
         }
 
+        public IIdentifier BackgroundImageResourceId { get; } =
+            new StringIdentifier("Graphics/Gui/MainMenu/background");
+
         public void Close() => IsOpen = false;
 
         public void Open() => IsOpen = true;
+
+        public void StartNewGame() => RequestNewGame?.Invoke(this, EventArgs.Empty);
+
+        public void NavigateOptions() => RequestOptions?.Invoke(this, EventArgs.Empty);
+
+        public void ExitGame() => RequestExit?.Invoke(this, EventArgs.Empty);
     }
 }

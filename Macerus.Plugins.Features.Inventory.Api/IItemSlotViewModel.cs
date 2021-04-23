@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 
+using Macerus.Plugins.Features.Gui.Api;
+
 using ProjectXyz.Api.Framework;
 
 namespace Macerus.Plugins.Features.Inventory.Api

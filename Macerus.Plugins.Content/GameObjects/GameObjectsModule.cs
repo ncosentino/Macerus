@@ -2,18 +2,14 @@
 
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Game.GameObjects.Autofac
+namespace Macerus.Plugins.Content.GameObjects
 {
     public class GameObjectsModule : SingleRegistrationModule
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-               .RegisterType<GameObjectRepositoryAmenity>()
-               .AsImplementedInterfaces()
-               .SingleInstance();
-            builder
-                .RegisterType<GameObjectRepositoryFacade>()
+                .RegisterType<GameObjectIdentifiers>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

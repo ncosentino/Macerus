@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Macerus.Plugins.Features.Inventory.Default
+namespace Macerus.Plugins.Features.Gui.Default
 {
     public abstract class NotifierBase : INotifyPropertyChanged
     {

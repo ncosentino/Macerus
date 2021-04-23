@@ -3,7 +3,7 @@
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Game.GameObjects
+namespace Macerus.Plugins.Content.GameObjects
 {
     public sealed class GameObjectIdentifiers : IGameObjectIdentifiers
     {

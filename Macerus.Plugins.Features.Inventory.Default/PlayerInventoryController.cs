@@ -11,7 +11,6 @@ using NexusLabs.Contracts;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
-using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.Inventory.Default
 {
