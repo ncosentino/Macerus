@@ -152,6 +152,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 _dropToMapBinder,
                 $"Expecting '{nameof(_dropToMapBinder)}' to not be null.");
 
+            _itemSetController.EndPendingDragDrop();
             _itemSetController.Unregister(_equipmentBinder);
             _itemSetController.Unregister(_bagBinder);
             _itemSetController.Unregister(_dropToMapBinder);

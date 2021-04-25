@@ -50,6 +50,13 @@ namespace Macerus.Plugins.Features.Inventory.Default
             itemSet.ItemsChanged -= ItemSet_ItemsChanged;
         }
 
+        public void EndPendingDragDrop()
+        {
+            _itemDragViewModel.DraggedItemSlot = null;
+            _dragSourceBinder = null;
+            UpdateDropSlots();
+        }
+
         private void UpdateDropSlots()
         {
             var dragItem = _dragSourceBinder == null
@@ -83,9 +90,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             object sender,
             DragEndEventArgs e)
         {
-            _itemDragViewModel.DraggedItemSlot = null;
-            _dragSourceBinder = null;
-            UpdateDropSlots();
+            EndPendingDragDrop();
         }
 
         private void ItemSlotCollectionViewModel_Dropped(

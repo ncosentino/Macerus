@@ -5,5 +5,7 @@
         void Register(IItemSetToViewModelBinder binder);
 
         void Unregister(IItemSetToViewModelBinder binder);
+
+        void EndPendingDragDrop();
     }
 }
