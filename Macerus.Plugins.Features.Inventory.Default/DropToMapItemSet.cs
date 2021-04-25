@@ -17,11 +17,11 @@ namespace Macerus.Plugins.Features.Inventory.Default
     public sealed class DropToMapItemSet : IItemSet
     {
         private readonly ILootDropFactory _lootDropFactory;
-        private readonly IReadOnlyMapGameObjectManager _mapGameObjectManager;
+        private readonly IMapGameObjectManager _mapGameObjectManager;
 
         public DropToMapItemSet(
             ILootDropFactory lootDropFactory,
-            IReadOnlyMapGameObjectManager mapGameObjectManager)
+            IMapGameObjectManager mapGameObjectManager)
         {
             _lootDropFactory = lootDropFactory;
             _mapGameObjectManager = mapGameObjectManager;
@@ -55,7 +55,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 .GameObjects
                 .First(x => x.Has<IPlayerControlledBehavior>())
                 .GetOnly<IReadOnlyWorldLocationBehavior>();
-            _lootDropFactory.CreateLoot(
+            var loot = _lootDropFactory.CreateLoot(
                 playerWorldLocationBehavior.X,
                 playerWorldLocationBehavior.Y,
                 false,
@@ -63,6 +63,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 {
                     itemToSwapIn
                 });
+            _mapGameObjectManager.MarkForAddition(loot);
             return SwapResult.SuccessAndContinue;
         }
     }
