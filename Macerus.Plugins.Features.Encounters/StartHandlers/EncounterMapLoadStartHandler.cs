@@ -5,7 +5,6 @@ using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Mapping.Api;
-using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.Encounters
 {
@@ -36,10 +35,7 @@ namespace Macerus.Plugins.Features.Encounters
             var mapContext = _filterContextAmenity.CopyWithAdditionalAttributes(
                 filterContext,
                 encounterMapFilterBehavior.ProvidedAttributes);
-
-            // FIXME: actually load the map from a repo
-            var mapId = new StringIdentifier("swamp");
-            _mapManager.SwitchMap(mapId);
+            _mapManager.SwitchMap(mapContext);
         }
     }
 }

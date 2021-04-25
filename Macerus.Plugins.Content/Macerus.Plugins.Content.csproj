@@ -8,6 +8,7 @@
     <None Remove="Graphics\Actors\LpcUniversal\player_male.png" />
     <None Remove="Graphics\Actors\LpcUniversal\skeleton_basic.png" />
     <None Remove="Mapping\Maps\swamp_tmx.txt" />
+    <None Remove="Mapping\Maps\test_encounter_map_tmx.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +35,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Graphics\Actors\LpcUniversal\skeleton_basic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Mapping\Maps\test_encounter_map_tmx.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Mapping\Maps\swamp_tmx.txt">

@@ -10,6 +10,7 @@ using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
+using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Encounters
@@ -24,6 +25,7 @@ namespace Macerus.Plugins.Content.Encounters
                     var filterContextAmenity = c.Resolve<IFilterContextAmenity>();
                     var spawnTableIdentifiers = c.Resolve<ISpawnTableIdentifiers>();
                     var combatTeamIdentifiers = c.Resolve<ICombatTeamIdentifiers>();
+                    var mapIdentifiers = c.Resolve<IMapIdentifiers>();
                     var encounterDefinitions = new IEncounterDefinition[]
                     {
                         new EncounterDefinition(
@@ -34,9 +36,11 @@ namespace Macerus.Plugins.Content.Encounters
                             new IGeneratorComponent[]
                             {
                                 new StatelessBehaviorGeneratorComponent(
-                                    new EncounterMapFilterBehavior(new IFilterAttribute[]
+                                    new EncounterMapFilterBehavior(new[] 
                                     {
-                                        // FIXME: put a map here
+                                        filterContextAmenity.CreateRequiredAttribute(
+                                            mapIdentifiers.FilterContextMapIdentifier,
+                                            new StringIdentifier("test_encounter_map")),
                                     }),
                                     new EncounterSpawnTableIdBehavior(
                                         new StringIdentifier("test-multi-skeleton"),
