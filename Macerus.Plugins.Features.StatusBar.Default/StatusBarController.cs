@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Macerus.Api.Behaviors;
+using Macerus.Plugins.Features.Gui.Api;
 // TODO: This Stats reference should be to an API!
 using Macerus.Plugins.Features.Stats;
 using Macerus.Plugins.Features.StatusBar.Api;
@@ -25,12 +26,15 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
             IReadOnlyMapGameObjectManager readOnlyMapGameObjectManager,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
+            IUserInterfaceSystem userInterfaceSystem,
             IStatusBarViewModel statusBarViewModel)
         {
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
             _mapGameObjectManager = readOnlyMapGameObjectManager;
             _statDefinitionToTermMappingRepository = statDefinitionToTermMappingRepository;
             _statusBarViewModel = statusBarViewModel;
+
+            userInterfaceSystem.RegisterUpdater(1, UpdateAsync);
         }
 
         public delegate StatusBarController Factory();

@@ -1,9 +1,8 @@
 ﻿using Autofac;
 using Macerus.Plugins.Features.StatusBar.Api;
-using Macerus.Plugins.Features.StatusBar.Default;
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Plugins.Features.Inventory.Default.Autofac
+namespace Macerus.Plugins.Features.StatusBar.Default.Autofac
 {
     public sealed class StatusBarModule : SingleRegistrationModule
     {
