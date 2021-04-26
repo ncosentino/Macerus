@@ -169,6 +169,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Ch
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.CharacterSheet.Default", "Macerus.Plugins.Features.CharacterSheet.Default\Macerus.Plugins.Features.CharacterSheet.Default.csproj", "{DD9CF1EF-F46E-416B-B2BA-FDDA05ECE1F3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StatusBar", "StatusBar", "{B6D4BE2A-B1D6-44CD-AD98-4C60ECA100E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.StatusBar.Api", "Macerus.Plugins.Features.StatusBar.Api\Macerus.Plugins.Features.StatusBar.Api.csproj", "{7C6B5700-7FDA-428F-A3E4-1FA850BFDCC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.StatusBar.Default", "Macerus.Plugins.Features.StatusBar.Default\Macerus.Plugins.Features.StatusBar.Default.csproj", "{B428321E-FFFC-4458-A925-8F4B8DAC2919}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -399,6 +405,14 @@ Global
 		{DD9CF1EF-F46E-416B-B2BA-FDDA05ECE1F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD9CF1EF-F46E-416B-B2BA-FDDA05ECE1F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD9CF1EF-F46E-416B-B2BA-FDDA05ECE1F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C6B5700-7FDA-428F-A3E4-1FA850BFDCC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C6B5700-7FDA-428F-A3E4-1FA850BFDCC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C6B5700-7FDA-428F-A3E4-1FA850BFDCC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C6B5700-7FDA-428F-A3E4-1FA850BFDCC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B428321E-FFFC-4458-A925-8F4B8DAC2919}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B428321E-FFFC-4458-A925-8F4B8DAC2919}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B428321E-FFFC-4458-A925-8F4B8DAC2919}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B428321E-FFFC-4458-A925-8F4B8DAC2919}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -479,6 +493,9 @@ Global
 		{C10A7DBA-D336-4909-B674-54847FA5D1FD} = {33A6C169-52DA-446B-A241-FEC05722752A}
 		{8B1F911C-B9DD-43F5-85D3-EC46CA612D41} = {C10A7DBA-D336-4909-B674-54847FA5D1FD}
 		{DD9CF1EF-F46E-416B-B2BA-FDDA05ECE1F3} = {C10A7DBA-D336-4909-B674-54847FA5D1FD}
+		{B6D4BE2A-B1D6-44CD-AD98-4C60ECA100E3} = {33A6C169-52DA-446B-A241-FEC05722752A}
+		{7C6B5700-7FDA-428F-A3E4-1FA850BFDCC3} = {B6D4BE2A-B1D6-44CD-AD98-4C60ECA100E3}
+		{B428321E-FFFC-4458-A925-8F4B8DAC2919} = {B6D4BE2A-B1D6-44CD-AD98-4C60ECA100E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}
