@@ -14,7 +14,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default.Autofac
                 .SingleInstance();
             builder
                 .RegisterType<StatusBarController>()
-                .As<IStatusBarController>()
+                .AsImplementedInterfaces()
                 .SingleInstance();
         }
     }

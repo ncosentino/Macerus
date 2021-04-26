@@ -1,23 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using ProjectXyz.Api.Systems;
 using Macerus.Plugins.Features.Gui.Api;
+
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
-using System;
+using ProjectXyz.Api.Systems;
 
 namespace Macerus.Plugins.Features.Gui.Default
 {
     public sealed class UserInterfaceSystem : IUserInterfaceSystem
     {
-        private readonly List<Tuple<double, Func<Task>>> _callbacks;
+        private readonly IReadOnlyCollection<Tuple<double, IUserInterfaceUpdate>> _updaters;
 
-        public UserInterfaceSystem()
+        public UserInterfaceSystem(IEnumerable<IDiscoverableUserInterfaceUpdate> discoverableUserInterfaceUpdaters)
         {
-            _callbacks = new List<Tuple<double, Func<Task>>>();
+            _updaters = discoverableUserInterfaceUpdaters
+                .Select(x => new Tuple<double, IUserInterfaceUpdate>(
+                    x.UpdateIntervalInSeconds,
+                    x))
+                .ToArray();
         }
 
 
@@ -34,16 +39,11 @@ namespace Macerus.Plugins.Features.Gui.Default
             var elapsedSeconds = elapsed.Value / 1000;
 
             Parallel.ForEach(
-                _callbacks,
+                _updaters,
                 async (x) =>
                 {
-                    await Task.Run(x.Item2);
+                    await x.Item2.UpdateAsync(systemUpdateContext);
                 });
-        }
-
-        public void RegisterUpdater(double interval, Func<Task> updateTaskFactory)
-        {
-            _callbacks.Add(Tuple.Create(interval, updateTaskFactory));
         }
     }
 }

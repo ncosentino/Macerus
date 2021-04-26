@@ -100,10 +100,10 @@ namespace Macerus.Plugins.Content.Actors
                                     }),
                                 new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
-                                    [new IntIdentifier(0)] = 100,
                                     [new IntIdentifier(1)] = 100,
                                     [new IntIdentifier(2)] = 100,
                                     [new IntIdentifier(3)] = 100,
+                                    [new IntIdentifier(4)] = 100,
                                     [combatTeamIdentifiers.CombatTeamStatDefinitionId] = combatTeamIdentifiers.PlayerTeamStatValue,
                                     [new StringIdentifier("speed")] = 20, // FIXME: just for testing
                                 }),

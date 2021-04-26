@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Macerus.Api.Behaviors;
-using Macerus.Plugins.Features.Gui.Api;
 // TODO: This Stats reference should be to an API!
 using Macerus.Plugins.Features.Stats;
 using Macerus.Plugins.Features.StatusBar.Api;
+
 using NexusLabs.Contracts;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Stats;
+using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 
 namespace Macerus.Plugins.Features.StatusBar.Default
@@ -26,27 +28,29 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
             IReadOnlyMapGameObjectManager readOnlyMapGameObjectManager,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
-            IUserInterfaceSystem userInterfaceSystem,
             IStatusBarViewModel statusBarViewModel)
         {
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
             _mapGameObjectManager = readOnlyMapGameObjectManager;
             _statDefinitionToTermMappingRepository = statDefinitionToTermMappingRepository;
             _statusBarViewModel = statusBarViewModel;
-
-            userInterfaceSystem.RegisterUpdater(1, UpdateAsync);
         }
 
         public delegate StatusBarController Factory();
 
-        public async Task UpdateAsync()
+        public double UpdateIntervalInSeconds { get; } = 1;
+
+        public async Task UpdateAsync(ISystemUpdateContext context)
         {
             var player = _mapGameObjectManager
                 .GameObjects
                 .FirstOrDefault(x => x.Has<IPlayerControlledBehavior>());
-            Contract.RequiresNotNull(
-                player,
-                $"Expecting to find game object on map with behavior '{typeof(IPlayerControlledBehavior)}'.");
+
+            // no player loaded up? no status to update.
+            if (player == null)
+            {
+                return;
+            }
 
             var stats = new Dictionary<string, Tuple<string, string>>()
             {

@@ -41,22 +41,19 @@ namespace Macerus.Headless
         {
             var container = new MacerusContainer();
 
-            new LootCorpseExercise().Go(container);
+            new GameLoopExercise().Go(container);
         }
+    }
 
-        private static void CombatTurnManager_CombatEnded(object sender, CombatEndedEventArgs e)
+    public sealed class GameLoopExercise
+    {
+        public void Go(MacerusContainer container)
         {
-            throw new NotImplementedException();
-        }
-
-        private static Vector2 ClosestPosition(
-            Vector2 source,
-            IEnumerable<Vector2> candidates)
-        {
-            var closest = candidates
-                .OrderBy(x => Math.Abs(source.X - x.X) + Math.Abs(source.Y - x.Y))
-                .First();
-            return closest;
+            var gameEngine = container.Resolve<IGameEngine>();
+            while (true)
+            {
+                gameEngine.Update();
+            }
         }
     }
 
