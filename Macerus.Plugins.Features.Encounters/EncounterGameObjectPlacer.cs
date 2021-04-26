@@ -56,6 +56,12 @@ namespace Macerus.Plugins.Features.Encounters
                 _mapGameObjectManager.MarkForAddition(gameObjectToPlace);
             }
 
+            // remove remaining spawn locations
+            foreach (var spawnLocation in availableSpawnLocations)
+            {
+                _mapGameObjectManager.MarkForRemoval((IGameObject)spawnLocation.Owner); // FIXME: whyyy these casts
+            }
+
             // force synchronization so later handlers can operate
             _mapGameObjectManager.Synchronize();
         }
