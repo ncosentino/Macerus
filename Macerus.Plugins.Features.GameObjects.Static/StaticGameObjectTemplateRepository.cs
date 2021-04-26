@@ -14,8 +14,7 @@ using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Static
 {
-
-    public sealed class StaticGameObjectRepository : IDiscoverableGameObjectRepository
+    public sealed class StaticGameObjectTemplateRepository : IDiscoverableGameObjectTemplateRepository
     {
         private readonly IGameObjectIdentifiers _gameObjectIdentifiers;
         private readonly IStaticGameObjectIdentifiers _staticGameObjectIdentifiers;
@@ -23,7 +22,7 @@ namespace Macerus.Plugins.Features.GameObjects.Static
         private readonly IFilterContextAmenity _filterContextAmenity;
         private readonly IAttributeFilterer _attributeFilterer;
 
-        public StaticGameObjectRepository(
+        public StaticGameObjectTemplateRepository(
             IGameObjectIdentifiers gameObjectIdentifiers,
             IStaticGameObjectIdentifiers staticGameObjectIdentifiers,
             IStaticGameObjectFactory staticGameObjectFactory,
@@ -78,12 +77,6 @@ namespace Macerus.Plugins.Features.GameObjects.Static
                 },
                 new StaticGameObjectPropertiesBehavior(properties));
             return staticGameObject;
-        }
-
-        public IEnumerable<IGameObject> Load(IFilterContext filterContext)
-        {
-            // FIXME: implement this
-            yield break;
         }
     }
 }

@@ -7,6 +7,7 @@ using Macerus.Api.GameObjects;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Shared.Framework;
 
@@ -17,6 +18,7 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
         private readonly ITiledMapLoader _tiledMapLoader;
         private readonly IGameObjectRepositoryAmenity _gameObjectRepositoryAmenity;
         private readonly ILogger _logger;
+        private readonly Dictionary<IIdentifier, List<IIdentifier>> _gameObjectIdCache;
 
         public TiledNetGameObjectRepository(
             ITiledMapLoader tiledMapLoader,
@@ -26,10 +28,24 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
             _tiledMapLoader = tiledMapLoader;
             _gameObjectRepositoryAmenity = gameObjectRepositoryAmenity;
             _logger = logger;
+            _gameObjectIdCache = new Dictionary<IIdentifier, List<IIdentifier>>();
         }
 
         public IEnumerable<IGameObject> LoadForMap(IIdentifier mapId)
         {
+            if (_gameObjectIdCache.TryGetValue(
+                mapId,
+                out var cachedGameObjectIds))
+            {
+                foreach (var gameObjectId in cachedGameObjectIds)
+                {
+                    var gameObject = _gameObjectRepositoryAmenity.LoadGameObject(gameObjectId);
+                    yield return gameObject;
+                }
+
+                yield break;
+            }
+
             var tiledMap = _tiledMapLoader.LoadMap(mapId);
 
             double worldScalingFactor;
@@ -96,11 +112,32 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
                             $"on map '{mapId}'.");
                     }
 
-                    var gameObject = _gameObjectRepositoryAmenity.LoadSingleGameObject(
-                        new StringIdentifier(typeId.ToString()), // FIXME: assuming string is a bit hacky
+                    // FIXME: should we be allowed to load unique IDs from the TMX
+                    var gameObject = _gameObjectRepositoryAmenity.LoadGameObject(
                         new StringIdentifier(uniqueId.ToString())); // FIXME: assuming string is a bit hacky
                     yield return gameObject;
                 }
+            }
+        }
+
+        public void SaveState(
+            IMap map,
+            IEnumerable<IGameObject> gameObjects)
+        {
+            if (!_gameObjectIdCache.TryGetValue(
+                map.Id,
+                out var cachedMapGameObjectes))
+            {
+                cachedMapGameObjectes = new List<IIdentifier>();
+                _gameObjectIdCache[map.Id] = cachedMapGameObjectes;
+            }
+
+            cachedMapGameObjectes.Clear();
+            foreach (var gameObject in gameObjects)
+            {
+                var identifierBehavior = gameObject.GetOnly<IIdentifierBehavior>();
+                var id = identifierBehavior.Id;
+                cachedMapGameObjectes.Add(id);
             }
         }
     }

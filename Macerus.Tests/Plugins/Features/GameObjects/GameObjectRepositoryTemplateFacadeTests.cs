@@ -13,18 +13,18 @@ using Xunit;
 
 namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
 {
-    public sealed class GameObjectRepositoryFacadeTests
+    public sealed class GameObjectRepositoryTemplateFacadeTests
     {
         private static readonly MacerusContainer _container;
-        private static readonly IGameObjectRepositoryFacade _gameObjectRepositoryFacade;
+        private static readonly IGameObjectTemplateRepositoryFacade _gameObjectTemplateRepositoryFacade;
         private static readonly IFilterContextAmenity _filterContextAmenity;
         private static readonly IGameObjectIdentifiers _gameObjectIdentifiers;
         private static readonly IActorIdentifiers _actorIdentifiers;
 
-        static GameObjectRepositoryFacadeTests()
+        static GameObjectRepositoryTemplateFacadeTests()
         {
             _container = new MacerusContainer();
-            _gameObjectRepositoryFacade = _container.Resolve<IGameObjectRepositoryFacade>();
+            _gameObjectTemplateRepositoryFacade = _container.Resolve<IGameObjectTemplateRepositoryFacade>();
             _filterContextAmenity = _container.Resolve<IFilterContextAmenity>();
             _gameObjectIdentifiers = _container.Resolve<IGameObjectIdentifiers>();
             _actorIdentifiers = _container.Resolve<IActorIdentifiers>();
@@ -40,7 +40,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                 _filterContextAmenity.CreateRequiredAttribute(
                     _gameObjectIdentifiers.FilterContextTemplateId,
                     new StringIdentifier("player")));
-            var result = _gameObjectRepositoryFacade.CreateFromTemplate(
+            var result = _gameObjectTemplateRepositoryFacade.CreateFromTemplate(
                 filterContext,
                 new Dictionary<string, object>());
 
@@ -61,7 +61,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                 _filterContextAmenity.CreateSupportedAttribute(
                     new StringIdentifier("affix-type"),
                     "normal"));
-            var result = _gameObjectRepositoryFacade.CreateFromTemplate(
+            var result = _gameObjectTemplateRepositoryFacade.CreateFromTemplate(
                 filterContext,
                 new Dictionary<string, object>());
 
@@ -82,7 +82,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                 _filterContextAmenity.CreateSupportedAttribute(
                     new StringIdentifier("affix-type"),
                     new StringIdentifier("not a valid affix type")));
-            Assert.Throws<InvalidOperationException>(() =>_gameObjectRepositoryFacade.CreateFromTemplate(
+            Assert.Throws<InvalidOperationException>(() =>_gameObjectTemplateRepositoryFacade.CreateFromTemplate(
                 filterContext,
                 new Dictionary<string, object>()));
         }

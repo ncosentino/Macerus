@@ -21,6 +21,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
     {
         private static readonly MacerusContainer _container;
         private static readonly AssertionHelpers _assertionHelpers;
+        private static readonly TestAmenities _testAmenities;
 
         private static readonly IMapGameObjectManager _mapGameObjectManager;
         private static readonly IFilterContextAmenity _filterContextAmenity;
@@ -28,10 +29,12 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
         private static readonly IEncounterManager _encounterManager;
         private static readonly IMacerusActorIdentifiers _actorIdentifiers;
         private static readonly IInteractionHandlerFacade _interactionHandler;
+        private static readonly IMapManager _mapManager;
 
         static CorpseInteractionTests()
         {
             _container = new MacerusContainer();
+            _testAmenities = new TestAmenities(_container);
             _assertionHelpers = new AssertionHelpers(_container);
 
             _mapGameObjectManager = _container.Resolve<IMapGameObjectManager>();
@@ -40,10 +43,14 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
             _encounterManager = _container.Resolve<IEncounterManager>();
             _actorIdentifiers = _container.Resolve<IMacerusActorIdentifiers>();
             _interactionHandler = _container.Resolve<IInteractionHandlerFacade>();
+            _mapManager = _container.Resolve<IMapManager>();
         }
 
         private void Setup(out IGameObject player, out IGameObject skeleton)
         {
+            // FIXME: this is just a temporary hack because the player is templated from here
+            _mapManager.SwitchMap(new StringIdentifier("swamp"));
+
             var filterContext = _filterContextAmenity.CreateNoneFilterContext();
             _encounterManager.StartEncounter(
                 filterContext,
@@ -63,75 +70,81 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
         [Fact]
         private void Interact_NotDead_NoItemsTransfered()
         {
-            Setup(out var player, out var skeleton);
+            _testAmenities.UsingCleanMapAndObjects(() =>
+            {
+                Setup(out var player, out var skeleton);
 
-            var skeletonInventory = skeleton
-                .Get<IItemContainerBehavior>()
-                .Single(x => x
-                    .ContainerId
-                    .Equals(_actorIdentifiers.InventoryIdentifier));
-            int expectedSkeletonInventoryItemCount = skeletonInventory.Items.Count;
-            int expectedSkeletonEquipmentCount = skeleton
-                .GetOnly<ICanEquipBehavior>()
-                .GetEquippedItems()
-                .Count();
-
-            // should be no-op
-            _interactionHandler.Interact(player, skeleton.GetOnly<CorpseInteractableBehavior>());
-
-            var playerInventory = player
-                .Get<IItemContainerBehavior>()
-                .Single(x => x
-                    .ContainerId
-                    .Equals(_actorIdentifiers.InventoryIdentifier));
-            Assert.Empty(playerInventory.Items);
-
-            Assert.Equal(
-                expectedSkeletonInventoryItemCount,
-                skeletonInventory.Items.Count);
-            Assert.Equal(
-                expectedSkeletonEquipmentCount,
-                skeleton
+                var skeletonInventory = skeleton
+                    .Get<IItemContainerBehavior>()
+                    .Single(x => x
+                        .ContainerId
+                        .Equals(_actorIdentifiers.InventoryIdentifier));
+                int expectedSkeletonInventoryItemCount = skeletonInventory.Items.Count;
+                int expectedSkeletonEquipmentCount = skeleton
                     .GetOnly<ICanEquipBehavior>()
                     .GetEquippedItems()
-                    .Count());
+                    .Count();
+
+                // should be no-op
+                _interactionHandler.Interact(player, skeleton.GetOnly<CorpseInteractableBehavior>());
+
+                var playerInventory = player
+                    .Get<IItemContainerBehavior>()
+                    .Single(x => x
+                        .ContainerId
+                        .Equals(_actorIdentifiers.InventoryIdentifier));
+                Assert.Empty(playerInventory.Items);
+
+                Assert.Equal(
+                    expectedSkeletonInventoryItemCount,
+                    skeletonInventory.Items.Count);
+                Assert.Equal(
+                    expectedSkeletonEquipmentCount,
+                    skeleton
+                        .GetOnly<ICanEquipBehavior>()
+                        .GetEquippedItems()
+                        .Count());
+            });
         }
 
         [Fact]
         private void Interact_Dead_AllItemsTransfered()
         {
-            Setup(out var player, out var skeleton);
+            _testAmenities.UsingCleanMapAndObjects(() =>
+            {
+                Setup(out var player, out var skeleton);
 
-            var skeletonInventory = skeleton
-                .Get<IItemContainerBehavior>()
-                .Single(x => x
-                    .ContainerId
-                    .Equals(_actorIdentifiers.InventoryIdentifier));
-            int expectedSkeletonInventoryItemCount = skeletonInventory.Items.Count;
-            int expectedSkeletonEquipmentCount = skeleton
-                .GetOnly<ICanEquipBehavior>()
-                .GetEquippedItems()
-                .Count();
+                var skeletonInventory = skeleton
+                    .Get<IItemContainerBehavior>()
+                    .Single(x => x
+                        .ContainerId
+                        .Equals(_actorIdentifiers.InventoryIdentifier));
+                int expectedSkeletonInventoryItemCount = skeletonInventory.Items.Count;
+                int expectedSkeletonEquipmentCount = skeleton
+                    .GetOnly<ICanEquipBehavior>()
+                    .GetEquippedItems()
+                    .Count();
 
-            skeleton
-                .GetOnly<IHasMutableStatsBehavior>()
-                .MutateStats(stats => stats[_combatStatIdentifiers.CurrentLifeStatId] = 0);
+                skeleton
+                    .GetOnly<IHasMutableStatsBehavior>()
+                    .MutateStats(stats => stats[_combatStatIdentifiers.CurrentLifeStatId] = 0);
 
-            _interactionHandler.Interact(player, skeleton.GetOnly<CorpseInteractableBehavior>());
+                _interactionHandler.Interact(player, skeleton.GetOnly<CorpseInteractableBehavior>());
 
-            var playerInventory = player
-                .Get<IItemContainerBehavior>()
-                .Single(x => x
-                    .ContainerId
-                    .Equals(_actorIdentifiers.InventoryIdentifier));
-            Assert.Equal(
-                expectedSkeletonEquipmentCount + expectedSkeletonInventoryItemCount,
-                playerInventory.Items.Count);
+                var playerInventory = player
+                    .Get<IItemContainerBehavior>()
+                    .Single(x => x
+                        .ContainerId
+                        .Equals(_actorIdentifiers.InventoryIdentifier));
+                Assert.Equal(
+                    expectedSkeletonEquipmentCount + expectedSkeletonInventoryItemCount,
+                    playerInventory.Items.Count);
 
-            Assert.Empty(skeletonInventory.Items);
-            Assert.Empty(skeleton
-                .GetOnly<ICanEquipBehavior>()
-                .GetEquippedItems());
+                Assert.Empty(skeletonInventory.Items);
+                Assert.Empty(skeleton
+                    .GetOnly<ICanEquipBehavior>()
+                    .GetEquippedItems());
+            });
         }
     }
 }

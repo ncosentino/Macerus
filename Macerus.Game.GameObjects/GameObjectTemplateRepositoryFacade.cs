@@ -12,42 +12,17 @@ using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Game.GameObjects
 {
-    public sealed class GameObjectRepositoryFacade : IGameObjectRepositoryFacade
+    public sealed class GameObjectTemplateRepositoryFacade : IGameObjectTemplateRepositoryFacade
     {
-        private readonly IReadOnlyCollection<IDiscoverableGameObjectRepository> _repositories;
+        private readonly IReadOnlyCollection<IDiscoverableGameObjectTemplateRepository> _repositories;
         private readonly IAttributeFilterer _attributeFilterer;
 
-        public GameObjectRepositoryFacade(
+        public GameObjectTemplateRepositoryFacade(
             IAttributeFilterer attributeFilterer,
-            IEnumerable<IDiscoverableGameObjectRepository> discoverableGameObjectRepositories)
+            IEnumerable<IDiscoverableGameObjectTemplateRepository> discoverableGameObjectRepositories)
         {
             _repositories = discoverableGameObjectRepositories.ToArray();
             _attributeFilterer = attributeFilterer;
-        }
-
-        public IEnumerable<IGameObject> Load(IFilterContext filterContext)
-        {
-            if (filterContext.MaximumCount < 1)
-            {
-                yield break;
-            }
-
-            var filteredRepositories = _attributeFilterer.Filter(
-                _repositories,
-                filterContext);
-
-            var count = 0;
-            foreach (var result in filteredRepositories
-                .SelectMany(x => x.Load(filterContext)))
-            {
-                yield return result;
-
-                count++;
-                if (count >= filterContext.MaximumCount)
-                {
-                    break;
-                }
-            }
         }
 
         public IGameObject CreateFromTemplate(

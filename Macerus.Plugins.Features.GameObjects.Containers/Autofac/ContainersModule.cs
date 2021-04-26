@@ -15,7 +15,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<ContainerRepository>()
+                .RegisterType<ContainerTemplateRepository>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder

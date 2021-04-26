@@ -2,7 +2,7 @@
 
 namespace Macerus.Plugins.Features.GameObjects.Containers.Api
 {
-    public interface IContainerRepository : IGameObjectRepository
+    public interface IContainerRepository : IGameObjectTemplateRepository
     {
     }
 }

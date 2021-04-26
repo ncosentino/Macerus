@@ -7,9 +7,10 @@ namespace Macerus.Api.GameObjects
 {
     public interface IGameObjectRepositoryAmenity
     {
-        IGameObject LoadSingleGameObject(
-            IIdentifier typeId,
+        IGameObject LoadGameObject(
             IIdentifier id);
+
+        void SaveGameObject(IGameObject gameObject);
 
         IGameObject CreateGameObjectFromTemplate(
             IIdentifier typeId,

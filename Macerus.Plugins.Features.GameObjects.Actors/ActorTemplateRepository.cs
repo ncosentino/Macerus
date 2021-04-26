@@ -12,7 +12,7 @@ using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
-    public sealed class ActorRepository : IDiscoverableGameObjectRepository
+    public sealed class ActorTemplateRepository : IDiscoverableGameObjectTemplateRepository
     {
         private readonly IGameObjectIdentifiers _gameObjectIdentifiers;
         private readonly IActorIdentifiers _actorIdentifiers;
@@ -20,7 +20,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         private readonly IAttributeFilterer _attributeFilterer;
         private readonly IReadOnlyCollection<IDiscoverableActorTemplateRepository> _discoverableActorTemplateRepositories;
 
-        public ActorRepository(
+        public ActorTemplateRepository(
             IGameObjectIdentifiers gameObjectIdentifiers,
             IActorIdentifiers actorIdentifiers,
             IFilterContextAmenity filterContextAmenity,
@@ -70,12 +70,6 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             }
 
             return results.Single();
-        }
-
-        public IEnumerable<IGameObject> Load(IFilterContext filterContext)
-        {
-            // FIXME: implement this
-            yield break;
         }
     }
 }

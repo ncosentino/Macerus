@@ -75,6 +75,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Player
                     {
                         TemplateId = _filterContextAmenity.GetGameObjectTemplateIdFromContext(filterContext),
                     },
+                    new AlwaysLoadWithMapBehavior(),
+                    new SkipMapSaveStateBehavior(),
                 }.Concat(generatedActor.Behaviors));
             _behaviorManager.Register(player, player.Behaviors);
 

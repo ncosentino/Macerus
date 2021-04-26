@@ -16,9 +16,9 @@ using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers
 {
-    public sealed class ContainerRepository :
+    public sealed class ContainerTemplateRepository :
         IContainerRepository,
-        IDiscoverableGameObjectRepository
+        IDiscoverableGameObjectTemplateRepository
     {       
         private readonly IContainerFactory _containerFactory;
         private readonly IGameObjectIdentifiers _gameObjectIdentifiers;
@@ -26,7 +26,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         private readonly ContainerMakesNoiseBehavior.Factory _containerMakesNoiseBehaviorFactory;
         private readonly IFilterContextAmenity _filterContextAmenity;
 
-        public ContainerRepository(
+        public ContainerTemplateRepository(
             IContainerFactory containerFactory,
             IGameObjectIdentifiers gameObjectIdentifiers,
             IContainerIdentifiers containerIdentifiers,
@@ -100,12 +100,6 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 containerInteractableBehavior,
                 additionalBehaviors);
             return container;
-        }
-
-        public IEnumerable<IGameObject> Load(IFilterContext filterContext)
-        {
-            // FIXME: implement this
-            yield break;
         }
     }
 }

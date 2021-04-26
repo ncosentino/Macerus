@@ -3,7 +3,6 @@
 using Autofac;
 
 using Macerus.Api.Behaviors.Filtering;
-using Macerus.Api.GameObjects;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
@@ -14,6 +13,7 @@ using Macerus.Shared.Behaviors;
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.CommonBehaviors;

@@ -1,6 +1,5 @@
-﻿using Macerus.Api.GameObjects;
-
-using ProjectXyz.Api.Framework;
+﻿using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.GameObjects

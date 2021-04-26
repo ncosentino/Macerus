@@ -42,7 +42,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         [Fact]
         private void GetWeights_PlayerPassiveRainSkill_ExpectedWeights()
         {
-            _testAmenities.UsingCleanObjectManager(() =>
+            _testAmenities.UsingCleanMapAndObjects(() =>
             {
                 var player = CreatePlayer();
                 player
@@ -67,7 +67,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         [Fact]
         private void GetWeights_TwoPlayersOnePassiveRain_ExpectedWeights()
         {
-            _testAmenities.UsingCleanObjectManager(() =>
+            _testAmenities.UsingCleanMapAndObjects(() =>
             {
                 var player = CreatePlayer();
                 player
@@ -94,7 +94,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         [Fact]
         private void GetMinimumDuration_PlayerPassiveRainSkill_ExpectedValue()
         {
-            _testAmenities.UsingCleanObjectManager(() =>
+            _testAmenities.UsingCleanMapAndObjects(() =>
             {
                 var player = CreatePlayer();
                 player
@@ -116,7 +116,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         [Fact]
         private void GetMinimumDuration_TwoPlayersOnePassiveRainSkill_ExpectedValue()
         {
-            _testAmenities.UsingCleanObjectManager(() =>
+            _testAmenities.UsingCleanMapAndObjects(() =>
             {
                 var player = CreatePlayer();
                 player
@@ -140,7 +140,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         [Fact]
         private void GetMaximumDuration_PlayerPassiveRainSkill_ExpectedValue()
         {
-            _testAmenities.UsingCleanObjectManager(() =>
+            _testAmenities.UsingCleanMapAndObjects(() =>
             {
                 var player = CreatePlayer();
                 player
@@ -159,7 +159,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         [Fact]
         private void GetMaximumDuration_TwoPlayersOnePassiveRainSkill_ExpectedValue()
         {
-            _testAmenities.UsingCleanObjectManager(() =>
+            _testAmenities.UsingCleanMapAndObjects(() =>
             {
                 var player = CreatePlayer();
                 player

@@ -20044,16 +20044,6 @@
   </data>
  </layer>
  <objectgroup color="#a0a0a4" name="Objects">
-  <!--FIXME: the player should NOT be hardcoded on the map!-->
-  <object id="1" name="tiled specific name" type="tiled specific type" x="1280" y="-512" width="32" height="32">
-   <properties>
-    <property name="$typeId" value="actor"/>
-    <property name="$templateId" value="player"/>
-    <!-- <property name="$uniqueId" value="player"/> -->
-    <property name="PlayerName" value="player"/>
-   </properties>
-   <ellipse/>
-  </object>
   <object id="2" name="tiled specific name" type="tiled specific type" x="1280" y="-920" width="192" height="32">
     <property name="$typeId" value="static"/>
     <property name="$templateId" value="wall"/>

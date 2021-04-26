@@ -2,8 +2,8 @@
 
 namespace Macerus.Api.GameObjects
 {
-    public interface IDiscoverableGameObjectRepository :
-        IGameObjectRepository,
+    public interface IDiscoverableGameObjectTemplateRepository :
+        IGameObjectTemplateRepository,
         IHasFilterAttributes
     {
     }

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 
 using Autofac;
 
@@ -13,7 +12,6 @@ using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Npc;
-using Macerus.Plugins.Features.Gui.Api;
 using Macerus.Plugins.Features.Interactions.Api;
 using Macerus.Plugins.Features.Inventory.Api;
 
@@ -21,7 +19,6 @@ using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Framework.Autofac;
@@ -29,7 +26,6 @@ using ProjectXyz.Game.Interface.Engine;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
-using ProjectXyz.Plugins.Features.Mapping.Default.PathFinding;
 using ProjectXyz.Plugins.Features.TurnBased.Api;
 using ProjectXyz.Shared.Framework;
 
@@ -41,7 +37,17 @@ namespace Macerus.Headless
         {
             var container = new MacerusContainer();
 
-            new GameLoopExercise().Go(container);
+            new SwitchMapExercise().Go(container);
+        }
+    }
+
+    public sealed class SwitchMapExercise
+    {
+        public void Go(MacerusContainer container)
+        {
+            var mapManager = container.Resolve<IMapManager>();
+            mapManager.SwitchMap(new StringIdentifier("swamp"));
+            mapManager.SwitchMap(new StringIdentifier("swamp"));
         }
     }
 

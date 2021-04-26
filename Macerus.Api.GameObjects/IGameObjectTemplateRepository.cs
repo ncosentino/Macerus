@@ -5,10 +5,8 @@ using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Api.GameObjects
 {
-    public interface IGameObjectRepository
+    public interface IGameObjectTemplateRepository
     {
-        IEnumerable<IGameObject> Load(IFilterContext filterContext);
-
         IGameObject CreateFromTemplate(
             IFilterContext filterContext,
             IReadOnlyDictionary<string, object> properties);
