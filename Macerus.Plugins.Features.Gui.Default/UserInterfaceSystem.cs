@@ -14,15 +14,20 @@ namespace Macerus.Plugins.Features.Gui.Default
 {
     public sealed class UserInterfaceSystem : IUserInterfaceSystem
     {
+        private readonly Dictionary<IUserInterfaceUpdate, DateTime> _lastUpdated;
+
         private readonly IReadOnlyCollection<Tuple<double, IUserInterfaceUpdate>> _updaters;
 
-        public UserInterfaceSystem(IEnumerable<IDiscoverableUserInterfaceUpdate> discoverableUserInterfaceUpdaters)
+        public UserInterfaceSystem(
+            IEnumerable<IDiscoverableUserInterfaceUpdate> discoverableUserInterfaceUpdaters)
         {
             _updaters = discoverableUserInterfaceUpdaters
                 .Select(x => new Tuple<double, IUserInterfaceUpdate>(
                     x.UpdateIntervalInSeconds,
                     x))
                 .ToArray();
+
+            _lastUpdated = _updaters.ToDictionary(x => x.Item2, x => DateTime.UtcNow);
         }
 
 
@@ -38,11 +43,14 @@ namespace Macerus.Plugins.Features.Gui.Default
                 .Interval;
             var elapsedSeconds = elapsed.Value / 1000;
 
+            var now = DateTime.UtcNow;
+
             Parallel.ForEach(
-                _updaters,
+                _updaters.Where(x => (now - _lastUpdated[x.Item2]).TotalSeconds > elapsedSeconds),
                 async (x) =>
                 {
                     await x.Item2.UpdateAsync(systemUpdateContext);
+                    _lastUpdated[x.Item2] = DateTime.UtcNow;
                 });
         }
     }
