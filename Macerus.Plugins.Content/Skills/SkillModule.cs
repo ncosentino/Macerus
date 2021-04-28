@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 
 using Autofac;
-
 using Macerus.Plugins.Features.GameObjects.Skills.Default;
 
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
@@ -75,7 +74,9 @@ namespace Macerus.Plugins.Content.Skills
                             {
                                 new StatelessBehaviorGeneratorComponent(
                                     new UseInCombatSkillBehavior(),
-                                    new UseOutOfCombatSkillBehavior())
+                                    new UseOutOfCombatSkillBehavior()),
+                                new SkillIconGeneratorComponent(@"graphics\skills\heal"),
+                                new SkillDisplayNameGeneratorComponent("Heal"),
                             },
                             new Dictionary<IIdentifier, double>()
                             {
@@ -137,7 +138,9 @@ namespace Macerus.Plugins.Content.Skills
                             {
                                 new StatelessBehaviorGeneratorComponent(
                                     new InflictDamageBehavior(),
-                                    new UseInCombatSkillBehavior())
+                                    new UseInCombatSkillBehavior()),
+                                new SkillIconGeneratorComponent(@"graphics\skills\fireball"),
+                                new SkillDisplayNameGeneratorComponent("Fireball"),
                             },
                             new Dictionary<IIdentifier, double>() { },
                             skillIdentifiers),

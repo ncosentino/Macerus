@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Skills.Api;
 // TODO: This Stats reference should be to an API!
 using Macerus.Plugins.Features.Stats;
 using Macerus.Plugins.Features.StatusBar.Api;
@@ -13,6 +14,7 @@ using NexusLabs.Contracts;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Stats;
 using ProjectXyz.Api.Systems;
+using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 
 namespace Macerus.Plugins.Features.StatusBar.Default
@@ -84,6 +86,24 @@ namespace Macerus.Plugins.Features.StatusBar.Default
 
             _statusBarViewModel.UpdateResource(resourcesViewModels.First(), true);
             _statusBarViewModel.UpdateResource(resourcesViewModels.Last(), false);
+
+            var iconColor = new Color()
+            {
+                R = 100,
+                G = 0,
+                B = 0,
+            };
+
+            var skills = player.GetOnly<IHasSkillsBehavior>().Skills;
+            var abilityViewModels = skills
+                .Select(x => new StatusBarAbilityViewModel(
+                1.0f,
+                iconColor,
+                x.GetOnly<IHasSkillIcon>().IconResourceId,
+                x.GetOnly<IHasSkillDisplayName>().DisplayName))
+                .ToArray();
+
+            _statusBarViewModel.UpdateAbilities(abilityViewModels);
         }
     }
 }
