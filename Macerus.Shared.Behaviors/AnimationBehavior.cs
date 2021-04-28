@@ -9,6 +9,21 @@ namespace Macerus.Shared.Behaviors
         BaseBehavior,
         IAnimationBehavior
     {
+        public AnimationBehavior()
+            : this(null, true)
+        {
+        }
+
+        public AnimationBehavior(
+            IIdentifier currentAnimationId,
+            bool visible)
+        {
+            CurrentAnimationId = currentAnimationId;
+            Visible = visible;
+        }
+
         public IIdentifier CurrentAnimationId { get; set; }
+
+        public bool Visible { get; set; }
     }
 }

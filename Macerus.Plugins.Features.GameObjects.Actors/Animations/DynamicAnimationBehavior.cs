@@ -46,11 +46,14 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             _dynamicAnimationIdentifiers = dynamicAnimationIdentifiers;
             _sourcePattern = sourcePattern;
             _cachedAnimationSpeedMultiplier = 1;
+            Visible = true;
         }
 
         public event EventHandler<AnimationFrameEventArgs> AnimationFrameChanged;
 
-        public ISpriteAnimationFrame CurrentFrame => _currentAnimation == null
+        public bool Visible { get; set; }
+
+        public ISpriteAnimationFrame CurrentFrame => !Visible || _currentAnimation == null
             ? null
             : _currentAnimation.Frames[_currentFrameIndex];
 
@@ -92,7 +95,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         public async Task UpdateAnimationAsync(double secondsSinceLastFrame)
         {
             var currentAnimationId = CurrentAnimationId;
-            if (_lastAnimationId!= null && currentAnimationId == null)
+            if (_lastAnimationId != null && currentAnimationId == null)
             {
                 _currentFrameIndex = 0;
                 _lastAnimationId = null;
@@ -101,6 +104,14 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
                 AnimationFrameChanged?.Invoke(
                     this, 
+                    new AnimationFrameEventArgs(null, null));
+                return;
+            }
+
+            if (!Visible)
+            {
+                AnimationFrameChanged?.Invoke(
+                    this,
                     new AnimationFrameEventArgs(null, null));
                 return;
             }
