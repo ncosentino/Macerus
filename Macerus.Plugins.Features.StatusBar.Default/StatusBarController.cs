@@ -22,6 +22,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
     public sealed class StatusBarController : IStatusBarController
     {
         private readonly IStatusBarViewModel _statusBarViewModel;
+        private readonly ISkillUsage _skillUsage;
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
         private readonly IReadOnlyMapGameObjectManager _mapGameObjectManager;
         private readonly IReadOnlyStatDefinitionToTermMappingRepository _statDefinitionToTermMappingRepository;
@@ -30,12 +31,14 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
             IReadOnlyMapGameObjectManager readOnlyMapGameObjectManager,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
-            IStatusBarViewModel statusBarViewModel)
+            IStatusBarViewModel statusBarViewModel,
+            ISkillUsage skillUsage)
         {
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
             _mapGameObjectManager = readOnlyMapGameObjectManager;
             _statDefinitionToTermMappingRepository = statDefinitionToTermMappingRepository;
             _statusBarViewModel = statusBarViewModel;
+            _skillUsage = skillUsage;
         }
 
         public delegate StatusBarController Factory();
@@ -87,20 +90,12 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             _statusBarViewModel.UpdateResource(resourcesViewModels.First(), true);
             _statusBarViewModel.UpdateResource(resourcesViewModels.Last(), false);
 
-            var iconColor = new Color()
-            {
-                R = 100,
-                G = 0,
-                B = 0,
-            };
-
             var skills = player.GetOnly<IHasSkillsBehavior>().Skills;
             var abilityViewModels = skills
                 .Select(x => new StatusBarAbilityViewModel(
-                1.0f,
-                iconColor,
-                x.GetOnly<IHasSkillIcon>().IconResourceId,
-                x.GetOnly<IHasSkillDisplayName>().DisplayName))
+                    _skillUsage.CanUseSkill(player, x),
+                    x.GetOnly<IHasSkillIcon>().IconResourceId,
+                    x.GetOnly<IHasSkillDisplayName>().DisplayName))
                 .ToArray();
 
             _statusBarViewModel.UpdateAbilities(abilityViewModels);

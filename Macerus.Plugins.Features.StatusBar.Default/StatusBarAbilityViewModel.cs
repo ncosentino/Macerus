@@ -1,5 +1,5 @@
-﻿using Macerus.Plugins.Features.Gui.Api;
-using Macerus.Plugins.Features.StatusBar.Api;
+﻿using Macerus.Plugins.Features.StatusBar.Api;
+
 using ProjectXyz.Api.Framework;
 
 namespace Macerus.Plugins.Features.StatusBar.Default
@@ -7,23 +7,19 @@ namespace Macerus.Plugins.Features.StatusBar.Default
     public sealed class StatusBarAbilityViewModel : IStatusBarAbilityViewModel
     {
         public StatusBarAbilityViewModel(
-            float iconOpacity,
-            IColor iconColor,
+            bool isEnabled,
             IIdentifier identifier,
             string abilityName)
         {
-            IconOpacity = iconOpacity;
-            IconColor = iconColor;
+            IsEnabled = isEnabled;
             IconResourceId = identifier;
             AbilityName = abilityName;
         }
 
-        public float IconOpacity { get; }
-
-        public IColor IconColor { get; }
-
-        public IIdentifier IconResourceId { get; }
+        public bool IsEnabled { get; }
 
         public string AbilityName { get; }
+
+        public IIdentifier IconResourceId { get; }
     }
 }
