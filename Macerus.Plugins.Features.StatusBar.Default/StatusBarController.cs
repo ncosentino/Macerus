@@ -40,7 +40,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
 
         public delegate StatusBarController Factory();
 
-        public double UpdateIntervalInSeconds { get; } = 2;
+        public double UpdateIntervalInSeconds { get; } = 0.3;
 
         public async Task UpdateAsync(ISystemUpdateContext context)
         {

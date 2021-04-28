@@ -37,7 +37,7 @@ namespace Macerus.Headless
         {
             var container = new MacerusContainer();
 
-            new SwitchMapExercise().Go(container);
+            new GameLoopExercise().Go(container);
         }
     }
 
