@@ -5,8 +5,9 @@ using Macerus.Api.Behaviors;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 
-namespace Macerus.Game.GameObjects
+namespace Macerus.Game
 {
+    // FIXME: based on the patterns we're using, this should be an 'Amenity' not extension method?
     public static class IMapGameObjectManagerExtensionMethods
     {
         public static IGameObject GetPlayer(this IReadOnlyMapGameObjectManager mapGameObjectManager)

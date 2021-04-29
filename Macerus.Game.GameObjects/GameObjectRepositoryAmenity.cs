@@ -11,7 +11,7 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Game.Api;
 
-namespace Macerus.Game.GameObjects
+namespace Macerus.Game
 {
     public sealed class GameObjectRepositoryAmenity : IGameObjectRepositoryAmenity
     {

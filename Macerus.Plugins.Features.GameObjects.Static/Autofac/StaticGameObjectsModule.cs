@@ -17,17 +17,25 @@ namespace Macerus.Plugins.Features.GameObjects.Static.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-               .RegisterType<StaticGameObjectBehaviorsInterceptorFacade>()
-               .AsImplementedInterfaces()
-               .SingleInstance();
+                .RegisterType<StaticGameObjectBehaviorsInterceptorFacade>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
             builder
-               .RegisterType<StaticGameObjectBehaviorsProviderFacade>()
-               .AsImplementedInterfaces()
-               .SingleInstance();
+                .RegisterType<StaticGameObjectBehaviorsProviderFacade>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
             builder
-              .RegisterType<StaticGameObjectFactory>()
-              .AsImplementedInterfaces()
-              .SingleInstance();
+                .RegisterType<StaticGameObjectFactory>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<SpawnTemplatePropertiesBehaviorProvider>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<TriggerOnCombatEndBehaviorProvider>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

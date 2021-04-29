@@ -10,7 +10,7 @@ using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.GameObjects;
 
-namespace Macerus.Game.GameObjects
+namespace Macerus.Game
 {
     public sealed class GameObjectTemplateRepositoryFacade : IGameObjectTemplateRepositoryFacade
     {

@@ -9,7 +9,7 @@ using ProjectXyz.Game.Api;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 
-namespace Macerus.Game.GameObjects
+namespace Macerus.Game
 {
     public sealed class GameObjectRepository : IGameObjectRepository
     {

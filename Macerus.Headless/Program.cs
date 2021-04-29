@@ -37,7 +37,7 @@ namespace Macerus.Headless
         {
             var container = new MacerusContainer();
 
-            new GameLoopExercise().Go(container);
+            new CombatExercise().Go(container);
         }
     }
 
@@ -122,6 +122,9 @@ namespace Macerus.Headless
             var turnBasedManager = container.Resolve<ITurnBasedManager>();
             var encounterManager = container.Resolve<IEncounterManager>();
             var logger = container.Resolve<ILogger>();
+
+            // FIXME: this is just a hack to spawn the player
+            mapManager.SwitchMap(new StringIdentifier("swamp"));
 
             var filterContext = filterContextAmenity.CreateNoneFilterContext();
             encounterManager.StartEncounter(

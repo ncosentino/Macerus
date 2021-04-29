@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Features", "Features", "{33
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus", "Macerus\Macerus.csproj", "{8F665659-A11D-4B52-8401-294615AC2636}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Game.GameObjects", "Macerus.Game.GameObjects\Macerus.Game.GameObjects.csproj", "{A0EB2A74-18CD-4256-AFCD-6785561F96CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Game", "Macerus.Game.GameObjects\Macerus.Game.csproj", "{A0EB2A74-18CD-4256-AFCD-6785561F96CB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Api.GameObjects", "Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj", "{1C464D4F-A13F-46EE-86A5-D38CB2A0C3B6}"
 EndProject
@@ -171,9 +171,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Ch
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StatusBar", "StatusBar", "{B6D4BE2A-B1D6-44CD-AD98-4C60ECA100E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.StatusBar.Api", "Macerus.Plugins.Features.StatusBar.Api\Macerus.Plugins.Features.StatusBar.Api.csproj", "{7C6B5700-7FDA-428F-A3E4-1FA850BFDCC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.StatusBar.Api", "Macerus.Plugins.Features.StatusBar.Api\Macerus.Plugins.Features.StatusBar.Api.csproj", "{7C6B5700-7FDA-428F-A3E4-1FA850BFDCC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.StatusBar.Default", "Macerus.Plugins.Features.StatusBar.Default\Macerus.Plugins.Features.StatusBar.Default.csproj", "{B428321E-FFFC-4458-A925-8F4B8DAC2919}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.StatusBar.Default", "Macerus.Plugins.Features.StatusBar.Default\Macerus.Plugins.Features.StatusBar.Default.csproj", "{B428321E-FFFC-4458-A925-8F4B8DAC2919}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,9 +2,9 @@
 
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Game.GameObjects.Autofac
+namespace Macerus.Game.Autofac
 {
-    public class GameObjectsModule : SingleRegistrationModule
+    public class GameObjectModule : SingleRegistrationModule
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
@@ -18,6 +18,10 @@ namespace Macerus.Game.GameObjects.Autofac
                 .SingleInstance();
             builder
                 .RegisterType<GameObjectRepository>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<CombatEndTemplateSpawnerSystem>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

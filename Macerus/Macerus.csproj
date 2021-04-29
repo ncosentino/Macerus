@@ -31,7 +31,7 @@
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
     <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
     <ProjectReference Include="..\Macerus.Game.Api\Macerus.Game.Api.csproj" />
-    <ProjectReference Include="..\Macerus.Game.GameObjects\Macerus.Game.GameObjects.csproj" />
+    <ProjectReference Include="..\Macerus.Game.GameObjects\Macerus.Game.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Content\Macerus.Plugins.Content.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Data.MySql\Macerus.Plugins.Data.MySql.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Animations.Api\Macerus.Plugins.Features.Animations.Api.csproj" />
