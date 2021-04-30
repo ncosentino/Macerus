@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Autofac;
 using Macerus.Plugins.Features.GameObjects.Skills.Default;
@@ -139,6 +140,10 @@ namespace Macerus.Plugins.Content.Skills
                                 new StatelessBehaviorGeneratorComponent(
                                     new InflictDamageBehavior(),
                                     new UseInCombatSkillBehavior(),
+                                    new SkillTargetBehavior(
+                                        Tuple.Create(0,0),  // Starts at the caster's location
+                                        new [] { 1 },       // Affects only enemy team 1
+                                        new [] { Tuple.Create(1, 0), Tuple.Create(2, 0), Tuple.Create(3, 0)}), // x+1, x+2, x+3 from origin
                                     new HasSkillDisplayName("Fireball"),
                                     new HasSkillIcon(new StringIdentifier(@"graphics\skills\fireball"))),
                             },
