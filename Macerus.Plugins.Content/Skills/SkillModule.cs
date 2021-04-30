@@ -76,6 +76,10 @@ namespace Macerus.Plugins.Content.Skills
                                 new StatelessBehaviorGeneratorComponent(
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior(),
+                                    new SkillTargetBehavior(
+                                        Tuple.Create(0,0),  // Starts at the caster's location
+                                        new [] { 0 },       // Affects only enemy team 1
+                                        new Tuple<int, int>[0]),
                                     new HasSkillDisplayName("Heal"),
                                     new HasSkillIcon(new StringIdentifier(@"graphics\skills\heal"))),
                             },
@@ -161,7 +165,11 @@ namespace Macerus.Plugins.Content.Skills
                             {
                                 new StatelessBehaviorGeneratorComponent(
                                     new InflictDamageBehavior(),
-                                    new UseInCombatSkillBehavior())
+                                    new UseInCombatSkillBehavior(),
+                                    new SkillTargetBehavior(
+                                        Tuple.Create(0,0),  // Starts at the caster's location
+                                        new [] { 1 },       // Affects only enemy team 1
+                                        new [] { Tuple.Create(0, 1) }))
                             },
                             new Dictionary<IIdentifier, double>() { },
                             skillIdentifiers),

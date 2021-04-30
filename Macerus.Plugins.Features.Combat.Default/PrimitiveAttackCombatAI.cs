@@ -138,8 +138,7 @@ namespace Macerus.Plugins.Features.Combat.Default
 
             _skillHandlerFacade.Handle(
                 actor,
-                firstUsableSkill,
-                new[] { target });
+                firstUsableSkill);
             _logger.Info(
                 $"'{actor}' used skill '{firstUsableSkill}' on '{target}'.");
             return true;

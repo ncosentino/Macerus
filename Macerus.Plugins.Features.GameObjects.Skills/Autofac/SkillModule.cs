@@ -1,7 +1,5 @@
 ﻿using Autofac;
 
-using Macerus.Plugins.Features.GameObjects.Skills.Default;
-
 using ProjectXyz.Framework.Autofac;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default.Autofac
@@ -27,15 +25,19 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<EnchantSelfSkillHandler>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
                 .RegisterType<EnchantTargetsSkillHandler>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
                 .RegisterType<InflictDamageSkillHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<SkillDecomposer>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<SkillTargetingAmenity>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

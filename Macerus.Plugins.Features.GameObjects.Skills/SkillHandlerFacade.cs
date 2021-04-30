@@ -10,23 +10,28 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
     public sealed class SkillHandlerFacade : ISkillHandlerFacade
     {
         private readonly IReadOnlyCollection<IDiscoverableSkillHandler> _skillHandlers;
+        private readonly ISkillDecomposer _skillDecomposer;
 
-        public SkillHandlerFacade(IEnumerable<IDiscoverableSkillHandler> skillHandlers)
+        public SkillHandlerFacade(
+            ISkillDecomposer skillDecomposer,
+            IEnumerable<IDiscoverableSkillHandler> skillHandlers)
         {
             _skillHandlers = skillHandlers.ToArray();
+            _skillDecomposer = skillDecomposer;
         }
 
         public void Handle(
             IGameObject user,
-            IGameObject skill,
-            IReadOnlyCollection<IGameObject> targets)
+            IGameObject skill)
         {
-            foreach (var skillHandler in _skillHandlers)
+            foreach (var decomposedSkill in _skillDecomposer.Decompose(skill))
             {
-                skillHandler.Handle(
-                    user,
-                    skill,
-                    targets);
+                foreach (var skillHandler in _skillHandlers)
+                {
+                    skillHandler.Handle(
+                        user,
+                        decomposedSkill);
+                }
             }
         }
     }

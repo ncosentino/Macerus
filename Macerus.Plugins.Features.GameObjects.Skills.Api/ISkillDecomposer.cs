@@ -4,10 +4,8 @@ using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Api
 {
-    public interface ISkillHandler
+    public interface ISkillDecomposer
     {
-        void Handle(
-            IGameObject user,
-            IGameObject skill);
+        IEnumerable<IGameObject> Decompose(IGameObject skill);
     }
 }

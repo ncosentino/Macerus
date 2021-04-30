@@ -11,16 +11,19 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
     public sealed class EnchantTargetsSkillHandler : IDiscoverableSkillHandler
     {
         private readonly IEnchantmentLoader _enchantmentLoader;
+        private readonly ISkillTargetingAmenity _skillTargetingAmenity;
 
-        public EnchantTargetsSkillHandler(IEnchantmentLoader enchantmentLoader)
+        public EnchantTargetsSkillHandler(
+            IEnchantmentLoader enchantmentLoader,
+            ISkillTargetingAmenity skillTargetingAmenity)
         {
             _enchantmentLoader = enchantmentLoader;
+            _skillTargetingAmenity = skillTargetingAmenity;
         }
 
         public void Handle(
             IGameObject user,
-            IGameObject skill,
-            IReadOnlyCollection<IGameObject> targets)
+            IGameObject skill)
         {
             if (!skill.TryGetFirst<IEnchantTargetsBehavior>(out var enchantTargetsBehavior))
             {
@@ -39,7 +42,11 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             // - See point above, but we probably want a way where we can apply
             //   specific enchantments to specific targets. i envision
             //   something that's like "buff allies, debuff enemies in radius"
-            foreach (var target in targets)
+            var skillTargets = _skillTargetingAmenity.FindTargetsForSkill(
+                user,
+                skill);
+
+            foreach (var target in skillTargets)
             {
                 var targetEnchantmentsBehavior = target.GetOnly<IHasEnchantmentsBehavior>();
                 targetEnchantmentsBehavior.AddEnchantments(statefulEnchantments);

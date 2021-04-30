@@ -11,23 +11,30 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
     public sealed class InflictDamageSkillHandler : IDiscoverableSkillHandler
     {
         private readonly ICombatStatIdentifiers _combatStatIdentifiers;
+        private readonly ISkillTargetingAmenity _skillTargetingAmenity;
 
-        public InflictDamageSkillHandler(ICombatStatIdentifiers combatStatIdentifiers)
+        public InflictDamageSkillHandler(
+            ICombatStatIdentifiers combatStatIdentifiers,
+            ISkillTargetingAmenity skillTargetingAmenity)
         {
             _combatStatIdentifiers = combatStatIdentifiers;
+            _skillTargetingAmenity = skillTargetingAmenity;
         }
 
         public void Handle(
             IGameObject user,
-            IGameObject skill,
-            IReadOnlyCollection<IGameObject> targets)
+            IGameObject skill)
         {
             if (!skill.TryGetFirst<IInflictDamageBehavior>(out var inflictDamageBehavior))
             {
                 return;
             }
 
-            foreach (var target in targets)
+            var skillTargets = _skillTargetingAmenity.FindTargetsForSkill(
+                user, 
+                skill);
+
+            foreach (var target in skillTargets)
             {
                 // FIXME: we'll actually want to calculate damage...
                 // - elemental, spell, physical, evasion, armor, crit, resistances

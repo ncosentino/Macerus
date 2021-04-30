@@ -4,9 +4,9 @@ using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Api
 {
-    public interface ISkillHandler
+    public interface ISkillTargetingAmenity
     {
-        void Handle(
+        IEnumerable<IGameObject> FindTargetsForSkill(
             IGameObject user,
             IGameObject skill);
     }
