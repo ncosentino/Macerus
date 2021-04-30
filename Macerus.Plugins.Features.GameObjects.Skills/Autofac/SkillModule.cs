@@ -38,14 +38,6 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default.Autofac
                 .RegisterType<InflictDamageSkillHandler>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
-            builder
-                .RegisterType<SkillIconGeneratorComponentToBehaviorConverter>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
-                .RegisterType<SkillDisplayNameGeneratorComponentToBehaviorConverter>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
         }
     }
 }

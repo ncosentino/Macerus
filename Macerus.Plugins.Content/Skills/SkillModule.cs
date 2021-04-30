@@ -74,9 +74,9 @@ namespace Macerus.Plugins.Content.Skills
                             {
                                 new StatelessBehaviorGeneratorComponent(
                                     new UseInCombatSkillBehavior(),
-                                    new UseOutOfCombatSkillBehavior()),
-                                new SkillIconGeneratorComponent(@"graphics\skills\heal"),
-                                new SkillDisplayNameGeneratorComponent("Heal"),
+                                    new UseOutOfCombatSkillBehavior(),
+                                    new HasSkillDisplayName("Heal"),
+                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\heal"))),
                             },
                             new Dictionary<IIdentifier, double>()
                             {
@@ -138,9 +138,9 @@ namespace Macerus.Plugins.Content.Skills
                             {
                                 new StatelessBehaviorGeneratorComponent(
                                     new InflictDamageBehavior(),
-                                    new UseInCombatSkillBehavior()),
-                                new SkillIconGeneratorComponent(@"graphics\skills\fireball"),
-                                new SkillDisplayNameGeneratorComponent("Fireball"),
+                                    new UseInCombatSkillBehavior(),
+                                    new HasSkillDisplayName("Fireball"),
+                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\fireball"))),
                             },
                             new Dictionary<IIdentifier, double>() { },
                             skillIdentifiers),
