@@ -97,6 +97,7 @@ namespace Macerus.Plugins.Content.Actors
                                         new ItemContainerBehavior(actorIdentifiers.BeltIdentifier),
                                         new HasSkillsBehavior(),
                                         new CanEquipBehavior(humanoidEquipSlotIds),
+                                        new HasPrefabResourceIdBehavior(new StringIdentifier("Mapping/Prefabs/Actors/PlayerPlaceholder")),
                                     }),
                                 new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
@@ -130,6 +131,7 @@ namespace Macerus.Plugins.Content.Actors
                                         new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),
                                         new CanEquipBehavior(humanoidEquipSlotIds),
                                         new CorpseInteractableBehavior(false),
+                                        new HasPrefabResourceIdBehavior(new StringIdentifier("Mapping/Prefabs/Actors/Actor")),
                                     }),
                                 new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {

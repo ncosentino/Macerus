@@ -7,6 +7,7 @@ using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Api.GameObjects;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
+using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
@@ -67,13 +68,14 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Player
             }
 
             var generatedActor = generatedActors.Single();
+            var templateId = _filterContextAmenity.GetGameObjectTemplateIdFromContext(filterContext);
 
             var player = new Player(
                 new IBehavior[]
                 {
                     new TemplateIdentifierBehavior()
                     {
-                        TemplateId = _filterContextAmenity.GetGameObjectTemplateIdFromContext(filterContext),
+                        TemplateId = templateId,
                     },
                     new AlwaysLoadWithMapBehavior(),
                     new SkipMapSaveStateBehavior(),

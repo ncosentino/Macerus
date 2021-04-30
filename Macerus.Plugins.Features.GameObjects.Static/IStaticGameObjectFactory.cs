@@ -13,6 +13,7 @@ namespace Macerus.Plugins.Features.GameObjects.Static
             IReadOnlyTemplateIdentifierBehavior templateIdentifierBehavior,
             IReadOnlyIdentifierBehavior identifierBehavior,
             IReadOnlyWorldLocationBehavior worldLocationBehavior,
-            IReadOnlyStaticGameObjectPropertiesBehavior propertiesBehavior);
+            IReadOnlyStaticGameObjectPropertiesBehavior propertiesBehavior,
+            IReadOnlyPrefabResourceIdBehavior prefabResourceIdBehavior);
     }
 }

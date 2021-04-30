@@ -14,7 +14,7 @@ namespace Macerus.Plugins.Features.Encounters.Triggers.GamObjects.Static
 {
     public sealed class EncounterSpawnLocationBehaviorsProvider : IDiscoverableStaticGameObjectBehaviorsProvider
     {
-        private static readonly IIdentifier ENCOUNTER_SPAWN_ID = new StringIdentifier("encounterspawn");
+        private static readonly IIdentifier ENCOUNTER_SPAWN_ID = new StringIdentifier("EncounterSpawn");
 
         public IEnumerable<IBehavior> GetBehaviors(IReadOnlyCollection<IBehavior> baseBehaviors)
         {

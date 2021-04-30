@@ -20044,83 +20044,73 @@
   </data>
  </layer>
  <objectgroup color="#a0a0a4" name="Objects">
+ <!--FIXME: player should not be templated from map...-->
   <object id="1" name="tiled specific name" type="tiled specific type" x="1280" y="-512" width="32" height="32">
    <properties>
-    <property name="$typeId" value="actor"/>
-    <property name="$templateId" value="player"/>
-    <!-- <property name="$uniqueId" value="player"/> -->
+    <property name="typeId" value="actor"/>
+    <property name="templateId" value="player"/>
     <property name="PlayerName" value="player"/>
    </properties>
    <ellipse/>
   </object>
   <object id="2" name="tiled specific name" type="tiled specific type" x="1280" y="-920" width="192" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="wall"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/wall"/>
   </object>
   <object id="3" name="tiled specific name" type="tiled specific type" x="1496" y="-886.4" width="288" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="wall"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/wall"/>
   </object>
   <object id="4" name="tiled specific name" type="tiled specific type" x="1064" y="-886.4" width="288" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="wall"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/wall"/>
   </object>
   <object id="5" name="tiled specific name" type="tiled specific type" x="904" y="-832" width="32" height="128">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="wall"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/wall"/>
   </object>
   <object id="6" name="tiled specific name" type="tiled specific type" x="1656" y="-832" width="32" height="128">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="wall"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/wall"/>
   </object>
   <object id="7" name="tiled specific name" type="tiled specific type" x="1064" y="-776" width="288" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="wall"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/wall"/>
   </object>
   <object id="8" name="tiled specific name" type="tiled specific type" x="1496" y="-776" width="288" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="wall"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/wall"/>
   </object>
   <object id="9" name="tiled specific name" type="tiled specific type" x="1280" y="-640" width="32" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="rectangulartrigger"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/rectangulartrigger"/>
     <property name="OnEnterTriggerScriptId" value="on enter script id"/>
     <property name="OnExitTriggerScriptId" value="on exit script id"/>
   </object>
   <object id="10" name="tiled specific name" type="tiled specific type" x="1280" y="-712" width="32" height="32">
-    <property name="$typeId" value="container"/>
-    <property name="$templateId" value="chest"/>
+    <property name="typeId" value="container"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="container/chest"/>
     <property name="TransferItemsOnActivate" value="True"/>
     <property name="DropTableId" value="any_normal_magic_10x_lvl10"/>
     <property name="Collisions" value="True"/>
   </object>
   <object id="11" name="tiled specific name" type="tiled specific type" x="1280" y="-800" width="128" height="128">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="rectangularencountertrigger"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value="EncounterTrigger"/>
+    <property name="prefabId" value="static/rectangularencountertrigger"/>
     <property name="EncounterId" value="test-encounter"/>
     <property name="EncounterChance" value="0.5"/>
     <property name="EncounterInterval" value="5000"/>
     <property name="MustBeMoving" value="true"/>
-  </object>
-  <object id="12" name="tiled specific name" type="tiled specific type" x="1216" y="-512" width="32" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="encounterspawn"/>
-  </object>
-  <object id="13" name="tiled specific name" type="tiled specific type" x="1344" y="-512" width="32" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="encounterspawn"/>
-  </object>
-  <object id="14" name="tiled specific name" type="tiled specific type" x="1408" y="-512" width="32" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="encounterspawn"/>
-  </object>
-  <object id="15" name="tiled specific name" type="tiled specific type" x="1472" y="-512" width="32" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="encounterspawn"/>
-  </object>
-  <object id="16" name="tiled specific name" type="tiled specific type" x="1536" y="-512" width="32" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="encounterspawn"/>
   </object>
  </objectgroup>
  <objectgroup color="#a0a0a4" name="EmptyGroupJustAsAnExample">

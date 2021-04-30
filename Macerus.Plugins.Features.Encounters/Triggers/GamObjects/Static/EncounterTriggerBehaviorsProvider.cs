@@ -11,7 +11,7 @@ namespace Macerus.Plugins.Features.Encounters.Triggers.GamObjects.Static
 {
     public sealed class EncounterTriggerBehaviorsProvider : IDiscoverableStaticGameObjectBehaviorsProvider
     {
-        private static readonly IIdentifier ENCOUNTER_TRIGGER_TEMPLATE_ID = new StringIdentifier("rectangularencountertrigger");
+        private static readonly IIdentifier ENCOUNTER_TRIGGER_TEMPLATE_ID = new StringIdentifier("EncounterTrigger");
 
         public IEnumerable<IBehavior> GetBehaviors(IReadOnlyCollection<IBehavior> baseBehaviors)
         {

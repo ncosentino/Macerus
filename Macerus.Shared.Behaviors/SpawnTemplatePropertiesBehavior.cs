@@ -26,7 +26,7 @@ namespace Macerus.Shared.Behaviors
             get
             {
                 if (!Properties.TryGetValue(
-                    "$typeId",
+                    "typeId",
                     out var rawValue))
                 {
                     return null;
@@ -44,7 +44,7 @@ namespace Macerus.Shared.Behaviors
             get
             {
                 if (!Properties.TryGetValue(
-                    "$templateId",
+                    "templateId",
                     out var rawValue))
                 {
                     return null;

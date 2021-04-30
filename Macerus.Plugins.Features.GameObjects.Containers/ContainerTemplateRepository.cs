@@ -98,6 +98,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 containerPropertiesBehavior,
                 new ItemContainerBehavior(new StringIdentifier("Items")),
                 containerInteractableBehavior,
+                new HasPrefabResourceIdBehavior(new StringIdentifier($"Mapping/Prefabs/{properties["PrefabId"]}")),
                 additionalBehaviors);
             return container;
         }

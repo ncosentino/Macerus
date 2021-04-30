@@ -20045,74 +20045,87 @@
  </layer>
  <objectgroup color="#a0a0a4" name="Objects">
   <object id="2" name="tiled specific name" type="tiled specific type" x="1280" y="-920" width="192" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="wall"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/wall"/>
   </object>
   <object id="3" name="tiled specific name" type="tiled specific type" x="1496" y="-886.4" width="288" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="wall"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/wall"/>
   </object>
   <object id="4" name="tiled specific name" type="tiled specific type" x="1064" y="-886.4" width="288" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="wall"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/wall"/>
   </object>
   <object id="5" name="tiled specific name" type="tiled specific type" x="904" y="-832" width="32" height="128">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="wall"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/wall"/>
   </object>
   <object id="6" name="tiled specific name" type="tiled specific type" x="1656" y="-832" width="32" height="128">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="wall"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/wall"/>
   </object>
   <object id="7" name="tiled specific name" type="tiled specific type" x="1064" y="-776" width="288" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="wall"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/wall"/>
   </object>
   <object id="8" name="tiled specific name" type="tiled specific type" x="1496" y="-776" width="288" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="wall"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/wall"/>
   </object>
   <object id="10" name="tiled specific name" type="tiled specific type" x="1280" y="-712" width="32" height="32">
-    <property name="$typeId" value="container"/>
-    <property name="$templateId" value="chest"/>
+    <property name="typeId" value="container"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="container/chest"/>
     <property name="TransferItemsOnActivate" value="True"/>
     <property name="DropTableId" value="any_normal_magic_10x_lvl10"/>
     <property name="Collisions" value="True"/>
   </object>
   <object id="12" name="tiled specific name" type="tiled specific type" x="1216" y="-512" width="32" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="encounterspawn"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value="EncounterSpawn"/>
+    <property name="prefabId" value="static/encounterspawn"/>
     <property name="AllowedTeams" value="0"/>
   </object>
   <object id="13" name="tiled specific name" type="tiled specific type" x="1344" y="-512" width="32" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="encounterspawn"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value="EncounterSpawn"/>
+    <property name="prefabId" value="static/encounterspawn"/>
     <property name="AllowedTeams" value="1,2,3,4,5"/>
   </object>
   <object id="14" name="tiled specific name" type="tiled specific type" x="1408" y="-512" width="32" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="encounterspawn"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value="EncounterSpawn"/>
+    <property name="prefabId" value="static/encounterspawn"/>
     <property name="AllowedTeams" value="1,2,3,4,5"/>
   </object>
   <object id="15" name="tiled specific name" type="tiled specific type" x="1472" y="-512" width="32" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="encounterspawn"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value="EncounterSpawn"/>
+    <property name="prefabId" value="static/encounterspawn"/>
     <property name="AllowedTeams" value="1,2,3,4,5"/>
   </object>
   <object id="16" name="tiled specific name" type="tiled specific type" x="1536" y="-512" width="32" height="32">
-    <property name="$typeId" value="static"/>
-    <property name="$templateId" value="encounterspawn"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value="EncounterSpawn"/>
+    <property name="prefabId" value="static/encounterspawn"/>
     <property name="AllowedTeams" value="1,2,3,4,5"/>
   </object>
   <object id="17" name="tiled specific name" type="tiled specific type" x="1536" y="-600" width="32" height="32">
-    <property name="$typeId" value="static"/>
-    <!--<property name="$templateId" value="??do we really require this??"/>-->
-    <property name="$templateId" value="rectangulartrigger"/>
-    <property name="$prefabId" value="spawnoncombatend"/>
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/rectangulartrigger"/>
     <property name="TriggerOnCombatEnd" />
     <property name="SpawnTemplateProperties">
-      <property name="$typeId" value="container"/>
-      <property name="$templateId" value="chest"/>
+      <property name="typeId" value="container"/>
+      <property name="templateId" value=""/>
+      <property name="prefabId" value="container/chest"/>
       <property name="x" value="48"/>
       <property name="y" value="-30"/>
       <property name="width" value="1"/>

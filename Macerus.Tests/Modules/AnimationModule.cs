@@ -11,7 +11,9 @@ namespace Macerus.Tests.Modules
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<NoneLpcAnimationDiscovererSettings>()
+                .Register(c => new LpcAnimationDiscovererSettings(
+                    @"..\..\..\..\Macerus.Plugins.Content",
+                    @"Graphics\Actors\LpcUniversal"))
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

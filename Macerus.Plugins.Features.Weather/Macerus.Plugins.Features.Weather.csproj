@@ -10,4 +10,8 @@
     <PackageReference Include="ProjectXyz" Version="1.0.*" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj" />
+  </ItemGroup>
+
 </Project>

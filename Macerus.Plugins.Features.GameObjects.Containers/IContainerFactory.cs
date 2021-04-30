@@ -20,6 +20,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             IReadOnlyContainerPropertiesBehavior propertiesBehavior,
             IItemContainerBehavior itemContainerBehavior,
             IInteractableBehavior interactableBehavior,
+            IReadOnlyPrefabResourceIdBehavior prefabResourceIdBehavior,
             IEnumerable<IBehavior> additionalBehaviors);
     }
 }

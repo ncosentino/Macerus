@@ -75,7 +75,8 @@ namespace Macerus.Plugins.Features.GameObjects.Static
                     Width = Convert.ToDouble(properties["Width"], CultureInfo.InvariantCulture),
                     Height = Convert.ToDouble(properties["Height"], CultureInfo.InvariantCulture),
                 },
-                new StaticGameObjectPropertiesBehavior(properties));
+                new StaticGameObjectPropertiesBehavior(properties),
+                new HasPrefabResourceIdBehavior(new StringIdentifier($"Mapping/Prefabs/{properties["PrefabId"]}")));
             return staticGameObject;
         }
     }

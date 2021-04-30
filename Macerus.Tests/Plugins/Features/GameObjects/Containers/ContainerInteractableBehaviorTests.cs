@@ -43,6 +43,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Containers
                     ["Y"] = 0,
                     ["Width"] = 1,
                     ["Height"] = 1,
+                    ["PrefabId"] = "some prefab",
                     ["DropTableId"] = "any_magic_1-10_lvl10",
                     ["TransferItemsOnActivate"] = true,
                 });

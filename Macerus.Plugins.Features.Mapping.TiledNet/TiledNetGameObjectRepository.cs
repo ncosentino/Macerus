@@ -85,7 +85,7 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
                     };
                     foreach (var property in tiledMapObject.Properties)
                     {
-                        properties[property.Key.TrimStart('$')] = property.Value;
+                        properties[property.Key] = property.Value;
                     }
 
                     if (!properties.TryGetValue("TypeId", out var typeId))

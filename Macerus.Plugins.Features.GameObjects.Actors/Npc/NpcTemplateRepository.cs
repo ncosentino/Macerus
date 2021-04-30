@@ -7,6 +7,7 @@ using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Api.GameObjects;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
+using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;

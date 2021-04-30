@@ -35,6 +35,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             IReadOnlyContainerPropertiesBehavior propertiesBehavior,
             IItemContainerBehavior itemContainerBehavior,
             IInteractableBehavior interactableBehavior,
+            IReadOnlyPrefabResourceIdBehavior prefabResourceIdBehavior,
             IEnumerable<IBehavior> additionalBehaviors)
         {
             var baseBehaviours = new IBehavior[]
@@ -46,6 +47,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 propertiesBehavior,
                 itemContainerBehavior,
                 interactableBehavior,
+                prefabResourceIdBehavior,
             }
             .Concat(additionalBehaviors)
             .ToArray();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-using Macerus.Game.GameObjects;
+using Macerus.Game;
 using Macerus.Plugins.Features.Mapping.TiledNet;
 
 using ProjectXyz.Api.Framework;
