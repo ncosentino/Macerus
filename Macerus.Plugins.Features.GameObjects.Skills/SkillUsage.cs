@@ -4,6 +4,7 @@ using Macerus.Plugins.Features.GameObjects.Skills.Api;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
+using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api;
@@ -13,13 +14,16 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
     public sealed class SkillUsage : ISkillUsage
     {
         private readonly IStatCalculationService _statCalculationService;
+        private readonly ICombatTurnManager _combatTurnManager;
         private readonly ILogger _logger;
 
         public SkillUsage(
             IStatCalculationService statCalculationService,
+            ICombatTurnManager combatTurnManager,
             ILogger logger)
         {
             _statCalculationService = statCalculationService;
+            _combatTurnManager = combatTurnManager;
             _logger = logger;
         }
 
@@ -27,6 +31,21 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             IGameObject actor,
             IGameObject skill)
         {
+            if (_combatTurnManager.InCombat)
+            {
+                if (!skill.Has<IUseInCombatSkillBehavior>())
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (!skill.Has<IUseOutOfCombatSkillBehavior>())
+                {
+                    return false;
+                }
+            }
+
             if (skill.TryGetFirst<ISkillResourceUsageBehavior>(out var skillResourceUsageBehavior) &&
                 skillResourceUsageBehavior.StaticStatRequirements.Any())
             {
