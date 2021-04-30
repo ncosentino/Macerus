@@ -76,6 +76,7 @@ namespace Macerus.Plugins.Content.Skills
                                 new StatelessBehaviorGeneratorComponent(
                                     new UseInCombatSkillBehavior(),
                                     new UseOutOfCombatSkillBehavior(),
+                                    new EnchantTargetsBehavior(new [] {new StringIdentifier("heal-self") }),
                                     new SkillTargetBehavior(
                                         Tuple.Create(0,0),  // Starts at the caster's location
                                         new [] { 0 },       // Affects only enemy team 1
@@ -152,6 +153,29 @@ namespace Macerus.Plugins.Content.Skills
                                     new HasSkillIcon(new StringIdentifier(@"graphics\skills\fireball"))),
                             },
                             new Dictionary<IIdentifier, double>() { },
+                            skillIdentifiers),
+                        new SkillDefinition(
+                            new StringIdentifier("elder-fireball"),
+                            new StringIdentifier("single-target"),
+                            new IIdentifier[] { },
+                            new IIdentifier[] { new StringIdentifier("heal-self") },
+                            new Dictionary<IIdentifier, double>() { },
+                            new IFilterAttribute[] { },
+                            new IGeneratorComponent[]
+                            {
+                                new StatelessBehaviorGeneratorComponent(
+                                    new CombinationSkillBehavior(new []
+                                    {
+                                        new StringIdentifier("heal-self"),
+                                        new StringIdentifier("test-fireball"),
+                                    }),
+                                    new HasSkillDisplayName("Elder"),
+                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\elder"))),
+                            },
+                            new Dictionary<IIdentifier, double>() 
+                            {
+                                [new IntIdentifier(4)] = 10, // mana current
+                            },
                             skillIdentifiers),
                         // Test, Damaging single target
                         new SkillDefinition(

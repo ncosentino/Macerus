@@ -42,7 +42,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 // - status effects
                 // - chance to hit
                 var targetStatsBehavior = target.GetOnly<IHasMutableStatsBehavior>();
-                targetStatsBehavior.MutateStats(targetStats => targetStats[_combatStatIdentifiers.CurrentLifeStatId] -= 10);
+                targetStatsBehavior.MutateStats(targetStats => targetStats[_combatStatIdentifiers.CurrentLifeStatId] -= 100);
             }
         }
     }
