@@ -53,10 +53,17 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
                         mapLayerTiles);
                     return mapLayer;
                 });
+
             var behaviors = new List<IBehavior>()
             {
                 new MapPropertiesBehavior(tiledMap.Properties),
             };
+
+            if (tiledMap.Properties.ContainsKey("IgnoreSavingGameObjectState"))
+            {
+                behaviors.Add(new IgnoreSavingGameObjectStateBehavior());
+            }
+
             var map = _mapFactory.Create(
                 mapId,
                 layers,

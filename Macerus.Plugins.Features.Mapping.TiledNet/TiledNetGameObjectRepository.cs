@@ -124,6 +124,11 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
             IMap map,
             IEnumerable<IGameObject> gameObjects)
         {
+            if (map.Has<IIgnoreSavingGameObjectStateBehavior>())
+            {
+                return;
+            }
+
             if (!_gameObjectIdCache.TryGetValue(
                 map.Id,
                 out var cachedMapGameObjectes))

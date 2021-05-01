@@ -6,6 +6,7 @@
   <property name="WeatherTableId" value="sample weather"/>
   <!--0.03125 = 1/32 which makes game object coordinates in tiles... but this map wont look right in Tiled program-->
   <!--<property name="WorldScalingFactor" value="0.03125"/>-->
+  <property name="IgnoreSavingGameObjectState"/>
  </properties>
  <tileset firstgid="1" name="swamp" tilewidth="32" tileheight="32">
   <image source="../Tilesets/Exterior/Swamp/swamp.png" trans="ff00ff" width="224" height="96"/>
