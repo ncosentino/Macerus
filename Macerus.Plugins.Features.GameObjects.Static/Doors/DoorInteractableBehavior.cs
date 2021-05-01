@@ -11,14 +11,22 @@ namespace Macerus.Plugins.Features.GameObjects.Static.Doors
     {
         public DoorInteractableBehavior(
             bool automaticInteraction,
-            IIdentifier transitionToMapId)
+            IIdentifier transitionToMapId,
+            double? transitionToX,
+            double? transitionToY)
         {
             AutomaticInteraction = automaticInteraction;
             TransitionToMapId = transitionToMapId;
+            TransitionToX = transitionToX;
+            TransitionToY = transitionToY;
         }
 
         public bool AutomaticInteraction { get; }
 
         public IIdentifier TransitionToMapId { get; }
+
+        public double? TransitionToX { get; }
+
+        public double? TransitionToY { get; }
     }
 }

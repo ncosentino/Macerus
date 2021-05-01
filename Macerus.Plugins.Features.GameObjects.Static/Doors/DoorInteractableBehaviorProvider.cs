@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -25,7 +24,13 @@ namespace Macerus.Plugins.Features.GameObjects.Static.Doors
                         Convert.ToBoolean(automaticInteraction, CultureInfo.InvariantCulture),
                     doorBehaviorProperties.TryGetValue("TransitionToMapId", out var transitionToMapId)
                         ? new StringIdentifier(Convert.ToString(transitionToMapId, CultureInfo.InvariantCulture))
-                        : null);
+                        : null,
+                    doorBehaviorProperties.TryGetValue("TransitionToX", out var transitionToX)
+                        ? Convert.ToDouble(transitionToX, CultureInfo.InvariantCulture)
+                        : (double?)null,
+                    doorBehaviorProperties.TryGetValue("TransitionToY", out var transitionToY)
+                        ? Convert.ToDouble(transitionToY, CultureInfo.InvariantCulture)
+                        : (double?)null);
                 yield return doorBehavior;
             }
 

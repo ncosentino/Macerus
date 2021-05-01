@@ -20127,7 +20127,7 @@
       <property name="templateId" value=""/>
       <property name="prefabId" value="container/chest"/>
       <property name="x" value="48"/>
-      <property name="y" value="-30"/>
+      <property name="y" value="-20"/>
       <property name="width" value="1"/>
       <property name="height" value="1"/>
       <property name="TransferItemsOnActivate" value="True"/>
@@ -20145,12 +20145,14 @@
       <property name="templateId" value="??this is a door but proof we don't require this??"/>
       <property name="prefabId" value="static/encounterspawn"/>
       <property name="x" value="50"/>
-      <property name="y" value="-30"/>
+      <property name="y" value="-20"/>
       <property name="width" value="1"/>
       <property name="height" value="1"/>
       <property name="DoorBehavior">
         <property name="AutomaticInteraction" value="False"/>
         <property name="TransitionToMapId" value="swamp"/>
+        <property name="TransitionToX" value="40"/>
+        <property name="TransitionToY" value="-16"/>
       </property>
     </property>
   </object>

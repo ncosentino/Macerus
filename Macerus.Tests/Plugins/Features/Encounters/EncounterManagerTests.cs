@@ -3,6 +3,8 @@ using System.Linq;
 
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Encounters;
+using Macerus.Plugins.Features.GameObjects.Static.Doors;
+using Macerus.Plugins.Features.Interactions.Api;
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
@@ -28,6 +30,7 @@ namespace Macerus.Tests.Plugins.Features.Encounters
         private static readonly IMapManager _mapManager;
         private static readonly IActorIdentifiers _actorIdentifiers;
         private static readonly IGameEngine _gameEngine;
+        private static readonly IInteractionHandler _interactionHandler;
 
         static EncounterManagerTests()
         {
@@ -41,6 +44,7 @@ namespace Macerus.Tests.Plugins.Features.Encounters
             _mapManager = _container.Resolve<IMapManager>();
             _actorIdentifiers = _container.Resolve<IActorIdentifiers>();
             _gameEngine = _container.Resolve<IGameEngine>(); // NOTE: we need this to resolve systems.
+            _interactionHandler = _container.Resolve<IInteractionHandlerFacade>();
         }
 
         [Fact]
@@ -86,11 +90,14 @@ namespace Macerus.Tests.Plugins.Features.Encounters
                     filterContext,
                     new StringIdentifier("test-encounter"));
 
-                Assert.Single(_mapGameObjectManager
-                    .GameObjects
-                    .Where(x => 
-                        x.Has<ITriggerOnCombatEndBehavior>() &&
-                        x.Has<IReadOnlySpawnTemplatePropertiesBehavior>()));
+                Assert.Equal(
+                    2,
+                    _mapGameObjectManager
+                        .GameObjects
+                        .Where(x => 
+                            x.Has<ITriggerOnCombatEndBehavior>() &&
+                            x.Has<IReadOnlySpawnTemplatePropertiesBehavior>())
+                        .Count());
                 Assert.Single(_mapGameObjectManager
                     .GameObjects
                     .Where(x => x.GetOnly<ITypeIdentifierBehavior>()
@@ -114,6 +121,43 @@ namespace Macerus.Tests.Plugins.Features.Encounters
                         .Count(x => x.GetOnly<ITypeIdentifierBehavior>()
                             .TypeId
                             .Equals(new StringIdentifier("container"))));
+            });
+        }
+
+        [Fact]
+        private void EndCombat_UseReturnDoor_BackToStartMapAtSpecifiedLocation()
+        {
+            _testAmenities.UsingCleanMapAndObjects(() =>
+            {
+                // FIXME: this forces player spawn
+                _mapManager.SwitchMap(new StringIdentifier("swamp"));
+
+                var filterContext = _filterContextProvider.GetContext();
+                _encounterManager.StartEncounter(
+                    filterContext,
+                    new StringIdentifier("test-encounter"));
+
+                _combatTurnManager.EndCombat(
+                    Enumerable.Empty<IGameObject>(),
+                    new Dictionary<int, IReadOnlyCollection<IGameObject>>());
+                _gameEngine.Update();
+
+                var player = _mapGameObjectManager
+                    .GameObjects
+                    .Single(x => x.Has<IPlayerControlledBehavior>());
+                var door = _mapGameObjectManager
+                    .GameObjects
+                    .Single(x => x.Has<DoorInteractableBehavior>())
+                    .GetOnly<DoorInteractableBehavior>();
+                _interactionHandler.Interact(
+                    player,
+                    door);
+
+                Assert.Equal(door.TransitionToMapId, _mapManager.ActiveMap.Id);
+
+                var playerLocation = player.GetOnly<IReadOnlyWorldLocationBehavior>();
+                Assert.Equal(door.TransitionToX.Value, playerLocation.X);
+                Assert.Equal(door.TransitionToY.Value, playerLocation.Y);
             });
         }
     }
