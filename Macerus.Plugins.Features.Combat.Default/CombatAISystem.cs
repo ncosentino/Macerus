@@ -65,6 +65,17 @@ namespace Macerus.Plugins.Features.Combat.Default
                 .Value
                 .Interval;
 
+            var currentLife = _currentActor
+                .GetOnly<IHasStatsBehavior>()
+                // FIXME: do we need to consider a stat calc or
+                // can we assume base stat
+                .BaseStats[_combatStatIdentifiers.CurrentLifeStatId];
+            if (currentLife <= 0)
+            {
+                _turnBasedManager.SetApplicableObjects(new[] { _currentActor });
+                return;
+            }
+
             if (_currentCombatAI.Execute(
                 _currentActor,
                 new HashSet<IGameObject>(_combatGameObjectProvider.GetGameObjects()),
@@ -97,22 +108,8 @@ namespace Macerus.Plugins.Features.Combat.Default
 
         private void ConfigureForNextActor(IGameObject nextActor)
         {
-            var nextActorCurrentLife = nextActor
-                .GetOnly<IHasStatsBehavior>()
-                // FIXME: do we need to consider a stat calc or
-                // can we assume base stat
-                .BaseStats[_combatStatIdentifiers.CurrentLifeStatId];
-
-            if (nextActorCurrentLife > 0)
-            {
-                _currentActor = nextActor;
-                _currentCombatAI = GetCombatAI(nextActor);
-            }
-            else
-            {
-                _currentActor = null;
-                _currentCombatAI = null;
-            }
+            _currentActor = nextActor;
+            _currentCombatAI = GetCombatAI(nextActor);
         }
 
         private void CombatTurnManager_TurnProgressed(
