@@ -239,7 +239,7 @@ namespace Macerus.Headless
                 var playerLocation = player.GetOnly<IWorldLocationBehavior>();
                 if (playerMovement.PointsToWalk.Count < 1)
                 {
-                    var skill = skillAmenity.GetSkillById(new StringIdentifier("fireball"));
+                    var skill = skillAmenity.GetSkillById(new StringIdentifier("elder-fireball"));
                     skillHandlerFacade.Handle(player, skill);
 
                     keepRunning = false;

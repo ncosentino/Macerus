@@ -182,8 +182,9 @@ namespace Macerus.Plugins.Content.Skills
                                 new StatelessBehaviorGeneratorComponent(
                                     new UseInCombatSkillBehavior(),
                                     new CombinationSkillBehavior(
-                                        new StringIdentifier("increase-fire-damage"),
-                                        new StringIdentifier("fire-damage-line")),
+                                        new SequentialSkillExecutorBehavior(
+                                            new StringIdentifier("increase-fire-damage"),
+                                            new StringIdentifier("fire-damage-line"))),
                                     new HasSkillDisplayName("Fireball"),
                                     new HasSkillIcon(new StringIdentifier(@"graphics\skills\fireball"))),
                             },
@@ -192,28 +193,30 @@ namespace Macerus.Plugins.Content.Skills
                                 [new IntIdentifier(4)] = 20, // mana current
                             },
                             skillIdentifiers),
-
+                        // Boost + damage
                         new SkillDefinition(
                             new StringIdentifier("elder-fireball"),
                             new StringIdentifier("single-target"),
                             new IIdentifier[] { },
-                            new IIdentifier[] { new StringIdentifier("heal-self") },
+                            new IIdentifier[] { },
                             new Dictionary<IIdentifier, double>() { },
                             new IFilterAttribute[] { },
                             new IGeneratorComponent[]
                             {
                                 new StatelessBehaviorGeneratorComponent(
-                                    new CombinationSkillBehavior(new []
-                                    {
-                                        new StringIdentifier("heal-self"),
-                                        new StringIdentifier("test-fireball"),
-                                    }),
+                                    new UseInCombatSkillBehavior(),
+                                    new CombinationSkillBehavior(
+                                        new ParallelSkillExecutorBehavior(
+                                            new StringIdentifier("increase-fire-damage"),
+                                            new StringIdentifier("heal-self")),
+                                        new SequentialSkillExecutorBehavior(
+                                            new StringIdentifier("fire-damage-line"))),
                                     new HasSkillDisplayName("Elder"),
                                     new HasSkillIcon(new StringIdentifier(@"graphics\skills\elder"))),
                             },
-                            new Dictionary<IIdentifier, double>() 
+                           new Dictionary<IIdentifier, double>()
                             {
-                                [new IntIdentifier(4)] = 10, // mana current
+                                [new IntIdentifier(4)] = 20, // mana current
                             },
                             skillIdentifiers),
                         // Test, Damaging single target

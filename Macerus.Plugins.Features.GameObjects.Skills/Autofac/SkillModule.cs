@@ -33,10 +33,6 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<SkillDecomposer>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
                 .RegisterType<SkillTargetingAmenity>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
