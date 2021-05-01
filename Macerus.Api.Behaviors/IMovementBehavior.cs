@@ -20,5 +20,9 @@ namespace Macerus.Api.Behaviors
         void SetWalkPath(IEnumerable<Vector2> pointsToWalk);
 
         Vector2 CompleteWalkPoint();
+
+        new int Direction { get; }
+
+        void SetDirection(int direction);
     }
 }

@@ -163,9 +163,27 @@ namespace Macerus.Plugins.Content.Skills
                                 new StatelessBehaviorGeneratorComponent(
                                     new InflictDamageBehavior(),
                                     new SkillTargetBehavior(
-                                        Tuple.Create(0,0),
+                                        Tuple.Create(0, 0),
                                         new [] { 1 },
                                         new [] { Tuple.Create(0, 1), Tuple.Create(0, 2), Tuple.Create(0, 3)})),
+                            },
+                            new Dictionary<IIdentifier, double>() { },
+                            skillIdentifiers),
+                        new SkillDefinition(
+                            new StringIdentifier("fire-damage-t"),
+                            new StringIdentifier("single-target"),
+                            new IIdentifier[] { },
+                            new IIdentifier[] { },
+                            new Dictionary<IIdentifier, double>() { },
+                            new IFilterAttribute[] { },
+                            new IGeneratorComponent[]
+                            {
+                                new StatelessBehaviorGeneratorComponent(
+                                    new InflictDamageBehavior(),
+                                    new SkillTargetBehavior(
+                                        Tuple.Create(1,2),
+                                        new [] { 1 },
+                                        new [] { Tuple.Create(0, 1), Tuple.Create(1, 1), Tuple.Create(-1, 1)})),
                             },
                             new Dictionary<IIdentifier, double>() { },
                             skillIdentifiers),
@@ -212,6 +230,32 @@ namespace Macerus.Plugins.Content.Skills
                                         new SequentialSkillExecutorBehavior(
                                             new StringIdentifier("fire-damage-line"))),
                                     new HasSkillDisplayName("Elder"),
+                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\elder"))),
+                            },
+                           new Dictionary<IIdentifier, double>()
+                            {
+                                [new IntIdentifier(4)] = 20, // mana current
+                            },
+                            skillIdentifiers),
+                        // Boost + damage
+                        new SkillDefinition(
+                            new StringIdentifier("elder-fireball-t"),
+                            new StringIdentifier("single-target"),
+                            new IIdentifier[] { },
+                            new IIdentifier[] { },
+                            new Dictionary<IIdentifier, double>() { },
+                            new IFilterAttribute[] { },
+                            new IGeneratorComponent[]
+                            {
+                                new StatelessBehaviorGeneratorComponent(
+                                    new UseInCombatSkillBehavior(),
+                                    new CombinationSkillBehavior(
+                                        new ParallelSkillExecutorBehavior(
+                                            new StringIdentifier("increase-fire-damage"),
+                                            new StringIdentifier("heal-self")),
+                                        new SequentialSkillExecutorBehavior(
+                                            new StringIdentifier("fire-damage-t"))),
+                                    new HasSkillDisplayName("ElderT"),
                                     new HasSkillIcon(new StringIdentifier(@"graphics\skills\elder"))),
                             },
                            new Dictionary<IIdentifier, double>()

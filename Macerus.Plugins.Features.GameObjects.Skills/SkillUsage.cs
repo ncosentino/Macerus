@@ -60,11 +60,11 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 
                     if (actualStatValue < requiredStatValue)
                     {
-                        _logger.Debug(
-                            $"'{actor}' did not meet required stat ID " +
-                            $"'{requiredStatDefinitionId}' value of " +
-                            $"{requiredStatValue}. Had value of " +
-                            $"{actualStatValue}.");
+                        //_logger.Debug(
+                        //    $"'{actor}' did not meet required stat ID " +
+                        //    $"'{requiredStatDefinitionId}' value of " +
+                        //    $"{requiredStatValue}. Had value of " +
+                        //    $"{actualStatValue}.");
                         return false;
                     }
                 }

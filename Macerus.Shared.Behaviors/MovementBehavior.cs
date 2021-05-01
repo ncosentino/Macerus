@@ -99,6 +99,8 @@ namespace Macerus.Shared.Behaviors
 
         public IReadOnlyCollection<Vector2> PointsToWalk => _pointsToWalk;
 
+        public int Direction { get; private set; }
+
         public void SetThrottle(double throttleX, double throttleY)
         {
             try
@@ -209,6 +211,11 @@ namespace Macerus.Shared.Behaviors
         {
             var lastWalkPoint = _pointsToWalk.Dequeue();
             return lastWalkPoint;
+        }
+
+        public void SetDirection(int direction)
+        {
+            Direction = direction;
         }
     }
 }

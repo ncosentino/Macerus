@@ -15,6 +15,8 @@ namespace Macerus.Api.Behaviors
 
         double VelocityY { get; }
 
+        int Direction { get; }
+
         IReadOnlyCollection<Vector2> PointsToWalk { get; }
     }
 }
