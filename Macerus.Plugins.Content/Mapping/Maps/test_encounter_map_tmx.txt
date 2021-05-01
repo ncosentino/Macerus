@@ -20135,6 +20135,25 @@
       <property name="Collisions" value="True"/>
     </property>
   </object>
+  <object id="18" name="tiled specific name" type="tiled specific type" x="1600" y="-600" width="32" height="32">
+    <property name="typeId" value="static"/>
+    <property name="templateId" value=""/>
+    <property name="prefabId" value="static/rectangulartrigger"/>
+    <property name="TriggerOnCombatEnd" />
+    <property name="SpawnTemplateProperties">
+      <property name="typeId" value="static"/>
+      <property name="templateId" value="??this is a door but proof we don't require this??"/>
+      <property name="prefabId" value="static/encounterspawn"/>
+      <property name="x" value="50"/>
+      <property name="y" value="-30"/>
+      <property name="width" value="1"/>
+      <property name="height" value="1"/>
+      <property name="DoorBehavior">
+        <property name="AutomaticInteraction" value="False"/>
+        <property name="TransitionToMapId" value="swamp"/>
+      </property>
+    </property>
+  </object>
  </objectgroup>
  <objectgroup color="#a0a0a4" name="EmptyGroupJustAsAnExample">
  </objectgroup>
