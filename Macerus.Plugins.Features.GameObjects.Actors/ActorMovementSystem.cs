@@ -55,6 +55,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 UpdateVelocity(
                     movementBehavior,
                     elapsedSeconds);
+                UpdateDirection(
+                    movementBehavior);
                 UpdateAnimation(
                     movementBehavior,
                     dynamicAnimationBehavior,
@@ -77,6 +79,35 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 yield return requiredBehaviors;
             }
         }
+
+        private void UpdateDirection(
+            IMovementBehavior movementBehavior)
+        {
+            var throttleX = movementBehavior.ThrottleX;
+            var throttleY = movementBehavior.ThrottleY;
+
+            if (throttleX > 0)
+            {
+                movementBehavior.SetDirection(2);
+            }
+            else if (throttleX < 0)
+            {
+                movementBehavior.SetDirection(0);
+            }
+            else if (throttleY > 0)
+            {
+                movementBehavior.SetDirection(1);
+            }
+            else if (throttleY < 0)
+            {
+                movementBehavior.SetDirection(3);
+            }
+            else
+            {
+                movementBehavior.SetDirection(1);
+            }
+        }
+
 
         private void UpdateAnimation(
             IMovementBehavior movementBehavior,
