@@ -35,6 +35,8 @@ namespace Macerus.Plugins.Content.Stats
                     {
                         [new StringIdentifier("speed")] = "SPEED",
                         [combatTeamIdentifiers.CombatTeamStatDefinitionId] = "COMBAT_TEAM",
+                        [new StringIdentifier("firedmg")] = "FIRE_DAMAGE",
+                        [new StringIdentifier("fireresist")] = "FIRE_RESIST",
                     };
                     var statDefinitionToTermRepository = new InMemoryStatDefinitionToTermMappingRepository(mapping);
                     return statDefinitionToTermRepository;

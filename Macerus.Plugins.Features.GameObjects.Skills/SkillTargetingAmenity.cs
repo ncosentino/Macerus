@@ -37,13 +37,13 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             }
 
             var userLocation = user.GetOnly<IWorldLocationBehavior>();
-            var skillOriginX = (int)userLocation.X + targetBehavior.OriginOffset.Item1;
-            var skillOriginY = (int)userLocation.Y + targetBehavior.OriginOffset.Item2;
+            var skillOriginX = (int)Math.Round(userLocation.X) + targetBehavior.OriginOffset.Item1;
+            var skillOriginY = (int)Math.Round(userLocation.Y) + targetBehavior.OriginOffset.Item2;
 
-            var affectedLocations = targetBehavior
-                .PatternFromOrigin
-                .Select(x => Tuple.Create(skillOriginX + x.Item1, skillOriginY + x.Item2))
-                .AppendSingle(Tuple.Create(skillOriginX, skillOriginY))
+            var affectedLocations = new[] { Tuple.Create(skillOriginX, skillOriginY) }
+                .Concat(targetBehavior
+                    .PatternFromOrigin
+                    .Select(x => Tuple.Create(skillOriginX + x.Item1, skillOriginY + x.Item2)))
                 .ToArray();
 
             var targets = _mapGameObjectManager
@@ -53,11 +53,11 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                     .TeamIds
                     .Contains((int)x
                         .GetOnly<IHasMutableStatsBehavior>()
-                        .BaseStats[new StringIdentifier("CombatTeam")]))
+                        .BaseStats[_combatTeamIdentifiers.CombatTeamStatDefinitionId]))
                 .Where(x => affectedLocations.Contains(
                     Tuple.Create(
-                        (int)x.GetOnly<IWorldLocationBehavior>().X,
-                        (int)x.GetOnly<IWorldLocationBehavior>().Y)));
+                        (int)Math.Round(x.GetOnly<IWorldLocationBehavior>().X),
+                        (int)Math.Round(x.GetOnly<IWorldLocationBehavior>().Y))));
 
             return targets;
         }

@@ -132,9 +132,27 @@ namespace Macerus.Plugins.Content.Skills
                             },
                             new Dictionary<IIdentifier, double>() { },
                             skillIdentifiers),
-                        // Test, Damaging single target
                         new SkillDefinition(
-                            new StringIdentifier("test-fireball"),
+                            new StringIdentifier("increase-fire-damage"),
+                            new StringIdentifier("self"),
+                            new IIdentifier[] { },
+                            new IIdentifier[] { new StringIdentifier("increase-fire-damage") },
+                            new Dictionary<IIdentifier, double>() { },
+                            new IFilterAttribute[] { },
+                            new IGeneratorComponent[]
+                            {
+                                new StatelessBehaviorGeneratorComponent(
+                                    new EnchantTargetsBehavior(
+                                        new StringIdentifier("increase-fire-damage")),
+                                    new SkillTargetBehavior(
+                                        Tuple.Create(0,0),
+                                        new [] { 0 },
+                                        new Tuple<int, int>[0])),
+                            },
+                            new Dictionary<IIdentifier, double>() { },
+                            skillIdentifiers),
+                        new SkillDefinition(
+                            new StringIdentifier("fire-damage-line"),
                             new StringIdentifier("single-target"),
                             new IIdentifier[] { },
                             new IIdentifier[] { },
@@ -144,16 +162,37 @@ namespace Macerus.Plugins.Content.Skills
                             {
                                 new StatelessBehaviorGeneratorComponent(
                                     new InflictDamageBehavior(),
-                                    new UseInCombatSkillBehavior(),
                                     new SkillTargetBehavior(
-                                        Tuple.Create(0,0),  // Starts at the caster's location
-                                        new [] { 1 },       // Affects only enemy team 1
-                                        new [] { Tuple.Create(1, 0), Tuple.Create(2, 0), Tuple.Create(3, 0)}), // x+1, x+2, x+3 from origin
-                                    new HasSkillDisplayName("Fireball"),
-                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\fireball"))),
+                                        Tuple.Create(0,0),
+                                        new [] { 1 },
+                                        new [] { Tuple.Create(0, 1), Tuple.Create(0, 2), Tuple.Create(0, 3)})),
                             },
                             new Dictionary<IIdentifier, double>() { },
                             skillIdentifiers),
+                        // Boost + damage
+                        new SkillDefinition(
+                            new StringIdentifier("fireball"),
+                            new StringIdentifier("single-target"),
+                            new IIdentifier[] { },
+                            new IIdentifier[] { },
+                            new Dictionary<IIdentifier, double>() { },
+                            new IFilterAttribute[] { },
+                            new IGeneratorComponent[]
+                            {
+                                new StatelessBehaviorGeneratorComponent(
+                                    new UseInCombatSkillBehavior(),
+                                    new CombinationSkillBehavior(
+                                        new StringIdentifier("increase-fire-damage"),
+                                        new StringIdentifier("fire-damage-line")),
+                                    new HasSkillDisplayName("Fireball"),
+                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\fireball"))),
+                            },
+                           new Dictionary<IIdentifier, double>()
+                            {
+                                [new IntIdentifier(4)] = 20, // mana current
+                            },
+                            skillIdentifiers),
+
                         new SkillDefinition(
                             new StringIdentifier("elder-fireball"),
                             new StringIdentifier("single-target"),

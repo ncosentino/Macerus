@@ -57,6 +57,19 @@ namespace Macerus.Plugins.Content.Skills
                                     }),
                             }),
                         enchantmentTemplate.CreateSkillEnchantment(
+                            new StringIdentifier("increase-fire-damage"),
+                            new StringIdentifier("firedmg"),
+                            new IGeneratorComponent[]
+                            {
+                                new StatefulBehaviorGeneratorComponent(() =>
+                                    new IBehavior[]
+                                    {
+                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "FIRE_DAMAGE + 30"),
+                                        new ExpiryTriggerBehavior(new DurationTriggerBehavior(5)),
+                                        new AppliesToBaseStat()
+                                    }),
+                            }),
+                        enchantmentTemplate.CreateSkillEnchantment(
                             new StringIdentifier("passive-rain-weight"),
                             new StringIdentifier("rain-weight"),
                             new IGeneratorComponent[]

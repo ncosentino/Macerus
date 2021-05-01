@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Numerics;
 using Autofac;
 
 using Macerus.Api.Behaviors;
@@ -12,6 +12,7 @@ using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Npc;
+using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Interactions.Api;
 using Macerus.Plugins.Features.Inventory.Api;
 
@@ -37,7 +38,7 @@ namespace Macerus.Headless
         {
             var container = new MacerusContainer();
 
-            new CombatExercise().Go(container);
+            new SkillCastExercise().Go(container);
         }
     }
 
@@ -160,6 +161,92 @@ namespace Macerus.Headless
                     logger.Info("Skipping player turn...");
                 }
             }
+
+            Console.ReadLine();
+        }
+    }
+
+    public sealed class SkillCastExercise
+    {
+        public void Go(MacerusContainer container)
+        {
+            var gameEngine = container.Resolve<IGameEngine>();
+
+            var actorSpawner = container.Resolve<IActorSpawner>();
+            var spawnTableIdentifiers = container.Resolve<ISpawnTableIdentifiers>();
+            var mapGameObjectManager = container.Resolve<IMapGameObjectManager>();
+            var mapManager = container.Resolve<IMapManager>();
+            var filterContextAmenity = container.Resolve<IFilterContextAmenity>();
+            var combatTurnManager = container.Resolve<ICombatTurnManager>();
+            var turnBasedManager = container.Resolve<ITurnBasedManager>();
+            var encounterManager = container.Resolve<IEncounterManager>();
+            var skillAmenity = container.Resolve<ISkillAmenity>();
+            var skillHandlerFacade = container.Resolve<ISkillHandlerFacade>();
+            var logger = container.Resolve<ILogger>();
+
+            // FIXME: this is just a hack to spawn the player
+            mapManager.SwitchMap(new StringIdentifier("swamp"));
+
+            var filterContext = filterContextAmenity.CreateNoneFilterContext();
+            encounterManager.StartEncounter(
+                filterContext,
+                new StringIdentifier("test-encounter"));
+
+            var actors = mapGameObjectManager
+                .GameObjects
+                .Where(x => x
+                    .Get<ITypeIdentifierBehavior>()
+                    .Any(y => y.TypeId.Equals(new StringIdentifier("actor"))));
+
+            var player = actors
+                .Where(x => x.Has<IPlayerControlledBehavior>())
+                .Single();
+
+            var target = actors
+                .Where(x => !x.Has<IPlayerControlledBehavior>())
+                .FirstOrDefault();
+
+            if (target == null)
+            {
+                logger.Info("No target!");
+                return;
+            }
+            else
+            {
+                var targetLocation = target.GetOnly<IWorldLocationBehavior>();
+                var playerLocation = player.GetOnly<IWorldLocationBehavior>();
+                var playerMovement = player.GetOnly<IMovementBehavior>();
+
+                logger.Info($"Player targets the enemy at: ({targetLocation.X}, {targetLocation.Y})");
+
+                playerMovement.SetWalkPath(new[] {
+                    new Vector2((float)targetLocation.X, (float)targetLocation.Y - 1),
+                });
+
+                logger.Info($"Player path set to end at: ({targetLocation.X}, {targetLocation.Y - 1})");
+            }
+
+            var keepRunning = true;
+            while (keepRunning)
+            {
+                gameEngine.Update();
+                if (!keepRunning)
+                {
+                    break;
+                }
+
+                var playerMovement = player.GetOnly<IMovementBehavior>();
+                var playerLocation = player.GetOnly<IWorldLocationBehavior>();
+                if (playerMovement.PointsToWalk.Count < 1)
+                {
+                    var skill = skillAmenity.GetSkillById(new StringIdentifier("fireball"));
+                    skillHandlerFacade.Handle(player, skill);
+
+                    keepRunning = false;
+                }
+
+            }
+
 
             Console.ReadLine();
         }

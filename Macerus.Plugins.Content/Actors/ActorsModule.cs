@@ -107,6 +107,8 @@ namespace Macerus.Plugins.Content.Actors
                                     [new IntIdentifier(4)] = 100,
                                     [combatTeamIdentifiers.CombatTeamStatDefinitionId] = combatTeamIdentifiers.PlayerTeamStatValue,
                                     [new StringIdentifier("speed")] = 20, // FIXME: just for testing
+                                    [new StringIdentifier("firedmg")] = 10, // FIXME: just for testing
+                                    [new StringIdentifier("fireresist")] = 10, // FIXME: just for testing
                                 }),
                             },
                             new IFilterAttribute[]
@@ -143,6 +145,8 @@ namespace Macerus.Plugins.Content.Actors
                                     [new IntIdentifier(2)] = 10,
                                     [new IntIdentifier(3)] = 10,
                                     [new StringIdentifier("speed")] = 10, // FIXME: just for testing
+                                    [new StringIdentifier("firedmg")] = 0, // FIXME: just for testing
+                                    [new StringIdentifier("fireresist")] = 10, // FIXME: just for testing
                                 }),
                                 new HasSkillsGeneratorComponent(new Dictionary<IIdentifier, int>()
                                 {

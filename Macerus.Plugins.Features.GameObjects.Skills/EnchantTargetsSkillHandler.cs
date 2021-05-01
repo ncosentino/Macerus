@@ -1,22 +1,24 @@
-﻿using System.Collections.Generic;
-
-using Macerus.Plugins.Features.GameObjects.Skills.Api;
+﻿using Macerus.Plugins.Features.GameObjects.Skills.Api;
 
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
     public sealed class EnchantTargetsSkillHandler : IDiscoverableSkillHandler
     {
+        private readonly ILogger _logger;
         private readonly IEnchantmentLoader _enchantmentLoader;
         private readonly ISkillTargetingAmenity _skillTargetingAmenity;
 
         public EnchantTargetsSkillHandler(
+            ILogger logger,
             IEnchantmentLoader enchantmentLoader,
             ISkillTargetingAmenity skillTargetingAmenity)
         {
+            _logger = logger;
             _enchantmentLoader = enchantmentLoader;
             _skillTargetingAmenity = skillTargetingAmenity;
         }
@@ -33,15 +35,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             var statefulEnchantments = _enchantmentLoader
                 .LoadForEnchantmenDefinitionIds(enchantTargetsBehavior.StatefulEnchantmentDefinitionIds);
 
-            // FIXME: we need to answer:
-            // - which targets of our full set of targets are applicable here?
-            //   probably by default we might expect "all", but consider
-            //   friendly-only, enemy-only, friendly-fire on, or even something
-            //   more exotic like different targeted areas of the skill get
-            //   different effects?
-            // - See point above, but we probably want a way where we can apply
-            //   specific enchantments to specific targets. i envision
-            //   something that's like "buff allies, debuff enemies in radius"
+            var skillName = skill.GetOnly<IIdentifierBehavior>();
             var skillTargets = _skillTargetingAmenity.FindTargetsForSkill(
                 user,
                 skill);
@@ -50,6 +44,8 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             {
                 var targetEnchantmentsBehavior = target.GetOnly<IHasEnchantmentsBehavior>();
                 targetEnchantmentsBehavior.AddEnchantments(statefulEnchantments);
+
+                _logger.Debug($"{user} enchanted {target} using skill {skillName.Id}.");
             }
         }
     }

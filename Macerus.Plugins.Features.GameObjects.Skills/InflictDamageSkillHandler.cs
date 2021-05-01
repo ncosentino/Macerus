@@ -1,10 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
+using Macerus.Plugins.Features.Stats;
 
+using ProjectXyz.Api.Enchantments.Stats;
+using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
@@ -12,13 +17,22 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
     {
         private readonly ICombatStatIdentifiers _combatStatIdentifiers;
         private readonly ISkillTargetingAmenity _skillTargetingAmenity;
+        private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
+        private readonly IStatCalculationContextFactory _statCalculationContextFactory;
+        private readonly ILogger _logger;
 
         public InflictDamageSkillHandler(
             ICombatStatIdentifiers combatStatIdentifiers,
-            ISkillTargetingAmenity skillTargetingAmenity)
+            ISkillTargetingAmenity skillTargetingAmenity,
+            IStatCalculationServiceAmenity statCalculationServiceAmenity,
+            IStatCalculationContextFactory statCalculationContextFactory,
+            ILogger logger)
         {
             _combatStatIdentifiers = combatStatIdentifiers;
             _skillTargetingAmenity = skillTargetingAmenity;
+            _statCalculationServiceAmenity = statCalculationServiceAmenity;
+            _statCalculationContextFactory = statCalculationContextFactory;
+            _logger = logger;
         }
 
         public void Handle(
@@ -30,19 +44,32 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 return;
             }
 
+            var userEnchantments = user.GetOnly<IHasEnchantmentsBehavior>();
+
+            var damageStats = _statCalculationServiceAmenity.GetStatValue(
+                user,
+                new StringIdentifier("firedmg"),
+                _statCalculationContextFactory.Create(
+                    Enumerable.Empty<IComponent>(),
+                    userEnchantments.Enchantments));
+
+            var skillName = skill.GetOnly<IIdentifierBehavior>();
             var skillTargets = _skillTargetingAmenity.FindTargetsForSkill(
                 user, 
                 skill);
 
             foreach (var target in skillTargets)
             {
-                // FIXME: we'll actually want to calculate damage...
-                // - elemental, spell, physical, evasion, armor, crit, resistances
-                // - resource stealing
-                // - status effects
-                // - chance to hit
+                var resistStats = _statCalculationServiceAmenity.GetStatValue(
+                    target,
+                    new StringIdentifier("fireresist"));
+
+                var totalDamage = damageStats - resistStats;
+
                 var targetStatsBehavior = target.GetOnly<IHasMutableStatsBehavior>();
-                targetStatsBehavior.MutateStats(targetStats => targetStats[_combatStatIdentifiers.CurrentLifeStatId] -= 100);
+                targetStatsBehavior.MutateStats(targetStats => targetStats[_combatStatIdentifiers.CurrentLifeStatId] -= totalDamage);
+
+                _logger.Debug($"{user} inflicted {totalDamage} ({damageStats} - {resistStats}) to {target} using {skillName.Id}");
             }
         }
     }

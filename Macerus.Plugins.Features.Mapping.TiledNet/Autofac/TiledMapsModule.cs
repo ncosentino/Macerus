@@ -33,10 +33,6 @@ namespace Assets.Scripts.Plugins.Features.Maps.TiledNet.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<CachingTiledMapLoader>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
                 .RegisterType<TiledNetToMapConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();

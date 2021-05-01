@@ -13,6 +13,11 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
         IEnchantTargetsBehavior
     {
         public EnchantTargetsBehavior(
+            params IIdentifier[] definitionIds) : this(definitionIds.ToList())
+        {
+        }
+
+        public EnchantTargetsBehavior(
             IEnumerable<IIdentifier> definitionIds)
         {
             StatefulEnchantmentDefinitionIds = definitionIds.ToArray();
