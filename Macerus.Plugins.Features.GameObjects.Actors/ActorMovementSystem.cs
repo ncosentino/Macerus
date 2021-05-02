@@ -233,11 +233,14 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 ? 0
                 : Math.Max(MIN_VELOCITY_RANGE, Math.Min(MAX_VELOCITY_RANGE, velocityY));
 
-            // FIXME: walking on diagonals shouldn't make you go super fast
-            // TODO: consider if there's risidual velocity or throttle
-            if (Math.Abs(velocityX) > double.Epsilon &&
-                Math.Abs(velocityY) > double.Epsilon)
+            // walking on diagonals shouldn't make you go super fast
+            // FIXME: only care about this at max speed because click-to-move
+            // acceleration is so slow this becomes painful to watch
+            if (Math.Abs(velocityX) == MAX_VELOCITY_RANGE_ABS &&
+                Math.Abs(velocityY) == MAX_VELOCITY_RANGE_ABS)
             {
+                velocityX /= 1.41d;
+                velocityY /= 1.41d;
             }
 
             movementBehavior.SetVelocity(
