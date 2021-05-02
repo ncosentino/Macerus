@@ -26,6 +26,69 @@ namespace Macerus.Plugins.Content.Skills
                     var skillIdentifiers = c.Resolve<ISkillIdentifiers>();
                     var definitions = new[]
                     {
+                        // Default Attack Skill
+                        new SkillDefinition(
+                            new StringIdentifier("default-attack"),
+                            new StringIdentifier("single-target"),
+                            new IIdentifier[] { },
+                            new IIdentifier[] { },
+                            new Dictionary<IIdentifier, double>() { },
+                            new IFilterAttribute[] { },
+                            new IGeneratorComponent[]
+                            {
+                                new StatelessBehaviorGeneratorComponent(
+                                    new InflictDamageBehavior(),
+                                    new UseInCombatSkillBehavior(),
+                                    new SkillTargetBehavior(
+                                        Tuple.Create(0,0),  // Starts at the caster's location
+                                        new [] { 1 },       // Affects only enemy team 1
+                                        new [] { Tuple.Create(0, 1) }),
+                                    new HasSkillDisplayName("Attack"),
+                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\default-attack"))),
+                            },
+                            new Dictionary<IIdentifier, double>() { },
+                            skillIdentifiers),
+                        // Default Pass Skill
+                        new SkillDefinition(
+                            new StringIdentifier("default-pass"),
+                            new StringIdentifier("single-target"),
+                            new IIdentifier[] { },
+                            new IIdentifier[] { },
+                            new Dictionary<IIdentifier, double>() { },
+                            new IFilterAttribute[] { },
+                            new IGeneratorComponent[]
+                            {
+                                new StatelessBehaviorGeneratorComponent(
+                                    new InflictDamageBehavior(),
+                                    new UseInCombatSkillBehavior(),
+                                    new HasSkillDisplayName("Pass"),
+                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\default-pass"))),
+                            },
+                            new Dictionary<IIdentifier, double>() { },
+                            skillIdentifiers),
+                        // Default Defend Skill
+                        new SkillDefinition(
+                            new StringIdentifier("default-defend"),
+                            new StringIdentifier("single-target"),
+                            new IIdentifier[] { },
+                            new IIdentifier[] { },
+                            new Dictionary<IIdentifier, double>() { },
+                            new IFilterAttribute[] { },
+                            new IGeneratorComponent[]
+                            {
+                                new StatelessBehaviorGeneratorComponent(
+                                    new InflictDamageBehavior(),
+                                    new UseInCombatSkillBehavior(),
+                                    new HasSkillDisplayName("Defend"),
+                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\default-defend")),
+                                    // FIXME: add some type of defense bonus
+                                    new SkillTargetBehavior(
+                                        Tuple.Create(0,0),  // Starts at the caster's location
+                                        new [] { 0 },       // Affects only caster team
+                                        new Tuple<int, int>[0])),
+                            },
+                            new Dictionary<IIdentifier, double>() { },
+                            skillIdentifiers),
                         // Passive Enchantment, Stat-Based
                         new SkillDefinition(
                             new StringIdentifier("green-glow"),
@@ -79,7 +142,7 @@ namespace Macerus.Plugins.Content.Skills
                                     new EnchantTargetsBehavior(new [] {new StringIdentifier("heal-self") }),
                                     new SkillTargetBehavior(
                                         Tuple.Create(0,0),  // Starts at the caster's location
-                                        new [] { 0 },       // Affects only enemy team 1
+                                        new [] { 0 },       // Affects only caster team
                                         new Tuple<int, int>[0]),
                                     new HasSkillDisplayName("Heal"),
                                     new HasSkillIcon(new StringIdentifier(@"graphics\skills\heal"))),
@@ -262,26 +325,6 @@ namespace Macerus.Plugins.Content.Skills
                             {
                                 [new IntIdentifier(4)] = 20, // mana current
                             },
-                            skillIdentifiers),
-                        // Test, Damaging single target
-                        new SkillDefinition(
-                            new StringIdentifier("test-attack"),
-                            new StringIdentifier("single-target"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] { },
-                            new Dictionary<IIdentifier, double>() { },
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new InflictDamageBehavior(),
-                                    new UseInCombatSkillBehavior(),
-                                    new SkillTargetBehavior(
-                                        Tuple.Create(0,0),  // Starts at the caster's location
-                                        new [] { 1 },       // Affects only enemy team 1
-                                        new [] { Tuple.Create(0, 1) }))
-                            },
-                            new Dictionary<IIdentifier, double>() { },
                             skillIdentifiers),
                     };
 

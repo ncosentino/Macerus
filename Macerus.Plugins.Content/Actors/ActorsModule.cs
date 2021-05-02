@@ -8,6 +8,7 @@ using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 using Macerus.Plugins.Features.GameObjects.Actors.Npc;
+using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Behaviors;
@@ -66,6 +67,7 @@ namespace Macerus.Plugins.Content.Actors
                     var gameObjectIdentifiers = c.Resolve<IGameObjectIdentifiers>();
                     var actorIdentifiers = c.Resolve<IMacerusActorIdentifiers>();
                     var combatTeamIdentifiers = c.Resolve<ICombatTeamIdentifiers>();
+                    var skillAmenity = c.Resolve<ISkillAmenity>();
 
                     IReadOnlyCollection<IIdentifier> humanoidEquipSlotIds = new[]
                     {
@@ -95,13 +97,20 @@ namespace Macerus.Plugins.Content.Actors
                                         new PlayerControlledBehavior(),
                                         new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),
                                         new ItemContainerBehavior(actorIdentifiers.BeltIdentifier),
-                                        new HasSkillsBehavior(),
                                         new CanEquipBehavior(humanoidEquipSlotIds),
                                         new HasPrefabResourceIdBehavior(new StringIdentifier("Mapping/Prefabs/Actors/PlayerPlaceholder")),
                                     }),
+                                new HasSkillsGeneratorComponent(new Dictionary<IIdentifier, int>()
+                                {
+                                    [new StringIdentifier("default-attack")] = 1,
+                                    [new StringIdentifier("default-defend")] = 1,
+                                    [new StringIdentifier("default-pass")] = 1,
+                                    [new StringIdentifier("heal-self")] = 1,
+                                    [new StringIdentifier("fireball")] = 1,
+                                }),
                                 new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
-                                    [new IntIdentifier(1)] = 100,
+                                    [new IntIdentifier(1)] = 10,
                                     [new IntIdentifier(2)] = 100,
                                     [new IntIdentifier(3)] = 100,
                                     [new IntIdentifier(4)] = 100,
@@ -150,7 +159,9 @@ namespace Macerus.Plugins.Content.Actors
                                 }),
                                 new HasSkillsGeneratorComponent(new Dictionary<IIdentifier, int>()
                                 {
-                                    [new StringIdentifier("test-attack")] = 1,
+                                    [new StringIdentifier("default-attack")] = 1,
+                                    [new StringIdentifier("default-defend")] = 1,
+                                    [new StringIdentifier("default-pass")] = 1,
                                 }),
                                 new SpawnWithItemsGeneratorComponent(new StringIdentifier("test-skeleton-drop")),
                                 new SpawnWithEquipmentGeneratorComponent(
