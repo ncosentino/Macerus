@@ -104,8 +104,9 @@ namespace Macerus.Plugins.Content.Actors
                                     [new StringIdentifier("default-attack")] = 1,
                                     [new StringIdentifier("default-defend")] = 1,
                                     [new StringIdentifier("default-pass")] = 1,
-                                    [new StringIdentifier("heal-self")] = 1,
+                                    [new StringIdentifier("heal")] = 1,
                                     [new StringIdentifier("fireball")] = 1,
+                                    [new StringIdentifier("passive-green-glow")] = 1,
                                 }),
                                 new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {

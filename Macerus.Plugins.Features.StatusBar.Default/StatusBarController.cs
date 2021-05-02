@@ -12,6 +12,7 @@ using Macerus.Plugins.Features.StatusBar.Api;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Stats;
 using ProjectXyz.Api.Systems;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Plugins.Features.TurnBased.Api;
@@ -97,10 +98,11 @@ namespace Macerus.Plugins.Features.StatusBar.Default
 
             var skills = player.GetOnly<IHasSkillsBehavior>().Skills;
             var abilityViewModels = skills
+                .Where(x => !x.Has<IHasEnchantmentsBehavior>())
                 .Select(x => new StatusBarAbilityViewModel(
                     _skillUsage.CanUseSkill(player, x),
-                    x.GetOnly<IHasSkillIcon>().IconResourceId,
-                    x.GetOnly<IHasSkillDisplayName>().DisplayName))
+                    x.GetOnly<IHasDisplayIconBehavior>().IconResourceId,
+                    x.GetOnly<IHasDisplayNameBehavior>().DisplayName))
                 .ToArray();
 
             _statusBarViewModel.UpdateAbilities(abilityViewModels);

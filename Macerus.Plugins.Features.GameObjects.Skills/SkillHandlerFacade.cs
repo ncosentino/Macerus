@@ -5,6 +5,7 @@ using Macerus.Plugins.Features.GameObjects.Skills.Api;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
+using ProjectXyz.Plugins.Features.GameObjects.Skills;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
@@ -32,25 +33,22 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             IGameObject user,
             IGameObject skill)
         {
-            // FIXME: Really, this is the same as a combination skill with a single skill inside. 
-            // No need for any other types of skills. Can wrap it in some sugarre to make it work 
-            // the same as combinatorial ones.
+            // All skills should be a combination skill (even a combination of one!)
             if (!skill.TryGetFirst<ICombinationSkillBehavior>(out var combinationSkill))
             {
-                HandleSkill(user, skill);
                 return;
             }
 
             foreach (var executor in combinationSkill.SkillExecutors)
             {
-                if (executor.TryGetFirst<ISequentialSkillExecutorBehavior>(out var sequentialSkills))
-                {
-                    var skillsToExecuteSequentially = sequentialSkills
-                        .SkillIds
-                        .Select(x => _skillAmenity.GetSkillById(x))
-                        .ToArray();
+                var skillsToExecute = executor
+                    .SkillIdentifiers
+                    .Select(x => _skillAmenity.GetSkillById(x))
+                    .ToArray();
 
-                    foreach (var s in skillsToExecuteSequentially)
+                if (executor is ISequentialSkillExecutorBehavior)
+                {
+                    foreach (var s in skillsToExecute)
                     {
                         HandleSkill(user, s);
                     }
@@ -58,14 +56,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                     continue;
                 }
 
-                if (executor.TryGetFirst<IParallelSkillExecutorBehavior>(out var parallelSkills))
+                if (executor is IParallelSkillExecutorBehavior)
                 {
-                    var skillsToExecuteInParallel = parallelSkills
-                        .SkillIds
-                        .Select(x => _skillAmenity.GetSkillById(x))
-                        .ToArray();
-
-                    Parallel.ForEach(skillsToExecuteInParallel, (s) => HandleSkill(user, s));
+                    Parallel.ForEach(skillsToExecute, (s) => HandleSkill(user, s));
 
                     continue;
                 }
@@ -73,11 +66,11 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
         }
 
         private void HandleSkill(IGameObject user, IGameObject skill)
-        {
-            foreach (var handler in _skillHandlers)
-            {
-                handler.Handle(user, skill);
-            }
-        }
+         {
+             foreach (var handler in _skillHandlers)
+             {
+                 handler.Handle(user, skill);
+             }
+         }
     }
 }

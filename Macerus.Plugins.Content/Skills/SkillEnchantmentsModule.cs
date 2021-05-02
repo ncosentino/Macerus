@@ -70,6 +70,19 @@ namespace Macerus.Plugins.Content.Skills
                                     }),
                             }),
                         enchantmentTemplate.CreateSkillEnchantment(
+                            new StringIdentifier("increase-armor"),
+                            new StringIdentifier("armor"),
+                            new IGeneratorComponent[]
+                            {
+                                new StatefulBehaviorGeneratorComponent(() =>
+                                    new IBehavior[]
+                                    {
+                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "ARMOR + 10"),
+                                        new ExpiryTriggerBehavior(new DurationTriggerBehavior(1)),
+                                        new AppliesToBaseStat()
+                                    }),
+                            }),
+                        enchantmentTemplate.CreateSkillEnchantment(
                             new StringIdentifier("passive-rain-weight"),
                             new StringIdentifier("rain-weight"),
                             new IGeneratorComponent[]

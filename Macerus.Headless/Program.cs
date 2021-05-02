@@ -181,6 +181,7 @@ namespace Macerus.Headless
             var turnBasedManager = container.Resolve<ITurnBasedManager>();
             var encounterManager = container.Resolve<IEncounterManager>();
             var skillAmenity = container.Resolve<ISkillAmenity>();
+            var skillUsage = container.Resolve<ISkillUsage>();
             var skillHandlerFacade = container.Resolve<ISkillHandlerFacade>();
             var logger = container.Resolve<ILogger>();
 
@@ -220,10 +221,10 @@ namespace Macerus.Headless
                 logger.Info($"Player targets the enemy at: ({targetLocation.X}, {targetLocation.Y})");
 
                 playerMovement.SetWalkPath(new[] {
-                    new Vector2((float)targetLocation.X - 2, (float)targetLocation.Y + 1),
+                    new Vector2((float)targetLocation.X, (float)targetLocation.Y - 1),
                 });
 
-                logger.Info($"Player path set to end at: ({targetLocation.X - 2}, {targetLocation.Y + 1})");
+                logger.Info($"Player path set to end at: ({targetLocation.X}, {targetLocation.Y - 1})");
             }
 
             var keepRunning = true;
@@ -239,14 +240,10 @@ namespace Macerus.Headless
                 var playerLocation = player.GetOnly<IWorldLocationBehavior>();
                 if (playerMovement.PointsToWalk.Count < 1)
                 {
-                    var skill = skillAmenity.GetSkillById(new StringIdentifier("elder-fireball-t"));
-
-                    playerMovement.SetDirection(2);
-                    logger.Info($"Player turned to direction {playerMovement.Direction} to cast elder-fireball-t");
-                    skillHandlerFacade.Handle(player, skill);
+                    var skill = skillAmenity.GetSkillById(new StringIdentifier("fireball"));
 
                     playerMovement.SetDirection(1);
-                    logger.Info($"Player turned to direction {playerMovement.Direction} to cast elder-fireball-t");
+                    logger.Info($"Player turned to direction {playerMovement.Direction} to cast");
                     skillHandlerFacade.Handle(player, skill);
 
                     keepRunning = false;

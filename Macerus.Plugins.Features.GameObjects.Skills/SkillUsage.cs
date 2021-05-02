@@ -33,14 +33,14 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
         {
             if (_combatTurnManager.InCombat)
             {
-                if (!skill.Has<IUseInCombatSkillBehavior>())
+                if (!skill.Has<IUseInCombatBehavior>())
                 {
                     return false;
                 }
             }
             else
             {
-                if (!skill.Has<IUseOutOfCombatSkillBehavior>())
+                if (!skill.Has<IUseOutOfCombatBehavior>())
                 {
                     return false;
                 }

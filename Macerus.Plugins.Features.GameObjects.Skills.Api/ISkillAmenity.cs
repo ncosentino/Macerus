@@ -9,6 +9,6 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Api
     {
         IGameObject GetSkillById(IIdentifier skillDefinitionId);
 
-        IEnumerable<IGameObject> GetStatefulEnchantmentsBySkillId(IIdentifier skillDefinitionId);
+        //IEnumerable<IGameObject> GetStatefulEnchantmentsBySkillId(IIdentifier skillDefinitionId);
     }
 }

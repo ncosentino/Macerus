@@ -114,7 +114,7 @@ namespace Macerus.Plugins.Features.Combat.Default
                 .Skills;
             var firstUsableSkill = skills.FirstOrDefault(x =>
                 x.Has<IInflictDamageBehavior>() &&
-                x.Has<IUseInCombatSkillBehavior>());
+                x.Has<IUseInCombatBehavior>());
             if (firstUsableSkill == null)
             {
                 _logger.Info(

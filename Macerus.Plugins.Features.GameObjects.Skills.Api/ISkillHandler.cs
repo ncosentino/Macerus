@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-using ProjectXyz.Api.GameObjects;
+﻿using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Api
 {

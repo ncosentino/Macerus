@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Autofac;
-
-using Macerus.Plugins.Features.GameObjects.Skills.Api;
+﻿using Autofac;
 using Macerus.Plugins.Features.GameObjects.Skills.Default;
-
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
-using ProjectXyz.Api.Enchantments.Calculations;
-using ProjectXyz.Api.Framework;
-using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
-using ProjectXyz.Shared.Framework;
+using System;
+using System.Linq;
 
 namespace Macerus.Plugins.Content.Skills
 {
@@ -24,312 +15,87 @@ namespace Macerus.Plugins.Content.Skills
             builder
                 .Register(c =>
                 {
-                    var calculationPriorityFactory = c.Resolve<ICalculationPriorityFactory>();
-                    var skillIdentifiers = c.Resolve<ISkillIdentifiers>();
-                    var combinationSkillBehaviorFactory = c.Resolve<ICombinationSkillBehaviorFactory>();
                     var definitions = new[]
                     {
-                        // Default Attack Skill
-                        new SkillDefinition(
-                            new StringIdentifier("default-attack"),
-                            new StringIdentifier("single-target"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] { },
-                            new Dictionary<IIdentifier, double>() { },
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new InflictDamageBehavior(),
-                                    new UseInCombatSkillBehavior(),
-                                    new SkillTargetBehavior(
-                                        Tuple.Create(0,0),  // Starts at the caster's location
-                                        new [] { 1 },       // Affects only enemy team 1
-                                        new [] { Tuple.Create(0, 1) }),
-                                    new HasSkillDisplayName("Attack"),
-                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\default-attack"))),
-                            },
-                            new Dictionary<IIdentifier, double>() { },
-                            skillIdentifiers),
-                        // Default Pass Skill
-                        new SkillDefinition(
-                            new StringIdentifier("default-pass"),
-                            new StringIdentifier("single-target"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] { },
-                            new Dictionary<IIdentifier, double>() { },
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new InflictDamageBehavior(),
-                                    new UseInCombatSkillBehavior(),
-                                    new HasSkillDisplayName("Pass"),
-                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\default-pass"))),
-                            },
-                            new Dictionary<IIdentifier, double>() { },
-                            skillIdentifiers),
-                        // Default Defend Skill
-                        new SkillDefinition(
-                            new StringIdentifier("default-defend"),
-                            new StringIdentifier("single-target"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] { },
-                            new Dictionary<IIdentifier, double>() { },
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new InflictDamageBehavior(),
-                                    new UseInCombatSkillBehavior(),
-                                    new HasSkillDisplayName("Defend"),
-                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\default-defend")),
-                                    // FIXME: add some type of defense bonus
-                                    new SkillTargetBehavior(
-                                        Tuple.Create(0,0),  // Starts at the caster's location
-                                        new [] { 0 },       // Affects only caster team
-                                        new Tuple<int, int>[0])),
-                            },
-                            new Dictionary<IIdentifier, double>() { },
-                            skillIdentifiers),
-                        // Passive Enchantment, Stat-Based
-                        new SkillDefinition(
-                            new StringIdentifier("green-glow"),
-                            new StringIdentifier("self"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] { },
-                            new Dictionary<IIdentifier, double>()
-                            {
-                                [new IntIdentifier(8)] = 1, // green light radius
-                            },
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new PassiveSkillBehavior(),
-                                    new UseInCombatSkillBehavior(),
-                                    new UseOutOfCombatSkillBehavior())
-                            },
-                            new Dictionary<IIdentifier, double>() { },
-                            skillIdentifiers),
-                        // Passive Enchantment, Enchantment-Definition-Based
-                        new SkillDefinition(
-                            new StringIdentifier("green-glow-ench"),
-                            new StringIdentifier("self"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] { new StringIdentifier("green-glow-ench") },
-                            new Dictionary<IIdentifier, double>() { },
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new PassiveSkillBehavior(),
-                                    new UseInCombatSkillBehavior(),
-                                    new UseOutOfCombatSkillBehavior())
-                            },
-                            new Dictionary<IIdentifier, double>() { },
-                            skillIdentifiers),
-                        // Castable, Enchantment-Definition-Based
-                        new SkillDefinition(
-                            new StringIdentifier("heal-self"),
-                            new StringIdentifier("self"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] { new StringIdentifier("heal-self") },
-                            new Dictionary<IIdentifier, double>() { },
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new UseInCombatSkillBehavior(),
-                                    new UseOutOfCombatSkillBehavior(),
-                                    new EnchantTargetsBehavior(new [] {new StringIdentifier("heal-self") }),
-                                    new SkillTargetBehavior(
-                                        Tuple.Create(0,0),  // Starts at the caster's location
-                                        new [] { 0 },       // Affects only caster team
-                                        new Tuple<int, int>[0]),
-                                    new HasSkillDisplayName("Heal"),
-                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\heal"))),
-                            },
-                            new Dictionary<IIdentifier, double>()
-                            {
-                                [new IntIdentifier(4)] = 75, // mana current
-                            },
-                            skillIdentifiers),
-                        // Passive, Weather
-                        new SkillDefinition(
-                            new StringIdentifier("passive-rain"),
-                            new StringIdentifier("self"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] 
-                            {
-                                new StringIdentifier($"passive-rain-weight"),
-                                new StringIdentifier($"passive-rain-min"),
-                                new StringIdentifier($"passive-rain-max"),
-                            },
-                            new Dictionary<IIdentifier, double>(),
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new PassiveSkillBehavior(),
-                                    new UseInCombatSkillBehavior(),
-                                    new UseOutOfCombatSkillBehavior())
-                            },
-                            new Dictionary<IIdentifier, double>(),
-                            skillIdentifiers),
-                        // Passive Animation, Stat-Based
-                        new SkillDefinition(
-                            new StringIdentifier("skeleton-player"),
-                            new StringIdentifier("self"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] { },
-                            new Dictionary<IIdentifier, double>()
-                            {
-                                [new StringIdentifier("animation_override")] = 1,
-                                [new StringIdentifier("animation_alpha_multiplier")] = 0.5,
-                            },
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new PassiveSkillBehavior(),
-                                    new UseInCombatSkillBehavior(),
-                                    new UseOutOfCombatSkillBehavior())
-                            },
-                            new Dictionary<IIdentifier, double>() { },
-                            skillIdentifiers),
-                        new SkillDefinition(
-                            new StringIdentifier("increase-fire-damage"),
-                            new StringIdentifier("self"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] { new StringIdentifier("increase-fire-damage") },
-                            new Dictionary<IIdentifier, double>() { },
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new EnchantTargetsBehavior(
-                                        new StringIdentifier("increase-fire-damage")),
-                                    new SkillTargetBehavior(
-                                        Tuple.Create(0,0),
-                                        new [] { 0 },
-                                        new Tuple<int, int>[0])),
-                            },
-                            new Dictionary<IIdentifier, double>() { },
-                            skillIdentifiers),
-                        new SkillDefinition(
-                            new StringIdentifier("fire-damage-line"),
-                            new StringIdentifier("single-target"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] { },
-                            new Dictionary<IIdentifier, double>() { },
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new InflictDamageBehavior(),
-                                    new SkillTargetBehavior(
-                                        Tuple.Create(0, 0),
-                                        new [] { 1 },
-                                        new [] { Tuple.Create(0, 1), Tuple.Create(0, 2), Tuple.Create(0, 3)})),
-                            },
-                            new Dictionary<IIdentifier, double>() { },
-                            skillIdentifiers),
-                        new SkillDefinition(
-                            new StringIdentifier("fire-damage-t"),
-                            new StringIdentifier("single-target"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] { },
-                            new Dictionary<IIdentifier, double>() { },
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new InflictDamageBehavior(),
-                                    new SkillTargetBehavior(
-                                        Tuple.Create(1,2),
-                                        new [] { 1 },
-                                        new [] { Tuple.Create(0, 1), Tuple.Create(1, 1), Tuple.Create(-1, 1)})),
-                            },
-                            new Dictionary<IIdentifier, double>() { },
-                            skillIdentifiers),
-                        // Boost + damage
-                        new SkillDefinition(
-                            new StringIdentifier("fireball"),
-                            new StringIdentifier("single-target"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] { },
-                            new Dictionary<IIdentifier, double>() { },
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new UseInCombatSkillBehavior(),
-                                    combinationSkillBehaviorFactory.Create(
-                                        new SequentialSkillExecutorBehavior(
-                                            new StringIdentifier("increase-fire-damage"),
-                                            new StringIdentifier("fire-damage-line"))),
-                                    new HasSkillDisplayName("Fireball"),
-                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\fireball"))),
-                            },
-                           new Dictionary<IIdentifier, double>()
-                            {
-                                [new IntIdentifier(4)] = 20, // mana current
-                            },
-                            skillIdentifiers),
-                        // Boost + damage
-                        new SkillDefinition(
-                            new StringIdentifier("elder-fireball"),
-                            new StringIdentifier("single-target"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] { },
-                            new Dictionary<IIdentifier, double>() { },
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new UseInCombatSkillBehavior(),
-                                    combinationSkillBehaviorFactory.Create(
-                                        new ParallelSkillExecutorBehavior(
-                                            new StringIdentifier("increase-fire-damage"),
-                                            new StringIdentifier("heal-self")),
-                                        new SequentialSkillExecutorBehavior(
-                                            new StringIdentifier("fire-damage-line"))),
-                                    new HasSkillDisplayName("Elder"),
-                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\elder"))),
-                            },
-                           new Dictionary<IIdentifier, double>()
-                            {
-                                [new IntIdentifier(4)] = 20, // mana current
-                            },
-                            skillIdentifiers),
-                        // Boost + damage
-                        new SkillDefinition(
-                            new StringIdentifier("elder-fireball-t"),
-                            new StringIdentifier("single-target"),
-                            new IIdentifier[] { },
-                            new IIdentifier[] { },
-                            new Dictionary<IIdentifier, double>() { },
-                            new IFilterAttribute[] { },
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new UseInCombatSkillBehavior(),
-                                    combinationSkillBehaviorFactory.Create(
-                                        new ParallelSkillExecutorBehavior(
-                                            new StringIdentifier("increase-fire-damage"),
-                                            new StringIdentifier("heal-self")),
-                                        new SequentialSkillExecutorBehavior(
-                                            new StringIdentifier("fire-damage-t"))),
-                                    new HasSkillDisplayName("ElderT"),
-                                    new HasSkillIcon(new StringIdentifier(@"graphics\skills\elder"))),
-                            },
-                           new Dictionary<IIdentifier, double>()
-                            {
-                                [new IntIdentifier(4)] = 20, // mana current
-                            },
-                            skillIdentifiers),
-                    };
+                        SkillDefinition
+                            .FromId("default-attack")
+                            .WithDisplayName("Attack")
+                            .WithDisplayIcon(@"graphics\skills\default-attack")
+                            .InflictDamage()
+                            .CanBeUsedInCombat()
+                            .StartsAtOffsetFromUser(0, 0)
+                            .TargetsPattern(
+                                Tuple.Create(0, 1))
+                            .AffectsTeams(1)
+                            .End(),
+                        SkillDefinition
+                            .FromId("default-defend")
+                            .WithDisplayName("Defend")
+                            .WithDisplayIcon(@"graphics\skills\default-defend")
+                            .Enchant("increase-armor")
+                            .CanBeUsedInCombat()
+                            .StartsAtOffsetFromUser(0, 0)
+                            .TargetsPattern(
+                                Tuple.Create(0,0))
+                            .AffectsTeams(0)
+                            .End(),
+                        SkillDefinition
+                            .FromId("default-pass")
+                            .WithDisplayName("Pass")
+                            .WithDisplayIcon(@"graphics\skills\default-pass")
+                            .CanBeUsedInCombat()
+                            .End(),
+                        SkillDefinition
+                            .FromId("heal")
+                            .WithDisplayName("Heal")
+                            .WithDisplayIcon(@"graphics\skills\heal")
+                            .WithResourceRequirement(4, 20)
+                            .Enchant("heal-self")
+                            .CanBeUsedOutOfCombat()
+                            .CanBeUsedInCombat()
+                            .AffectsTeams(0)
+                            .StartsAtOffsetFromUser(0, 0)
+                            .TargetsPattern()
+                            .End(),
+                        SkillDefinition
+                            .FromId("fireball")
+                            .WithDisplayName("Fireball")
+                            .WithDisplayIcon(@"graphics\skills\fireball")
+                            .WithResourceRequirement(4, 10)
+                            .CanBeUsedInCombat()
+                            .IsACombinationOf(
+                                MacerusExecuteSkills.InParallel(
+                                    SkillDefinition
+                                        .Anonymous()
+                                        .Enchant("increase-fire-damage")
+                                        .AffectsTeams(0)
+                                        .StartsAtOffsetFromUser(0, 0)
+                                        .TargetsPattern()),
+                                MacerusExecuteSkills.InSequence(
+                                    SkillDefinition
+                                        .Anonymous()
+                                        .InflictDamage()
+                                        .AffectsTeams(1)
+                                        .StartsAtOffsetFromUser(0, 1)
+                                        .TargetsPattern(
+                                            Tuple.Create(0, 1))))
+                            .End(),
+                        SkillDefinition
+                            .FromId("passive-green-glow")
+                            .CanBeUsedInCombat()
+                            .CanBeUsedOutOfCombat()
+                            .EnchantPassive("green-glow-ench")
+                            .End(),
+                        SkillDefinition
+                            .FromId("passive-rain")
+                            .CanBeUsedInCombat()
+                            .CanBeUsedOutOfCombat()
+                            .EnchantPassive(
+                                "passive-rain-weight",
+                                "passive-rain-min",
+                                "passive-rain-max")
+                            .End(),
+                    }.SelectMany(x => x);
 
                     var attributeFilter = c.Resolve<IAttributeFilterer>();
                     var repository = new InMemorySkillDefinitionRepository(

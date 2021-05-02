@@ -8,6 +8,7 @@ using Macerus.Plugins.Features.GameObjects.Skills.Api;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Shared.Framework;
 
@@ -31,15 +32,20 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             IGameObject user,
             IGameObject skill)
         {
-            if (!skill.TryGetFirst<ISkillTargetBehavior>(out var targetBehavior))
+            if (!skill.TryGetFirst<ITargetPatternBehavior>(out var targetPatternBehavior) ||
+                !skill.TryGetFirst<ITargetOriginBehavior>(out var targetOriginBehavior) ||
+                !skill.TryGetFirst<ITargetCombatTeamBehavior>(out var targetCombatTeam))
             {
                 return Enumerable.Empty<IGameObject>();
             }
 
-            var transformedSkillOrigin = GetSkillOriginFromUserDirection(user, targetBehavior.OriginOffset);
+            var transformedSkillOrigin = GetSkillOriginFromUserDirection(
+                user,
+                targetOriginBehavior.OffsetFromCasterX,
+                targetOriginBehavior.OffsetFromCasterY);
 
-            var transformedPatternFromOrigin = targetBehavior
-                .PatternFromOrigin
+            var transformedPatternFromOrigin = targetPatternBehavior
+                .LocationsOffsetFromOrigin
                 .Select(x => GetSkillLocationFromOriginAndUserDirection(user, transformedSkillOrigin, x));
 
             var affectedLocations = new[] { transformedSkillOrigin }
@@ -49,11 +55,11 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             var targets = _mapGameObjectManager
                 .GameObjects
                 .Where(x => x.Get<ITypeIdentifierBehavior>().Any(y => y.TypeId.Equals(new StringIdentifier("actor"))))
-                .Where(x => targetBehavior
-                    .TeamIds
-                    .Contains((int)x
+                .Where(x => targetCombatTeam
+                    .AffectedTeams
+                    .Contains(new IntIdentifier((int)x
                         .GetOnly<IHasMutableStatsBehavior>()
-                        .BaseStats[_combatTeamIdentifiers.CombatTeamStatDefinitionId]))
+                        .BaseStats[_combatTeamIdentifiers.CombatTeamStatDefinitionId])))
                 .Where(x => affectedLocations.Contains(
                     Tuple.Create(
                         (int)Math.Round(x.GetOnly<IWorldLocationBehavior>().X),
@@ -64,7 +70,8 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 
         private Tuple<int, int> GetSkillOriginFromUserDirection(
             IGameObject user,
-            Tuple<int, int> originOffset)
+            int originOffsetX,
+            int originOffsetY)
         {
             var userLocation = user.GetOnly<IWorldLocationBehavior>();
 
@@ -74,8 +81,8 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 
             var transformedOriginOffset = Transform(
                 direction,
-                originOffset.Item1,
-                originOffset.Item2);
+                originOffsetX,
+                originOffsetY);
 
             var skillLocationX = (int)Math.Round(userLocation.X) + transformedOriginOffset.Item1;
             var skillLocationY = (int)Math.Round(userLocation.Y) + transformedOriginOffset.Item2;

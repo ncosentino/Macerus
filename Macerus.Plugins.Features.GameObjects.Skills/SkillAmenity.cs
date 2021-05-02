@@ -12,6 +12,7 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
+using ProjectXyz.Plugins.Features.GameObjects.Skills.Components;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
@@ -63,9 +64,20 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                     new IdentifierFilterAttributeValue(skillDefinitionId),
                     true)))
                 .Single();
-            var statefulEnchantments = _enchantmentLoader
-                .LoadForEnchantmenDefinitionIds(skillDefinition.StatefulEnchantmentDefinitions);
-            return statefulEnchantments;
+
+            var statefulEnchantments = skillDefinition
+                .FilterComponents
+                .FirstOrDefault(x => x is PassiveEnchantmentGeneratorComponent) as PassiveEnchantmentGeneratorComponent;
+
+            if (statefulEnchantments == null)
+            {
+                return Enumerable.Empty<IGameObject>();
+            }
+
+            return statefulEnchantments == null
+                ? Enumerable.Empty<IGameObject>()
+                : _enchantmentLoader.LoadForEnchantmenDefinitionIds(
+                    statefulEnchantments.EnchantmentDefinitionIds);
         }
     }
 }

@@ -4,6 +4,7 @@ using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Skills;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
@@ -29,13 +30,13 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             IGameObject user,
             IGameObject skill)
         {
-            if (!skill.TryGetFirst<IEnchantTargetsBehavior>(out var enchantTargetsBehavior))
+            if (!skill.TryGetFirst<IApplyEnchantmentsBehavior>(out var enchantTargetsBehavior))
             {
                 return;
             }
 
             var statefulEnchantments = _enchantmentLoader
-                .LoadForEnchantmenDefinitionIds(enchantTargetsBehavior.StatefulEnchantmentDefinitionIds);
+                .LoadForEnchantmenDefinitionIds(enchantTargetsBehavior.EnchantmentDefinitionIds);
 
             var skillName = skill.GetOnly<IIdentifierBehavior>();
             var skillTargets = _skillTargetingAmenity.FindTargetsForSkill(

@@ -34,6 +34,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Skills
 
             var allSkills = skillRepository
                 .GetSkills(skillFilterContext)
+                .Where(x => x.Has<IHasEnchantmentsBehavior>())
                 .ToArray();
             foreach (var skill in allSkills.Cast<IGameObject>())
             {
