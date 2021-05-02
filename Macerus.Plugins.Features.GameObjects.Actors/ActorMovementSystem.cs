@@ -146,12 +146,17 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandBack;
             }
-            else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationStandBack) != true &&
-                animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationStandForward) != true &&
-                animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationStandLeft) != true &&
-                animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationStandRight) != true)
+            else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkForward) == true)
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandForward;
+            }
+            else if (animationBehavior.BaseAnimationId == null)
+            {
+                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandForward;
+                _logger.Debug(
+                    $"Switching animation to '{animationBehavior.BaseAnimationId}' " +
+                    $"on game object '{animationBehavior.Owner}' because the " +
+                    $"animation ID was unset.");
             }
 
             if (lastAnimationId != animationBehavior.BaseAnimationId)

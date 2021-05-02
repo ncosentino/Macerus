@@ -23,6 +23,8 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             _skillTargetingAmenity = skillTargetingAmenity;
         }
 
+        public int? Priority { get; } = int.MinValue;
+
         public void Handle(
             IGameObject user,
             IGameObject skill)

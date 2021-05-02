@@ -29,6 +29,14 @@ namespace Macerus.Plugins.Content.Actors
 
         public IIdentifier AnimationDeath { get; } = new StringIdentifier("$actor$_death");
 
+        public IIdentifier AnimationCastBack { get; } = new StringIdentifier("$actor$_cast_back");
+
+        public IIdentifier AnimationCastForward { get; } = new StringIdentifier("$actor$_cast_forward");
+
+        public IIdentifier AnimationCastLeft { get; } = new StringIdentifier("$actor$_cast_left");
+
+        public IIdentifier AnimationCastRight { get; } = new StringIdentifier("$actor$_cast_right");
+
         public IIdentifier InventoryIdentifier { get; } = new StringIdentifier("Inventory");
 
         public IIdentifier BeltIdentifier { get; } = new StringIdentifier("Belt");

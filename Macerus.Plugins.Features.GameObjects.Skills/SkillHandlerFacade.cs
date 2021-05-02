@@ -21,7 +21,11 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
         {
             _logger = logger;
             _skillAmenity = skillAmenity;
-            _skillHandlers = skillHandlers.ToArray();
+            _skillHandlers = skillHandlers
+                .OrderBy(x => x.Priority == null
+                    ? int.MaxValue
+                    : x.Priority.Value)
+                .ToArray();
         }
 
         public void Handle(

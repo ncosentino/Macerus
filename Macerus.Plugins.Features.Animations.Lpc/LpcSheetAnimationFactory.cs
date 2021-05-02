@@ -28,6 +28,14 @@ namespace Macerus.Plugins.Features.Animations.Lpc
             [Direction.Right] = 87,
         };
 
+        private static readonly IReadOnlyDictionary<Direction, int> _mapDirectionToCastStartIndex = new Dictionary<Direction, int>()
+        {
+            [Direction.Back] = 0,
+            [Direction.Left] = 7,
+            [Direction.Forward] = 14,
+            [Direction.Right] = 21,
+        };
+
         public IEnumerable<ISpriteAnimation> CreateForSheet(IIdentifier spriteSheetResourceId)
         {
             foreach (var entry in CreateDirectionalAnimations(spriteSheetResourceId))
@@ -94,6 +102,13 @@ namespace Macerus.Plugins.Features.Animations.Lpc
                 {
                     yield return entry;
                 }
+
+                foreach (var entry in CreateCastAnimations(
+                    spriteSheetResourceId,
+                    direction))
+                {
+                    yield return entry;
+                }
             }
         }
 
@@ -120,18 +135,60 @@ namespace Macerus.Plugins.Features.Animations.Lpc
             yield return animation;
         }
 
-        private ISpriteAnimationFrame CreateStandAnimationFrame(
+        private IEnumerable<ISpriteAnimation> CreateCastAnimations(
             IIdentifier spriteSheetResourceId,
             Direction direction)
         {
-            var index = _mapDirectionToMoveStartIndex[direction];
-            var duration = 60f;
+            var animationPrefix = GetAnimationPrefix(spriteSheetResourceId);
+
+            var frames = new List<ISpriteAnimationFrame>();
+            foreach (var offset in Enumerable.Range(0, 7))
+            {
+                var duration = offset == 6
+                    ? (float?)null
+                    : 0.1f;
+                var frame = CreateCastAnimationFrame(
+                    spriteSheetResourceId,
+                    direction,
+                    offset,
+                    duration);
+                frames.Add(frame);
+            }
+
+            var animation = new SpriteAnimation(
+                new StringIdentifier($"{animationPrefix}_cast_{direction}".ToLowerInvariant()),
+                frames,
+                true);
+            yield return animation;
+        }
+
+        private ISpriteAnimationFrame CreateCastAnimationFrame(
+            IIdentifier spriteSheetResourceId,
+            Direction direction,
+            int offset,
+            float? duration)
+        {
+            var index = _mapDirectionToCastStartIndex[direction] + offset;
             return new SpriteAnimationFrame(
                 spriteSheetResourceId,
                 GetSpriteId(spriteSheetResourceId, index),
                 false,
                 false,
                 duration,
+                new FrameColor(1, 1, 1, 1));
+        }
+
+        private ISpriteAnimationFrame CreateStandAnimationFrame(
+            IIdentifier spriteSheetResourceId,
+            Direction direction)
+        {
+            var index = _mapDirectionToMoveStartIndex[direction];
+            return new SpriteAnimationFrame(
+                spriteSheetResourceId,
+                GetSpriteId(spriteSheetResourceId, index),
+                false,
+                false,
+                null,
                 new FrameColor(1, 1, 1, 1));
         }
 

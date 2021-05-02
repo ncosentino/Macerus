@@ -29,6 +29,10 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
+                .RegisterType<AnimateSkillUserSkillHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<InflictDamageSkillHandler>()
                 .AsImplementedInterfaces()
                 .SingleInstance();

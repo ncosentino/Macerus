@@ -2,5 +2,6 @@
 {
     public interface IDiscoverableSkillHandler : ISkillHandler
     {
+        int? Priority { get; }
     }
 }

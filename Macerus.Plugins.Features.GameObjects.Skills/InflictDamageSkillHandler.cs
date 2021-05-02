@@ -35,6 +35,8 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             _logger = logger;
         }
 
+        public int? Priority { get; } = null;
+
         public void Handle(
             IGameObject user,
             IGameObject skill)
