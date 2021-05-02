@@ -76,6 +76,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
                     ["DestroyOnUse"] = true,
                     ["AutomaticInteraction"] = automaticInteraction,
                     ["TransferItemsOnActivate"] = true,
+                    ["PrefabId"] = "Container/LootDrop",
                 });
 
             var itemContainerBehavior = lootObject.GetOnly<IItemContainerBehavior>();
