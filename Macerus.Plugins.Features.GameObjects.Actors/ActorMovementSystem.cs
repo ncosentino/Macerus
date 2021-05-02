@@ -151,6 +151,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationStandLeft) != true &&
                 animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationStandRight) != true)
             {
+                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandForward;
             }
 
             if (lastAnimationId != animationBehavior.BaseAnimationId)
