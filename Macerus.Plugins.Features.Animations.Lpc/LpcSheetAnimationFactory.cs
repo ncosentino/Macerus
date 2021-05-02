@@ -34,6 +34,45 @@ namespace Macerus.Plugins.Features.Animations.Lpc
             {
                 yield return entry;
             }
+
+            yield return CreateDeathAnimation(spriteSheetResourceId);
+        }
+
+        private ISpriteAnimation CreateDeathAnimation(IIdentifier spriteSheetResourceId)
+        {
+            var animationPrefix = GetAnimationPrefix(spriteSheetResourceId);
+
+            var frames = new List<ISpriteAnimationFrame>();
+            foreach (var offset in Enumerable.Range(0, 6))
+            {
+                var frame = CreateDeathAnimationFrame(
+                    spriteSheetResourceId,
+                    offset,
+                    offset == 5 ? (float?)null : 0.25f);
+                frames.Add(frame);
+            }
+
+            var animation = new SpriteAnimation(
+                new StringIdentifier($"{animationPrefix}_death".ToLowerInvariant()),
+                frames,
+                false);
+            return animation;
+        }
+
+        private ISpriteAnimationFrame CreateDeathAnimationFrame(
+            IIdentifier spriteSheetResourceId,
+            int offset,
+            float? duration)
+        {
+            const int DEATH_ANIMATION_INDEX_START = 172;
+            var index = DEATH_ANIMATION_INDEX_START + offset;
+            return new SpriteAnimationFrame(
+                spriteSheetResourceId,
+                GetSpriteId(spriteSheetResourceId, index),
+                false,
+                false,
+                duration,
+                new FrameColor(1, 1, 1, 1));
         }
 
         private IEnumerable<ISpriteAnimation> CreateDirectionalAnimations(IIdentifier spriteSheetResourceId)

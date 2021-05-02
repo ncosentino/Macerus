@@ -38,7 +38,7 @@ namespace Macerus.Headless
         {
             var container = new MacerusContainer();
 
-            new SkillCastExercise().Go(container);
+            new CombatExercise().Go(container);
         }
     }
 

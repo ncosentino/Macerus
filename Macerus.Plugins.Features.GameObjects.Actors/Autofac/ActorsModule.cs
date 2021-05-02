@@ -38,6 +38,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
+                .RegisterType<ActorDeathAnimationSystem>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<ActorTemplateRepository>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
