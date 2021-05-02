@@ -102,10 +102,6 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             {
                 movementBehavior.SetDirection(3);
             }
-            else
-            {
-                movementBehavior.SetDirection(1);
-            }
         }
 
 
@@ -125,45 +121,36 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             if (throttleX > 0)
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalkRight;
-                movementBehavior.SetDirection(2);
             }
             else if (throttleX < 0)
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalkLeft;
-                movementBehavior.SetDirection(0);
             }
             else if (throttleY > 0)
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalkBack;
-                movementBehavior.SetDirection(3);
             }
             else if (throttleY < 0)
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalkForward;
-                movementBehavior.SetDirection(1);
             }
             else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkRight) == true)
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandRight;
-                movementBehavior.SetDirection(2);
             }
             else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkLeft) == true)
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandLeft;
-                movementBehavior.SetDirection(0);
             }
             else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkBack) == true)
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandBack;
-                movementBehavior.SetDirection(3);
             }
             else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationStandBack) != true &&
                 animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationStandForward) != true &&
                 animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationStandLeft) != true &&
                 animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationStandRight) != true)
             {
-                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandForward;
-                movementBehavior.SetDirection(1);
             }
 
             if (lastAnimationId != animationBehavior.BaseAnimationId)
