@@ -45,10 +45,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Containers.Sounds\Macerus.Plugins.Features.GameObjects.Containers.Sounds.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Containers\Macerus.Plugins.Features.GameObjects.Containers.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
