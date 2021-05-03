@@ -37,8 +37,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Npc
             IGameObject actor,
             IInteractableBehavior behavior)
         {
-            // FIXME: whyyyyy this terrible casting
-            var interactableObject = (IGameObject)behavior.Owner;
+            var interactableObject = behavior.Owner;
 
             var targetStats = interactableObject.GetOnly<IHasStatsBehavior>();
             if (targetStats.BaseStats[_combatStatIdentifiers.CurrentLifeStatId] > 0)

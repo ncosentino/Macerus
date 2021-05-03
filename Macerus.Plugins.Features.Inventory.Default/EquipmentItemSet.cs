@@ -31,7 +31,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             .Select(x => new KeyValuePair<IIdentifier, IGameObject>(
                 x,
                 _canEquipBehavior.TryGet(x, out var canBeEquipped)
-                    ? (IGameObject)canBeEquipped.Owner 
+                    ? canBeEquipped.Owner 
                     : null));
 
         public IGameObject GetItem(IIdentifier id)
@@ -42,7 +42,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             }
 
             return _canEquipBehavior.TryGet(id, out var canBeEquipped)
-                ? (IGameObject)canBeEquipped.Owner
+                ? canBeEquipped.Owner
                 : null;
         }
 

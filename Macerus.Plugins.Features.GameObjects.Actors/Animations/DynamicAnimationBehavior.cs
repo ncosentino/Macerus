@@ -71,7 +71,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 if (DateTime.UtcNow - _lastLookupdUtc > TimeSpan.FromSeconds(1))
                 {
                     var overrideStatValue = _statCalculationServiceAmenity.GetStatValue(
-                        (IGameObject)Owner,
+                        Owner,
                         _dynamicAnimationIdentifiers.AnimationOverrideStatId);
                     _replacementPattern = _animationReplacementPatternRepository
                         .GetReplacementPattern((int)overrideStatValue);
@@ -202,7 +202,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         public async Task<IAnimationMultipliers> GetAnimationMultipliersAsync()
         {
             var multiplierStats = await _statCalculationServiceAmenity.GetStatValuesAsync(
-                (IGameObject)Owner,
+                Owner,
                 new[]
                 {
                     _dynamicAnimationIdentifiers.AnimationSpeedMultiplierStatId,

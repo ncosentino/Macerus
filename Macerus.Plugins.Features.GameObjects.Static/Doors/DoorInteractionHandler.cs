@@ -23,8 +23,6 @@ namespace Macerus.Plugins.Features.GameObjects.Static.Doors
             IGameObject actor,
             IInteractableBehavior behavior)
         {
-            // FIXME: whyyyyy this terrible casting
-            var interactableObject = (IGameObject)behavior.Owner;
             var doorInteractableBehavior = (DoorInteractableBehavior)behavior;
 
             if (doorInteractableBehavior.TransitionToMapId != null)

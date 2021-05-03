@@ -37,8 +37,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             IGameObject actor,
             IInteractableBehavior behavior)
         {
-            // FIXME: whyyyyy this terrible casting
-            var interactableObject = (IGameObject)behavior.Owner;
+            var interactableObject = behavior.Owner;
 
             var actorInventory = actor
                 .Get<IItemContainerBehavior>()

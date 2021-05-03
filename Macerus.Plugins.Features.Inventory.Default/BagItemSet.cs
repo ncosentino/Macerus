@@ -177,7 +177,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
 
             if (_socketPatternHandler.TryHandle(
                 _socketableInfoFactory.Create(
-                    (IGameObject)canBeSocketedBehavior.Owner,
+                    canBeSocketedBehavior.Owner,
                     canBeSocketedBehavior),
                 out var newSocketPatternItem))
             {
