@@ -11,7 +11,9 @@ using ProjectXyz.Api.Enchantments.Generation;
 
 namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql
 {
-    public sealed class EnchantmentDefinitionRepository : IDiscoverableReadOnlyEnchantmentDefinitionRepository
+    public sealed class EnchantmentDefinitionRepository :
+        IDiscoverableReadOnlyEnchantmentDefinitionRepository,
+        IEnchantmentDefinitionRepository
     {
         private readonly IConnectionFactory _connectionFactory;
         private readonly IDeserializer _deserializer;

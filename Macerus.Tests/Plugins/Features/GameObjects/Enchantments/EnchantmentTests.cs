@@ -35,9 +35,9 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Enchantments
         public void EnchantmentDefinitions_WriteToRepository_ReadBackFromRepository()
         {
             var enchantmentTemplate = new EnchantmentTemplate(_container.Resolve<ICalculationPriorityFactory>());
-            var statDefinitionToTermMappingRepositories = _container.Resolve<IEnumerable<IStatDefinitionToTermMappingRepository>>();
-            var statDefinitionTermMapping = statDefinitionToTermMappingRepositories
-                .SelectMany(x => x.GetStatDefinitionIdToTermMappings())
+            var statDefinitionToTermMappingRepository = _container.Resolve<IReadOnlyStatDefinitionToTermMappingRepositoryFacade>();
+            var statDefinitionTermMapping = statDefinitionToTermMappingRepository
+                .GetStatDefinitionIdToTermMappings()
                 .ToDictionary(
                     x => x.Term,
                     x => x);
