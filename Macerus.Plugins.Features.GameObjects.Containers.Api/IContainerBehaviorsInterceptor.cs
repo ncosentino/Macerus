@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers.Api
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments.Generation;
@@ -31,7 +31,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
         private readonly IMagicItemNameGenerator _magicItemNameGenerator;
         private readonly IFilterContextFactory _filterContextFactory;
         private readonly IFilterContextAmenity _filterContextAmenity;
-        private readonly IBehaviorManager _behaviorManager;
+        private readonly IGameObjectFactory _gameObjectFactory;
 
         public MagicItemGenerator(
             IBaseItemGenerator baseItemGenerator,
@@ -40,7 +40,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             IMagicItemNameGenerator magicItemNameGenerator,
             IFilterContextFactory filterContextFactory,
             IFilterContextAmenity filterContextAmenity,
-            IBehaviorManager behaviorManager)
+            IGameObjectFactory gameObjectFactory)
         {
             _baseItemGenerator = baseItemGenerator;
             _enchantmentGenerator = enchantmentGenerator;
@@ -48,7 +48,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             _magicItemNameGenerator = magicItemNameGenerator;
             _filterContextFactory = filterContextFactory;
             _filterContextAmenity = filterContextAmenity;
-            _behaviorManager = behaviorManager;
+            _gameObjectFactory = gameObjectFactory;
         }
 
         public IEnumerable<IGameObject> GenerateItems(IFilterContext filterContext)
@@ -120,8 +120,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                 var magicItemBehaviors = baseItemBehaviorsToUse
                     .Concat(additionalBehaviors)
                     .ToArray();
-                var magicItem = new MagicItem(magicItemBehaviors);
-                _behaviorManager.Register(magicItem, magicItemBehaviors);
+                var magicItem = _gameObjectFactory.Create(magicItemBehaviors);
                 yield return magicItem;
             }
         }

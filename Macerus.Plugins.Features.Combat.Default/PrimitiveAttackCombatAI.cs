@@ -10,7 +10,7 @@ using Macerus.Plugins.Features.Stats;
 
 using NexusLabs.Contracts;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;

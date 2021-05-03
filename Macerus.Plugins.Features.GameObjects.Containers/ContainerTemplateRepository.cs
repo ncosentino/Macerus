@@ -7,7 +7,7 @@ using Macerus.Plugins.Features.GameObjects.Containers.Api;
 using Macerus.Plugins.Features.GameObjects.Containers.Sounds;
 using Macerus.Shared.Behaviors;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.GameObjects;

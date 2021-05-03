@@ -3,7 +3,7 @@
 using Macerus.Plugins.Features.GameObjects.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
@@ -59,7 +59,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
             var generatedItems = itemGenerator
                 .GenerateItems(itemGenerationContext)
                 .ToArray();
-            foreach (var item in generatedItems.Cast<IHasBehaviors>())
+            foreach (var item in generatedItems.Cast<IGameObject>())
             {
                 _assertionHelpers.AssertAffix(
                     item,

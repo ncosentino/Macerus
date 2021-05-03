@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Plugins.Features.Mapping.Default;
@@ -11,6 +11,7 @@ using ProjectXyz.Plugins.Features.Mapping.Default;
 using Tiled.Net.Dto.Tilesets;
 using Tiled.Net.Maps;
 using Tiled.Net.Tilesets;
+using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Plugins.Features.Mapping.TiledNet
 {
@@ -27,7 +28,7 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
             _mapFactory = mapFactory;
         }
 
-        public IMap Convert(
+        public IGameObject Convert(
             IIdentifier mapId,
             ITiledMap tiledMap)
         {

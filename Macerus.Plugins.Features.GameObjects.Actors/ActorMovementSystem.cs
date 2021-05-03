@@ -5,7 +5,7 @@ using System.Numerics;
 
 using Macerus.Api.Behaviors;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
@@ -35,14 +35,14 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
         public void Update(
             ISystemUpdateContext systemUpdateContext,
-            IEnumerable<IHasBehaviors> hasBehaviors)
+            IEnumerable<IGameObject> gameObjects)
         {
             var elapsedTime = systemUpdateContext
                 .GetFirst<IComponent<IElapsedTime>>()
                 .Value;
             var elapsedSeconds = ((IInterval<double>)elapsedTime.Interval).Value / 1000;
 
-            foreach (var supportedEntry in GetSupportedEntries(hasBehaviors))
+            foreach (var supportedEntry in GetSupportedEntries(gameObjects))
             {
                 var movementBehavior = supportedEntry.Item1;
                 var dynamicAnimationBehavior = supportedEntry.Item2;
@@ -64,9 +64,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             }
         }
 
-        private IEnumerable<Tuple<IMovementBehavior, IDynamicAnimationBehavior, IWorldLocationBehavior>> GetSupportedEntries(IEnumerable<IHasBehaviors> hasBehaviors)
+        private IEnumerable<Tuple<IMovementBehavior, IDynamicAnimationBehavior, IWorldLocationBehavior>> GetSupportedEntries(IEnumerable<IGameObject> gameObjects)
         {
-            foreach (var gameObject in hasBehaviors)
+            foreach (var gameObject in gameObjects)
             {
                 Tuple<IMovementBehavior, IDynamicAnimationBehavior, IWorldLocationBehavior> requiredBehaviors;
                 if (!_behaviorFinder.TryFind(

@@ -1,4 +1,4 @@
-﻿using ProjectXyz.Api.Behaviors;
+﻿using ProjectXyz.Api.GameObjects.Behaviors;
 using System;
 using System.Collections.Generic;
 

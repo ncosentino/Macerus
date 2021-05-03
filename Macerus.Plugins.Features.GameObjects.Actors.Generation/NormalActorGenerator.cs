@@ -5,7 +5,7 @@ using System.Linq;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.GameObjects;

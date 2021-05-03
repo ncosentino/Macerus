@@ -2,7 +2,7 @@
 
 using Macerus.Plugins.Features.GameObjects.Static.Api;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Shared.Framework;

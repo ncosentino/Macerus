@@ -1,6 +1,6 @@
 ﻿using Macerus.Plugins.Features.GameObjects.Static.Api;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Framework;
 
 namespace Macerus.Plugins.Features.Encounters.Triggers.GamObjects.Static

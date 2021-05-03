@@ -4,7 +4,7 @@ using System.Linq;
 
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers
 {

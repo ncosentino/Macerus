@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
@@ -18,7 +18,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Animations
 
         public void Update(
             ISystemUpdateContext systemUpdateContext,
-            IEnumerable<IHasBehaviors> hasBehaviors)
+            IEnumerable<IGameObject> gameObjects)
         {
             var elapsed = (IInterval<double>)systemUpdateContext
                 .GetFirst<IComponent<IElapsedTime>>()
@@ -27,16 +27,16 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Animations
             var elapsedSeconds = elapsed.Value / 1000;
 
             Parallel.ForEach(
-                GetDynamicAnimationBehaviors(hasBehaviors),
+                GetDynamicAnimationBehaviors(gameObjects),
                 async dynamicAnimationBehavior =>
                 {
                     await dynamicAnimationBehavior.UpdateAnimationAsync(elapsedSeconds);
                 });
         }
 
-        private IEnumerable<IDynamicAnimationBehavior> GetDynamicAnimationBehaviors(IEnumerable<IHasBehaviors> hasBehaviors)
+        private IEnumerable<IDynamicAnimationBehavior> GetDynamicAnimationBehaviors(IEnumerable<IGameObject> gameObjects)
         {
-            return hasBehaviors.SelectMany(x => x.Get<IDynamicAnimationBehavior>());
+            return gameObjects.SelectMany(x => x.Get<IDynamicAnimationBehavior>());
         }
     }
 }

@@ -3,7 +3,7 @@
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Shared.Behaviors;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors

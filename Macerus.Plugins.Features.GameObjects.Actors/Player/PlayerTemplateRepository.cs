@@ -5,14 +5,12 @@ using System.Linq;
 
 using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
-using Macerus.Api.GameObjects;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
-using Macerus.Shared.Behaviors;
 
-using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Shared.Framework;
@@ -23,16 +21,16 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Player
     {
         private readonly IGameObjectIdentifiers _gameObjectIdentifiers;
         private readonly IActorGeneratorFacade _actorGeneratorFacade;
-        private readonly IBehaviorManager _behaviorManager;
+        private readonly IGameObjectFactory _gameObjectFactory;
         private readonly IFilterContextAmenity _filterContextAmenity;
 
         public PlayerTemplateRepository(
-            IBehaviorManager behaviorManager,
+            IGameObjectFactory gameObjectFactory,
             IFilterContextAmenity filterContextAmenity,
             IGameObjectIdentifiers gameObjectIdentifiers,
             IActorGeneratorFacade actorGeneratorFacade)
         {
-            _behaviorManager = behaviorManager;
+            _gameObjectFactory = gameObjectFactory;
             _filterContextAmenity = filterContextAmenity;
             _gameObjectIdentifiers = gameObjectIdentifiers;
             _actorGeneratorFacade = actorGeneratorFacade;
@@ -70,7 +68,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Player
             var generatedActor = generatedActors.Single();
             var templateId = _filterContextAmenity.GetGameObjectTemplateIdFromContext(filterContext);
 
-            var player = new Player(
+            var player = _gameObjectFactory.Create(
                 new IBehavior[]
                 {
                     new TemplateIdentifierBehavior()
@@ -80,7 +78,6 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Player
                     new AlwaysLoadWithMapBehavior(),
                     new SkipMapSaveStateBehavior(),
                 }.Concat(generatedActor.Behaviors));
-            _behaviorManager.Register(player, player.Behaviors);
 
             var worldLocation = player.Get<IWorldLocationBehavior>().Single();
             worldLocation.X = properties.TryGetValue("X", out var rawX)

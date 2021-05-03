@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments.Calculations;
@@ -35,7 +35,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Skills
             var allSkills = skillRepository
                 .GetSkills(skillFilterContext)
                 .ToArray();
-            foreach (var skill in allSkills.Cast<IHasBehaviors>())
+            foreach (var skill in allSkills.Cast<IGameObject>())
             {
                 Assert.True(
                     skill.Get<IHasEnchantmentsBehavior>().Count() == 1,

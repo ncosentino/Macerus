@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 
 using Autofac;
+
+using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.GameObjects.Skills.Default;
 
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
@@ -24,6 +26,7 @@ namespace Macerus.Plugins.Content.Skills
                 {
                     var calculationPriorityFactory = c.Resolve<ICalculationPriorityFactory>();
                     var skillIdentifiers = c.Resolve<ISkillIdentifiers>();
+                    var combinationSkillBehaviorFactory = c.Resolve<ICombinationSkillBehaviorFactory>();
                     var definitions = new[]
                     {
                         // Default Attack Skill
@@ -262,7 +265,7 @@ namespace Macerus.Plugins.Content.Skills
                             {
                                 new StatelessBehaviorGeneratorComponent(
                                     new UseInCombatSkillBehavior(),
-                                    new CombinationSkillBehavior(
+                                    combinationSkillBehaviorFactory.Create(
                                         new SequentialSkillExecutorBehavior(
                                             new StringIdentifier("increase-fire-damage"),
                                             new StringIdentifier("fire-damage-line"))),
@@ -286,7 +289,7 @@ namespace Macerus.Plugins.Content.Skills
                             {
                                 new StatelessBehaviorGeneratorComponent(
                                     new UseInCombatSkillBehavior(),
-                                    new CombinationSkillBehavior(
+                                    combinationSkillBehaviorFactory.Create(
                                         new ParallelSkillExecutorBehavior(
                                             new StringIdentifier("increase-fire-damage"),
                                             new StringIdentifier("heal-self")),
@@ -312,7 +315,7 @@ namespace Macerus.Plugins.Content.Skills
                             {
                                 new StatelessBehaviorGeneratorComponent(
                                     new UseInCombatSkillBehavior(),
-                                    new CombinationSkillBehavior(
+                                    combinationSkillBehaviorFactory.Create(
                                         new ParallelSkillExecutorBehavior(
                                             new StringIdentifier("increase-fire-damage"),
                                             new StringIdentifier("heal-self")),
@@ -340,14 +343,6 @@ namespace Macerus.Plugins.Content.Skills
                 .RegisterType<SkillIdentifiers>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
-            builder
-               .RegisterType<SkillAmenity>()
-               .AsImplementedInterfaces()
-               .SingleInstance();
-            builder
-               .RegisterType<SkillUsage>()
-               .AsImplementedInterfaces()
-               .SingleInstance();
         }
     }
 }

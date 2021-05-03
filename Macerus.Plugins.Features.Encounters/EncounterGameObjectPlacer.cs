@@ -7,7 +7,7 @@ using Macerus.Plugins.Features.Stats;
 
 using NexusLabs.Framework;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.Mapping.Api;
@@ -67,14 +67,14 @@ namespace Macerus.Plugins.Features.Encounters
                     $"({gameObjectLocation.X},{gameObjectLocation.Y}).");
 
                 spawnLocationEntries.Remove(selectedSpawnEntry);
-                _mapGameObjectManager.MarkForRemoval((IGameObject)spawnLocation.Owner); // FIXME: whyyy these casts
+                _mapGameObjectManager.MarkForRemoval(spawnLocation.Owner);
                 _mapGameObjectManager.MarkForAddition(gameObjectToPlace);
             }
 
             // remove remaining spawn locations
             foreach (var spawnLocationEntry in spawnLocationEntries)
             {
-                _mapGameObjectManager.MarkForRemoval((IGameObject)spawnLocationEntry.WorldLocation.Owner); // FIXME: whyyy these casts
+                _mapGameObjectManager.MarkForRemoval(spawnLocationEntry.WorldLocation.Owner);
             }
 
             // force synchronization so later handlers can operate

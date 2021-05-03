@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 
@@ -10,6 +9,6 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Api
     {
         IGameObject GetSkillById(IIdentifier skillDefinitionId);
 
-        IEnumerable<IEnchantment> GetStatefulEnchantmentsBySkillId(IIdentifier skillDefinitionId);
+        IEnumerable<IGameObject> GetStatefulEnchantmentsBySkillId(IIdentifier skillDefinitionId);
     }
 }

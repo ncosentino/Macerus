@@ -5,7 +5,7 @@ using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
 using Macerus.Plugins.Features.Interactions.Api;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 
@@ -13,16 +13,16 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
 {
     public sealed class ContainerFactory : IContainerFactory
     {
-        private readonly IBehaviorManager _behaviorManager;
+        private readonly IGameObjectFactory _gameObjectFactory;
         private readonly IContainerBehaviorsProviderFacade _ContainerBehaviorsProviderFacade;
         private readonly IContainerBehaviorsInterceptorFacade _ContainerBehaviorsInterceptorFacade;
 
         public ContainerFactory(
-            IBehaviorManager behaviorManager,
+            IGameObjectFactory gameObjectFactory,
             IContainerBehaviorsProviderFacade ContainerBehaviorsProviderFacade,
             IContainerBehaviorsInterceptorFacade ContainerBehaviorsInterceptorFacade)
         {
-            _behaviorManager = behaviorManager;
+            _gameObjectFactory = gameObjectFactory;
             _ContainerBehaviorsProviderFacade = ContainerBehaviorsProviderFacade;
             _ContainerBehaviorsInterceptorFacade = ContainerBehaviorsInterceptorFacade;
         }
@@ -57,9 +57,8 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 .ToArray();
             _ContainerBehaviorsInterceptorFacade.Intercept(allBehaviors);
 
-            var Container = new Container(allBehaviors);
-            _behaviorManager.Register(Container, allBehaviors);
-            return Container;
+            var container = _gameObjectFactory.Create(allBehaviors);
+            return container;
         }
     }
 }

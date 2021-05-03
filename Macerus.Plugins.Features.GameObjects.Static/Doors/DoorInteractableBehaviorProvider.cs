@@ -4,7 +4,7 @@ using System.Globalization;
 
 using Macerus.Plugins.Features.GameObjects.Static.Api;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Shared.Framework;
 

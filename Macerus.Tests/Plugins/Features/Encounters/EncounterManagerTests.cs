@@ -63,7 +63,7 @@ namespace Macerus.Tests.Plugins.Features.Encounters
                 Assert.True(
                     _combatTurnManager.InCombat,
                     $"Expected '{nameof(_combatTurnManager)}.{nameof(ICombatTurnManager.InCombat)}' to be true.");
-                Assert.Equal(new StringIdentifier("test_encounter_map"), _mapManager.ActiveMap.Id);
+                Assert.Equal(new StringIdentifier("test_encounter_map"), _mapManager.ActiveMap.GetOnly<IIdentifierBehavior>().Id);
                 Assert.Single(_mapGameObjectManager.GameObjects.Where(x => x.Has<IPlayerControlledBehavior>()));
                 Assert.InRange(
                     _mapGameObjectManager
@@ -153,7 +153,7 @@ namespace Macerus.Tests.Plugins.Features.Encounters
                     player,
                     door);
 
-                Assert.Equal(door.TransitionToMapId, _mapManager.ActiveMap.Id);
+                Assert.Equal(door.TransitionToMapId, _mapManager.ActiveMap.GetOnly<IIdentifierBehavior>().Id);
 
                 var playerLocation = player.GetOnly<IReadOnlyWorldLocationBehavior>();
                 Assert.Equal(door.TransitionToX.Value, playerLocation.X);

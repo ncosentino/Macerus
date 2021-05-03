@@ -5,7 +5,7 @@ using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Stats;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
@@ -36,14 +36,14 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
         public void Update(
             ISystemUpdateContext systemUpdateContext,
-            IEnumerable<IHasBehaviors> hasBehaviors)
+            IEnumerable<IGameObject> gameObjects)
         {
             // FIXME: update interval throttling?
 
-            foreach (var entry in GetSupportedEntries(hasBehaviors))
+            foreach (var entry in GetSupportedEntries(gameObjects))
             {
                 var currentLife = _statCalculationServiceAmenity.GetStatValue(
-                    (IGameObject)entry.Item1.Owner, // FIXME: casting. reduce usage of IHasBehaviors
+                    entry.Item1.Owner,
                     _combatStatIdentifiers.CurrentLifeStatId);
                 if (currentLife <= 0)
                 {
@@ -52,9 +52,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             }
         }
 
-        private IEnumerable<Tuple<IHasStatsBehavior, IDynamicAnimationBehavior>> GetSupportedEntries(IEnumerable<IHasBehaviors> hasBehaviors)
+        private IEnumerable<Tuple<IHasStatsBehavior, IDynamicAnimationBehavior>> GetSupportedEntries(IEnumerable<IGameObject> gameObjects)
         {
-            foreach (var gameObject in hasBehaviors)
+            foreach (var gameObject in gameObjects)
             {
                 Tuple<IHasStatsBehavior, IDynamicAnimationBehavior> requiredBehaviors;
                 if (!_behaviorFinder.TryFind(

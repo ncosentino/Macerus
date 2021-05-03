@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.Gui.Api;
 
-using ProjectXyz.Api.Behaviors;
-using ProjectXyz.Api.Framework;
-using ProjectXyz.Api.Framework.Entities;
+using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Systems;
 
 namespace Macerus.Plugins.Features.Gui.Default
@@ -35,7 +33,7 @@ namespace Macerus.Plugins.Features.Gui.Default
 
         public void Update(
             ISystemUpdateContext systemUpdateContext,
-            IEnumerable<IHasBehaviors> hasBehaviors)
+            IEnumerable<IGameObject> gameObjects)
         {
             // we're going to use wall-clock time
             var now = DateTime.UtcNow;

@@ -16,7 +16,7 @@ using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Interactions.Api;
 using Macerus.Plugins.Features.Inventory.Api;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
@@ -282,14 +282,14 @@ namespace Macerus.Headless
 
             public void Update(
                 ISystemUpdateContext systemUpdateContext,
-                IEnumerable<IHasBehaviors> hasBehaviors)
+                IEnumerable<IGameObject> gameObjects)
             {
                 var elapsedTime = systemUpdateContext
                     .GetFirst<IComponent<IElapsedTime>>()
                     .Value;
                 var elapsedSeconds = ((IInterval<double>)elapsedTime.Interval).Value / 1000;
 
-                foreach (var gameObject in hasBehaviors)
+                foreach (var gameObject in gameObjects)
                 {
                     if (!_behaviorFinder.TryFind<IReadOnlyMovementBehavior, IWorldLocationBehavior>(
                         gameObject, 

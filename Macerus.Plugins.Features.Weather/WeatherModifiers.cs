@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using ProjectXyz.Api.Behaviors;
-using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Stats;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
@@ -184,7 +183,7 @@ namespace Macerus.Plugins.Features.Weather
                         s.Item2,
                         int.MinValue),
                     })),
-                new IEnchantment[] { });
+                new IGameObject[] { });
             return context;
         }
     }

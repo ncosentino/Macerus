@@ -7,13 +7,11 @@ using NexusLabs.Contracts;
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
-using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
-using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
@@ -57,7 +55,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             return skills.FirstOrDefault();
         }
 
-        public IEnumerable<IEnchantment> GetStatefulEnchantmentsBySkillId(IIdentifier skillDefinitionId)
+        public IEnumerable<IGameObject> GetStatefulEnchantmentsBySkillId(IIdentifier skillDefinitionId)
         {
             var skillDefinition = _skillDefinitionRepositoryFacade
                 .GetSkillDefinitions(_filterContextFactory.CreateFilterContextForSingle(new FilterAttribute(

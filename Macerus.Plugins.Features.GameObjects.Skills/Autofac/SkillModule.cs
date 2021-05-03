@@ -9,7 +9,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<SkillIdentifiers>()
+                .RegisterType<CombinationSkillBehaviorFactory>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder

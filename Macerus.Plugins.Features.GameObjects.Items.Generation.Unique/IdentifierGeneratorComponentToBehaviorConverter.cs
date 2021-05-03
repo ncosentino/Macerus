@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Unique;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 
 namespace Macerus.Plugins.Content.Wip.Items

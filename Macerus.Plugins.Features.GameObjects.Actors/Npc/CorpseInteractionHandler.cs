@@ -8,7 +8,7 @@ using Macerus.Plugins.Features.Interactions.Api;
 
 using NexusLabs.Contracts;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;

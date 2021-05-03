@@ -11,7 +11,7 @@ using Macerus.Plugins.Features.GameObjects.Actors.Npc;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Shared.Behaviors;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;

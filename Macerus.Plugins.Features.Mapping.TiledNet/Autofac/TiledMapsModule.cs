@@ -4,7 +4,6 @@ using Macerus.Plugins.Features.Mapping.TiledNet;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Shared.Framework.Collections;
 
 using Tiled.Net.Maps;
@@ -16,10 +15,6 @@ namespace Assets.Scripts.Plugins.Features.Maps.TiledNet.Autofac
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
-            builder
-                .Register(x => new Cache<IIdentifier, IMap>(5))
-                .AsImplementedInterfaces()
-                .SingleInstance();
             builder
                 .Register(x => new Cache<IIdentifier, ITiledMap>(5))
                 .AsImplementedInterfaces()

@@ -3,7 +3,7 @@
 using Macerus.Plugins.Features.GameObjects.Static.Api;
 using Macerus.Shared.Behaviors;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Plugins.Features.GameObjects.Static

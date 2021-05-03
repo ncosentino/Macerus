@@ -4,7 +4,7 @@ using System.Linq;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.GameObjects;
@@ -18,13 +18,16 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Normal
     {
         private readonly IBaseItemGenerator _baseItemGenerator;
         private readonly IFilterContextAmenity _filterContextAmenity;
+        private readonly IGameObjectFactory _gameObjectFactory;
 
         public NormalItemGenerator(
             IBaseItemGenerator baseItemGenerator,
-            IFilterContextAmenity filterContextAmenity)
+            IFilterContextAmenity filterContextAmenity,
+            IGameObjectFactory gameObjectFactory)
         {
             _baseItemGenerator = baseItemGenerator;
             _filterContextAmenity = filterContextAmenity;
+            _gameObjectFactory = gameObjectFactory;
         }
 
         public IEnumerable<IGameObject> GenerateItems(IFilterContext filterContext)
@@ -33,7 +36,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Normal
                 filterContext,
                 SupportedAttributes);
             var baseItems = _baseItemGenerator.GenerateItems(normalGeneratorContext);
-            var items = baseItems.Select(baseItem => new NormalItem(baseItem.Behaviors.Concat(new IBehavior[]
+            var items = baseItems.Select(baseItem => _gameObjectFactory.Create(baseItem.Behaviors.Concat(new IBehavior[]
             {
                 new HasAffixType(new StringIdentifier("normal")),
             })));

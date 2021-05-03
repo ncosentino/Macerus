@@ -2,7 +2,7 @@
 
 using Macerus.Plugins.Features.Combat.Api;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
@@ -39,7 +39,7 @@ namespace Macerus.Plugins.Features.Combat.Default
 
         public void Update(
             ISystemUpdateContext systemUpdateContext,
-            IEnumerable<IHasBehaviors> hasBehaviors)
+            IEnumerable<IGameObject> gameObjects)
         {
             var turnInfo = systemUpdateContext
                 .GetFirst<IComponent<ITurnInfo>>()

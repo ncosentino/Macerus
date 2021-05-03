@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Stats;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
@@ -26,7 +25,7 @@ namespace Macerus.Plugins.Features.Stats
              {
                  var context = statCalculationContextFactory.Create(
                     new IComponent[] { },
-                    new IEnchantment[] { });
+                    new IGameObject[] { });
                  return context;
              });
         }

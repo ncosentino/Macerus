@@ -5,14 +5,12 @@ using System.Linq;
 
 using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
-using Macerus.Api.GameObjects;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
-using Macerus.Shared.Behaviors;
 
-using ProjectXyz.Api.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
@@ -24,16 +22,16 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Npc
     {
         private readonly IGameObjectIdentifiers _gameObjectIdentifiers;
         private readonly IActorGeneratorFacade _actorGeneratorFacade;
-        private readonly IBehaviorManager _behaviorManager;
+        private readonly IGameObjectFactory _gameObjectFactory;
         private readonly IFilterContextAmenity _filterContextAmenity;
 
         public NpcTemplateRepository(
-            IBehaviorManager behaviorManager,
+            IGameObjectFactory gameObjectFactory,
             IFilterContextAmenity filterContextAmenity,
             IGameObjectIdentifiers gameObjectIdentifiers,
             IActorGeneratorFacade actorGeneratorFacade)
         {
-            _behaviorManager = behaviorManager;
+            _gameObjectFactory = gameObjectFactory;
             _filterContextAmenity = filterContextAmenity;
             _gameObjectIdentifiers = gameObjectIdentifiers;
             _actorGeneratorFacade = actorGeneratorFacade;
@@ -70,8 +68,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Npc
             }
 
             var generatedActor = generatedActors.Single();
-
-            var npc = new Npc(
+                            
+            var npc = _gameObjectFactory.Create(
                 new IBehavior[]
                 {
                     new TemplateIdentifierBehavior()
@@ -79,7 +77,6 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Npc
                         TemplateId = _filterContextAmenity.GetGameObjectTemplateIdFromContext(filterContext),
                     },
                 }.Concat(generatedActor.Behaviors));
-            _behaviorManager.Register(npc, npc.Behaviors);
 
             var worldLocation = npc.Get<IWorldLocationBehavior>().Single();
             worldLocation.SetLocation(

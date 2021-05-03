@@ -6,8 +6,6 @@ using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
 
 using NexusLabs.Framework;
 
-using ProjectXyz.Api.Enchantments;
-using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
@@ -27,7 +25,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 
         public IHasInventoryDisplayName GenerateName(
             IGameObject baseItem,
-            IReadOnlyCollection<IEnchantment> enchantments)
+            IReadOnlyCollection<IGameObject> enchantments)
         {
             // FIXME: make this a bit more robust. it assumes every enchantment
             // MUST exist as a prefix AND a suffix, and we can pick and choose

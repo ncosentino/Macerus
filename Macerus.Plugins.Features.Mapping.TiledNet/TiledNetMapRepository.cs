@@ -8,6 +8,7 @@ using ProjectXyz.Api.Framework.Collections;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Shared.Framework.Collections;
 
 namespace Macerus.Plugins.Features.Mapping.TiledNet
 {
@@ -16,21 +17,20 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
         private readonly IMapIdentifiers _mapIdentifiers;
         private readonly ITiledNetToMapConverter _tiledNetToMapConverter;
         private readonly ITiledMapLoader _tiledMapLoader;
-        private readonly ICache<IIdentifier, IMap> _mapCache;
+        private readonly ICache<IIdentifier, IGameObject> _mapCache;
 
         public TiledNetMapRepository(
             IMapIdentifiers mapIdentifiers,
             ITiledNetToMapConverter tiledNetToMapConverter,
-            ITiledMapLoader tiledMapLoader,
-            ICache<IIdentifier, IMap> mapCache)
+            ITiledMapLoader tiledMapLoader)
         {
             _mapIdentifiers = mapIdentifiers;
             _tiledNetToMapConverter = tiledNetToMapConverter;
             _tiledMapLoader = tiledMapLoader;
-            _mapCache = mapCache;
+            _mapCache = new Cache<IIdentifier, IGameObject>(5);
         }
 
-        public IEnumerable<IMap> LoadMaps(IFilterContext filterContext)
+        public IEnumerable<IGameObject> LoadMaps(IFilterContext filterContext)
         {
             var requiredAttributes = filterContext
                     .Attributes
@@ -48,7 +48,7 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
 
             var mapId = ((IdentifierFilterAttributeValue)requiredAttributes.Single().Value).Value;
 
-            IMap cached;
+            IGameObject cached;
             if (_mapCache.TryGetValue(mapId, out cached))
             {
                 yield return cached;

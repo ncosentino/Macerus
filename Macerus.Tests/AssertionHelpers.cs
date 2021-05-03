@@ -3,7 +3,7 @@
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Stats;
 using ProjectXyz.Api.Framework;
@@ -100,7 +100,7 @@ namespace Macerus.Tests
         {
             var context = _statCalculationContextFactory.Create(
                 Enumerable.Empty<IComponent>(),
-                Enumerable.Empty<IEnchantment>());
+                Enumerable.Empty<IGameObject>());
             var actualStatValue = _statCalculationService.GetStatValue(
                 gameObject,
                 statDefinitionId,
@@ -111,7 +111,7 @@ namespace Macerus.Tests
                 $"to be {expectedValue} but was {actualStatValue}.");
         }
 
-        public void AssertSocketBehaviors(IHasBehaviors item)
+        public void AssertSocketBehaviors(IGameObject item)
         {
             var canBeSocketedBehaviors = item
                 .Get<ICanBeSocketedBehavior>()
@@ -131,7 +131,7 @@ namespace Macerus.Tests
             }
         }
 
-        public void AssertAffix(IHasBehaviors item, IIdentifier requiredAffixId)
+        public void AssertAffix(IGameObject item, IIdentifier requiredAffixId)
         {
             var affixTypeBehaviors = item
                 .Get<IHasAffixType>()

@@ -2,7 +2,6 @@
 
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
-using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
@@ -11,6 +10,6 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
     {
         IHasInventoryDisplayName GenerateName(
             IGameObject baseItem,
-            IReadOnlyCollection<IEnchantment> enchantments);
+            IReadOnlyCollection<IGameObject> enchantments);
     }
 }

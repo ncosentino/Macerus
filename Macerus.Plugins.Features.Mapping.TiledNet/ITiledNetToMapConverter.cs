@@ -1,5 +1,5 @@
 ﻿using ProjectXyz.Api.Framework;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Api.GameObjects;
 
 using Tiled.Net.Maps;
 
@@ -7,7 +7,7 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
 {
     public interface ITiledNetToMapConverter
     {
-        IMap Convert(
+        IGameObject Convert(
             IIdentifier mapId,
             ITiledMap tiledMap);
     }

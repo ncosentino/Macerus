@@ -4,7 +4,8 @@ using System.Linq;
 using Macerus.Api.Behaviors;
 using Macerus.Api.GameObjects;
 
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Combat.Api;
@@ -35,7 +36,7 @@ namespace Macerus.Game
 
         public void Update(
             ISystemUpdateContext systemUpdateContext,
-            IEnumerable<IHasBehaviors> hasBehaviors)
+            IEnumerable<IGameObject> gameObjects)
         {
             // no-op
         }

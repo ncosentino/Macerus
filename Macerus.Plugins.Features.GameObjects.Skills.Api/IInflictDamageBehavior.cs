@@ -1,5 +1,5 @@
 ﻿
-using ProjectXyz.Api.Behaviors;
+using ProjectXyz.Api.GameObjects.Behaviors;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Api
 {

@@ -1,4 +1,4 @@
-﻿using ProjectXyz.Api.Behaviors;
+﻿using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Shared.Game.Behaviors;
 

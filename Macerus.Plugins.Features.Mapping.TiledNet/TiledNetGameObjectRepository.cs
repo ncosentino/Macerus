@@ -121,7 +121,7 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
         }
 
         public void SaveState(
-            IMap map,
+            IGameObject map,
             IEnumerable<IGameObject> gameObjects)
         {
             if (map.Has<IIgnoreSavingGameObjectStateBehavior>())
@@ -129,12 +129,13 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
                 return;
             }
 
+            var mapId = map.GetOnly<IIdentifierBehavior>().Id;
             if (!_gameObjectIdCache.TryGetValue(
-                map.Id,
+                mapId,
                 out var cachedMapGameObjectes))
             {
                 cachedMapGameObjectes = new List<IIdentifier>();
-                _gameObjectIdCache[map.Id] = cachedMapGameObjectes;
+                _gameObjectIdCache[mapId] = cachedMapGameObjectes;
             }
 
             cachedMapGameObjectes.Clear();
