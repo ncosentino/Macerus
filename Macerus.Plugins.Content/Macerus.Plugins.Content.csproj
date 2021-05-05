@@ -28,6 +28,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Socketing\Macerus.Plugins.Features.GameObjects.Items.Socketing.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items\Macerus.Plugins.Features.GameObjects.Items.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Mapping.TiledNet\Macerus.Plugins.Features.Mapping.TiledNet.csproj" />
   </ItemGroup>
 
   <ItemGroup>
