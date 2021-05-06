@@ -13,6 +13,8 @@ using Macerus.Plugins.Features.Encounters;
 using ProjectXyz.Api.Data.Serialization;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Shared.Framework;
@@ -80,6 +82,15 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                 Assert.Equal(
                     player.Behaviors.Count,
                     result.Item1.Behaviors.Count);
+
+                // ensure base stats are correct
+                var resultBaseStats = result.Item1.Behaviors.GetOnly<IHasStatsBehavior>().BaseStats;
+                foreach (var baseStatKvp in player.Behaviors.GetOnly<IHasStatsBehavior>().BaseStats)
+                {
+                    Assert.Equal(
+                        baseStatKvp.Value,
+                        resultBaseStats[baseStatKvp.Key]);
+                }
             });
         }
 
