@@ -1,27 +1,20 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 
 using Macerus.Api.Behaviors;
-using Macerus.Api.Behaviors.Filtering;
-using Macerus.Api.GameObjects;
-using Macerus.Plugins.Features.Encounters;
 
 using ProjectXyz.Api.Data.Serialization;
-using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;
 
-namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
+namespace Macerus.Tests.Plugins.Features.GameObjects
 {
     public sealed class GameObjectSerializationTests
     {
@@ -103,12 +96,12 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                     gameObjectToSerialize,
                     Encoding.UTF8);
                 stream.Seek(0, SeekOrigin.Begin);
-                
+
                 using (var reader = new StreamReader(stream))
                 {
                     var rawJson = reader.ReadToEnd();
                     stream.Seek(0, SeekOrigin.Begin);
-                
+
                     var result = _deserializer.Deserialize<IGameObject>(stream);
                     return Tuple.Create(result, rawJson);
                 }
