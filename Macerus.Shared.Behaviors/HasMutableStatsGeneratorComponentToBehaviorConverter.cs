@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Plugins.Features.CommonBehaviors;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 
 namespace Macerus.Shared.Behaviors
 {
