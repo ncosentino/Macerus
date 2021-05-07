@@ -18,4 +18,23 @@ namespace Macerus.Plugins.Features.Inventory.Api
 
         SwapResult SwapItems(IIdentifier itemIdToSwapOut, IGameObject itemToSwapIn);
     }
+
+    public static class IItemSetExtensions
+    {
+        public static bool CanAddItem(
+            this IItemSet itemSet,
+            IGameObject itemToAdd)
+        {
+            var result = itemSet.CanSwapItems(null, itemToAdd);
+            return result;
+        }
+
+        public static SwapResult AddItem(
+            this IItemSet itemSet,
+            IGameObject itemToAdd)
+        {
+            var result = itemSet.SwapItems(null, itemToAdd);
+            return result;
+        }
+    }
 }

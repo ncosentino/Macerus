@@ -106,8 +106,20 @@ namespace Macerus.Plugins.Features.Inventory.Default
                     return SwapResult.SuccessAndContinue;
                 }
 
-                if (itemToSwapIn != null &&
-                    _itemContainerBehavior.Items.Any(x => x == itemToSwapIn) &&
+                var swapInIsSameBag =
+                    itemToSwapIn != null &&
+                    _itemContainerBehavior.Items.Any(x => x == itemToSwapIn);
+
+                if (swapInIsSameBag &&
+                    TryStackItems(
+                        itemToSwapIn,
+                        itemToSwapOut))
+                {
+                    ItemsChanged?.Invoke(this, EventArgs.Empty);
+                    return SwapResult.SuccessAndStop;
+                }
+
+                if (swapInIsSameBag &&
                     TrySocketItem(
                         itemToSwapIn,
                         itemToSwapOut))
@@ -132,6 +144,57 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 ItemsChanged?.Invoke(this, EventArgs.Empty);
                 return SwapResult.SuccessAndContinue;
             });
+        }
+
+        private bool TryStackItems(
+            IGameObject itemToBeAddedToStack,
+            IGameObject itemWithStack)
+        {
+            if (itemWithStack == itemToBeAddedToStack)
+            {
+                return false;
+            }
+
+            if (!itemWithStack.TryGetFirst<IStackableItemBehavior>(out var existingItemStackBehavior))
+            {
+                return false;
+            }
+
+            if (!itemToBeAddedToStack.TryGetFirst<IStackableItemBehavior>(out var itemStackBehaviorToAdd))
+            {
+                return false;
+            }
+
+            if (!existingItemStackBehavior.StackId.Equals(itemStackBehaviorToAdd.StackId))
+            {
+                return false;
+            }
+
+            if (existingItemStackBehavior.StackLimit <= existingItemStackBehavior.Count)
+            {
+                return false;
+            }
+
+            var freeSpace = existingItemStackBehavior.StackLimit - existingItemStackBehavior.Count;
+            var willAdd = Math.Min(freeSpace, itemStackBehaviorToAdd.Count);
+
+            existingItemStackBehavior.Count += willAdd;
+            itemStackBehaviorToAdd.Count -= willAdd;
+
+            if (itemStackBehaviorToAdd.Count < 1)
+            {
+                if (!_itemContainerBehavior.TryRemoveItem(itemToBeAddedToStack))
+                {
+                    throw new InvalidOperationException(
+                        $"'{itemStackBehaviorToAdd}' was fully added to " +
+                        $"'{existingItemStackBehavior}' by moving {willAdd} " +
+                        $"items. The source now has " +
+                        $"{itemStackBehaviorToAdd.Count} but it could not be " +
+                        $"removed from '{_itemContainerBehavior}'.");
+                }
+            }
+
+            return true;
         }
 
         private bool TrySocketItem(
