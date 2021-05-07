@@ -4,5 +4,6 @@ namespace Macerus.Plugins.Features.StatusBar.Api
 {
     public interface IStatusBarController : IDiscoverableUserInterfaceUpdate
     {
+        void ActivateSkillSlot(int slotIndex);
     }
 }

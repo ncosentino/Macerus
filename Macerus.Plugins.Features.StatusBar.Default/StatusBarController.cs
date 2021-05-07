@@ -9,13 +9,12 @@ using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Stats;
 using Macerus.Plugins.Features.StatusBar.Api;
 
-using NexusLabs.Contracts;
-
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Stats;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.TurnBased.Api;
 
 namespace Macerus.Plugins.Features.StatusBar.Default
 {
@@ -23,6 +22,8 @@ namespace Macerus.Plugins.Features.StatusBar.Default
     {
         private readonly IStatusBarViewModel _statusBarViewModel;
         private readonly ISkillUsage _skillUsage;
+        private readonly ISkillHandlerFacade _skillHandlerFacade;
+        private readonly ITurnBasedManager _turnBasedManager;
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
         private readonly IReadOnlyMapGameObjectManager _mapGameObjectManager;
         private readonly IReadOnlyStatDefinitionToTermMappingRepository _statDefinitionToTermMappingRepository;
@@ -32,13 +33,17 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             IReadOnlyMapGameObjectManager readOnlyMapGameObjectManager,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
             IStatusBarViewModel statusBarViewModel,
-            ISkillUsage skillUsage)
+            ISkillUsage skillUsage,
+            ISkillHandlerFacade skillHandlerFacade,
+            ITurnBasedManager turnBasedManager)
         {
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
             _mapGameObjectManager = readOnlyMapGameObjectManager;
             _statDefinitionToTermMappingRepository = statDefinitionToTermMappingRepository;
             _statusBarViewModel = statusBarViewModel;
             _skillUsage = skillUsage;
+            _skillHandlerFacade = skillHandlerFacade;
+            _turnBasedManager = turnBasedManager;
         }
 
         public delegate StatusBarController Factory();
@@ -99,6 +104,35 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 .ToArray();
 
             _statusBarViewModel.UpdateAbilities(abilityViewModels);
+        }
+
+        public void ActivateSkillSlot(int slotIndex)
+        {
+            var player = _mapGameObjectManager
+                .GameObjects
+                .FirstOrDefault(x => x.Has<IPlayerControlledBehavior>());
+            // FIXME: we actually need to map the index to some sort of quick
+            // slot concept, not just full list of skills
+            var skills = player
+                .GetOnly<IHasSkillsBehavior>()
+                .Skills
+                .ToArray();
+            var skill = skills[slotIndex];
+
+            if (!_skillUsage.CanUseSkill(
+                player,
+                skill))
+            {
+                return;
+            }
+
+            _skillUsage.UseRequiredResources(
+                player,
+                skill);
+            _skillHandlerFacade.Handle(
+                player,
+                skill);
+            _turnBasedManager.SetApplicableObjects(new[] { player });
         }
     }
 }
