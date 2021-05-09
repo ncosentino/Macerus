@@ -12,6 +12,8 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
+using ProjectXyz.Plugins.Features.Combat.Api;
+using ProjectXyz.Api.Behaviors.Filtering;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
@@ -19,15 +21,21 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
     {
         private readonly IBehaviorFinder _behaviorFinder;
         private readonly IActorIdentifiers _actorIdentifiers;
+        private readonly ICombatTurnManager _combatTurnManager;
+        private readonly IFilterContextProvider _filterContextProvider;
         private readonly ILogger _logger;
 
         public ActorMovementSystem(
             IBehaviorFinder behaviorFinder,
             IActorIdentifiers actorIdentifiers,
+            ICombatTurnManager combatTurnManager,
+            IFilterContextProvider filterContextProvider,
             ILogger logger)
         {
             _behaviorFinder = behaviorFinder;
             _actorIdentifiers = actorIdentifiers;
+            _combatTurnManager = combatTurnManager;
+            _filterContextProvider = filterContextProvider;
             _logger = logger;
         }
 
@@ -48,6 +56,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 var dynamicAnimationBehavior = supportedEntry.Item2;
                 var worldLocationBehavior = supportedEntry.Item3;
 
+                InhibitNonTurnMovement(movementBehavior);
                 WalkPath(
                     movementBehavior,
                     worldLocationBehavior,
@@ -61,6 +70,20 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                     movementBehavior,
                     dynamicAnimationBehavior,
                     elapsedSeconds);
+            }
+        }
+
+        private void InhibitNonTurnMovement(IMovementBehavior movementBehavior)
+        {
+            if (_combatTurnManager.InCombat &&
+                (movementBehavior.ThrottleX != 0 ||
+                movementBehavior.ThrottleY != 0))
+            {
+                var actor = movementBehavior.Owner;
+                if (!_combatTurnManager.GetSnapshot(_filterContextProvider.GetContext(), 1).Single().Equals(actor))
+                {
+                    movementBehavior.SetThrottle(0, 0);
+                }
             }
         }
 
