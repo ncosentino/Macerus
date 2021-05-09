@@ -2,6 +2,7 @@
 
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 
+using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.Combat.Api;
@@ -15,15 +16,18 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
     {
         private readonly IStatCalculationService _statCalculationService;
         private readonly ICombatTurnManager _combatTurnManager;
+        private readonly IFilterContextProvider _filterContextProvider;
         private readonly ILogger _logger;
 
         public SkillUsage(
             IStatCalculationService statCalculationService,
             ICombatTurnManager combatTurnManager,
+            IFilterContextProvider filterContextProvider,
             ILogger logger)
         {
             _statCalculationService = statCalculationService;
             _combatTurnManager = combatTurnManager;
+            _filterContextProvider = filterContextProvider;
             _logger = logger;
         }
 
@@ -33,7 +37,8 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
         {
             if (_combatTurnManager.InCombat)
             {
-                if (!skill.Has<IUseInCombatBehavior>())
+                if (!skill.Has<IUseInCombatBehavior>() ||
+                    !_combatTurnManager.GetSnapshot(_filterContextProvider.GetContext(), 1).Single().Equals(actor))
                 {
                     return false;
                 }
