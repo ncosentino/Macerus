@@ -65,6 +65,11 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
                 behaviors.Add(new IgnoreSavingGameObjectStateBehavior());
             }
 
+            if (tiledMap.Properties.ContainsKey("HasFogOfWar"))
+            {
+                behaviors.Add(new HasFogOfWarBehavior());
+            }
+
             var map = _mapFactory.Create(
                 mapId,
                 layers,

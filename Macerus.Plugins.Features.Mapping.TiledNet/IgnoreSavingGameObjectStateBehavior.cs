@@ -7,4 +7,10 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
         IIgnoreSavingGameObjectStateBehavior
     {
     }
+
+    public sealed class HasFogOfWarBehavior :
+        BaseBehavior,
+        IHasFogOfWarBehavior
+    {
+    }
 }
