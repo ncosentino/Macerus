@@ -61,7 +61,6 @@ namespace Macerus.Tests.Plugins.Features.Mapping
             });
         }
 
-        // FIXME: this will currently fail until we handle not templating the player.
         [Fact]
         private void SwitchMap_IntermediateThenBackToSameMap_PlayerPersistsAcrossMaps()
         {
