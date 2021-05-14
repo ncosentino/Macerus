@@ -3,6 +3,8 @@ using Macerus.Plugins.Features.Animations.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.Stats;
 
+using ProjectXyz.Api.Framework;
+
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
     public sealed class DynamicAnimationBehaviorFactory : IDynamicAnimationBehaviorFactory
@@ -24,14 +26,21 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             _dynamicAnimationIdentifiers = dynamicAnimationIdentifiers;
         }
 
-        public IDynamicAnimationBehavior Create(string sourcePattern)
+        public IDynamicAnimationBehavior Create(
+            string sourcePattern,
+            IIdentifier baseAnimationId,
+            bool visible,
+            int currentFrameIndex)
         {
             var behavior = new DynamicAnimationBehavior(
                 _spriteAnimationProvider,
                 _animationReplacementPatternRepository,
                 _statCalculationServiceAmenity,
                 _dynamicAnimationIdentifiers,
-                sourcePattern);
+                sourcePattern,
+                baseAnimationId,
+                visible,
+                currentFrameIndex);
             return behavior;
         }
     }

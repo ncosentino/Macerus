@@ -7,12 +7,12 @@ using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.Stats;
 
 using ProjectXyz.Api.Framework;
-using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Shared.Framework;
 using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
+
     public sealed class DynamicAnimationBehavior :
         BaseBehavior,
         IDynamicAnimationBehavior
@@ -21,10 +21,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         private readonly IAnimationReplacementPatternRepository _animationReplacementPatternRepository;
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
         private readonly IDynamicAnimationIdentifiers _dynamicAnimationIdentifiers;
-        private readonly string _sourcePattern;
 
         private ISpriteAnimation _currentAnimation;
-        private int _currentFrameIndex;
         private double _secondsElapsedOnFrame;
         private IIdentifier _lastAnimationId;
         private DateTime _lastLookupdUtc;
@@ -38,24 +36,35 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             IAnimationReplacementPatternRepository animationReplacementPatternRepository,
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
             IDynamicAnimationIdentifiers dynamicAnimationIdentifiers,
-            string sourcePattern)
+            string sourcePattern,
+            IIdentifier baseAnimationId,
+            bool visible,
+            int currentFrameIndex)
         {
             _spriteAnimationRepository = spriteAnimationRepository;
             _animationReplacementPatternRepository = animationReplacementPatternRepository;
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
             _dynamicAnimationIdentifiers = dynamicAnimationIdentifiers;
-            _sourcePattern = sourcePattern;
+            
+            SourcePattern = sourcePattern;
+            BaseAnimationId = baseAnimationId;
+            Visible = visible;
+            CurrentFrameIndex = currentFrameIndex;
+            
             _cachedAnimationSpeedMultiplier = 1;
-            Visible = true;
         }
 
         public event EventHandler<AnimationFrameEventArgs> AnimationFrameChanged;
 
+        public string SourcePattern { get; }
+
         public bool Visible { get; set; }
+
+        public int CurrentFrameIndex { get; private set; }
 
         public ISpriteAnimationFrame CurrentFrame => !Visible || _currentAnimation == null
             ? null
-            : _currentAnimation.Frames[_currentFrameIndex];
+            : _currentAnimation.Frames[CurrentFrameIndex];
 
         public IIdentifier BaseAnimationId { get; set; }
 
@@ -82,7 +91,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                     ? _cachedTransformedAnimationId
                     : Transform(
                         BaseAnimationId,
-                        _sourcePattern,
+                        SourcePattern,
                         _replacementPattern);
                 _cachedTransformedAnimationId = transformedAnimationId;
                 _lastSourceAnimationId = BaseAnimationId;
@@ -97,7 +106,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             var currentAnimationId = CurrentAnimationId;
             if (_lastAnimationId != null && currentAnimationId == null)
             {
-                _currentFrameIndex = 0;
+                CurrentFrameIndex = 0;
                 _lastAnimationId = null;
                 _secondsElapsedOnFrame = 0;
                 _currentAnimation = null;
@@ -119,7 +128,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             bool forceRefreshSprite = false;
             if (currentAnimationId != _lastAnimationId)
             {
-                _currentFrameIndex = 0;
+                CurrentFrameIndex = 0;
                 _secondsElapsedOnFrame = 0;
                 _lastAnimationId = currentAnimationId;
 
@@ -135,22 +144,22 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 forceRefreshSprite = true;
             }
 
-            if (_currentFrameIndex >= _currentAnimation.Frames.Count ||
-                _currentFrameIndex < 0)
+            if (CurrentFrameIndex >= _currentAnimation.Frames.Count ||
+                CurrentFrameIndex < 0)
             {
                 throw new InvalidOperationException(
-                    $"The current frame {_currentFrameIndex} was out " +
+                    $"The current frame {CurrentFrameIndex} was out " +
                     $"of range on '{Owner}.{this}' animation " +
                     $"'{currentAnimationId}'.");
             }
 
             _secondsElapsedOnFrame += secondsSinceLastFrame;
             ISpriteAnimationFrame currentFrame;
-            var lastFrameIndex = _currentFrameIndex;
+            var lastFrameIndex = CurrentFrameIndex;
 
             while (true)
             {
-                currentFrame = _currentAnimation.Frames[_currentFrameIndex];
+                currentFrame = _currentAnimation.Frames[CurrentFrameIndex];
                 if (currentFrame.DurationInSeconds == null)
                 {
                     break;
@@ -159,14 +168,14 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 var durationInSeconds = (float)(currentFrame.DurationInSeconds.Value /_cachedAnimationSpeedMultiplier);
                 if (_secondsElapsedOnFrame >= durationInSeconds)
                 {
-                    _currentFrameIndex++;
+                    CurrentFrameIndex++;
                     _secondsElapsedOnFrame -= durationInSeconds;
 
-                    if (_currentFrameIndex == _currentAnimation.Frames.Count)
+                    if (CurrentFrameIndex == _currentAnimation.Frames.Count)
                     {
                         if (_currentAnimation.Repeat)
                         {
-                            _currentFrameIndex = 0;
+                            CurrentFrameIndex = 0;
                         }
                         else
                         {
@@ -181,7 +190,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 break;
             }
 
-            if (_currentFrameIndex == lastFrameIndex &&
+            if (CurrentFrameIndex == lastFrameIndex &&
                 !forceRefreshSprite)
             {
                 return;

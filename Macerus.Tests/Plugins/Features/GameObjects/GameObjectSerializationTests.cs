@@ -84,6 +84,15 @@ namespace Macerus.Tests.Plugins.Features.GameObjects
                         baseStatKvp.Value,
                         resultBaseStats[baseStatKvp.Key]);
                 }
+
+                // ensure we have our expected animation
+                var animationBehavior = result.Item1.Behaviors.GetOnly<IReadOnlyDynamicAnimationBehavior>();
+                Assert.Equal("$actor$", animationBehavior.SourcePattern);
+                Assert.Equal(new StringIdentifier("$actor$_stand_forward"), animationBehavior.BaseAnimationId);
+                Assert.Equal(0, animationBehavior.CurrentFrameIndex);
+                Assert.True(
+                    animationBehavior.Visible,
+                    $"Expecting {nameof(animationBehavior) + "." + nameof(animationBehavior.Visible)} to be true.");
             });
         }
 
