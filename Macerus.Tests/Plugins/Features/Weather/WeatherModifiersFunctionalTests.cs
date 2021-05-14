@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-using Macerus.Api.GameObjects;
 using Macerus.Plugins.Content.Weather;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Plugins.Features.Weather.Api;
@@ -23,8 +20,6 @@ namespace Macerus.Tests.Plugins.Features.Weather
         private static readonly TestAmenities _testAmenities;
         private static readonly IMapGameObjectManager _mapGameObjectManager;
         private static readonly IWeatherModifiers _weatherModifiers;
-        private static readonly IGameObjectRepositoryAmenity _gameObjectRepositoryAmenity;
-        private static readonly IActorIdentifiers _actorIdentifiers;
         private static readonly ISkillAmenity _skillAmenity;
 
         static WeatherModifiersFunctionalTests()
@@ -34,8 +29,6 @@ namespace Macerus.Tests.Plugins.Features.Weather
 
             _mapGameObjectManager = _container.Resolve<IMapGameObjectManager>();
             _weatherModifiers = _container.Resolve<IWeatherModifiers>();
-            _gameObjectRepositoryAmenity = _container.Resolve<IGameObjectRepositoryAmenity>();
-            _actorIdentifiers = _container.Resolve<IActorIdentifiers>();
             _skillAmenity = _container.Resolve<ISkillAmenity>();
         }
 
@@ -44,7 +37,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         {
             _testAmenities.UsingCleanMapAndObjects(() =>
             {
-                var player = CreatePlayer();
+                var player = _testAmenities.CreatePlayerInstance();
                 player
                     .GetOnly<IHasSkillsBehavior>()
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
@@ -69,14 +62,14 @@ namespace Macerus.Tests.Plugins.Features.Weather
         {
             _testAmenities.UsingCleanMapAndObjects(() =>
             {
-                var player = CreatePlayer();
+                var player = _testAmenities.CreatePlayerInstance();
                 player
                     .GetOnly<IHasSkillsBehavior>()
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
 
                 _mapGameObjectManager.MarkForAddition(
                     player,
-                    CreatePlayer());
+                    _testAmenities.CreatePlayerInstance());
                 _mapGameObjectManager.Synchronize();
 
                 var inputWeights = new Dictionary<IIdentifier, double>()
@@ -96,7 +89,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         {
             _testAmenities.UsingCleanMapAndObjects(() =>
             {
-                var player = CreatePlayer();
+                var player = _testAmenities.CreatePlayerInstance();
                 player
                     .GetOnly<IHasSkillsBehavior>()
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
@@ -118,14 +111,14 @@ namespace Macerus.Tests.Plugins.Features.Weather
         {
             _testAmenities.UsingCleanMapAndObjects(() =>
             {
-                var player = CreatePlayer();
+                var player = _testAmenities.CreatePlayerInstance();
                 player
                     .GetOnly<IHasSkillsBehavior>()
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
 
                 _mapGameObjectManager.MarkForAddition(
                     player,
-                    CreatePlayer());
+                    _testAmenities.CreatePlayerInstance());
                 _mapGameObjectManager.Synchronize();
 
                 var result = _weatherModifiers.GetMinimumDuration(
@@ -142,7 +135,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         {
             _testAmenities.UsingCleanMapAndObjects(() =>
             {
-                var player = CreatePlayer();
+                var player = _testAmenities.CreatePlayerInstance();
                 player
                     .GetOnly<IHasSkillsBehavior>()
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
@@ -161,34 +154,20 @@ namespace Macerus.Tests.Plugins.Features.Weather
         {
             _testAmenities.UsingCleanMapAndObjects(() =>
             {
-                var player = CreatePlayer();
+                var player = _testAmenities.CreatePlayerInstance();
                 player
                     .GetOnly<IHasSkillsBehavior>()
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
 
                 _mapGameObjectManager.MarkForAddition(
                     player,
-                    CreatePlayer());
+                    _testAmenities.CreatePlayerInstance());
                 _mapGameObjectManager.Synchronize();
 
                 var result = _weatherModifiers.GetMaximumDuration(WeatherIds.Rain, 10000);
 
                 Assert.Equal(25000, result);
             });
-        }
-
-        private IGameObject CreatePlayer()
-        {
-            return _gameObjectRepositoryAmenity.CreateGameObjectFromTemplate(
-                _actorIdentifiers.ActorTypeIdentifier,
-                new StringIdentifier("player"),
-                new Dictionary<string, object>()
-                {
-                    ["X"] = 0,
-                    ["Y"] = 0,
-                    ["Width"] = 1,
-                    ["Height"] = 1,
-                });
         }
     }
 }

@@ -7,13 +7,12 @@ using Autofac;
 using Macerus.Plugins.Features.GameObjects.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
-using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
-using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Generation;
@@ -32,6 +31,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
     public sealed class LootGeneratorTests
     {
         private static readonly MacerusContainer _container;
+        private static readonly TestAmenities _testAmenities;
         private static readonly Lazy<Dictionary<string, IItemDefinition>> _lazyAllowNormalItems;
         private static readonly Lazy<Dictionary<string, IItemDefinition>> _lazyAllowMagicItems;
         private static readonly ILootGenerator _lootGenerator;
@@ -42,6 +42,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
         static LootGeneratorTests()
         {
             _container = new MacerusContainer();
+            _testAmenities = new TestAmenities(_container);
             _lazyAllowNormalItems = new Lazy<Dictionary<string, IItemDefinition>>(() =>
             {
                 var filterContextFactory = _container.Resolve<IFilterContextFactory>();
@@ -138,7 +139,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
         [Fact]
         public void GenerateLoot_PlayerStatsRequiredPlayerPresentStatsMet_ExpectedDropTable()
         {
-            UsingPlayer(player =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
             {
                 player
                     .GetOnly<IHasMutableStatsBehavior>()
@@ -164,7 +165,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
         [Fact]
         public void GenerateLoot_PlayerStatsRequiredPlayerPresentStatsNotMet_ThrowsNoValidTable()
         {
-            UsingPlayer(player =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
             {
                 player
                     .GetOnly<IHasMutableStatsBehavior>()
@@ -185,28 +186,6 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                     .GenerateLoot(context)
                     .ToArray());
             });
-        }
-
-        private void UsingPlayer(Action<IGameObject> callback)
-        {
-            var actor = _actorFactory.Create(
-                new IdentifierBehavior()
-                {
-                    Id = new StringIdentifier("player")
-                },
-                Enumerable.Empty<IBehavior>());
-
-            _mapGameObjectManager.MarkForAddition(actor);
-            try
-            {
-                _mapGameObjectManager.Synchronize();
-                callback.Invoke(actor);
-            }
-            finally
-            {
-                _mapGameObjectManager.MarkForRemoval(actor);
-                _mapGameObjectManager.Synchronize();
-            }
         }
 
         public sealed class TestModule : SingleRegistrationModule

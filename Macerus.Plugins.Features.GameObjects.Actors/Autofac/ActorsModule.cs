@@ -2,8 +2,6 @@
 
 using Macerus.Plugins.Features.GameObjects.Actors.Animations;
 using Macerus.Plugins.Features.GameObjects.Actors.LightRadius;
-using Macerus.Plugins.Features.GameObjects.Actors.Npc;
-using Macerus.Plugins.Features.GameObjects.Actors.Player;
 using Macerus.Plugins.Features.GameObjects.Actors.Serialization.Newtonsoft;
 
 using ProjectXyz.Framework.Autofac;
@@ -23,10 +21,6 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<ActorBehaviorsProvider>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
                 .RegisterType<InitialStateActorBehaviorsInterceptor>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
@@ -40,14 +34,6 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Autofac
                 .SingleInstance();
             builder
                 .RegisterType<ActorDeathAnimationSystem>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
-                .RegisterType<ActorTemplateRepository>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
-                .RegisterType<PlayerTemplateRepository>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder

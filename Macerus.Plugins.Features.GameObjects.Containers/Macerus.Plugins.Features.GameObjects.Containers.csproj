@@ -30,7 +30,6 @@
     <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Api\Macerus.Plugins.Features.GameObjects.Actors.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Containers.Api\Macerus.Plugins.Features.GameObjects.Containers.Api.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Containers.Sounds\Macerus.Plugins.Features.GameObjects.Containers.Sounds.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Api\Macerus.Plugins.Features.GameObjects.Items.Generation.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Interactions.Api\Macerus.Plugins.Features.Interactions.Api.csproj" />
     <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj" />

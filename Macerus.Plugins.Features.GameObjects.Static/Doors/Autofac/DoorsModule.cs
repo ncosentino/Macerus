@@ -9,10 +9,6 @@ namespace Macerus.Plugins.Features.GameObjects.Static.Doors.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<DoorInteractableBehaviorProvider>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
                 .RegisterType<DoorInteractionHandler>()
                 .AsImplementedInterfaces()
                 .SingleInstance();

@@ -55,17 +55,8 @@ namespace Macerus.Tests.Plugins.Features.GameObjects
         [Fact]
         private void SerializeAndDeserialize_Player_ExpectedResults()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
             {
-                var mapManager = _container.Resolve<IMapManager>();
-                var mapGameObjectManager = _container.Resolve<IReadOnlyMapGameObjectManager>();
-
-                // FIXME: this is just to get the player
-                mapManager.SwitchMap(new StringIdentifier("swamp"));
-                var player = mapGameObjectManager
-                    .GameObjects
-                    .Single(x => x.Has<IPlayerControlledBehavior>());
-
                 var result = Exercise(player);
 
                 Assert.NotNull(result.Item1);

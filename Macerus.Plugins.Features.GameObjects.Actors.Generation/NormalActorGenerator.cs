@@ -14,6 +14,7 @@ using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Shared.Framework;
 using ProjectXyz.Shared.Game.Behaviors;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
 {
@@ -52,12 +53,22 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
                 var generatorComponents = actorDefinition
                     .GeneratorComponents
                     .Concat(additionalActorGeneratorComponents);
-                var definitionBehaviors = _generatorComponentToBehaviorConverter.Convert(
-                    Enumerable.Empty<IBehavior>(),
-                    generatorComponents);
+                
+                // FIXME: this whole part around the ID feels like complete
+                // trash. what's the right balance between allowing definitions
+                // to specify the ID but also being safe to ensure there is one?
+                var definitionBehaviors = _generatorComponentToBehaviorConverter
+                    .Convert(
+                        Enumerable.Empty<IBehavior>(),
+                        generatorComponents)
+                    .ToArray();
+                var identifierBehavior = definitionBehaviors
+                    .TakeTypes<IReadOnlyIdentifierBehavior>()
+                    .SingleOrDefault()
+                    ?? new IdentifierBehavior(new StringIdentifier(Guid.NewGuid().ToString())); // FIXME: do we really need a guid here...
                 var actor = _actorFactory.Create(
-                    new IdentifierBehavior(new StringIdentifier(Guid.NewGuid().ToString())), // FIXME: do we really need a guid here...
-                    definitionBehaviors);
+                    identifierBehavior,
+                    definitionBehaviors.Except(new[] { identifierBehavior }));
                 yield return actor;
             }
         }

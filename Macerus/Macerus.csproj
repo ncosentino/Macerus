@@ -25,9 +25,6 @@
     <PackageReference Include="ProjectXyz" Version="1.0.*" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\libraries\Tiled.Net\Tiled.Net.Dto\Tiled.Net.Dto.csproj" />
-    <ProjectReference Include="..\..\..\..\libraries\Tiled.Net\Tiled.Net.Tmx.Xml\Tiled.Net.Tmx.Xml.csproj" />
-    <ProjectReference Include="..\..\..\..\libraries\Tiled.Net\Tiled.Net\Tiled.Net.csproj" />
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
     <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
     <ProjectReference Include="..\Macerus.Game.Api\Macerus.Game.Api.csproj" />
@@ -63,7 +60,6 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items\Macerus.Plugins.Features.GameObjects.Items.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Skills.Api\Macerus.Plugins.Features.GameObjects.Skills.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.Default.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Static.Api\Macerus.Plugins.Features.GameObjects.Static.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Static\Macerus.Plugins.Features.GameObjects.Static.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Gui.Api\Macerus.Plugins.Features.Gui.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Gui.Default\Macerus.Plugins.Features.Gui.Default.csproj" />
@@ -75,7 +71,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.Inventory.Default\Macerus.Plugins.Features.Inventory.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.MainMenu.Api\Macerus.Plugins.Features.MainMenu.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.MainMenu.Default\Macerus.Plugins.Features.MainMenu.Default.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.Mapping.TiledNet\Macerus.Plugins.Features.Mapping.TiledNet.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Mapping.Default\Macerus.Plugins.Features.Mapping.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Mapping\Macerus.Plugins.Features.Mapping.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.StatusBar.Api\Macerus.Plugins.Features.StatusBar.Api.csproj" />

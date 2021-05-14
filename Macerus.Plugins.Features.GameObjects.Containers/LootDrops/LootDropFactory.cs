@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Macerus.Api.Behaviors.Filtering;
-using Macerus.Plugins.Features.GameObjects.Containers.Api;
+using Macerus.Api.GameObjects;
 using Macerus.Plugins.Features.GameObjects.Containers.Api.LootDrops;
 
-using NexusLabs.Contracts;
-
-using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
+using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
@@ -17,23 +15,14 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
     public sealed class LootDropFactory : ILootDropFactory
     {
         private readonly ILootDropIdentifiers _lootDropIdentifiers;
-        private readonly IContainerRepository _containerRepository;
-        private readonly IContainerIdentifiers _containerIdentifiers;
-        private readonly IFilterContextFactory _filterContextFactory;
-        private readonly IFilterContextAmenity _filterContextAmenity;
+        private readonly IGameObjectRepositoryAmenity _gameObjectRepositoryAmenity;
 
         public LootDropFactory(
             ILootDropIdentifiers lootDropIdentifiers,
-            IContainerRepository containerRepository,
-            IContainerIdentifiers containerIdentifiers,
-            IFilterContextFactory filterContextFactory,
-            IFilterContextAmenity filterContextAmenity)
+            IGameObjectRepositoryAmenity gameObjectRepositoryAmenity)
         {
             _lootDropIdentifiers = lootDropIdentifiers;
-            _containerRepository = containerRepository;
-            _containerIdentifiers = containerIdentifiers;
-            _filterContextFactory = filterContextFactory;
-            _filterContextAmenity = filterContextAmenity;
+            _gameObjectRepositoryAmenity = gameObjectRepositoryAmenity;
         }
 
         public IGameObject CreateLoot(
@@ -54,29 +43,12 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
             bool automaticInteraction,
             IEnumerable<IGameObject> items)
         {
-            var filterContext = _filterContextFactory.CreateFilterContextForSingle();
-            // note: if this seems redundant, it's because repos can handle 
-            // multiple types if they choose... don't forget it! :)
-            filterContext = _filterContextAmenity.ExtendWithGameObjectTypeIdFilter(
-                filterContext,
-                _containerIdentifiers.ContainerTypeIdentifier);
-            filterContext = _filterContextAmenity.ExtendWithGameObjectTemplateIdFilter(
-                filterContext,
-                _lootDropIdentifiers.LootDropTemplateId);
-
-            var lootObject = _containerRepository.CreateFromTemplate(
-                filterContext,
-                new Dictionary<string, object>()
+            var lootObject = _gameObjectRepositoryAmenity.CreateGameObjectFromTemplate(
+                _lootDropIdentifiers.LootDropTemplateId,
+                new IBehavior[]
                 {
-                    ["X"] = worldX,
-                    ["Y"] = worldY,
-                    ["Width"] = 0.25, // FIXME: why is it that 1x1 tile looks huge
-                    ["Height"] = 0.25,
-                    ["Collisions"] = false,
-                    ["DestroyOnUse"] = true,
-                    ["AutomaticInteraction"] = automaticInteraction,
-                    ["TransferItemsOnActivate"] = true,
-                    ["PrefabId"] = "Container/LootDrop",
+                    new ContainerInteractableBehavior(automaticInteraction, true, true),
+                    new PositionBehavior(worldX, worldY),
                 });
 
             var itemContainerBehavior = lootObject.GetOnly<IItemContainerBehavior>();

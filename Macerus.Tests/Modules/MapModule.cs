@@ -3,7 +3,7 @@ using System.IO;
 
 using Autofac;
 
-using Macerus.Plugins.Features.Mapping.TiledNet;
+using Macerus.Plugins.Features.Mapping;
 
 using ProjectXyz.Framework.Autofac;
 
@@ -47,7 +47,7 @@ namespace Macerus.Tests.Modules
             public string ResourcesRoot => _lazyResourceRoot.Value.FullName;
         }
 
-        public sealed class MapResourceLoader : ITiledMapResourceLoader
+        public sealed class MapResourceLoader : IMapResourceLoader
         {
             private readonly IMappingAssetPaths _mappingAssetPaths;
 

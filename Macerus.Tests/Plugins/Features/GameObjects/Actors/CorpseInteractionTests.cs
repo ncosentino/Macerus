@@ -4,8 +4,8 @@ using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Encounters;
+using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
-using Macerus.Plugins.Features.GameObjects.Actors.Npc;
 using Macerus.Plugins.Features.Interactions.Api;
 
 using ProjectXyz.Api.GameObjects;
@@ -29,7 +29,6 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
         private static readonly IEncounterManager _encounterManager;
         private static readonly IMacerusActorIdentifiers _actorIdentifiers;
         private static readonly IInteractionHandlerFacade _interactionHandler;
-        private static readonly IMapManager _mapManager;
 
         static CorpseInteractionTests()
         {
@@ -43,22 +42,14 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
             _encounterManager = _container.Resolve<IEncounterManager>();
             _actorIdentifiers = _container.Resolve<IMacerusActorIdentifiers>();
             _interactionHandler = _container.Resolve<IInteractionHandlerFacade>();
-            _mapManager = _container.Resolve<IMapManager>();
         }
 
-        private void Setup(out IGameObject player, out IGameObject skeleton)
+        private void Setup(out IGameObject skeleton)
         {
-            // FIXME: this is just a temporary hack because the player is templated from here
-            _mapManager.SwitchMap(new StringIdentifier("swamp"));
-
             var filterContext = _filterContextAmenity.CreateNoneFilterContext();
             _encounterManager.StartEncounter(
                 filterContext,
                 new StringIdentifier("test-encounter"));
-
-            player = _mapGameObjectManager
-                .GameObjects
-                .FirstOrDefault(x => x.Has<IPlayerControlledBehavior>());
 
             skeleton = _mapGameObjectManager
                 .GameObjects
@@ -70,9 +61,9 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
         [Fact]
         private void Interact_NotDead_NoItemsTransfered()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
             {
-                Setup(out var player, out var skeleton);
+                Setup(out var skeleton);
 
                 var skeletonInventory = skeleton
                     .Get<IItemContainerBehavior>()
@@ -110,9 +101,9 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
         [Fact]
         private void Interact_Dead_AllItemsTransfered()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
             {
-                Setup(out var player, out var skeleton);
+                Setup(out var skeleton);
 
                 var skeletonInventory = skeleton
                     .Get<IItemContainerBehavior>()

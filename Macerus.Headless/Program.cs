@@ -11,7 +11,6 @@ using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
-using Macerus.Plugins.Features.GameObjects.Actors.Npc;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Interactions.Api;
 using Macerus.Plugins.Features.Inventory.Api;
@@ -29,6 +28,12 @@ using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Plugins.Features.TurnBased.Api;
 using ProjectXyz.Shared.Framework;
+using ProjectXyz.Api.Data.Serialization;
+using System.Text;
+using System.IO;
+using ProjectXyz.Plugins.Features.Behaviors.Default;
+using Macerus.Shared.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Actors;
 
 namespace Macerus.Headless
 {
@@ -38,7 +43,41 @@ namespace Macerus.Headless
         {
             var container = new MacerusContainer();
 
-            new CombatExercise().Go(container);
+            new ConvertMapExercise().Go(container);
+        }
+    }
+
+    public sealed class ConvertMapExercise
+    {
+        public void Go(MacerusContainer container)
+        {
+            var serializer = container.Resolve<ISerializer>();
+            //var filterContextAmenity = container.Resolve<IFilterContextAmenity>();
+            //var mapRepositoryFacade = container.Resolve<IMapRepositoryFacade>();
+            //var mapGameObjectRepository = container.Resolve<IMapGameObjectRepository>();
+            //var filterContext = filterContextAmenity.CreateFilterContextForSingle(
+            //    filterContextAmenity.CreateRequiredAttribute(
+            //        container.Resolve<IMapIdentifiers>().FilterContextMapIdentifier,
+            //        new StringIdentifier("test_encounter_map")));
+            //var map = mapRepositoryFacade.LoadMaps(filterContext).Single();
+
+            //using (var outStream = new FileStream("map.json", FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+            //{
+            //    serializer.Serialize(outStream, map, Encoding.UTF8);
+            //}
+
+            //var gameObjects = mapGameObjectRepository
+            //    .LoadForMap(new StringIdentifier("test_encounter_map"))
+            //    .ToArray();
+            //using (var outStream = new FileStream("map.objects.json", FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+            //{
+            //    serializer.Serialize(outStream, gameObjects, Encoding.UTF8);
+            //}
+
+            using (var outStream = new FileStream("spawn.json", FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+            {
+                serializer.Serialize(outStream, new GameObject(new[] { new SpawnTemplatePropertiesBehavior(new GameObject(new[] { new BoxColliderBehavior(1, 2, 3, 4, true) })) }), Encoding.UTF8);
+            }
         }
     }
 
@@ -214,8 +253,8 @@ namespace Macerus.Headless
             }
             else
             {
-                var targetLocation = target.GetOnly<IWorldLocationBehavior>();
-                var playerLocation = player.GetOnly<IWorldLocationBehavior>();
+                var targetLocation = target.GetOnly<IPositionBehavior>();
+                var playerLocation = player.GetOnly<IPositionBehavior>();
                 var playerMovement = player.GetOnly<IMovementBehavior>();
 
                 logger.Info($"Player targets the enemy at: ({targetLocation.X}, {targetLocation.Y})");
@@ -237,7 +276,7 @@ namespace Macerus.Headless
                 }
 
                 var playerMovement = player.GetOnly<IMovementBehavior>();
-                var playerLocation = player.GetOnly<IWorldLocationBehavior>();
+                var playerLocation = player.GetOnly<IPositionBehavior>();
                 if (playerMovement.PointsToWalk.Count < 1)
                 {
                     var skill = skillAmenity.GetSkillById(new StringIdentifier("fireball"));
@@ -288,7 +327,7 @@ namespace Macerus.Headless
 
                 foreach (var gameObject in gameObjects)
                 {
-                    if (!_behaviorFinder.TryFind<IReadOnlyMovementBehavior, IWorldLocationBehavior>(
+                    if (!_behaviorFinder.TryFind<IReadOnlyMovementBehavior, IPositionBehavior>(
                         gameObject, 
                         out var behaviors))
                     {
@@ -298,7 +337,7 @@ namespace Macerus.Headless
                     var movementBehavior = behaviors.Item1;
                     var locationBehavior = behaviors.Item2;
 
-                    locationBehavior.SetLocation(
+                    locationBehavior.SetPosition(
                         locationBehavior.X + movementBehavior.VelocityX * elapsedSeconds,
                         locationBehavior.Y + movementBehavior.VelocityY * elapsedSeconds);
                 }

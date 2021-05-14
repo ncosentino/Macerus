@@ -7,8 +7,10 @@
   <ItemGroup>
     <None Remove="Graphics\Actors\LpcUniversal\player_male.png" />
     <None Remove="Graphics\Actors\LpcUniversal\skeleton_basic.png" />
-    <None Remove="Mapping\Maps\swamp_tmx.txt" />
-    <None Remove="Mapping\Maps\test_encounter_map_tmx.txt" />
+    <None Remove="Mapping\Maps\swamp.objects_json.txt" />
+    <None Remove="Mapping\Maps\swamp_json.txt" />
+    <None Remove="Mapping\Maps\test_encounter_map.objects_json.txt" />
+    <None Remove="Mapping\Maps\test_encounter_map_json.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,10 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Macerus.Game.GameObjects\Macerus.Game.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Api\Macerus.Plugins.Features.Combat.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Default\Macerus.Plugins.Features.Combat.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Encounters\Macerus.Plugins.Features.Encounters.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Containers\Macerus.Plugins.Features.GameObjects.Containers.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments\Macerus.Plugins.Features.GameObjects.Enchantments.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.csproj" />
@@ -28,7 +32,8 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Socketing\Macerus.Plugins.Features.GameObjects.Items.Socketing.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items\Macerus.Plugins.Features.GameObjects.Items.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.Default.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.Mapping.TiledNet\Macerus.Plugins.Features.Mapping.TiledNet.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Static\Macerus.Plugins.Features.GameObjects.Static.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Mapping.Default\Macerus.Plugins.Features.Mapping.Default.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,10 +43,16 @@
     <Content Include="Graphics\Actors\LpcUniversal\skeleton_basic.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Mapping\Maps\test_encounter_map_tmx.txt">
+    <Content Include="Mapping\Maps\swamp.objects_json.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Mapping\Maps\swamp_tmx.txt">
+    <Content Include="Mapping\Maps\swamp_json.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Mapping\Maps\test_encounter_map.objects_json.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Mapping\Maps\test_encounter_map_json.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -50,11 +50,8 @@ namespace Macerus.Tests.Plugins.Features.Encounters
         [Fact]
         private void StartEncounter_TestEncounter_ExpectedState()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
             {
-                // FIXME: this forces player spawn
-                _mapManager.SwitchMap(new StringIdentifier("swamp"));
-
                 var filterContext = _filterContextProvider.GetContext();
                 _encounterManager.StartEncounter(
                     filterContext,
@@ -80,11 +77,8 @@ namespace Macerus.Tests.Plugins.Features.Encounters
         [Fact]
         private void EndCombat_TestEncounterPlayerWins_TriggerOnCombatEndSpawners()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
             {
-                // FIXME: this forces player spawn
-                _mapManager.SwitchMap(new StringIdentifier("swamp"));
-
                 var filterContext = _filterContextProvider.GetContext();
                 _encounterManager.StartEncounter(
                     filterContext,
@@ -127,11 +121,8 @@ namespace Macerus.Tests.Plugins.Features.Encounters
         [Fact]
         private void EndCombat_UseReturnDoor_BackToStartMapAtSpecifiedLocation()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
             {
-                // FIXME: this forces player spawn
-                _mapManager.SwitchMap(new StringIdentifier("swamp"));
-
                 var filterContext = _filterContextProvider.GetContext();
                 _encounterManager.StartEncounter(
                     filterContext,
@@ -142,9 +133,6 @@ namespace Macerus.Tests.Plugins.Features.Encounters
                     new Dictionary<int, IReadOnlyCollection<IGameObject>>());
                 _gameEngine.Update();
 
-                var player = _mapGameObjectManager
-                    .GameObjects
-                    .Single(x => x.Has<IPlayerControlledBehavior>());
                 var door = _mapGameObjectManager
                     .GameObjects
                     .Single(x => x.Has<DoorInteractableBehavior>())

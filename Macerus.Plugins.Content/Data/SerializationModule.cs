@@ -4,8 +4,11 @@ using System.Linq;
 
 using Autofac;
 
+using Macerus.Plugins.Features.Encounters.Triggers;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
-using Macerus.Plugins.Features.Mapping.TiledNet;
+using Macerus.Plugins.Features.GameObjects.Static.Doors;
+using Macerus.Plugins.Features.Mapping;
+using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
@@ -45,16 +48,26 @@ namespace Macerus.Plugins.Content.Data
                         [typeof(RangeFilterAttributeValue)] = "RangeFilterAttributeValue",
                         [typeof(CalculationPriority<int>)] = "IntCalculationPriority",
                         [typeof(IdentifierBehavior)] = "IdentifierBehavior",
+                        [typeof(TypeIdentifierBehavior)] = "TypeIdBehavior",
+                        [typeof(TemplateIdentifierBehavior)] = "TemplateIdBehavior",
+                        [typeof(HasPrefabResourceIdBehavior)] = "PrefabIdBehavior",
+                        [typeof(PositionBehavior)] = "pos",
+                        [typeof(SizeBehavior)] = "size",
+                        [typeof(BoxColliderBehavior)] = "bcollide",
+                        [typeof(CircleColliderBehavior)] = "ccollide",
+                        [typeof(DoorInteractableBehavior)] = "DoorBehavior",
+                        [typeof(TileResourceBehavior)] = "tileres",
+                        [typeof(EncounterTriggerPropertiesBehavior)] = "EncounterTrigger",
+                        [typeof(IgnoreSavingGameObjectStateBehavior)] = "IgnoreSavingGameObjectStateBehavior",
+                        [typeof(HasFogOfWarBehavior)] = "HasFogOfWarBehavior",                        
                     };
-                    mapping.AddRange(WithCollectionMappings<TileResourceComponent>("TileResourceComponent"));
                     mapping.AddRange(WithCollectionMappings<MapLayersBehavior>("MapLayersBehavior"));
                     mapping.AddRange(WithCollectionMappings<MapLayer>("MapLayer"));
-                    mapping.AddRange(WithCollectionMappings<MapTile>("MapTile"));
                     mapping.AddRange(WithCollectionMappings<StringIdentifier>("sid"));
                     mapping.AddRange(WithCollectionMappings<IntIdentifier>("iid"));
+                    mapping.AddRange(WithCollectionMappings<Interval<double>>("intervald"));
                     mapping.AddRange(WithCollectionMappings<GameObject>("obj"));
                     mapping.AddRange(WithCollectionMappings<IMapLayer>("IMapLayer"));
-                    mapping.AddRange(WithCollectionMappings<IMapTile>("IMapTile"));
                     mapping.AddRange(WithCollectionMappings<IIdentifier>("id"));
                     mapping.AddRange(WithCollectionMappings<IGameObject>("iobj"));
                     mapping.AddRange(WithCollectionMappings<IBehavior>("IBehavior"));

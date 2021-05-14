@@ -40,7 +40,7 @@ namespace Macerus.Plugins.Content.SpawnTables
                                     gameObjectIdentifiers.FilterContextTypeId,
                                     actorIdentifiers.ActorTypeIdentifier),
                                 filterContextAmenity.CreateRequiredAttribute(
-                                    gameObjectIdentifiers.FilterContextTemplateId,
+                                    actorIdentifiers.ActorDefinitionIdentifier,
                                     new StringIdentifier("test-skeleton")),
                                 filterContextAmenity.CreateRequiredAttribute(
                                     new StringIdentifier("affix-type"),

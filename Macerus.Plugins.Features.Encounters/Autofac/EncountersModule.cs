@@ -7,7 +7,6 @@ using Macerus.Plugins.Features.Encounters.SpawnTables;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Actors;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked;
-using Macerus.Plugins.Features.Encounters.Triggers.GamObjects.Static;
 
 using ProjectXyz.Framework.Autofac;
 
@@ -51,14 +50,6 @@ namespace Macerus.Plugins.Features.Encounters.Autofac
                 .SingleInstance();
             builder
                 .RegisterType<EncounterDefinitionRepositoryFacade>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
-                .RegisterType<EncounterTriggerBehaviorsProvider>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
-                .RegisterType<EncounterSpawnLocationBehaviorsProvider>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder

@@ -3,7 +3,7 @@ using System.IO;
 
 using Autofac;
 
-using Macerus.Plugins.Features.Mapping.TiledNet;
+using Macerus.Plugins.Features.Mapping;
 
 using ProjectXyz.Framework.Autofac;
 
@@ -48,7 +48,7 @@ namespace Macerus.Headless
         public string ResourcesRoot => _lazyResourceRoot.Value.FullName;
     }
 
-    public sealed class MapResourceLoader : ITiledMapResourceLoader
+    public sealed class MapResourceLoader : IMapResourceLoader
     {
         private readonly IMappingAssetPaths _mappingAssetPaths;
 
@@ -62,6 +62,11 @@ namespace Macerus.Headless
             var fullPath = Path.Combine(
                 _mappingAssetPaths.ResourcesRoot,
                 $"{pathToResource}.txt");
+            if (!File.Exists(fullPath))
+            {
+                return null;
+            }
+
             return File.OpenRead(fullPath);
         }
     }

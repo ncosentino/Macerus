@@ -5,7 +5,6 @@ using Macerus.Api.Behaviors;
 using Macerus.Api.GameObjects;
 
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Game.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Shared.Framework;
@@ -35,7 +34,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
         [Fact]
         private void SwitchMap_SameMap_NoOpSamePlayer()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(___ =>
             {
                 _mapManager.SwitchMap(new StringIdentifier("swamp"));
 
@@ -64,7 +63,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
         [Fact]
         private void SwitchMap_IntermediateThenBackToSameMap_PlayerPersistsAcrossMaps()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(_ =>
             {
                 _mapManager.SwitchMap(new StringIdentifier("swamp"));
 

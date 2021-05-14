@@ -1,33 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Api.GameObjects;
+using Macerus.Shared.Behaviors;
 
 using NexusLabs.Contracts;
 
 using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Game.Api;
 
 namespace Macerus.Game
 {
     public sealed class GameObjectRepositoryAmenity : IGameObjectRepositoryAmenity
     {
-        private readonly IGameObjectTemplateRepositoryFacade _gameObjectTemplateRepositoryFacade;
+        private readonly IGameObjectTemplateRepository _gameObjectTemplateRepository;
         private readonly IGameObjectRepository _gameObjectRepository;
+        private readonly IGameObjectFactory _gameObjectFactory;
         private readonly IFilterContextAmenity _filterContextAmenity;
         private readonly IFilterContextFactory _filterContextFactory;
 
         public GameObjectRepositoryAmenity(
-            IGameObjectTemplateRepositoryFacade gameObjectTemplateRepositoryFacade,
+            IGameObjectTemplateRepository gameObjectTemplateRepository,
             IGameObjectRepository gameObjectRepository,
+            IGameObjectFactory gameObjectFactory,
             IFilterContextAmenity filterContextAmenity,
             IFilterContextFactory filterContextFactory)
         {
-            _gameObjectTemplateRepositoryFacade = gameObjectTemplateRepositoryFacade;
+            _gameObjectTemplateRepository = gameObjectTemplateRepository;
             _gameObjectRepository = gameObjectRepository;
+            _gameObjectFactory = gameObjectFactory;
             _filterContextAmenity = filterContextAmenity;
             _filterContextFactory = filterContextFactory;
         }
@@ -55,21 +61,31 @@ namespace Macerus.Game
         }
 
         public IGameObject CreateGameObjectFromTemplate(
-            IIdentifier typeId,
             IIdentifier templateId,
-            IReadOnlyDictionary<string, object> properties)
+            IEnumerable<IBehavior> additionalBehaviors)
         {
             var filterContext = _filterContextFactory.CreateFilterContextForSingle();
-            filterContext = _filterContextAmenity.ExtendWithGameObjectTypeIdFilter(
-                filterContext,
-                typeId);
             filterContext = _filterContextAmenity.ExtendWithGameObjectTemplateIdFilter(
                 filterContext,
                 templateId);
-            var gameObject = _gameObjectTemplateRepositoryFacade.CreateFromTemplate(
-                filterContext,
-                properties);
-            return gameObject;
+            var templates = _gameObjectTemplateRepository
+                .GetTemplates(filterContext)
+                .ToArray();
+            Contract.Requires(
+                templates.Length == 1,
+                $"Expecting exactly 1 template to match ID '{templateId}' but there " +
+                $"were {templates.Length}.");
+            var template = templates.Single();
+
+            // FIXME: do we need to handle merging behaviors and other fun stuff?
+            var newBehaviorTypes = new HashSet<Type>(additionalBehaviors.Select(x => x.GetType()));
+            var newGameObject = _gameObjectFactory
+                .Create(template
+                    .Behaviors
+                    .Where(x => !newBehaviorTypes.Contains(x.GetType()))
+                    .Concat(additionalBehaviors)
+                    .Concat(new[] { new CreatedFromTemplateBehavior(templateId) }));
+            return newGameObject;
         }
     }
 }

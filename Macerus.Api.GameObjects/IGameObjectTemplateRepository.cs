@@ -7,8 +7,6 @@ namespace Macerus.Api.GameObjects
 {
     public interface IGameObjectTemplateRepository
     {
-        IGameObject CreateFromTemplate(
-            IFilterContext filterContext,
-            IReadOnlyDictionary<string, object> properties);
+        IEnumerable<IGameObject> GetTemplates(IFilterContext filterContext);
     }
 }

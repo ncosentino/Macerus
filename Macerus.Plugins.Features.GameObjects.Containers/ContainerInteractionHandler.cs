@@ -37,6 +37,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
             IGameObject actor,
             IInteractableBehavior behavior)
         {
+            var interactableBehavior = (IContainerInteractableBehavior)behavior;
             var interactableObject = behavior.Owner;
 
             var actorInventory = actor
@@ -48,20 +49,15 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
 
             var sourceItemContainer = interactableObject.GetOnly<IItemContainerBehavior>();
             Contract.RequiresNotNull(
-                actorInventory,
+                sourceItemContainer,
                 $"'{interactableObject}' did not have a single '{typeof(IItemContainerBehavior)}'.");
-
-            var properties = interactableObject.GetOnly<IReadOnlyContainerPropertiesBehavior>();
-            Contract.RequiresNotNull(
-                actorInventory,
-                $"'{interactableObject}' did not have a single '{typeof(IReadOnlyContainerPropertiesBehavior)}'.");
 
             GenerateNecessaryLoot(
                 interactableObject,
                 sourceItemContainer);
 
             // need a copy so we can iterate + remove
-            if (properties.TransferItemsOnActivate)
+            if (interactableBehavior.TransferItemsOnActivate)
             {
                 var itemsToTake = sourceItemContainer
                     .Items
@@ -73,7 +69,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 }
             }
 
-            if (properties.DestroyOnUse)
+            if (interactableBehavior.DestroyOnUse)
             {
                 _mapGameObjectManager.MarkForRemoval(interactableObject);
             }

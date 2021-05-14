@@ -1,5 +1,4 @@
-﻿
-using Macerus.Api.Behaviors;
+﻿using Macerus.Api.Behaviors;
 
 using ProjectXyz.Shared.Game.Behaviors;
 

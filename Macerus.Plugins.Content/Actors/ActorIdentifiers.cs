@@ -11,6 +11,8 @@ namespace Macerus.Plugins.Content.Actors
 
         public IIdentifier ActorTypeIdentifier { get; } = new StringIdentifier("actor");
 
+        public IIdentifier ActorDefinitionIdentifier { get; } = new StringIdentifier("actor-id");
+
         public IIdentifier AnimationStandBack { get; } = new StringIdentifier("$actor$_stand_back");
 
         public IIdentifier AnimationStandForward { get; } = new StringIdentifier("$actor$_stand_forward");

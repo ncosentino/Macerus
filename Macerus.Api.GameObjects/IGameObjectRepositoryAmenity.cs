@@ -2,6 +2,7 @@
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 
 namespace Macerus.Api.GameObjects
 {
@@ -13,8 +14,7 @@ namespace Macerus.Api.GameObjects
         void SaveGameObject(IGameObject gameObject);
 
         IGameObject CreateGameObjectFromTemplate(
-            IIdentifier typeId,
             IIdentifier templateId,
-            IReadOnlyDictionary<string, object> properties);
+            IEnumerable<IBehavior> additionalBehaviors);
     }
 }

@@ -2,14 +2,12 @@
 
 using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
-using Macerus.Api.GameObjects;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;
@@ -45,7 +43,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                     _gameObjectIdentifiers.FilterContextTypeId,
                     _actorIdentifiers.ActorTypeIdentifier),
                 _filterContextAmenity.CreateRequiredAttribute(
-                    _gameObjectIdentifiers.FilterContextTemplateId,
+                    _actorIdentifiers.ActorDefinitionIdentifier,
                     new StringIdentifier("player")));
             var results = _actorGeneratorFacade
                 .GenerateActors(filterContext, Enumerable.Empty<IGeneratorComponent>())
@@ -55,6 +53,11 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
             var result = results.Single();
             Assert.NotNull(result);
             Assert.Single(result.Get<IPlayerControlledBehavior>());
+            var identifierBehavior = Assert.Single(result.Get<IReadOnlyIdentifierBehavior>());
+            // FIXME: this is a crutch and we should not have this hardcoded
+            // to player. this breaks when we want to do parties with multiple
+            // "players" instead of a single dedicated one
+            Assert.Equal(new StringIdentifier("player"), identifierBehavior.Id);
             _assertionHelpers.AssertActorRequirements(result);
             _assertionHelpers.AssertStatValue(
                 result,
@@ -71,7 +74,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                         _gameObjectIdentifiers.FilterContextTypeId,
                         _actorIdentifiers.ActorTypeIdentifier),
                     _filterContextAmenity.CreateRequiredAttribute(
-                        _gameObjectIdentifiers.FilterContextTemplateId,
+                        _actorIdentifiers.ActorDefinitionIdentifier,
                         new StringIdentifier("player"))),
                 3, 
                 5);
@@ -99,7 +102,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                     _gameObjectIdentifiers.FilterContextTypeId,
                     _actorIdentifiers.ActorTypeIdentifier),
                 _filterContextAmenity.CreateRequiredAttribute(
-                    _gameObjectIdentifiers.FilterContextTemplateId,
+                    _actorIdentifiers.ActorDefinitionIdentifier,
                     new StringIdentifier("test-skeleton")),
                 _filterContextAmenity.CreateRequiredAttribute(
                     new StringIdentifier("affix-type"),
@@ -141,7 +144,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                         _gameObjectIdentifiers.FilterContextTypeId,
                         _actorIdentifiers.ActorTypeIdentifier),
                     _filterContextAmenity.CreateRequiredAttribute(
-                        _gameObjectIdentifiers.FilterContextTemplateId,
+                        _actorIdentifiers.ActorDefinitionIdentifier,
                         new StringIdentifier("test-skeleton")),
                     _filterContextAmenity.CreateRequiredAttribute(
                         new StringIdentifier("affix-type"),

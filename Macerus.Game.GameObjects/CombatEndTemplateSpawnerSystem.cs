@@ -9,6 +9,7 @@ using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Combat.Api;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 
 namespace Macerus.Game
@@ -18,17 +19,20 @@ namespace Macerus.Game
         private readonly IMapGameObjectManager _mapGameObjectManager;
         private readonly IBehaviorFinder _behaviorFinder;
         private readonly IGameObjectRepositoryAmenity _gameObjectRepositoryAmenity;
+        private readonly IGameObjectFactory _gameObjectFactory;
         private readonly ILogger _logger;
 
         public CombatEndTemplateSpawnerSystem(
             IMapGameObjectManager mapGameObjectManager,
             IBehaviorFinder behaviorFinder,
             IObservableCombatTurnManager combatTurnManager,
-            IGameObjectRepositoryAmenity gameObjectRepositoryAmenity)
+            IGameObjectRepositoryAmenity gameObjectRepositoryAmenity,
+            IGameObjectFactory gameObjectFactory)
         {
             _mapGameObjectManager = mapGameObjectManager;
             _behaviorFinder = behaviorFinder;
             _gameObjectRepositoryAmenity = gameObjectRepositoryAmenity;
+            _gameObjectFactory = gameObjectFactory;
             combatTurnManager.CombatEnded += CombatTurnManager_CombatEnded;
         }
 
@@ -66,10 +70,13 @@ namespace Macerus.Game
                 .Where(x => x != null);
             foreach (var entry in spawnersToTrigger)
             {
-                var spawnedObject = _gameObjectRepositoryAmenity.CreateGameObjectFromTemplate(
-                    entry.SpawnTemplateProperties.TypeId,
-                    entry.SpawnTemplateProperties.TemplateId,
-                    entry.SpawnTemplateProperties.Properties);
+                var templateToSpawn = entry.SpawnTemplateProperties.TemplateToSpawn;
+                
+                var spawnedObject = templateToSpawn.TryGetFirst<ITemplateIdentifierBehavior>(out var templateIdentifierBehavior)
+                    ? _gameObjectRepositoryAmenity.CreateGameObjectFromTemplate(
+                        templateIdentifierBehavior.TemplateId,
+                        templateToSpawn.Behaviors)
+                    : _gameObjectFactory.Create(templateToSpawn.Behaviors);
                 _mapGameObjectManager.MarkForRemoval(entry.GameObject);
                 _mapGameObjectManager.MarkForAddition(spawnedObject);
             }

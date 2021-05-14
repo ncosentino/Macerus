@@ -7,7 +7,6 @@ using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
-using Macerus.Plugins.Features.GameObjects.Actors.Npc;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Shared.Behaviors;
 
@@ -67,6 +66,7 @@ namespace Macerus.Plugins.Content.Actors
                     var actorIdentifiers = c.Resolve<IMacerusActorIdentifiers>();
                     var combatTeamIdentifiers = c.Resolve<ICombatTeamIdentifiers>();
                     var skillAmenity = c.Resolve<ISkillAmenity>();
+                    var dynamicAnimationBehaviorFactory = c.Resolve<IDynamicAnimationBehaviorFactory>();
 
                     IReadOnlyCollection<IIdentifier> humanoidEquipSlotIds = new[]
                     {
@@ -93,7 +93,19 @@ namespace Macerus.Plugins.Content.Actors
                                 new StatefulBehaviorGeneratorComponent(() =>
                                     new IBehavior[]
                                     {
+                                        // FIXME: this is a CRUTCH and we should not support it because it completely breaks with party-support
+                                        new IdentifierBehavior(new StringIdentifier("player")),
+                                        dynamicAnimationBehaviorFactory.Create(
+                                            "$actor$",
+                                            new StringIdentifier(string.Empty),
+                                            true,
+                                            0),
+                                        new PositionBehavior(0, 0),
+                                        new SizeBehavior(1, 1),
+                                        new MovementBehavior(),
                                         new PlayerControlledBehavior(),
+                                        new AlwaysLoadWithMapBehavior(),
+                                        new SkipMapSaveStateBehavior(),
                                         new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),
                                         new ItemContainerBehavior(actorIdentifiers.BeltIdentifier),
                                         new CanEquipBehavior(humanoidEquipSlotIds),
@@ -126,7 +138,7 @@ namespace Macerus.Plugins.Content.Actors
                                     gameObjectIdentifiers.FilterContextTypeId,
                                     actorIdentifiers.ActorTypeIdentifier),
                                 filterContextAmenity.CreateRequiredAttribute(
-                                    gameObjectIdentifiers.FilterContextTemplateId,
+                                    actorIdentifiers.ActorDefinitionIdentifier,
                                     new StringIdentifier("player")),
                                 filterContextAmenity.CreateSupportedAttribute(
                                     new StringIdentifier("affix-type"),
@@ -138,6 +150,14 @@ namespace Macerus.Plugins.Content.Actors
                                 new StatefulBehaviorGeneratorComponent(() =>
                                     new IBehavior[]
                                     {
+                                        dynamicAnimationBehaviorFactory.Create(
+                                            "$actor$",
+                                            new StringIdentifier(string.Empty),
+                                            true,
+                                            0),
+                                        new PositionBehavior(0, 0),
+                                        new SizeBehavior(1, 1),
+                                        new MovementBehavior(),
                                         new CombatAIBehavior(),
                                         new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),
                                         new CanEquipBehavior(humanoidEquipSlotIds),
@@ -175,7 +195,7 @@ namespace Macerus.Plugins.Content.Actors
                                     gameObjectIdentifiers.FilterContextTypeId,
                                     actorIdentifiers.ActorTypeIdentifier),
                                 filterContextAmenity.CreateSupportedAttribute(
-                                    gameObjectIdentifiers.FilterContextTemplateId,
+                                    actorIdentifiers.ActorDefinitionIdentifier,
                                     new StringIdentifier("test-skeleton")),
                                 filterContextAmenity.CreateRequiredAttributeForAny(
                                     new StringIdentifier("affix-type"),

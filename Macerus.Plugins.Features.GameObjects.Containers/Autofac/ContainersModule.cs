@@ -1,7 +1,7 @@
 ﻿using Autofac;
 
 using Macerus.Plugins.Features.GameObjects.Containers.LootDrops;
-using Macerus.Plugins.Features.GameObjects.Containers.Sounds;
+
 using ProjectXyz.Framework.Autofac;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers.Autofac
@@ -11,30 +11,6 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<ContainerIdentifiers>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
-                .RegisterType<ContainerTemplateRepository>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
-               .RegisterType<ContainerBehaviorsInterceptorFacade>()
-               .AsImplementedInterfaces()
-               .SingleInstance();
-            builder
-               .RegisterType<ContainerBehaviorsProviderFacade>()
-               .AsImplementedInterfaces()
-               .SingleInstance();
-            builder
-              .RegisterType<ContainerFactory>()
-              .AsImplementedInterfaces()
-              .SingleInstance();
-            builder
-              .RegisterType<LootDropIdentifiers>()
-              .AsImplementedInterfaces()
-              .SingleInstance();
-            builder
                 .RegisterType<LootDropFactory>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
@@ -42,7 +18,6 @@ namespace Macerus.Plugins.Features.GameObjects.Containers.Autofac
                 .RegisterType<ContainerInteractionHandler>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
-            builder.RegisterType<ContainerMakesNoiseBehavior>(); // for factory
         }
     }
 }
