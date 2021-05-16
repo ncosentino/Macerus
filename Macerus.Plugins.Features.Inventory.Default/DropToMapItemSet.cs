@@ -10,6 +10,7 @@ using NexusLabs.Contracts;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 
 namespace Macerus.Plugins.Features.Inventory.Default
@@ -51,13 +52,13 @@ namespace Macerus.Plugins.Features.Inventory.Default
             IIdentifier itemIdToSwapOut,
             IGameObject itemToSwapIn)
         {
-            var playerWorldLocationBehavior = _mapGameObjectManager
+            var playerPositionBehavior = _mapGameObjectManager
                 .GameObjects
                 .First(x => x.Has<IPlayerControlledBehavior>())
-                .GetOnly<IReadOnlyWorldLocationBehavior>();
+                .GetOnly<IPositionBehavior>();
             var loot = _lootDropFactory.CreateLoot(
-                playerWorldLocationBehavior.X,
-                playerWorldLocationBehavior.Y,
+                playerPositionBehavior.X,
+                playerPositionBehavior.Y,
                 false,
                 new[]
                 {

@@ -1,6 +1,10 @@
-﻿namespace Macerus.Plugins.Features.Mapping.TiledNet
+﻿using ProjectXyz.Shared.Game.Behaviors;
+
+namespace Macerus.Plugins.Features.Mapping.TiledNet
 {
-    public sealed class TileResourceComponent : ITileResourceComponent
+    public sealed class TileResourceComponent :
+        BaseBehavior,
+        ITileResourceBehavior
     {
         public TileResourceComponent(
             string tilesetResourcePath,

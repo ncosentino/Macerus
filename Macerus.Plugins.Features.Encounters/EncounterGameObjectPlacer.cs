@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Stats;
 
@@ -11,6 +10,7 @@ using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 
 namespace Macerus.Plugins.Features.Encounters
 {
@@ -38,14 +38,14 @@ namespace Macerus.Plugins.Features.Encounters
 
         public void PlaceGameObjects(IEnumerable<IGameObject> gameObjectsToPlace)
         {
-            var spawnLocationEntries = _mapGameObjectManager
+            var spawnPositionEntries = _mapGameObjectManager
                 .GameObjects
                 .Select(x => x.Get<IEncounterSpawnLocationBehavior>().FirstOrDefault())
                 .Where(x => x != null)
                 .Select(x => new
                 {
                     AllowedTeams = x.AllowedTeams,
-                    WorldLocation = x.Owner.GetOnly<IReadOnlyWorldLocationBehavior>()
+                    Position = x.Owner.GetOnly<IReadOnlyPositionBehavior>()
                 })
                 .ToList();
             foreach (var gameObjectToPlace in gameObjectsToPlace)
@@ -54,27 +54,27 @@ namespace Macerus.Plugins.Features.Encounters
                     gameObjectToPlace,
                     _combatTeamIdentifiers.CombatTeamStatDefinitionId);
 
-                var applicableSpawnLocationEntries = spawnLocationEntries
+                var applicableSpawnLocationEntries = spawnPositionEntries
                     .Where(x => x.AllowedTeams.Contains(teamId))
                     .ToArray();
                 var selectedSpawnEntry = applicableSpawnLocationEntries[_random.Next(0, applicableSpawnLocationEntries.Length)];
-                var spawnLocation = selectedSpawnEntry.WorldLocation;
+                var spawnPosition = selectedSpawnEntry.Position;
 
-                var gameObjectLocation = gameObjectToPlace.GetOnly<IWorldLocationBehavior>();
-                gameObjectLocation.SetLocation(spawnLocation.X, spawnLocation.Y);
+                var gameObjectPosition = gameObjectToPlace.GetOnly<IPositionBehavior>();
+                gameObjectPosition.SetPosition(spawnPosition.X, spawnPosition.Y);
                 _logger.Debug(
-                    $"Set location of '{gameObjectToPlace}' to " +
-                    $"({gameObjectLocation.X},{gameObjectLocation.Y}).");
+                    $"Set position of '{gameObjectToPlace}' to " +
+                    $"({gameObjectPosition.X},{gameObjectPosition.Y}).");
 
-                spawnLocationEntries.Remove(selectedSpawnEntry);
-                _mapGameObjectManager.MarkForRemoval(spawnLocation.Owner);
+                spawnPositionEntries.Remove(selectedSpawnEntry);
+                _mapGameObjectManager.MarkForRemoval(spawnPosition.Owner);
                 _mapGameObjectManager.MarkForAddition(gameObjectToPlace);
             }
 
             // remove remaining spawn locations
-            foreach (var spawnLocationEntry in spawnLocationEntries)
+            foreach (var spawnPositionEntry in spawnPositionEntries)
             {
-                _mapGameObjectManager.MarkForRemoval(spawnLocationEntry.WorldLocation.Owner);
+                _mapGameObjectManager.MarkForRemoval(spawnPositionEntry.Position.Owner);
             }
 
             // force synchronization so later handlers can operate

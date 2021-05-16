@@ -1,8 +1,8 @@
-﻿using ProjectXyz.Plugins.Features.Mapping.Api;
+﻿using ProjectXyz.Api.GameObjects.Behaviors;
 
 namespace Macerus.Plugins.Features.Mapping.TiledNet
 {
-    public interface IKeyValuePairTileComponent : ITileComponent
+    public interface IKeyValuePairTileBehavior : IBehavior
     {
         string Key { get; }
 

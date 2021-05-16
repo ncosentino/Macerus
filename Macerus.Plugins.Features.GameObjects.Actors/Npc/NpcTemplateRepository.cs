@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 
@@ -14,6 +13,7 @@ using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors.Npc
@@ -78,15 +78,16 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Npc
                     },
                 }.Concat(generatedActor.Behaviors));
 
-            var worldLocation = npc.Get<IWorldLocationBehavior>().Single();
-            worldLocation.SetLocation(
+            var positionBehavior = npc.Get<IPositionBehavior>().Single();
+            positionBehavior.SetPosition(
                 properties.TryGetValue("X", out var rawX)
                     ? Convert.ToDouble(rawX, CultureInfo.InvariantCulture)
                     : 0,
                 properties.TryGetValue("Y", out var rawY)
                     ? Convert.ToDouble(rawY, CultureInfo.InvariantCulture)
                     : 0);
-            worldLocation.SetSize(
+            var sizeBehavior = npc.Get<ISizeBehavior>().Single();
+            sizeBehavior.SetSize(
                 properties.TryGetValue("Width", out var rawWidth)
                     ? Convert.ToDouble(rawWidth, CultureInfo.InvariantCulture)
                     : 1,

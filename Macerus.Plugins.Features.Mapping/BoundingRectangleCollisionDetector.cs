@@ -5,6 +5,7 @@ using System.Numerics;
 using Macerus.Api.Behaviors;
 
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 
 namespace Macerus.Plugins.Features.Mapping
@@ -27,12 +28,13 @@ namespace Macerus.Plugins.Features.Mapping
 
             foreach (var gameObject in _mapGameObjectManager.GameObjects)
             {
-                var worldLocationBehavior = gameObject.GetOnly<IWorldLocationBehavior>();
+                var positionBehavior = gameObject.GetOnly<IPositionBehavior>();
+                var sizeBehavior = gameObject.GetOnly<ISizeBehavior>();
                 var collisionBox = new Vector4(
-                    (float)(worldLocationBehavior.X - worldLocationBehavior.Width / 2),
-                    (float)(worldLocationBehavior.Y - worldLocationBehavior.Height / 2),
-                    (float)(worldLocationBehavior.X + worldLocationBehavior.Width / 2),
-                    (float)(worldLocationBehavior.Y + worldLocationBehavior.Height / 2));
+                    (float)(positionBehavior.X - sizeBehavior.Width / 2),
+                    (float)(positionBehavior.Y - sizeBehavior.Height / 2),
+                    (float)(positionBehavior.X + sizeBehavior.Width / 2),
+                    (float)(positionBehavior.Y + sizeBehavior.Height / 2));
                 if (ignoreLookup.Contains(collisionBox))
                 {
                     continue;

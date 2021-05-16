@@ -1,8 +1,8 @@
-﻿using ProjectXyz.Plugins.Features.Mapping.Api;
+﻿using ProjectXyz.Api.GameObjects.Behaviors;
 
 namespace Macerus.Plugins.Features.Mapping
 {
-    public interface ITileResourceComponent : ITileComponent
+    public interface ITileResourceBehavior : IBehavior
     {
         string TilesetResourcePath { get; }
 

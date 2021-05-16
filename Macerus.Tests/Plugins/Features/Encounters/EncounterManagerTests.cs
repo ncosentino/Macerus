@@ -155,9 +155,9 @@ namespace Macerus.Tests.Plugins.Features.Encounters
 
                 Assert.Equal(door.TransitionToMapId, _mapManager.ActiveMap.GetOnly<IIdentifierBehavior>().Id);
 
-                var playerLocation = player.GetOnly<IReadOnlyWorldLocationBehavior>();
-                Assert.Equal(door.TransitionToX.Value, playerLocation.X);
-                Assert.Equal(door.TransitionToY.Value, playerLocation.Y);
+                var playerPosition = player.GetOnly<IReadOnlyPositionBehavior>();
+                Assert.Equal(door.TransitionToX.Value, playerPosition.X);
+                Assert.Equal(door.TransitionToY.Value, playerPosition.Y);
             });
         }
     }

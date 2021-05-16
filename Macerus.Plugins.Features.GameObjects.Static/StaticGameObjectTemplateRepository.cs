@@ -68,13 +68,12 @@ namespace Macerus.Plugins.Features.GameObjects.Static
                 {
                     Id = new StringIdentifier($"{typeId}-{templateId}-{Guid.NewGuid()}"),
                 },
-                new WorldLocationBehavior()
-                {
-                    X = Convert.ToDouble(properties["X"], CultureInfo.InvariantCulture),
-                    Y = Convert.ToDouble(properties["Y"], CultureInfo.InvariantCulture),
-                    Width = Convert.ToDouble(properties["Width"], CultureInfo.InvariantCulture),
-                    Height = Convert.ToDouble(properties["Height"], CultureInfo.InvariantCulture),
-                },
+                new PositionBehavior(
+                    Convert.ToDouble(properties["X"], CultureInfo.InvariantCulture),
+                    Convert.ToDouble(properties["Y"], CultureInfo.InvariantCulture)),
+                new SizeBehavior(
+                    Convert.ToDouble(properties["Width"], CultureInfo.InvariantCulture),
+                    Convert.ToDouble(properties["Height"], CultureInfo.InvariantCulture)),
                 new StaticGameObjectPropertiesBehavior(properties),
                 new HasPrefabResourceIdBehavior(new StringIdentifier($"Mapping/Prefabs/{properties["PrefabId"]}")));
             return staticGameObject;

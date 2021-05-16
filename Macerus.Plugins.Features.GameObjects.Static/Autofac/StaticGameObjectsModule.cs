@@ -29,10 +29,6 @@ namespace Macerus.Plugins.Features.GameObjects.Static.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<SpawnTemplatePropertiesBehaviorProvider>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
                 .RegisterType<TriggerOnCombatEndBehaviorProvider>()
                 .AsImplementedInterfaces()
                 .SingleInstance();

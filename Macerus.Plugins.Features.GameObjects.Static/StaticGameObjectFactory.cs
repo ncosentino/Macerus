@@ -29,7 +29,8 @@ namespace Macerus.Plugins.Features.GameObjects.Static
             IReadOnlyTypeIdentifierBehavior typeIdentifierBehavior,
             IReadOnlyTemplateIdentifierBehavior templateIdentifierBehavior,
             IReadOnlyIdentifierBehavior identifierBehavior,
-            IReadOnlyWorldLocationBehavior worldLocationBehavior,
+            IPositionBehavior positionBehavior,
+            ISizeBehavior sizeBehavior,
             IReadOnlyStaticGameObjectPropertiesBehavior propertiesBehavior,
             IReadOnlyPrefabResourceIdBehavior prefabResourceIdBehavior)
         {
@@ -38,7 +39,8 @@ namespace Macerus.Plugins.Features.GameObjects.Static
                 typeIdentifierBehavior,
                 templateIdentifierBehavior,
                 identifierBehavior,
-                worldLocationBehavior,
+                positionBehavior,
+                sizeBehavior,
                 propertiesBehavior,
                 prefabResourceIdBehavior,
             };

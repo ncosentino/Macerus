@@ -84,13 +84,12 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 {
                     Id = new StringIdentifier($"{typeId}-{templateId}-{Guid.NewGuid()}"),
                 },
-                new WorldLocationBehavior()
-                {
-                    X = containerPropertiesBehavior.X,
-                    Y = containerPropertiesBehavior.Y,
-                    Width = containerPropertiesBehavior.Width,
-                    Height = containerPropertiesBehavior.Height,
-                },
+                new PositionBehavior(
+                    containerPropertiesBehavior.X,
+                    containerPropertiesBehavior.Y),
+                new SizeBehavior(
+                    containerPropertiesBehavior.Width,
+                    containerPropertiesBehavior.Height),
                 // FIXME: support checks for things like
                 // - drop table ID to use
                 // - whether or not it's deposit-supported or withdrawl-only

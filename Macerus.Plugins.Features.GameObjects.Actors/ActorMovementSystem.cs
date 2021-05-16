@@ -14,6 +14,7 @@ using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
@@ -54,12 +55,12 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             {
                 var movementBehavior = supportedEntry.Item1;
                 var dynamicAnimationBehavior = supportedEntry.Item2;
-                var worldLocationBehavior = supportedEntry.Item3;
+                var positionBehavior = supportedEntry.Item3;
 
                 InhibitNonTurnMovement(movementBehavior);
                 WalkPath(
                     movementBehavior,
-                    worldLocationBehavior,
+                    positionBehavior,
                     elapsedSeconds);
                 UpdateVelocity(
                     movementBehavior,
@@ -87,11 +88,11 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             }
         }
 
-        private IEnumerable<Tuple<IMovementBehavior, IDynamicAnimationBehavior, IWorldLocationBehavior>> GetSupportedEntries(IEnumerable<IGameObject> gameObjects)
+        private IEnumerable<Tuple<IMovementBehavior, IDynamicAnimationBehavior, IPositionBehavior>> GetSupportedEntries(IEnumerable<IGameObject> gameObjects)
         {
             foreach (var gameObject in gameObjects)
             {
-                Tuple<IMovementBehavior, IDynamicAnimationBehavior, IWorldLocationBehavior> requiredBehaviors;
+                Tuple<IMovementBehavior, IDynamicAnimationBehavior, IPositionBehavior> requiredBehaviors;
                 if (!_behaviorFinder.TryFind(
                     gameObject,
                     out requiredBehaviors))
@@ -278,7 +279,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
         private void WalkPath(
             IMovementBehavior movementBehavior,
-            IWorldLocationBehavior locationBehavior,
+            IPositionBehavior positionBehavior,
             double elapsedSeconds)
         {
             if (movementBehavior.PointsToWalk.Count < 1)
@@ -292,8 +293,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             double closeEnough = movementBehavior.PointsToWalk.Count == 1
                 ? 0.50
                 : 0.25;
-            if (Math.Abs(locationBehavior.X - currentWalkPoint.X) +
-                Math.Abs(locationBehavior.Y - currentWalkPoint.Y) < closeEnough)
+            if (Math.Abs(positionBehavior.X - currentWalkPoint.X) +
+                Math.Abs(positionBehavior.Y - currentWalkPoint.Y) < closeEnough)
             {
                 movementBehavior.CompleteWalkPoint();
 
@@ -321,28 +322,28 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             var previousThrottleY = movementBehavior.ThrottleY;
             var throttleX = 0d;
             var throttleY = 0d;
-            if (Math.Abs(locationBehavior.X - currentWalkPoint.X) < DEBOUNCE)
+            if (Math.Abs(positionBehavior.X - currentWalkPoint.X) < DEBOUNCE)
             {
                 throttleX = 0;
             }
-            else if (locationBehavior.X < currentWalkPoint.X)
+            else if (positionBehavior.X < currentWalkPoint.X)
             {
                 throttleX = throttleX < 0 ? 0 : previousThrottleX + DAMPENING_FACTOR * elapsedSeconds;
             }
-            else if (locationBehavior.X > currentWalkPoint.X)
+            else if (positionBehavior.X > currentWalkPoint.X)
             {
                 throttleX = throttleX > 0 ? 0 : previousThrottleX - DAMPENING_FACTOR * elapsedSeconds;
             }
 
-            if (Math.Abs(locationBehavior.Y - currentWalkPoint.Y) < DEBOUNCE)
+            if (Math.Abs(positionBehavior.Y - currentWalkPoint.Y) < DEBOUNCE)
             {
                 throttleY = 0;
             }
-            else if (locationBehavior.Y < currentWalkPoint.Y)
+            else if (positionBehavior.Y < currentWalkPoint.Y)
             {
                 throttleY = throttleY < 0 ? 0 : previousThrottleY + DAMPENING_FACTOR * elapsedSeconds;
             }
-            else if (locationBehavior.Y > currentWalkPoint.Y)
+            else if (positionBehavior.Y > currentWalkPoint.Y)
             {
                 throttleY = throttleY > 0 ? 0 : previousThrottleY - DAMPENING_FACTOR * elapsedSeconds;
             }

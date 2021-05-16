@@ -99,9 +99,9 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
                     var tilesetResourcePath = _tilesetSpriteResourceResolver.ResolveResourcePath(tileset.Images.Single().SourcePath);
                     var spriteResourceName = $"{Path.GetFileNameWithoutExtension(tilesetResourcePath)}_{tiledTile.Gid - tileset.FirstGid}";
 
-                    var tileComponents = tilesetTile
+                    var tileBehaviors = tilesetTile
                         .Properties
-                        .Select(prop => (ITileComponent)new KeyValuePairTileComponent(
+                        .Select(prop => (IBehavior)new KeyValuePairTileComponent(
                             prop.Key,
                             prop.Value))
                         .AppendSingle(new TileResourceComponent(tilesetResourcePath, spriteResourceName));
@@ -109,7 +109,7 @@ namespace Macerus.Plugins.Features.Mapping.TiledNet
                     var mapTile = new MapTile(
                         x * flipX,
                         y * flipY,
-                        tileComponents);
+                        tileBehaviors);
                     yield return mapTile;
                 }
             }

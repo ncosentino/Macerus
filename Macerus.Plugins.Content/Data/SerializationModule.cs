@@ -54,7 +54,6 @@ namespace Macerus.Plugins.Content.Data
                     mapping.AddRange(WithCollectionMappings<IntIdentifier>("iid"));
                     mapping.AddRange(WithCollectionMappings<GameObject>("obj"));
                     mapping.AddRange(WithCollectionMappings<IMapLayer>("IMapLayer"));
-                    mapping.AddRange(WithCollectionMappings<ITileComponent>("ITileComponent"));
                     mapping.AddRange(WithCollectionMappings<IMapTile>("IMapTile"));
                     mapping.AddRange(WithCollectionMappings<IIdentifier>("id"));
                     mapping.AddRange(WithCollectionMappings<IGameObject>("iobj"));

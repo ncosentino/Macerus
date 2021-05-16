@@ -1,6 +1,10 @@
-﻿namespace Macerus.Plugins.Features.Mapping.TiledNet
+﻿using ProjectXyz.Shared.Game.Behaviors;
+
+namespace Macerus.Plugins.Features.Mapping.TiledNet
 {
-    public sealed class KeyValuePairTileComponent : IKeyValuePairTileComponent
+    public sealed class KeyValuePairTileComponent :
+        BaseBehavior,
+        IKeyValuePairTileBehavior
     {
         public KeyValuePairTileComponent(string key, object value)
         {
@@ -12,6 +16,4 @@
 
         public object Value { get; }
     }
-
-
 }

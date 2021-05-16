@@ -187,13 +187,13 @@ namespace Macerus.Plugins.Features.Combat.Default
             Contract.RequiresNotNull(actor, $"{nameof(actor)} cannot be null.");
             Contract.RequiresNotNull(target, $"{nameof(target)} cannot be null.");
 
-            var targetLocationBehavior = target.GetOnly<IWorldLocationBehavior>();
-            var targetLocation = new Vector2((float)targetLocationBehavior.X, (float)targetLocationBehavior.Y);
+            var targetPositionBehavior = target.GetOnly<IPositionBehavior>();
+            var targetLocation = new Vector2((float)targetPositionBehavior.X, (float)targetPositionBehavior.Y);
             var adjacentPositions = _mapProvider.PathFinder.GetAdjacentPositions(
                 targetLocation,
                 true);
-            var actorLocationBehavior = target.GetOnly<IWorldLocationBehavior>();
-            var actorLocation = new Vector2((float)actorLocationBehavior.X, (float)actorLocationBehavior.Y);
+            var actorPositionBehavior = target.GetOnly<IPositionBehavior>();
+            var actorLocation = new Vector2((float)actorPositionBehavior.X, (float)actorPositionBehavior.Y);
 
             _logger.Info(
                 $"'{actor}' needs to walk from " +
@@ -201,7 +201,8 @@ namespace Macerus.Plugins.Features.Combat.Default
                 $"target '{target}' standing at position " +
                 $"({targetLocation.X},{targetLocation.Y}).");
 
-            var actorSize = new Vector2((float)actorLocationBehavior.Width, (float)actorLocationBehavior.Height);
+            var actorSizeBehavior = target.GetOnly<ISizeBehavior>();
+            var actorSize = new Vector2((float)actorSizeBehavior.Width, (float)actorSizeBehavior.Height);
             var pointsToWalk = new Queue<Vector2>(_mapProvider
                 .PathFinder
                 .FindPath(

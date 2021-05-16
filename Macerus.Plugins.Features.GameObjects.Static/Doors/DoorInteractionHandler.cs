@@ -4,6 +4,7 @@ using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Interactions.Api;
 
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Static.Doors
@@ -33,14 +34,14 @@ namespace Macerus.Plugins.Features.GameObjects.Static.Doors
             if (doorInteractableBehavior.TransitionToX != null ||
                 doorInteractableBehavior.TransitionToY != null)
             {
-                var actorLocationBehavior = actor.GetOnly<IWorldLocationBehavior>();
-                actorLocationBehavior.SetLocation(
+                var actorPositionBehavior = actor.GetOnly<IPositionBehavior>();
+                actorPositionBehavior.SetPosition(
                     doorInteractableBehavior.TransitionToX != null
                         ? doorInteractableBehavior.TransitionToX.Value
-                        : actorLocationBehavior.X,
+                        : actorPositionBehavior.X,
                     doorInteractableBehavior.TransitionToY != null
                         ? doorInteractableBehavior.TransitionToY.Value
-                        : actorLocationBehavior.Y);
+                        : actorPositionBehavior.Y);
             }
         }
     }

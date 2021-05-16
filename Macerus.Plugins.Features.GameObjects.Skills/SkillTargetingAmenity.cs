@@ -48,7 +48,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 .LocationsOffsetFromOrigin
                 .Select(x => GetSkillLocationFromOriginAndUserDirection(user, transformedSkillOrigin, x));
 
-            var affectedLocations = new[] { transformedSkillOrigin }
+            var affectedPositions = new[] { transformedSkillOrigin }
                 .Concat(transformedPatternFromOrigin)
                 .ToArray();
 
@@ -60,10 +60,10 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                     .Contains(new IntIdentifier((int)x
                         .GetOnly<IHasMutableStatsBehavior>()
                         .BaseStats[_combatTeamIdentifiers.CombatTeamStatDefinitionId])))
-                .Where(x => affectedLocations.Contains(
+                .Where(x => affectedPositions.Contains(
                     Tuple.Create(
-                        (int)Math.Round(x.GetOnly<IWorldLocationBehavior>().X),
-                        (int)Math.Round(x.GetOnly<IWorldLocationBehavior>().Y))));
+                        (int)Math.Round(x.GetOnly<IPositionBehavior>().X),
+                        (int)Math.Round(x.GetOnly<IPositionBehavior>().Y))));
 
             return targets;
         }
@@ -73,7 +73,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             int originOffsetX,
             int originOffsetY)
         {
-            var userLocation = user.GetOnly<IWorldLocationBehavior>();
+            var userPosition = user.GetOnly<IPositionBehavior>();
 
             var direction = !user.TryGetFirst<IMovementBehavior>(out var userMovement)
                 ? -1
@@ -84,10 +84,10 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 originOffsetX,
                 originOffsetY);
 
-            var skillLocationX = (int)Math.Round(userLocation.X) + transformedOriginOffset.Item1;
-            var skillLocationY = (int)Math.Round(userLocation.Y) + transformedOriginOffset.Item2;
+            var skillPositionX = (int)Math.Round(userPosition.X) + transformedOriginOffset.Item1;
+            var skillPositionY = (int)Math.Round(userPosition.Y) + transformedOriginOffset.Item2;
 
-            return Tuple.Create(skillLocationX, skillLocationY);
+            return Tuple.Create(skillPositionX, skillPositionY);
         }
 
         private Tuple<int, int> GetSkillLocationFromOriginAndUserDirection(
