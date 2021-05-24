@@ -8,12 +8,18 @@
           "SerializableId": "IBehavior[List]",
           "Data": [
             {
-              "SerializableId": "TemplateIdBehavior",
+              "SerializableId": "ename",
               "Data": {
-                "templateId": {
+                "name": "NoWalk"
+              }
+            },
+            {
+              "SerializableId": "IdentifierBehavior",
+              "Data": {
+                "id": {
                   "SerializableId": "sid",
                   "Data": {
-                    "identifier": "static/wall"
+                    "identifier": "0f3bdac9-c327-41ab-bc1a-844644e54ae8"
                   }
                 }
               }
@@ -33,12 +39,12 @@
               }
             },
             {
-              "SerializableId": "PrefabIdBehavior",
+              "SerializableId": "TemplateIdBehavior",
               "Data": {
-                "prefabResourceId": {
+                "templateId": {
                   "SerializableId": "sid",
                   "Data": {
-                    "identifier": "Mapping/Prefabs/static/wall"
+                    "identifier": "static/wall"
                   }
                 }
               }
@@ -53,12 +59,6 @@
                   }
                 }
               }
-            },
-            {
-              "SerializableId": "ename",
-              "Data": {
-                "name": "NoWalk"
-              }
             }
           ]
         }
@@ -71,12 +71,18 @@
           "SerializableId": "IBehavior[List]",
           "Data": [
             {
-              "SerializableId": "TemplateIdBehavior",
+              "SerializableId": "ename",
               "Data": {
-                "templateId": {
+                "name": "NoWalk"
+              }
+            },
+            {
+              "SerializableId": "IdentifierBehavior",
+              "Data": {
+                "id": {
                   "SerializableId": "sid",
                   "Data": {
-                    "identifier": "static/wall"
+                    "identifier": "67b522d2-eaf1-42fa-ad3d-de8af8358040"
                   }
                 }
               }
@@ -85,7 +91,7 @@
               "SerializableId": "pos",
               "Data": {
                 "x": 47.25,
-                "y": -27.2
+                "y": -27.200000762939453
               }
             },
             {
@@ -93,6 +99,17 @@
               "Data": {
                 "width": 9.0,
                 "height": 1.0
+              }
+            },
+            {
+              "SerializableId": "TemplateIdBehavior",
+              "Data": {
+                "templateId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "static/wall"
+                  }
+                }
               }
             },
             {
@@ -104,12 +121,6 @@
                     "identifier": "MapEditor/Prefabs/NoWalk"
                   }
                 }
-              }
-            },
-            {
-              "SerializableId": "ename",
-              "Data": {
-                "name": "NoWalk"
               }
             }
           ]
@@ -123,12 +134,18 @@
           "SerializableId": "IBehavior[List]",
           "Data": [
             {
-              "SerializableId": "TemplateIdBehavior",
+              "SerializableId": "ename",
               "Data": {
-                "templateId": {
+                "name": "NoWalk"
+              }
+            },
+            {
+              "SerializableId": "IdentifierBehavior",
+              "Data": {
+                "id": {
                   "SerializableId": "sid",
                   "Data": {
-                    "identifier": "static/wall"
+                    "identifier": "e559aad4-6580-4598-acc5-ed468a3a88d1"
                   }
                 }
               }
@@ -137,7 +154,7 @@
               "SerializableId": "pos",
               "Data": {
                 "x": 33.75,
-                "y": -27.2
+                "y": -27.200000762939453
               }
             },
             {
@@ -145,6 +162,17 @@
               "Data": {
                 "width": 9.0,
                 "height": 1.0
+              }
+            },
+            {
+              "SerializableId": "TemplateIdBehavior",
+              "Data": {
+                "templateId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "static/wall"
+                  }
+                }
               }
             },
             {
@@ -156,12 +184,6 @@
                     "identifier": "MapEditor/Prefabs/NoWalk"
                   }
                 }
-              }
-            },
-            {
-              "SerializableId": "ename",
-              "Data": {
-                "name": "NoWalk"
               }
             }
           ]
@@ -175,12 +197,18 @@
           "SerializableId": "IBehavior[List]",
           "Data": [
             {
-              "SerializableId": "TemplateIdBehavior",
+              "SerializableId": "ename",
               "Data": {
-                "templateId": {
+                "name": "NoWalk"
+              }
+            },
+            {
+              "SerializableId": "IdentifierBehavior",
+              "Data": {
+                "id": {
                   "SerializableId": "sid",
                   "Data": {
-                    "identifier": "static/wall"
+                    "identifier": "847ed794-e16f-4dc0-b951-e2a7e183a965"
                   }
                 }
               }
@@ -200,6 +228,17 @@
               }
             },
             {
+              "SerializableId": "TemplateIdBehavior",
+              "Data": {
+                "templateId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "static/wall"
+                  }
+                }
+              }
+            },
+            {
               "SerializableId": "EditorPrefabIdBehavior",
               "Data": {
                 "prefabResourceId": {
@@ -208,12 +247,6 @@
                     "identifier": "MapEditor/Prefabs/NoWalk"
                   }
                 }
-              }
-            },
-            {
-              "SerializableId": "ename",
-              "Data": {
-                "name": "NoWalk"
               }
             }
           ]
@@ -227,12 +260,18 @@
           "SerializableId": "IBehavior[List]",
           "Data": [
             {
-              "SerializableId": "TemplateIdBehavior",
+              "SerializableId": "ename",
               "Data": {
-                "templateId": {
+                "name": "NoWalk"
+              }
+            },
+            {
+              "SerializableId": "IdentifierBehavior",
+              "Data": {
+                "id": {
                   "SerializableId": "sid",
                   "Data": {
-                    "identifier": "static/wall"
+                    "identifier": "44e1dcb9-7219-4abf-8246-319574f82ece"
                   }
                 }
               }
@@ -252,6 +291,17 @@
               }
             },
             {
+              "SerializableId": "TemplateIdBehavior",
+              "Data": {
+                "templateId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "static/wall"
+                  }
+                }
+              }
+            },
+            {
               "SerializableId": "EditorPrefabIdBehavior",
               "Data": {
                 "prefabResourceId": {
@@ -260,12 +310,6 @@
                     "identifier": "MapEditor/Prefabs/NoWalk"
                   }
                 }
-              }
-            },
-            {
-              "SerializableId": "ename",
-              "Data": {
-                "name": "NoWalk"
               }
             }
           ]
@@ -279,12 +323,18 @@
           "SerializableId": "IBehavior[List]",
           "Data": [
             {
-              "SerializableId": "TemplateIdBehavior",
+              "SerializableId": "ename",
               "Data": {
-                "templateId": {
+                "name": "NoWalk"
+              }
+            },
+            {
+              "SerializableId": "IdentifierBehavior",
+              "Data": {
+                "id": {
                   "SerializableId": "sid",
                   "Data": {
-                    "identifier": "static/wall"
+                    "identifier": "4430571d-306d-4461-b3bf-acea4591c632"
                   }
                 }
               }
@@ -304,6 +354,17 @@
               }
             },
             {
+              "SerializableId": "TemplateIdBehavior",
+              "Data": {
+                "templateId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "static/wall"
+                  }
+                }
+              }
+            },
+            {
               "SerializableId": "EditorPrefabIdBehavior",
               "Data": {
                 "prefabResourceId": {
@@ -312,12 +373,6 @@
                     "identifier": "MapEditor/Prefabs/NoWalk"
                   }
                 }
-              }
-            },
-            {
-              "SerializableId": "ename",
-              "Data": {
-                "name": "NoWalk"
               }
             }
           ]
@@ -331,12 +386,18 @@
           "SerializableId": "IBehavior[List]",
           "Data": [
             {
-              "SerializableId": "TemplateIdBehavior",
+              "SerializableId": "ename",
               "Data": {
-                "templateId": {
+                "name": "NoWalk"
+              }
+            },
+            {
+              "SerializableId": "IdentifierBehavior",
+              "Data": {
+                "id": {
                   "SerializableId": "sid",
                   "Data": {
-                    "identifier": "static/wall"
+                    "identifier": "0445e687-abb1-4630-85dd-7ec47228c1cb"
                   }
                 }
               }
@@ -356,6 +417,17 @@
               }
             },
             {
+              "SerializableId": "TemplateIdBehavior",
+              "Data": {
+                "templateId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "static/wall"
+                  }
+                }
+              }
+            },
+            {
               "SerializableId": "EditorPrefabIdBehavior",
               "Data": {
                 "prefabResourceId": {
@@ -365,11 +437,446 @@
                   }
                 }
               }
-            },
+            }
+          ]
+        }
+      }
+    },
+    {
+      "SerializableId": "obj",
+      "Data": {
+        "behaviors": {
+          "SerializableId": "IBehavior[List]",
+          "Data": [
             {
               "SerializableId": "ename",
               "Data": {
                 "name": "NoWalk"
+              }
+            },
+            {
+              "SerializableId": "pos",
+              "Data": {
+                "x": 42.25,
+                "y": -21.530000686645508
+              }
+            },
+            {
+              "SerializableId": "size",
+              "Data": {
+                "width": 1.0,
+                "height": 3.75
+              }
+            },
+            {
+              "SerializableId": "IdentifierBehavior",
+              "Data": {
+                "id": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "7920e326-b357-4c9b-b4dc-df366190b12c"
+                  }
+                }
+              }
+            },
+            {
+              "SerializableId": "TemplateIdBehavior",
+              "Data": {
+                "templateId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "static/wall"
+                  }
+                }
+              }
+            },
+            {
+              "SerializableId": "EditorPrefabIdBehavior",
+              "Data": {
+                "prefabResourceId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "MapEditor/Prefabs/NoWalk"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "SerializableId": "obj",
+      "Data": {
+        "behaviors": {
+          "SerializableId": "IBehavior[List]",
+          "Data": [
+            {
+              "SerializableId": "ename",
+              "Data": {
+                "name": "NoWalk"
+              }
+            },
+            {
+              "SerializableId": "pos",
+              "Data": {
+                "x": 38.75,
+                "y": -21.530000686645508
+              }
+            },
+            {
+              "SerializableId": "size",
+              "Data": {
+                "width": 1.0,
+                "height": 3.75
+              }
+            },
+            {
+              "SerializableId": "IdentifierBehavior",
+              "Data": {
+                "id": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "d6f1d381-19eb-474c-bf5c-e8d7baa4bd7b"
+                  }
+                }
+              }
+            },
+            {
+              "SerializableId": "TemplateIdBehavior",
+              "Data": {
+                "templateId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "static/wall"
+                  }
+                }
+              }
+            },
+            {
+              "SerializableId": "EditorPrefabIdBehavior",
+              "Data": {
+                "prefabResourceId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "MapEditor/Prefabs/NoWalk"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "SerializableId": "obj",
+      "Data": {
+        "behaviors": {
+          "SerializableId": "IBehavior[List]",
+          "Data": [
+            {
+              "SerializableId": "ename",
+              "Data": {
+                "name": "NoWalk"
+              }
+            },
+            {
+              "SerializableId": "pos",
+              "Data": {
+                "x": 47.75,
+                "y": -19.200000762939453
+              }
+            },
+            {
+              "SerializableId": "size",
+              "Data": {
+                "width": 10.0,
+                "height": 1.0
+              }
+            },
+            {
+              "SerializableId": "IdentifierBehavior",
+              "Data": {
+                "id": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "485fc4f1-07ee-4314-9e50-407b6f1d1d1f"
+                  }
+                }
+              }
+            },
+            {
+              "SerializableId": "TemplateIdBehavior",
+              "Data": {
+                "templateId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "static/wall"
+                  }
+                }
+              }
+            },
+            {
+              "SerializableId": "EditorPrefabIdBehavior",
+              "Data": {
+                "prefabResourceId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "MapEditor/Prefabs/NoWalk"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "SerializableId": "obj",
+      "Data": {
+        "behaviors": {
+          "SerializableId": "IBehavior[List]",
+          "Data": [
+            {
+              "SerializableId": "ename",
+              "Data": {
+                "name": "NoWalk"
+              }
+            },
+            {
+              "SerializableId": "pos",
+              "Data": {
+                "x": 53.2400016784668,
+                "y": -17.520000457763672
+              }
+            },
+            {
+              "SerializableId": "size",
+              "Data": {
+                "width": 1.0,
+                "height": 4.0
+              }
+            },
+            {
+              "SerializableId": "IdentifierBehavior",
+              "Data": {
+                "id": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "2dde6c6a-49d3-47ca-aec6-c711f5ad5ece"
+                  }
+                }
+              }
+            },
+            {
+              "SerializableId": "TemplateIdBehavior",
+              "Data": {
+                "templateId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "static/wall"
+                  }
+                }
+              }
+            },
+            {
+              "SerializableId": "EditorPrefabIdBehavior",
+              "Data": {
+                "prefabResourceId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "MapEditor/Prefabs/NoWalk"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "SerializableId": "obj",
+      "Data": {
+        "behaviors": {
+          "SerializableId": "IBehavior[List]",
+          "Data": [
+            {
+              "SerializableId": "ename",
+              "Data": {
+                "name": "NoWalk"
+              }
+            },
+            {
+              "SerializableId": "pos",
+              "Data": {
+                "x": 47.75,
+                "y": -15.800000190734863
+              }
+            },
+            {
+              "SerializableId": "size",
+              "Data": {
+                "width": 10.0,
+                "height": 1.0
+              }
+            },
+            {
+              "SerializableId": "IdentifierBehavior",
+              "Data": {
+                "id": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "98f5ef28-1510-4317-88d4-ffe150e94e00"
+                  }
+                }
+              }
+            },
+            {
+              "SerializableId": "TemplateIdBehavior",
+              "Data": {
+                "templateId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "static/wall"
+                  }
+                }
+              }
+            },
+            {
+              "SerializableId": "EditorPrefabIdBehavior",
+              "Data": {
+                "prefabResourceId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "MapEditor/Prefabs/NoWalk"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "SerializableId": "obj",
+      "Data": {
+        "behaviors": {
+          "SerializableId": "IBehavior[List]",
+          "Data": [
+            {
+              "SerializableId": "ename",
+              "Data": {
+                "name": "NoWalk"
+              }
+            },
+            {
+              "SerializableId": "pos",
+              "Data": {
+                "x": 40.5,
+                "y": -14.800000190734863
+              }
+            },
+            {
+              "SerializableId": "size",
+              "Data": {
+                "width": 6.0,
+                "height": 1.0
+              }
+            },
+            {
+              "SerializableId": "IdentifierBehavior",
+              "Data": {
+                "id": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "b9bc38f3-5f52-4537-9edf-3546a3a1e4d1"
+                  }
+                }
+              }
+            },
+            {
+              "SerializableId": "TemplateIdBehavior",
+              "Data": {
+                "templateId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "static/wall"
+                  }
+                }
+              }
+            },
+            {
+              "SerializableId": "EditorPrefabIdBehavior",
+              "Data": {
+                "prefabResourceId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "MapEditor/Prefabs/NoWalk"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "SerializableId": "obj",
+      "Data": {
+        "behaviors": {
+          "SerializableId": "IBehavior[List]",
+          "Data": [
+            {
+              "SerializableId": "ename",
+              "Data": {
+                "name": "NoWalk"
+              }
+            },
+            {
+              "SerializableId": "pos",
+              "Data": {
+                "x": 37.75,
+                "y": -17.5
+              }
+            },
+            {
+              "SerializableId": "size",
+              "Data": {
+                "width": 1.0,
+                "height": 4.5
+              }
+            },
+            {
+              "SerializableId": "IdentifierBehavior",
+              "Data": {
+                "id": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "0653cafa-3b36-4cb1-a7b6-a58ad8995180"
+                  }
+                }
+              }
+            },
+            {
+              "SerializableId": "TemplateIdBehavior",
+              "Data": {
+                "templateId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "static/wall"
+                  }
+                }
+              }
+            },
+            {
+              "SerializableId": "EditorPrefabIdBehavior",
+              "Data": {
+                "prefabResourceId": {
+                  "SerializableId": "sid",
+                  "Data": {
+                    "identifier": "MapEditor/Prefabs/NoWalk"
+                  }
+                }
               }
             }
           ]
