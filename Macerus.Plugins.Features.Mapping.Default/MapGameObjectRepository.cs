@@ -56,12 +56,6 @@ namespace Macerus.Plugins.Features.Mapping.Default
             IReadOnlyCollection<IGameObject> gameObjects;
             using (var mapResourceStream = _resourceLoader.LoadStream(mapResourcePath))
             {
-                // FIXME: we need this while we support Tiled in parallel
-                if (mapResourceStream == null)
-                {
-                    yield break;
-                }
-
                 gameObjects = _deserializer.Deserialize<IReadOnlyCollection<IGameObject>>(mapResourceStream);
             }
 

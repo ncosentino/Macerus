@@ -31,7 +31,7 @@ namespace Macerus.Tests.GameObjects
                 new StringIdentifier("static/wall"),
                 new IBehavior[0]);
             Assert.NotNull(gameObject);
-            Assert.Equal(4, gameObject.Behaviors.Count);
+            Assert.Equal(5, gameObject.Behaviors.Count);
             Assert.True(
                 gameObject.Behaviors.Single(x =>
                     x is IReadOnlyPrefabResourceIdBehavior &&
@@ -52,6 +52,11 @@ namespace Macerus.Tests.GameObjects
                     x is IReadOnlyTypeIdentifierBehavior &&
                     ((IReadOnlyTypeIdentifierBehavior)x).TypeId.Equals(new StringIdentifier("static"))) != null,
                 $"Expecting a matching '{typeof(IReadOnlyTypeIdentifierBehavior)}' on '{gameObject}'.");
+            Assert.True(
+                gameObject.Behaviors.Single(x =>
+                    x is IReadOnlyIdentifierBehavior &&
+                    ((IReadOnlyIdentifierBehavior)x).Id != null) != null,
+                $"Expecting a matching '{typeof(IReadOnlyIdentifierBehavior)}' on '{gameObject}'.");
         }
 
         [Fact]
@@ -67,7 +72,7 @@ namespace Macerus.Tests.GameObjects
                     expectedSizeBehavior,
                 });
             Assert.NotNull(gameObject);
-            Assert.Equal(5, gameObject.Behaviors.Count);
+            Assert.Equal(6, gameObject.Behaviors.Count);
             Assert.True(
                 gameObject.Behaviors.Single(x =>
                     x is IReadOnlyPrefabResourceIdBehavior &&
@@ -83,6 +88,12 @@ namespace Macerus.Tests.GameObjects
                     x is IReadOnlyTypeIdentifierBehavior &&
                     ((IReadOnlyTypeIdentifierBehavior)x).TypeId.Equals(new StringIdentifier("static"))) != null,
                 $"Expecting a matching '{typeof(IReadOnlyTypeIdentifierBehavior)}' on '{gameObject}'.");
+            Assert.True(
+                gameObject.Behaviors.Single(x =>
+                    x is IReadOnlyIdentifierBehavior &&
+                    ((IReadOnlyIdentifierBehavior)x).Id != null) != null,
+                $"Expecting a matching '{typeof(IReadOnlyIdentifierBehavior)}' on '{gameObject}'.");
+
             var boxColliderBehavior = Assert.Single(gameObject.Behaviors.TakeTypes<IBoxColliderBehavior>());
             Assert.Equal(expectedBoxColliderBehavior, boxColliderBehavior);
             var sizeBehavior = Assert.Single(gameObject.Behaviors.TakeTypes<ISizeBehavior>());

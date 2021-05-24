@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Macerus.ContentCreator.MapEditor.Behaviors.Shared\Macerus.ContentCreator.MapEditor.Behaviors.Shared.csproj" />
     <ProjectReference Include="..\Macerus.Game.GameObjects\Macerus.Game.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Api\Macerus.Plugins.Features.Combat.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Default\Macerus.Plugins.Features.Combat.Default.csproj" />

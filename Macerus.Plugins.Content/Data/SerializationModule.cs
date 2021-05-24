@@ -4,6 +4,7 @@ using System.Linq;
 
 using Autofac;
 
+using Macerus.ContentCreator.MapEditor.Behaviors.Shared;
 using Macerus.Plugins.Features.Encounters.Triggers;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Static.Doors;
@@ -59,7 +60,9 @@ namespace Macerus.Plugins.Content.Data
                         [typeof(TileResourceBehavior)] = "tileres",
                         [typeof(EncounterTriggerPropertiesBehavior)] = "EncounterTrigger",
                         [typeof(IgnoreSavingGameObjectStateBehavior)] = "IgnoreSavingGameObjectStateBehavior",
-                        [typeof(HasFogOfWarBehavior)] = "HasFogOfWarBehavior",                        
+                        [typeof(HasFogOfWarBehavior)] = "HasFogOfWarBehavior",
+                        [typeof(EditorPrefabResourceIdBehavior)] = "EditorPrefabIdBehavior",
+                        [typeof(EditorNameBehavior)] = "ename",
                     };
                     mapping.AddRange(WithCollectionMappings<MapLayersBehavior>("MapLayersBehavior"));
                     mapping.AddRange(WithCollectionMappings<MapLayer>("MapLayer"));

@@ -13,6 +13,9 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Game.Api;
+using ProjectXyz.Plugins.Features.CommonBehaviors;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Game
 {
@@ -79,12 +82,21 @@ namespace Macerus.Game
 
             // FIXME: do we need to handle merging behaviors and other fun stuff?
             var newBehaviorTypes = new HashSet<Type>(additionalBehaviors.Select(x => x.GetType()));
-            var newGameObject = _gameObjectFactory
-                .Create(template
-                    .Behaviors
-                    .Where(x => !newBehaviorTypes.Contains(x.GetType()))
-                    .Concat(additionalBehaviors)
-                    .Concat(new[] { new CreatedFromTemplateBehavior(templateId) }));
+            var newBehaviors = template
+                .Behaviors
+                .Where(x => !newBehaviorTypes.Contains(x.GetType()))
+                .Concat(additionalBehaviors)
+                .ToList();
+
+            // FIXME: we should make the editor enforce we always have an identifier
+            if (!newBehaviors.TakeTypes<IReadOnlyIdentifierBehavior>().Any())
+            {
+                newBehaviors.Add(new IdentifierBehavior(new StringIdentifier(Guid.NewGuid().ToString())));
+            }
+
+            newBehaviors.Add(new CreatedFromTemplateBehavior(templateId));
+            
+            var newGameObject = _gameObjectFactory.Create(newBehaviors);
             return newGameObject;
         }
     }
