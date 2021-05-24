@@ -16,12 +16,12 @@ namespace Macerus.Plugins.Features.Mapping.Default
 
         public string ConvertToMapResourcePath(string mapResourceId)
         {
-            return Path.Combine(_relativeMapsResourceRoot, $"{mapResourceId}_json");
+            return Path.Combine(_relativeMapsResourceRoot, $"{mapResourceId}");
         }
 
         public string ConvertToGameObjectResourcePath(string mapResourceId)
         {
-            return Path.Combine(_relativeMapsResourceRoot, $"{mapResourceId}.objects_json");
+            return Path.Combine(_relativeMapsResourceRoot, $"{mapResourceId}.objects");
         }
     }
 }

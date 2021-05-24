@@ -61,7 +61,7 @@ namespace Macerus.Headless
         {
             var fullPath = Path.Combine(
                 _mappingAssetPaths.ResourcesRoot,
-                $"{pathToResource}.txt");
+                $"{pathToResource}.json");
             if (!File.Exists(fullPath))
             {
                 return null;

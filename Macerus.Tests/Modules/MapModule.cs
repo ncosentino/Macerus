@@ -60,7 +60,7 @@ namespace Macerus.Tests.Modules
             {
                 var fullPath = Path.Combine(
                     _mappingAssetPaths.ResourcesRoot,
-                    $"{pathToResource}.txt");
+                    $"{pathToResource}.json");
                 return File.OpenRead(fullPath);
             }
         }

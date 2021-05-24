@@ -7,10 +7,10 @@
   <ItemGroup>
     <None Remove="Graphics\Actors\LpcUniversal\player_male.png" />
     <None Remove="Graphics\Actors\LpcUniversal\skeleton_basic.png" />
-    <None Remove="Mapping\Maps\swamp.objects_json.txt" />
-    <None Remove="Mapping\Maps\swamp_json.txt" />
-    <None Remove="Mapping\Maps\test_encounter_map.objects_json.txt" />
-    <None Remove="Mapping\Maps\test_encounter_map_json.txt" />
+    <None Remove="Mapping\Maps\swamp.json" />
+    <None Remove="Mapping\Maps\swamp.objects.json" />
+    <None Remove="Mapping\Maps\test_encounter_map.json" />
+    <None Remove="Mapping\Maps\test_encounter_map.objects.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,16 +43,16 @@
     <Content Include="Graphics\Actors\LpcUniversal\skeleton_basic.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Mapping\Maps\swamp.objects_json.txt">
+    <Content Include="Mapping\Maps\swamp.objects.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Mapping\Maps\swamp_json.txt">
+    <Content Include="Mapping\Maps\swamp.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Mapping\Maps\test_encounter_map.objects_json.txt">
+    <Content Include="Mapping\Maps\test_encounter_map.objects.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Mapping\Maps\test_encounter_map_json.txt">
+    <Content Include="Mapping\Maps\test_encounter_map.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
