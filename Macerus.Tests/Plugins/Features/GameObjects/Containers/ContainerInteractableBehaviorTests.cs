@@ -42,7 +42,9 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Containers
                         true,
                         true,
                         true),
-                    new ContainerGenerateItemsBehavior(new StringIdentifier("any_magic_1-10_lvl10")),
+                    new ContainerGenerateItemsBehavior(
+                        new StringIdentifier("any_magic_1-10_lvl10"),
+                        false),
                 });
             var player = _testAmenities.CreatePlayerInstance();
 
