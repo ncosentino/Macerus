@@ -1,4 +1,4 @@
-﻿using ProjectXyz.Api.Behaviors.Filtering;
+﻿using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Api.Framework;
 
 namespace Macerus.Plugins.Features.Encounters

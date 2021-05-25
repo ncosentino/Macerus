@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Macerus.Plugins.Features.GameObjects.Skills.Default;
-using ProjectXyz.Api.Behaviors.Filtering.Attributes;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using System;

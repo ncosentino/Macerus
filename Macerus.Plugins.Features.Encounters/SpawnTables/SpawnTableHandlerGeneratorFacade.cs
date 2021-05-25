@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 
-using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 

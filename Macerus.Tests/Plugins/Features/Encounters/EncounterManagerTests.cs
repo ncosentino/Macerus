@@ -6,7 +6,7 @@ using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.GameObjects.Static.Doors;
 using Macerus.Plugins.Features.Interactions.Api;
 
-using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Game.Interface.Engine;
 using ProjectXyz.Plugins.Features.Combat.Api;

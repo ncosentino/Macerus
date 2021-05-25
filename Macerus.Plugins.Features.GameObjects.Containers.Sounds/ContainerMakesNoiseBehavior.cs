@@ -1,8 +1,7 @@
 ﻿
 using Macerus.Api.Behaviors;
 
-using ProjectXyz.Api.Behaviors.Filtering;
-using ProjectXyz.Api.Data.Serialization;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers.Sounds

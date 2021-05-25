@@ -1,12 +1,11 @@
-﻿
-using Autofac;
+﻿using Autofac;
 
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
 
-using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Enchantments.Generation.InMemory;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Enchantments

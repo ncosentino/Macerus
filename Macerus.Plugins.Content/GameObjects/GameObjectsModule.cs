@@ -9,7 +9,7 @@ using Macerus.Plugins.Features.Encounters.Triggers;
 using Macerus.Plugins.Features.GameObjects.Containers;
 using Macerus.Shared.Behaviors;
 
-using ProjectXyz.Api.Behaviors.Filtering.Attributes;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;

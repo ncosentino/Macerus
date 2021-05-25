@@ -8,10 +8,10 @@ using Macerus.Plugins.Features.Encounters.SpawnTables.Api.Linked;
 using NexusLabs.Contracts;
 using NexusLabs.Framework;
 
-using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes; // FIXME: dependency on non-API
+using ProjectXyz.Plugins.Features.Filtering.Default.Attributes; // FIXME: dependency on non-API
 
 namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Linked
 {

@@ -5,7 +5,7 @@ using Macerus.Plugins.Features.GameObjects.Containers.Sounds.Engine.Pulse;
 using Macerus.Plugins.Features.GameObjects.Containers.Sounds.Repository;
 using Macerus.Plugins.Features.GameObjects.Containers.Sounds.Repository.Api;
 using Macerus.Plugins.Features.GameObjects.Containers.Sounds.Repository.Transforms;
-using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using System;
 using System.Linq;
 

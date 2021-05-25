@@ -2,10 +2,10 @@
 
 using Autofac;
 
-using ProjectXyz.Api.Behaviors.Filtering.Attributes;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.Behaviors.Filtering.Default.Attributes;
+using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.BoundedStats;
 using ProjectXyz.Plugins.Features.BoundedStats.Api;
 using ProjectXyz.Plugins.Features.Weather;

@@ -9,9 +9,9 @@ using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 
 using NexusLabs.Contracts;
 
-using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 
 namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Actors
 {

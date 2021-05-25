@@ -2,7 +2,7 @@
 
 using Macerus.Plugins.Features.HeaderBar.Api.CombatTurnOrder;
 
-using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Combat.Api;
 
 namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder

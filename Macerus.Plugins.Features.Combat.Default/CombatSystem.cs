@@ -2,13 +2,13 @@
 
 using Macerus.Plugins.Features.Combat.Api;
 
-using ProjectXyz.Api.GameObjects.Behaviors;
-using ProjectXyz.Api.Behaviors.Filtering;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Combat.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.TurnBased.Api;
 
 namespace Macerus.Plugins.Features.Combat.Default

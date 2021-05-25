@@ -1,4 +1,4 @@
-﻿using ProjectXyz.Api.Behaviors.Filtering.Attributes;
+﻿using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
 {

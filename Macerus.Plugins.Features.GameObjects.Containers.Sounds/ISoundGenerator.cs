@@ -1,4 +1,4 @@
-﻿using ProjectXyz.Api.Behaviors.Filtering;
+﻿using ProjectXyz.Plugins.Features.Filtering.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -2,7 +2,7 @@
 using Macerus.Api.Behaviors.Filtering;
 
 using ProjectXyz.Api.GameObjects.Behaviors;
-using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 

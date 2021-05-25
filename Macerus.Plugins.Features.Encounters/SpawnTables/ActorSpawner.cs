@@ -7,11 +7,11 @@ using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 using NexusLabs.Contracts;
 using NexusLabs.Framework;
 
-using ProjectXyz.Api.Behaviors.Filtering;
-using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework.Collections;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
+using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 
 namespace Macerus.Plugins.Features.Encounters.SpawnTables
 {

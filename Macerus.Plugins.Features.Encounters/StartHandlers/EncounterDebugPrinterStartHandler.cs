@@ -1,7 +1,7 @@
 ﻿using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Stats;
 
-using ProjectXyz.Api.Behaviors.Filtering;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.Combat.Api;

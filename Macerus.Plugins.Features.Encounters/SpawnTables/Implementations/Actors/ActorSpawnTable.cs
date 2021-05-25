@@ -3,9 +3,9 @@ using System.Linq;
 
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api.Standard;
 
-using ProjectXyz.Api.Behaviors.Filtering.Attributes;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects.Generation;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 
 namespace Macerus.Plugins.Features.Encounters.SpawnTables.Implementations.Actors
 {
