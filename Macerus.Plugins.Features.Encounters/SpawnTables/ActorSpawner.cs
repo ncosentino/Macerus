@@ -41,9 +41,9 @@ namespace Macerus.Plugins.Features.Encounters.SpawnTables
             // filter the spawn tables
             var allSpawnTables = _spawnTableRepository.GetAllSpawnTables();
             var filteredSpawnTables = _attributeFilterer
-                .Filter(
+                .BidirectionalFilter(
                     allSpawnTables,
-                    filterContext)
+                    filterContext.Attributes)
                 .ToArray();
             if (filteredSpawnTables.Length < 1)
             {

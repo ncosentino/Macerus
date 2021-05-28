@@ -48,9 +48,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
             var contextForSet = _filterContextAmenity.CreateRequiredContextForSet(
                 filterContext,
                 _generators);
-            var filteredGenerators = _attributeFilterer.Filter(
+            var filteredGenerators = _attributeFilterer.BidirectionalFilter(
                 _generators,
-                contextForSet).ToArray();
+                contextForSet.Attributes).ToArray();
             if (!filteredGenerators.Any())
             {
                 throw new InvalidOperationException(

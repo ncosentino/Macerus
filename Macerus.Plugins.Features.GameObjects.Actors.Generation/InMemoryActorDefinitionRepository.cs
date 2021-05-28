@@ -21,9 +21,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
 
         public IEnumerable<IActorDefinition> GetActorDefinitions(IFilterContext filterContext)
         {
-            var results = _attributeFilterer.Filter(
+            var results = _attributeFilterer.BidirectionalFilter(
                 _actorDefinitions,
-                filterContext);
+                filterContext.Attributes);
             return results;
         }
     }

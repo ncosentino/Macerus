@@ -47,9 +47,9 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql
             }
 
             var enchantmentDefinitions = _definitionCache;
-            var filteredEnchantmentDefinitions = _attributeFilterer.Filter(
+            var filteredEnchantmentDefinitions = _attributeFilterer.BidirectionalFilter(
                 enchantmentDefinitions,
-                filterContext);
+                filterContext.Attributes);
             foreach (var filteredEnchantmentDefinition in filteredEnchantmentDefinitions)
             {
                 // TODO: ensure we have all of the Enchantment generation components
