@@ -56,7 +56,6 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal\Macerus.Plugins.Features.GameObjects.Items.Generation.Normal.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Unique\Macerus.Plugins.Features.GameObjects.Items.Generation.Unique.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns\Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Socketing\Macerus.Plugins.Features.GameObjects.Items.Socketing.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items\Macerus.Plugins.Features.GameObjects.Items.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Skills.Api\Macerus.Plugins.Features.GameObjects.Skills.Api.csproj" />

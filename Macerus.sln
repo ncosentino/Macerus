@@ -63,8 +63,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Ga
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Socketing", "Socketing", "{3A6EC585-4595-4643-977E-65BE7A2A8EBC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns", "Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns\Macerus.Plugins.Features.GameObjects.Items.Socketing.SocketPatterns.csproj", "{E24195F7-AFA2-4550-9DCB-5D0FBD3A416D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Items.Generation.Unique", "Macerus.Plugins.Features.GameObjects.Items.Generation.Unique\Macerus.Plugins.Features.GameObjects.Items.Generation.Unique.csproj", "{01BD3968-1BD6-4F5C-8CD1-FB4648DD868B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Skills", "Skills", "{86014C1C-18FA-4FC5-B76C-0FFD8D2A3E19}"
@@ -173,7 +171,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ContentCreator", "ContentCr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MapEditor", "MapEditor", "{601FB2CA-AA33-42F8-9441-B45714906FC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.ContentCreator.MapEditor.Behaviors.Shared", "Macerus.ContentCreator.MapEditor.Behaviors.Shared\Macerus.ContentCreator.MapEditor.Behaviors.Shared.csproj", "{5B0402B7-E052-466D-91DD-3570811E9E67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.ContentCreator.MapEditor.Behaviors.Shared", "Macerus.ContentCreator.MapEditor.Behaviors.Shared\Macerus.ContentCreator.MapEditor.Behaviors.Shared.csproj", "{5B0402B7-E052-466D-91DD-3570811E9E67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -249,10 +247,6 @@ Global
 		{7F656455-14D3-474E-9DAC-7B75E2289C42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F656455-14D3-474E-9DAC-7B75E2289C42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F656455-14D3-474E-9DAC-7B75E2289C42}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E24195F7-AFA2-4550-9DCB-5D0FBD3A416D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E24195F7-AFA2-4550-9DCB-5D0FBD3A416D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E24195F7-AFA2-4550-9DCB-5D0FBD3A416D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E24195F7-AFA2-4550-9DCB-5D0FBD3A416D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{01BD3968-1BD6-4F5C-8CD1-FB4648DD868B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{01BD3968-1BD6-4F5C-8CD1-FB4648DD868B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01BD3968-1BD6-4F5C-8CD1-FB4648DD868B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -438,7 +432,6 @@ Global
 		{489FBF59-F50E-4D18-8F3D-6900555D91F2} = {8989A7CB-427A-4954-8118-238604017FE8}
 		{7F656455-14D3-474E-9DAC-7B75E2289C42} = {DBB8AA2F-D157-4B10-9EE8-4179D4019FB6}
 		{3A6EC585-4595-4643-977E-65BE7A2A8EBC} = {DBB8AA2F-D157-4B10-9EE8-4179D4019FB6}
-		{E24195F7-AFA2-4550-9DCB-5D0FBD3A416D} = {3A6EC585-4595-4643-977E-65BE7A2A8EBC}
 		{01BD3968-1BD6-4F5C-8CD1-FB4648DD868B} = {DBB8AA2F-D157-4B10-9EE8-4179D4019FB6}
 		{86014C1C-18FA-4FC5-B76C-0FFD8D2A3E19} = {00A2FCF7-72A1-4031-AD5F-42345BA13DE3}
 		{0E65B42E-E2B3-4C8F-B47A-D896FE0D1B39} = {86014C1C-18FA-4FC5-B76C-0FFD8D2A3E19}

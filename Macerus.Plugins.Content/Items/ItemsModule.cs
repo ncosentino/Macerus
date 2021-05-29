@@ -2,15 +2,16 @@
 
 using Autofac;
 
+using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Content.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Socketing;
 
-using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.Filtering.Default.Attributes; // FIXME: dependency on non-API
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory;
 using ProjectXyz.Shared.Framework;
@@ -22,18 +23,23 @@ namespace Macerus.Plugins.Content.Items
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
+                .RegisterType<ItemIdentifiers>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .Register(c =>
                 {
+                    var itemIdentifiers = c.Resolve<IItemIdentifiers>();
+                    var filterContextAmenity = c.Resolve<IFilterContextAmenity>();
                     var itemDefinitions = new[]
                     {
                         new ItemDefinition(
                             new[]
                             {
                                 EnchantmentFilterAttributes.AllowsNormalAndMagicAffix,
-                                new FilterAttribute(
-                                    new StringIdentifier("item-id"),
-                                    new IdentifierFilterAttributeValue(new StringIdentifier("leather-gloves")),
-                                    false)
+                                filterContextAmenity.CreateSupportedAttribute(
+                                    itemIdentifiers.ItemDefinitionIdentifier,
+                                    new StringIdentifier("leather-gloves")),
                             },
                             new IGeneratorComponent[]
                             {
@@ -49,10 +55,9 @@ namespace Macerus.Plugins.Content.Items
                             new[]
                             {
                                 EnchantmentFilterAttributes.AllowsNormalAndMagicAffix,
-                                new FilterAttribute(
-                                    new StringIdentifier("item-id"),
-                                    new IdentifierFilterAttributeValue(new StringIdentifier("cloth-hood")),
-                                    false)
+                                filterContextAmenity.CreateSupportedAttribute(
+                                    itemIdentifiers.ItemDefinitionIdentifier,
+                                    new StringIdentifier("cloth-hood")),
                             },
                             new IGeneratorComponent[]
                             {
@@ -68,10 +73,9 @@ namespace Macerus.Plugins.Content.Items
                             new[]
                             {
                                 EnchantmentFilterAttributes.AllowsNormalAndMagicAffix,
-                                new FilterAttribute(
-                                    new StringIdentifier("item-id"),
-                                    new IdentifierFilterAttributeValue(new StringIdentifier("cloth-armor")),
-                                    false)
+                                filterContextAmenity.CreateSupportedAttribute(
+                                    itemIdentifiers.ItemDefinitionIdentifier,
+                                    new StringIdentifier("cloth-armor")),
                             },
                             new IGeneratorComponent[]
                             {
@@ -87,10 +91,9 @@ namespace Macerus.Plugins.Content.Items
                             new[]
                             {
                                 EnchantmentFilterAttributes.RequiresNormalAffix,
-                                new FilterAttribute(
-                                    new StringIdentifier("item-id"),
-                                    new IdentifierFilterAttributeValue(new StringIdentifier("junk")),
-                                    false)
+                                filterContextAmenity.CreateSupportedAttribute(
+                                    itemIdentifiers.ItemDefinitionIdentifier,
+                                    new StringIdentifier("junk")),
                             },
                             new IGeneratorComponent[]
                             {
@@ -101,10 +104,9 @@ namespace Macerus.Plugins.Content.Items
                             new[]
                             {
                                 EnchantmentFilterAttributes.RequiresNormalAffix,
-                                new FilterAttribute(
-                                    new StringIdentifier("item-id"),
-                                    new IdentifierFilterAttributeValue(new StringIdentifier("ruby")),
-                                    false)
+                                filterContextAmenity.CreateSupportedAttribute(
+                                    itemIdentifiers.ItemDefinitionIdentifier,
+                                    new StringIdentifier("ruby")),
                             },
                             new IGeneratorComponent[]
                             {
