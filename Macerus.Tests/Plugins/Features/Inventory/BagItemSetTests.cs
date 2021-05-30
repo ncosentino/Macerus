@@ -6,6 +6,7 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Socketing;
 using ProjectXyz.Plugins.Features.GameObjects.Items.SocketPatterns.Api;
 using ProjectXyz.Shared.Framework;
 
@@ -180,6 +181,46 @@ namespace Macerus.Tests.Plugins.Features.Inventory
             Assert.Equal(
                 0,
                 itemToAdd.GetOnly<IStackableItemBehavior>().Count);
+        }
+
+        [Fact]
+        private void SwapItems_SocketingCompletesSocketPattern_ItemsConsumedSocketPatternItemAdded()
+        {
+            // FIXME: this particular socket pattern being used (single slot
+            // filled) is not a real socket pattern and should be replaced
+            // with a valid one or a test-specific one!
+            var rubyIdBehavior = new IdentifierBehavior(new StringIdentifier("the item to fit into the socket"));
+            var ruby = _gameObjectFactory.Create(new IBehavior[]
+            {
+                rubyIdBehavior,
+                new CanFitSocketBehavior(new StringIdentifier("gemslot"), 1),
+            });
+
+            var armorIdBehavior = new IdentifierBehavior(new StringIdentifier("the item with the sockets"));
+            var armor = _gameObjectFactory.Create(new IBehavior[]
+            {
+                armorIdBehavior,
+                new CanBeSocketedBehavior(new[]
+                {
+                    new StringIdentifier("gemslot"),
+                })
+            });
+
+            _bagItemSet.AddItem(armor);
+            _bagItemSet.AddItem(ruby);
+
+            var itemsChangedEvent = 0;
+            _bagItemSet.ItemsChanged += (s, e) => itemsChangedEvent++;
+
+            var result = _bagItemSet.SwapItems(
+                armorIdBehavior.Id,
+                ruby);
+
+            Assert.Equal(SwapResult.SuccessAndStop, result);
+            Assert.Equal(1, itemsChangedEvent);
+            var singleEntry = Assert.Single(_bagItemSet.Items);
+            Assert.NotEqual(ruby, singleEntry.Value);
+            Assert.NotEqual(armor, singleEntry.Value);
         }
     }
 }
