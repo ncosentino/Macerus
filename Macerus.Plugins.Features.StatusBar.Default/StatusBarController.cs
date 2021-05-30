@@ -143,18 +143,18 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             var viewModels = new ConcurrentDictionary<IGameObject, IStatusBarAbilityViewModel>();
 
             // FIXME: convert to IAsyncEnumerable when supported?
-            Parallel.ForEach(skills, skill =>
-            {
-                var canUseSkill = _skillUsage.CanUseSkillAsync(actor, skill).Result; // FIXME: run async
-                var viewModel = new StatusBarAbilityViewModel(
-                    canUseSkill,
-                    skill.GetOnly<IHasDisplayIconBehavior>().IconResourceId,
-                    skill.GetOnly<IHasDisplayNameBehavior>().DisplayName);
-                if (!viewModels.TryAdd(skill, viewModel))
+            var tasks = skills
+                .Select(skill => Task.Run(async () =>
                 {
-                    throw new InvalidOperationException();
-                }
-            });
+                    var canUseSkill = await _skillUsage.CanUseSkillAsync(actor, skill);
+                    var viewModel = new StatusBarAbilityViewModel(
+                        canUseSkill,
+                        skill.GetOnly<IHasDisplayIconBehavior>().IconResourceId,
+                        skill.GetOnly<IHasDisplayNameBehavior>().DisplayName);
+                    viewModels.TryAdd(skill, viewModel);
+                }))
+                .ToArray();
+            Task.WaitAll(tasks);
 
             // we do this to respect the order of the skills
             return skills.Select(x => viewModels[x]).ToArray();
