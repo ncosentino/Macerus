@@ -1,7 +1,7 @@
-﻿using Macerus.Plugins.Features.StatusBar.Api;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Linq;
+
+using Macerus.Plugins.Features.StatusBar.Api;
 
 namespace Macerus.Plugins.Features.StatusBar.Default
 {
@@ -23,13 +23,23 @@ namespace Macerus.Plugins.Features.StatusBar.Default
         {
             if (left)
             {
-                LeftResource = resource;
-                OnPropertyChanged(nameof(LeftResource));
+                if (LeftResource?.Current != resource.Current ||
+                    LeftResource?.Maximum != resource.Maximum ||
+                    LeftResource?.Name != resource.Name)
+                {
+                    LeftResource = resource;
+                    OnPropertyChanged(nameof(LeftResource));
+                }
             }
             else
             {
-                RightResource = resource;
-                OnPropertyChanged(nameof(RightResource));
+                if (RightResource?.Current != resource.Current ||
+                     RightResource?.Maximum != resource.Maximum ||
+                     RightResource?.Name != resource.Name)
+                {
+                    RightResource = resource;
+                    OnPropertyChanged(nameof(RightResource));
+                }
             }
         }
 

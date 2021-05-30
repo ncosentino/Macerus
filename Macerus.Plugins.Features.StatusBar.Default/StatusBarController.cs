@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Stats;
 using Macerus.Plugins.Features.StatusBar.Api;
 
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Stats;
 using ProjectXyz.Api.Systems;
@@ -16,6 +18,7 @@ using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Plugins.Features.TurnBased.Api;
+using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.StatusBar.Default
 {
@@ -28,6 +31,8 @@ namespace Macerus.Plugins.Features.StatusBar.Default
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
         private readonly IReadOnlyMapGameObjectManager _mapGameObjectManager;
         private readonly IReadOnlyStatDefinitionToTermMappingRepository _statDefinitionToTermMappingRepository;
+
+        private readonly Lazy<IReadOnlyCollection<Tuple<IIdentifier, IIdentifier, IIdentifier>>> _lazyCurrentAndMaxResourceIdentifiers;
 
         public StatusBarController(
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
@@ -45,6 +50,30 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             _skillUsage = skillUsage;
             _skillHandlerFacade = skillHandlerFacade;
             _turnBasedManager = turnBasedManager;
+
+            _lazyCurrentAndMaxResourceIdentifiers = new Lazy<IReadOnlyCollection<Tuple<IIdentifier, IIdentifier, IIdentifier>>>(() =>
+            {
+                // FIXME: make the key a resource name identifier for localized lookup?
+                var stats = new Dictionary<string, Tuple<string, string>>()
+                {
+                    { "LIFE", Tuple.Create("LIFE_CURRENT", "LIFE_MAXIMUM") },
+                    { "MANA", Tuple.Create("MANA_CURRENT", "MANA_MAXIMUM") },
+                };
+
+                var minMaxIdentifiers = new List<Tuple<IIdentifier, IIdentifier, IIdentifier>>(stats.Count);
+                foreach (var stat in stats)
+                {
+                    var currentId = _statDefinitionToTermMappingRepository
+                        .GetStatDefinitionToTermMappingByTerm(stat.Value.Item1)
+                        .StatDefinitionId;
+                    var maxId = _statDefinitionToTermMappingRepository
+                        .GetStatDefinitionToTermMappingByTerm(stat.Value.Item2)
+                        .StatDefinitionId;
+                    minMaxIdentifiers.Add(Tuple.Create(currentId, maxId, (IIdentifier)new StringIdentifier(stat.Key)));
+                }
+
+                return minMaxIdentifiers;
+            });
         }
 
         public delegate StatusBarController Factory();
@@ -62,53 +91,76 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             {
                 return;
             }
-
-            var stats = new Dictionary<string, Tuple<string, string>>()
-            {
-                {"LIFE", Tuple.Create("LIFE_CURRENT", "LIFE_MAXIMUM") },
-                {"MANA", Tuple.Create("MANA_CURRENT", "MANA_MAXIMUM") },
-            };
-
-            var resourcesViewModels = new List<IStatusBarResourceViewModel>();
-
-            foreach (var stat in stats)
-            {
-                var currentId = _statDefinitionToTermMappingRepository
-                    .GetStatDefinitionToTermMappingByTerm(stat.Value.Item1)
-                    .StatDefinitionId;
-                var maxId = _statDefinitionToTermMappingRepository
-                    .GetStatDefinitionToTermMappingByTerm(stat.Value.Item2)
-                    .StatDefinitionId;
-
-                var resources = await _statCalculationServiceAmenity.GetStatValuesAsync(
-                    player,
-                    new[] { currentId, maxId });
-
-                var resourceCurrent = resources[currentId];
-                var resourceMaximum = resources[maxId];
-
-                resourcesViewModels.Add(new StatusBarResourceViewModel(
-                    stat.Key,
-                    resourceCurrent,
-                    resourceMaximum));
-            }
+                        
+            var resourcesViewModels = await GetResourceViewModelsAsync(
+                player,
+                _lazyCurrentAndMaxResourceIdentifiers.Value);
 
             _statusBarViewModel.UpdateResource(resourcesViewModels.First(), true);
             _statusBarViewModel.UpdateResource(resourcesViewModels.Last(), false);
 
-            var skills = player.GetOnly<IHasSkillsBehavior>().Skills;
-            var abilityViewModels = skills
+            var skills = player
+                .GetOnly<IHasSkillsBehavior>()
+                .Skills
                 .Where(x => !x.Has<IHasEnchantmentsBehavior>())
-                .Select(x => new StatusBarAbilityViewModel(
-                    _skillUsage.CanUseSkill(player, x),
-                    x.GetOnly<IHasDisplayIconBehavior>().IconResourceId,
-                    x.GetOnly<IHasDisplayNameBehavior>().DisplayName))
                 .ToArray();
+            var abilityViewModels = await CreateAbilityViewModelsAsync(player, skills);
 
             _statusBarViewModel.UpdateAbilities(abilityViewModels);
         }
 
-        public void ActivateSkillSlot(int slotIndex)
+        private async Task<List<IStatusBarResourceViewModel>> GetResourceViewModelsAsync(
+            IGameObject player,
+            IEnumerable<Tuple<IIdentifier, IIdentifier, IIdentifier>> currentAndMaxStatIdentifiers)
+        {
+            var resourcesViewModels = new List<IStatusBarResourceViewModel>();
+
+            var resources = await _statCalculationServiceAmenity.GetStatValuesAsync(
+                player,
+                currentAndMaxStatIdentifiers.SelectMany(x => new[] { x.Item1, x.Item2 }));
+
+            foreach (var currentAndMaxIdentifiers in currentAndMaxStatIdentifiers)
+            {
+                var resourceCurrent = resources[currentAndMaxIdentifiers.Item1];
+                var resourceMaximum = resources[currentAndMaxIdentifiers.Item2];
+                
+                // FIXME: make this a localized lookup!
+                var resourceName = currentAndMaxIdentifiers.Item3.ToString();
+
+                resourcesViewModels.Add(new StatusBarResourceViewModel(
+                    resourceName,
+                    resourceCurrent,
+                    resourceMaximum));
+            }
+
+            return resourcesViewModels;
+        }
+
+        private async Task<IReadOnlyCollection<IStatusBarAbilityViewModel>> CreateAbilityViewModelsAsync(
+            IGameObject actor,
+            IReadOnlyCollection<IGameObject> skills)
+        {
+            var viewModels = new ConcurrentDictionary<IGameObject, IStatusBarAbilityViewModel>();
+
+            // FIXME: convert to IAsyncEnumerable when supported?
+            Parallel.ForEach(skills, skill =>
+            {
+                var canUseSkill = _skillUsage.CanUseSkillAsync(actor, skill).Result; // FIXME: run async
+                var viewModel = new StatusBarAbilityViewModel(
+                    canUseSkill,
+                    skill.GetOnly<IHasDisplayIconBehavior>().IconResourceId,
+                    skill.GetOnly<IHasDisplayNameBehavior>().DisplayName);
+                if (!viewModels.TryAdd(skill, viewModel))
+                {
+                    throw new InvalidOperationException();
+                }
+            });
+
+            // we do this to respect the order of the skills
+            return skills.Select(x => viewModels[x]).ToArray();
+        }
+
+        public async Task ActivateSkillSlotAsync(int slotIndex)
         {
             var player = _mapGameObjectManager
                 .GameObjects
@@ -121,7 +173,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 .ToArray();
             var skill = skills[slotIndex];
 
-            if (!_skillUsage.CanUseSkill(
+            if (!await _skillUsage.CanUseSkillAsync(
                 player,
                 skill))
             {

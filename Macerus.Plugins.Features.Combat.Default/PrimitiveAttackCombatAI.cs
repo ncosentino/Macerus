@@ -19,6 +19,7 @@ using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Shared.Framework;
+using System.Threading.Tasks;
 
 namespace Macerus.Plugins.Features.Combat.Default
 {
@@ -88,9 +89,9 @@ namespace Macerus.Plugins.Features.Combat.Default
                     turnShouldEnd = WalkToTarget(actor);
                     break;
                 case CombatState.UseSkill:
-                    turnShouldEnd = UseSkillOnTarget(
+                    turnShouldEnd = UseSkillOnTargetAsync(
                         actor,
-                        _combatTarget);
+                        _combatTarget).Result; // FIXME: propagate async pattern pls
                     break;
             }
 
@@ -102,7 +103,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             return turnShouldEnd;
         }
 
-        private bool UseSkillOnTarget(
+        private async Task<bool> UseSkillOnTargetAsync(
             IGameObject actor,
             IGameObject target)
         {
@@ -123,7 +124,7 @@ namespace Macerus.Plugins.Features.Combat.Default
                 return true;
             }
 
-            if (!_skillUsage.CanUseSkill(
+            if (!await _skillUsage.CanUseSkillAsync(
                 actor,
                 firstUsableSkill))
             {

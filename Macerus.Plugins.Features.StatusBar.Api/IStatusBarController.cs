@@ -1,9 +1,11 @@
-﻿using Macerus.Plugins.Features.Gui.Api;
+﻿using System.Threading.Tasks;
+
+using Macerus.Plugins.Features.Gui.Api;
 
 namespace Macerus.Plugins.Features.StatusBar.Api
 {
     public interface IStatusBarController : IDiscoverableUserInterfaceUpdate
     {
-        void ActivateSkillSlot(int slotIndex);
+        Task ActivateSkillSlotAsync(int slotIndex);
     }
 }

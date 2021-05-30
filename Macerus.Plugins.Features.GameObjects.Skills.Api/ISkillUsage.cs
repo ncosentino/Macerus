@@ -1,11 +1,15 @@
-﻿using ProjectXyz.Api.GameObjects;
+﻿using System.Threading.Tasks;
+
+using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Api
 {
     public interface ISkillUsage
     {
-        bool CanUseSkill(IGameObject actor, IGameObject skill);
-        
+        Task<bool> CanUseSkillAsync(
+            IGameObject actor,
+            IGameObject skill);
+
         void UseRequiredResources(IGameObject actor, IGameObject skill);
     }
 }
