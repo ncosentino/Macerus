@@ -8,11 +8,11 @@ namespace Macerus.Plugins.Features.Inventory.Default
 {
     public sealed class BagItemSetFactory : IBagItemSetFactory
     {
-        private readonly ISocketPatternHandler _socketPatternHandler;
+        private readonly ISocketPatternHandlerFacade _socketPatternHandler;
         private readonly ISocketableInfoFactory _socketableInfoFactory;
 
         public BagItemSetFactory(
-            ISocketPatternHandler socketPatternHandler,
+            ISocketPatternHandlerFacade socketPatternHandler,
             ISocketableInfoFactory socketableInfoFactory)
         {
             _socketPatternHandler = socketPatternHandler;

@@ -15,13 +15,13 @@ namespace Macerus.Plugins.Features.Inventory.Default
     public sealed class BagItemSet : IItemSet
     {
         private readonly IItemContainerBehavior _itemContainerBehavior;
-        private readonly ISocketPatternHandler _socketPatternHandler;
+        private readonly ISocketPatternHandlerFacade _socketPatternHandler;
         private readonly ISocketableInfoFactory _socketableInfoFactory;
         private bool _ignoreBehaviorEvents;
 
         public BagItemSet(
             IItemContainerBehavior itemContainerBehavior,
-            ISocketPatternHandler socketPatternHandler,
+            ISocketPatternHandlerFacade socketPatternHandler,
             ISocketableInfoFactory socketableInfoFactory)
         {
             _itemContainerBehavior = itemContainerBehavior;
