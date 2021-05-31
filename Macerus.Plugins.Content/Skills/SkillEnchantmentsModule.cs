@@ -3,21 +3,21 @@ using System.Linq;
 
 using Autofac;
 
-using Macerus.Plugins.Content.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
 
-using ProjectXyz.Api.GameObjects.Behaviors;
-using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.BaseStatEnchantments.Enchantments;
-using ProjectXyz.Plugins.Features.Filtering.Default.Attributes; // FIXME: dependency on non-API
+using ProjectXyz.Plugins.Features.Enchantments.Generation;
 using ProjectXyz.Plugins.Features.Enchantments.Generation.InMemory;
 using ProjectXyz.Plugins.Features.ExpiringEnchantments;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
+using ProjectXyz.Plugins.Features.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;  // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Plugins.Features.TurnBased.Duration;
@@ -66,6 +66,19 @@ namespace Macerus.Plugins.Content.Skills
                                     {
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "FIRE_DAMAGE + 30"),
                                         new ExpiryTriggerBehavior(new DurationTriggerBehavior(5)),
+                                        new AppliesToBaseStat()
+                                    }),
+                            }),
+                        enchantmentTemplate.CreateSkillEnchantment(
+                            new StringIdentifier("default-attack"),
+                            new StringIdentifier("physicaldmg"),
+                            new IGeneratorComponent[]
+                            {
+                                new StatefulBehaviorGeneratorComponent(() =>
+                                    new IBehavior[]
+                                    {
+                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "PHYSICAL_DAMAGE + 5"),
+                                        new ExpiryTriggerBehavior(new DurationTriggerBehavior(1)),
                                         new AppliesToBaseStat()
                                     }),
                             }),

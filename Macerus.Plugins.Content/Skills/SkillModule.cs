@@ -21,6 +21,7 @@ namespace Macerus.Plugins.Content.Skills
                             .FromId("default-attack")
                             .WithDisplayName("Attack")
                             .WithDisplayIcon(@"graphics\skills\default-attack")
+                            .Enchant("default-attack")
                             .InflictDamage()
                             .CanBeUsedInCombat()
                             .StartsAtOffsetFromUser(0, 0)

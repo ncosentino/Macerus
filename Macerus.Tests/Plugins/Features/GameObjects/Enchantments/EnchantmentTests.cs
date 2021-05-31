@@ -1,24 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 using Macerus.Plugins.Content.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
 
-using ProjectXyz.Api.GameObjects.Behaviors;
-using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Api.Stats;
+using ProjectXyz.Plugins.Features.Enchantments.Generation;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;
-
-using EnchantmentDefinition = Macerus.Plugins.Content.Enchantments.EnchantmentDefinition;
 
 namespace Macerus.Tests.Plugins.Features.GameObjects.Enchantments
 {
