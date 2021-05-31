@@ -33,11 +33,32 @@ namespace Macerus.Plugins.Content.Stats
                     // iterating on features
                     var mapping = new Dictionary<IIdentifier, string>()
                     {
-                        [new StringIdentifier("speed")] = "SPEED",
+                        // game-system specific
                         [combatTeamIdentifiers.CombatTeamStatDefinitionId] = "COMBAT_TEAM",
-                        [new StringIdentifier("firedmg")] = "FIRE_DAMAGE",
-                        [new StringIdentifier("fireresist")] = "FIRE_RESIST",
+                        // general
+                        [new StringIdentifier("speed")] = "SPEED",
+                        // defensive
                         [new StringIdentifier("armor")] = "ARMOR",
+                        [new StringIdentifier("dodge")] = "DODGE",
+                        [new StringIdentifier("block")] = "BLOCK",
+                        // damage types
+                        [new StringIdentifier("firedmg")] = "FIRE_DAMAGE",
+                        [new StringIdentifier("icedmg")] = "ICE_DAMAGE",
+                        [new StringIdentifier("waterdmg")] = "WATER_DAMAGE",
+                        [new StringIdentifier("lightningdmg")] = "LIGHTNING_DAMAGE",
+                        [new StringIdentifier("earthdmg")] = "EARTH_DAMAGE",
+                        [new StringIdentifier("poisondmg")] = "POISON_DAMAGE",
+                        [new StringIdentifier("darkdmg")] = "DARK_DAMAGE",
+                        [new StringIdentifier("lightdmg")] = "LIGHT_DAMAGE",
+                        // resistances
+                        [new StringIdentifier("fireresist")] = "FIRE_RESIST",
+                        [new StringIdentifier("iceresist")] = "ICE_RESIST",
+                        [new StringIdentifier("waterresist")] = "WATER_RESIST",
+                        [new StringIdentifier("lightningresist")] = "LIGHTNING_RESIST",
+                        [new StringIdentifier("earthresist")] = "EARTH_RESIST",
+                        [new StringIdentifier("poisonresist")] = "POISON_RESIST",
+                        [new StringIdentifier("darkresist")] = "DARK_RESIST",
+                        [new StringIdentifier("lightresist")] = "LIGHT_RESIST",
                     };
                     var statDefinitionToTermRepository = new InMemoryStatDefinitionToTermMappingRepository(mapping);
                     return statDefinitionToTermRepository;
