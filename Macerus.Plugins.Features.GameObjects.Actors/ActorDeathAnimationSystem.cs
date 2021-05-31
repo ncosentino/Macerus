@@ -61,7 +61,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
             _nextTriggerAccumulator = 0;
 
-            foreach (var entry in GetSupportedEntries(turnInfo.ApplicableGameObjects))
+            // we want to iterate over all the game objects, not just the ones
+            // with the current turn, especially because the actor dying is
+            // usually not the one with the active turn
+            foreach (var entry in GetSupportedEntries(gameObjects))
             {
                 var currentLife = _statCalculationServiceAmenity.GetStatValue(
                     entry.Item1.Owner,
