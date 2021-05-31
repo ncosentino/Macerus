@@ -5,11 +5,13 @@ using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Stats;
 
-using ProjectXyz.Api.GameObjects.Behaviors;
+using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
+using ProjectXyz.Plugins.Features.TurnBased.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
@@ -19,6 +21,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         private readonly IActorIdentifiers _actorIdentifiers;
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
         private readonly ICombatStatIdentifiers _combatStatIdentifiers;
+
+        private double _nextTriggerAccumulator;
 
         public ActorDeathAnimationSystem(
             IBehaviorFinder behaviorFinder,
@@ -38,9 +42,26 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             ISystemUpdateContext systemUpdateContext,
             IEnumerable<IGameObject> gameObjects)
         {
-            // FIXME: update interval throttling?
+            var turnInfo = systemUpdateContext
+                .GetFirst<IComponent<ITurnInfo>>()
+                .Value;
+            if (turnInfo.ElapsedTurns == 0)
+            {
+                return;
+            }
+            else if (turnInfo.ElapsedTurns != 1)
+            {
+                _nextTriggerAccumulator += turnInfo.ElapsedTurns;
+                const double TURNS_BEFORE_UPDATING = 0.3;
+                if (_nextTriggerAccumulator < TURNS_BEFORE_UPDATING)
+                {
+                    return;
+                }
+            }
 
-            foreach (var entry in GetSupportedEntries(gameObjects))
+            _nextTriggerAccumulator = 0;
+
+            foreach (var entry in GetSupportedEntries(turnInfo.ApplicableGameObjects))
             {
                 var currentLife = _statCalculationServiceAmenity.GetStatValue(
                     entry.Item1.Owner,
