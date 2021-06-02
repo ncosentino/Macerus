@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 using Macerus.Api.Behaviors;
@@ -32,7 +33,7 @@ namespace Macerus.Shared.Behaviors
         public double ThrottleX
         {
             get { return _throttleX; }
-            set
+            private set
             {
                 if (!SetThrottleXIfChanged(value))
                 {
@@ -49,7 +50,7 @@ namespace Macerus.Shared.Behaviors
         public double ThrottleY
         {
             get { return _throttleY; }
-            set
+            private set
             {
                 if (!SetThrottleYIfChanged(value))
                 {
@@ -66,7 +67,7 @@ namespace Macerus.Shared.Behaviors
         public double VelocityX
         {
             get { return _velocityX; }
-            set
+            private set
             {
                 if (!SetVelocityXIfChanged(value))
                 {
@@ -83,7 +84,7 @@ namespace Macerus.Shared.Behaviors
         public double VelocityY
         {
             get { return _velocityY; }
-            set
+            private set
             {
                 if (!SetVelocityYIfChanged(value))
                 {
@@ -100,6 +101,14 @@ namespace Macerus.Shared.Behaviors
         public IReadOnlyCollection<Vector2> PointsToWalk => _pointsToWalk;
 
         public int Direction { get; private set; }
+
+        public Vector2? CurrentWalkTarget { get; private set; }
+
+        public Vector2? CurrentWalkSource { get; private set; }
+
+        public double CurrentWalkSegmentDistance { get; private set; }
+
+        public TimeSpan CurrentWalkSegmentElapsedTime { get; set; }
 
         public void SetThrottle(double throttleX, double throttleY)
         {
@@ -137,6 +146,44 @@ namespace Macerus.Shared.Behaviors
             {
                 _disableEventChange = false;
             }
+        }
+
+        public void SetWalkPath(IEnumerable<Vector2> pointsToWalk)
+        {
+            _pointsToWalk.Clear();
+
+            foreach (var point in pointsToWalk)
+            {
+                _pointsToWalk.Enqueue(point);
+            }
+
+            StartNextWalkPoint();
+        }
+
+        public Tuple<Vector2?, Vector2?> StartNextWalkPoint()
+        {
+            CurrentWalkSource = _pointsToWalk.Any()
+                ? _pointsToWalk.Dequeue()
+                : (Vector2?)null;
+            CurrentWalkTarget = _pointsToWalk.Any()
+                ? _pointsToWalk.Peek()
+                : (Vector2?)null;
+            CurrentWalkSegmentDistance = CurrentWalkTarget.HasValue
+                ? Vector2.Distance(CurrentWalkTarget.Value, CurrentWalkSource.Value)
+                : 0d;
+            CurrentWalkSegmentElapsedTime = TimeSpan.FromSeconds(0);
+
+            if (CurrentWalkSource != null && CurrentWalkTarget == null)
+            {
+                SetThrottle(0, 0);
+            }
+
+            return Tuple.Create(CurrentWalkSource, CurrentWalkTarget);
+        }
+
+        public void SetDirection(int direction)
+        {
+            Direction = direction;
         }
 
         private bool SetThrottleXIfChanged(double value)
@@ -181,41 +228,6 @@ namespace Macerus.Shared.Behaviors
 
             _velocityY = value;
             return true;
-        }
-
-        public void SetWalkPath(IEnumerable<Vector2> pointsToWalk)
-        {
-            Vector2? currentWalkPoint = _pointsToWalk.Count > 0
-                ? _pointsToWalk.Peek()
-                : (Vector2?)null;
-
-            _pointsToWalk.Clear();
-            foreach (var point in pointsToWalk)
-            {
-                _pointsToWalk.Enqueue(point);
-            }
-
-            if (currentWalkPoint == null)
-            {
-                SetThrottle(0, 0);
-            }
-            else
-            {
-                // FIXME: try to put the throttle in the new direction... my
-                // math no good anymore so i'm putting this off
-                SetThrottle(_throttleX / 2, _throttleY / 2);
-            }
-        }
-
-        public Vector2 CompleteWalkPoint()
-        {
-            var lastWalkPoint = _pointsToWalk.Dequeue();
-            return lastWalkPoint;
-        }
-
-        public void SetDirection(int direction)
-        {
-            Direction = direction;
         }
     }
 }

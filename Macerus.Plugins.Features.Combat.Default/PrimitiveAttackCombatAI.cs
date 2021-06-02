@@ -192,13 +192,26 @@ namespace Macerus.Plugins.Features.Combat.Default
             var targetLocation = new Vector2((float)targetPositionBehavior.X, (float)targetPositionBehavior.Y);
             var targetSizeBehavior = target.GetOnly<IReadOnlySizeBehavior>();
             var targetSize = new Vector2((float)targetSizeBehavior.Width, (float)targetSizeBehavior.Height);
-            var adjacentPositions = _mapProvider.PathFinder.GetAdjacentPositionsToObject(
+
+            var allAdjacentPositions = _mapProvider.PathFinder.GetAllAdjacentPositionsToObject(
                 targetLocation,
                 targetSize,
                 true);
-            var actorPositionBehavior = target.GetOnly<IReadOnlyPositionBehavior>();
+
+            var actorPositionBehavior = actor.GetOnly<IReadOnlyPositionBehavior>();
             var actorLocation = new Vector2((float)actorPositionBehavior.X, (float)actorPositionBehavior.Y);
-            var destinationLocation = ClosestPosition(actorLocation, adjacentPositions);
+            if (allAdjacentPositions.Any(x => Vector2.Distance(x, actorLocation) < double.Epsilon))
+            {
+                _logger.Info($"'{actor}' is already standing adjacent to target.");
+                _combatState = CombatState.UseSkill;
+                return false;
+            }
+
+            var freeAdjacentPositions = _mapProvider.PathFinder.GetFreeAdjacentPositionsToObject(
+                targetLocation,
+                targetSize,
+                true);
+            var destinationLocation = ClosestPosition(actorLocation, freeAdjacentPositions);
 
             _logger.Info(
                 $"'{actor}' needs to walk from " +
@@ -209,12 +222,14 @@ namespace Macerus.Plugins.Features.Combat.Default
 
             var actorSizeBehavior = target.GetOnly<IReadOnlySizeBehavior>();
             var actorSize = new Vector2((float)actorSizeBehavior.Width, (float)actorSizeBehavior.Height);
-            var pointsToWalk = new Queue<Vector2>(_mapProvider
-                .PathFinder
-                .FindPath(
-                    actorLocation,
-                    destinationLocation,
-                    actorSize));
+            var pointsToWalk = new Queue<Vector2>(
+                new[] { actorLocation }
+                .Concat(_mapProvider
+                    .PathFinder
+                    .FindPath(
+                        actorLocation,
+                        destinationLocation,
+                        actorSize)));
             _logger.Info(
                 $"Path:\r\n" +
                 string.Join("\r\n", pointsToWalk.Select(p => $"\t({p.X},{p.Y})")));

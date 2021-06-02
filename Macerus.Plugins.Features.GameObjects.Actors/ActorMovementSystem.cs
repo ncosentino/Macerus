@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
 using Macerus.Api.Behaviors;
 
@@ -25,6 +26,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         private readonly IFilterContextProvider _filterContextProvider;
         private readonly ILogger _logger;
 
+        private bool _tileRestrictedMovement;
+
         public ActorMovementSystem(
             IBehaviorFinder behaviorFinder,
             IActorIdentifiers actorIdentifiers,
@@ -37,6 +40,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             _combatTurnManager = combatTurnManager;
             _filterContextProvider = filterContextProvider;
             _logger = logger;
+
+            _combatTurnManager.CombatStarted += CombatTurnManager_CombatStarted;
+            _combatTurnManager.CombatEnded += CombatTurnManager_CombatEnded;
         }
 
         public int? Priority => null;
@@ -57,13 +63,44 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 var positionBehavior = supportedEntry.Item3;
 
                 InhibitNonTurnMovement(movementBehavior);
-                WalkPath(
-                    movementBehavior,
-                    positionBehavior,
-                    elapsedSeconds);
-                UpdateVelocity(
-                    movementBehavior,
-                    elapsedSeconds);
+                
+                if (_tileRestrictedMovement)
+                {
+                    movementBehavior.SetVelocity(0, 0);
+
+                    if (movementBehavior.CurrentWalkTarget != null)
+                    {
+                        ProcessTileBasedWalkPath(
+                            movementBehavior,
+                            positionBehavior,
+                            elapsedSeconds);
+                    }
+                    else
+                    {
+                        ProcessTileBasedThrottleMovement(
+                            movementBehavior,
+                            positionBehavior,
+                            elapsedSeconds);
+                    }
+                }
+                else
+                {
+                    if (movementBehavior.CurrentWalkTarget != null)
+                    {
+                        ProcessFreeformWalkPath(
+                            movementBehavior,
+                            positionBehavior,
+                            elapsedSeconds);
+                    }
+                    else
+                    {
+                        ProcessFreeformThrottleMovement(
+                            movementBehavior,
+                            positionBehavior,
+                            elapsedSeconds);
+                    }
+                }
+
                 UpdateDirection(
                     movementBehavior);
                 UpdateAnimation(
@@ -108,25 +145,45 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         {
             var throttleX = movementBehavior.ThrottleX;
             var throttleY = movementBehavior.ThrottleY;
+            var velocityX = movementBehavior.VelocityX;
+            var velocityY = movementBehavior.VelocityY;
 
-            if (throttleX > 0)
+            if (Math.Abs(throttleX) > 0 || Math.Abs(throttleY) > 0)
+            {
+                if (throttleX > 0)
+                {
+                    movementBehavior.SetDirection(2);
+                }
+                else if (throttleX < 0)
+                {
+                    movementBehavior.SetDirection(0);
+                }
+                else if (throttleY > 0)
+                {
+                    movementBehavior.SetDirection(1);
+                }
+                else if (throttleY < 0)
+                {
+                    movementBehavior.SetDirection(3);
+                }
+            }
+            else if (velocityX > 0)
             {
                 movementBehavior.SetDirection(2);
             }
-            else if (throttleX < 0)
+            else if (velocityX < 0)
             {
                 movementBehavior.SetDirection(0);
             }
-            else if (throttleY > 0)
+            else if (velocityY > 0)
             {
                 movementBehavior.SetDirection(1);
             }
-            else if (throttleY < 0)
+            else if (velocityY < 0)
             {
                 movementBehavior.SetDirection(3);
             }
         }
-
 
         private void UpdateAnimation(
             IMovementBehavior movementBehavior,
@@ -191,42 +248,185 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             }
         }
 
-        private void UpdateVelocity(
+        private void ProcessTileBasedThrottleMovement(
             IMovementBehavior movementBehavior,
+            IPositionBehavior positionBehavior,
             double elapsedSeconds)
+        {
+            var throttleX = movementBehavior.ThrottleX;
+            var throttleY = movementBehavior.ThrottleY;
+
+            if (Math.Abs(throttleX) > 0 ||
+                Math.Abs(throttleY) > 0)
+            {
+                movementBehavior.SetWalkPath(Enumerable.Empty<Vector2>());
+            }
+
+            var velocity = VelocityFromThrottle(movementBehavior);
+
+            if (Math.Abs(velocity.X) > 0 ||
+                Math.Abs(velocity.Y) > 0)
+            {
+                positionBehavior.SetPosition(
+                    positionBehavior.X + velocity.X * elapsedSeconds,
+                    positionBehavior.Y + velocity.Y * elapsedSeconds);
+            }
+        }
+
+        private void ProcessFreeformThrottleMovement(
+            IMovementBehavior movementBehavior,
+            IPositionBehavior positionBehavior,
+            double elapsedSeconds)
+        {
+            var throttleX = movementBehavior.ThrottleX;
+            var throttleY = movementBehavior.ThrottleY;
+
+            if (Math.Abs(throttleX) > 0 ||
+                Math.Abs(throttleY) > 0)
+            {
+                movementBehavior.SetWalkPath(Enumerable.Empty<Vector2>());
+            }
+
+            var velocity = VelocityFromThrottle(movementBehavior);
+            movementBehavior.SetVelocity(velocity.X, velocity.Y);
+        }
+
+        private void ProcessTileBasedWalkPath(
+            IMovementBehavior movementBehavior,
+            IPositionBehavior positionBehavior,
+            double elapsedSeconds)
+        {
+            if (!TryGetWalkPoint(
+                positionBehavior,
+                movementBehavior,
+                double.Epsilon,
+                out var currentWalkPoint))
+            {
+                return;
+            }
+
+            movementBehavior.CurrentWalkSegmentElapsedTime += TimeSpan.FromSeconds(elapsedSeconds);
+            var distanceToTravel = GetMaxVelocityAbs() * (float)movementBehavior.CurrentWalkSegmentElapsedTime.TotalSeconds;
+
+            var lerpPercent = Math.Max(0, Math.Min(1, (float)(distanceToTravel / movementBehavior.CurrentWalkSegmentDistance)));
+            var nextPosition = Lerp(
+                movementBehavior.CurrentWalkSource.Value,
+                currentWalkPoint.Value,
+                lerpPercent);
+
+            var throttle = Vector2.Normalize(nextPosition - new Vector2((float)positionBehavior.X, (float)positionBehavior.Y));
+            movementBehavior.SetThrottle(
+                throttle.X > 0 ? 1 : throttle.X < 0 ? -1 : 0,
+                throttle.Y > 0 ? 1 : throttle.Y < 0 ? -1 : 0);            
+            positionBehavior.SetPosition(nextPosition.X, nextPosition.Y);
+        }
+
+        private void ProcessFreeformWalkPath(
+            IMovementBehavior movementBehavior,
+            IPositionBehavior positionBehavior,
+            double elapsedSeconds)
+        {
+            if (!TryGetWalkPoint(
+                positionBehavior,
+                movementBehavior,
+                0.05,
+                out var currentWalkPoint))
+            {
+                return;
+            }
+
+            movementBehavior.CurrentWalkSegmentElapsedTime += TimeSpan.FromSeconds(elapsedSeconds);
+            var speed = GetMaxVelocityAbs();
+            var distanceToTravel = speed * (float)movementBehavior.CurrentWalkSegmentElapsedTime.TotalSeconds;
+
+            var lerpPercent = Math.Max(0, Math.Min(1, (float)(distanceToTravel / movementBehavior.CurrentWalkSegmentDistance)));
+            var nextPosition = Lerp(
+                movementBehavior.CurrentWalkSource.Value,
+                currentWalkPoint.Value,
+                lerpPercent);
+
+            var throttle = Vector2.Normalize(nextPosition - new Vector2((float)positionBehavior.X, (float)positionBehavior.Y));
+            movementBehavior.SetThrottle(
+                throttle.X > 0 ? 1 : throttle .X< 0 ? -1 : 0,
+                throttle.Y > 0 ? 1 : throttle.Y < 0 ? -1 : 0);
+
+            var velocity = speed * throttle;
+            movementBehavior.SetVelocity(velocity.X, velocity.Y);
+        }
+
+        private bool TryGetWalkPoint(
+            IPositionBehavior positionBehavior,
+            IMovementBehavior movementBehavior,
+            double closeEnough,
+            out Vector2? walkPoint)
+        {
+            walkPoint = movementBehavior.CurrentWalkTarget.Value;
+            if (!walkPoint.HasValue)
+            {
+                return false;
+            }
+
+            if (Math.Abs(positionBehavior.X - walkPoint.Value.X) +
+                Math.Abs(positionBehavior.Y - walkPoint.Value.Y) < closeEnough)
+            {
+                var nextWalkInfo = movementBehavior.StartNextWalkPoint();
+
+                if (!nextWalkInfo.Item2.HasValue)
+                {
+                    _logger.Debug(
+                        $"'{movementBehavior.Owner}' walked to their target at " +
+                        $"'({walkPoint.Value.X},{walkPoint.Value.Y})'.");
+                    positionBehavior.SetPosition(
+                        walkPoint.Value.X,
+                        walkPoint.Value.Y);
+                    return false;
+                }
+                else
+                {
+                    var nextWalkPoint = nextWalkInfo.Item2.Value;
+                    _logger.Debug(
+                        $"'{movementBehavior.Owner}' walked to '({walkPoint.Value.X},{walkPoint.Value.Y})' " +
+                        $"and will walk to ({nextWalkPoint.X},{nextWalkPoint.Y}) next.");
+                    walkPoint = nextWalkPoint;
+                }
+            }
+
+            return true;
+        }
+
+        private Vector2 VelocityFromThrottle(IMovementBehavior movementBehavior)
         {
             // TODO: load this from stats?
             const double SPEED = 100f;
-            const double MAX_VELOCITY_RANGE_ABS = 2;
-            const double MAX_VELOCITY_RANGE = MAX_VELOCITY_RANGE_ABS;
-            const double MIN_VELOCITY_RANGE = -1 * MAX_VELOCITY_RANGE_ABS;
             const double MIN_VELOCITY_ABS_VALUE = 0.01;
             const double MIN_THROTTLE_ABS_VALUE = 0.01;
-            const double RATE_OF_DECELERATION = 10;
-
             // TODO: the rate of decel could be affected by the type of tile you're on?
             // ice might have a way lower rate, etc...
-            var timeAdjustedDecelerate = elapsedSeconds * RATE_OF_DECELERATION;
+            const double RATE_OF_DECELERATION = 10;
+
+            var maxVelocityAbs = GetMaxVelocityAbs();
+            var minVelocityRange = -maxVelocityAbs;
+            var maxVelocityRange = maxVelocityAbs;
 
             var velocityX = movementBehavior.VelocityX;
             var velocityY = movementBehavior.VelocityY;
             var throttleX = movementBehavior.ThrottleX;
             var throttleY = movementBehavior.ThrottleY;
 
-            var timeAdjustedVelocityAdjustmentX = elapsedSeconds * SPEED * throttleX;
+            var velocityAdjustmentX = SPEED * throttleX;
 
             if (throttleX >= MIN_THROTTLE_ABS_VALUE ||
                 throttleX < -1 * MIN_THROTTLE_ABS_VALUE)
             {
-                velocityX = velocityX + timeAdjustedVelocityAdjustmentX;
+                velocityX = velocityX + velocityAdjustmentX;
             }
-            else if (velocityX >= MIN_VELOCITY_ABS_VALUE)
+            else if (throttleX >= MIN_VELOCITY_ABS_VALUE)
             {
-                velocityX = velocityX - timeAdjustedDecelerate;
+                velocityX = velocityX - RATE_OF_DECELERATION;
             }
-            else if (velocityX < -1 * MIN_VELOCITY_ABS_VALUE)
+            else if (throttleX < -1 * MIN_VELOCITY_ABS_VALUE)
             {
-                velocityX = velocityX + timeAdjustedDecelerate;
+                velocityX = velocityX + RATE_OF_DECELERATION;
             }
             else
             {
@@ -235,22 +435,22 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
             velocityX = Math.Abs(velocityX) <= MIN_VELOCITY_ABS_VALUE
                 ? 0
-                : Math.Max(MIN_VELOCITY_RANGE, Math.Min(MAX_VELOCITY_RANGE, velocityX));
+                : Math.Max(minVelocityRange, Math.Min(maxVelocityRange, velocityX));
 
-            var timeAdjustedVelocityAdjustmentY = elapsedSeconds * SPEED * throttleY;
+            var velocityAdjustmentY = SPEED * throttleY;
 
             if (throttleY >= MIN_THROTTLE_ABS_VALUE ||
                 throttleY < -1 * MIN_THROTTLE_ABS_VALUE)
             {
-                velocityY = velocityY + timeAdjustedVelocityAdjustmentY;
+                velocityY = velocityY + velocityAdjustmentY;
             }
-            else if (velocityY >= MIN_VELOCITY_ABS_VALUE)
+            else if (throttleY >= MIN_VELOCITY_ABS_VALUE)
             {
-                velocityY = velocityY - timeAdjustedDecelerate;
+                velocityY = velocityY - RATE_OF_DECELERATION;
             }
-            else if (velocityY < -1 * MIN_VELOCITY_ABS_VALUE)
+            else if (throttleY < -1 * MIN_VELOCITY_ABS_VALUE)
             {
-                velocityY = velocityY + timeAdjustedDecelerate;
+                velocityY = velocityY + RATE_OF_DECELERATION;
             }
             else
             {
@@ -259,97 +459,37 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
             velocityY = Math.Abs(velocityY) <= MIN_VELOCITY_ABS_VALUE
                 ? 0
-                : Math.Max(MIN_VELOCITY_RANGE, Math.Min(MAX_VELOCITY_RANGE, velocityY));
+                : Math.Max(minVelocityRange, Math.Min(maxVelocityRange, velocityY));
 
             // walking on diagonals shouldn't make you go super fast
-            // FIXME: only care about this at max speed because click-to-move
-            // acceleration is so slow this becomes painful to watch
-            if (Math.Abs(velocityX) == MAX_VELOCITY_RANGE_ABS &&
-                Math.Abs(velocityY) == MAX_VELOCITY_RANGE_ABS)
+            if (Math.Abs(velocityX) > 0 &&
+                Math.Abs(velocityY) > 0)
             {
                 velocityX /= 1.41d;
                 velocityY /= 1.41d;
             }
 
-            movementBehavior.SetVelocity(
-                velocityX,
-                velocityY);
+            return new Vector2((float)velocityX, (float)velocityY);
         }
 
-        private void WalkPath(
-            IMovementBehavior movementBehavior,
-            IPositionBehavior positionBehavior,
-            double elapsedSeconds)
+        private float GetMaxVelocityAbs()
         {
-            if (movementBehavior.PointsToWalk.Count < 1)
-            {
-                return;
-            }
+            return 2f;
+        }
 
-            var currentWalkPoint = movementBehavior.PointsToWalk.First();
+        private Vector2 Lerp(Vector2 start, Vector2 end, float percent)
+        {
+            return start + percent * (end - start);
+        }
 
-            // try to stay a little further on the last point so we don't slam into the target
-            double closeEnough = movementBehavior.PointsToWalk.Count == 1
-                ? 0.50
-                : 0.25;
-            if (Math.Abs(positionBehavior.X - currentWalkPoint.X) +
-                Math.Abs(positionBehavior.Y - currentWalkPoint.Y) < closeEnough)
-            {
-                movementBehavior.CompleteWalkPoint();
+        private void CombatTurnManager_CombatStarted(object sender, EventArgs e)
+        {
+            _tileRestrictedMovement = true;
+        }
 
-                if (movementBehavior.PointsToWalk.Count < 1)
-                {
-                    _logger.Debug(
-                        $"'{movementBehavior.Owner}' walked to their target at " +
-                        $"'({currentWalkPoint.X},{currentWalkPoint.Y})'.");
-                    movementBehavior.SetThrottle(0, 0);
-                    return;
-                }
-                else
-                {
-                    var nextWalkPoint = movementBehavior.PointsToWalk.First();
-                    _logger.Debug(
-                        $"'{movementBehavior.Owner}' walked to '({currentWalkPoint.X},{currentWalkPoint.Y})' " +
-                        $"and will walk to ({nextWalkPoint.X},{nextWalkPoint.Y}) next.");
-                    currentWalkPoint = nextWalkPoint;
-                }
-            }
-
-            const double DEBOUNCE = 0.1;
-            const double DAMPENING_FACTOR = 0.1;
-            var previousThrottleX = movementBehavior.ThrottleX;
-            var previousThrottleY = movementBehavior.ThrottleY;
-            var throttleX = 0d;
-            var throttleY = 0d;
-            if (Math.Abs(positionBehavior.X - currentWalkPoint.X) < DEBOUNCE)
-            {
-                throttleX = 0;
-            }
-            else if (positionBehavior.X < currentWalkPoint.X)
-            {
-                throttleX = throttleX < 0 ? 0 : previousThrottleX + DAMPENING_FACTOR * elapsedSeconds;
-            }
-            else if (positionBehavior.X > currentWalkPoint.X)
-            {
-                throttleX = throttleX > 0 ? 0 : previousThrottleX - DAMPENING_FACTOR * elapsedSeconds;
-            }
-
-            if (Math.Abs(positionBehavior.Y - currentWalkPoint.Y) < DEBOUNCE)
-            {
-                throttleY = 0;
-            }
-            else if (positionBehavior.Y < currentWalkPoint.Y)
-            {
-                throttleY = throttleY < 0 ? 0 : previousThrottleY + DAMPENING_FACTOR * elapsedSeconds;
-            }
-            else if (positionBehavior.Y > currentWalkPoint.Y)
-            {
-                throttleY = throttleY > 0 ? 0 : previousThrottleY - DAMPENING_FACTOR * elapsedSeconds;
-            }
-
-            throttleX = throttleX > 1 ? 1 : throttleX < -1 ? -1 : throttleX;
-            throttleY = throttleY > 1 ? 1 : throttleY < -1 ? -1 : throttleY;
-            movementBehavior.SetThrottle(throttleX, throttleY);
+        private void CombatTurnManager_CombatEnded(object sender, EventArgs e)
+        {
+            _tileRestrictedMovement = false;
         }
     }
 }
