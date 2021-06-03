@@ -63,21 +63,19 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 var positionBehavior = supportedEntry.Item3;
 
                 InhibitNonTurnMovement(movementBehavior);
-                
+
                 if (_tileRestrictedMovement)
                 {
+                    // disallow any potential velocity shinanigans when we're
+                    // in tile-restricted mode
                     movementBehavior.SetVelocity(0, 0);
 
-                    if (movementBehavior.CurrentWalkTarget != null)
+                    // we only have walk-paths in tile-restricted movement.
+                    // throttle can be used instead to change direction but
+                    // that's it!
+                    if (movementBehavior.CurrentWalkTarget.HasValue)
                     {
                         ProcessTileBasedWalkPath(
-                            movementBehavior,
-                            positionBehavior,
-                            elapsedSeconds);
-                    }
-                    else
-                    {
-                        ProcessTileBasedThrottleMovement(
                             movementBehavior,
                             positionBehavior,
                             elapsedSeconds);
@@ -85,24 +83,22 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 }
                 else
                 {
-                    if (movementBehavior.CurrentWalkTarget != null)
+                    // process throttle movement first to allow path interruption
+                    ProcessFreeformThrottleMovement(
+                        movementBehavior,
+                        positionBehavior,
+                        elapsedSeconds);
+
+                    if (movementBehavior.CurrentWalkTarget.HasValue)
                     {
                         ProcessFreeformWalkPath(
                             movementBehavior,
                             positionBehavior,
                             elapsedSeconds);
                     }
-                    else
-                    {
-                        ProcessFreeformThrottleMovement(
-                            movementBehavior,
-                            positionBehavior,
-                            elapsedSeconds);
-                    }
                 }
 
-                UpdateDirection(
-                    movementBehavior);
+                UpdateDirection(movementBehavior);
                 UpdateAnimation(
                     movementBehavior,
                     dynamicAnimationBehavior,
@@ -193,24 +189,25 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             // we use throttle to control the animation because it gives 
             // superior feedback to the user that you're trying to move in a 
             // particular direction over the direction you may actually have 
-            // velocity in
+            // velocity in. if there's no throttle we can rely on velocity.
             var throttleX = movementBehavior.ThrottleX;
             var throttleY = movementBehavior.ThrottleY;
-            var lastAnimationId = animationBehavior.BaseAnimationId;
+            var velocityX = movementBehavior.VelocityX;
+            var velocityY = movementBehavior.VelocityY;
 
-            if (throttleX > 0)
+            if (throttleX > 0 || velocityX > 0)
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalkRight;
             }
-            else if (throttleX < 0)
+            else if (throttleX < 0 || velocityX < 0)
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalkLeft;
             }
-            else if (throttleY > 0)
+            else if (throttleY > 0 || velocityY > 0)
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalkBack;
             }
-            else if (throttleY < 0)
+            else if (throttleY < 0 || velocityY < 0)
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalkForward;
             }
@@ -233,43 +230,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             else if (animationBehavior.BaseAnimationId == null)
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandForward;
-                _logger.Debug(
+                _logger.Warn(
                     $"Switching animation to '{animationBehavior.BaseAnimationId}' " +
                     $"on game object '{animationBehavior.Owner}' because the " +
                     $"animation ID was unset.");
-            }
-
-            if (lastAnimationId != animationBehavior.BaseAnimationId)
-            {
-                //_logger.Debug(
-                //    $"Switching animation to '{animationBehavior.BaseAnimationId}' " +
-                //    $"on game object '{animationBehavior.Owner}'. Current " +
-                //    $"animation is '{animationBehavior.CurrentAnimationId}'.");
-            }
-        }
-
-        private void ProcessTileBasedThrottleMovement(
-            IMovementBehavior movementBehavior,
-            IPositionBehavior positionBehavior,
-            double elapsedSeconds)
-        {
-            var throttleX = movementBehavior.ThrottleX;
-            var throttleY = movementBehavior.ThrottleY;
-
-            if (Math.Abs(throttleX) > 0 ||
-                Math.Abs(throttleY) > 0)
-            {
-                movementBehavior.SetWalkPath(Enumerable.Empty<Vector2>());
-            }
-
-            var velocity = VelocityFromThrottle(movementBehavior);
-
-            if (Math.Abs(velocity.X) > 0 ||
-                Math.Abs(velocity.Y) > 0)
-            {
-                positionBehavior.SetPosition(
-                    positionBehavior.X + velocity.X * elapsedSeconds,
-                    positionBehavior.Y + velocity.Y * elapsedSeconds);
             }
         }
 
@@ -287,8 +251,11 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 movementBehavior.SetWalkPath(Enumerable.Empty<Vector2>());
             }
 
-            var velocity = VelocityFromThrottle(movementBehavior);
-            movementBehavior.SetVelocity(velocity.X, velocity.Y);
+            if (!movementBehavior.CurrentWalkTarget.HasValue)
+            {
+                var velocity = VelocityFromThrottle(movementBehavior);
+                movementBehavior.SetVelocity(velocity.X, velocity.Y);
+            }
         }
 
         private void ProcessTileBasedWalkPath(
@@ -345,12 +312,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 currentWalkPoint.Value,
                 lerpPercent);
 
-            var throttle = Vector2.Normalize(nextPosition - new Vector2((float)positionBehavior.X, (float)positionBehavior.Y));
-            movementBehavior.SetThrottle(
-                throttle.X > 0 ? 1 : throttle .X< 0 ? -1 : 0,
-                throttle.Y > 0 ? 1 : throttle.Y < 0 ? -1 : 0);
-
-            var velocity = speed * throttle;
+            var directionUnitVector = Vector2.Normalize(nextPosition - new Vector2((float)positionBehavior.X, (float)positionBehavior.Y));
+            var velocity = speed * directionUnitVector;
             movementBehavior.SetVelocity(velocity.X, velocity.Y);
         }
 
