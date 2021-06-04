@@ -20,6 +20,14 @@ namespace Macerus.Game.Autofac
                 .RegisterType<CombatEndTemplateSpawnerSystem>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<UpdateFrequencySystem>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<UpdateFrequencyManager>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }
