@@ -10,6 +10,8 @@ using NexusLabs.Contracts;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Crafting.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 
 namespace Macerus.Plugins.Features.Inventory.Default.Crafting
@@ -17,38 +19,45 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
     public sealed class CraftingController : ICraftingController
     {
         private readonly IMacerusActorIdentifiers _macerusActorIdentifiers;
+        private readonly ICraftingHandlerFacade _craftingHandler;
+        private readonly IFilterContextProvider _filterContextProvider;
         private readonly IBagItemSetFactory _bagItemSetFactory;
         private readonly ICraftingWindowViewModel _craftingWindowViewModel;
         private readonly IMapGameObjectManager _mapGameObjectManager;
         private readonly IItemSetController _itemSetController;
-        private readonly IItemSlotCollectionViewModel _playerBagItemSlotCollectionViewModel;
+        private readonly IItemSlotCollectionViewModel _craftingBagItemSlotCollectionViewModel;
         private readonly IItemToItemSlotViewModelConverter _bagToItemSlotViewModelConverter;
 
         private IItemSetToViewModelBinder _bagBinder;
 
         public CraftingController(
             IMacerusActorIdentifiers macerusActorIdentifiers,
+            ICraftingHandlerFacade craftingHandler,
+            IFilterContextProvider filterContextProvider,
             IBagItemSetFactory bagItemSetFactory,
             ICraftingWindowViewModel craftingWindowViewModel,
             IMapGameObjectManager mapGameObjectManager,
             IItemSetController itemSetController,
-            IItemSlotCollectionViewModel playerBagItemSlotCollectionViewModel,
+            IItemSlotCollectionViewModel craftingBagItemSlotCollectionViewModel,
             IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter)
         {
             _macerusActorIdentifiers = macerusActorIdentifiers;
+            _craftingHandler = craftingHandler;
+            _filterContextProvider = filterContextProvider;
             _bagItemSetFactory = bagItemSetFactory;
             _craftingWindowViewModel = craftingWindowViewModel;
             _mapGameObjectManager = mapGameObjectManager;
             _itemSetController = itemSetController;
-            _playerBagItemSlotCollectionViewModel = playerBagItemSlotCollectionViewModel;
+            _craftingBagItemSlotCollectionViewModel = craftingBagItemSlotCollectionViewModel;
             _bagToItemSlotViewModelConverter = bagToItemSlotViewModelConverter;
 
-            _craftingWindowViewModel.Opened += PlayerInventoryViewModel_Opened;
-            _craftingWindowViewModel.Closed += PlayerInventoryViewModel_Closed;
+            _craftingWindowViewModel.Opened += CraftingWindowViewModel_Opened;
+            _craftingWindowViewModel.Closed += CraftingWindowViewModel_Closed;
+            _craftingWindowViewModel.RequestCraft += CraftingWindowViewModel_RequestCraft;
         }
 
         public delegate CraftingController Factory(
-            IItemSlotCollectionViewModel playerBagItemSlotCollectionViewModel,
+            IItemSlotCollectionViewModel craftingBagItemSlotCollectionViewModel,
             IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter);
 
         public void OpenCraftingWindow() => _craftingWindowViewModel.Open();
@@ -69,7 +78,7 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
             return _craftingWindowViewModel.IsOpen;
         }
 
-        private void PlayerInventoryViewModel_Opened(
+        private void CraftingWindowViewModel_Opened(
             object sender,
             EventArgs e)
         {
@@ -94,14 +103,14 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
             _bagBinder = new ItemSetToViewModelBinder(
                 _bagToItemSlotViewModelConverter,
                 _bagItemSetFactory.Create(craftingInventoryBehavior),
-                _playerBagItemSlotCollectionViewModel);
+                _craftingBagItemSlotCollectionViewModel);
 
             _itemSetController.Register(_bagBinder);
 
             _bagBinder.RefreshViewModel();
         }
 
-        private void PlayerInventoryViewModel_Closed(
+        private void CraftingWindowViewModel_Closed(
             object sender,
             EventArgs e)
         {
@@ -113,6 +122,36 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
             _itemSetController.Unregister(_bagBinder);
 
             _bagBinder = null;
+        }
+
+        private void CraftingWindowViewModel_RequestCraft(
+            object sender,
+            EventArgs e)
+        {
+            var filterAttributes = _filterContextProvider
+                .GetContext()
+                .Attributes
+                .ToArray();
+            var ingredients = _bagBinder
+                .ItemSet
+                .Items
+                .ToDictionary(x => x.Key, x => x.Value);
+
+            if (_craftingHandler.TryHandle(
+                filterAttributes,
+                ingredients.Values,
+                out var newItems))
+            {
+                foreach (var itemId in ingredients.Keys)
+                {
+                    _bagBinder.ItemSet.RemoveItem(itemId);
+                }
+
+                foreach (var item in newItems)
+                {
+                    _bagBinder.ItemSet.AddItem(item);
+                }
+            }
         }
     }
 }

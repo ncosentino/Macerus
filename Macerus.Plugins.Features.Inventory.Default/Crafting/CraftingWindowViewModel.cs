@@ -15,6 +15,8 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
 
         public event EventHandler<EventArgs> Closed;
 
+        public event EventHandler<EventArgs> RequestCraft;
+
         public bool IsOpen
         {
             get { return _isOpen; }
@@ -36,6 +38,8 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
                 }
             }
         }
+
+        public void Craft() => RequestCraft?.Invoke(this, EventArgs.Empty);
 
         public void Close() => IsOpen = false;
 

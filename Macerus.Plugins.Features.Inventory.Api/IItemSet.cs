@@ -29,11 +29,27 @@ namespace Macerus.Plugins.Features.Inventory.Api
             return result;
         }
 
+        public static bool CanRemove(
+            this IItemSet itemSet,
+            IIdentifier itemIdToRemove)
+        {
+            var result = itemSet.CanSwapItems(itemIdToRemove, null);
+            return result;
+        }
+
         public static SwapResult AddItem(
             this IItemSet itemSet,
             IGameObject itemToAdd)
         {
             var result = itemSet.SwapItems(null, itemToAdd);
+            return result;
+        }
+
+        public static SwapResult RemoveItem(
+            this IItemSet itemSet,
+            IIdentifier itemIdToRemove)
+        {
+            var result = itemSet.SwapItems(itemIdToRemove, null);
             return result;
         }
     }
