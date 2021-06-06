@@ -10,5 +10,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Api
         IIdentifier CraftingInventoryIdentifier { get; }
 
         IIdentifier BeltIdentifier { get; }
+
+        IIdentifier MoveDistancePerTurnTotalStatDefinitionId { get; }
+
+        IIdentifier MoveDistancePerTurnCurrentStatDefinitionId { get; }
     }
 }

@@ -13,6 +13,10 @@ namespace Macerus.Plugins.Features.Combat.Default.Autofac
                .AsImplementedInterfaces()
                .SingleInstance();
             builder
+               .RegisterType<MovementPerTurnSystem>()
+               .AsImplementedInterfaces()
+               .SingleInstance();
+            builder
                .RegisterType<CombatAISystem>()
                .AsImplementedInterfaces()
                .SingleInstance();

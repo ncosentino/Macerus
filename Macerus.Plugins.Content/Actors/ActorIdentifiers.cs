@@ -44,5 +44,9 @@ namespace Macerus.Plugins.Content.Actors
         public IIdentifier InventoryIdentifier { get; } = new StringIdentifier("Inventory");
 
         public IIdentifier BeltIdentifier { get; } = new StringIdentifier("Belt");
+
+        public IIdentifier MoveDistancePerTurnTotalStatDefinitionId { get; } = new StringIdentifier("total move distance per turn");
+
+        public IIdentifier MoveDistancePerTurnCurrentStatDefinitionId { get; } = new StringIdentifier("current move distance per turn");
     }
 }

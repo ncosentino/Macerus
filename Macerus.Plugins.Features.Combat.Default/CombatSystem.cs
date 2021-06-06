@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using Macerus.Plugins.Features.Combat.Api;
+using Macerus.Plugins.Features.GameObjects.Actors.Api;
 
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;

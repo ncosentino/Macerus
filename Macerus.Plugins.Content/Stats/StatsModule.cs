@@ -3,6 +3,7 @@
 using Autofac;
 
 using Macerus.Plugins.Features.Combat.Api;
+using Macerus.Plugins.Features.GameObjects.Actors.Api;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
@@ -27,6 +28,7 @@ namespace Macerus.Plugins.Content.Stats
                 .Register(c =>
                 {
                     var combatTeamIdentifiers = c.Resolve<ICombatTeamIdentifiers>();
+                    var actorIdentifiers = c.Resolve<IMacerusActorIdentifiers>();
 
                     // FIXME: these are all temporary just for testing so we
                     // don't need to keep updating the database while we are
@@ -34,9 +36,12 @@ namespace Macerus.Plugins.Content.Stats
                     var mapping = new Dictionary<IIdentifier, string>()
                     {
                         // game-system specific
+                        // combat
                         [combatTeamIdentifiers.CombatTeamStatDefinitionId] = "COMBAT_TEAM",
                         // general
                         [new StringIdentifier("speed")] = "SPEED",
+                        [actorIdentifiers.MoveDistancePerTurnCurrentStatDefinitionId] = "MOVE_DISTANCE_PER_TURN_CURRENT",
+                        [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = "MOVE_DISTANCE_PER_TURN_TOTAL",
                         // defensive
                         [new StringIdentifier("armor")] = "ARMOR",
                         [new StringIdentifier("dodge")] = "DODGE",
