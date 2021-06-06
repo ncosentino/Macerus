@@ -9,11 +9,13 @@ namespace Macerus.Plugins.Features.StatusBar.Api
 
         IStatusBarResourceViewModel RightResource { get; }
 
-        IEnumerable<IStatusBarAbilityViewModel> Abilities { get; }
+        IReadOnlyCollection<IStatusBarAbilityViewModel> Abilities { get; }
 
-        void UpdateResource(IStatusBarResourceViewModel resource, bool left);
+        void UpdateResource(
+            IStatusBarResourceViewModel resource,
+            bool left);
 
         void UpdateAbilities(
-            IEnumerable<IStatusBarAbilityViewModel> abilities);
+            IReadOnlyCollection<IStatusBarAbilityViewModel> abilities);
     }
 }

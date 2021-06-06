@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using Macerus.Plugins.Features.Gui.Default;
 using Macerus.Plugins.Features.StatusBar.Api;
 
 namespace Macerus.Plugins.Features.StatusBar.Default
@@ -9,15 +10,18 @@ namespace Macerus.Plugins.Features.StatusBar.Default
         NotifierBase,
         IStatusBarViewModel
     {
+        private readonly List<IStatusBarAbilityViewModel> _abilityViewModels;
+
         public StatusBarViewModel()
         {
+            _abilityViewModels = new List<IStatusBarAbilityViewModel>();
         }
 
         public IStatusBarResourceViewModel LeftResource { get; private set; }
 
         public IStatusBarResourceViewModel RightResource { get; private set; }
 
-        public IEnumerable<IStatusBarAbilityViewModel> Abilities { get; private set; }
+        public IReadOnlyCollection<IStatusBarAbilityViewModel> Abilities => _abilityViewModels;
 
         public void UpdateResource(IStatusBarResourceViewModel resource, bool left)
         {
@@ -43,11 +47,48 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             }
         }
 
-        public void UpdateAbilities(IEnumerable<IStatusBarAbilityViewModel> abilities)
+        public void UpdateAbilities(IReadOnlyCollection<IStatusBarAbilityViewModel> abilities)
         {
-            Abilities = abilities.ToArray();
+            var hasChanged = abilities.Count != _abilityViewModels.Count;
 
-            OnPropertyChanged(nameof(Abilities));
+            if (!hasChanged)
+            {
+                using (var newEnumerator = abilities.GetEnumerator())
+                using (var existingEnumerator = _abilityViewModels.GetEnumerator())
+                {
+                    while (newEnumerator.MoveNext() && existingEnumerator.MoveNext())
+                    {
+                        var existingViewModel = existingEnumerator.Current;
+                        var newViewModel = newEnumerator.Current;
+
+                        if (!string.Equals(existingViewModel.AbilityName, newViewModel.AbilityName))
+                        {
+                            hasChanged = true;
+                            break;
+                        }
+
+                        if (existingViewModel.IsEnabled != newViewModel.IsEnabled)
+                        {
+                            hasChanged = true;
+                            break;
+                        }
+
+                        if (!Equals(existingViewModel.IconResourceId, newViewModel.IconResourceId))
+                        {
+                            hasChanged = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (hasChanged)
+            {
+                _abilityViewModels.Clear();
+                _abilityViewModels.AddRange(abilities);
+                OnPropertyChanged(nameof(Abilities));
+                return;
+            }
         }
     }
 }

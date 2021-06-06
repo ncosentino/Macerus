@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Macerus.Plugins.Features.CharacterSheet.Api;
+using Macerus.Plugins.Features.Gui.Default;
 
 namespace Macerus.Plugins.Features.CharacterSheet.Default
 {
