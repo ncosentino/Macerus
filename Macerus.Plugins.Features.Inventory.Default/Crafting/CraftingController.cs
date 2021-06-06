@@ -4,6 +4,7 @@ using System.Linq;
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.Inventory.Api;
+using Macerus.Plugins.Features.Inventory.Api.Crafting;
 
 using NexusLabs.Contracts;
 
@@ -11,79 +12,67 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 
-namespace Macerus.Plugins.Features.Inventory.Default
+namespace Macerus.Plugins.Features.Inventory.Default.Crafting
 {
-    public sealed class PlayerInventoryController : IPlayerInventoryController
+    public sealed class CraftingController : ICraftingController
     {
         private readonly IMacerusActorIdentifiers _macerusActorIdentifiers;
         private readonly IBagItemSetFactory _bagItemSetFactory;
-        private readonly IPlayerInventoryViewModel _playerInventoryViewModel;
+        private readonly ICraftingWindowViewModel _craftingWindowViewModel;
         private readonly IMapGameObjectManager _mapGameObjectManager;
         private readonly IItemSetController _itemSetController;
-        private readonly IItemSlotCollectionViewModel _playerEquipmentItemSlotCollectionViewModel;
         private readonly IItemSlotCollectionViewModel _playerBagItemSlotCollectionViewModel;
         private readonly IItemToItemSlotViewModelConverter _bagToItemSlotViewModelConverter;
-        private readonly IItemToItemSlotViewModelConverter _equipmentToItemSlotViewModelConverter;
 
-        private IItemSetToViewModelBinder _equipmentBinder;
         private IItemSetToViewModelBinder _bagBinder;
 
-        public PlayerInventoryController(
+        public CraftingController(
             IMacerusActorIdentifiers macerusActorIdentifiers,
             IBagItemSetFactory bagItemSetFactory,
-            IPlayerInventoryViewModel playerInventoryViewModel,
+            ICraftingWindowViewModel craftingWindowViewModel,
             IMapGameObjectManager mapGameObjectManager,
             IItemSetController itemSetController,
-            IItemSlotCollectionViewModel playerEquipmentItemSlotCollectionViewModel,
             IItemSlotCollectionViewModel playerBagItemSlotCollectionViewModel,
-            IItemToItemSlotViewModelConverter equipmentToItemSlotViewModelConverter,
             IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter)
         {
             _macerusActorIdentifiers = macerusActorIdentifiers;
             _bagItemSetFactory = bagItemSetFactory;
-            _playerInventoryViewModel = playerInventoryViewModel;
+            _craftingWindowViewModel = craftingWindowViewModel;
             _mapGameObjectManager = mapGameObjectManager;
             _itemSetController = itemSetController;
-            _playerEquipmentItemSlotCollectionViewModel = playerEquipmentItemSlotCollectionViewModel;
             _playerBagItemSlotCollectionViewModel = playerBagItemSlotCollectionViewModel;
-            _equipmentToItemSlotViewModelConverter = equipmentToItemSlotViewModelConverter;
             _bagToItemSlotViewModelConverter = bagToItemSlotViewModelConverter;
 
-            _playerInventoryViewModel.Opened += PlayerInventoryViewModel_Opened;
-            _playerInventoryViewModel.Closed += PlayerInventoryViewModel_Closed;
+            _craftingWindowViewModel.Opened += PlayerInventoryViewModel_Opened;
+            _craftingWindowViewModel.Closed += PlayerInventoryViewModel_Closed;
         }
 
-        public delegate PlayerInventoryController Factory(
-            IItemSlotCollectionViewModel playerEquipmentItemSlotCollectionViewModel,
+        public delegate CraftingController Factory(
             IItemSlotCollectionViewModel playerBagItemSlotCollectionViewModel,
-            IItemToItemSlotViewModelConverter equipmentToItemSlotViewModelConverter,
             IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter);
 
-        public void OpenInventory() => _playerInventoryViewModel.Open();
+        public void OpenCraftingWindow() => _craftingWindowViewModel.Open();
 
-        public void CloseInventory() => _playerInventoryViewModel.Close();
+        public void CloseCraftingWindow() => _craftingWindowViewModel.Close();
 
-        public bool ToggleInventory()
+        public bool ToggleCraftingWindow()
         {
-            if (_playerInventoryViewModel.IsOpen)
+            if (_craftingWindowViewModel.IsOpen)
             {
-                CloseInventory();
+                CloseCraftingWindow();
             }
             else
             {
-                OpenInventory();
+                OpenCraftingWindow();
             }
 
-            return _playerInventoryViewModel.IsOpen;
+            return _craftingWindowViewModel.IsOpen;
         }
 
         private void PlayerInventoryViewModel_Opened(
             object sender,
             EventArgs e)
         {
-            Contract.Requires(
-                _equipmentBinder == null,
-                $"Expecting '{nameof(_equipmentBinder)}' to be null.");
             Contract.Requires(
                 _bagBinder == null,
                 $"Expecting '{nameof(_bagBinder)}' to be null.");
@@ -95,27 +84,20 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 player,
                 $"Expecting to find game object on map with behavior '{typeof(IPlayerControlledBehavior)}'.");
 
-            var playerEquipmentBehavior = player.GetOnly<ICanEquipBehavior>();
-            var playerInventoryBehavior = player
+            var craftingInventoryBehavior = player
                 .Get<IItemContainerBehavior>()
-                .FirstOrDefault(x => x.ContainerId.Equals(_macerusActorIdentifiers.InventoryIdentifier));
+                .FirstOrDefault(x => x.ContainerId.Equals(_macerusActorIdentifiers.CraftingInventoryIdentifier));
             Contract.RequiresNotNull(
-                playerInventoryBehavior,
+                craftingInventoryBehavior,
                 $"Expecting to find a matching behavior of type '{typeof(IItemContainerBehavior)}' on '{player}'.");
 
-            _equipmentBinder = new ItemSetToViewModelBinder(
-                _equipmentToItemSlotViewModelConverter,
-                new EquipmentItemSet(playerEquipmentBehavior),
-                _playerEquipmentItemSlotCollectionViewModel);
             _bagBinder = new ItemSetToViewModelBinder(
                 _bagToItemSlotViewModelConverter,
-                _bagItemSetFactory.Create(playerInventoryBehavior),
+                _bagItemSetFactory.Create(craftingInventoryBehavior),
                 _playerBagItemSlotCollectionViewModel);
 
-            _itemSetController.Register(_equipmentBinder);
             _itemSetController.Register(_bagBinder);
 
-            _equipmentBinder.RefreshViewModel();
             _bagBinder.RefreshViewModel();
         }
 
@@ -124,17 +106,12 @@ namespace Macerus.Plugins.Features.Inventory.Default
             EventArgs e)
         {
             Contract.RequiresNotNull(
-                _equipmentBinder,
-                $"Expecting '{nameof(_equipmentBinder)}' to not be null.");
-            Contract.RequiresNotNull(
                 _bagBinder,
                 $"Expecting '{nameof(_bagBinder)}' to not be null.");
 
             _itemSetController.EndPendingDragDrop();
-            _itemSetController.Unregister(_equipmentBinder);
             _itemSetController.Unregister(_bagBinder);
 
-            _equipmentBinder = null;
             _bagBinder = null;
         }
     }

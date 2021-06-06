@@ -1,8 +1,10 @@
 ﻿using Autofac;
 
+using Macerus.Plugins.Features.GameObjects.Containers.Api.LootDrops;
 using Macerus.Plugins.Features.Inventory.Api;
 
 using ProjectXyz.Framework.Autofac;
+using ProjectXyz.Plugins.Features.Mapping.Api;
 
 namespace Macerus.Plugins.Features.Inventory.Default.Autofac
 {
@@ -19,7 +21,17 @@ namespace Macerus.Plugins.Features.Inventory.Default.Autofac
             builder
                 .RegisterType<ItemSetController>()
                 .AsImplementedInterfaces()
-                .SingleInstance();
+                .SingleInstance()
+                .OnActivated(x =>
+                {
+                    var dropToMapBinder = new ItemSetToViewModelBinder(
+                        x.Context.ResolveNamed<IItemToItemSlotViewModelConverter>(CONVERTER_NAME_BAG),
+                        new DropToMapItemSet(
+                            x.Context.Resolve<ILootDropFactory>(),
+                            x.Context.Resolve<IMapGameObjectManager>()),
+                        x.Context.ResolveNamed<IItemSlotCollectionViewModel>(ITEM_SET_NAME_DROP_TO_MAP));
+                    x.Instance.Register(dropToMapBinder);
+                });
             builder
                 .RegisterType<BagItemSetFactory>()
                 .AsImplementedInterfaces()
@@ -52,7 +64,6 @@ namespace Macerus.Plugins.Features.Inventory.Default.Autofac
                     var controller = factory(
                         x.ResolveNamed<IItemSlotCollectionViewModel>(ITEM_SET_NAME_PLAYER_EQUIPMENT),
                         x.ResolveNamed<IItemSlotCollectionViewModel>(ITEM_SET_NAME_PLAYER_BAG),
-                        x.ResolveNamed<IItemSlotCollectionViewModel>(ITEM_SET_NAME_DROP_TO_MAP),
                         x.ResolveNamed<IItemToItemSlotViewModelConverter>(CONVERTER_NAME_EQUIPMENT),
                         x.ResolveNamed<IItemToItemSlotViewModelConverter>(CONVERTER_NAME_BAG));
                     return controller;

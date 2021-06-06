@@ -107,6 +107,7 @@ namespace Macerus.Plugins.Content.Actors
                                         new AlwaysLoadWithMapBehavior(),
                                         new SkipMapSaveStateBehavior(),
                                         new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),
+                                        new ItemContainerBehavior(actorIdentifiers.CraftingInventoryIdentifier),
                                         new ItemContainerBehavior(actorIdentifiers.BeltIdentifier),
                                         new CanEquipBehavior(humanoidEquipSlotIds),
                                         new HasPrefabResourceIdBehavior(new StringIdentifier("Mapping/Prefabs/Actors/PlayerPlaceholder")),

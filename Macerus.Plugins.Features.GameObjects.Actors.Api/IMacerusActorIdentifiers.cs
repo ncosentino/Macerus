@@ -7,6 +7,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Api
     {
         IIdentifier InventoryIdentifier { get; }
 
+        IIdentifier CraftingInventoryIdentifier { get; }
+
         IIdentifier BeltIdentifier { get; }
     }
 }

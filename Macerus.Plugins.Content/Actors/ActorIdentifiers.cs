@@ -39,6 +39,8 @@ namespace Macerus.Plugins.Content.Actors
 
         public IIdentifier AnimationCastRight { get; } = new StringIdentifier("$actor$_cast_right");
 
+        public IIdentifier CraftingInventoryIdentifier { get; } = new StringIdentifier("Crafting");
+
         public IIdentifier InventoryIdentifier { get; } = new StringIdentifier("Inventory");
 
         public IIdentifier BeltIdentifier { get; } = new StringIdentifier("Belt");
