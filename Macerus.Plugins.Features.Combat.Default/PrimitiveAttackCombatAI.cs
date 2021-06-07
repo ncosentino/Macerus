@@ -256,19 +256,23 @@ namespace Macerus.Plugins.Features.Combat.Default
                 destinationLocation = fallbackDestinationLocation;
             }
 
+            var walkPath = _mapProvider
+                .PathFinder
+                .FindPath(
+                    actorLocation,
+                    destinationLocation,
+                    actorSize,
+                    canMoveDiagonally);
             var pointsToWalk = new Queue<Vector2>(
                 new[] { actorLocation }
-                .Concat(_mapProvider
-                    .PathFinder
-                    .FindPath(
-                        actorLocation,
-                        destinationLocation,
-                        actorSize,
-                        canMoveDiagonally)));
+                .Concat(walkPath.Positions));
             _logger.Info(
                 $"Path:\r\n" +
                 string.Join("\r\n", pointsToWalk.Select(p => $"\t({p.X},{p.Y})")));
             actor.GetOnly<IMovementBehavior>().SetWalkPath(pointsToWalk);
+            actor
+                .GetOnly<IHasMutableStatsBehavior>()
+                .MutateStats(stats => stats[_actorIdentifiers.MoveDistancePerTurnCurrentStatDefinitionId] -= walkPath.TotalDistance);
 
             _combatState = CombatState.WalkToTarget;
             return false;
