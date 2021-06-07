@@ -131,7 +131,7 @@ namespace Macerus.Plugins.Content.Actors
                                     [new StringIdentifier("speed")] = 20, // FIXME: just for testing
                                     [new StringIdentifier("firedmg")] = 10, // FIXME: just for testing
                                     [new StringIdentifier("fireresist")] = 10, // FIXME: just for testing
-                                    [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = combatTeamIdentifiers.PlayerTeamStatValue,
+                                    [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = 3,
                                 }),
                             },
                             new IFilterAttribute[]
