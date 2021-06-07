@@ -131,7 +131,8 @@ namespace Macerus.Plugins.Content.Actors
                                     [new StringIdentifier("speed")] = 20, // FIXME: just for testing
                                     [new StringIdentifier("firedmg")] = 10, // FIXME: just for testing
                                     [new StringIdentifier("fireresist")] = 10, // FIXME: just for testing
-                                    [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = 3,
+                                    [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = 3, // FIXME: just for testing
+                                    [actorIdentifiers.MoveDiagonallyStatDefinitionId] = 0, // FIXME: just for testing
                                 }),
                             },
                             new IFilterAttribute[]
@@ -178,6 +179,8 @@ namespace Macerus.Plugins.Content.Actors
                                     [new StringIdentifier("speed")] = 10, // FIXME: just for testing
                                     [new StringIdentifier("firedmg")] = 0, // FIXME: just for testing
                                     [new StringIdentifier("fireresist")] = 10, // FIXME: just for testing
+                                    [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = 4, // FIXME: just for testing
+                                    [actorIdentifiers.MoveDiagonallyStatDefinitionId] = 1, // FIXME: just for testing
                                 }),
                                 new HasSkillsGeneratorComponent(new Dictionary<IIdentifier, int>()
                                 {

@@ -1,4 +1,5 @@
 ﻿using Macerus.Plugins.Features.Combat.Api;
+using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Stats;
 
@@ -14,6 +15,7 @@ namespace Macerus.Plugins.Features.Combat.Default
         private readonly ISkillHandlerFacade _skillHandlerFacade;
         private readonly ICombatTeamIdentifiers _combatTeamIdentifiers;
         private readonly ICombatStatIdentifiers _combatStatIdentifiers;
+        private readonly IMacerusActorIdentifiers _actorIdentifiers;
         private readonly IMapProvider _mapProvider;
         private readonly ILogger _logger;
 
@@ -23,6 +25,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             ISkillHandlerFacade skillHandlerFacade,
             ICombatTeamIdentifiers combatTeamIdentifiers,
             ICombatStatIdentifiers combatStatIdentifiers,
+            IMacerusActorIdentifiers actorIdentifiers,
             IMapProvider mapProvider,
             ILogger logger)
         {
@@ -31,6 +34,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             _skillHandlerFacade = skillHandlerFacade;
             _combatTeamIdentifiers = combatTeamIdentifiers;
             _combatStatIdentifiers = combatStatIdentifiers;
+            _actorIdentifiers = actorIdentifiers;
             _mapProvider = mapProvider;
             _logger = logger;
         }
@@ -44,6 +48,7 @@ namespace Macerus.Plugins.Features.Combat.Default
                 _skillHandlerFacade,
                 _combatTeamIdentifiers,
                 _combatStatIdentifiers,
+                _actorIdentifiers,
                 _mapProvider,
                 _logger);
             return combatAI;

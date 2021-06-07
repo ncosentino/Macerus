@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Combat.Api;
+using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Stats;
 
 using NexusLabs.Contracts;
 
-using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Plugins.Features.Mapping.Api;
-using ProjectXyz.Shared.Framework;
-using System.Threading.Tasks;
 
 namespace Macerus.Plugins.Features.Combat.Default
 {
@@ -30,6 +30,7 @@ namespace Macerus.Plugins.Features.Combat.Default
         private readonly ISkillHandlerFacade _skillHandlerFacade;
         private readonly ICombatTeamIdentifiers _combatTeamIdentifiers;
         private readonly ICombatStatIdentifiers _combatStatIdentifiers;
+        private readonly IMacerusActorIdentifiers _actorIdentifiers;
         private readonly IMapProvider _mapProvider;
         private readonly ILogger _logger;
 
@@ -42,6 +43,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             ISkillHandlerFacade skillHandlerFacade,
             ICombatTeamIdentifiers combatTeamIdentifiers,
             ICombatStatIdentifiers combatStatIdentifiers,
+            IMacerusActorIdentifiers actorIdentifiers,
             IMapProvider mapProvider,
             ILogger logger)
         {
@@ -50,6 +52,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             _skillHandlerFacade = skillHandlerFacade;
             _combatTeamIdentifiers = combatTeamIdentifiers;
             _combatStatIdentifiers = combatStatIdentifiers;
+            _actorIdentifiers = actorIdentifiers;
             _mapProvider = mapProvider;
             _logger = logger;
         }
@@ -200,6 +203,7 @@ namespace Macerus.Plugins.Features.Combat.Default
 
             var actorPositionBehavior = actor.GetOnly<IReadOnlyPositionBehavior>();
             var actorLocation = new Vector2((float)actorPositionBehavior.X, (float)actorPositionBehavior.Y);
+
             if (allAdjacentPositions.Any(x => Vector2.Distance(x, actorLocation) < double.Epsilon))
             {
                 _logger.Info($"'{actor}' is already standing adjacent to target.");
@@ -207,21 +211,51 @@ namespace Macerus.Plugins.Features.Combat.Default
                 return false;
             }
 
+            bool canMoveDiagonally = _statCalculationServiceAmenity.GetStatValue(
+                actor,
+                _actorIdentifiers.MoveDiagonallyStatDefinitionId) > 0;
+            var allowedWalkDistance = _statCalculationServiceAmenity.GetStatValue(
+                actor,
+                _actorIdentifiers.MoveDistancePerTurnCurrentStatDefinitionId);
+
             var freeAdjacentPositions = _mapProvider.PathFinder.GetFreeAdjacentPositionsToObject(
                 targetLocation,
                 targetSize,
-                true);
+                canMoveDiagonally);
             var destinationLocation = ClosestPosition(actorLocation, freeAdjacentPositions);
 
             _logger.Info(
                 $"'{actor}' needs to walk from " +
                 $"({actorLocation.X},{actorLocation.Y}) in order to " +
-                $"({destinationLocation.X},{destinationLocation.Y}) in order to" +
+                $"({destinationLocation.X},{destinationLocation.Y}) in order to " +
                 $"target '{target}' standing at position " +
                 $"({targetLocation.X},{targetLocation.Y}).");
 
             var actorSizeBehavior = target.GetOnly<IReadOnlySizeBehavior>();
             var actorSize = new Vector2((float)actorSizeBehavior.Width, (float)actorSizeBehavior.Height);
+
+            var canMoveToPositions = _mapProvider
+                .PathFinder
+                .GetAllowedPathDestinations(
+                    actorLocation,
+                    actorSize,
+                    allowedWalkDistance,
+                    canMoveDiagonally)
+                .ToArray();
+            if (!canMoveToPositions.Contains(destinationLocation))
+            {
+                // pick the closest position to the target that the actor can move to
+                var fallbackDestinationLocation = ClosestPosition(
+                    targetLocation,
+                    canMoveToPositions);
+
+                _logger.Info(
+                    $"'{actor}' cannot move to the desired destination location " +
+                    $"({destinationLocation.X},{destinationLocation.Y}). They will move to " +
+                    $"({fallbackDestinationLocation.X},{fallbackDestinationLocation.Y}).");
+                destinationLocation = fallbackDestinationLocation;
+            }
+
             var pointsToWalk = new Queue<Vector2>(
                 new[] { actorLocation }
                 .Concat(_mapProvider
@@ -229,7 +263,8 @@ namespace Macerus.Plugins.Features.Combat.Default
                     .FindPath(
                         actorLocation,
                         destinationLocation,
-                        actorSize)));
+                        actorSize,
+                        canMoveDiagonally)));
             _logger.Info(
                 $"Path:\r\n" +
                 string.Join("\r\n", pointsToWalk.Select(p => $"\t({p.X},{p.Y})")));

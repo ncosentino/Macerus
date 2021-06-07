@@ -42,6 +42,7 @@ namespace Macerus.Plugins.Content.Stats
                         [new StringIdentifier("speed")] = "SPEED",
                         [actorIdentifiers.MoveDistancePerTurnCurrentStatDefinitionId] = "MOVE_DISTANCE_PER_TURN_CURRENT",
                         [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = "MOVE_DISTANCE_PER_TURN_TOTAL",
+                        [actorIdentifiers.MoveDiagonallyStatDefinitionId] = "MOVE_DIAGONALLY",
                         // defensive
                         [new StringIdentifier("armor")] = "ARMOR",
                         [new StringIdentifier("dodge")] = "DODGE",

@@ -48,5 +48,7 @@ namespace Macerus.Plugins.Content.Actors
         public IIdentifier MoveDistancePerTurnTotalStatDefinitionId { get; } = new StringIdentifier("total move distance per turn");
 
         public IIdentifier MoveDistancePerTurnCurrentStatDefinitionId { get; } = new StringIdentifier("current move distance per turn");
+
+        public IIdentifier MoveDiagonallyStatDefinitionId { get; } = new StringIdentifier("move diagonally");
     }
 }
