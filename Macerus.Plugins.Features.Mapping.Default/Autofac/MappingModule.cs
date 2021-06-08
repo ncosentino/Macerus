@@ -9,6 +9,10 @@ namespace Macerus.Plugins.Features.Mapping.Default.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
+               .RegisterType<MappingAmenity>()
+               .AsImplementedInterfaces()
+               .SingleInstance();
+            builder
                .RegisterType<MapResourceIdConverter>()
                .AsImplementedInterfaces()
                .SingleInstance();
