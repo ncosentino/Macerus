@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,6 +28,9 @@ namespace Macerus.Plugins.Features.Combat.Default
         private readonly IMappingAmenity _mappingAmenity;
         private readonly IMapTraversableHighlighter _mapTraversableHighlighter;
         private readonly IFilterContextProvider _filterContextProvider;
+
+        private IObservableMovementBehavior _trackedMovementBehavior;
+        private bool _previouslyTrackedMovement;
 
         public MovementPerTurnSystem(
             ICombatTurnManager combatTurnManager,
@@ -75,7 +79,7 @@ namespace Macerus.Plugins.Features.Combat.Default
                     return typeIdentifierBehavior.TypeId.Equals(_macerusActorIdentifiers.ActorTypeIdentifier);
                 });
             UpdateStats(actors);
-            UpdateTraversableHighlighting(_combatTurnManager
+            UpdateAndTrackTraversableHighlighting(_combatTurnManager
                 .GetSnapshot(_filterContextProvider.GetContext(), 1)
                 .Single());
         }
@@ -101,6 +105,24 @@ namespace Macerus.Plugins.Features.Combat.Default
             Task.WaitAll(tasks);
         }
 
+        private void UpdateAndTrackTraversableHighlighting(IGameObject actor)
+        {
+            if (_trackedMovementBehavior != null)
+            {
+                _trackedMovementBehavior.ThrottleChanged -= TrackedMovementBehavior_ThrottleChanged;
+            }
+
+            UpdateTraversableHighlighting(actor);
+
+            _trackedMovementBehavior = actor?.GetOnly<IObservableMovementBehavior>();
+            _previouslyTrackedMovement = false;
+
+            if (_trackedMovementBehavior != null)
+            {
+                _trackedMovementBehavior.ThrottleChanged += TrackedMovementBehavior_ThrottleChanged;
+            }
+        }
+
         private void UpdateTraversableHighlighting(IGameObject actor)
         {
             var traversablePoints = actor?.Has<IPlayerControlledBehavior>() == true
@@ -109,19 +131,42 @@ namespace Macerus.Plugins.Features.Combat.Default
             _mapTraversableHighlighter.SetTraversableTiles(traversablePoints);
         }
 
+        private void TrackedMovementBehavior_ThrottleChanged(
+            object sender,
+            EventArgs e)
+        {
+            var movementBehavior = (IReadOnlyMovementBehavior)sender;
+            bool movement =
+                Math.Abs(movementBehavior.ThrottleX) > 0 ||
+                Math.Abs(movementBehavior.ThrottleY) > 0;
+            
+            // if we weren't moving but now we are, clear the movement highlighting
+            // but otherwise if we were moving and now we aren't, set the movement highlighting
+            if (!_previouslyTrackedMovement && movement)
+            {
+                UpdateTraversableHighlighting(null);
+            }
+            else if (_previouslyTrackedMovement && !movement)
+            {
+                UpdateTraversableHighlighting(movementBehavior.Owner);
+            }
+
+            _previouslyTrackedMovement = movement;
+        }
+
         private void CombatTurnManager_CombatStarted(
             object sender, 
             CombatStartedEventArgs e)
         {
             UpdateStats(_combatGameObjectProvider.GetGameObjects());
-            UpdateTraversableHighlighting(e.ActorOrder.First());
+            UpdateAndTrackTraversableHighlighting(e.ActorOrder.First());
         }
 
         private void CombatTurnManager_CombatEnded(
             object sender,
             CombatEndedEventArgs e)
         {
-            UpdateTraversableHighlighting(null);
+            UpdateAndTrackTraversableHighlighting(null);
         }
     }
 }
