@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Macerus.Plugins.Features.Stats.Api;
+
 using ProjectXyz.Api.Enchantments.Stats;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;

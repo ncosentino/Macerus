@@ -1,5 +1,5 @@
 ﻿using Macerus.Plugins.Features.Combat.Api;
-using Macerus.Plugins.Features.Stats;
+using Macerus.Plugins.Features.Stats.Api;
 
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Api.GameObjects;

@@ -73,6 +73,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.MainMenu.Default\Macerus.Plugins.Features.MainMenu.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Mapping.Default\Macerus.Plugins.Features.Mapping.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Mapping\Macerus.Plugins.Features.Mapping.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Stats.Api\Macerus.Plugins.Features.Stats.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.StatusBar.Api\Macerus.Plugins.Features.StatusBar.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.StatusBar.Default\Macerus.Plugins.Features.StatusBar.Default.csproj" />

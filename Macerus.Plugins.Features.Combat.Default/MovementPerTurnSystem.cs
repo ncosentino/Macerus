@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
-using Macerus.Plugins.Features.Stats;
+using Macerus.Plugins.Features.Stats.Api;
 
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;

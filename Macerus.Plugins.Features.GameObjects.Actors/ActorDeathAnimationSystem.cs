@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Combat.Api;
-using Macerus.Plugins.Features.Stats;
+using Macerus.Plugins.Features.Stats.Api;
 
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;

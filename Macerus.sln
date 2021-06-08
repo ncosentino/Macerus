@@ -173,6 +173,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MapEditor", "MapEditor", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.ContentCreator.MapEditor.Behaviors.Shared", "Macerus.ContentCreator.MapEditor.Behaviors.Shared\Macerus.ContentCreator.MapEditor.Behaviors.Shared.csproj", "{5B0402B7-E052-466D-91DD-3570811E9E67}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Stats.Api", "Macerus.Plugins.Features.Stats.Api\Macerus.Plugins.Features.Stats.Api.csproj", "{3BF28854-95F2-4C21-8164-FA8A087F7552}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -403,6 +405,10 @@ Global
 		{5B0402B7-E052-466D-91DD-3570811E9E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B0402B7-E052-466D-91DD-3570811E9E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B0402B7-E052-466D-91DD-3570811E9E67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BF28854-95F2-4C21-8164-FA8A087F7552}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BF28854-95F2-4C21-8164-FA8A087F7552}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BF28854-95F2-4C21-8164-FA8A087F7552}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BF28854-95F2-4C21-8164-FA8A087F7552}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -485,6 +491,7 @@ Global
 		{9BB4DD66-07B1-4886-AE7A-696FB34A223F} = {32F65C4C-D4E1-4913-96FB-BF4371D26554}
 		{601FB2CA-AA33-42F8-9441-B45714906FC9} = {E2ADBB67-8741-4A57-A227-03CD65C651D1}
 		{5B0402B7-E052-466D-91DD-3570811E9E67} = {601FB2CA-AA33-42F8-9441-B45714906FC9}
+		{3BF28854-95F2-4C21-8164-FA8A087F7552} = {F7A4EA31-5774-4ADF-A504-85F69A763FA5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}

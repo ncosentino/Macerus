@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net46</TargetFramework>
@@ -7,10 +7,6 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="ProjectXyz" Version="1.0.*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Macerus.Plugins.Features.Stats.Api\Macerus.Plugins.Features.Stats.Api.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
-// TODO: This Stats reference should be to an API!
-using Macerus.Plugins.Features.Stats;
+using Macerus.Plugins.Features.Stats.Api;
 using Macerus.Plugins.Features.StatusBar.Api;
 
 using ProjectXyz.Api.Framework;

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
-using Macerus.Plugins.Features.Stats;
+using Macerus.Plugins.Features.Stats.Api;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
