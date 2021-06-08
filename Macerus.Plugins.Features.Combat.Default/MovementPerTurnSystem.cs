@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.Mapping;
 using Macerus.Plugins.Features.Stats.Api;
 
 using ProjectXyz.Api.Framework.Entities;
@@ -11,6 +13,7 @@ using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.TurnBased.Api;
 
 namespace Macerus.Plugins.Features.Combat.Default
@@ -21,19 +24,29 @@ namespace Macerus.Plugins.Features.Combat.Default
         private readonly IMacerusActorIdentifiers _macerusActorIdentifiers;
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
         private readonly ICombatGameObjectProvider _combatGameObjectProvider;
+        private readonly IMappingAmenity _mappingAmenity;
+        private readonly IMapTraversableHighlighter _mapTraversableHighlighter;
+        private readonly IFilterContextProvider _filterContextProvider;
 
         public MovementPerTurnSystem(
             ICombatTurnManager combatTurnManager,
             IMacerusActorIdentifiers macerusActorIdentifiers,
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
-            ICombatGameObjectProvider combatGameObjectProvider)
+            ICombatGameObjectProvider combatGameObjectProvider,
+            IMappingAmenity mappingAmenity,
+            IMapTraversableHighlighter mapTraversableHighlighter,
+            IFilterContextProvider filterContextProvider)
         {
             _combatTurnManager = combatTurnManager;
             _macerusActorIdentifiers = macerusActorIdentifiers;
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
             _combatGameObjectProvider = combatGameObjectProvider;
+            _mappingAmenity = mappingAmenity;
+            _mapTraversableHighlighter = mapTraversableHighlighter;
+            _filterContextProvider = filterContextProvider;
 
             _combatTurnManager.CombatStarted += CombatTurnManager_CombatStarted;
+            _combatTurnManager.CombatEnded += CombatTurnManager_CombatEnded;
         }
 
         public int? Priority => null;
@@ -62,6 +75,9 @@ namespace Macerus.Plugins.Features.Combat.Default
                     return typeIdentifierBehavior.TypeId.Equals(_macerusActorIdentifiers.ActorTypeIdentifier);
                 });
             UpdateStats(actors);
+            UpdateTraversableHighlighting(_combatTurnManager
+                .GetSnapshot(_filterContextProvider.GetContext(), 1)
+                .Single());
         }
 
         private void UpdateStats(IEnumerable<IGameObject> actors)
@@ -85,11 +101,27 @@ namespace Macerus.Plugins.Features.Combat.Default
             Task.WaitAll(tasks);
         }
 
+        private void UpdateTraversableHighlighting(IGameObject actor)
+        {
+            var traversablePoints = actor?.Has<IPlayerControlledBehavior>() == true
+                ? _mappingAmenity.GetAllowedPathDestinationsForActor(actor)
+                : Enumerable.Empty<System.Numerics.Vector2>();
+            _mapTraversableHighlighter.SetTraversableTiles(traversablePoints);
+        }
+
         private void CombatTurnManager_CombatStarted(
             object sender, 
             CombatStartedEventArgs e)
         {
             UpdateStats(_combatGameObjectProvider.GetGameObjects());
+            UpdateTraversableHighlighting(e.ActorOrder.First());
+        }
+
+        private void CombatTurnManager_CombatEnded(
+            object sender,
+            CombatEndedEventArgs e)
+        {
+            UpdateTraversableHighlighting(null);
         }
     }
 }
