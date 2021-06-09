@@ -1,21 +1,19 @@
 ﻿using Autofac;
 
-using Macerus.Plugins.Features.CharacterSheet.Default;
-
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Plugins.Features.Inventory.Default.Autofac
+namespace Macerus.Plugins.Features.Hud.Default.Autofac
 {
-    public sealed class CharacterSheetModule : SingleRegistrationModule
+    public sealed class HudModule : SingleRegistrationModule
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<CharacterSheetViewModel>()
+                .RegisterType<HudViewModel>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<CharacterSheetController>()
+                .RegisterType<HudController>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

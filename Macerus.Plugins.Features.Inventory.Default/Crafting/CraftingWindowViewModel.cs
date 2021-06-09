@@ -17,6 +17,8 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
 
         public event EventHandler<EventArgs> RequestCraft;
 
+        public bool IsLeftDocked { get; } = true;
+
         public bool IsOpen
         {
             get { return _isOpen; }

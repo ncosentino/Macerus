@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Plugins.Features.Gui.Api\Macerus.Plugins.Features.Gui.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Hud\Macerus.Plugins.Features.Hud.csproj" />
   </ItemGroup>
 
 </Project>

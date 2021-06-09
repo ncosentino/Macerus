@@ -1,8 +1,8 @@
-﻿using Macerus.Plugins.Features.Gui.Api;
+﻿using Macerus.Plugins.Features.Hud;
 
 namespace Macerus.Plugins.Features.Inventory.Api
 {
-    public interface IPlayerInventoryViewModel : IWindowViewModel
+    public interface IPlayerInventoryViewModel : IDiscoverableHudWindowViewModel
     {        
     }
 }

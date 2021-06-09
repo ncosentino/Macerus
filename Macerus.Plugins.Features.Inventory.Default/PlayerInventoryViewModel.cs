@@ -15,6 +15,8 @@ namespace Macerus.Plugins.Features.Inventory.Default
 
         public event EventHandler<EventArgs> Closed;
 
+        public bool IsLeftDocked { get; } = false;
+
         public bool IsOpen
         {
             get { return _isOpen; }
