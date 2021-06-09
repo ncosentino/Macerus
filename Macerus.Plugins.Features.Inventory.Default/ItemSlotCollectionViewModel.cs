@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Macerus.Plugins.Features.Gui.Default;
 using Macerus.Plugins.Features.Inventory.Api;
@@ -10,6 +11,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
         NotifierBase,
         IItemSlotCollectionViewModel
     {
+        private readonly List<object> _itemOrderingKeys;
         private readonly IDictionary<object, IItemSlotViewModel> _itemSlots;
 
         private bool _isDragOver;
@@ -17,6 +19,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
 
         public ItemSlotCollectionViewModel()
         {
+            _itemOrderingKeys = new List<object>();
             _itemSlots = new ObservableConcurrentDictionary<object, IItemSlotViewModel>();
             _isDropAllowed = true;
         }
@@ -27,7 +30,10 @@ namespace Macerus.Plugins.Features.Inventory.Default
 
         public event EventHandler<DroppedEventArgs> Dropped;
 
-        public IEnumerable<IItemSlotViewModel> ItemSlots => _itemSlots.Values; // FIXME: be able to wrap with filter/sort
+        public IEnumerable<IItemSlotViewModel> ItemSlots => _itemOrderingKeys
+            .Select(x => _itemSlots.TryGetValue(x, out var itemSlot)
+                ? itemSlot
+                : null);
 
         public string BackgroundImageResourceId { get; }
 
@@ -60,8 +66,11 @@ namespace Macerus.Plugins.Features.Inventory.Default
         public void SetItemSlots(IEnumerable<IItemSlotViewModel> itemSlots)
         {
             _itemSlots.Clear();
+            _itemOrderingKeys.Clear();
+
             foreach (var slot in itemSlots)
             {
+                _itemOrderingKeys.Add(slot.Id);
                 _itemSlots.Add(slot.Id, slot);
             }
 
