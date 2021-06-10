@@ -5,6 +5,7 @@ using Macerus.Plugins.Features.GameObjects.Items.Generation.Unique;
 
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 
 namespace Macerus.Plugins.Content.Wip.Items
 {
@@ -13,6 +14,7 @@ namespace Macerus.Plugins.Content.Wip.Items
         public Type ComponentType { get; } = typeof(UniqueBaseItemGeneratorComponent);
 
         public IEnumerable<IBehavior> Convert(
+            IFilterContext filterContext,
             IEnumerable<IBehavior> baseBehaviors,
             IGeneratorComponent generatorComponent)
         {

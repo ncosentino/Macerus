@@ -6,6 +6,7 @@ using NexusLabs.Framework;
 
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Socketing.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Socketing
@@ -29,6 +30,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Socketing
         public Type ComponentType { get; } = typeof(SocketGeneratorComponent);
 
         public IEnumerable<IBehavior> Convert(
+            IFilterContext filterContext,
             IEnumerable<IBehavior> baseBehaviors,
             IGeneratorComponent generatorComponent)
         {

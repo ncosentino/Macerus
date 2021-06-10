@@ -78,6 +78,10 @@ namespace Macerus.Plugins.Features.Inventory.Default.Autofac
                 .RegisterType<ItemDragViewModel>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<InventorySocketingWorkflow>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

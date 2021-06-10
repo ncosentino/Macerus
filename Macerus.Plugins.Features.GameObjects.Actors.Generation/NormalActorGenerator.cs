@@ -59,6 +59,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
                 // to specify the ID but also being safe to ensure there is one?
                 var definitionBehaviors = _generatorComponentToBehaviorConverter
                     .Convert(
+                        filterContext,
                         Enumerable.Empty<IBehavior>(),
                         generatorComponents)
                     .ToArray();

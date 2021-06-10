@@ -7,26 +7,21 @@ using Macerus.Plugins.Features.Inventory.Api;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Socketing.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Items.SocketPatterns.Api;
 
 namespace Macerus.Plugins.Features.Inventory.Default
 {
     public sealed class BagItemSet : IItemSet
     {
         private readonly IItemContainerBehavior _itemContainerBehavior;
-        private readonly ISocketPatternHandlerFacade _socketPatternHandler;
-        private readonly ISocketableInfoFactory _socketableInfoFactory;
+        private readonly IInventorySocketingWorkflow _inventorySocketingWorkflow;
         private bool _ignoreBehaviorEvents;
 
         public BagItemSet(
             IItemContainerBehavior itemContainerBehavior,
-            ISocketPatternHandlerFacade socketPatternHandler,
-            ISocketableInfoFactory socketableInfoFactory)
+            IInventorySocketingWorkflow inventorySocketingWorkflow)
         {
             _itemContainerBehavior = itemContainerBehavior;
-            _socketPatternHandler = socketPatternHandler;
-            _socketableInfoFactory = socketableInfoFactory;
+            _inventorySocketingWorkflow = inventorySocketingWorkflow;
 
             _itemContainerBehavior.ItemsChanged += ItemContainerBehavior_ItemsChanged;
         }
@@ -120,7 +115,8 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 }
 
                 if (swapInIsSameBag &&
-                    TrySocketItem(
+                    _inventorySocketingWorkflow.TrySocketItem(
+                        _itemContainerBehavior,
                         itemToSwapIn,
                         itemToSwapOut))
                 {
@@ -197,74 +193,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             return true;
         }
 
-        private bool TrySocketItem(
-            IGameObject itemToBePlacedInsideSocket,
-            IGameObject itemToHaveSocketFilled)
-        {
-            if (itemToBePlacedInsideSocket == itemToHaveSocketFilled)
-            {
-                return false;
-            }
-
-            if (!itemToHaveSocketFilled.TryGetFirst<ICanBeSocketedBehavior>(out var canBeSocketedBehavior))
-            {
-                return false;
-            }
-
-            if (!itemToBePlacedInsideSocket.TryGetFirst<ICanFitSocketBehavior>(out var canFitSocketBehavior))
-            {
-                return false;
-            }
-
-            if (!canBeSocketedBehavior.CanFitSocket(canFitSocketBehavior))
-            {
-                return false;
-            }
-
-            if (!canBeSocketedBehavior.Socket(canFitSocketBehavior))
-            {
-                throw new InvalidOperationException(
-                    $"Check to socket '{canFitSocketBehavior}' into " +
-                    $"'{canBeSocketedBehavior}' passed, but " +
-                    $"{nameof(ICanBeSocketedBehavior.Socket)}() was not " +
-                    $"successful.");
-            }
-
-            if (!_itemContainerBehavior.TryRemoveItem(itemToBePlacedInsideSocket))
-            {
-                throw new InvalidOperationException(
-                    $"'{canFitSocketBehavior}' was socketed into " +
-                    $"'{canBeSocketedBehavior}', but could not remove " +
-                    $"'{itemToBePlacedInsideSocket}' from the source container.");
-            }
-
-            if (_socketPatternHandler.TryHandle(
-                _socketableInfoFactory.Create(
-                    canBeSocketedBehavior.Owner,
-                    canBeSocketedBehavior),
-                out var newSocketPatternItem))
-            {
-                if (!_itemContainerBehavior.TryRemoveItem(itemToHaveSocketFilled))
-                {
-                    throw new InvalidOperationException(
-                        $"'{canFitSocketBehavior}' was socketed into " +
-                        $"'{canBeSocketedBehavior}' and created socket pattern " +
-                        $"item '{newSocketPatternItem}'. However, the original " +
-                        $"'{itemToHaveSocketFilled}' could not be removed from " +
-                        $"'{_itemContainerBehavior}'.");
-                }
-
-                if (!_itemContainerBehavior.TryAddItem(newSocketPatternItem))
-                {
-                    throw new InvalidOperationException(
-                        $"A socket pattern item '{newSocketPatternItem}' was " +
-                        $"created, but could not be added to " +
-                        $"'{_itemContainerBehavior}'.");
-                }
-            }
-
-            return true;
-        }
+        
 
         private SwapResult IgnoringBehaviorEvents(Func<SwapResult> callback)
         {

@@ -1,5 +1,4 @@
-﻿
-using System.Linq;
+﻿using System.Linq;
 
 using Macerus.Plugins.Features.Inventory.Api;
 using Macerus.Plugins.Features.Inventory.Default;
@@ -8,7 +7,6 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Items.SocketPatterns.Api;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;
@@ -140,8 +138,7 @@ namespace Macerus.Tests.Plugins.Features.Inventory
         {
             var bagItemSet = new BagItemSet(
                 itemContainerBehavior,
-                _container.Resolve<ISocketPatternHandlerFacade>(),
-                _container.Resolve<ISocketableInfoFactory>());
+                _container.Resolve<IInventorySocketingWorkflow>());
             var binder = new ItemSetToViewModelBinder(
                 new BagItemToItemSlotViewModelConverter(),
                 bagItemSet,

@@ -7,7 +7,6 @@ using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Socketing;
-using ProjectXyz.Plugins.Features.GameObjects.Items.SocketPatterns.Api;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;
@@ -31,8 +30,7 @@ namespace Macerus.Tests.Plugins.Features.Inventory
         {
             _bagItemSet = new BagItemSet(
                 new ItemContainerBehavior(new StringIdentifier("inventory")),
-                _container.Resolve<ISocketPatternHandlerFacade>(),
-                _container.Resolve<ISocketableInfoFactory>());
+                _container.Resolve<IInventorySocketingWorkflow>());
         }
 
         [Fact]

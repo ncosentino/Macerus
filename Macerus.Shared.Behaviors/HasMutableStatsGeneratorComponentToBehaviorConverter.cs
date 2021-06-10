@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 
 namespace Macerus.Shared.Behaviors
 {
@@ -19,6 +20,7 @@ namespace Macerus.Shared.Behaviors
         public Type ComponentType => typeof(HasMutableStatsGeneratorComponent);
 
         public IEnumerable<IBehavior> Convert(
+            IFilterContext filterContext,
             IEnumerable<IBehavior> baseBehaviors,
             IGeneratorComponent generatorComponent)
         {

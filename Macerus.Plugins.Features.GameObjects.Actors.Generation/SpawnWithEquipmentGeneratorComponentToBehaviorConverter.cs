@@ -10,6 +10,7 @@ using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
 {
@@ -25,6 +26,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
         public Type ComponentType => typeof(SpawnWithEquipmentGeneratorComponent);
 
         public IEnumerable<IBehavior> Convert(
+            IFilterContext filterContext,
             IEnumerable<IBehavior> baseBehaviors,
             IGeneratorComponent generatorComponent)
         {

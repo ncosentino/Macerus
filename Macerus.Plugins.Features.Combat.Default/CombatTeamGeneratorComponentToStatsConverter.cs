@@ -7,6 +7,7 @@ using Macerus.Plugins.Features.Combat.Api;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 
 namespace Macerus.Plugins.Features.Combat.Default
 {
@@ -22,6 +23,7 @@ namespace Macerus.Plugins.Features.Combat.Default
         public Type ComponentType => typeof(CombatTeamGeneratorComponent);
 
         public IEnumerable<IBehavior> Convert(
+            IFilterContext filterContext,
             IEnumerable<IBehavior> baseBehaviors,
             IGeneratorComponent generatorComponent)
         {

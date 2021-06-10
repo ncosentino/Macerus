@@ -1,30 +1,24 @@
-﻿
-using Macerus.Plugins.Features.Inventory.Api;
+﻿using Macerus.Plugins.Features.Inventory.Api;
 
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Items.SocketPatterns.Api;
 
 namespace Macerus.Plugins.Features.Inventory.Default
 {
     public sealed class BagItemSetFactory : IBagItemSetFactory
     {
-        private readonly ISocketPatternHandlerFacade _socketPatternHandler;
-        private readonly ISocketableInfoFactory _socketableInfoFactory;
+        private readonly IInventorySocketingWorkflow _inventorySocketingWorkflow;
 
         public BagItemSetFactory(
-            ISocketPatternHandlerFacade socketPatternHandler,
-            ISocketableInfoFactory socketableInfoFactory)
+            IInventorySocketingWorkflow inventorySocketingWorkflow)
         {
-            _socketPatternHandler = socketPatternHandler;
-            _socketableInfoFactory = socketableInfoFactory;
+            _inventorySocketingWorkflow = inventorySocketingWorkflow;
         }
 
         public IItemSet Create(IItemContainerBehavior itemContainerBehavior)
         {
             var bagItemSet = new BagItemSet(
                 itemContainerBehavior,
-                _socketPatternHandler,
-                _socketableInfoFactory);
+                _inventorySocketingWorkflow);
             return bagItemSet;
         }
     }

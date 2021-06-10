@@ -13,25 +13,22 @@ namespace Macerus.Plugins.Content.SocketPatterns
     public sealed class SocketPatternHandler : IDiscoverableSocketPatternHandler
     {
         private readonly IItemGeneratorFacade _itemGenerator;
-        private readonly IFilterContextProvider _filterContextProvider;
 
         public SocketPatternHandler(
-            IItemGeneratorFacade itemGenerator,
-            IFilterContextProvider filterContextProvider)
+            IItemGeneratorFacade itemGenerator)
         {
             _itemGenerator = itemGenerator;
-            _filterContextProvider = filterContextProvider;
         }
 
         public bool TryHandle(
+            IFilterContext filterContext,
             ISocketableInfo socketableInfo,
             out IGameObject newItem)
         {
             // FIXME: this is just a hack to test things out
             if (socketableInfo.OccupiedSockets.Count == 1)
             {
-                var filterContext = _filterContextProvider
-                    .GetContext()
+                var newItemFilterContext = filterContext
                     .WithAdditionalAttributes(new[]
                     {
                         new FilterAttribute(
@@ -41,7 +38,7 @@ namespace Macerus.Plugins.Content.SocketPatterns
                     })
                     .WithRange(1, 1);
                 newItem = _itemGenerator
-                    .GenerateItems(filterContext)
+                    .GenerateItems(newItemFilterContext)
                     .Single();
                 return true;
             }
