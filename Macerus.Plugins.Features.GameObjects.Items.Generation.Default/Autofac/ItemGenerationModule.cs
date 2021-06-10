@@ -12,6 +12,10 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Default.Autofac
                 .RegisterType<LootGeneratorAmenity>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<RandomEnchantmentsGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

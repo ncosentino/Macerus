@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Items.Generation.Default;
 
+using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
+using ProjectXyz.Api.GameObjects.Generation;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
-using ProjectXyz.Api.Enchantments.Generation;
-using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes; // FIXME: dependency on non-API
-using ProjectXyz.Plugins.Features.CommonBehaviors;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
 using ProjectXyz.Shared.Framework;
 
@@ -20,36 +19,34 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 {
     public sealed class MagicItemGenerator : IDiscoverableItemGenerator
     {
-        private static readonly IFilterAttribute RequiresMagicAffix = new FilterAttribute(
-            new StringIdentifier("affix-type"),
-            new StringFilterAttributeValue("magic"),
-            true);
-
+        private readonly IFilterAttribute _requiresMagicAffix;
         private readonly IBaseItemGenerator _baseItemGenerator;
-        private readonly IEnchantmentGenerator _enchantmentGenerator;
-        private readonly IHasEnchantmentsBehaviorFactory _hasEnchantmentsBehaviorFactory;
-        private readonly IMagicItemNameGenerator _magicItemNameGenerator;
-        private readonly IFilterContextFactory _filterContextFactory;
         private readonly IFilterContextAmenity _filterContextAmenity;
         private readonly IGameObjectFactory _gameObjectFactory;
+        private readonly IGeneratorComponentToBehaviorConverterFacade _generatorComponentToBehaviorConverterFacade;
 
         public MagicItemGenerator(
             IBaseItemGenerator baseItemGenerator,
-            IEnchantmentGenerator enchantmentGenerator,
-            IHasEnchantmentsBehaviorFactory hasEnchantmentsBehaviorFactory,
-            IMagicItemNameGenerator magicItemNameGenerator,
-            IFilterContextFactory filterContextFactory,
             IFilterContextAmenity filterContextAmenity,
-            IGameObjectFactory gameObjectFactory)
+            IGameObjectFactory gameObjectFactory,
+            IGeneratorComponentToBehaviorConverterFacade generatorComponentToBehaviorConverterFacade)
         {
             _baseItemGenerator = baseItemGenerator;
-            _enchantmentGenerator = enchantmentGenerator;
-            _hasEnchantmentsBehaviorFactory = hasEnchantmentsBehaviorFactory;
-            _magicItemNameGenerator = magicItemNameGenerator;
-            _filterContextFactory = filterContextFactory;
             _filterContextAmenity = filterContextAmenity;
             _gameObjectFactory = gameObjectFactory;
+            _generatorComponentToBehaviorConverterFacade = generatorComponentToBehaviorConverterFacade;
+
+            _requiresMagicAffix = new FilterAttribute(
+                new StringIdentifier("affix-type"),
+                new StringFilterAttributeValue("magic"),
+                true);
+            SupportedAttributes = new IFilterAttribute[]
+            {
+                _requiresMagicAffix,
+            };
         }
+        
+        public IEnumerable<IFilterAttribute> SupportedAttributes { get; } 
 
         public IEnumerable<IGameObject> GenerateItems(IFilterContext filterContext)
         {
@@ -67,67 +64,35 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                 // - original context has a range for item level, but if our 
                 //   item was at one end of that range, it might mean better or
                 //    worse enchantments given the item level.
-
-                IHasEnchantmentsBehavior hasEnchantmentsBehavior;
-                if ((hasEnchantmentsBehavior = baseItem
-                    .Get<IHasEnchantmentsBehavior>()
-                    .SingleOrDefault()) == null)
-                {
-                    hasEnchantmentsBehavior = _hasEnchantmentsBehaviorFactory.Create();
-
-                    IHasReadOnlyEnchantmentsBehavior hasReadOnlyEnchantmentsBehavior;
-                    if ((hasReadOnlyEnchantmentsBehavior = baseItem
-                        .Get<IHasReadOnlyEnchantmentsBehavior>()
-                        .SingleOrDefault()) != null)
-                    {
-                        hasEnchantmentsBehavior.AddEnchantments(hasReadOnlyEnchantmentsBehavior.Enchantments);
-                    }
-                }
-
-                var additionalBehaviors = new List<IBehavior>()
+                
+                var additionalStaticBehaviors = new List<IBehavior>()
                 {
                     new HasInventoryBackgroundColor(0, 0, 255),
                     new HasAffixType(new StringIdentifier("magic")),
-                    hasEnchantmentsBehavior,
                 };
-
-                var attributes = magicItemGeneratorContext
-                    .Attributes
-                    .Where(x => !SupportedAttributes.Any(s => s.Id.Equals(x.Id)))
-                    .Concat(SupportedAttributes);
-                var enchantmentGeneratorContext = _filterContextFactory.CreateContext(
-                    1,
-                    2,
-                    attributes);
-                var enchantments = _enchantmentGenerator
-                    .GenerateEnchantments(enchantmentGeneratorContext)
-                    .ToArray();
-                if (!enchantments.Any())
-                {
-                    throw new InvalidOperationException(
-                        $"No enchantments were added to the base item.");
-                }
-
-                hasEnchantmentsBehavior.AddEnchantments(enchantments);
-
-                additionalBehaviors.Add(_magicItemNameGenerator.GenerateName(
-                    baseItem,
-                    enchantments));
 
                 var baseItemBehaviorsToUse = baseItem
                     .Behaviors
                     .Where(x => !(x is IHasReadOnlyEnchantmentsBehavior));
-                var magicItemBehaviors = baseItemBehaviorsToUse
-                    .Concat(additionalBehaviors)
+                var magicItemBehaviorsPreGeneration = baseItemBehaviorsToUse
+                    .Concat(additionalStaticBehaviors)
                     .ToArray();
-                var magicItem = _gameObjectFactory.Create(magicItemBehaviors);
+                var magicItemBehaviorsPostGeneration = _generatorComponentToBehaviorConverterFacade
+                    .Convert(
+                        magicItemGeneratorContext,
+                        magicItemBehaviorsPreGeneration,
+                        new IGeneratorComponent[]
+                        {
+                            new RandomEnchantmentsGeneratorComponent(
+                                1,
+                                2,
+                                SupportedAttributes),
+                            new MagicItemNameGeneratorComponent(),
+                        })
+                    .ToArray();
+                var magicItem = _gameObjectFactory.Create(magicItemBehaviorsPostGeneration);
                 yield return magicItem;
             }
-        }
-
-        public IEnumerable<IFilterAttribute> SupportedAttributes { get; } = new IFilterAttribute[]
-        {
-            RequiresMagicAffix,
-        };
+        }        
     }
 }

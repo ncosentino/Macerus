@@ -7,6 +7,7 @@ using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
 using NexusLabs.Framework;
 
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 {
@@ -24,7 +25,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
         }
 
         public IHasInventoryDisplayName GenerateName(
-            IGameObject baseItem,
+            IEnumerable<IBehavior> itemBehaviors,
             IReadOnlyCollection<IGameObject> enchantments)
         {
             // FIXME: make this a bit more robust. it assumes every enchantment
@@ -39,7 +40,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                 .ToDictionary(
                     x => x,
                     x => x.GetOnly<IHasSuffixBehavior>());
-            var baseDisplayName = baseItem.GetOnly<IHasInventoryDisplayName>();
+            var baseDisplayName = itemBehaviors.GetOnly<IHasInventoryDisplayName>();
             if (enchantments.Count == 1)
             {
                 return new HasInventoryDisplayName(_random.NextDouble(0, 1) >= 0.5
