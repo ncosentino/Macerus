@@ -37,7 +37,7 @@ namespace Macerus.Plugins.Content.Crafting
                             },
                             new IIdentifier[]
                             {
-                                new StringIdentifier("any_normal_magic_10x_lvl10")
+                                new StringIdentifier("any_normal_magic_rare_10x_lvl10")
                             })
                     });
                     return repository;

@@ -32,56 +32,56 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
     {
         private static readonly MacerusContainer _container;
         private static readonly TestAmenities _testAmenities;
-        private static readonly Lazy<Dictionary<string, IItemDefinition>> _lazyAllowNormalItems;
-        private static readonly Lazy<Dictionary<string, IItemDefinition>> _lazyAllowMagicItems;
+        private static readonly Lazy<IReadOnlyDictionary<string, IItemDefinition>> _lazyAllowNormalItems;
+        private static readonly Lazy<IReadOnlyDictionary<string, IItemDefinition>> _lazyAllowMagicItems;
+        private static readonly Lazy<IReadOnlyDictionary<string, IItemDefinition>> _lazyAllowRareItems;
         private static readonly ILootGenerator _lootGenerator;
         private static readonly IFilterContextProvider _filterContextProvider;
-        private static readonly IMapGameObjectManager _mapGameObjectManager;
-        private static readonly IActorFactory _actorFactory;
 
         static LootGeneratorTests()
         {
             _container = new MacerusContainer();
             _testAmenities = new TestAmenities(_container);
-            _lazyAllowNormalItems = new Lazy<Dictionary<string, IItemDefinition>>(() =>
-            {
-                var filterContextFactory = _container.Resolve<IFilterContextFactory>();
-                var itemDefinitionRepository = _container.Resolve<IItemDefinitionRepositoryFacade>();
-                var normalitems = itemDefinitionRepository
-                    .LoadItemDefinitions(filterContextFactory.CreateContext(
-                        0,
-                        int.MaxValue,
-                        new FilterAttribute(
-                            new StringIdentifier("affix-type"),
-                            new StringFilterAttributeValue("normal"),
-                            true)))
-                    .ToDictionary(
-                        x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
-                        x => x);
-                return normalitems;
-            });
-            _lazyAllowMagicItems = new Lazy<Dictionary<string, IItemDefinition>>(() =>
-            {
-                var filterContextFactory = _container.Resolve<IFilterContextFactory>();
-                var itemDefinitionRepository = _container.Resolve<IItemDefinitionRepositoryFacade>();
-                var allowMagicItems = itemDefinitionRepository
-                    .LoadItemDefinitions(filterContextFactory.CreateContext(
-                        0,
-                        int.MaxValue,
-                        new FilterAttribute(
-                            new StringIdentifier("affix-type"),
-                            new StringFilterAttributeValue("magic"),
-                            true)))
-                    .ToDictionary(
-                        x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
-                        x => x);
-                return allowMagicItems;
-            });
+
+            var filterContextFactory = _container.Resolve<IFilterContextFactory>();
+            var itemDefinitionRepository = _container.Resolve<IItemDefinitionRepositoryFacade>();
+            _lazyAllowNormalItems = new Lazy<IReadOnlyDictionary<string, IItemDefinition>>(() =>
+                GetAllowedItemsByName(
+                    filterContextFactory,
+                    itemDefinitionRepository,
+                    "normal"));
+            _lazyAllowMagicItems = new Lazy<IReadOnlyDictionary<string, IItemDefinition>>(() =>
+                GetAllowedItemsByName(
+                    filterContextFactory,
+                    itemDefinitionRepository,
+                    "magic"));
+            _lazyAllowRareItems = new Lazy<IReadOnlyDictionary<string, IItemDefinition>>(() =>
+                GetAllowedItemsByName(
+                    filterContextFactory,
+                    itemDefinitionRepository,
+                    "rare"));
 
             _lootGenerator = _container.Resolve<ILootGenerator>();
             _filterContextProvider = _container.Resolve<IFilterContextProvider>();
-            _mapGameObjectManager = _container.Resolve<IMapGameObjectManager>();
-            _actorFactory = _container.Resolve<IActorFactory>();
+        }
+
+        private static IReadOnlyDictionary<string, IItemDefinition> GetAllowedItemsByName(
+            IFilterContextFactory filterContextFactory,
+            IItemDefinitionRepositoryFacade itemDefinitionRepository,
+            string affixType)
+        {
+            var allowedItems = itemDefinitionRepository
+                .LoadItemDefinitions(filterContextFactory.CreateContext(
+                    0,
+                    int.MaxValue,
+                    new FilterAttribute(
+                        new StringIdentifier("affix-type"),
+                        new StringFilterAttributeValue(affixType),
+                        true)))
+                .ToDictionary(
+                    x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
+                    x => x);
+            return allowedItems;
         }
 
         private static IReadOnlyDictionary<string, IItemDefinition> AllowNormalItems =>
@@ -90,8 +90,11 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
         private static IReadOnlyDictionary<string, IItemDefinition> AllowMagicItems =>
             _lazyAllowMagicItems.Value;
 
+        private static IReadOnlyDictionary<string, IItemDefinition> AllowRareItems =>
+            _lazyAllowRareItems.Value;
+
         [Fact]
-        public void GenerateLootStressTest_NormalAndMagicTable_ItemsMeetAffixRequirements()
+        public void GenerateLootStressTest_NormalMagicAndRareTable_ItemsMeetAffixRequirements()
         {
             var filterContext = _filterContextProvider.GetContext();
             filterContext = new FilterContext(
@@ -101,7 +104,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                     .Attributes
                     .AppendSingle(new FilterAttribute(
                         new StringIdentifier("drop-table"),
-                        new IdentifierFilterAttributeValue(new StringIdentifier("any_normal_magic_10x_lvl10")),
+                        new IdentifierFilterAttributeValue(new StringIdentifier("any_normal_magic_rare_10x_lvl10")),
                         true)));
 
             foreach (var item in _lootGenerator.GenerateLoot(filterContext))
@@ -125,6 +128,13 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                 {
                     Assert.True(
                         AllowMagicItems.ContainsKey(baseDisplayName),
+                        $"Item was generated with affix type '{affixTypeId}' " +
+                        $"but was not found in the allowed collection.");
+                }
+                else if (affixTypeId.Equals(new StringIdentifier("rare")))
+                {
+                    Assert.True(
+                        AllowRareItems.ContainsKey(baseDisplayName),
                         $"Item was generated with affix type '{affixTypeId}' " +
                         $"but was not found in the allowed collection.");
                 }

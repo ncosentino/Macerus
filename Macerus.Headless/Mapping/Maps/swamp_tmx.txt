@@ -20091,7 +20091,7 @@
     <property name="$typeId" value="container"/>
     <property name="$templateId" value="chest"/>
     <property name="TransferItemsOnActivate" value="True"/>
-    <property name="DropTableId" value="any_normal_magic_10x_lvl10"/>
+    <property name="DropTableId" value="any_normal_magic_rare_10x_lvl10"/>
     <property name="Collisions" value="True"/>
   </object>
   <object id="11" name="tiled specific name" type="tiled specific type" x="1280" y="-800" width="128" height="128">

@@ -46,7 +46,7 @@ namespace Macerus.Plugins.Content.Enchantments
                             10,
                             30),
                         enchantmentTemplate.CreateMagicRangeEnchantment(
-                            new IntIdentifier(3), // max life
+                            new IntIdentifier(3), // max mana
                             Affixes.Prefixes.Magic,
                             Affixes.Suffixes.OfMana,
                             1,

@@ -7,13 +7,13 @@ using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments
+namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare.Enchantments
 {
-    public sealed class MagicEnchantmentGenerator : IDiscoverableEnchantmentGenerator
+    public sealed class RareEnchantmentGenerator : IDiscoverableEnchantmentGenerator
     {
         private readonly IBaseEnchantmentGenerator _baseEnchantmentGenerator;
 
-        public MagicEnchantmentGenerator(IBaseEnchantmentGenerator baseEnchantmentGenerator)
+        public RareEnchantmentGenerator(IBaseEnchantmentGenerator baseEnchantmentGenerator)
         {
             _baseEnchantmentGenerator = baseEnchantmentGenerator;
         }
@@ -28,7 +28,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantmen
         {
             new FilterAttribute(
                 new StringIdentifier("affix-type"),
-                new StringFilterAttributeValue("magic"),
+                new StringFilterAttributeValue("rare"),
                 true),
         };
     }

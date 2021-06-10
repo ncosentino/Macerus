@@ -11,6 +11,11 @@ namespace Macerus.Plugins.Content.Enchantments
             new StringFilterAttributeValue("magic"),
             true);
 
+        public static IFilterAttribute RequiresRareAffix { get; } = new FilterAttribute(
+            new StringIdentifier("affix-type"),
+            new StringFilterAttributeValue("rare"),
+            true);
+
         public static IFilterAttribute RequiresNormalAffix { get; } = new FilterAttribute(
             new StringIdentifier("affix-type"),
             new StringFilterAttributeValue("normal"),
@@ -19,6 +24,11 @@ namespace Macerus.Plugins.Content.Enchantments
         public static IFilterAttribute AllowsNormalAndMagicAffix { get; } = new FilterAttribute(
             new StringIdentifier("affix-type"),
             new AnyStringCollectionFilterAttributeValue("normal", "magic"),
+            false);
+
+        public static IFilterAttribute AllowsNormalMagicAndRareAffix { get; } = new FilterAttribute(
+            new StringIdentifier("affix-type"),
+            new AnyStringCollectionFilterAttributeValue("normal", "magic", "rare"),
             false);
 
         public static IFilterAttribute AllowsMagicAffix { get; } = new FilterAttribute(

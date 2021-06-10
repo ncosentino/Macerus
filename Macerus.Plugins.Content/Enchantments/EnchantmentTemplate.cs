@@ -54,5 +54,34 @@ namespace Macerus.Plugins.Content.Enchantments
                 });
             return enchantmentDefinition;
         }
+
+        public IEnchantmentDefinition CreateRareRangeEnchantment(
+            IIdentifier statDefinitionId,
+            double minValue,
+            double maxValue,
+            double minLevel,
+            double maxLevel)
+        {
+            var enchantmentDefinition = new EnchantmentDefinition(
+                new[]
+                {
+                    EnchantmentFilterAttributes.RequiresRareAffix,
+                    new FilterAttribute(
+                        new StringIdentifier("item-level"),
+                        new RangeFilterAttributeValue(minLevel, maxLevel),
+                        true),
+                },
+                new IGeneratorComponent[]
+                {
+                    new EnchantmentTargetGeneratorComponent(new StringIdentifier("self")),
+                    new HasStatGeneratorComponent(statDefinitionId),
+                    new RandomRangeExpressionGeneratorComponent(
+                        statDefinitionId,
+                        "+",
+                        _calculationPriorityFactory.Create<int>(1),
+                        minValue, maxValue)
+                });
+            return enchantmentDefinition;
+        }
     }
 }

@@ -29,6 +29,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments\Macerus.Plugins.Features.GameObjects.Enchantments.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic\Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Rare\Macerus.Plugins.Features.GameObjects.Items.Generation.Rare.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Unique\Macerus.Plugins.Features.GameObjects.Items.Generation.Unique.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Socketing\Macerus.Plugins.Features.GameObjects.Items.Socketing.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items\Macerus.Plugins.Features.GameObjects.Items.csproj" />

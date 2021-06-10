@@ -36,7 +36,7 @@ namespace Macerus.Plugins.Content.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentFilterAttributes.AllowsNormalAndMagicAffix,
+                                EnchantmentFilterAttributes.AllowsNormalMagicAndRareAffix,
                                 filterContextAmenity.CreateSupportedAttribute(
                                     itemIdentifiers.ItemDefinitionIdentifier,
                                     new StringIdentifier("leather-gloves")),
@@ -54,7 +54,7 @@ namespace Macerus.Plugins.Content.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentFilterAttributes.AllowsNormalAndMagicAffix,
+                                EnchantmentFilterAttributes.AllowsNormalMagicAndRareAffix,
                                 filterContextAmenity.CreateSupportedAttribute(
                                     itemIdentifiers.ItemDefinitionIdentifier,
                                     new StringIdentifier("cloth-hood")),
@@ -72,7 +72,7 @@ namespace Macerus.Plugins.Content.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentFilterAttributes.AllowsNormalAndMagicAffix,
+                                EnchantmentFilterAttributes.AllowsNormalMagicAndRareAffix,
                                 filterContextAmenity.CreateSupportedAttribute(
                                     itemIdentifiers.ItemDefinitionIdentifier,
                                     new StringIdentifier("cloth-armor")),

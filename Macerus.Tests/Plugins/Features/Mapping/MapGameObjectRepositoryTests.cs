@@ -217,7 +217,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
                         .TransferItemsOnActivate,
                     "Expecting to have transfer items on activate on container properties behavior.");
                 Assert.Equal(
-                    new StringIdentifier("any_normal_magic_10x_lvl10"),
+                    new StringIdentifier("any_normal_magic_rare_10x_lvl10"),
                     containerBehaviors
                         .TakeTypes<IReadOnlyContainerGenerateItemsBehavior>()
                         .Single()

@@ -55,7 +55,7 @@ namespace Macerus.Plugins.Content.DropTables
                                     false),
                             }),
                         dropTableFactory.Create(
-                            new StringIdentifier("any_normal_magic_10x_lvl10"),
+                            new StringIdentifier("any_normal_magic_rare_10x_lvl10"),
                             10,
                             10,
                             Enumerable.Empty<IFilterAttribute>(),
@@ -63,7 +63,7 @@ namespace Macerus.Plugins.Content.DropTables
                             {
                                 new FilterAttribute(
                                     new StringIdentifier("affix-type"),
-                                    new AnyStringCollectionFilterAttributeValue("normal", "magic"),
+                                    new AnyStringCollectionFilterAttributeValue("normal", "magic", "rare"),
                                     true),
                                 new FilterAttribute(
                                     new StringIdentifier("item-level"),
