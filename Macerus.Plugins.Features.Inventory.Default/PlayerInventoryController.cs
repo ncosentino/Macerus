@@ -4,10 +4,14 @@ using System.Linq;
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.Inventory.Api;
+using Macerus.Plugins.Features.Inventory.Api.HoverCards;
+using Macerus.Plugins.Features.Inventory.Default.HoverCards;
 
 using NexusLabs.Contracts;
 
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Framework.ViewWelding.Api;
+using ProjectXyz.Framework.ViewWelding.Api.Welders;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 
@@ -23,6 +27,9 @@ namespace Macerus.Plugins.Features.Inventory.Default
         private readonly IItemSlotCollectionViewModel _playerEquipmentItemSlotCollectionViewModel;
         private readonly IItemSlotCollectionViewModel _playerBagItemSlotCollectionViewModel;
         private readonly IItemToItemSlotViewModelConverter _bagToItemSlotViewModelConverter;
+        private readonly IViewWelderFactory _viewWelderFactory;
+        private readonly IHoverCardViewFactory _hoverCardViewFactory;
+        private readonly IBehaviorsToHoverCardPartViewModelConverterFacade _behaviorsToHoverCardPartViewModelConverter;
         private readonly IItemToItemSlotViewModelConverter _equipmentToItemSlotViewModelConverter;
 
         private IItemSetToViewModelBinder _equipmentBinder;
@@ -37,7 +44,10 @@ namespace Macerus.Plugins.Features.Inventory.Default
             IItemSlotCollectionViewModel playerEquipmentItemSlotCollectionViewModel,
             IItemSlotCollectionViewModel playerBagItemSlotCollectionViewModel,
             IItemToItemSlotViewModelConverter equipmentToItemSlotViewModelConverter,
-            IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter)
+            IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter,
+            IViewWelderFactory viewWelderFactory,
+            IHoverCardViewFactory hoverCardViewFactory,
+            IBehaviorsToHoverCardPartViewModelConverterFacade behaviorsToHoverCardPartViewModelConverter)
         {
             _macerusActorIdentifiers = macerusActorIdentifiers;
             _bagItemSetFactory = bagItemSetFactory;
@@ -48,7 +58,9 @@ namespace Macerus.Plugins.Features.Inventory.Default
             _playerBagItemSlotCollectionViewModel = playerBagItemSlotCollectionViewModel;
             _equipmentToItemSlotViewModelConverter = equipmentToItemSlotViewModelConverter;
             _bagToItemSlotViewModelConverter = bagToItemSlotViewModelConverter;
-
+            _viewWelderFactory = viewWelderFactory;
+            _hoverCardViewFactory = hoverCardViewFactory;
+            _behaviorsToHoverCardPartViewModelConverter = behaviorsToHoverCardPartViewModelConverter;
             _playerInventoryViewModel.Opened += PlayerInventoryViewModel_Opened;
             _playerInventoryViewModel.Closed += PlayerInventoryViewModel_Closed;
         }
@@ -107,16 +119,33 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 _equipmentToItemSlotViewModelConverter,
                 new EquipmentItemSet(playerEquipmentBehavior),
                 _playerEquipmentItemSlotCollectionViewModel);
+            _equipmentBinder.RequestPopulateHoverCardContent += ItemBinder_RequestPopulateHoverCardContent;
+
             _bagBinder = new ItemSetToViewModelBinder(
                 _bagToItemSlotViewModelConverter,
                 _bagItemSetFactory.Create(playerInventoryBehavior),
                 _playerBagItemSlotCollectionViewModel);
+            _bagBinder.RequestPopulateHoverCardContent += ItemBinder_RequestPopulateHoverCardContent;
 
             _itemSetController.Register(_equipmentBinder);
             _itemSetController.Register(_bagBinder);
 
             _equipmentBinder.RefreshViewModel();
             _bagBinder.RefreshViewModel();
+        }
+
+        private void ItemBinder_RequestPopulateHoverCardContent(
+            object sender,
+            PopulateHoverCardFromItemEventArgs e)
+        {
+            var parts = _behaviorsToHoverCardPartViewModelConverter.Convert(e.Item.Behaviors);
+            var viewModel = new HoverCardViewModel(parts);
+            var hoverCardView = _hoverCardViewFactory.Create(viewModel);
+            _viewWelderFactory
+                .Create<ISimpleWelder>(
+                    e.HoverCardContent,
+                    hoverCardView)
+                .Weld();
         }
 
         private void PlayerInventoryViewModel_Closed(
@@ -134,7 +163,10 @@ namespace Macerus.Plugins.Features.Inventory.Default
             _itemSetController.Unregister(_equipmentBinder);
             _itemSetController.Unregister(_bagBinder);
 
+            _equipmentBinder.RequestPopulateHoverCardContent -= ItemBinder_RequestPopulateHoverCardContent;
             _equipmentBinder = null;
+
+            _bagBinder.RequestPopulateHoverCardContent -= ItemBinder_RequestPopulateHoverCardContent;
             _bagBinder = null;
         }
     }

@@ -5,10 +5,14 @@ using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.Inventory.Api;
 using Macerus.Plugins.Features.Inventory.Api.Crafting;
+using Macerus.Plugins.Features.Inventory.Api.HoverCards;
+using Macerus.Plugins.Features.Inventory.Default.HoverCards;
 
 using NexusLabs.Contracts;
 
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Framework.ViewWelding.Api;
+using ProjectXyz.Framework.ViewWelding.Api.Welders;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Crafting.Api;
@@ -27,7 +31,9 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
         private readonly IItemSetController _itemSetController;
         private readonly IItemSlotCollectionViewModel _craftingBagItemSlotCollectionViewModel;
         private readonly IItemToItemSlotViewModelConverter _bagToItemSlotViewModelConverter;
-
+        private readonly IViewWelderFactory _viewWelderFactory;
+        private readonly IHoverCardViewFactory _hoverCardViewFactory;
+        private readonly IBehaviorsToHoverCardPartViewModelConverterFacade _behaviorsToHoverCardPartViewModelConverter;
         private IItemSetToViewModelBinder _bagBinder;
 
         public CraftingController(
@@ -39,7 +45,10 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
             IMapGameObjectManager mapGameObjectManager,
             IItemSetController itemSetController,
             IItemSlotCollectionViewModel craftingBagItemSlotCollectionViewModel,
-            IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter)
+            IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter,
+            IViewWelderFactory viewWelderFactory,
+            IHoverCardViewFactory hoverCardViewFactory,
+            IBehaviorsToHoverCardPartViewModelConverterFacade behaviorsToHoverCardPartViewModelConverter)
         {
             _macerusActorIdentifiers = macerusActorIdentifiers;
             _craftingHandler = craftingHandler;
@@ -50,7 +59,9 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
             _itemSetController = itemSetController;
             _craftingBagItemSlotCollectionViewModel = craftingBagItemSlotCollectionViewModel;
             _bagToItemSlotViewModelConverter = bagToItemSlotViewModelConverter;
-
+            _viewWelderFactory = viewWelderFactory;
+            _hoverCardViewFactory = hoverCardViewFactory;
+            _behaviorsToHoverCardPartViewModelConverter = behaviorsToHoverCardPartViewModelConverter;
             _craftingWindowViewModel.Opened += CraftingWindowViewModel_Opened;
             _craftingWindowViewModel.Closed += CraftingWindowViewModel_Closed;
             _craftingWindowViewModel.RequestCraft += CraftingWindowViewModel_RequestCraft;
@@ -104,10 +115,25 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
                 _bagToItemSlotViewModelConverter,
                 _bagItemSetFactory.Create(craftingInventoryBehavior),
                 _craftingBagItemSlotCollectionViewModel);
+            _bagBinder.RequestPopulateHoverCardContent += ItemBinder_RequestPopulateHoverCardContent;
 
             _itemSetController.Register(_bagBinder);
 
             _bagBinder.RefreshViewModel();
+        }
+
+        private void ItemBinder_RequestPopulateHoverCardContent(
+            object sender,
+            PopulateHoverCardFromItemEventArgs e)
+        {
+            var parts = _behaviorsToHoverCardPartViewModelConverter.Convert(e.Item.Behaviors);
+            var viewModel = new HoverCardViewModel(parts);
+            var hoverCardView = _hoverCardViewFactory.Create(viewModel);
+            _viewWelderFactory
+                .Create<ISimpleWelder>(
+                    e.HoverCardContent,
+                    hoverCardView)
+                .Weld();
         }
 
         private void CraftingWindowViewModel_Closed(
@@ -121,6 +147,7 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
             _itemSetController.EndPendingDragDrop();
             _itemSetController.Unregister(_bagBinder);
 
+            _bagBinder.RequestPopulateHoverCardContent -= ItemBinder_RequestPopulateHoverCardContent;
             _bagBinder = null;
         }
 

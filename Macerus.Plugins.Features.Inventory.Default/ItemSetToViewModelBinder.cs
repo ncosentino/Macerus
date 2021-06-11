@@ -23,6 +23,8 @@ namespace Macerus.Plugins.Features.Inventory.Default
             ItemSlotCollectionViewModel = itemSlotCollectionViewModel;
         }
 
+        public event EventHandler<PopulateHoverCardFromItemEventArgs> RequestPopulateHoverCardContent;
+
         public IItemSlotCollectionViewModel ItemSlotCollectionViewModel { get; }
 
         public IItemSet ItemSet { get; }
@@ -55,12 +57,34 @@ namespace Macerus.Plugins.Features.Inventory.Default
 
         public void RefreshViewModel()
         {
+            foreach (var itemSlot in ItemSlotCollectionViewModel.ItemSlots)
+            {
+                itemSlot.RequestPopulateHoverCardContent -= ItemSlot_RequestPopulateHoverCardContent;
+            }
+
             var itemSlots = ItemSet
                 .Items
                 .Select(kvp => _itemToItemSlotViewModelConverter.Convert(
                     kvp.Key,
-                    kvp.Value));
+                    kvp.Value))
+                .ToArray();
             ItemSlotCollectionViewModel.SetItemSlots(itemSlots);
+
+            foreach (var itemSlot in ItemSlotCollectionViewModel.ItemSlots)
+            {
+                itemSlot.RequestPopulateHoverCardContent += ItemSlot_RequestPopulateHoverCardContent;
+            }
+        }
+
+        private void ItemSlot_RequestPopulateHoverCardContent(
+            object sender,
+            PopulateHoverCardFromSlotEventArgs e)
+        {
+            var item = GetItemForViewModelId(e.ItemSlotViewModel.Id);
+            var args = new PopulateHoverCardFromItemEventArgs(
+                item,
+                e.HoverCardContent);
+            RequestPopulateHoverCardContent?.Invoke(this, args);
         }
 
         private IIdentifier ConvertViewModelToBackendId(object id)

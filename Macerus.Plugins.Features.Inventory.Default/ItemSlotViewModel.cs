@@ -1,4 +1,6 @@
-﻿using Macerus.Plugins.Features.Gui.Api;
+﻿using System;
+
+using Macerus.Plugins.Features.Gui.Api;
 using Macerus.Plugins.Features.Gui.Default;
 using Macerus.Plugins.Features.Inventory.Api;
 
@@ -32,6 +34,8 @@ namespace Macerus.Plugins.Features.Inventory.Default
             SlotLabel = slotLabel;
             ShowLabel = !string.IsNullOrEmpty(slotLabel);
         }
+
+        public event EventHandler<PopulateHoverCardFromSlotEventArgs> RequestPopulateHoverCardContent;
 
         public object Id { get; }
 
@@ -87,5 +91,9 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 }
             }
         }
+
+        public void PopulateHoverCard(object hoverCardContainerView) => RequestPopulateHoverCardContent?.Invoke(
+            this,
+            new PopulateHoverCardFromSlotEventArgs(this, hoverCardContainerView));
     }
 }

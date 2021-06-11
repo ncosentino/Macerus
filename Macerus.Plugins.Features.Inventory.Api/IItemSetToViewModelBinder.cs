@@ -1,9 +1,13 @@
-﻿using ProjectXyz.Api.GameObjects;
+﻿using System;
+
+using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Plugins.Features.Inventory.Api
 {
     public interface IItemSetToViewModelBinder
     {
+        event EventHandler<PopulateHoverCardFromItemEventArgs> RequestPopulateHoverCardContent;
+
         IItemSlotCollectionViewModel ItemSlotCollectionViewModel { get; }
 
         IItemSet ItemSet { get; }
