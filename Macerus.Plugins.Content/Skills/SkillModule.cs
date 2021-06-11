@@ -79,7 +79,9 @@ namespace Macerus.Plugins.Content.Skills
                                         .AffectsTeams(1)
                                         .StartsAtOffsetFromUser(0, 1)
                                         .TargetsPattern(
-                                            Tuple.Create(0, 1))))
+                                            Tuple.Create(0, 1),
+                                            Tuple.Create(0, 2),
+                                            Tuple.Create(0, 3))))
                             .End(),
                         SkillDefinition
                             .FromId("passive-green-glow")

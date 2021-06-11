@@ -34,6 +34,10 @@ using System.IO;
 using ProjectXyz.Plugins.Features.Behaviors.Default;
 using Macerus.Shared.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Actors;
+using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors.Generation;
+using ProjectXyz.Api.GameObjects.Generation;
+using Macerus.Plugins.Features.StatusBar.Api;
 
 namespace Macerus.Headless
 {
@@ -43,7 +47,7 @@ namespace Macerus.Headless
         {
             var container = new MacerusContainer();
 
-            new ConvertMapExercise().Go(container);
+            new SkillCastExercise().Go(container);
         }
     }
 
@@ -220,12 +224,31 @@ namespace Macerus.Headless
             var turnBasedManager = container.Resolve<ITurnBasedManager>();
             var encounterManager = container.Resolve<IEncounterManager>();
             var skillAmenity = container.Resolve<ISkillAmenity>();
+            var skillTargetingAmenity = container.Resolve<ISkillTargetingAmenity>();
             var skillUsage = container.Resolve<ISkillUsage>();
             var skillHandlerFacade = container.Resolve<ISkillHandlerFacade>();
             var logger = container.Resolve<ILogger>();
+            var gameObjectIdentifiers = container.Resolve<IGameObjectIdentifiers>();
+            var actorIdentifiers = container.Resolve<IActorIdentifiers>();
+            var actorGeneratorFacade = container.Resolve<IActorGeneratorFacade>();
+            var statusBarController = container.Resolve<IStatusBarController>();
 
             // FIXME: this is just a hack to spawn the player
             mapManager.SwitchMap(new StringIdentifier("swamp"));
+            var context = filterContextAmenity.CreateFilterContextForSingle(
+                filterContextAmenity.CreateRequiredAttribute(
+                    gameObjectIdentifiers.FilterContextTypeId,
+                    actorIdentifiers.ActorTypeIdentifier),
+                filterContextAmenity.CreateRequiredAttribute(
+                    actorIdentifiers.ActorDefinitionIdentifier,
+                    new StringIdentifier("player")));
+            var player = actorGeneratorFacade
+                .GenerateActors(
+                    context,
+                    new IGeneratorComponent[0])
+                .Single();
+            player.GetOnly<IPositionBehavior>().SetPosition(40, -16);
+            mapGameObjectManager.MarkForAddition(player);
 
             var filterContext = filterContextAmenity.CreateNoneFilterContext();
             encounterManager.StartEncounter(
@@ -237,10 +260,6 @@ namespace Macerus.Headless
                 .Where(x => x
                     .Get<ITypeIdentifierBehavior>()
                     .Any(y => y.TypeId.Equals(new StringIdentifier("actor"))));
-
-            var player = actors
-                .Where(x => x.Has<IPlayerControlledBehavior>())
-                .Single();
 
             var target = actors
                 .Where(x => !x.Has<IPlayerControlledBehavior>())

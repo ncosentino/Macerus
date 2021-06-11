@@ -2,10 +2,12 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
+using Macerus.Plugins.Features.Mapping;
 using Macerus.Plugins.Features.Stats.Api;
 using Macerus.Plugins.Features.StatusBar.Api;
 
@@ -27,6 +29,9 @@ namespace Macerus.Plugins.Features.StatusBar.Default
         private readonly ISkillUsage _skillUsage;
         private readonly ISkillHandlerFacade _skillHandlerFacade;
         private readonly ITurnBasedManager _turnBasedManager;
+        private readonly Lazy<IMapTraversableHighlighter> _mapTraversableHighlighter;
+        private readonly ISkillTargetingAmenity _skillTargetingAmenity;
+        private readonly ISkillAmenity _skillAmenity;
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
         private readonly IReadOnlyMapGameObjectManager _mapGameObjectManager;
         private readonly IReadOnlyStatDefinitionToTermMappingRepository _statDefinitionToTermMappingRepository;
@@ -40,7 +45,10 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             IStatusBarViewModel statusBarViewModel,
             ISkillUsage skillUsage,
             ISkillHandlerFacade skillHandlerFacade,
-            ITurnBasedManager turnBasedManager)
+            ITurnBasedManager turnBasedManager,
+            Lazy<IMapTraversableHighlighter> mapTraversableHighlighter,
+            ISkillTargetingAmenity skillTargetingAmenity,
+            ISkillAmenity skillAmenity)
         {
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
             _mapGameObjectManager = readOnlyMapGameObjectManager;
@@ -49,7 +57,9 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             _skillUsage = skillUsage;
             _skillHandlerFacade = skillHandlerFacade;
             _turnBasedManager = turnBasedManager;
-
+            _mapTraversableHighlighter = mapTraversableHighlighter;
+            _skillTargetingAmenity = skillTargetingAmenity;
+            _skillAmenity = skillAmenity;
             _lazyCurrentAndMaxResourceIdentifiers = new Lazy<IReadOnlyCollection<Tuple<IIdentifier, IIdentifier, IIdentifier>>>(() =>
             {
                 // FIXME: make the key a resource name identifier for localized lookup?
@@ -186,6 +196,51 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 player,
                 skill);
             _turnBasedManager.SetApplicableObjects(new[] { player });
+        }
+
+        public async Task PreviewSkillSlotAsync(int slotIndex)
+        {
+            var player = _mapGameObjectManager
+                .GameObjects
+                .FirstOrDefault(x => x.Has<IPlayerControlledBehavior>());
+            // FIXME: we actually need to map the index to some sort of quick
+            // slot concept, not just full list of skills
+            var skills = player
+                .GetOnly<IHasSkillsBehavior>()
+                .Skills
+                .ToArray();
+            var skill = skills[slotIndex];
+
+            if (!await _skillUsage.CanUseSkillAsync(
+                player,
+                skill))
+            {
+                return;
+            }
+
+            if (!skill.TryGetFirst<ICombinationSkillBehavior>(out var combinationSkill))
+            {
+                return;
+            }
+
+            var skillTargetLocations = new HashSet<Vector2>();
+            foreach (var cs in combinationSkill.SkillExecutors)
+            {
+                foreach (var s in cs.SkillIdentifiers.Select(x => _skillAmenity.GetSkillById(x)))
+                {
+                    var targets = _skillTargetingAmenity.FindTargetLocationsForSkill(
+                        player,
+                        s);
+
+                    foreach (var t in targets)
+                    {
+                        skillTargetLocations.Add(t);
+                    }                    
+                }
+            }
+
+            _mapTraversableHighlighter.Value.SetTargettedTiles(
+                skillTargetLocations);
         }
     }
 }

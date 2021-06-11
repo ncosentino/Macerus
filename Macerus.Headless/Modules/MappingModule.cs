@@ -32,6 +32,10 @@ namespace Macerus.Headless
 
     public sealed class MapTraversableHighlighter : IMapTraversableHighlighter
     {
+        public void SetTargettedTiles(IEnumerable<Vector2> traversableTiles)
+        {
+        }
+
         public void SetTraversableTiles(IEnumerable<Vector2> traversableTiles)
         {
         }

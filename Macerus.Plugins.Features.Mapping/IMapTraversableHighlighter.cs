@@ -6,5 +6,7 @@ namespace Macerus.Plugins.Features.Mapping
     public interface IMapTraversableHighlighter
     {
         void SetTraversableTiles(IEnumerable<Vector2> traversableTiles);
+
+        void SetTargettedTiles(IEnumerable<Vector2> traversableTiles);
     }
 }

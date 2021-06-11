@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Numerics;
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
@@ -66,6 +66,33 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                         (int)Math.Round(x.GetOnly<IPositionBehavior>().Y))));
 
             return targets;
+        }
+
+        public IEnumerable<Vector2> FindTargetLocationsForSkill(
+            IGameObject user,
+            IGameObject skill)
+        {
+            if (!skill.TryGetFirst<ITargetPatternBehavior>(out var targetPatternBehavior) ||
+                !skill.TryGetFirst<ITargetOriginBehavior>(out var targetOriginBehavior))
+            {
+                return Enumerable.Empty<Vector2>();
+            }
+
+            var transformedSkillOrigin = GetSkillOriginFromUserDirection(
+                user,
+                targetOriginBehavior.OffsetFromCasterX,
+                targetOriginBehavior.OffsetFromCasterY);
+
+            var transformedPatternFromOrigin = targetPatternBehavior
+                .LocationsOffsetFromOrigin
+                .Select(x => GetSkillLocationFromOriginAndUserDirection(user, transformedSkillOrigin, x));
+
+            var affectedPositions = new[] { transformedSkillOrigin }
+                .Concat(transformedPatternFromOrigin)
+                .ToArray();
+
+            return affectedPositions
+                .Select(x => new Vector2(x.Item1, x.Item2));
         }
 
         private Tuple<int, int> GetSkillOriginFromUserDirection(
