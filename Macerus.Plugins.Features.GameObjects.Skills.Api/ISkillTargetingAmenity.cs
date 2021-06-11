@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 using ProjectXyz.Api.GameObjects;
 
@@ -10,7 +11,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Api
             IGameObject user,
             IGameObject skill);
 
-        IEnumerable<Vector2> FindTargetLocationsForSkill(
+        Tuple<int, IEnumerable<Vector2>> FindTargetLocationsForSkill(
             IGameObject user,
             IGameObject skill);
     }

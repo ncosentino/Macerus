@@ -223,19 +223,26 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 return;
             }
 
-            var skillTargetLocations = new HashSet<Vector2>();
+            var skillTargetLocations = new Dictionary<int, HashSet<Vector2>>();
             foreach (var cs in combinationSkill.SkillExecutors)
             {
                 foreach (var s in cs.SkillIdentifiers.Select(x => _skillAmenity.GetSkillById(x)))
                 {
-                    var targets = _skillTargetingAmenity.FindTargetLocationsForSkill(
+                    var targetsByTeam = _skillTargetingAmenity.FindTargetLocationsForSkill(
                         player,
                         s);
 
-                    foreach (var t in targets)
+                    if (!skillTargetLocations.ContainsKey(targetsByTeam.Item1))
                     {
-                        skillTargetLocations.Add(t);
-                    }                    
+                        skillTargetLocations.Add(targetsByTeam.Item1, new HashSet<Vector2>(targetsByTeam.Item2));
+                    }
+                    else
+                    {
+                        foreach (var t in targetsByTeam.Item2)
+                        {
+                            skillTargetLocations[targetsByTeam.Item1].Add(t);
+                        }
+                    }           
                 }
             }
 

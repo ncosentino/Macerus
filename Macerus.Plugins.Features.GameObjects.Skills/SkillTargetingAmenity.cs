@@ -68,14 +68,15 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             return targets;
         }
 
-        public IEnumerable<Vector2> FindTargetLocationsForSkill(
+        public Tuple<int, IEnumerable<Vector2>> FindTargetLocationsForSkill(
             IGameObject user,
             IGameObject skill)
         {
             if (!skill.TryGetFirst<ITargetPatternBehavior>(out var targetPatternBehavior) ||
-                !skill.TryGetFirst<ITargetOriginBehavior>(out var targetOriginBehavior))
+                !skill.TryGetFirst<ITargetOriginBehavior>(out var targetOriginBehavior) ||
+                !skill.TryGetFirst<ITargetCombatTeamBehavior>(out var targetCombatTeam))
             {
-                return Enumerable.Empty<Vector2>();
+                return Tuple.Create(-1, Enumerable.Empty<Vector2>());
             }
 
             var transformedSkillOrigin = GetSkillOriginFromUserDirection(
@@ -91,8 +92,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 .Concat(transformedPatternFromOrigin)
                 .ToArray();
 
-            return affectedPositions
-                .Select(x => new Vector2(x.Item1, x.Item2));
+            return Tuple.Create(
+                (targetCombatTeam.AffectedTeams.Single() as IntIdentifier).Identifier,
+                affectedPositions.Select(x => new Vector2(x.Item1, x.Item2)));
         }
 
         private Tuple<int, int> GetSkillOriginFromUserDirection(
