@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
@@ -127,8 +128,9 @@ namespace Macerus.Plugins.Features.Combat.Default
         {
             var traversablePoints = actor?.Has<IPlayerControlledBehavior>() == true
                 ? _mappingAmenity.GetAllowedPathDestinationsForActor(actor)
-                : Enumerable.Empty<System.Numerics.Vector2>();
+                : Enumerable.Empty<Vector2>();
             _mapTraversableHighlighter.SetTraversableTiles(traversablePoints);
+            _mapTraversableHighlighter.SetTargettedTiles(new Dictionary<int, HashSet<Vector2>>());
         }
 
         private void TrackedMovementBehavior_ThrottleChanged(
