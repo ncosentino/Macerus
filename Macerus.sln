@@ -181,7 +181,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Hu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Hud.Default", "Macerus.Plugins.Features.Hud.Default\Macerus.Plugins.Features.Hud.Default.csproj", "{D01630EB-3735-40CC-BCCD-FAC17493A0C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.GameObjects.Items.Generation.Rare", "Macerus.Plugins.Features.GameObjects.Items.Generation.Rare\Macerus.Plugins.Features.GameObjects.Items.Generation.Rare.csproj", "{8DEB9B0E-21A6-4FBC-AA92-798CE1148314}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Items.Generation.Rare", "Macerus.Plugins.Features.GameObjects.Items.Generation.Rare\Macerus.Plugins.Features.GameObjects.Items.Generation.Rare.csproj", "{8DEB9B0E-21A6-4FBC-AA92-798CE1148314}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InGameMenu", "InGameMenu", "{25B4FCA6-3D74-4058-9AC2-07C8467CA09F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.InGameMenu.Api", "Macerus.Plugins.Features.InGameMenu.Api\Macerus.Plugins.Features.InGameMenu.Api.csproj", "{8786C7A7-B113-4854-98CE-7560B4336E73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.InGameMenu.Default", "Macerus.Plugins.Features.InGameMenu.Default\Macerus.Plugins.Features.InGameMenu.Default.csproj", "{31CF958F-EBFE-4D4E-96A3-7512D4354AF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -429,6 +435,14 @@ Global
 		{8DEB9B0E-21A6-4FBC-AA92-798CE1148314}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DEB9B0E-21A6-4FBC-AA92-798CE1148314}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DEB9B0E-21A6-4FBC-AA92-798CE1148314}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8786C7A7-B113-4854-98CE-7560B4336E73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8786C7A7-B113-4854-98CE-7560B4336E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8786C7A7-B113-4854-98CE-7560B4336E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8786C7A7-B113-4854-98CE-7560B4336E73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31CF958F-EBFE-4D4E-96A3-7512D4354AF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31CF958F-EBFE-4D4E-96A3-7512D4354AF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31CF958F-EBFE-4D4E-96A3-7512D4354AF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31CF958F-EBFE-4D4E-96A3-7512D4354AF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -516,6 +530,9 @@ Global
 		{DC85D367-E307-48D4-ACE8-35211D366A59} = {660AE7F3-B16D-4296-BD98-546C9B50E0E8}
 		{D01630EB-3735-40CC-BCCD-FAC17493A0C0} = {660AE7F3-B16D-4296-BD98-546C9B50E0E8}
 		{8DEB9B0E-21A6-4FBC-AA92-798CE1148314} = {DBB8AA2F-D157-4B10-9EE8-4179D4019FB6}
+		{25B4FCA6-3D74-4058-9AC2-07C8467CA09F} = {33A6C169-52DA-446B-A241-FEC05722752A}
+		{8786C7A7-B113-4854-98CE-7560B4336E73} = {25B4FCA6-3D74-4058-9AC2-07C8467CA09F}
+		{31CF958F-EBFE-4D4E-96A3-7512D4354AF5} = {25B4FCA6-3D74-4058-9AC2-07C8467CA09F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}

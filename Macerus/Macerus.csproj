@@ -68,6 +68,8 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.HeaderBar.Default\Macerus.Plugins.Features.HeaderBar.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Hud.Default\Macerus.Plugins.Features.Hud.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Hud\Macerus.Plugins.Features.Hud.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.InGameMenu.Api\Macerus.Plugins.Features.InGameMenu.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.InGameMenu.Default\Macerus.Plugins.Features.InGameMenu.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Interactions.Api\Macerus.Plugins.Features.Interactions.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Interactions.Default\Macerus.Plugins.Features.Interactions.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Inventory.Api\Macerus.Plugins.Features.Inventory.Api.csproj" />
