@@ -12,20 +12,16 @@ namespace Macerus.Plugins.Features.Gui.Default
 {
     public sealed class UserInterfaceSystem : IUserInterfaceSystem
     {
-        private readonly Dictionary<IUserInterfaceUpdate, DateTime> _nextUpdateLookup;
+        private readonly Dictionary<IDiscoverableUserInterfaceUpdate, DateTime> _lastUpdateLookup;
 
-        private readonly IReadOnlyCollection<Tuple<double, IUserInterfaceUpdate>> _updaters;
+        private readonly IReadOnlyCollection<IDiscoverableUserInterfaceUpdate> _updaters;
 
         public UserInterfaceSystem(
             IEnumerable<IDiscoverableUserInterfaceUpdate> discoverableUserInterfaceUpdaters)
         {
-            _updaters = discoverableUserInterfaceUpdaters
-                .Select(x => new Tuple<double, IUserInterfaceUpdate>(
-                    x.UpdateIntervalInSeconds,
-                    x))
-                .ToArray();
+            _updaters = discoverableUserInterfaceUpdaters.ToArray();
 
-            _nextUpdateLookup = _updaters.ToDictionary(x => x.Item2, x => DateTime.MinValue);
+            _lastUpdateLookup = _updaters.ToDictionary(x => x, x => DateTime.MinValue);
         }
 
 
@@ -39,11 +35,11 @@ namespace Macerus.Plugins.Features.Gui.Default
             var now = DateTime.UtcNow;
 
             Parallel.ForEach(
-                _updaters.Where(x => now >= _nextUpdateLookup[x.Item2]),
+                _updaters.Where(x => now >= _lastUpdateLookup[x].AddSeconds(x.UpdateIntervalInSeconds)),
                 async (x) =>
                 {
-                    await x.Item2.UpdateAsync(systemUpdateContext);
-                    _nextUpdateLookup[x.Item2] = DateTime.UtcNow.AddSeconds(x.Item1);
+                    await x.UpdateAsync(systemUpdateContext);
+                    _lastUpdateLookup[x] = DateTime.UtcNow;
                 });
         }
     }
