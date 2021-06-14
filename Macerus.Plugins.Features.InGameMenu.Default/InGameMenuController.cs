@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Macerus.Game.Api;
+using Macerus.Plugins.Features.Gui.Api.SceneTransitions;
 using Macerus.Plugins.Features.InGameMenu.Api;
 
 using ProjectXyz.Shared.Framework;
@@ -12,15 +13,18 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
         private readonly IInGameMenuViewModel _inGameMenuViewModel;
         private readonly ISceneManager _sceneManager;
         private readonly IApplication _application;
+        private readonly ISceneTransitionController _sceneTransitionController;
 
         public InGameMenuController(
             IInGameMenuViewModel inGameMenuViewModel,
             ISceneManager sceneManager,
-            IApplication application)
+            IApplication application,
+            ISceneTransitionController sceneTransitionController)
         {
             _inGameMenuViewModel = inGameMenuViewModel;
             _sceneManager = sceneManager;
             _application = application;
+            _sceneTransitionController = sceneTransitionController;
 
             _inGameMenuViewModel.RequestExit += InGameMenuViewModel_RequestExit;
             _inGameMenuViewModel.RequestClose += InGameMenuViewModel_RequestClose;
@@ -57,7 +61,11 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
             object sender,
             EventArgs e)
         {
-            _sceneManager.GoToScene(new StringIdentifier("MainMenu"));
+            _sceneTransitionController.StartTransition(
+                TimeSpan.FromSeconds(1),
+                TimeSpan.FromSeconds(1),
+                () => _sceneManager.GoToScene(new StringIdentifier("MainMenu")),
+                () => { });
         }
 
         private void InGameMenuViewModel_RequestExit(
