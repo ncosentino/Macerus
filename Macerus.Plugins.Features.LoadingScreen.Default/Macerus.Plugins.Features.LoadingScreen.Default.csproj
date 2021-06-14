@@ -14,7 +14,6 @@
     <ProjectReference Include="..\Macerus.Game.Api\Macerus.Game.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Gui.Default\Macerus.Plugins.Features.Gui.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.LoadingScreen.Api\Macerus.Plugins.Features.LoadingScreen.Api.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.MainMenu.Api\Macerus.Plugins.Features.MainMenu.Api.csproj" />
   </ItemGroup>
 
 </Project>

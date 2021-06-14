@@ -2,7 +2,7 @@
 
 using Macerus.Game.Api;
 using Macerus.Game.Api.Scenes;
-using Macerus.Plugins.Features.Gui.Api.SceneTransitions;
+using Macerus.Plugins.Features.LoadingScreen.Api;
 using Macerus.Plugins.Features.MainMenu.Api;
 
 using ProjectXyz.Shared.Framework;
@@ -14,18 +14,19 @@ namespace Macerus.Plugins.Features.MainMenu.Default
         private readonly IMainMenuViewModel _mainMenuViewModel;
         private readonly ISceneManager _sceneManager;
         private readonly IApplication _application;
-        private readonly ISceneTransitionController _sceneTransitionController;
+        private readonly ILoadingScreenController _loadingScreenController;
 
         public MainMenuController(
             IMainMenuViewModel mainMenuViewModel,
             ISceneManager sceneManager,
             IApplication application,
-            ISceneTransitionController sceneTransitionController)
+            ILoadingScreenController loadingScreenController)
         {
             _mainMenuViewModel = mainMenuViewModel;
             _sceneManager = sceneManager;
             _application = application;
-            _sceneTransitionController = sceneTransitionController;
+            _loadingScreenController = loadingScreenController;
+
             _mainMenuViewModel.RequestExit += MainMenuViewModel_RequestExit;
             _mainMenuViewModel.RequestNewGame += MainMenuViewModel_RequestNewGame;
             _mainMenuViewModel.RequestOptions += MainMenuViewModel_RequestOptions;
@@ -60,9 +61,8 @@ namespace Macerus.Plugins.Features.MainMenu.Default
             object sender,
             EventArgs e)
         {
-            _sceneTransitionController.StartTransition(
-                TimeSpan.FromSeconds(1),
-                TimeSpan.FromSeconds(1),
+            _loadingScreenController.Load(
+                // FIXME: we actually need a way to pre-load this scene and then flip over...
                 () => _sceneManager.GoToScene(new StringIdentifier("Explore")),
                 () => { });
         }

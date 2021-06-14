@@ -189,6 +189,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.InGameMenu.Default", "Macerus.Plugins.Features.InGameMenu.Default\Macerus.Plugins.Features.InGameMenu.Default.csproj", "{31CF958F-EBFE-4D4E-96A3-7512D4354AF5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LoadingScreen", "LoadingScreen", "{8EF4BF20-5AB9-4BDA-BFD1-995CDE4AEA70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.LoadingScreen.Api", "Macerus.Plugins.Features.LoadingScreen.Api\Macerus.Plugins.Features.LoadingScreen.Api.csproj", "{52A897C3-EF70-496F-9AF9-ACD374C175B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.LoadingScreen.Default", "Macerus.Plugins.Features.LoadingScreen.Default\Macerus.Plugins.Features.LoadingScreen.Default.csproj", "{5ECC5D4B-A8FA-4520-AAEE-31F109F8582A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -443,6 +449,14 @@ Global
 		{31CF958F-EBFE-4D4E-96A3-7512D4354AF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31CF958F-EBFE-4D4E-96A3-7512D4354AF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31CF958F-EBFE-4D4E-96A3-7512D4354AF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52A897C3-EF70-496F-9AF9-ACD374C175B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52A897C3-EF70-496F-9AF9-ACD374C175B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52A897C3-EF70-496F-9AF9-ACD374C175B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52A897C3-EF70-496F-9AF9-ACD374C175B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ECC5D4B-A8FA-4520-AAEE-31F109F8582A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ECC5D4B-A8FA-4520-AAEE-31F109F8582A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ECC5D4B-A8FA-4520-AAEE-31F109F8582A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ECC5D4B-A8FA-4520-AAEE-31F109F8582A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -533,6 +547,9 @@ Global
 		{25B4FCA6-3D74-4058-9AC2-07C8467CA09F} = {33A6C169-52DA-446B-A241-FEC05722752A}
 		{8786C7A7-B113-4854-98CE-7560B4336E73} = {25B4FCA6-3D74-4058-9AC2-07C8467CA09F}
 		{31CF958F-EBFE-4D4E-96A3-7512D4354AF5} = {25B4FCA6-3D74-4058-9AC2-07C8467CA09F}
+		{8EF4BF20-5AB9-4BDA-BFD1-995CDE4AEA70} = {33A6C169-52DA-446B-A241-FEC05722752A}
+		{52A897C3-EF70-496F-9AF9-ACD374C175B2} = {8EF4BF20-5AB9-4BDA-BFD1-995CDE4AEA70}
+		{5ECC5D4B-A8FA-4520-AAEE-31F109F8582A} = {8EF4BF20-5AB9-4BDA-BFD1-995CDE4AEA70}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}
