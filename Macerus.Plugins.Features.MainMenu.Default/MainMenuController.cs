@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Macerus.Game.Api;
+using Macerus.Game.Api.Scenes;
 using Macerus.Plugins.Features.Gui.Api.SceneTransitions;
 using Macerus.Plugins.Features.MainMenu.Api;
 
