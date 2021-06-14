@@ -10,6 +10,10 @@ namespace Macerus.Game.Api.Scenes
 
         string CurrentSceneName { get; }
 
-        void GoToScene(IIdentifier sceneId);
+        void NavigateToScene(IIdentifier sceneId);
+
+        void BeginNavigateToScene(
+            IIdentifier sceneId,
+            Action<ISceneCompletion> completedCallback);
     }
 }

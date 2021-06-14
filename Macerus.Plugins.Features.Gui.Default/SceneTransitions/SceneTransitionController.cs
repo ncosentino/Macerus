@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using Macerus.Plugins.Features.Gui.Api;
 using Macerus.Plugins.Features.Gui.Api.SceneTransitions;
 
-using ProjectXyz.Api.Framework;
-using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.Systems;
 
 namespace Macerus.Plugins.Features.Gui.Default.SceneTransitions

@@ -65,7 +65,7 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
             _sceneTransitionController.StartTransition(
                 TimeSpan.FromSeconds(1),
                 TimeSpan.FromSeconds(1),
-                () => _sceneManager.GoToScene(new StringIdentifier("MainMenu")),
+                () => _sceneManager.NavigateToScene(new StringIdentifier("MainMenu")),
                 () => { });
         }
 

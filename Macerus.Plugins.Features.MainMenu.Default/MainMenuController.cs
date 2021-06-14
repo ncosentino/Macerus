@@ -61,10 +61,13 @@ namespace Macerus.Plugins.Features.MainMenu.Default
             object sender,
             EventArgs e)
         {
-            _loadingScreenController.Load(
-                // FIXME: we actually need a way to pre-load this scene and then flip over...
-                () => _sceneManager.GoToScene(new StringIdentifier("Explore")),
-                () => { });
+            ISceneCompletion sceneCompletion = null;
+            _loadingScreenController.BeginLoad(
+                () => _sceneManager.BeginNavigateToScene(
+                    new StringIdentifier("Explore"),
+                    sc => sceneCompletion = sc),
+                () => sceneCompletion != null ? 1 : 0,
+                () => sceneCompletion.SwitchoverScenes());
         }
 
         private void MainMenuViewModel_RequestExit(
