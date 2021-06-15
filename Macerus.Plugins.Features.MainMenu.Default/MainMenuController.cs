@@ -1,32 +1,29 @@
 ﻿using System;
 
 using Macerus.Game.Api;
-using Macerus.Game.Api.Scenes;
-using Macerus.Plugins.Features.LoadingScreen.Api;
+using Macerus.Plugins.Features.Gui.Api.SceneTransitions;
 using Macerus.Plugins.Features.MainMenu.Api;
-
-using ProjectXyz.Shared.Framework;
+using Macerus.Plugins.Features.MainMenu.Api.NewGame;
 
 namespace Macerus.Plugins.Features.MainMenu.Default
 {
     public sealed class MainMenuController : IMainMenuController
     {
         private readonly IMainMenuViewModel _mainMenuViewModel;
-        private readonly ISceneManager _sceneManager;
         private readonly IApplication _application;
-        private readonly ILoadingScreenController _loadingScreenController;
+        private readonly Lazy<INewGameController> _lazyNewGameController;
+        private readonly ITransitionController _transitionController;
 
         public MainMenuController(
             IMainMenuViewModel mainMenuViewModel,
-            ISceneManager sceneManager,
             IApplication application,
-            ILoadingScreenController loadingScreenController)
+            Lazy<INewGameController> lazyNewGameController,
+            ITransitionController transitionController)
         {
             _mainMenuViewModel = mainMenuViewModel;
-            _sceneManager = sceneManager;
             _application = application;
-            _loadingScreenController = loadingScreenController;
-
+            _lazyNewGameController = lazyNewGameController;
+            _transitionController = transitionController;
             _mainMenuViewModel.RequestExit += MainMenuViewModel_RequestExit;
             _mainMenuViewModel.RequestNewGame += MainMenuViewModel_RequestNewGame;
             _mainMenuViewModel.RequestOptions += MainMenuViewModel_RequestOptions;
@@ -61,13 +58,15 @@ namespace Macerus.Plugins.Features.MainMenu.Default
             object sender,
             EventArgs e)
         {
-            ISceneCompletion sceneCompletion = null;
-            _loadingScreenController.BeginLoad(
-                () => _sceneManager.BeginNavigateToScene(
-                    new StringIdentifier("Explore"),
-                    sc => sceneCompletion = sc),
-                () => sceneCompletion != null ? 1 : 0,
-                () => sceneCompletion.SwitchoverScenes());
+            _transitionController.StartTransition(
+                TimeSpan.FromSeconds(0.3),
+                TimeSpan.FromSeconds(0.3),
+                () =>
+                {
+                    _lazyNewGameController.Value.ShowScreen();
+                    _mainMenuViewModel.Close();
+                },
+                () => { });
         }
 
         private void MainMenuViewModel_RequestExit(

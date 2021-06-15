@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.MainMenu.Api\Macerus.Plugins.Features.MainMenu.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CharacterCreation\" />
+  </ItemGroup>
+
 </Project>

@@ -34,7 +34,7 @@ namespace Macerus.Plugins.Features.LoadingScreen.Default
 
         private readonly ILoadingScreenViewModel _loadingScreenViewModel;
         private readonly ISceneManager _sceneManager;
-        private readonly ISceneTransitionController _sceneTransitionController;
+        private readonly ITransitionController _sceneTransitionController;
 
         private LoadState _loadState;
         private Action _startWorkCallback;
@@ -44,7 +44,7 @@ namespace Macerus.Plugins.Features.LoadingScreen.Default
         public LoadingScreenController(
             ILoadingScreenViewModel loadingScreenViewModel,
             ISceneManager sceneManager,
-            ISceneTransitionController sceneTransitionController)
+            ITransitionController sceneTransitionController)
         {
             _loadingScreenViewModel = loadingScreenViewModel;
             _sceneManager = sceneManager;

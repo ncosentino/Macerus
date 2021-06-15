@@ -8,8 +8,8 @@ using ProjectXyz.Api.Systems;
 
 namespace Macerus.Plugins.Features.Gui.Default.SceneTransitions
 {
-    public sealed class SceneTransitionController :
-        ISceneTransitionController,
+    public sealed class TransitionController :
+        ITransitionController,
         IDiscoverableUserInterfaceUpdate
     {
         private readonly IFaderSceneTransitionViewModel _faderSceneTransitionViewModel;
@@ -17,7 +17,7 @@ namespace Macerus.Plugins.Features.Gui.Default.SceneTransitions
         private TransitionPackage _transitionPackage;
         private DateTime _lastUpdate;
 
-        public SceneTransitionController(IFaderSceneTransitionViewModel faderSceneTransitionViewModel)
+        public TransitionController(IFaderSceneTransitionViewModel faderSceneTransitionViewModel)
         {
             _faderSceneTransitionViewModel = faderSceneTransitionViewModel;
         }

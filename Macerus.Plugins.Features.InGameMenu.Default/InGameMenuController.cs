@@ -4,6 +4,7 @@ using Macerus.Game.Api;
 using Macerus.Game.Api.Scenes;
 using Macerus.Plugins.Features.Gui.Api.SceneTransitions;
 using Macerus.Plugins.Features.InGameMenu.Api;
+using Macerus.Plugins.Features.MainMenu.Api;
 
 using ProjectXyz.Shared.Framework;
 
@@ -14,19 +15,21 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
         private readonly IInGameMenuViewModel _inGameMenuViewModel;
         private readonly ISceneManager _sceneManager;
         private readonly IApplication _application;
-        private readonly ISceneTransitionController _sceneTransitionController;
+        private readonly ITransitionController _sceneTransitionController;
+        private readonly IMainMenuController _mainMenuController;
 
         public InGameMenuController(
             IInGameMenuViewModel inGameMenuViewModel,
             ISceneManager sceneManager,
             IApplication application,
-            ISceneTransitionController sceneTransitionController)
+            ITransitionController sceneTransitionController,
+            IMainMenuController mainMenuController)
         {
             _inGameMenuViewModel = inGameMenuViewModel;
             _sceneManager = sceneManager;
             _application = application;
             _sceneTransitionController = sceneTransitionController;
-
+            _mainMenuController = mainMenuController;
             _inGameMenuViewModel.RequestExit += InGameMenuViewModel_RequestExit;
             _inGameMenuViewModel.RequestClose += InGameMenuViewModel_RequestClose;
             _inGameMenuViewModel.RequestOptions += InGameMenuViewModel_RequestOptions;
@@ -65,7 +68,11 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
             _sceneTransitionController.StartTransition(
                 TimeSpan.FromSeconds(1),
                 TimeSpan.FromSeconds(1),
-                () => _sceneManager.NavigateToScene(new StringIdentifier("MainMenu")),
+                () =>
+                {
+                    _mainMenuController.OpenMenu();
+                    _sceneManager.NavigateToScene(new StringIdentifier("MainMenu"));
+                },
                 () => { });
         }
 

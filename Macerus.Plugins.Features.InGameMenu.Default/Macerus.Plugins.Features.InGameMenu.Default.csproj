@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net46</TargetFramework>
@@ -14,6 +14,7 @@
     <ProjectReference Include="..\Macerus.Game.Api\Macerus.Game.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Gui.Default\Macerus.Plugins.Features.Gui.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.InGameMenu.Api\Macerus.Plugins.Features.InGameMenu.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.MainMenu.Api\Macerus.Plugins.Features.MainMenu.Api.csproj" />
   </ItemGroup>
 
 </Project>

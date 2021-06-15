@@ -2,18 +2,18 @@
 
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Plugins.Features.Gui.Default.SceneTransitions.Autofac
+namespace Macerus.Plugins.Features.MainMenu.Default.NewGame.Autofac
 {
-    public sealed class SceneTransitionsModule : SingleRegistrationModule
+    public sealed class NewGameModule : SingleRegistrationModule
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<SceneTransitionController>()
+                .RegisterType<NewGameViewModel>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<FaderSceneTransitionViewModel>()
+                .RegisterType<NewGameController>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

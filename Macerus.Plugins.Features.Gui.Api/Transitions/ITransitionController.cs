@@ -2,7 +2,7 @@
 
 namespace Macerus.Plugins.Features.Gui.Api.SceneTransitions
 {
-    public interface ISceneTransitionController
+    public interface ITransitionController
     {
         bool Transitioning { get; }
 
