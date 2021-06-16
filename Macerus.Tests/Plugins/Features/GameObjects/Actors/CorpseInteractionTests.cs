@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
@@ -44,26 +45,27 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
             _interactionHandler = _container.Resolve<IInteractionHandlerFacade>();
         }
 
-        private void Setup(out IGameObject skeleton)
+        private async Task<IGameObject> SetupAsync()
         {
             var filterContext = _filterContextAmenity.CreateNoneFilterContext();
-            _encounterManager.StartEncounter(
+            await _encounterManager.StartEncounterAsync(
                 filterContext,
                 new StringIdentifier("test-encounter"));
 
-            skeleton = _mapGameObjectManager
+            var skeleton = _mapGameObjectManager
                 .GameObjects
                 .FirstOrDefault(x =>
                     !x.Has<IPlayerControlledBehavior>() &&
                     x.GetOnly<ITypeIdentifierBehavior>().TypeId.Equals(_actorIdentifiers.ActorTypeIdentifier));
+            return skeleton;
         }
 
         [Fact]
         private void Interact_NotDead_NoItemsTransfered()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
             {
-                Setup(out var skeleton);
+                var skeleton = await SetupAsync();
 
                 var skeletonInventory = skeleton
                     .Get<IItemContainerBehavior>()
@@ -77,7 +79,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                     .Count();
 
                 // should be no-op
-                _interactionHandler.Interact(player, skeleton.GetOnly<CorpseInteractableBehavior>());
+                await _interactionHandler.InteractAsync(player, skeleton.GetOnly<CorpseInteractableBehavior>());
 
                 var playerInventory = player
                     .Get<IItemContainerBehavior>()
@@ -101,9 +103,9 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
         [Fact]
         private void Interact_Dead_AllItemsTransfered()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
             {
-                Setup(out var skeleton);
+                var skeleton = await SetupAsync();
 
                 var skeletonInventory = skeleton
                     .Get<IItemContainerBehavior>()
@@ -120,7 +122,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                     .GetOnly<IHasMutableStatsBehavior>()
                     .MutateStats(stats => stats[_combatStatIdentifiers.CurrentLifeStatId] = 0);
 
-                _interactionHandler.Interact(player, skeleton.GetOnly<CorpseInteractableBehavior>());
+                await _interactionHandler.InteractAsync(player, skeleton.GetOnly<CorpseInteractableBehavior>());
 
                 var playerInventory = player
                     .Get<IItemContainerBehavior>()

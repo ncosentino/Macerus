@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.Interactions.Api;
 
@@ -19,7 +20,7 @@ namespace Macerus.Plugins.Features.Interactions.Default
                 x => x);
         }
 
-        public void Interact(
+        public async Task InteractAsync(
             IGameObject actor,
             IInteractableBehavior behavior)
         {
@@ -32,7 +33,9 @@ namespace Macerus.Plugins.Features.Interactions.Default
                     $"to handle '{behavior}'.");
             }
 
-            handler.Interact(actor, behavior);
+            await handler
+                .InteractAsync(actor, behavior)
+                .ConfigureAwait(false);
         }
     }
 }

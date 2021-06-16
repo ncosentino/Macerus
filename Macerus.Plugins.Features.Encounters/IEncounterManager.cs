@@ -1,10 +1,14 @@
-﻿using ProjectXyz.Plugins.Features.Filtering.Api;
+﻿using System.Threading.Tasks;
+
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 
 namespace Macerus.Plugins.Features.Encounters
 {
     public interface IEncounterManager
     {
-        void StartEncounter(IFilterContext filterContext, IIdentifier encounterDefinitioId);
+        Task StartEncounterAsync(
+            IFilterContext filterContext,
+            IIdentifier encounterDefinitioId);
     }
 }

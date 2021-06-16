@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
+using System.Threading.Tasks;
 
 using Autofac;
 
@@ -74,7 +75,7 @@ namespace Macerus.Headless
             _mappingAssetPaths = mappingAssetPaths;
         }
 
-        public Stream LoadStream(string pathToResource)
+        public async Task<Stream> LoadStreamAsync(string pathToResource)
         {
             var fullPath = Path.Combine(
                 _mappingAssetPaths.ResourcesRoot,

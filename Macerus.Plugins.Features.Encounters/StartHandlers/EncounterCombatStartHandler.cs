@@ -1,7 +1,8 @@
-﻿
-using ProjectXyz.Plugins.Features.Filtering.Api;
+﻿using System.Threading.Tasks;
+
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Combat.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.TurnBased.Api;
 
 namespace Macerus.Plugins.Features.Encounters
@@ -21,7 +22,7 @@ namespace Macerus.Plugins.Features.Encounters
 
         public int Priority => int.MaxValue - 10000;
 
-        public void Handle(
+        public async Task HandleAsync(
             IGameObject encounter,
             IFilterContext filterContext)
         {

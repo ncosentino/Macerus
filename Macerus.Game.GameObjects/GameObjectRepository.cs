@@ -29,6 +29,11 @@ namespace Macerus.Game
             _cache[id] = gameObject;
         }
 
+        public void Clear()
+        {
+            _cache.Clear();
+        }
+
         public IEnumerable<IGameObject> LoadAll() => _cache.Values;
 
         public IEnumerable<IGameObject> Load(IFilterContext filterContext)

@@ -34,9 +34,9 @@ namespace Macerus.Tests.Plugins.Features.Mapping
         [Fact]
         private void SwitchMap_SameMap_NoOpSamePlayer()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(___ =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(async ___ =>
             {
-                _mapManager.SwitchMap(new StringIdentifier("swamp"));
+                await _mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
 
                 var uniqueStatId = new StringIdentifier(Guid.NewGuid().ToString());
                 var player = _mapGameObjectManager
@@ -47,7 +47,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
 
                 int mapChangeCount = 0;
                 _mapManager.MapChanged += (_, __) => mapChangeCount++;
-                _mapManager.SwitchMap(new StringIdentifier("swamp"));
+                await _mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
 
                 var playerAfter = _mapGameObjectManager
                     .GameObjects
@@ -63,9 +63,9 @@ namespace Macerus.Tests.Plugins.Features.Mapping
         [Fact]
         private void SwitchMap_IntermediateThenBackToSameMap_PlayerPersistsAcrossMaps()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(_ =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(async _ =>
             {
-                _mapManager.SwitchMap(new StringIdentifier("swamp"));
+                await _mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
 
                 var uniqueStatId = new StringIdentifier(Guid.NewGuid().ToString());
                 var player = _mapGameObjectManager
@@ -74,7 +74,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
                 var playerStats = player.GetOnly<IHasMutableStatsBehavior>();
                 playerStats.MutateStats(stats => stats.Add(uniqueStatId, 123));
 
-                _mapManager.SwitchMap(new StringIdentifier("test_encounter_map"));
+                await _mapManager.SwitchMapAsync(new StringIdentifier("test_encounter_map"));
                 player = _mapGameObjectManager
                     .GameObjects
                     .Single(x => x.Has<IPlayerControlledBehavior>());
@@ -87,7 +87,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
                 Assert.Equal(player, playerInRepository);
                 Assert.Equal(123d, playerStats.BaseStats[uniqueStatId]);
 
-                _mapManager.SwitchMap(new StringIdentifier("swamp"));
+                await _mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
                 player = _mapGameObjectManager
                     .GameObjects
                     .Single(x => x.Has<IPlayerControlledBehavior>());

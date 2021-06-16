@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
 
@@ -32,12 +33,12 @@ namespace Macerus.Tests.Plugins.Features.GameObjects
         }
 
         [Fact]
-        private void SerializeAndDeserialize_SwampMap_ExpectedResults()
+        private async Task SerializeAndDeserialize_SwampMap_ExpectedResults()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            await _testAmenities.UsingCleanMapAndObjects(async () =>
             {
                 var mapManager = _container.Resolve<IMapManager>();
-                mapManager.SwitchMap(new StringIdentifier("swamp"));
+                await mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
 
                 var input = mapManager.ActiveMap;
                 var result = Exercise(input);
@@ -53,9 +54,9 @@ namespace Macerus.Tests.Plugins.Features.GameObjects
         }
 
         [Fact]
-        private void SerializeAndDeserialize_Player_ExpectedResults()
+        private async Task SerializeAndDeserialize_Player_ExpectedResults()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
+            await _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
             {
                 var result = Exercise(player);
 

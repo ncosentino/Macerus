@@ -3,6 +3,7 @@
 using Autofac;
 
 using Macerus.Game.Api;
+using Macerus.Game.Api.Scenes;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Logging;
@@ -39,9 +40,20 @@ namespace Macerus.Tests.Modules
             _logger = logger;
         }
 
-        public void GoToScene(IIdentifier sceneId)
+        public string CurrentSceneName => null;
+
+        public event EventHandler<EventArgs> SceneChanged;
+
+        public void BeginNavigateToScene(
+            IIdentifier sceneId,
+            Action<ISceneCompletion> completedCallback)
         {
-            _logger.Info($"Go to scene '{sceneId}'.");
+            _logger.Info($"Navigating to scene '{sceneId}'...");
+        }
+
+        public void NavigateToScene(IIdentifier sceneId)
+        {
+            _logger.Info($"Navigate to scene '{sceneId}'.");
         }
     }
 }

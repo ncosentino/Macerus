@@ -6,11 +6,11 @@ using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.GameObjects.Static.Doors;
 using Macerus.Plugins.Features.Interactions.Api;
 
-using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Game.Interface.Engine;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Shared.Framework;
@@ -50,10 +50,10 @@ namespace Macerus.Tests.Plugins.Features.Encounters
         [Fact]
         private void StartEncounter_TestEncounter_ExpectedState()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
             {
                 var filterContext = _filterContextProvider.GetContext();
-                _encounterManager.StartEncounter(
+                await _encounterManager.StartEncounterAsync(
                     filterContext,
                     new StringIdentifier("test-encounter"));
 
@@ -77,10 +77,10 @@ namespace Macerus.Tests.Plugins.Features.Encounters
         [Fact]
         private void EndCombat_TestEncounterPlayerWins_TriggerOnCombatEndSpawners()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
             {
                 var filterContext = _filterContextProvider.GetContext();
-                _encounterManager.StartEncounter(
+                await _encounterManager.StartEncounterAsync(
                     filterContext,
                     new StringIdentifier("test-encounter"));
 
@@ -101,7 +101,7 @@ namespace Macerus.Tests.Plugins.Features.Encounters
                 _combatTurnManager.EndCombat(
                     Enumerable.Empty<IGameObject>(),
                     new Dictionary<int, IReadOnlyCollection<IGameObject>>());
-                _gameEngine.Update();
+                await _gameEngine.UpdateAsync();
 
                 Assert.Empty(_mapGameObjectManager
                     .GameObjects
@@ -121,23 +121,23 @@ namespace Macerus.Tests.Plugins.Features.Encounters
         [Fact]
         private void EndCombat_UseReturnDoor_BackToStartMapAtSpecifiedLocation()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
             {
                 var filterContext = _filterContextProvider.GetContext();
-                _encounterManager.StartEncounter(
+                await _encounterManager.StartEncounterAsync(
                     filterContext,
                     new StringIdentifier("test-encounter"));
 
                 _combatTurnManager.EndCombat(
                     Enumerable.Empty<IGameObject>(),
                     new Dictionary<int, IReadOnlyCollection<IGameObject>>());
-                _gameEngine.Update();
+                await _gameEngine.UpdateAsync();
 
                 var door = _mapGameObjectManager
                     .GameObjects
                     .Single(x => x.Has<DoorInteractableBehavior>())
                     .GetOnly<DoorInteractableBehavior>();
-                _interactionHandler.Interact(
+                await _interactionHandler.InteractAsync(
                     player,
                     door);
 

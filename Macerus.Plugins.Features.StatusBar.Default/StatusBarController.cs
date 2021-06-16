@@ -83,6 +83,10 @@ namespace Macerus.Plugins.Features.StatusBar.Default
 
                 return minMaxIdentifiers;
             });
+
+            // FIXME: MySQL implementations at least before .NET 4.5 have
+            // issues with async await support and can literally deadlock
+            object hackToResolveResourceIds = _lazyCurrentAndMaxResourceIdentifiers.Value;
         }
 
         public delegate StatusBarController Factory();
@@ -103,7 +107,8 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                         
             var resourcesViewModels = await GetResourceViewModelsAsync(
                 player,
-                _lazyCurrentAndMaxResourceIdentifiers.Value);
+                _lazyCurrentAndMaxResourceIdentifiers.Value)
+                .ConfigureAwait(false);
 
             _statusBarViewModel.UpdateResource(resourcesViewModels.First(), true);
             _statusBarViewModel.UpdateResource(resourcesViewModels.Last(), false);
@@ -113,7 +118,10 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 .Skills
                 .Where(x => !x.Has<IHasEnchantmentsBehavior>())
                 .ToArray();
-            var abilityViewModels = await CreateAbilityViewModelsAsync(player, skills);
+            var abilityViewModels = await CreateAbilityViewModelsAsync(
+                player, 
+                skills)
+                .ConfigureAwait(false);
 
             _statusBarViewModel.UpdateAbilities(abilityViewModels);
         }
@@ -124,9 +132,11 @@ namespace Macerus.Plugins.Features.StatusBar.Default
         {
             var resourcesViewModels = new List<IStatusBarResourceViewModel>();
 
-            var resources = await _statCalculationServiceAmenity.GetStatValuesAsync(
-                player,
-                currentAndMaxStatIdentifiers.SelectMany(x => new[] { x.Item1, x.Item2 }));
+            var resources = await _statCalculationServiceAmenity
+                .GetStatValuesAsync(
+                    player,
+                    currentAndMaxStatIdentifiers.SelectMany(x => new[] { x.Item1, x.Item2 }))
+                .ConfigureAwait(false);
 
             foreach (var currentAndMaxIdentifiers in currentAndMaxStatIdentifiers)
             {
@@ -163,7 +173,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                     viewModels.TryAdd(skill, viewModel);
                 }))
                 .ToArray();
-            Task.WaitAll(tasks);
+            await Task.WhenAll(tasks).ConfigureAwait(false);
 
             // we do this to respect the order of the skills
             return skills.Select(x => viewModels[x]).ToArray();
@@ -182,9 +192,11 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 .ToArray();
             var skill = skills[slotIndex];
 
-            if (!await _skillUsage.CanUseSkillAsync(
-                player,
-                skill))
+            if (!await _skillUsage
+                .CanUseSkillAsync(
+                    player,
+                    skill)
+                .ConfigureAwait(false))
             {
                 return;
             }
@@ -211,9 +223,11 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 .ToArray();
             var skill = skills[slotIndex];
 
-            if (!await _skillUsage.CanUseSkillAsync(
-                player,
-                skill))
+            if (!await _skillUsage
+                .CanUseSkillAsync(
+                    player,
+                    skill)
+                .ConfigureAwait(false))
             {
                 return;
             }

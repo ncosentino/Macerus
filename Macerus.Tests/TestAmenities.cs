@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors.Filtering;
-using Macerus.Api.GameObjects;
 using Macerus.Game;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 using Macerus.Plugins.Features.Mapping.Default;
@@ -26,7 +26,7 @@ namespace Macerus.Tests
         private readonly MacerusContainer _container;
         private readonly IMapGameObjectManager _mapGameObjectManager;
         private readonly IGameObjectRepository _gameObjectRepository;
-        private readonly IMapGameObjectRepository _mapGameObjectRepository;
+        private readonly IMapStateRepository _mapStateRepository;
         private readonly IMapManager _mapManager;
         private readonly IActorGeneratorFacade _actorGeneratorFacade;
         private readonly IFilterContextAmenity _filterContextAmenity;
@@ -38,7 +38,7 @@ namespace Macerus.Tests
             _container = container;
             _mapGameObjectManager = _container.Resolve<IMapGameObjectManager>();
             _gameObjectRepository = _container.Resolve<IGameObjectRepository>();
-            _mapGameObjectRepository = _container.Resolve<IMapGameObjectRepository>();
+            _mapStateRepository = _container.Resolve<IMapStateRepository>();
             _mapManager = _container.Resolve<IMapManager>();
             _actorGeneratorFacade = _container.Resolve<IActorGeneratorFacade>();
             _filterContextAmenity = _container.Resolve<IFilterContextAmenity>();
@@ -63,30 +63,30 @@ namespace Macerus.Tests
             return player;
         }
 
-        public void UsingCleanMapAndObjectsWithPlayer(Action<IGameObject> callback)
+        public async Task UsingCleanMapAndObjectsWithPlayer(Func<IGameObject, Task> callback)
         {
             var actor = CreatePlayerInstance();
-            UsingCleanMapAndObjects(() =>
+            await UsingCleanMapAndObjects(async () =>
             {
                 _mapGameObjectManager.MarkForAddition(actor);
                 _mapGameObjectManager.Synchronize();
 
-                callback.Invoke(actor);
+                await callback.Invoke(actor);
             });
         }
 
-        public void UsingCleanMapAndObjects(Action callback)
+        public async Task UsingCleanMapAndObjects(Func<Task> callback)
         {
             ResetGameObjectManagerHack(
                 _gameObjectRepository,
-                _mapGameObjectRepository);
+                _mapStateRepository);
 
             _mapManager.UnloadMap();
             Assert.Empty(_mapGameObjectManager.GameObjects);
 
             try
             {
-                callback.Invoke();
+                await callback.Invoke();
             }
             finally
             {
@@ -97,18 +97,18 @@ namespace Macerus.Tests
 
         private void ResetGameObjectManagerHack(
             IGameObjectRepository gameObjectRepository,
-            IMapGameObjectRepository mapGameObjectRepository)
+            IMapStateRepository mapStateRepository)
         {
             var cacheField = typeof(GameObjectRepository)
                 .GetField("_cache", BindingFlags.NonPublic | BindingFlags.Instance);
             var cache = (Dictionary<IIdentifier, IGameObject>)cacheField.GetValue(gameObjectRepository);
             cache.Clear();
 
-            if (mapGameObjectRepository is MapGameObjectRepository)
+            if (mapStateRepository is MapStateRepository)
             {
-                cacheField = typeof(MapGameObjectRepository)
+                cacheField = typeof(MapStateRepository)
                     .GetField("_gameObjectIdCache", BindingFlags.NonPublic | BindingFlags.Instance);
-                var cache2 = (Dictionary<IIdentifier, List<IIdentifier>>)cacheField.GetValue(mapGameObjectRepository);
+                var cache2 = (Dictionary<IIdentifier, List<IIdentifier>>)cacheField.GetValue(mapStateRepository);
                 cache2.Clear();
             }
         }

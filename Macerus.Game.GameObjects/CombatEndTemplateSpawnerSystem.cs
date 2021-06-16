@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
 using Macerus.Api.GameObjects;
@@ -38,11 +39,11 @@ namespace Macerus.Game
 
         public int? Priority => null;
 
-        public void Update(
+        public async Task UpdateAsync(
             ISystemUpdateContext systemUpdateContext,
             IEnumerable<IGameObject> gameObjects)
         {
-            // no-op
+            // no-op... hijacking as a system to be resolved easily
         }
 
         private void CombatTurnManager_CombatEnded(

@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
 
-using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Interactions.Api;
 
 using ProjectXyz.Api.GameObjects;
@@ -20,7 +20,7 @@ namespace Macerus.Plugins.Features.GameObjects.Static.Doors
 
         public Type InteractableType { get; } = typeof(DoorInteractableBehavior);
 
-        public void Interact(
+        public async Task InteractAsync(
             IGameObject actor,
             IInteractableBehavior behavior)
         {
@@ -28,7 +28,9 @@ namespace Macerus.Plugins.Features.GameObjects.Static.Doors
 
             if (doorInteractableBehavior.TransitionToMapId != null)
             {
-                _mapManager.SwitchMap(doorInteractableBehavior.TransitionToMapId);
+                await _mapManager
+                    .SwitchMapAsync(doorInteractableBehavior.TransitionToMapId)
+                    .ConfigureAwait(false);
             }
 
             if (doorInteractableBehavior.TransitionToX != null ||

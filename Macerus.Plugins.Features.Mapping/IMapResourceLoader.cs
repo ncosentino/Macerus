@@ -1,9 +1,10 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 
 namespace Macerus.Plugins.Features.Mapping
 {
     public interface IMapResourceLoader
     {
-        Stream LoadStream(string pathToResource);
+        Task<Stream> LoadStreamAsync(string pathToResource);
     }
 }

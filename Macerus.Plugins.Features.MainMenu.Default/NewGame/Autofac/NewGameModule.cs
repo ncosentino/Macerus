@@ -16,6 +16,10 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame.Autofac
                 .RegisterType<NewGameController>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<NewGameWorkflow>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

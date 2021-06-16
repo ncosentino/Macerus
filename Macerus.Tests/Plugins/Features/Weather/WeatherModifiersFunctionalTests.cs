@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Macerus.Plugins.Content.Weather;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
@@ -33,9 +34,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
         }
 
         [Fact]
-        private void GetWeights_PlayerPassiveRainSkill_ExpectedWeights()
+        private async Task GetWeights_PlayerPassiveRainSkill_ExpectedWeights()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            await _testAmenities.UsingCleanMapAndObjects(async () =>
             {
                 var player = _testAmenities.CreatePlayerInstance();
                 player
@@ -58,9 +59,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
         }
 
         [Fact]
-        private void GetWeights_TwoPlayersOnePassiveRain_ExpectedWeights()
+        private async Task GetWeights_TwoPlayersOnePassiveRain_ExpectedWeights()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            await _testAmenities.UsingCleanMapAndObjects(async () =>
             {
                 var player = _testAmenities.CreatePlayerInstance();
                 player
@@ -85,9 +86,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
         }
 
         [Fact]
-        private void GetMinimumDuration_PlayerPassiveRainSkill_ExpectedValue()
+        private async Task GetMinimumDuration_PlayerPassiveRainSkill_ExpectedValue()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            await _testAmenities.UsingCleanMapAndObjects(async () =>
             {
                 var player = _testAmenities.CreatePlayerInstance();
                 player
@@ -107,9 +108,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
         }
 
         [Fact]
-        private void GetMinimumDuration_TwoPlayersOnePassiveRainSkill_ExpectedValue()
+        private async Task GetMinimumDuration_TwoPlayersOnePassiveRainSkill_ExpectedValue()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            await _testAmenities.UsingCleanMapAndObjects(async () =>
             {
                 var player = _testAmenities.CreatePlayerInstance();
                 player
@@ -131,9 +132,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
         }
 
         [Fact]
-        private void GetMaximumDuration_PlayerPassiveRainSkill_ExpectedValue()
+        private async Task GetMaximumDuration_PlayerPassiveRainSkill_ExpectedValue()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            await _testAmenities.UsingCleanMapAndObjects(async () =>
             {
                 var player = _testAmenities.CreatePlayerInstance();
                 player
@@ -150,9 +151,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
         }
 
         [Fact]
-        private void GetMaximumDuration_TwoPlayersOnePassiveRainSkill_ExpectedValue()
+        private async Task GetMaximumDuration_TwoPlayersOnePassiveRainSkill_ExpectedValue()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            await _testAmenities.UsingCleanMapAndObjects(async () =>
             {
                 var player = _testAmenities.CreatePlayerInstance();
                 player

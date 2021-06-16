@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 using Macerus.Game.Api.Scenes;
 using Macerus.Plugins.Features.Gui.Api.SceneTransitions;
@@ -16,6 +17,7 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
         private readonly ISceneManager _sceneManager;
         private readonly ILoadingScreenController _loadingScreenController;
         private readonly ITransitionController _transitionController;
+        private readonly Lazy<INewGameWorkflow> _lazyNewGameWorkflow;
         private readonly Lazy<IMainMenuController> _lazyMainMenuController;
 
         public NewGameController(
@@ -23,12 +25,14 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             ISceneManager sceneManager,
             ILoadingScreenController loadingScreenController,
             ITransitionController transitionController,
+            Lazy<INewGameWorkflow> lazyNewGameWorkflow,
             Lazy<IMainMenuController> lazyMainMenuController)
         {
             _newGameViewModel = newGameViewModel;
             _sceneManager = sceneManager;
             _loadingScreenController = loadingScreenController;
             _transitionController = transitionController;
+            _lazyNewGameWorkflow = lazyNewGameWorkflow;
             _lazyMainMenuController = lazyMainMenuController;
             _newGameViewModel.RequestNewGame += NewGameViewModel_RequestNewGame;
             _newGameViewModel.RequestGoBack += NewGameViewModel_RequestGoBack;
@@ -57,15 +61,34 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             EventArgs e)
         {
             ISceneCompletion sceneCompletion = null;
+            Task createNewGameTask = null;
             _loadingScreenController.BeginLoad(
                 () =>
                 {
                     CloseScreen();
-                    _sceneManager.BeginNavigateToScene(
-                        new StringIdentifier("Explore"),
-                        sc => sceneCompletion = sc);
+                    createNewGameTask = Task
+                        .Run(async () => await _lazyNewGameWorkflow.Value.RunAsync())
+                        .ContinueWith(t =>
+                        {
+                            _sceneManager.BeginNavigateToScene(
+                                new StringIdentifier("Explore"),
+                                sc => sceneCompletion = sc);
+                        }, TaskContinuationOptions.OnlyOnRanToCompletion);
                 },
-                () => sceneCompletion != null ? 1 : 0,
+                () =>
+                {
+                    if (createNewGameTask.Status == TaskStatus.Faulted)
+                    {
+                        throw new InvalidOperationException(
+                            $"Loading task failed. See inner exception.",
+                            createNewGameTask.Exception);
+                    }
+
+                    var progress = (sceneCompletion != null && createNewGameTask.Status == TaskStatus.RanToCompletion)
+                        ? 1
+                        : 0;
+                    return progress;
+                },
                 () => sceneCompletion.SwitchoverScenes());
         }
 

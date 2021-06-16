@@ -24,6 +24,10 @@ namespace Macerus.Plugins.Features.Mapping.Default.Autofac
                .RegisterType<MapGameObjectRepository>()
                .AsImplementedInterfaces()
                .SingleInstance();
+            builder
+               .RegisterType<MapStateRepository>()
+               .AsImplementedInterfaces()
+               .SingleInstance();
         }
     }
 }

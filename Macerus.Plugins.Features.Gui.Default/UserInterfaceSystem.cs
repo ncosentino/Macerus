@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.Gui.Api;
@@ -24,23 +25,24 @@ namespace Macerus.Plugins.Features.Gui.Default
             _lastUpdateLookup = _updaters.ToDictionary(x => x, x => DateTime.MinValue);
         }
 
-
         public int? Priority => null;
 
-        public void Update(
+        public async Task UpdateAsync(
             ISystemUpdateContext systemUpdateContext,
             IEnumerable<IGameObject> gameObjects)
         {
             // we're going to use wall-clock time
             var now = DateTime.UtcNow;
 
-            Parallel.ForEach(
-                _updaters.Where(x => now >= _lastUpdateLookup[x].AddSeconds(x.UpdateIntervalInSeconds)),
-                async (x) =>
-                {
-                    await x.UpdateAsync(systemUpdateContext);
-                    _lastUpdateLookup[x] = DateTime.UtcNow;
-                });
+            var updaters = _updaters
+                .Where(x => now >= _lastUpdateLookup[x].AddSeconds(x.UpdateIntervalInSeconds))
+                .ToArray();
+
+            foreach (var updater in updaters)
+            {
+                await updater.UpdateAsync(systemUpdateContext);
+                _lastUpdateLookup[updater] = DateTime.UtcNow;
+            }
         }
     }
 }

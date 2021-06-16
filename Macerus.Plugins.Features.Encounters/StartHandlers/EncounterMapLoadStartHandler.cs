@@ -1,9 +1,10 @@
-﻿
+﻿using System.Threading.Tasks;
+
 using Macerus.Api.Behaviors.Filtering;
 
+using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.Filtering.Api;
-using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 
 namespace Macerus.Plugins.Features.Encounters
@@ -23,7 +24,7 @@ namespace Macerus.Plugins.Features.Encounters
 
         public int Priority => 10000;
 
-        public void Handle(
+        public async Task HandleAsync(
             IGameObject encounter,
             IFilterContext filterContext)
         {
@@ -35,7 +36,9 @@ namespace Macerus.Plugins.Features.Encounters
             var mapContext = _filterContextAmenity.CopyWithAdditionalAttributes(
                 filterContext,
                 encounterMapFilterBehavior.ProvidedAttributes);
-            _mapManager.SwitchMap(mapContext);
+            await _mapManager
+                .SwitchMapAsync(mapContext)
+                .ConfigureAwait(false);
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using ProjectXyz.Plugins.Features.Filtering.Api;
+﻿using System.Threading.Tasks;
+
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 
 namespace Macerus.Plugins.Features.Encounters
 {
@@ -16,14 +18,16 @@ namespace Macerus.Plugins.Features.Encounters
             _startEncounterHandlerFacade = startEncounterHandlerFacade;
         }
 
-        public void StartEncounter(
+        public async Task StartEncounterAsync(
             IFilterContext filterContext,
             IIdentifier encounterDefinitioId)
         {
             var encounter = _encounterRepository.GetEncounterById(encounterDefinitioId);
-            _startEncounterHandlerFacade.Handle(
-                encounter,
-                filterContext);
+            await _startEncounterHandlerFacade
+                .HandleAsync(
+                    encounter,
+                    filterContext)
+                .ConfigureAwait(false);
         }
     }
 }

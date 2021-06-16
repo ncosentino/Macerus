@@ -25,6 +25,7 @@ using ProjectXyz.Shared.Framework;
 
 using Xunit;
 using Xunit.Sdk;
+using System.Threading.Tasks;
 
 namespace Macerus.Tests.Plugins.Features.GameObjects.Items
 {
@@ -147,9 +148,9 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
         }
 
         [Fact]
-        public void GenerateLoot_PlayerStatsRequiredPlayerPresentStatsMet_ExpectedDropTable()
+        public async Task GenerateLoot_PlayerStatsRequiredPlayerPresentStatsMet_ExpectedDropTable()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
+            await _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
             {
                 player
                     .GetOnly<IHasMutableStatsBehavior>()
@@ -173,9 +174,9 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
         }
 
         [Fact]
-        public void GenerateLoot_PlayerStatsRequiredPlayerPresentStatsNotMet_ThrowsNoValidTable()
+        public async Task GenerateLoot_PlayerStatsRequiredPlayerPresentStatsNotMet_ThrowsNoValidTable()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(player =>
+            await _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
             {
                 player
                     .GetOnly<IHasMutableStatsBehavior>()

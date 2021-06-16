@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Macerus.Game.Api;
 
@@ -29,7 +30,7 @@ namespace Macerus.Game
 
         public int? Priority { get; } = int.MinValue;
 
-        public void Update(
+        public async Task UpdateAsync(
             ISystemUpdateContext systemUpdateContext,
             IEnumerable<IGameObject> gameObjects)
         {

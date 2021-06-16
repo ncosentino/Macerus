@@ -32,10 +32,10 @@ namespace Macerus.Tests.Plugins.Features.Mapping
         [Fact]
         private void LoadForMap_TestEncounterMap_WallHasExpectedBehaviors()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            _testAmenities.UsingCleanMapAndObjects(async () =>
             {
-                var gameObjects = _mapGameObjectRepository
-                    .LoadForMap(new StringIdentifier("test_encounter_map"))
+                var gameObjects = (await _mapGameObjectRepository
+                    .LoadForMapAsync(new StringIdentifier("test_encounter_map")))
                     .ToArray();
 
                 Assert.Equal(OBJ_COUNT_ON_TESTENCOUNTERMAP, gameObjects.Length);
@@ -133,10 +133,10 @@ namespace Macerus.Tests.Plugins.Features.Mapping
         [Fact]
         private void LoadForMap_TestEncounterMap_ContainerHasExpectedBehaviors()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            _testAmenities.UsingCleanMapAndObjects(async () =>
             {
-                var gameObjects = _mapGameObjectRepository
-                    .LoadForMap(new StringIdentifier("test_encounter_map"))
+                var gameObjects = (await _mapGameObjectRepository
+                    .LoadForMapAsync(new StringIdentifier("test_encounter_map")))
                     .ToArray();
 
                 Assert.Equal(OBJ_COUNT_ON_TESTENCOUNTERMAP, gameObjects.Length);
@@ -276,10 +276,10 @@ namespace Macerus.Tests.Plugins.Features.Mapping
         [Fact]
         private void LoadForMap_TestEncounterMap_TriggerOnCombatEndDoorExpectedBehaviors()
         {
-            _testAmenities.UsingCleanMapAndObjects(() =>
+            _testAmenities.UsingCleanMapAndObjects(async () =>
             {
-                var gameObjects = _mapGameObjectRepository
-                    .LoadForMap(new StringIdentifier("test_encounter_map"))
+                var gameObjects = (await _mapGameObjectRepository
+                    .LoadForMapAsync(new StringIdentifier("test_encounter_map")))
                     .ToArray();
 
                 Assert.Equal(OBJ_COUNT_ON_TESTENCOUNTERMAP, gameObjects.Length);

@@ -14,6 +14,7 @@ using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.TurnBased.Api;
+using System.Threading.Tasks;
 
 namespace Macerus.Plugins.Features.Combat.Default
 {
@@ -49,7 +50,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             _combatTurnManager.CombatStarted += CombatTurnManager_CombatStarted;
         }
 
-        public void Update(
+        public async Task UpdateAsync(
             ISystemUpdateContext systemUpdateContext,
             IEnumerable<IGameObject> gameObjects)
         {

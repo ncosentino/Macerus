@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
@@ -39,7 +40,7 @@ namespace Macerus.Plugins.Features.Encounters
 
         public int Priority => 20000;
 
-        public void Handle(
+        public async Task HandleAsync(
             IGameObject encounter,
             IFilterContext filterContext)
         {

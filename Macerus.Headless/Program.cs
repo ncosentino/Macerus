@@ -1,8 +1,12 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Text;
+using System.Threading.Tasks;
+
 using Autofac;
 
 using Macerus.Api.Behaviors;
@@ -10,44 +14,42 @@ using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
+using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Interactions.Api;
 using Macerus.Plugins.Features.Inventory.Api;
+using Macerus.Plugins.Features.StatusBar.Api;
+using Macerus.Shared.Behaviors;
 
-using ProjectXyz.Api.GameObjects.Behaviors;
+using ProjectXyz.Api.Data.Serialization;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
+using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Game.Interface.Engine;
+using ProjectXyz.Plugins.Features.Behaviors.Default;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Plugins.Features.TurnBased.Api;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Api.Data.Serialization;
-using System.Text;
-using System.IO;
-using ProjectXyz.Plugins.Features.Behaviors.Default;
-using Macerus.Shared.Behaviors;
-using Macerus.Plugins.Features.GameObjects.Actors;
-using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
-using Macerus.Plugins.Features.GameObjects.Actors.Generation;
-using ProjectXyz.Api.GameObjects.Generation;
-using Macerus.Plugins.Features.StatusBar.Api;
 
 namespace Macerus.Headless
 {
     class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var container = new MacerusContainer();
 
-            new SkillCastExercise().Go(container);
+            await new SkillCastExercise().Go(container);
         }
     }
 
@@ -87,29 +89,29 @@ namespace Macerus.Headless
 
     public sealed class SwitchMapExercise
     {
-        public void Go(MacerusContainer container)
+        public async Task Go(MacerusContainer container)
         {
             var mapManager = container.Resolve<IMapManager>();
-            mapManager.SwitchMap(new StringIdentifier("swamp"));
-            mapManager.SwitchMap(new StringIdentifier("swamp"));
+            await mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
+            await mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
         }
     }
 
     public sealed class GameLoopExercise
     {
-        public void Go(MacerusContainer container)
+        public async Task Go(MacerusContainer container)
         {
             var gameEngine = container.Resolve<IGameEngine>();
             while (true)
             {
-                gameEngine.Update();
+                await gameEngine.UpdateAsync();
             }
         }
     }
 
     public sealed class LootCorpseExercise
     {
-        public void Go(MacerusContainer container)
+        public async Task Go(MacerusContainer container)
         {
             var gameEngine = container.Resolve<IGameEngine>();
 
@@ -126,7 +128,7 @@ namespace Macerus.Headless
             var interactionHandler = container.Resolve<IInteractionHandlerFacade>();
 
             var filterContext = filterContextAmenity.CreateNoneFilterContext();
-            encounterManager.StartEncounter(
+            await encounterManager.StartEncounterAsync(
                 filterContext,
                 new StringIdentifier("test-encounter"));
 
@@ -141,19 +143,19 @@ namespace Macerus.Headless
                     x.GetOnly<ITypeIdentifierBehavior>().TypeId.Equals(actorIdentifiers.ActorTypeIdentifier));
 
             // should be no-op
-            interactionHandler.Interact(player, skeleton.GetOnly<CorpseInteractableBehavior>());
+            await interactionHandler.InteractAsync(player, skeleton.GetOnly<CorpseInteractableBehavior>());
 
             skeleton
                 .GetOnly<IHasMutableStatsBehavior>()
                 .MutateStats(stats => stats[combatStatIdentifiers.CurrentLifeStatId] = 0);
             
-            interactionHandler.Interact(player, skeleton.GetOnly<CorpseInteractableBehavior>());
+            await interactionHandler.InteractAsync(player, skeleton.GetOnly<CorpseInteractableBehavior>());
         }
     }
 
     public sealed class CombatExercise
     {
-        public void Go(MacerusContainer container)
+        public async Task Go(MacerusContainer container)
         {
             var gameEngine = container.Resolve<IGameEngine>();
 
@@ -168,10 +170,10 @@ namespace Macerus.Headless
             var logger = container.Resolve<ILogger>();
 
             // FIXME: this is just a hack to spawn the player
-            mapManager.SwitchMap(new StringIdentifier("swamp"));
+            await mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
 
             var filterContext = filterContextAmenity.CreateNoneFilterContext();
-            encounterManager.StartEncounter(
+            await encounterManager.StartEncounterAsync(
                 filterContext,
                 new StringIdentifier("test-encounter"));
 
@@ -187,7 +189,7 @@ namespace Macerus.Headless
 
             while (keepRunning)
             {
-                gameEngine.Update();
+                await gameEngine.UpdateAsync();
                 if (!keepRunning)
                 {
                     break;
@@ -211,7 +213,7 @@ namespace Macerus.Headless
 
     public sealed class SkillCastExercise
     {
-        public void Go(MacerusContainer container)
+        public async Task Go(MacerusContainer container)
         {
             var gameEngine = container.Resolve<IGameEngine>();
 
@@ -234,7 +236,7 @@ namespace Macerus.Headless
             var statusBarController = container.Resolve<IStatusBarController>();
 
             // FIXME: this is just a hack to spawn the player
-            mapManager.SwitchMap(new StringIdentifier("swamp"));
+            await mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
             var context = filterContextAmenity.CreateFilterContextForSingle(
                 filterContextAmenity.CreateRequiredAttribute(
                     gameObjectIdentifiers.FilterContextTypeId,
@@ -251,7 +253,7 @@ namespace Macerus.Headless
             mapGameObjectManager.MarkForAddition(player);
 
             var filterContext = filterContextAmenity.CreateNoneFilterContext();
-            encounterManager.StartEncounter(
+            await encounterManager.StartEncounterAsync(
                 filterContext,
                 new StringIdentifier("test-encounter"));
 
@@ -288,7 +290,7 @@ namespace Macerus.Headless
             var keepRunning = true;
             while (keepRunning)
             {
-                gameEngine.Update();
+                await gameEngine.UpdateAsync();
                 if (!keepRunning)
                 {
                     break;
@@ -335,7 +337,7 @@ namespace Macerus.Headless
 
             public int? Priority => null;
 
-            public void Update(
+            public async Task UpdateAsync(
                 ISystemUpdateContext systemUpdateContext,
                 IEnumerable<IGameObject> gameObjects)
             {

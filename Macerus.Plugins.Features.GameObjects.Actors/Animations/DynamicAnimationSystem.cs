@@ -16,7 +16,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Animations
     {
         public int? Priority => null;
 
-        public void Update(
+        public async Task UpdateAsync(
             ISystemUpdateContext systemUpdateContext,
             IEnumerable<IGameObject> gameObjects)
         {
@@ -25,13 +25,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Animations
                 .Value
                 .Interval;
             var elapsedSeconds = elapsed.Value / 1000;
-
-            Parallel.ForEach(
-                GetDynamicAnimationBehaviors(gameObjects),
-                async dynamicAnimationBehavior =>
-                {
-                    await dynamicAnimationBehavior.UpdateAnimationAsync(elapsedSeconds);
-                });
+            await Task
+               .WhenAll(GetDynamicAnimationBehaviors(gameObjects).Select(b => b.UpdateAnimationAsync(elapsedSeconds)))
+               .ConfigureAwait(false);
         }
 
         private IEnumerable<IDynamicAnimationBehavior> GetDynamicAnimationBehaviors(IEnumerable<IGameObject> gameObjects)

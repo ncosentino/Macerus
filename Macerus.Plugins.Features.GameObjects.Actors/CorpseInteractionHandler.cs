@@ -11,6 +11,7 @@ using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using System.Threading.Tasks;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
@@ -29,7 +30,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
         public Type InteractableType { get; } = typeof(CorpseInteractableBehavior);
 
-        public void Interact(
+        public async Task InteractAsync(
             IGameObject actor,
             IInteractableBehavior behavior)
         {

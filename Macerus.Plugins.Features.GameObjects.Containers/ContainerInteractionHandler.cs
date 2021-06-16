@@ -12,6 +12,7 @@ using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
+using System.Threading.Tasks;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers
 {
@@ -33,7 +34,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
 
         public Type InteractableType { get; } = typeof(ContainerInteractableBehavior);
 
-        public void Interact(
+        public async Task InteractAsync(
             IGameObject actor,
             IInteractableBehavior behavior)
         {

@@ -56,7 +56,7 @@ namespace Macerus.Plugins.Features.Combat.Default
 
         public int? Priority => null;
 
-        public void Update(
+        public async Task UpdateAsync(
             ISystemUpdateContext systemUpdateContext,
             IEnumerable<IGameObject> gameObjects)
         {

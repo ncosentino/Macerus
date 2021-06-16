@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
-using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Api.Data.Serialization;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Collections;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Shared.Framework.Collections;
@@ -34,7 +35,7 @@ namespace Macerus.Plugins.Features.Mapping.Default
             _mapCache = new Cache<IIdentifier, IGameObject>(5);
         }
 
-        public IEnumerable<IGameObject> LoadMaps(IFilterContext filterContext)
+        public async Task<IReadOnlyCollection<IGameObject>> LoadMapsAsync(IFilterContext filterContext)
         {
             var requiredAttributes = filterContext
                 .Attributes
@@ -55,27 +56,28 @@ namespace Macerus.Plugins.Features.Mapping.Default
             IGameObject cached;
             if (_mapCache.TryGetValue(mapId, out cached))
             {
-                yield return cached;
-                yield break;
+                return new[] { cached };
             }
 
             var mapResourcePath = _mapResourceIdConverter.ConvertToMapResourcePath(mapId.ToString());
 
             IGameObject map;
-            using (var mapResourceStream = _resourceLoader.LoadStream(mapResourcePath))
+            using (var mapResourceStream = await _resourceLoader
+                .LoadStreamAsync(mapResourcePath)
+                .ConfigureAwait(false))
             {
                 // FIXME: we need this while we support Tiled in parallel
                 if (mapResourceStream == null)
                 {
                     _mapCache.AddOrUpdate(mapId, null);
-                    yield break;
+                    return new IGameObject[] { };
                 }
 
                 map = _deserializer.Deserialize<IGameObject>(mapResourceStream);
             }
 
             _mapCache.AddOrUpdate(mapId, map);
-            yield return map;
+            return new[] { map };
         }
     }
 }

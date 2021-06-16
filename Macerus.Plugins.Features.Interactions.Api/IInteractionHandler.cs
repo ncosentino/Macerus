@@ -1,10 +1,12 @@
-﻿using ProjectXyz.Api.GameObjects;
+﻿using System.Threading.Tasks;
+
+using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Plugins.Features.Interactions.Api
 {
     public interface IInteractionHandler
     {
-        void Interact(
+        Task InteractAsync(
             IGameObject actor,
             IInteractableBehavior behavior);
     }

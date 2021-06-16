@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
 using Macerus.Api.GameObjects;
@@ -15,50 +16,53 @@ namespace Macerus.Plugins.Features.Mapping.Default
     public sealed class MapGameObjectRepository : IMapGameObjectRepository
     {
         private readonly IGameObjectRepositoryAmenity _gameObjectRepositoryAmenity;
+        private readonly IMapStateRepository _mapStateRepository;
         private readonly ILogger _logger;
         private readonly IMapResourceIdConverter _mapResourceIdConverter;
         private readonly IMapResourceLoader _resourceLoader;
         private readonly IDeserializer _deserializer;
-        private readonly Dictionary<IIdentifier, List<IIdentifier>> _gameObjectIdCache;
 
         public MapGameObjectRepository(
             IGameObjectRepositoryAmenity gameObjectRepositoryAmenity,
+            IMapStateRepository mapStateRepository,
             ILogger logger,
             IMapResourceIdConverter mapResourceIdConverter,
             IMapResourceLoader resourceLoader,
             IDeserializer deserializer)
         {
             _gameObjectRepositoryAmenity = gameObjectRepositoryAmenity;
+            _mapStateRepository = mapStateRepository;
             _logger = logger;
             _mapResourceIdConverter = mapResourceIdConverter;
             _resourceLoader = resourceLoader;
             _deserializer = deserializer;
-            _gameObjectIdCache = new Dictionary<IIdentifier, List<IIdentifier>>();
         }
 
-        public IEnumerable<IGameObject> LoadForMap(IIdentifier mapId)
+        public async Task<IReadOnlyCollection<IGameObject>> LoadForMapAsync(IIdentifier mapId)
         {
-            if (_gameObjectIdCache.TryGetValue(
-                mapId,
-                out var cachedGameObjectIds))
+            if (_mapStateRepository.HasState(mapId))
             {
-                foreach (var gameObjectId in cachedGameObjectIds)
+                var accumulateFromState = new List<IGameObject>();
+                foreach (var gameObjectId in _mapStateRepository.GetState(mapId))
                 {
                     var gameObject = _gameObjectRepositoryAmenity.LoadGameObject(gameObjectId);
-                    yield return gameObject;
+                    accumulateFromState.Add(gameObject);
                 }
 
-                yield break;
+                return accumulateFromState;
             }
 
             var mapResourcePath = _mapResourceIdConverter.ConvertToGameObjectResourcePath(mapId.ToString());
 
             IReadOnlyCollection<IGameObject> gameObjects;
-            using (var mapResourceStream = _resourceLoader.LoadStream(mapResourcePath))
+            using (var mapResourceStream = await _resourceLoader
+                .LoadStreamAsync(mapResourcePath)
+                .ConfigureAwait(false))
             {
                 gameObjects = _deserializer.Deserialize<IReadOnlyCollection<IGameObject>>(mapResourceStream);
             }
 
+            var accumulateFromLoad = new List<IGameObject>();
             foreach (var gameObject in gameObjects)
             {
                 if (gameObject.TryGetFirst<IReadOnlyTemplateIdentifierBehavior>(out var templateIdentifierBehavior) &&
@@ -67,39 +71,14 @@ namespace Macerus.Plugins.Features.Mapping.Default
                     var templatedGameObject = _gameObjectRepositoryAmenity.CreateGameObjectFromTemplate(
                         templateIdentifierBehavior.TemplateId,
                         gameObject.Behaviors);
-                    yield return templatedGameObject;
+                    accumulateFromLoad.Add(templatedGameObject);
                     continue;
                 }
 
-                yield return gameObject;
-            }
-        }
-
-        public void SaveState(
-            IGameObject map,
-            IEnumerable<IGameObject> gameObjects)
-        {
-            if (map.Has<IIgnoreSavingGameObjectStateBehavior>())
-            {
-                return;
+                accumulateFromLoad.Add(gameObject);
             }
 
-            var mapId = map.GetOnly<IIdentifierBehavior>().Id;
-            if (!_gameObjectIdCache.TryGetValue(
-                mapId,
-                out var cachedMapGameObjectes))
-            {
-                cachedMapGameObjectes = new List<IIdentifier>();
-                _gameObjectIdCache[mapId] = cachedMapGameObjectes;
-            }
-
-            cachedMapGameObjectes.Clear();
-            foreach (var gameObject in gameObjects)
-            {
-                var identifierBehavior = gameObject.GetOnly<IIdentifierBehavior>();
-                var id = identifierBehavior.Id;
-                cachedMapGameObjectes.Add(id);
-            }
-        }
+            return accumulateFromLoad;
+        }       
     }
 }

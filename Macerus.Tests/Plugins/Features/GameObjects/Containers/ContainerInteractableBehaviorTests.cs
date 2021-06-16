@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 
 using Macerus.Api.GameObjects;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
@@ -32,7 +33,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Containers
         }
 
         [Fact]
-        public void Interact_ContainerHasDropTableThatTransfers_PlayerGetsItems()
+        public async Task Interact_ContainerHasDropTableThatTransfers_PlayerGetsItems()
         {
             var container = _gameObjectRepositoryAmenity.CreateGameObjectFromTemplate(
                 new StringIdentifier("container/base"),
@@ -48,7 +49,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Containers
                 });
             var player = _testAmenities.CreatePlayerInstance();
 
-            _interactionHandler.Interact(
+            await _interactionHandler.InteractAsync(
                 player,
                 container.GetOnly<IInteractableBehavior>());
 
