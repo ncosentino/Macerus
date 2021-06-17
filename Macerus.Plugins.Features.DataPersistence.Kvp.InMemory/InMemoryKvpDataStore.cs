@@ -14,6 +14,8 @@ namespace Macerus.Plugins.Features.DataPersistence.Kvp.InMemory
             _cache = new Dictionary<IIdentifier, object>();
         }
 
+        public IEnumerable<IIdentifier> GetKeys() => _cache.Keys;
+
         public async Task<object> ReadAsync(IIdentifier identifier)
         {
             if (_cache.TryGetValue(

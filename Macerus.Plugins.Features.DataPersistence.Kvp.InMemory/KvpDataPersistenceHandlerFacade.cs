@@ -10,12 +10,17 @@ namespace Macerus.Plugins.Features.DataPersistence.Kvp.InMemory
     public sealed class KvpDataPersistenceHandlerFacade : IDiscoverableDataPersistenceHandler
     {
         private readonly IReadOnlyCollection<IDiscoverableKvpDataPersistenceWriter> _writers;
+        private readonly IReadOnlyCollection<IDiscoverableKvpDataPersistenceReader> _readers;
 
         public KvpDataPersistenceHandlerFacade(
             IKvpDataPersistenceHandlerLoadOrder loadOrder,
-            IEnumerable<IDiscoverableKvpDataPersistenceWriter> writers)
+            IEnumerable<IDiscoverableKvpDataPersistenceWriter> writers,
+            IEnumerable<IDiscoverableKvpDataPersistenceReader> readers)
         {
             _writers = writers
+                .OrderBy(x => loadOrder.GetOrder(x))
+                .ToArray();
+            _readers = readers
                 .OrderBy(x => loadOrder.GetOrder(x))
                 .ToArray();
         }
@@ -31,6 +36,16 @@ namespace Macerus.Plugins.Features.DataPersistence.Kvp.InMemory
             foreach (var wrapped in _writers)
             {
                 await wrapped.WriteAsync(storeWriter);
+            }
+        }
+
+        public async Task ReadAsync(IDataStore dataStore)
+        {
+            var storeReader = (IKvpDataStoreReader)dataStore;
+
+            foreach (var wrapped in _readers)
+            {
+                await wrapped.ReadAsync(storeReader);
             }
         }
     }

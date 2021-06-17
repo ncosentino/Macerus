@@ -25,9 +25,10 @@ namespace Macerus.Plugins.Features.DataPersistence.Default
             await _dataPersistenceHandlerFacade.WriteAsync(dataStore);
         }
 
-        public async Task LoadAsync()
+        public async Task LoadAsync(IIdentifier id)
         {
-            throw new NotImplementedException();
+            var dataStore = await _dataStoreManager.OpenAsync(id);
+            await _dataPersistenceHandlerFacade.ReadAsync(dataStore);
         }
     }
 }

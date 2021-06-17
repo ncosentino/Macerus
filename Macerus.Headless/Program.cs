@@ -64,6 +64,7 @@ namespace Macerus.Headless
 
             var dataPersistenceManager = container.Resolve<IDataPersistenceManager>();
             await dataPersistenceManager.SaveAsync(new StringIdentifier("my save game"));
+            await dataPersistenceManager.LoadAsync(new StringIdentifier("my save game"));
         }
     }
 

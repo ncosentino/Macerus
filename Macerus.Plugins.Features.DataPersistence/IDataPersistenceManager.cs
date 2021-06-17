@@ -6,7 +6,7 @@ namespace Macerus.Plugins.Features.DataPersistence
 {
     public interface IDataPersistenceManager
     {
-        Task LoadAsync();
+        Task LoadAsync(IIdentifier id);
 
         Task SaveAsync(IIdentifier id);
     }

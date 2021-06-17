@@ -14,6 +14,18 @@ namespace Macerus.Plugins.Features.DataPersistence.Default
             _handlers = handlers.ToArray();
         }
 
+        public async Task ReadAsync(IDataStore dataStore)
+        {
+            var handler = _handlers.FirstOrDefault(x => x.CanRead(dataStore));
+            if (handler == null)
+            {
+                throw new NotSupportedException(
+                    $"There is no handler registered that can support data store '{dataStore}'.");
+            }
+
+            await handler.ReadAsync(dataStore);
+        }
+
         public async Task WriteAsync(IDataStore dataStore)
         {
             var handler = _handlers.FirstOrDefault(x => x.CanWrite(dataStore));

@@ -19,5 +19,10 @@ namespace Macerus.Plugins.Content.DataPersistence.Kvp
             _ordering.TryGetValue(writer.GetType(), out var order)
             ? order
             : int.MaxValue;
+
+        public int GetOrder(IKvpDataPersistenceReader reader) =>
+            _ordering.TryGetValue(reader.GetType(), out var order)
+            ? order
+            : int.MaxValue;
     }
 }

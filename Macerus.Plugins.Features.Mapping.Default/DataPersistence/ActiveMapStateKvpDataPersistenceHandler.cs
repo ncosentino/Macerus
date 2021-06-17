@@ -6,7 +6,9 @@ using ProjectXyz.Plugins.Features.Mapping.Api;
 
 namespace Macerus.Plugins.Features.Mapping.Default.DataPersistence
 {
-    public sealed class ActiveMapStateKvpDataPersistenceHandler : IDiscoverableKvpDataPersistenceWriter
+    public sealed class ActiveMapStateKvpDataPersistenceHandler :
+        IDiscoverableKvpDataPersistenceWriter,
+        IDiscoverableKvpDataPersistenceReader
     {
         private readonly IMapManager _mapManager;
 
@@ -18,6 +20,11 @@ namespace Macerus.Plugins.Features.Mapping.Default.DataPersistence
         public async Task WriteAsync(IKvpDataStoreWriter writer)
         {
             await _mapManager.SaveActiveMapStateAsync();
+        }
+
+        public async Task ReadAsync(IKvpDataStoreReader reader)
+        {
+            _mapManager.UnloadMap();
         }
     }
 }

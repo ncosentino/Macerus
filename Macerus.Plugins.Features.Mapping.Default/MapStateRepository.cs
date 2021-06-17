@@ -2,8 +2,6 @@
 using System.Linq;
 
 using ProjectXyz.Api.Framework;
-using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 
 namespace Macerus.Plugins.Features.Mapping.Default
@@ -18,15 +16,9 @@ namespace Macerus.Plugins.Features.Mapping.Default
         }
 
         public void SaveState(
-           IGameObject map,
-           IEnumerable<IGameObject> gameObjects)
+           IIdentifier mapId,
+           IEnumerable<IIdentifier> gameObjectIds)
         {
-            if (map.Has<IIgnoreSavingGameObjectStateBehavior>())
-            {
-                return;
-            }
-
-            var mapId = map.GetOnly<IIdentifierBehavior>().Id;
             if (!_gameObjectIdCache.TryGetValue(
                 mapId,
                 out var cachedMapGameObjectes))
@@ -36,10 +28,8 @@ namespace Macerus.Plugins.Features.Mapping.Default
             }
 
             cachedMapGameObjectes.Clear();
-            foreach (var gameObject in gameObjects)
+            foreach (var id in gameObjectIds)
             {
-                var identifierBehavior = gameObject.GetOnly<IIdentifierBehavior>();
-                var id = identifierBehavior.Id;
                 cachedMapGameObjectes.Add(id);
             }
         }
