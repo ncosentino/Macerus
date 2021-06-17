@@ -8,7 +8,7 @@ using ProjectXyz.Framework.Autofac;
 
 namespace Macerus.Game.Autofac
 {
-    public class GameObjectModule : SingleRegistrationModule
+    public class GameModule : SingleRegistrationModule
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {

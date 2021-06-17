@@ -185,15 +185,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Ga
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InGameMenu", "InGameMenu", "{25B4FCA6-3D74-4058-9AC2-07C8467CA09F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.InGameMenu.Api", "Macerus.Plugins.Features.InGameMenu.Api\Macerus.Plugins.Features.InGameMenu.Api.csproj", "{8786C7A7-B113-4854-98CE-7560B4336E73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.InGameMenu.Api", "Macerus.Plugins.Features.InGameMenu.Api\Macerus.Plugins.Features.InGameMenu.Api.csproj", "{8786C7A7-B113-4854-98CE-7560B4336E73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.InGameMenu.Default", "Macerus.Plugins.Features.InGameMenu.Default\Macerus.Plugins.Features.InGameMenu.Default.csproj", "{31CF958F-EBFE-4D4E-96A3-7512D4354AF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.InGameMenu.Default", "Macerus.Plugins.Features.InGameMenu.Default\Macerus.Plugins.Features.InGameMenu.Default.csproj", "{31CF958F-EBFE-4D4E-96A3-7512D4354AF5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LoadingScreen", "LoadingScreen", "{8EF4BF20-5AB9-4BDA-BFD1-995CDE4AEA70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.LoadingScreen.Api", "Macerus.Plugins.Features.LoadingScreen.Api\Macerus.Plugins.Features.LoadingScreen.Api.csproj", "{52A897C3-EF70-496F-9AF9-ACD374C175B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.LoadingScreen.Api", "Macerus.Plugins.Features.LoadingScreen.Api\Macerus.Plugins.Features.LoadingScreen.Api.csproj", "{52A897C3-EF70-496F-9AF9-ACD374C175B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.LoadingScreen.Default", "Macerus.Plugins.Features.LoadingScreen.Default\Macerus.Plugins.Features.LoadingScreen.Default.csproj", "{5ECC5D4B-A8FA-4520-AAEE-31F109F8582A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.LoadingScreen.Default", "Macerus.Plugins.Features.LoadingScreen.Default\Macerus.Plugins.Features.LoadingScreen.Default.csproj", "{5ECC5D4B-A8FA-4520-AAEE-31F109F8582A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataPersistence", "DataPersistence", "{4F31D48C-6B7D-42A4-9A29-A6BEAE0E10A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.DataPersistence.Default", "Macerus.Plugins.Features.DataPersistence.Default\Macerus.Plugins.Features.DataPersistence.Default.csproj", "{0774BBCF-CEB3-4962-869B-8EBB2BAA0595}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.DataPersistence", "Macerus.Plugins.Features.DataPersistence\Macerus.Plugins.Features.DataPersistence.csproj", "{5C89A191-7B3E-41C5-9C99-E1E94108DEB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.DataPersistence.Kvp", "Macerus.Plugins.Features.DataPersistence.Kvp\Macerus.Plugins.Features.DataPersistence.Kvp.csproj", "{3FC14841-A60B-474E-BC20-3D4C5B94D721}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.DataPersistence.Kvp.InMemory", "Macerus.Plugins.Features.DataPersistence.Kvp.InMemory\Macerus.Plugins.Features.DataPersistence.Kvp.InMemory.csproj", "{F3D54189-167D-4EB8-B648-38F8D3D7D076}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -457,6 +467,22 @@ Global
 		{5ECC5D4B-A8FA-4520-AAEE-31F109F8582A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5ECC5D4B-A8FA-4520-AAEE-31F109F8582A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5ECC5D4B-A8FA-4520-AAEE-31F109F8582A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0774BBCF-CEB3-4962-869B-8EBB2BAA0595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0774BBCF-CEB3-4962-869B-8EBB2BAA0595}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0774BBCF-CEB3-4962-869B-8EBB2BAA0595}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0774BBCF-CEB3-4962-869B-8EBB2BAA0595}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C89A191-7B3E-41C5-9C99-E1E94108DEB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C89A191-7B3E-41C5-9C99-E1E94108DEB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C89A191-7B3E-41C5-9C99-E1E94108DEB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C89A191-7B3E-41C5-9C99-E1E94108DEB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FC14841-A60B-474E-BC20-3D4C5B94D721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FC14841-A60B-474E-BC20-3D4C5B94D721}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FC14841-A60B-474E-BC20-3D4C5B94D721}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FC14841-A60B-474E-BC20-3D4C5B94D721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3D54189-167D-4EB8-B648-38F8D3D7D076}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3D54189-167D-4EB8-B648-38F8D3D7D076}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3D54189-167D-4EB8-B648-38F8D3D7D076}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3D54189-167D-4EB8-B648-38F8D3D7D076}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -550,6 +576,11 @@ Global
 		{8EF4BF20-5AB9-4BDA-BFD1-995CDE4AEA70} = {33A6C169-52DA-446B-A241-FEC05722752A}
 		{52A897C3-EF70-496F-9AF9-ACD374C175B2} = {8EF4BF20-5AB9-4BDA-BFD1-995CDE4AEA70}
 		{5ECC5D4B-A8FA-4520-AAEE-31F109F8582A} = {8EF4BF20-5AB9-4BDA-BFD1-995CDE4AEA70}
+		{4F31D48C-6B7D-42A4-9A29-A6BEAE0E10A6} = {33A6C169-52DA-446B-A241-FEC05722752A}
+		{0774BBCF-CEB3-4962-869B-8EBB2BAA0595} = {4F31D48C-6B7D-42A4-9A29-A6BEAE0E10A6}
+		{5C89A191-7B3E-41C5-9C99-E1E94108DEB3} = {4F31D48C-6B7D-42A4-9A29-A6BEAE0E10A6}
+		{3FC14841-A60B-474E-BC20-3D4C5B94D721} = {4F31D48C-6B7D-42A4-9A29-A6BEAE0E10A6}
+		{F3D54189-167D-4EB8-B648-38F8D3D7D076} = {4F31D48C-6B7D-42A4-9A29-A6BEAE0E10A6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}

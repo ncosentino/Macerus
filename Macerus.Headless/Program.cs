@@ -12,6 +12,7 @@ using Autofac;
 using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Combat.Api;
+using Macerus.Plugins.Features.DataPersistence;
 using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 using Macerus.Plugins.Features.GameObjects.Actors;
@@ -32,6 +33,7 @@ using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Framework.Autofac;
+using ProjectXyz.Game.Api;
 using ProjectXyz.Game.Interface.Engine;
 using ProjectXyz.Plugins.Features.Behaviors.Default;
 using ProjectXyz.Plugins.Features.Combat.Api;
@@ -49,7 +51,19 @@ namespace Macerus.Headless
         {
             var container = new MacerusContainer();
 
-            await new SkillCastExercise().Go(container);
+            await new DataPersistenceExercise().Go(container);
+        }
+    }
+
+    public sealed class DataPersistenceExercise
+    {
+        public async Task Go(MacerusContainer container)
+        {
+            var mapManager = container.Resolve<IMapManager>();
+            await mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
+
+            var dataPersistenceManager = container.Resolve<IDataPersistenceManager>();
+            await dataPersistenceManager.SaveAsync(new StringIdentifier("my save game"));
         }
     }
 

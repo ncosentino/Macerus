@@ -46,6 +46,11 @@ namespace Macerus.Plugins.Features.Mapping.Default
 
         public bool HasState(IIdentifier mapId) => _gameObjectIdCache.ContainsKey(mapId);
 
+        public IEnumerable<KeyValuePair<IIdentifier, IReadOnlyCollection<IIdentifier>>> GetAllState() => _gameObjectIdCache
+            .Select(x => new KeyValuePair<IIdentifier, IReadOnlyCollection<IIdentifier>>(
+                x.Key,
+                x.Value));
+
         public IEnumerable<IIdentifier> GetState(IIdentifier mapId) =>
             _gameObjectIdCache.TryGetValue(
                 mapId,

@@ -39,6 +39,10 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.CharacterSheet.Default\Macerus.Plugins.Features.CharacterSheet.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Api\Macerus.Plugins.Features.Combat.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Default\Macerus.Plugins.Features.Combat.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.DataPersistence.Default\Macerus.Plugins.Features.DataPersistence.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.DataPersistence.Kvp.InMemory\Macerus.Plugins.Features.DataPersistence.Kvp.InMemory.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.DataPersistence.Kvp\Macerus.Plugins.Features.DataPersistence.Kvp.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.DataPersistence\Macerus.Plugins.Features.DataPersistence.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Encounters\Macerus.Plugins.Features.Encounters.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Api\Macerus.Plugins.Features.GameObjects.Actors.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Generation\Macerus.Plugins.Features.GameObjects.Actors.Generation.csproj" />
