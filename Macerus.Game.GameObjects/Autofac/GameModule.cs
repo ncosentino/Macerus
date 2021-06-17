@@ -2,6 +2,7 @@
 
 using Autofac;
 
+using Macerus.Game.Api;
 using Macerus.Game.Api.Scenes;
 
 using ProjectXyz.Framework.Autofac;
@@ -31,6 +32,16 @@ namespace Macerus.Game.Autofac
             builder
                 .RegisterType<UpdateFrequencyManager>()
                 .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<NoneSceneManager>()
+                .AsImplementedInterfaces()
+                .IfNotRegistered(typeof(ISceneManager))
+                .SingleInstance();
+            builder
+                .RegisterType<NoneApplication>()
+                .AsImplementedInterfaces()
+                .IfNotRegistered(typeof(IApplication))
                 .SingleInstance();
             builder
                 .RegisterBuildCallback(c =>
