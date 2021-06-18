@@ -2,13 +2,15 @@
 
 using Macerus.Plugins.Features.Gui.Api;
 
-using ProjectXyz.Api.Framework;
-
 namespace Macerus.Plugins.Features.InGameMenu.Api
 {
     public interface IInGameMenuViewModel : IWindowViewModel
     {
         event EventHandler<EventArgs> RequestGoToMainMenu;
+
+        event EventHandler<EventArgs> RequestSaveGame;
+
+        event EventHandler<EventArgs> RequestLoadGame;
 
         event EventHandler<EventArgs> RequestOptions;
 
@@ -23,5 +25,9 @@ namespace Macerus.Plugins.Features.InGameMenu.Api
         void CloseMenu();
 
         void ExitGame();
+
+        void SaveGame();
+
+        void LoadGame();
     }
 }

@@ -20,6 +20,8 @@ namespace Macerus.Plugins.Features.MainMenu.Default
 
         public event EventHandler<EventArgs> RequestNewGame;
 
+        public event EventHandler<EventArgs> RequestLoadGame;
+
         public event EventHandler<EventArgs> RequestOptions;
 
         public event EventHandler<EventArgs> RequestExit;
@@ -54,6 +56,8 @@ namespace Macerus.Plugins.Features.MainMenu.Default
         public void Open() => IsOpen = true;
 
         public void StartNewGame() => RequestNewGame?.Invoke(this, EventArgs.Empty);
+
+        public void LoadGame() => RequestLoadGame?.Invoke(this, EventArgs.Empty);
 
         public void NavigateOptions() => RequestOptions?.Invoke(this, EventArgs.Empty);
 

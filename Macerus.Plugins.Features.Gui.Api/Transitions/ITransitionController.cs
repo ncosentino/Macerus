@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Macerus.Plugins.Features.Gui.Api.SceneTransitions
 {
@@ -9,7 +10,7 @@ namespace Macerus.Plugins.Features.Gui.Api.SceneTransitions
         void StartTransition(
             TimeSpan transitionOutDuration,
             TimeSpan transitionInDuration,
-            Action transitionedOutCallback,
-            Action transitionedInCallback);
+            Func<Task> transitionedOutCallbackAsync,
+            Func<Task> transitionedInCallbackAsync);
     }
 }

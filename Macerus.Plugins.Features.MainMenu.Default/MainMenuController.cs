@@ -61,12 +61,12 @@ namespace Macerus.Plugins.Features.MainMenu.Default
             _transitionController.StartTransition(
                 TimeSpan.FromSeconds(0.3),
                 TimeSpan.FromSeconds(0.3),
-                () =>
+                async () =>
                 {
                     _lazyNewGameController.Value.ShowScreen();
                     _mainMenuViewModel.Close();
                 },
-                () => { });
+                async () => { });
         }
 
         private void MainMenuViewModel_RequestExit(

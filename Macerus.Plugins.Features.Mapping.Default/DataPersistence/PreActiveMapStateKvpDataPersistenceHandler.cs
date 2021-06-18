@@ -6,13 +6,13 @@ using ProjectXyz.Plugins.Features.Mapping.Api;
 
 namespace Macerus.Plugins.Features.Mapping.Default.DataPersistence
 {
-    public sealed class ActiveMapStateKvpDataPersistenceHandler :
+    public sealed class PreActiveMapStateKvpDataPersistenceHandler :
         IDiscoverableKvpDataPersistenceWriter,
         IDiscoverableKvpDataPersistenceReader
     {
         private readonly IMapManager _mapManager;
 
-        public ActiveMapStateKvpDataPersistenceHandler(IMapManager mapManager)
+        public PreActiveMapStateKvpDataPersistenceHandler(IMapManager mapManager)
         {
             _mapManager = mapManager;
         }

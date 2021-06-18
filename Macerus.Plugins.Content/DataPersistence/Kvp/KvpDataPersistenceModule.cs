@@ -18,7 +18,8 @@ namespace Macerus.Plugins.Content.DataPersistence.Kvp
                 {
                     var loadOrder = new KvpDataPersistenceHandlerLoadOrder(new Dictionary<Type, int>()
                     {
-                        [typeof(ActiveMapStateKvpDataPersistenceHandler)] = int.MinValue,
+                        [typeof(PreActiveMapStateKvpDataPersistenceHandler)] = int.MinValue,
+                        [typeof(PostActiveMapStateKvpDataPersistenceHandler)] = int.MaxValue,
                     });
                     return loadOrder;
                 })

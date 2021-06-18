@@ -39,16 +39,12 @@ namespace Macerus.Game.DataPersistence.Kvp
                        return null;
                    }
 
-                   return new
-                   {
-                       Key = x,
-                       ObjectId = new StringIdentifier(strId.Identifier.Substring("ObjectState/".Length)),
-                   };
+                   return x;
                })
                .Where(x => x != null);
             foreach (var objectStateKey in objectStateKeys)
             {
-                var obj = (IGameObject)await reader.ReadAsync(objectStateKey.ObjectId);
+                var obj = (IGameObject)await reader.ReadAsync(objectStateKey);
                 _gameObjectRepository.Save(obj);
             }
         }

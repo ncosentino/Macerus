@@ -13,7 +13,11 @@ namespace Macerus.Plugins.Features.Mapping.Default.DataPersistence.Autofac
                .AsImplementedInterfaces()
                .SingleInstance();
             builder
-               .RegisterType<ActiveMapStateKvpDataPersistenceHandler>()
+               .RegisterType<PreActiveMapStateKvpDataPersistenceHandler>()
+               .AsImplementedInterfaces()
+               .SingleInstance();
+            builder
+               .RegisterType<PostActiveMapStateKvpDataPersistenceHandler>()
                .AsImplementedInterfaces()
                .SingleInstance();
         }

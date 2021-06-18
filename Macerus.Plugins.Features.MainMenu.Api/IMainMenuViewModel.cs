@@ -10,6 +10,8 @@ namespace Macerus.Plugins.Features.MainMenu.Api
     {
         event EventHandler<EventArgs> RequestNewGame;
 
+        event EventHandler<EventArgs> RequestLoadGame;
+
         event EventHandler<EventArgs> RequestOptions;
 
         event EventHandler<EventArgs> RequestExit;
@@ -17,6 +19,8 @@ namespace Macerus.Plugins.Features.MainMenu.Api
         IIdentifier BackgroundImageResourceId { get; }
 
         void StartNewGame();
+
+        void LoadGame();
 
         void NavigateOptions();
 

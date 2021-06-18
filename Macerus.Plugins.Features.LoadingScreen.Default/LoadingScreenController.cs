@@ -37,9 +37,9 @@ namespace Macerus.Plugins.Features.LoadingScreen.Default
         private readonly ITransitionController _sceneTransitionController;
 
         private LoadState _loadState;
-        private Action _startWorkCallback;
-        private Func<double> _checkWorkProgressCallback;
-        private Action _doWhenDoneCallback;
+        private Func<Task> _startWorkCallbackAsync;
+        private Func<Task<double>> _checkWorkProgressCallbackAsync;
+        private Func<Task> _doWhenDoneCallbackAsync;
 
         public LoadingScreenController(
             ILoadingScreenViewModel loadingScreenViewModel,
@@ -58,17 +58,17 @@ namespace Macerus.Plugins.Features.LoadingScreen.Default
             : 10;
 
         public void BeginLoad(
-            Action startWorkCallback,
-            Func<double> checkWorkProgressCallback,
-            Action doWhenDoneCallback)
+            Func<Task> startWorkCallbackAsync,
+            Func<Task<double>> checkWorkProgressCallbackAsync,
+            Func<Task> doWhenDoneCallbackAsync)
         {
             Contract.Requires(
                 !IsLoading,
                 "The controller is already performing a loading operation.");
 
-            _startWorkCallback = startWorkCallback;
-            _checkWorkProgressCallback = checkWorkProgressCallback;
-            _doWhenDoneCallback = doWhenDoneCallback;
+            _startWorkCallbackAsync = startWorkCallbackAsync;
+            _checkWorkProgressCallbackAsync = checkWorkProgressCallbackAsync;
+            _doWhenDoneCallbackAsync = doWhenDoneCallbackAsync;
             _loadState = LoadState.Start;
         }
 
@@ -86,26 +86,26 @@ namespace Macerus.Plugins.Features.LoadingScreen.Default
                 _sceneTransitionController.StartTransition(
                     TimeSpan.FromSeconds(INTERMEDIATE_TRANSITION_DURATION_OUT_SEC),
                     TimeSpan.FromSeconds(INTERMEDIATE_TRANSITION_DURATION_IN_SEC),
-                    () => _sceneManager.BeginNavigateToScene(
+                    async () => _sceneManager.BeginNavigateToScene(
                         new StringIdentifier("LoadingScreen"),
                         sc =>
                         {
                             _loadState = LoadState.StartWork;
                             sc.SwitchoverScenes();
                         }),
-                    () => { });
+                    async () => { });
                 _loadState = LoadState.Starting;
             }
 
             if (_loadState == LoadState.StartWork)
             {
-                _startWorkCallback.Invoke();
+                await _startWorkCallbackAsync.Invoke();
                 _loadState = LoadState.WaitForWork;
             }
 
             if (_loadState == LoadState.WaitForWork)
             {
-                var progress = _checkWorkProgressCallback.Invoke();
+                var progress = await _checkWorkProgressCallbackAsync.Invoke();
                 progress = Math.Min(1, Math.Max(0, progress));
 
                 // FIXME: update view model
@@ -121,8 +121,8 @@ namespace Macerus.Plugins.Features.LoadingScreen.Default
                 _sceneTransitionController.StartTransition(
                     TimeSpan.FromSeconds(INTERMEDIATE_TRANSITION_DURATION_OUT_SEC),
                     TimeSpan.FromSeconds(FINAL_TRANSITION_DURATION_IN_SEC),
-                    () => _doWhenDoneCallback?.Invoke(),
-                    () => _loadState = LoadState.None);
+                    async () => await (_doWhenDoneCallbackAsync?.Invoke() ?? Task.CompletedTask),
+                    async () => _loadState = LoadState.None);
                 _loadState = LoadState.Completing;
             }
         }

@@ -63,9 +63,13 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             ISceneCompletion sceneCompletion = null;
             Task createNewGameTask = null;
             _loadingScreenController.BeginLoad(
-                () =>
+                async () =>
                 {
                     CloseScreen();
+
+                    // FIXME: what is this clusterf*ck with async call backs
+                    // and starting up a new task all about? we must be able to
+                    // simplify this nonsense
                     createNewGameTask = Task
                         .Run(async () => await _lazyNewGameWorkflow.Value.RunAsync())
                         .ContinueWith(t =>
@@ -75,7 +79,7 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
                                 sc => sceneCompletion = sc);
                         }, TaskContinuationOptions.OnlyOnRanToCompletion);
                 },
-                () =>
+                async () =>
                 {
                     if (createNewGameTask.Status == TaskStatus.Faulted)
                     {
@@ -89,7 +93,7 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
                         : 0;
                     return progress;
                 },
-                () => sceneCompletion.SwitchoverScenes());
+                async () => sceneCompletion.SwitchoverScenes());
         }
 
         private void NewGameViewModel_RequestGoBack(
@@ -99,12 +103,12 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             _transitionController.StartTransition(
                 TimeSpan.FromSeconds(0.3),
                 TimeSpan.FromSeconds(0.3),
-                () =>
+                async () =>
                 {
                     _lazyMainMenuController.Value.OpenMenu();
                     _newGameViewModel.Close();
                 },
-                () => { });
+                async () => { });
         }
     }
 }

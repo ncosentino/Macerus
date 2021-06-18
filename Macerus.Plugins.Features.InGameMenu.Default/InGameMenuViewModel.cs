@@ -23,6 +23,10 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
 
         public event EventHandler<EventArgs> RequestClose;
 
+        public event EventHandler<EventArgs> RequestSaveGame;
+
+        public event EventHandler<EventArgs> RequestLoadGame;
+
         public bool IsOpen
         {
             get { return _isOpen; }
@@ -56,5 +60,9 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
         public void ExitGame() => RequestExit?.Invoke(this, EventArgs.Empty);
 
         public void CloseMenu() => RequestClose?.Invoke(this, EventArgs.Empty);
+
+        public void SaveGame() => RequestSaveGame?.Invoke(this, EventArgs.Empty);
+
+        public void LoadGame() => RequestLoadGame?.Invoke(this, EventArgs.Empty);
     }
 }

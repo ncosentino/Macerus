@@ -52,13 +52,13 @@ namespace Macerus.Plugins.Features.Gui.Default.SceneTransitions
             {
                 if (_transitionPackage.TransitionOut)
                 {
-                    _transitionPackage.TransitionedOutCallback?.Invoke();
+                    await (_transitionPackage.TransitionedOutCallbackAsync?.Invoke() ?? Task.CompletedTask);
                     _transitionPackage.TransitionOut = false;
                     _transitionPackage.ElapsedPhaseTime = TimeSpan.FromSeconds(0);
                 }
                 else
                 {
-                    _transitionPackage.TransitionedInCallback?.Invoke();
+                    await (_transitionPackage.TransitionedInCallbackAsync?.Invoke() ?? Task.CompletedTask);
                     _transitionPackage = null;
                 }
 
@@ -76,8 +76,8 @@ namespace Macerus.Plugins.Features.Gui.Default.SceneTransitions
         public void StartTransition(
             TimeSpan transitionOutDuration,
             TimeSpan transitionInDuration,
-            Action transitionedOutCallback,
-            Action transitionedInCallback)
+            Func<Task> transitionedOutCallbackAsync,
+            Func<Task> transitionedInCallbackAsync)
         {
             _lastUpdate = DateTime.UtcNow;
             _transitionPackage = new TransitionPackage()
@@ -85,8 +85,8 @@ namespace Macerus.Plugins.Features.Gui.Default.SceneTransitions
                 TransitionOutDuration = transitionOutDuration,
                 TransitionInDuration = transitionInDuration,
                 ElapsedPhaseTime = TimeSpan.FromSeconds(0),
-                TransitionedInCallback = transitionedInCallback,
-                TransitionedOutCallback = transitionedOutCallback,
+                TransitionedInCallbackAsync = transitionedInCallbackAsync,
+                TransitionedOutCallbackAsync = transitionedOutCallbackAsync,
                 TransitionOut = true,
             };
         }
@@ -101,9 +101,9 @@ namespace Macerus.Plugins.Features.Gui.Default.SceneTransitions
 
             public TimeSpan ElapsedPhaseTime { get; set; }
 
-            public Action TransitionedOutCallback { get; set; }
+            public Func<Task> TransitionedOutCallbackAsync { get; set; }
             
-            public Action TransitionedInCallback { get; set; }
+            public Func<Task> TransitionedInCallbackAsync { get; set; }
         }
     }
 }
