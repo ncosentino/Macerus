@@ -56,7 +56,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 .GameObjects
                 .Where(x => x.Get<ITypeIdentifierBehavior>().Any(y => y.TypeId.Equals(new StringIdentifier("actor"))))
                 .Where(x => targetCombatTeam
-                    .AffectedTeams
+                    .AffectedTeamIds
                     .Contains(new IntIdentifier((int)x
                         .GetOnly<IHasMutableStatsBehavior>()
                         .BaseStats[_combatTeamIdentifiers.CombatTeamStatDefinitionId])))
@@ -93,7 +93,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 .ToArray();
 
             return Tuple.Create(
-                (targetCombatTeam.AffectedTeams.Single() as IntIdentifier).Identifier,
+                (targetCombatTeam.AffectedTeamIds.Single() as IntIdentifier).Identifier,
                 affectedPositions.Select(x => new Vector2(x.Item1, x.Item2)));
         }
 
