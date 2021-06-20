@@ -7,6 +7,7 @@ using Macerus.Plugins.Features.DataPersistence.Kvp;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Game.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Filtering;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Game.DataPersistence.Kvp
@@ -51,7 +52,7 @@ namespace Macerus.Game.DataPersistence.Kvp
 
         public async Task WriteAsync(IKvpDataStoreWriter writer)
         {
-            foreach (var obj in _gameObjectRepository.LoadAll())
+            foreach (var obj in _gameObjectRepository.Load(new[] { new PredicateFilter(_ => true) }))
             {
                 await writer.WriteAsync(
                     new StringIdentifier($"ObjectState/{obj.GetOnly<IReadOnlyIdentifierBehavior>().Id}"),

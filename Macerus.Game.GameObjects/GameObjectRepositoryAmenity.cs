@@ -8,13 +8,14 @@ using Macerus.Shared.Behaviors;
 
 using NexusLabs.Contracts;
 
-using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Game.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Filtering;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Game
@@ -48,12 +49,8 @@ namespace Macerus.Game
 
         public IGameObject LoadGameObject(IIdentifier id)
         {
-            var filterContext = _filterContextFactory.CreateFilterContextForSingle();
-            filterContext = _filterContextAmenity.ExtendWithGameObjectIdFilter(
-                 filterContext,
-                 id);
             var gameObjects = _gameObjectRepository
-                .Load(filterContext)
+                .Load(new[] { new AnyIdFilter(id) })
                 .ToArray();
             Contract.Requires(
                 gameObjects.Length == 1,

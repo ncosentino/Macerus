@@ -18,10 +18,6 @@ namespace Macerus.Game.Autofac
                .AsImplementedInterfaces()
                .SingleInstance();
             builder
-                .RegisterType<GameObjectRepository>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
                 .RegisterType<CombatEndTemplateSpawnerSystem>()
                 .AsImplementedInterfaces()
                 .SingleInstance();

@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors.Filtering;
-using Macerus.Game;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 using Macerus.Plugins.Features.Mapping.Default;
 
@@ -13,6 +12,7 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Game.Api;
+using ProjectXyz.Game.Core;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
 using ProjectXyz.Shared.Framework;
