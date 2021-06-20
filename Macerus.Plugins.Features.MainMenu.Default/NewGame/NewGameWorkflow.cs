@@ -11,6 +11,7 @@ using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Game.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.PartyManagement;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
@@ -24,6 +25,7 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
         private readonly Lazy<IMacerusActorIdentifiers> _lazyMacerusActorIdentifiers;
         private readonly Lazy<IActorGeneratorFacade> _lazyActorGeneratorFacade;
         private readonly Lazy<IMapManager> _lazyMapManager;
+        private readonly Lazy<IRosterManager> _lazyRosterManager;
 
         public NewGameWorkflow(
             Lazy<IMapStateRepository> lazyMapStateRepository,
@@ -32,7 +34,8 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             Lazy<IGameObjectIdentifiers> lazyGameObjectIdentifiers,
             Lazy<IMacerusActorIdentifiers> lazyMacerusActorIdentifiers,
             Lazy<IActorGeneratorFacade> lazyActorGeneratorFacade,
-            Lazy<IMapManager> lazyMapManager)
+            Lazy<IMapManager> lazyMapManager,
+            Lazy<IRosterManager> lazyRosterManager)
         {
             _lazyMapStateRepository = lazyMapStateRepository;
             _lazyGameObjectRepository = lazyGameObjectRepository;
@@ -41,16 +44,20 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             _lazyMacerusActorIdentifiers = lazyMacerusActorIdentifiers;
             _lazyActorGeneratorFacade = lazyActorGeneratorFacade;
             _lazyMapManager = lazyMapManager;
+            _lazyRosterManager = lazyRosterManager;
         }
 
         public async Task RunAsync()
         {
             _lazyGameObjectRepository.Value.Clear();
             _lazyMapStateRepository.Value.ClearState();
+            _lazyRosterManager.Value.ClearRoster();
 
             var player = CreatePlayerInstance();
             player.GetOnly<IPositionBehavior>().SetPosition(40, -16);
             _lazyGameObjectRepository.Value.Save(player);
+            _lazyRosterManager.Value.AddToRoster(player);
+            player.GetOnly<IRosterBehavior>().IsPartyLeader = true;
 
             await _lazyMapManager
                 .Value

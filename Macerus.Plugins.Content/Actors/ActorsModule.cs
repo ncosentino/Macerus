@@ -19,6 +19,7 @@ using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
+using ProjectXyz.Plugins.Features.PartyManagement.Default;
 using ProjectXyz.Plugins.Stats;
 using ProjectXyz.Shared.Framework;
 
@@ -104,7 +105,7 @@ namespace Macerus.Plugins.Content.Actors
                                         new SizeBehavior(1, 1),
                                         new MovementBehavior(),
                                         new PlayerControlledBehavior(),
-                                        new AlwaysLoadWithMapBehavior(),
+                                        new RosterBehavior(),
                                         new SkipMapSaveStateBehavior(),
                                         new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),
                                         new ItemContainerBehavior(actorIdentifiers.CraftingInventoryIdentifier),

@@ -12,6 +12,10 @@ namespace Macerus.Game.DataPersistence.Kvp.Autofac
                .RegisterType<GameObjectKvpDataPersistenceHandler>()
                .AsImplementedInterfaces()
                .SingleInstance();
+            builder
+               .RegisterType<RosterKvpDataPersistenceHandler>()
+               .AsImplementedInterfaces()
+               .SingleInstance();
         }
     }
 }
