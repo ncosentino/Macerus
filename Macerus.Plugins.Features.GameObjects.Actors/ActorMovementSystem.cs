@@ -151,36 +151,36 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             {
                 if (throttleX > 0)
                 {
-                    movementBehavior.SetDirection(2);
+                    movementBehavior.Direction = 2;
                 }
                 else if (throttleX < 0)
                 {
-                    movementBehavior.SetDirection(0);
+                    movementBehavior.Direction = 0;
                 }
                 else if (throttleY > 0)
                 {
-                    movementBehavior.SetDirection(1);
+                    movementBehavior.Direction = 1;
                 }
                 else if (throttleY < 0)
                 {
-                    movementBehavior.SetDirection(3);
+                    movementBehavior.Direction = 3;
                 }
             }
             else if (velocityX > 0)
             {
-                movementBehavior.SetDirection(2);
+                movementBehavior.Direction = 2;
             }
             else if (velocityX < 0)
             {
-                movementBehavior.SetDirection(0);
+                movementBehavior.Direction = 0;
             }
             else if (velocityY > 0)
             {
-                movementBehavior.SetDirection(1);
+                movementBehavior.Direction = 1;
             }
             else if (velocityY < 0)
             {
-                movementBehavior.SetDirection(3);
+                movementBehavior.Direction = 3;
             }
         }
 

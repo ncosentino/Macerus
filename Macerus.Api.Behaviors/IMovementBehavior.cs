@@ -8,11 +8,11 @@ namespace Macerus.Api.Behaviors
     {
         new TimeSpan CurrentWalkSegmentElapsedTime { get; set; }
 
+        new int Direction { get; set; }
+
         void SetThrottle(double throttleX, double throttleY);
 
         void SetVelocity(double velocityX, double velocityY);
-
-        void SetDirection(int direction);
 
         Tuple<Vector2?, Vector2?> StartNextWalkPoint();
 

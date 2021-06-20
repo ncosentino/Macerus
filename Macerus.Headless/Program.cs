@@ -40,6 +40,7 @@ using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.PartyManagement;
 using ProjectXyz.Plugins.Features.TurnBased.Api;
 using ProjectXyz.Shared.Framework;
 
@@ -59,12 +60,39 @@ namespace Macerus.Headless
     {
         public async Task Go(MacerusContainer container)
         {
+            var player = CreatePlayerInstance(container);
+            player.GetOnly<IPositionBehavior>().SetPosition(40, -16);
+            container.Resolve<IGameObjectRepository>().Save(player);
+            container.Resolve<IRosterManager>().AddToRoster(player);
+            player.GetOnly<IRosterBehavior>().IsPartyLeader = true;
+
             var mapManager = container.Resolve<IMapManager>();
             await mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
 
             var dataPersistenceManager = container.Resolve<IDataPersistenceManager>();
             await dataPersistenceManager.SaveAsync(new StringIdentifier("my save game"));
             await dataPersistenceManager.LoadAsync(new StringIdentifier("my save game"));
+        }
+
+        private IGameObject CreatePlayerInstance(MacerusContainer container)
+        {
+            var filterContextAmenity = container.Resolve<IFilterContextAmenity>();
+            var actorIdentifiers = container.Resolve<IMacerusActorIdentifiers>();
+            var gameObjectIdentifiers = container.Resolve<IGameObjectIdentifiers>();
+            var actorGeneratorFacade = container.Resolve<IActorGeneratorFacade>();
+            var context = filterContextAmenity.CreateFilterContextForSingle(
+                filterContextAmenity.CreateRequiredAttribute(
+                    gameObjectIdentifiers.FilterContextTypeId,
+                    actorIdentifiers.ActorTypeIdentifier),
+                filterContextAmenity.CreateRequiredAttribute(
+                    actorIdentifiers.ActorDefinitionIdentifier,
+                    new StringIdentifier("player")));
+            var player = actorGeneratorFacade
+                .GenerateActors(
+                    context,
+                    new IGeneratorComponent[] { })
+                .Single();
+            return player;
         }
     }
 
@@ -352,14 +380,16 @@ namespace Macerus.Headless
 
             public int? Priority => null;
 
-            public async Task UpdateAsync(
-                ISystemUpdateContext systemUpdateContext,
-                IEnumerable<IGameObject> gameObjects)
+            public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
             {
                 var elapsedTime = systemUpdateContext
                     .GetFirst<IComponent<IElapsedTime>>()
                     .Value;
                 var elapsedSeconds = ((IInterval<double>)elapsedTime.Interval).Value / 1000;
+                var gameObjects = systemUpdateContext
+                    .GetFirst<IComponent<ITurnInfo>>()
+                    .Value
+                    .AllGameObjects;
 
                 foreach (var gameObject in gameObjects)
                 {

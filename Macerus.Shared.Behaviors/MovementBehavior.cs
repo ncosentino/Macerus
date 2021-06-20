@@ -100,7 +100,7 @@ namespace Macerus.Shared.Behaviors
 
         public IReadOnlyCollection<Vector2> PointsToWalk => _pointsToWalk;
 
-        public int Direction { get; private set; }
+        public int Direction { get; set; }
 
         public Vector2? CurrentWalkTarget { get; private set; }
 
@@ -179,11 +179,6 @@ namespace Macerus.Shared.Behaviors
             }
 
             return Tuple.Create(CurrentWalkSource, CurrentWalkTarget);
-        }
-
-        public void SetDirection(int direction)
-        {
-            Direction = direction;
         }
 
         private bool SetThrottleXIfChanged(double value)
