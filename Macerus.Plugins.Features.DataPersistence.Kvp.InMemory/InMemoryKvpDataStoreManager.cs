@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using ProjectXyz.Api.Data.Serialization;
 using ProjectXyz.Api.Framework;
 
 namespace Macerus.Plugins.Features.DataPersistence.Kvp.InMemory
@@ -9,10 +10,16 @@ namespace Macerus.Plugins.Features.DataPersistence.Kvp.InMemory
     public sealed class InMemoryKvpDataStoreManager : IDataStoreManager
     {
         private readonly Dictionary<IIdentifier, IKvpDataStore> _dataStores;
+        private readonly ISerializer _serializer;
+        private readonly IDeserializer _deserializer;
 
-        public InMemoryKvpDataStoreManager()
+        public InMemoryKvpDataStoreManager(
+            ISerializer serializer,
+            IDeserializer deserializer)
         {
             _dataStores = new Dictionary<IIdentifier, IKvpDataStore>();
+            _serializer = serializer;
+            _deserializer = deserializer;
         }
 
         public async Task<IDataStore> CreateNewAsync(IIdentifier id)
@@ -23,7 +30,9 @@ namespace Macerus.Plugins.Features.DataPersistence.Kvp.InMemory
                     $"A data store with ID '{id}' already exists.");
             }
 
-            var dataStore = new InMemoryKvpDataStore();
+            var dataStore = new InMemoryKvpDataStore(
+                _serializer,
+                _deserializer);
             _dataStores[id] = dataStore;
 
             return dataStore;
