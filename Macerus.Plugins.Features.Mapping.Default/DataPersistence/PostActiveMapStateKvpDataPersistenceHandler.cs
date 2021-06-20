@@ -30,7 +30,7 @@ namespace Macerus.Plugins.Features.Mapping.Default.DataPersistence
 
         public async Task ReadAsync(IKvpDataStoreReader reader)
         {
-            var mapId = (IIdentifier)await reader.ReadAsync(new StringIdentifier("ActiveMapId"));
+            var mapId = await reader.ReadAsync<IIdentifier>(new StringIdentifier("ActiveMapId"));
             await _mapManager.SwitchMapAsync(mapId);
         }
     }

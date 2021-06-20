@@ -45,7 +45,7 @@ namespace Macerus.Game.DataPersistence.Kvp
                .Where(x => x != null);
             foreach (var objectStateKey in objectStateKeys)
             {
-                var obj = (IGameObject)await reader.ReadAsync(objectStateKey);
+                var obj = await reader.ReadAsync<IGameObject>(objectStateKey);
                 _gameObjectRepository.Save(obj);
             }
         }

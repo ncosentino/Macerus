@@ -9,6 +9,6 @@ namespace Macerus.Plugins.Features.DataPersistence.Kvp
     {
         IEnumerable<IIdentifier> GetKeys();
 
-        Task<object> ReadAsync(IIdentifier identifier);
+        Task<T> ReadAsync<T>(IIdentifier identifier);
     }
 }

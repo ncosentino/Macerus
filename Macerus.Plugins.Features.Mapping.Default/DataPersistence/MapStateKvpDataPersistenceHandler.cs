@@ -47,7 +47,7 @@ namespace Macerus.Plugins.Features.Mapping.Default.DataPersistence
                 .Where(x => x != null);
             foreach (var mapStateKey in mapStateKeys)
             {
-                var gameObjectIds = (IReadOnlyCollection<IIdentifier>)await reader.ReadAsync(mapStateKey.Key);
+                var gameObjectIds = await reader.ReadAsync<IReadOnlyCollection<IIdentifier>>(mapStateKey.Key);
                 _mapStateRepository.SaveState(
                     mapStateKey.MapId,
                     gameObjectIds);
