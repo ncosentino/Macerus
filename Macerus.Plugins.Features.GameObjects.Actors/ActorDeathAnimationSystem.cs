@@ -39,9 +39,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
         public int? Priority => null;
 
-        public async Task UpdateAsync(
-            ISystemUpdateContext systemUpdateContext,
-            IEnumerable<IGameObject> gameObjects)
+        public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
         {
             var turnInfo = systemUpdateContext
                 .GetFirst<IComponent<ITurnInfo>>()
@@ -65,7 +63,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             // we want to iterate over all the game objects, not just the ones
             // with the current turn, especially because the actor dying is
             // usually not the one with the active turn
-            foreach (var entry in GetSupportedEntries(gameObjects))
+            foreach (var entry in GetSupportedEntries(turnInfo.AllGameObjects))
             {
                 var currentLife = _statCalculationServiceAmenity.GetStatValue(
                     entry.Item1.Owner,

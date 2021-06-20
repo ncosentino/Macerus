@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Macerus.Game.Api;
 
-using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 
@@ -30,9 +28,7 @@ namespace Macerus.Game
 
         public int? Priority { get; } = int.MinValue;
 
-        public async Task UpdateAsync(
-            ISystemUpdateContext systemUpdateContext,
-            IEnumerable<IGameObject> gameObjects)
+        public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
         {
             _updatesAccumulator += 1;
 

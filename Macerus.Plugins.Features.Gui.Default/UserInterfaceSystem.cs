@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.Gui.Api;
 
-using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Systems;
 
 namespace Macerus.Plugins.Features.Gui.Default
@@ -27,9 +25,7 @@ namespace Macerus.Plugins.Features.Gui.Default
 
         public int? Priority => null;
 
-        public async Task UpdateAsync(
-            ISystemUpdateContext systemUpdateContext,
-            IEnumerable<IGameObject> gameObjects)
+        public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
         {
             // we're going to use wall-clock time
             var now = DateTime.UtcNow;

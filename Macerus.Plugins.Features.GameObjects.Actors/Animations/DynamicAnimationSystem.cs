@@ -9,6 +9,7 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Systems;
+using ProjectXyz.Plugins.Features.TurnBased.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors.Animations
 {
@@ -16,17 +17,18 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Animations
     {
         public int? Priority => null;
 
-        public async Task UpdateAsync(
-            ISystemUpdateContext systemUpdateContext,
-            IEnumerable<IGameObject> gameObjects)
+        public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
         {
+            var turnInfo = systemUpdateContext
+                .GetFirst<IComponent<ITurnInfo>>()
+                .Value;
             var elapsed = (IInterval<double>)systemUpdateContext
                 .GetFirst<IComponent<IElapsedTime>>()
                 .Value
                 .Interval;
             var elapsedSeconds = elapsed.Value / 1000;
             await Task
-               .WhenAll(GetDynamicAnimationBehaviors(gameObjects).Select(b => b.UpdateAnimationAsync(elapsedSeconds)))
+               .WhenAll(GetDynamicAnimationBehaviors(turnInfo.AllGameObjects).Select(b => b.UpdateAnimationAsync(elapsedSeconds)))
                .ConfigureAwait(false);
         }
 

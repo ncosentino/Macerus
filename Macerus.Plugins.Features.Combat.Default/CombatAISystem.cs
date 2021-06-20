@@ -50,9 +50,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             _combatTurnManager.CombatStarted += CombatTurnManager_CombatStarted;
         }
 
-        public async Task UpdateAsync(
-            ISystemUpdateContext systemUpdateContext,
-            IEnumerable<IGameObject> gameObjects)
+        public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
         {
             if (!_combatTurnManager.InCombat ||
                 _currentActor == null ||

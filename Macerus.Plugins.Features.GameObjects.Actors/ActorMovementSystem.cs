@@ -16,6 +16,7 @@ using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
+using ProjectXyz.Plugins.Features.TurnBased.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
@@ -48,16 +49,17 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
         public int? Priority => null;
 
-        public async Task UpdateAsync(
-            ISystemUpdateContext systemUpdateContext,
-            IEnumerable<IGameObject> gameObjects)
+        public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
         {
+            var turnInfo = systemUpdateContext
+                .GetFirst<IComponent<ITurnInfo>>()
+                .Value;
             var elapsedTime = systemUpdateContext
                 .GetFirst<IComponent<IElapsedTime>>()
                 .Value;
             var elapsedSeconds = ((IInterval<double>)elapsedTime.Interval).Value / 1000;
 
-            foreach (var supportedEntry in GetSupportedEntries(gameObjects))
+            foreach (var supportedEntry in GetSupportedEntries(turnInfo.AllGameObjects))
             {
                 var movementBehavior = supportedEntry.Item1;
                 var dynamicAnimationBehavior = supportedEntry.Item2;
