@@ -52,9 +52,12 @@ namespace Macerus.Plugins.Features.Combat.Default
 
         public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
         {
+            var currentActor = _currentActor;
+            var currentCombatAI = _currentCombatAI;
+
             if (!_combatTurnManager.InCombat ||
-                _currentActor == null ||
-                _currentCombatAI == null)
+                currentActor == null ||
+                currentCombatAI == null)
             {
                 return;
             }
@@ -64,23 +67,23 @@ namespace Macerus.Plugins.Features.Combat.Default
                 .Value
                 .Interval;
 
-            var currentLife = _currentActor
+            var currentLife = currentActor
                 .GetOnly<IHasStatsBehavior>()
                 // FIXME: do we need to consider a stat calc or
                 // can we assume base stat
                 .BaseStats[_combatStatIdentifiers.CurrentLifeStatId];
             if (currentLife <= 0)
             {
-                _turnBasedManager.SetApplicableObjects(new[] { _currentActor });
+                _turnBasedManager.SetApplicableObjects(new[] { currentActor });
                 return;
             }
 
-            if (_currentCombatAI.Execute(
-                _currentActor,
+            if (currentCombatAI.Execute(
+                currentActor,
                 new HashSet<IGameObject>(_combatGameObjectProvider.GetGameObjects()),
                 elapsed))
             {
-                _turnBasedManager.SetApplicableObjects(new[] { _currentActor });
+                _turnBasedManager.SetApplicableObjects(new[] { currentActor });
             }
         }
 

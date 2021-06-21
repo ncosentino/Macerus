@@ -177,6 +177,9 @@ namespace Macerus.Plugins.Content.Actors
                                     }),
                                 new HasSkillsGeneratorComponent(new Dictionary<IIdentifier, int>()
                                 {
+                                    [new StringIdentifier("default-attack")] = 1,
+                                    [new StringIdentifier("default-defend")] = 1,
+                                    [new StringIdentifier("default-pass")] = 1,
                                     [new StringIdentifier("fireball")] = 1,
                                 }),
                                 new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
