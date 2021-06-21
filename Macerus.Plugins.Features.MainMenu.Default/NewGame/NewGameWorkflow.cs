@@ -6,6 +6,7 @@ using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Game.Api;
@@ -53,11 +54,16 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             _lazyMapStateRepository.Value.ClearState();
             _lazyRosterManager.Value.ClearRoster();
 
-            var player = CreatePlayerInstance();
+            var player = CreateActor(new StringIdentifier("player"));
             player.GetOnly<IPositionBehavior>().SetPosition(40, -16);
             _lazyGameObjectRepository.Value.Save(player);
             _lazyRosterManager.Value.AddToRoster(player);
             player.GetOnly<IRosterBehavior>().IsPartyLeader = true;
+
+            var mercenary = CreateActor(new StringIdentifier("test-mercenary"));
+            _lazyGameObjectRepository.Value.Save(mercenary);
+            _lazyRosterManager.Value.AddToRoster(mercenary);
+            mercenary.GetOnly<IRosterBehavior>().IsActiveParty = true;
 
             await _lazyMapManager
                 .Value
@@ -65,7 +71,7 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
                 .ConfigureAwait(false);
         }
 
-        private IGameObject CreatePlayerInstance()
+        private IGameObject CreateActor(IIdentifier definitionId)
         {
             var filterContextAmenity = _lazyFilterContextAmenity.Value;
             var actorIdentifiers = _lazyMacerusActorIdentifiers.Value;
@@ -77,7 +83,7 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
                     actorIdentifiers.ActorTypeIdentifier),
                 filterContextAmenity.CreateRequiredAttribute(
                     actorIdentifiers.ActorDefinitionIdentifier,
-                    new StringIdentifier("player")));
+                    definitionId));
             var player = actorGeneratorFacade
                 .GenerateActors(
                     context,

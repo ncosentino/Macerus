@@ -21,6 +21,7 @@ using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Interactions.Api;
 using Macerus.Plugins.Features.Inventory.Api;
+using Macerus.Plugins.Features.MainMenu.Default.NewGame;
 using Macerus.Plugins.Features.StatusBar.Api;
 using Macerus.Shared.Behaviors;
 
@@ -52,7 +53,7 @@ namespace Macerus.Headless
         {
             var container = new MacerusContainer();
 
-            await new DataPersistenceExercise().Go(container);
+            await new CombatExercise().Go(container);
         }
     }
 
@@ -211,17 +212,15 @@ namespace Macerus.Headless
             var turnBasedManager = container.Resolve<ITurnBasedManager>();
             var encounterManager = container.Resolve<IEncounterManager>();
             var logger = container.Resolve<ILogger>();
+            var newGameWorkflow = container.Resolve<INewGameWorkflow>();
 
-            // FIXME: this is just a hack to spawn the player
-            await mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
+            // set ourselves up with a new game!
+            await newGameWorkflow.RunAsync();
 
             var filterContext = filterContextAmenity.CreateNoneFilterContext();
             await encounterManager.StartEncounterAsync(
                 filterContext,
                 new StringIdentifier("test-encounter"));
-
-            var playerInventoryController = container.Resolve<IPlayerInventoryController>();
-            playerInventoryController.OpenInventory();
 
             bool keepRunning = true;
             combatTurnManager.CombatEnded += (s, e) =>

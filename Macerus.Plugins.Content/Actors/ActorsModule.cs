@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Autofac;
 
@@ -144,6 +145,58 @@ namespace Macerus.Plugins.Content.Actors
                                 filterContextAmenity.CreateRequiredAttribute(
                                     actorIdentifiers.ActorDefinitionIdentifier,
                                     new StringIdentifier("player")),
+                                filterContextAmenity.CreateSupportedAttribute(
+                                    new StringIdentifier("affix-type"),
+                                    "normal"),
+                            }),
+                        new ActorDefinition(
+                            new IGeneratorComponent[]
+                            {
+                                new StatefulBehaviorGeneratorComponent(() =>
+                                    new IBehavior[]
+                                    {
+                                        new IdentifierBehavior(new StringIdentifier(Guid.NewGuid().ToString())),
+                                        dynamicAnimationBehaviorFactory.Create(
+                                            "$actor$",
+                                            new StringIdentifier(string.Empty),
+                                            true,
+                                            0),
+                                        new PositionBehavior(0, 0),
+                                        new SizeBehavior(1, 1),
+                                        new MovementBehavior(),
+                                        new RosterBehavior(),
+                                        new CombatAIBehavior(),
+                                        new SkipMapSaveStateBehavior(),
+                                        new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),
+                                        new CanEquipBehavior(humanoidEquipSlotIds),
+                                        new HasPrefabResourceIdBehavior(new StringIdentifier("Mapping/Prefabs/Actors/PlayerPlaceholder")),
+                                    }),
+                                new HasSkillsGeneratorComponent(new Dictionary<IIdentifier, int>()
+                                {
+                                    [new StringIdentifier("fireball")] = 1,
+                                }),
+                                new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
+                                {
+                                    [new IntIdentifier(1)] = 10,
+                                    [new IntIdentifier(2)] = 100,
+                                    [new IntIdentifier(3)] = 100,
+                                    [new IntIdentifier(4)] = 100,
+                                    [combatTeamIdentifiers.CombatTeamStatDefinitionId] = combatTeamIdentifiers.PlayerTeamStatValue,
+                                    [new StringIdentifier("speed")] = 20, // FIXME: just for testing
+                                    [new StringIdentifier("firedmg")] = 10, // FIXME: just for testing
+                                    [new StringIdentifier("fireresist")] = 10, // FIXME: just for testing
+                                    [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = 3, // FIXME: just for testing
+                                    [actorIdentifiers.MoveDiagonallyStatDefinitionId] = 0, // FIXME: just for testing
+                                }),
+                            },
+                            new IFilterAttribute[]
+                            {
+                                filterContextAmenity.CreateRequiredAttribute(
+                                    gameObjectIdentifiers.FilterContextTypeId,
+                                    actorIdentifiers.ActorTypeIdentifier),
+                                filterContextAmenity.CreateRequiredAttribute(
+                                    actorIdentifiers.ActorDefinitionIdentifier,
+                                    new StringIdentifier("test-mercenary")),
                                 filterContextAmenity.CreateSupportedAttribute(
                                     new StringIdentifier("affix-type"),
                                     "normal"),
