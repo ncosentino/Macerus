@@ -345,7 +345,7 @@ namespace Macerus.Headless
                 {
                     var skill = skillAmenity.GetSkillById(new StringIdentifier("fireball"));
 
-                    playerMovement.SetDirection(1);
+                    playerMovement.Direction = 1;
                     logger.Info($"Player turned to direction {playerMovement.Direction} to cast");
                     skillHandlerFacade.Handle(player, skill);
 
