@@ -97,6 +97,7 @@ namespace Macerus.Plugins.Content.Actors
                                     {
                                         // FIXME: this is a CRUTCH and we should not support it because it completely breaks with party-support
                                         new IdentifierBehavior(new StringIdentifier("player")),
+                                        new HasDisplayNameBehavior("Player"),
                                         dynamicAnimationBehaviorFactory.Create(
                                             "$actor$",
                                             new StringIdentifier(string.Empty),
@@ -113,6 +114,7 @@ namespace Macerus.Plugins.Content.Actors
                                         new ItemContainerBehavior(actorIdentifiers.BeltIdentifier),
                                         new CanEquipBehavior(humanoidEquipSlotIds),
                                         new HasPrefabResourceIdBehavior(new StringIdentifier("Mapping/Prefabs/Actors/PlayerPlaceholder")),
+                                        new HasDisplayIconBehavior(new StringIdentifier("graphics/actors/portraits/do-not-distribute/test-player-male")),
                                     }),
                                 new HasSkillsGeneratorComponent(new Dictionary<IIdentifier, int>()
                                 {
@@ -156,6 +158,7 @@ namespace Macerus.Plugins.Content.Actors
                                     new IBehavior[]
                                     {
                                         new IdentifierBehavior(new StringIdentifier(Guid.NewGuid().ToString())),
+                                        new HasDisplayNameBehavior("Hired Help"),
                                         dynamicAnimationBehaviorFactory.Create(
                                             "$actor$",
                                             new StringIdentifier(string.Empty),
@@ -170,6 +173,7 @@ namespace Macerus.Plugins.Content.Actors
                                         new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),
                                         new CanEquipBehavior(humanoidEquipSlotIds),
                                         new HasPrefabResourceIdBehavior(new StringIdentifier("Mapping/Prefabs/Actors/PlayerPlaceholder")),
+                                        new HasDisplayIconBehavior(new StringIdentifier("graphics/actors/portraits/do-not-distribute/test-player-male")),
                                     }),
                                 new HasSkillsGeneratorComponent(new Dictionary<IIdentifier, int>()
                                 {
@@ -207,6 +211,7 @@ namespace Macerus.Plugins.Content.Actors
                                 new StatefulBehaviorGeneratorComponent(() =>
                                     new IBehavior[]
                                     {
+                                        new HasDisplayNameBehavior("Skeleton"),
                                         dynamicAnimationBehaviorFactory.Create(
                                             "$actor$",
                                             new StringIdentifier(string.Empty),
@@ -220,6 +225,7 @@ namespace Macerus.Plugins.Content.Actors
                                         new CanEquipBehavior(humanoidEquipSlotIds),
                                         new CorpseInteractableBehavior(false),
                                         new HasPrefabResourceIdBehavior(new StringIdentifier("Mapping/Prefabs/Actors/Actor")),
+                                        new HasDisplayIconBehavior(new StringIdentifier("graphics/actors/portraits/do-not-distribute/test-skeleton")),
                                     }),
                                 new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
