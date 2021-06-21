@@ -52,6 +52,7 @@ namespace Macerus.Plugins.Content.Data
                         [typeof(TypeIdentifierBehavior)] = "TypeIdBehavior",
                         [typeof(TemplateIdentifierBehavior)] = "TemplateIdBehavior",
                         [typeof(HasPrefabResourceIdBehavior)] = "PrefabIdBehavior",
+                        [typeof(CombatMapBehavior)] = "IsCombatMap",
                         [typeof(PositionBehavior)] = "pos",
                         [typeof(SizeBehavior)] = "size",
                         [typeof(BoxColliderBehavior)] = "bcollide",
