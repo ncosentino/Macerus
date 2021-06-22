@@ -6,7 +6,7 @@ using Macerus.Plugins.Features.GameObjects.Containers.Api;
 using Macerus.Plugins.Features.GameObjects.Static.Doors;
 
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;

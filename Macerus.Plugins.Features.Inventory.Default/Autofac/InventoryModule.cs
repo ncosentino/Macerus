@@ -4,7 +4,7 @@ using Macerus.Plugins.Features.GameObjects.Containers.Api.LootDrops;
 using Macerus.Plugins.Features.Inventory.Api;
 
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.Inventory.Default.Autofac
 {

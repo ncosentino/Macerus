@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
@@ -12,7 +11,7 @@ using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Default;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.Encounters
 {

@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -20,29 +19,25 @@ using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Interactions.Api;
-using Macerus.Plugins.Features.Inventory.Api;
 using Macerus.Plugins.Features.MainMenu.Default.NewGame;
 using Macerus.Plugins.Features.StatusBar.Api;
 using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Data.Serialization;
-using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Api.Logging;
-using ProjectXyz.Api.Systems;
-using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Game.Api;
 using ProjectXyz.Game.Interface.Engine;
 using ProjectXyz.Plugins.Features.Behaviors.Default;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Plugins.Features.PartyManagement;
-using ProjectXyz.Plugins.Features.TurnBased.Api;
+using ProjectXyz.Plugins.Features.TurnBased;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Headless

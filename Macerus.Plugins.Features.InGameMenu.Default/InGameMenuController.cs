@@ -11,7 +11,7 @@ using Macerus.Plugins.Features.MainMenu.Api;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Combat.Api;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.InGameMenu.Default

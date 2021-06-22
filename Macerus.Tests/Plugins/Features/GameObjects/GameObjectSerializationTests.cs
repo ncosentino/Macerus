@@ -10,7 +10,7 @@ using ProjectXyz.Api.Data.Serialization;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
@@ -8,11 +9,10 @@ using Macerus.Plugins.Features.Interactions.Api;
 
 using NexusLabs.Contracts;
 
-using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.Mapping.Api;
-using System.Threading.Tasks;
+using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers
 {

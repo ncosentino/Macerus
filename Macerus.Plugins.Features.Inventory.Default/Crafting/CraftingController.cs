@@ -16,7 +16,7 @@ using ProjectXyz.Framework.ViewWelding.Api.Welders;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Crafting.Api;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.Inventory.Default.Crafting
 {

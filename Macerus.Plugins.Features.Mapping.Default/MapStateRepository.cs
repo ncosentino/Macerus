@@ -2,7 +2,7 @@
 using System.Linq;
 
 using ProjectXyz.Api.Framework;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.Mapping.Default
 {

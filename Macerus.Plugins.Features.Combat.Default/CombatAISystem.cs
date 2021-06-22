@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Combat.Api;
 
-using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.TurnBased.Api;
-using System.Threading.Tasks;
+using ProjectXyz.Plugins.Features.TurnBased;
 
 namespace Macerus.Plugins.Features.Combat.Default
 {

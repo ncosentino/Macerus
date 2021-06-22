@@ -5,7 +5,7 @@ using Macerus.Api.Behaviors.Filtering;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.Filtering.Api;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.Encounters
 {

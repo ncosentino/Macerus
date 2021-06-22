@@ -9,7 +9,7 @@ using ProjectXyz.Api.Framework.Collections;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Shared.Framework.Collections;
 
 namespace Macerus.Plugins.Features.Mapping.Default

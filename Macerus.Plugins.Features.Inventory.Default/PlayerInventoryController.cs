@@ -13,7 +13,7 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Framework.ViewWelding.Api;
 using ProjectXyz.Framework.ViewWelding.Api.Welders;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.Inventory.Default
 {

@@ -9,7 +9,7 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.Mapping.Default
 {

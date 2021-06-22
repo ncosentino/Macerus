@@ -12,7 +12,7 @@ using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
-using ProjectXyz.Plugins.Features.TurnBased.Api;
+using ProjectXyz.Plugins.Features.TurnBased;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {

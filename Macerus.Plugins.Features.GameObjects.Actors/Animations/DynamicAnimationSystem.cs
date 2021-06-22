@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
 
-using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Systems;
-using ProjectXyz.Plugins.Features.TurnBased.Api;
+using ProjectXyz.Plugins.Features.TurnBased;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors.Animations
 {

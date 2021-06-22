@@ -20,7 +20,7 @@ using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;  // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
-using ProjectXyz.Plugins.Features.TurnBased.Duration;
+using ProjectXyz.Plugins.Features.TurnBased.Default.Duration;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Skills

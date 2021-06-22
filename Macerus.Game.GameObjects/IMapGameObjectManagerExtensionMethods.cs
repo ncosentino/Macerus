@@ -3,7 +3,7 @@
 using Macerus.Api.Behaviors;
 
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Game
 {

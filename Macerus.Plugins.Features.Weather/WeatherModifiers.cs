@@ -12,7 +12,7 @@ using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api;
 using ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api.Handlers;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Plugins.Features.Weather.Api;
 using ProjectXyz.Shared.Framework;
 

@@ -7,7 +7,7 @@ using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Plugins.Features.Weather.Api;
 using ProjectXyz.Shared.Framework;
 

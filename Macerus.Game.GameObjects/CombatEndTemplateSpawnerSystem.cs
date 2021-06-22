@@ -10,7 +10,7 @@ using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Game
 {

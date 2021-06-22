@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
@@ -9,7 +10,7 @@ using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default

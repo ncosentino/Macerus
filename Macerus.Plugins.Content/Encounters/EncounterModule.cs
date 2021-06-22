@@ -10,7 +10,7 @@ using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Encounters

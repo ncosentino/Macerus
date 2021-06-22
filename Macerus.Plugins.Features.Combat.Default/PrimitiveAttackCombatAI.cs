@@ -19,7 +19,7 @@ using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.Combat.Default
 {

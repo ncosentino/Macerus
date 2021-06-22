@@ -20,7 +20,7 @@ using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables.Standard;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory.DropTables;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;

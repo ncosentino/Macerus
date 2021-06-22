@@ -10,7 +10,7 @@ using NexusLabs.Contracts;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Stats;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.CharacterSheet.Default
 {

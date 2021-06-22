@@ -5,7 +5,7 @@ using Macerus.Plugins.Features.DataPersistence.Kvp;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.Mapping.Default.DataPersistence

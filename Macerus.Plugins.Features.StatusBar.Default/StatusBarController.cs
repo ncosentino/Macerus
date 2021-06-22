@@ -17,8 +17,8 @@ using ProjectXyz.Api.Stats;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
-using ProjectXyz.Plugins.Features.Mapping.Api;
-using ProjectXyz.Plugins.Features.TurnBased.Api;
+using ProjectXyz.Plugins.Features.Mapping;
+using ProjectXyz.Plugins.Features.TurnBased;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.StatusBar.Default

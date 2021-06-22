@@ -23,7 +23,7 @@ using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Plugins.Features.Mapping.Default;
 using ProjectXyz.Shared.Data.Serialization;
 using ProjectXyz.Shared.Framework;

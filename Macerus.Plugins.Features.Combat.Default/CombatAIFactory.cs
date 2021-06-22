@@ -4,7 +4,7 @@ using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Stats.Api;
 
 using ProjectXyz.Api.Logging;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.Combat.Default
 {

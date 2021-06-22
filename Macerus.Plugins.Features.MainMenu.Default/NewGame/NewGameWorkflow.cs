@@ -11,7 +11,7 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Game.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Plugins.Features.PartyManagement;
 using ProjectXyz.Shared.Framework;
 

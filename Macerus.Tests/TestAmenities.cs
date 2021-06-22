@@ -14,7 +14,7 @@ using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Game.Api;
 using ProjectXyz.Game.Core;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
-using ProjectXyz.Plugins.Features.Mapping.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;
