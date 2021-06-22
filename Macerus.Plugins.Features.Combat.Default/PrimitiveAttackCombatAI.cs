@@ -89,7 +89,9 @@ namespace Macerus.Plugins.Features.Combat.Default
                         _combatTarget);
                     break;
                 case CombatState.WalkToTarget:
-                    turnShouldEnd = WalkToTarget(actor);
+                    turnShouldEnd = WalkToTarget(
+                        actor,
+                        _combatTarget);
                     break;
                 case CombatState.UseSkill:
                     turnShouldEnd = UseSkillOnTargetAsync(
@@ -168,20 +170,56 @@ namespace Macerus.Plugins.Features.Combat.Default
             return false;
         }
 
-        private bool WalkToTarget(IGameObject actor)
+        private bool WalkToTarget(
+            IGameObject actor,
+            IGameObject target)
         {
             Contract.RequiresNotNull(actor, $"{nameof(actor)} cannot be null.");
 
             var movementBehavior = actor.GetOnly<IMovementBehavior>();
             if (movementBehavior.PointsToWalk.Count < 1)
             {
+                // ensure we've stopped movin'
                 _logger.Info($"'{actor}' has completed their walk path.");
-
                 movementBehavior.SetThrottle(0, 0);
+
+                // face our target
+                movementBehavior.Direction = GetDirectionToFace(
+                    actor,
+                    target);
+
                 _combatState = CombatState.UseSkill;
             }
 
             return false;
+        }
+
+        private int GetDirectionToFace(
+            IGameObject actor,
+            IGameObject target)
+        {
+            var actorPositionBehavior = actor.GetOnly<IReadOnlyPositionBehavior>();
+            var targetPositionBehavior = target.GetOnly<IReadOnlyPositionBehavior>();
+            var unitDirectionVector = Vector2.Normalize(
+                new Vector2((float)targetPositionBehavior.X, (float)targetPositionBehavior.Y) -
+                new Vector2((float)actorPositionBehavior.X, (float)actorPositionBehavior.Y));
+
+            if (unitDirectionVector.X > 0)
+            {
+                return 2;
+            }
+            else if (unitDirectionVector.X < 0)
+            {
+                return 0;
+            }
+            else if (unitDirectionVector.Y > 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 3;
+            }
         }
 
         private bool PickWalkTarget(
