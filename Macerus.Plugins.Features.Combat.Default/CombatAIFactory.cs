@@ -1,56 +1,20 @@
 ﻿using Macerus.Plugins.Features.Combat.Api;
-using Macerus.Plugins.Features.GameObjects.Actors.Api;
-using Macerus.Plugins.Features.GameObjects.Skills.Api;
-using Macerus.Plugins.Features.Stats.Api;
-
-using ProjectXyz.Api.Logging;
-using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.Combat.Default
 {
     public sealed class CombatAIFactory : ICombatAIFactory
     {
-        private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
-        private readonly ISkillUsage _skillUsage;
-        private readonly ISkillHandlerFacade _skillHandlerFacade;
-        private readonly ICombatTeamIdentifiers _combatTeamIdentifiers;
-        private readonly ICombatStatIdentifiers _combatStatIdentifiers;
-        private readonly IMacerusActorIdentifiers _actorIdentifiers;
-        private readonly IMapProvider _mapProvider;
-        private readonly ILogger _logger;
+        private readonly PrimitiveAttackCombatAI.Factory _factory;
 
-        public CombatAIFactory(
-            IStatCalculationServiceAmenity statCalculationServiceAmenity,
-            ISkillUsage skillUsage,
-            ISkillHandlerFacade skillHandlerFacade,
-            ICombatTeamIdentifiers combatTeamIdentifiers,
-            ICombatStatIdentifiers combatStatIdentifiers,
-            IMacerusActorIdentifiers actorIdentifiers,
-            IMapProvider mapProvider,
-            ILogger logger)
+        public CombatAIFactory(PrimitiveAttackCombatAI.Factory factory)
         {
-            _statCalculationServiceAmenity = statCalculationServiceAmenity;
-            _skillUsage = skillUsage;
-            _skillHandlerFacade = skillHandlerFacade;
-            _combatTeamIdentifiers = combatTeamIdentifiers;
-            _combatStatIdentifiers = combatStatIdentifiers;
-            _actorIdentifiers = actorIdentifiers;
-            _mapProvider = mapProvider;
-            _logger = logger;
+            _factory = factory;
         }
 
         public ICombatAI Create()
         {
             // FIXME: this should be able to provide different combat AI
-            var combatAI = new PrimitiveAttackCombatAI(
-                _statCalculationServiceAmenity,
-                _skillUsage,
-                _skillHandlerFacade,
-                _combatTeamIdentifiers,
-                _combatStatIdentifiers,
-                _actorIdentifiers,
-                _mapProvider,
-                _logger);
+            var combatAI = _factory.Invoke();
             return combatAI;
         }
     }

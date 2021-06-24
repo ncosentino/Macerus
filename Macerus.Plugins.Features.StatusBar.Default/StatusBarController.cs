@@ -212,6 +212,8 @@ namespace Macerus.Plugins.Features.StatusBar.Default
 
         public async Task PreviewSkillSlotAsync(int slotIndex)
         {
+            var skillTargetLocations = new Dictionary<int, HashSet<Vector2>>();
+
             var player = _mapGameObjectManager
                 .GameObjects
                 .FirstOrDefault(x => x.Has<IPlayerControlledBehavior>());
@@ -229,39 +231,32 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                     skill)
                 .ConfigureAwait(false))
             {
+                _mapTraversableHighlighter
+                    .Value
+                    .SetTargettedTiles(skillTargetLocations);
                 return;
             }
 
-            if (!skill.TryGetFirst<ICombinationSkillBehavior>(out var combinationSkill))
+            foreach (var s in _skillAmenity.GetSkillsFromCombination(skill))
             {
-                return;
-            }
+                var targetsByTeam = _skillTargetingAmenity.FindTargetLocationsForSkill(
+                    player,
+                    s);
 
-            var skillTargetLocations = new Dictionary<int, HashSet<Vector2>>();
-            foreach (var cs in combinationSkill.SkillExecutors)
-            {
-                foreach (var s in cs.SkillIdentifiers.Select(x => _skillAmenity.GetSkillById(x)))
+                if (!skillTargetLocations.ContainsKey(targetsByTeam.Item1))
                 {
-                    var targetsByTeam = _skillTargetingAmenity.FindTargetLocationsForSkill(
-                        player,
-                        s);
+                    skillTargetLocations.Add(targetsByTeam.Item1, new HashSet<Vector2>());
+                }
 
-                    if (!skillTargetLocations.ContainsKey(targetsByTeam.Item1))
-                    {
-                        skillTargetLocations.Add(targetsByTeam.Item1, new HashSet<Vector2>(targetsByTeam.Item2));
-                    }
-                    else
-                    {
-                        foreach (var t in targetsByTeam.Item2)
-                        {
-                            skillTargetLocations[targetsByTeam.Item1].Add(t);
-                        }
-                    }           
+                foreach (var t in targetsByTeam.Item2)
+                {
+                    skillTargetLocations[targetsByTeam.Item1].Add(t);
                 }
             }
 
-            _mapTraversableHighlighter.Value.SetTargettedTiles(
-                skillTargetLocations);
+            _mapTraversableHighlighter
+                .Value
+                .SetTargettedTiles(skillTargetLocations);
         }
     }
 }

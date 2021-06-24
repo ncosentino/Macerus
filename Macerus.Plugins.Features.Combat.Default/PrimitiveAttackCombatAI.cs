@@ -26,12 +26,13 @@ namespace Macerus.Plugins.Features.Combat.Default
     public sealed class PrimitiveAttackCombatAI : ICombatAI
     {
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
-        private readonly ISkillUsage _skillUsage;
-        private readonly ISkillHandlerFacade _skillHandlerFacade;
+        private readonly Lazy<ISkillUsage> _lazySkillUsage;
+        private readonly Lazy<ISkillHandlerFacade> _lazySkillHandlerFacade;
+        private readonly Lazy<ISkillAmenity> _lazySkillAmenity;
         private readonly ICombatTeamIdentifiers _combatTeamIdentifiers;
         private readonly ICombatStatIdentifiers _combatStatIdentifiers;
         private readonly IMacerusActorIdentifiers _actorIdentifiers;
-        private readonly IMapProvider _mapProvider;
+        private readonly Lazy<IMapProvider> _lazyMapProvider;
         private readonly ILogger _logger;
 
         private CombatState _combatState;
@@ -39,23 +40,27 @@ namespace Macerus.Plugins.Features.Combat.Default
 
         public PrimitiveAttackCombatAI(
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
-            ISkillUsage skillUsage,
-            ISkillHandlerFacade skillHandlerFacade,
+            Lazy<ISkillUsage> lazySkillUsage,
+            Lazy<ISkillHandlerFacade> lazySkillHandlerFacade,
+            Lazy<ISkillAmenity> lazySkillAmenity,
             ICombatTeamIdentifiers combatTeamIdentifiers,
             ICombatStatIdentifiers combatStatIdentifiers,
             IMacerusActorIdentifiers actorIdentifiers,
-            IMapProvider mapProvider,
+            Lazy<IMapProvider> lazyMapProvider,
             ILogger logger)
         {
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
-            _skillUsage = skillUsage;
-            _skillHandlerFacade = skillHandlerFacade;
+            _lazySkillUsage = lazySkillUsage;
+            _lazySkillHandlerFacade = lazySkillHandlerFacade;
+            _lazySkillAmenity = lazySkillAmenity;
             _combatTeamIdentifiers = combatTeamIdentifiers;
             _combatStatIdentifiers = combatStatIdentifiers;
             _actorIdentifiers = actorIdentifiers;
-            _mapProvider = mapProvider;
+            _lazyMapProvider = lazyMapProvider;
             _logger = logger;
         }
+
+        public delegate PrimitiveAttackCombatAI Factory();
 
         private enum CombatState
         {
@@ -118,9 +123,13 @@ namespace Macerus.Plugins.Features.Combat.Default
             var skills = actor
                 .GetOnly<IHasSkillsBehavior>()
                 .Skills;
-            var firstUsableSkill = skills.FirstOrDefault(x =>
-                x.Has<IInflictDamageBehavior>() &&
-                x.Has<IUseInCombatBehavior>());
+            var firstUsableSkill = skills
+                .FirstOrDefault(s => _lazySkillAmenity
+                    .Value
+                    .GetSkillsFromCombination(s)
+                    .Any(sc =>
+                        sc.Has<IInflictDamageBehavior>() &&
+                        sc.Has<IUseInCombatBehavior>()));
             if (firstUsableSkill == null)
             {
                 _logger.Info(
@@ -129,7 +138,7 @@ namespace Macerus.Plugins.Features.Combat.Default
                 return true;
             }
 
-            if (!await _skillUsage.CanUseSkillAsync(
+            if (!await _lazySkillUsage.Value.CanUseSkillAsync(
                 actor,
                 firstUsableSkill))
             {
@@ -138,11 +147,11 @@ namespace Macerus.Plugins.Features.Combat.Default
                 return true;
             }
 
-            _skillUsage.UseRequiredResources(
+            _lazySkillUsage.Value.UseRequiredResources(
                 actor,
                 firstUsableSkill);
 
-            _skillHandlerFacade.Handle(
+            _lazySkillHandlerFacade.Value.Handle(
                 actor,
                 firstUsableSkill);
             _logger.Info(
@@ -234,7 +243,10 @@ namespace Macerus.Plugins.Features.Combat.Default
             var targetSizeBehavior = target.GetOnly<IReadOnlySizeBehavior>();
             var targetSize = new Vector2((float)targetSizeBehavior.Width, (float)targetSizeBehavior.Height);
 
-            var allAdjacentPositions = _mapProvider.PathFinder.GetAllAdjacentPositionsToObject(
+            var pathFinder = _lazyMapProvider
+                .Value
+                .PathFinder;
+            var allAdjacentPositions = pathFinder.GetAllAdjacentPositionsToObject(
                 targetLocation,
                 targetSize,
                 true);
@@ -256,7 +268,7 @@ namespace Macerus.Plugins.Features.Combat.Default
                 actor,
                 _actorIdentifiers.MoveDistancePerTurnCurrentStatDefinitionId);
 
-            var freeAdjacentPositions = _mapProvider.PathFinder.GetFreeAdjacentPositionsToObject(
+            var freeAdjacentPositions = pathFinder.GetFreeAdjacentPositionsToObject(
                 targetLocation,
                 targetSize,
                 canMoveDiagonally);
@@ -272,8 +284,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             var actorSizeBehavior = target.GetOnly<IReadOnlySizeBehavior>();
             var actorSize = new Vector2((float)actorSizeBehavior.Width, (float)actorSizeBehavior.Height);
 
-            var canMoveToPositions = _mapProvider
-                .PathFinder
+            var canMoveToPositions = pathFinder
                 .GetAllowedPathDestinations(
                     actorLocation,
                     actorSize,
@@ -294,13 +305,11 @@ namespace Macerus.Plugins.Features.Combat.Default
                 destinationLocation = fallbackDestinationLocation;
             }
 
-            var walkPath = _mapProvider
-                .PathFinder
-                .FindPath(
-                    actorLocation,
-                    destinationLocation,
-                    actorSize,
-                    canMoveDiagonally);
+            var walkPath = pathFinder.FindPath(
+                actorLocation,
+                destinationLocation,
+                actorSize,
+                canMoveDiagonally);
             var pointsToWalk = new Queue<Vector2>(
                 new[] { actorLocation }
                 .Concat(walkPath.Positions));

@@ -20,6 +20,7 @@ namespace Macerus.Plugins.Features.Combat.Default.Autofac
                .RegisterType<CombatAISystem>()
                .AsImplementedInterfaces()
                .SingleInstance();
+            builder.RegisterType<PrimitiveAttackCombatAI>(); // for factory
             builder
                 .RegisterType<CombatAIFactory>()
                 .AsImplementedInterfaces()
