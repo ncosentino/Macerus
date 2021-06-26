@@ -36,6 +36,14 @@ namespace Macerus.Plugins.Features.Animations.Lpc
             [Direction.Right] = 21,
         };
 
+        private static readonly IReadOnlyDictionary<Direction, int> _mapDirectionToStrikeStartIndex = new Dictionary<Direction, int>()
+        {
+            [Direction.Back] = 28,
+            [Direction.Left] = 36,
+            [Direction.Forward] = 44,
+            [Direction.Right] = 52,
+        };
+
         public IEnumerable<ISpriteAnimation> CreateForSheet(IIdentifier spriteSheetResourceId)
         {
             foreach (var entry in CreateDirectionalAnimations(spriteSheetResourceId))
@@ -109,6 +117,13 @@ namespace Macerus.Plugins.Features.Animations.Lpc
                 {
                     yield return entry;
                 }
+
+                foreach (var entry in CreateStrikeAnimations(
+                    spriteSheetResourceId,
+                    direction))
+                {
+                    yield return entry;
+                }
             }
         }
 
@@ -144,9 +159,7 @@ namespace Macerus.Plugins.Features.Animations.Lpc
             var frames = new List<ISpriteAnimationFrame>();
             foreach (var offset in Enumerable.Range(0, 7))
             {
-                var duration = offset == 6
-                    ? (float?)null
-                    : 0.1f;
+                var duration = 0.1f;
                 var frame = CreateCastAnimationFrame(
                     spriteSheetResourceId,
                     direction,
@@ -155,10 +168,47 @@ namespace Macerus.Plugins.Features.Animations.Lpc
                 frames.Add(frame);
             }
 
+            frames.Add(CreateCastAnimationFrame(
+                spriteSheetResourceId,
+                direction,
+                0,
+                0.1f));
+
             var animation = new SpriteAnimation(
                 new StringIdentifier($"{animationPrefix}_cast_{direction}".ToLowerInvariant()),
                 frames,
-                true);
+                false);
+            yield return animation;
+        }
+
+        private IEnumerable<ISpriteAnimation> CreateStrikeAnimations(
+            IIdentifier spriteSheetResourceId,
+            Direction direction)
+        {
+            var animationPrefix = GetAnimationPrefix(spriteSheetResourceId);
+
+            var frames = new List<ISpriteAnimationFrame>();
+            foreach (var offset in Enumerable.Range(0, 8))
+            {
+                var duration = 0.1f;
+                var frame = CreateStrikeAnimationFrame(
+                    spriteSheetResourceId,
+                    direction,
+                    offset,
+                    duration);
+                frames.Add(frame);
+            }
+
+            frames.Add(CreateStrikeAnimationFrame(
+                spriteSheetResourceId,
+                direction,
+                0,
+                0.1f));
+
+            var animation = new SpriteAnimation(
+                new StringIdentifier($"{animationPrefix}_strike_{direction}".ToLowerInvariant()),
+                frames,
+                false);
             yield return animation;
         }
 
@@ -169,6 +219,22 @@ namespace Macerus.Plugins.Features.Animations.Lpc
             float? duration)
         {
             var index = _mapDirectionToCastStartIndex[direction] + offset;
+            return new SpriteAnimationFrame(
+                spriteSheetResourceId,
+                GetSpriteId(spriteSheetResourceId, index),
+                false,
+                false,
+                duration,
+                new FrameColor(1, 1, 1, 1));
+        }
+
+        private ISpriteAnimationFrame CreateStrikeAnimationFrame(
+           IIdentifier spriteSheetResourceId,
+           Direction direction,
+           int offset,
+           float? duration)
+        {
+            var index = _mapDirectionToStrikeStartIndex[direction] + offset;
             return new SpriteAnimationFrame(
                 spriteSheetResourceId,
                 GetSpriteId(spriteSheetResourceId, index),

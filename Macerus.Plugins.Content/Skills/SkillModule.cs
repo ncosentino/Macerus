@@ -1,10 +1,14 @@
-﻿using Autofac;
-using Macerus.Plugins.Features.GameObjects.Skills.Default;
-using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
-using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.GameObjects.Skills;
-using System;
+﻿using System;
 using System.Linq;
+
+using Autofac;
+
+using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Skills.Default;
+
+using ProjectXyz.Framework.Autofac;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
+using ProjectXyz.Plugins.Features.GameObjects.Skills;
 
 namespace Macerus.Plugins.Content.Skills
 {
@@ -15,6 +19,7 @@ namespace Macerus.Plugins.Content.Skills
             builder
                 .Register(c =>
                 {
+                    var actorIdentifiers = c.Resolve<IMacerusActorIdentifiers>();
                     var definitions = new[]
                     {
                         SkillDefinition
@@ -28,6 +33,7 @@ namespace Macerus.Plugins.Content.Skills
                             .TargetsPattern(
                                 Tuple.Create(0, 1))
                             .AffectsTeams(1)
+                            .WithActorAnimation(actorIdentifiers.AnimationStrike)
                             .End(),
                         SkillDefinition
                             .FromId("default-defend")
@@ -39,12 +45,14 @@ namespace Macerus.Plugins.Content.Skills
                             .TargetsPattern(
                                 Tuple.Create(0,0))
                             .AffectsTeams(0)
+                            .WithActorAnimation(actorIdentifiers.AnimationStrike) // FIXME: wrong animation
                             .End(),
                         SkillDefinition
                             .FromId("default-pass")
                             .WithDisplayName("Pass")
                             .WithDisplayIcon(@"graphics\skills\default-pass")
                             .CanBeUsedInCombat()
+                            //.WithActorAnimation(xxx) no animation for passing?
                             .End(),
                         SkillDefinition
                             .FromId("heal")
@@ -57,6 +65,7 @@ namespace Macerus.Plugins.Content.Skills
                             .AffectsTeams(0)
                             .StartsAtOffsetFromUser(0, 0)
                             .TargetsPattern()
+                            .WithActorAnimation(actorIdentifiers.AnimationCast)
                             .End(),
                         SkillDefinition
                             .FromId("fireball")
@@ -64,6 +73,7 @@ namespace Macerus.Plugins.Content.Skills
                             .WithDisplayIcon(@"graphics\skills\fireball")
                             .WithResourceRequirement(4, 10)
                             .CanBeUsedInCombat()
+                            .WithActorAnimation(actorIdentifiers.AnimationCast)
                             .IsACombinationOf(
                                 MacerusExecuteSkills.InParallel(
                                     SkillDefinition

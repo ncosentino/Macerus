@@ -16,5 +16,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Api
         IIdentifier MoveDistancePerTurnCurrentStatDefinitionId { get; }
 
         IIdentifier MoveDiagonallyStatDefinitionId { get; }
+
+        IIdentifier AnimationCast { get; }
+
+        IIdentifier AnimationStrike { get; }
     }
 }

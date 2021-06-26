@@ -48,7 +48,51 @@ namespace Macerus.Headless
         {
             var container = new MacerusContainer();
 
-            await new CombatExercise().Go(container);
+            await new AnimateExercise().Go(container);
+        }
+    }
+
+    public sealed class AnimateExercise
+    {
+        public async Task Go(MacerusContainer container)
+        {
+            var player = CreatePlayerInstance(container);
+            player.GetOnly<IMovementBehavior>().Direction = 3;
+            player.GetOnly<IDynamicAnimationBehavior>().BaseAnimationId = new StringIdentifier("$actor$_cast_right");
+
+            container.Resolve<IGameObjectRepository>().Save(player);
+            container.Resolve<IRosterManager>().AddToRoster(player);
+            player.GetOnly<IRosterBehavior>().IsPartyLeader = true;
+
+            var mapManager = container.Resolve<IMapManager>();
+            await mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
+
+            var gameEngine = container.Resolve<IGameEngine>();
+            while (true)
+            {
+                await gameEngine.UpdateAsync();
+            }
+        }
+
+        private IGameObject CreatePlayerInstance(MacerusContainer container)
+        {
+            var filterContextAmenity = container.Resolve<IFilterContextAmenity>();
+            var actorIdentifiers = container.Resolve<IMacerusActorIdentifiers>();
+            var gameObjectIdentifiers = container.Resolve<IGameObjectIdentifiers>();
+            var actorGeneratorFacade = container.Resolve<IActorGeneratorFacade>();
+            var context = filterContextAmenity.CreateFilterContextForSingle(
+                filterContextAmenity.CreateRequiredAttribute(
+                    gameObjectIdentifiers.FilterContextTypeId,
+                    actorIdentifiers.ActorTypeIdentifier),
+                filterContextAmenity.CreateRequiredAttribute(
+                    actorIdentifiers.ActorDefinitionIdentifier,
+                    new StringIdentifier("player")));
+            var player = actorGeneratorFacade
+                .GenerateActors(
+                    context,
+                    new IGeneratorComponent[] { })
+                .Single();
+            return player;
         }
     }
 

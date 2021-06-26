@@ -106,6 +106,19 @@ namespace Macerus.Plugins.Content.Skills
             return skillDefinition;
         }
 
+        public static ISkillDefinition WithActorAnimation(
+            this ISkillDefinition oldSkillDefinition,
+            IIdentifier animationId)
+        {
+            var skillDefinition = new SkillDefinition(
+                oldSkillDefinition.SupportedAttributes,
+                oldSkillDefinition
+                    .FilterComponents
+                    .AppendSingle(new ActorAnimationOnUseGeneratorComponent(animationId)));
+
+            return skillDefinition;
+        }
+
         public static ISkillDefinition CanBeUsedOutOfCombat(
             this ISkillDefinition oldSkillDefinition)
         {

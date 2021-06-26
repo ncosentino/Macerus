@@ -7,6 +7,8 @@ namespace Macerus.Plugins.Content.Actors
 {
     public sealed class ActorIdentifiers : IMacerusActorIdentifiers
     {
+        private const string DIRECTION_PLACEHOLDER = "$direction$";
+
         public IIdentifier FilterContextActorStatsIdentifier { get; } = new StringIdentifier("actor-stats");
 
         public IIdentifier ActorTypeIdentifier { get; } = new StringIdentifier("actor");
@@ -31,13 +33,19 @@ namespace Macerus.Plugins.Content.Actors
 
         public IIdentifier AnimationDeath { get; } = new StringIdentifier("$actor$_death");
 
-        public IIdentifier AnimationCastBack { get; } = new StringIdentifier("$actor$_cast_back");
+        public IIdentifier AnimationDirectionBack => new StringIdentifier("back");
 
-        public IIdentifier AnimationCastForward { get; } = new StringIdentifier("$actor$_cast_forward");
+        public IIdentifier AnimationDirectionForward => new StringIdentifier("forward");
 
-        public IIdentifier AnimationCastLeft { get; } = new StringIdentifier("$actor$_cast_left");
+        public IIdentifier AnimationDirectionLeft => new StringIdentifier("left");
 
-        public IIdentifier AnimationCastRight { get; } = new StringIdentifier("$actor$_cast_right");
+        public IIdentifier AnimationDirectionRight => new StringIdentifier("right");
+
+        public IIdentifier AnimationCast { get; } = new StringIdentifier($"$actor$_cast_{DIRECTION_PLACEHOLDER}");
+
+        public IIdentifier AnimationStrike { get; } = new StringIdentifier($"$actor$_strike_{DIRECTION_PLACEHOLDER}");
+
+        public IIdentifier AnimationDirectionPlaceholder => new StringIdentifier(DIRECTION_PLACEHOLDER);
 
         public IIdentifier CraftingInventoryIdentifier { get; } = new StringIdentifier("Crafting");
 

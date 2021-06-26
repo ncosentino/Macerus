@@ -214,19 +214,23 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalkForward;
             }
-            else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkRight) == true)
+            else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkRight) == true ||
+                (animationBehavior.BaseAnimationId == null && movementBehavior.Direction == 2))
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandRight;
             }
-            else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkLeft) == true)
+            else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkLeft) == true ||
+                (animationBehavior.BaseAnimationId == null && movementBehavior.Direction == 0))
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandLeft;
             }
-            else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkBack) == true)
+            else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkBack) == true ||
+                (animationBehavior.BaseAnimationId == null && movementBehavior.Direction == 1))
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandBack;
             }
-            else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkForward) == true)
+            else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkForward) == true ||
+                (animationBehavior.BaseAnimationId == null && movementBehavior.Direction == 3))
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandForward;
             }

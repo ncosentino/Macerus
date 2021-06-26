@@ -3,9 +3,12 @@
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Skills;
+using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
@@ -38,24 +41,27 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 return;
             }
 
-            // FIXME: check the behavior on the skill to see if we have an
-            // attack with a weapon or a casting action
+            if (!skill.TryGetFirst<IActorAnimationOnUseBehavior>(out var actorAnimationOnUseBehavior))
+            {
+                return;
+            }
 
+            IIdentifier directionReplacementId;
             if (movementBehavior.Direction == 0)
             {
-                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationCastLeft;
+                directionReplacementId = _actorIdentifiers.AnimationDirectionLeft;
             }
             else if (movementBehavior.Direction == 1)
             {
-                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationCastBack;
+                directionReplacementId = _actorIdentifiers.AnimationDirectionBack;
             }
             else if (movementBehavior.Direction == 2)
             {
-                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationCastRight;
+                directionReplacementId = _actorIdentifiers.AnimationDirectionRight;
             }
             else if (movementBehavior.Direction == 3)
             {
-                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationCastForward;
+                directionReplacementId = _actorIdentifiers.AnimationDirectionForward;
             }
             else
             {
@@ -64,6 +70,13 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                     $"direction of '{user}' based on their movement behavior " +
                     $"'{movementBehavior}' was {movementBehavior.Direction}.");
             }
+
+            var directionModifiedAnimationId = new StringIdentifier(
+                actorAnimationOnUseBehavior
+                .AnimationId
+                .ToString()
+                .Replace(_actorIdentifiers.AnimationDirectionPlaceholder.ToString(), directionReplacementId.ToString()));
+            animationBehavior.BaseAnimationId = directionModifiedAnimationId;
         }
     }
 }
