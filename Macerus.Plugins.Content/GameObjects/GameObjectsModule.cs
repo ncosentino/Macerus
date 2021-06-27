@@ -16,6 +16,7 @@ using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Shared.Framework;
+using Macerus.Plugins.Features.GameObjects.Containers.Api.LootDrops;
 
 namespace Macerus.Plugins.Content.GameObjects
 {
@@ -31,6 +32,7 @@ namespace Macerus.Plugins.Content.GameObjects
                 .Register(c => 
                 {
                     var gameObjectFactory = c.Resolve<IGameObjectFactory>();
+                    var lootDropIdentifiers = c.Resolve<ILootDropIdentifiers>();
                     return new InMemoryGameObjectTemplateRepository(
                         c.Resolve<IGameObjectIdentifiers>(),
                         c.Resolve<IAttributeFilterer>(),
@@ -67,7 +69,7 @@ namespace Macerus.Plugins.Content.GameObjects
                                 new HasPrefabResourceIdBehavior(new StringIdentifier("Mapping/Prefabs/static/rectangularencountertrigger")),
                                 new EncounterTriggerPropertiesBehavior(true, null, null, 0), // this should always be overriden
                             }),
-                            [new StringIdentifier("LootDrop")] = () => gameObjectFactory.Create(new IBehavior[]
+                            [lootDropIdentifiers.LootDropTemplateId] = () => gameObjectFactory.Create(new IBehavior[]
                             {
                                 new TypeIdentifierBehavior(new StringIdentifier("container")),
                                 new HasPrefabResourceIdBehavior(new StringIdentifier("Mapping/Prefabs/Container/LootDrop")),

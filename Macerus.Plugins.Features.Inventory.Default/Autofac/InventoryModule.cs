@@ -28,7 +28,9 @@ namespace Macerus.Plugins.Features.Inventory.Default.Autofac
                         x.Context.ResolveNamed<IItemToItemSlotViewModelConverter>(CONVERTER_NAME_BAG),
                         new DropToMapItemSet(
                             x.Context.Resolve<ILootDropFactory>(),
-                            x.Context.Resolve<IMapGameObjectManager>()),
+                            x.Context.Resolve<ILootDropIdentifiers>(),
+                            x.Context.Resolve<IMapGameObjectManager>(),
+                            x.Context.Resolve<IMapProvider>()),
                         x.Context.ResolveNamed<IItemSlotCollectionViewModel>(ITEM_SET_NAME_DROP_TO_MAP));
                     x.Instance.Register(dropToMapBinder);
                 });
