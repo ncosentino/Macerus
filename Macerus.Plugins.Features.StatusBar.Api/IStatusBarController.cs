@@ -2,12 +2,18 @@
 
 using Macerus.Plugins.Features.Gui.Api;
 
+using ProjectXyz.Api.GameObjects;
+
 namespace Macerus.Plugins.Features.StatusBar.Api
 {
     public interface IStatusBarController : IDiscoverableUserInterfaceUpdate
     {
-        Task ActivateSkillSlotAsync(int slotIndex);
+        Task ActivateSkillSlotAsync(
+            IGameObject actor,
+            int slotIndex);
 
-        Task PreviewSkillSlotAsync(int slotIndex);
+        Task PreviewSkillSlotAsync(
+            IGameObject actor,
+            int slotIndex);
     }
 }

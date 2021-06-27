@@ -126,15 +126,93 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             _statusBarViewModel.UpdateAbilities(abilityViewModels);
         }
 
+        public async Task ActivateSkillSlotAsync(
+            IGameObject actor,
+            int slotIndex)
+        {
+            // FIXME: we actually need to map the index to some sort of quick
+            // slot concept, not just full list of skills
+            var skills = actor
+                .GetOnly<IHasSkillsBehavior>()
+                .Skills
+                .ToArray();
+            var skill = skills[slotIndex];
+
+            if (!await _skillUsage
+                .CanUseSkillAsync(
+                    actor,
+                    skill)
+                .ConfigureAwait(false))
+            {
+                return;
+            }
+
+            _skillUsage.UseRequiredResources(
+                actor,
+                skill);
+            _skillHandlerFacade.Handle(
+                actor,
+                skill);
+            _turnBasedManager.SetApplicableObjects(new[] { actor });
+        }
+
+        public async Task PreviewSkillSlotAsync(
+            IGameObject actor,
+            int slotIndex)
+        {
+            var skillTargetLocations = new Dictionary<int, HashSet<Vector2>>();
+
+            // FIXME: we actually need to map the index to some sort of quick
+            // slot concept, not just full list of skills
+            var skills = actor
+                .GetOnly<IHasSkillsBehavior>()
+                .Skills
+                .ToArray();
+            var skill = skills[slotIndex];
+
+            if (!await _skillUsage
+                .CanUseSkillAsync(
+                    actor,
+                    skill)
+                .ConfigureAwait(false))
+            {
+                _mapTraversableHighlighter
+                    .Value
+                    .SetTargettedTiles(skillTargetLocations);
+                return;
+            }
+
+            foreach (var s in _skillAmenity.GetSkillsFromCombination(skill))
+            {
+                var targetsByTeam = _skillTargetingAmenity.FindTargetLocationsForSkill(
+                    actor,
+                    s);
+
+                if (!skillTargetLocations.ContainsKey(targetsByTeam.Item1))
+                {
+                    skillTargetLocations.Add(targetsByTeam.Item1, new HashSet<Vector2>());
+                }
+
+                foreach (var t in targetsByTeam.Item2)
+                {
+                    skillTargetLocations[targetsByTeam.Item1].Add(t);
+                }
+            }
+
+            _mapTraversableHighlighter
+                .Value
+                .SetTargettedTiles(skillTargetLocations);
+        }
+
         private async Task<List<IStatusBarResourceViewModel>> GetResourceViewModelsAsync(
-            IGameObject player,
+            IGameObject actor,
             IEnumerable<Tuple<IIdentifier, IIdentifier, IIdentifier>> currentAndMaxStatIdentifiers)
         {
             var resourcesViewModels = new List<IStatusBarResourceViewModel>();
 
             var resources = await _statCalculationServiceAmenity
                 .GetStatValuesAsync(
-                    player,
+                    actor,
                     currentAndMaxStatIdentifiers.SelectMany(x => new[] { x.Item1, x.Item2 }))
                 .ConfigureAwait(false);
 
@@ -142,7 +220,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             {
                 var resourceCurrent = resources[currentAndMaxIdentifiers.Item1];
                 var resourceMaximum = resources[currentAndMaxIdentifiers.Item2];
-                
+
                 // FIXME: make this a localized lookup!
                 var resourceName = currentAndMaxIdentifiers.Item3.ToString();
 
@@ -177,86 +255,6 @@ namespace Macerus.Plugins.Features.StatusBar.Default
 
             // we do this to respect the order of the skills
             return skills.Select(x => viewModels[x]).ToArray();
-        }
-
-        public async Task ActivateSkillSlotAsync(int slotIndex)
-        {
-            var player = _mapGameObjectManager
-                .GameObjects
-                .FirstOrDefault(x => x.Has<IPlayerControlledBehavior>());
-            // FIXME: we actually need to map the index to some sort of quick
-            // slot concept, not just full list of skills
-            var skills = player
-                .GetOnly<IHasSkillsBehavior>()
-                .Skills
-                .ToArray();
-            var skill = skills[slotIndex];
-
-            if (!await _skillUsage
-                .CanUseSkillAsync(
-                    player,
-                    skill)
-                .ConfigureAwait(false))
-            {
-                return;
-            }
-
-            _skillUsage.UseRequiredResources(
-                player,
-                skill);
-            _skillHandlerFacade.Handle(
-                player,
-                skill);
-            _turnBasedManager.SetApplicableObjects(new[] { player });
-        }
-
-        public async Task PreviewSkillSlotAsync(int slotIndex)
-        {
-            var skillTargetLocations = new Dictionary<int, HashSet<Vector2>>();
-
-            var player = _mapGameObjectManager
-                .GameObjects
-                .FirstOrDefault(x => x.Has<IPlayerControlledBehavior>());
-            // FIXME: we actually need to map the index to some sort of quick
-            // slot concept, not just full list of skills
-            var skills = player
-                .GetOnly<IHasSkillsBehavior>()
-                .Skills
-                .ToArray();
-            var skill = skills[slotIndex];
-
-            if (!await _skillUsage
-                .CanUseSkillAsync(
-                    player,
-                    skill)
-                .ConfigureAwait(false))
-            {
-                _mapTraversableHighlighter
-                    .Value
-                    .SetTargettedTiles(skillTargetLocations);
-                return;
-            }
-
-            foreach (var s in _skillAmenity.GetSkillsFromCombination(skill))
-            {
-                var targetsByTeam = _skillTargetingAmenity.FindTargetLocationsForSkill(
-                    player,
-                    s);
-
-                if (!skillTargetLocations.ContainsKey(targetsByTeam.Item1))
-                {
-                    skillTargetLocations.Add(targetsByTeam.Item1, new HashSet<Vector2>());
-                }
-
-                foreach (var t in targetsByTeam.Item2)
-                {
-                    skillTargetLocations[targetsByTeam.Item1].Add(t);
-                }
-            }
-
-            _mapTraversableHighlighter
-                .Value
-                .SetTargettedTiles(skillTargetLocations);
         }
     }
 }
