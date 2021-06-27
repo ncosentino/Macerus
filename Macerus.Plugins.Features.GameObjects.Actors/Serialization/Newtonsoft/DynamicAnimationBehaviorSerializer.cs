@@ -28,12 +28,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Serialization.Newtonsoft
         {
             var jsonObject = (JObject)deserializer.ReadObject(stream);
             var baseAnimationId = deserializer.Deserialize<IIdentifier>((JObject)jsonObject["BaseAnimationId"]);
-            var sourcePattern = jsonObject["SourcePattern"].ToString();
             var visible = jsonObject["Visible"].Value<bool>();
             var currentFrameIndex = jsonObject["CurrentFrameIndex"].Value<int>();
 
             var behavior = _dynamicAnimationBehaviorFactory.Create(
-                sourcePattern,
                 baseAnimationId,
                 visible,
                 currentFrameIndex);
@@ -55,7 +53,6 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Serialization.Newtonsoft
                     BaseAnimationId = serializer.GetObjectToSerialize(
                         behavior.BaseAnimationId,
                         visited),
-                    SourcePattern = behavior.SourcePattern,
                     Visible = behavior.Visible,
                     CurrentFrameIndex = behavior.CurrentFrameIndex,
                 });

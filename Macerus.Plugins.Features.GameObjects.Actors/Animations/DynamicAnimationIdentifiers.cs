@@ -1,6 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -9,7 +7,7 @@ using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Features.GameObjects.Actors
+namespace Macerus.Plugins.Features.GameObjects.Actors.Animations
 {
     public sealed class DynamicAnimationIdentifiers : IDynamicAnimationIdentifiers
     {

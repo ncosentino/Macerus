@@ -6,6 +6,7 @@ using Autofac;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.GameObjects.Actors;
+using Macerus.Plugins.Features.GameObjects.Actors.Animations;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
@@ -99,7 +100,6 @@ namespace Macerus.Plugins.Content.Actors
                                         new IdentifierBehavior(new StringIdentifier("player")),
                                         new HasDisplayNameBehavior("Player"),
                                         dynamicAnimationBehaviorFactory.Create(
-                                            "$actor$",
                                             new StringIdentifier(string.Empty),
                                             true,
                                             0),
@@ -160,7 +160,6 @@ namespace Macerus.Plugins.Content.Actors
                                         new IdentifierBehavior(new StringIdentifier(Guid.NewGuid().ToString())),
                                         new HasDisplayNameBehavior("Hired Help"),
                                         dynamicAnimationBehaviorFactory.Create(
-                                            "$actor$",
                                             new StringIdentifier(string.Empty),
                                             true,
                                             0),
@@ -216,7 +215,6 @@ namespace Macerus.Plugins.Content.Actors
                                     {
                                         new HasDisplayNameBehavior("Skeleton"),
                                         dynamicAnimationBehaviorFactory.Create(
-                                            "$actor$",
                                             new StringIdentifier(string.Empty),
                                             true,
                                             0),

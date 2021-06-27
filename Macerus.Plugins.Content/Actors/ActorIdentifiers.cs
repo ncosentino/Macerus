@@ -1,4 +1,7 @@
-﻿using Macerus.Plugins.Features.GameObjects.Actors.Api;
+﻿using System;
+using System.Collections.Generic;
+
+using Macerus.Plugins.Features.GameObjects.Actors.Api;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Shared.Framework;
@@ -8,6 +11,20 @@ namespace Macerus.Plugins.Content.Actors
     public sealed class ActorIdentifiers : IMacerusActorIdentifiers
     {
         private const string DIRECTION_PLACEHOLDER = "$direction$";
+        private const string ACTOR_PLACEHOLDER = "$actor$";
+
+        private readonly IReadOnlyDictionary<int, IIdentifier> _directionToAnimationId;
+
+        public ActorIdentifiers()
+        {
+             _directionToAnimationId = new Dictionary<int, IIdentifier>()
+             {
+                 [0] = AnimationDirectionLeft,
+                 [1] = AnimationDirectionBack,
+                 [2] = AnimationDirectionRight,
+                 [3] = AnimationDirectionForward,
+             };
+        }
 
         public IIdentifier FilterContextActorStatsIdentifier { get; } = new StringIdentifier("actor-stats");
 
@@ -15,23 +32,11 @@ namespace Macerus.Plugins.Content.Actors
 
         public IIdentifier ActorDefinitionIdentifier { get; } = new StringIdentifier("actor-id");
 
-        public IIdentifier AnimationStandBack { get; } = new StringIdentifier("$actor$_stand_back");
+        public IIdentifier AnimationStand { get; } = new StringIdentifier($"{ACTOR_PLACEHOLDER}_stand_{DIRECTION_PLACEHOLDER}");
 
-        public IIdentifier AnimationStandForward { get; } = new StringIdentifier("$actor$_stand_forward");
+        public IIdentifier AnimationWalk { get; } = new StringIdentifier($"{ACTOR_PLACEHOLDER}_walk_{DIRECTION_PLACEHOLDER}");
 
-        public IIdentifier AnimationStandLeft { get; } = new StringIdentifier("$actor$_stand_left");
-
-        public IIdentifier AnimationStandRight { get; } = new StringIdentifier("$actor$_stand_right");
-
-        public IIdentifier AnimationWalkBack { get; } = new StringIdentifier("$actor$_walk_back");
-
-        public IIdentifier AnimationWalkForward { get; } = new StringIdentifier("$actor$_walk_forward");
-
-        public IIdentifier AnimationWalkLeft { get; } = new StringIdentifier("$actor$_walk_left");
-
-        public IIdentifier AnimationWalkRight { get; } = new StringIdentifier("$actor$_walk_right");
-
-        public IIdentifier AnimationDeath { get; } = new StringIdentifier("$actor$_death");
+        public IIdentifier AnimationDeath { get; } = new StringIdentifier($"{ACTOR_PLACEHOLDER}_death");
 
         public IIdentifier AnimationDirectionBack => new StringIdentifier("back");
 
@@ -41,11 +46,13 @@ namespace Macerus.Plugins.Content.Actors
 
         public IIdentifier AnimationDirectionRight => new StringIdentifier("right");
 
-        public IIdentifier AnimationCast { get; } = new StringIdentifier($"$actor$_cast_{DIRECTION_PLACEHOLDER}");
+        public IIdentifier AnimationCast { get; } = new StringIdentifier($"{ACTOR_PLACEHOLDER}_cast_{DIRECTION_PLACEHOLDER}");
 
-        public IIdentifier AnimationStrike { get; } = new StringIdentifier($"$actor$_strike_{DIRECTION_PLACEHOLDER}");
+        public IIdentifier AnimationStrike { get; } = new StringIdentifier($"{ACTOR_PLACEHOLDER}_strike_{DIRECTION_PLACEHOLDER}");
 
         public IIdentifier AnimationDirectionPlaceholder => new StringIdentifier(DIRECTION_PLACEHOLDER);
+
+        public IIdentifier AnimationActorPlaceholder => new StringIdentifier(ACTOR_PLACEHOLDER);
 
         public IIdentifier CraftingInventoryIdentifier { get; } = new StringIdentifier("Crafting");
 
@@ -58,5 +65,18 @@ namespace Macerus.Plugins.Content.Actors
         public IIdentifier MoveDistancePerTurnCurrentStatDefinitionId { get; } = new StringIdentifier("current move distance per turn");
 
         public IIdentifier MoveDiagonallyStatDefinitionId { get; } = new StringIdentifier("move diagonally");
+
+        public IIdentifier GetAnimationDirectionId(int direction)
+        {
+            if (_directionToAnimationId.TryGetValue(
+                direction,
+                out var id))
+            {
+                return id;
+            }
+
+            throw new NotSupportedException(
+                $"Unsupported direction value of '{direction}'.");
+        }
     }
 }

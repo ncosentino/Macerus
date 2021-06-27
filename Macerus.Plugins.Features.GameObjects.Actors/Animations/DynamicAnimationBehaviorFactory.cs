@@ -5,39 +5,37 @@ using Macerus.Plugins.Features.Stats.Api;
 
 using ProjectXyz.Api.Framework;
 
-namespace Macerus.Plugins.Features.GameObjects.Actors
+namespace Macerus.Plugins.Features.GameObjects.Actors.Animations
 {
     public sealed class DynamicAnimationBehaviorFactory : IDynamicAnimationBehaviorFactory
     {
         private readonly ISpriteAnimationRepository _spriteAnimationProvider;
-        private readonly IAnimationReplacementPatternRepository _animationReplacementPatternRepository;
+        private readonly IAnimationIdReplacementFacade _animationIdReplacementFacade;
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
         private readonly IDynamicAnimationIdentifiers _dynamicAnimationIdentifiers;
 
         public DynamicAnimationBehaviorFactory(
             ISpriteAnimationRepository spriteAnimationProvider,
-            IAnimationReplacementPatternRepository animationReplacementPatternRepository,
+            IAnimationIdReplacementFacade animationIdReplacementFacade,
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
             IDynamicAnimationIdentifiers dynamicAnimationIdentifiers)
         {
             _spriteAnimationProvider = spriteAnimationProvider;
-            _animationReplacementPatternRepository = animationReplacementPatternRepository;
+            _animationIdReplacementFacade = animationIdReplacementFacade;
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
             _dynamicAnimationIdentifiers = dynamicAnimationIdentifiers;
         }
 
         public IDynamicAnimationBehavior Create(
-            string sourcePattern,
             IIdentifier baseAnimationId,
             bool visible,
             int currentFrameIndex)
         {
             var behavior = new DynamicAnimationBehavior(
                 _spriteAnimationProvider,
-                _animationReplacementPatternRepository,
+                _animationIdReplacementFacade,
                 _statCalculationServiceAmenity,
                 _dynamicAnimationIdentifiers,
-                sourcePattern,
                 baseAnimationId,
                 visible,
                 currentFrameIndex);

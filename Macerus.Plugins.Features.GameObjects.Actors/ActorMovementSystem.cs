@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Actors.Api;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
@@ -15,7 +16,6 @@ using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.TurnBased;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
@@ -23,7 +23,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
     public sealed class ActorMovementSystem : IDiscoverableSystem
     {
         private readonly IBehaviorFinder _behaviorFinder;
-        private readonly IActorIdentifiers _actorIdentifiers;
+        private readonly IMacerusActorIdentifiers _actorIdentifiers;
         private readonly ICombatTurnManager _combatTurnManager;
         private readonly IFilterContextProvider _filterContextProvider;
         private readonly ILogger _logger;
@@ -32,7 +32,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
 
         public ActorMovementSystem(
             IBehaviorFinder behaviorFinder,
-            IActorIdentifiers actorIdentifiers,
+            IMacerusActorIdentifiers actorIdentifiers,
             ICombatTurnManager combatTurnManager,
             IFilterContextProvider filterContextProvider,
             ILogger logger)
@@ -142,6 +142,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         private void UpdateDirection(
             IMovementBehavior movementBehavior)
         {
+            // we prioritize throttle to control the direction because it gives 
+            // superior feedback to the user that you're trying to move in a 
+            // particular direction over the direction you may actually have 
+            // velocity in. if there's no throttle we can rely on velocity.
             var throttleX = movementBehavior.ThrottleX;
             var throttleY = movementBehavior.ThrottleY;
             var velocityX = movementBehavior.VelocityX;
@@ -189,58 +193,27 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             IDynamicAnimationBehavior animationBehavior,
             double elapsedSeconds)
         {
-            // we use throttle to control the animation because it gives 
-            // superior feedback to the user that you're trying to move in a 
-            // particular direction over the direction you may actually have 
-            // velocity in. if there's no throttle we can rely on velocity.
             var throttleX = movementBehavior.ThrottleX;
             var throttleY = movementBehavior.ThrottleY;
             var velocityX = movementBehavior.VelocityX;
             var velocityY = movementBehavior.VelocityY;
 
-            if (throttleX > 0 || velocityX > 0)
+            var throttle = new Vector2((float)throttleX, (float)throttleY);
+            var velocity = new Vector2((float)velocityX, (float)velocityY);
+
+            if (throttle.LengthSquared() > 0 || velocity.LengthSquared() > 0)
             {
-                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalkRight;
+                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalk;
             }
-            else if (throttleX < 0 || velocityX < 0)
+            // we want to ensure there isn't some other animation
+            // playing, so really we only want to assign a new animation
+            // here if we WERE moving (i.e. animation is walk) since now
+            // we aren't anymore... but we don't want to cancel things
+            // like casting or attacking animations
+            else if (animationBehavior.BaseAnimationId == null ||
+                Equals(animationBehavior.BaseAnimationId, _actorIdentifiers.AnimationWalk))
             {
-                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalkLeft;
-            }
-            else if (throttleY > 0 || velocityY > 0)
-            {
-                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalkBack;
-            }
-            else if (throttleY < 0 || velocityY < 0)
-            {
-                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalkForward;
-            }
-            else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkRight) == true ||
-                (animationBehavior.BaseAnimationId == null && movementBehavior.Direction == 2))
-            {
-                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandRight;
-            }
-            else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkLeft) == true ||
-                (animationBehavior.BaseAnimationId == null && movementBehavior.Direction == 0))
-            {
-                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandLeft;
-            }
-            else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkBack) == true ||
-                (animationBehavior.BaseAnimationId == null && movementBehavior.Direction == 1))
-            {
-                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandBack;
-            }
-            else if (animationBehavior.BaseAnimationId?.Equals(_actorIdentifiers.AnimationWalkForward) == true ||
-                (animationBehavior.BaseAnimationId == null && movementBehavior.Direction == 3))
-            {
-                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandForward;
-            }
-            else if (animationBehavior.BaseAnimationId == null)
-            {
-                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandForward;
-                _logger.Warn(
-                    $"Switching animation to '{animationBehavior.BaseAnimationId}' " +
-                    $"on game object '{animationBehavior.Owner}' because the " +
-                    $"animation ID was unset.");
+                animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStand;
             }
         }
 

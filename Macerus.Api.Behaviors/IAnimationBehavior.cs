@@ -4,7 +4,7 @@ namespace Macerus.Api.Behaviors
 {
     public interface IAnimationBehavior : IReadOnlyAnimationBehavior
     {
-        new IIdentifier CurrentAnimationId { get; set; }
+        new IIdentifier BaseAnimationId { get; set; }
 
         new bool Visible { get; set; }
     }

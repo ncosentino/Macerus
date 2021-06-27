@@ -20,5 +20,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Api
         IIdentifier AnimationCast { get; }
 
         IIdentifier AnimationStrike { get; }
+
+        IIdentifier AnimationActorPlaceholder { get; }
+
+        IIdentifier GetAnimationDirectionId(int direction);
     }
 }

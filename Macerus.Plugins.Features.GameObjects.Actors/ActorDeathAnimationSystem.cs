@@ -70,7 +70,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                     _combatStatIdentifiers.CurrentLifeStatId);
                 if (currentLife <= 0)
                 {
-                    entry.Item2.CurrentAnimationId = _actorIdentifiers.AnimationDeath;
+                    entry.Item2.BaseAnimationId = _actorIdentifiers.AnimationDeath;
                 }
             }
         }

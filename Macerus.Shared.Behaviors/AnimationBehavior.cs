@@ -15,14 +15,14 @@ namespace Macerus.Shared.Behaviors
         }
 
         public AnimationBehavior(
-            IIdentifier currentAnimationId,
+            IIdentifier baseAnimationId,
             bool visible)
         {
-            CurrentAnimationId = currentAnimationId;
+            BaseAnimationId = baseAnimationId;
             Visible = visible;
         }
 
-        public IIdentifier CurrentAnimationId { get; set; }
+        public IIdentifier BaseAnimationId { get; set; }
 
         public bool Visible { get; set; }
     }

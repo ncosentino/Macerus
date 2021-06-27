@@ -57,8 +57,9 @@ namespace Macerus.Headless
         public async Task Go(MacerusContainer container)
         {
             var player = CreatePlayerInstance(container);
-            player.GetOnly<IMovementBehavior>().Direction = 3;
-            player.GetOnly<IDynamicAnimationBehavior>().BaseAnimationId = new StringIdentifier("$actor$_cast_right");
+            var movementBehavior = player.GetOnly<IMovementBehavior>();
+            movementBehavior.Direction = 3;
+            player.GetOnly<IDynamicAnimationBehavior>().BaseAnimationId = container.Resolve<IMacerusActorIdentifiers>().AnimationStand;
 
             container.Resolve<IGameObjectRepository>().Save(player);
             container.Resolve<IRosterManager>().AddToRoster(player);
@@ -70,6 +71,7 @@ namespace Macerus.Headless
             var gameEngine = container.Resolve<IGameEngine>();
             while (true)
             {
+                movementBehavior.SetThrottle(1, 0);
                 await gameEngine.UpdateAsync();
             }
         }

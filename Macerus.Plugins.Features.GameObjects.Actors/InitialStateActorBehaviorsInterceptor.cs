@@ -4,21 +4,16 @@ using Macerus.Api.Behaviors;
 
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Api.Stats;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors
 {
     public sealed class InitialStateActorBehaviorsInterceptor : IDiscoverableActorBehaviorsInterceptor
     {
-        private readonly IReadOnlyStatDefinitionToTermMappingRepositoryFacade _statDefinitionToTermMappingRepository;
         private readonly IActorIdentifiers _actorIdentifiers;
 
-        public InitialStateActorBehaviorsInterceptor(
-            IReadOnlyStatDefinitionToTermMappingRepositoryFacade statDefinitionToTermMappingRepository,
-            IActorIdentifiers actorIdentifiers)
+        public InitialStateActorBehaviorsInterceptor(IActorIdentifiers actorIdentifiers)
         {
-            _statDefinitionToTermMappingRepository = statDefinitionToTermMappingRepository;
             _actorIdentifiers = actorIdentifiers;
         }
 
@@ -27,7 +22,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         IEnumerable<IBehavior> IActorBehaviorsInterceptor.Intercept(IReadOnlyCollection<IBehavior> behaviors)
         {
             var dynamicAnimationBehavior = behaviors.GetOnly<IDynamicAnimationBehavior>();
-            dynamicAnimationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStandForward;
+            var movementBehavior = behaviors.GetOnly<IMovementBehavior>();
+            movementBehavior.Direction = 3;
+            dynamicAnimationBehavior.BaseAnimationId = _actorIdentifiers.AnimationStand;
             return behaviors;
         }
     }

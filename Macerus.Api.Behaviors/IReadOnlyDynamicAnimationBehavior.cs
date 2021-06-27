@@ -12,8 +12,6 @@ namespace Macerus.Api.Behaviors
 
         ISpriteAnimationFrame CurrentFrame { get; }
 
-        string SourcePattern { get; }
-
         int CurrentFrameIndex { get; }
 
         Task<IAnimationMultipliers> GetAnimationMultipliersAsync();
