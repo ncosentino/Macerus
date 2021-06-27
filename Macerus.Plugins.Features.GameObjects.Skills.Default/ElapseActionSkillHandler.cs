@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using Macerus.Plugins.Features.GameObjects.Skills.Api;
+using Macerus.Plugins.Features.GameObjects.Skills;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.TurnBased;

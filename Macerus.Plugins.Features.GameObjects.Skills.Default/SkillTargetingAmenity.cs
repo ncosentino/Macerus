@@ -5,7 +5,7 @@ using System.Numerics;
 
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Combat.Api;
-using Macerus.Plugins.Features.GameObjects.Skills.Api;
+using Macerus.Plugins.Features.GameObjects.Skills;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
@@ -15,7 +15,6 @@ using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
-
     public sealed class SkillTargetingAmenity : ISkillTargetingAmenity
     {
         private readonly ICombatTeamIdentifiers _combatTeamIdentifiers;
@@ -29,7 +28,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             _mapGameObjectManager = mapGameObjectManager;
         }
 
-        public IEnumerable<IGameObject> FindTargetsForSkill(
+        public IEnumerable<IGameObject> FindTargetsForSkillEffect(
             IGameObject user,
             IGameObject skill)
         {
@@ -69,13 +68,13 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             return targets;
         }
 
-        public Tuple<int, IEnumerable<Vector2>> FindTargetLocationsForSkill(
+        public Tuple<int, IEnumerable<Vector2>> FindTargetLocationsForSkillEffect(
             IGameObject user,
-            IGameObject skill)
+            IGameObject skillEffect)
         {
-            if (!skill.TryGetFirst<ITargetPatternBehavior>(out var targetPatternBehavior) ||
-                !skill.TryGetFirst<ITargetOriginBehavior>(out var targetOriginBehavior) ||
-                !skill.TryGetFirst<ITargetCombatTeamBehavior>(out var targetCombatTeam))
+            if (!skillEffect.TryGetFirst<ITargetPatternBehavior>(out var targetPatternBehavior) ||
+                !skillEffect.TryGetFirst<ITargetOriginBehavior>(out var targetOriginBehavior) ||
+                !skillEffect.TryGetFirst<ITargetCombatTeamBehavior>(out var targetCombatTeam))
             {
                 return Tuple.Create(-1, Enumerable.Empty<Vector2>());
             }

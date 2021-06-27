@@ -1,8 +1,9 @@
-﻿using ProjectXyz.Api.Framework;
+﻿
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Features.GameObjects.Skills.Default
+namespace Macerus.Plugins.Content.Skills
 {
     public sealed class SkillIdentifiers : ISkillIdentifiers
     {

@@ -16,7 +16,7 @@
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.8" />
-    <PackageReference Include="NexusLabs.Contracts" Version="0.0.3" />
+    <PackageReference Include="NexusLabs.Contracts" Version="0.0.4" />
     <PackageReference Include="NexusLabs.Framework" Version="0.0.10" />
     <PackageReference Include="ProjectXyz" Version="1.0.*" />
   </ItemGroup>
@@ -30,7 +30,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Api\Macerus.Plugins.Features.Combat.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments\Macerus.Plugins.Features.GameObjects.Enchantments.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Skills.Api\Macerus.Plugins.Features.GameObjects.Skills.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Stats.Api\Macerus.Plugins.Features.Stats.Api.csproj" />
   </ItemGroup>
 </Project>

@@ -17,7 +17,7 @@ using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Default;
 using Macerus.Plugins.Features.GameObjects.Actors.Default.AI;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
-using Macerus.Plugins.Features.GameObjects.Skills.Api;
+using Macerus.Plugins.Features.GameObjects.Skills;
 using Macerus.Plugins.Features.Interactions.Api;
 using Macerus.Plugins.Features.MainMenu.Default.NewGame;
 using Macerus.Plugins.Features.Scripting;
@@ -49,7 +49,7 @@ namespace Macerus.Headless
         public static async Task Main(string[] args)
         {
             var container = new MacerusContainer();
-            await new ScriptExercise().Go(container);
+            await new SkillCastExercise().Go(container);
         }
     }
 
@@ -66,7 +66,7 @@ namespace Macerus.Headless
 
     using Macerus.Headless;
     using Macerus.Plugins.Features.Scripting;
-    using Macerus.Plugins.Features.GameObjects.Skills.Api;
+    using Macerus.Plugins.Features.GameObjects.Skills;
 
     namespace The.Name.Space
     {
@@ -485,7 +485,7 @@ namespace Macerus.Headless
                     playerMovement.Direction = 1;
                     logger.Info($"Player turned to direction {playerMovement.Direction} to cast");
                     await skillHandlerFacade
-                        .HandleAsync(player, skill)
+                        .HandleSkillAsync(player, skill)
                         .ConfigureAwait(false);
 
                     keepRunning = false;

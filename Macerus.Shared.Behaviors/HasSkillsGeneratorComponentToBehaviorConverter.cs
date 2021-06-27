@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Macerus.Plugins.Features.GameObjects.Skills.Api;
+using Macerus.Plugins.Features.GameObjects.Skills;
 
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;

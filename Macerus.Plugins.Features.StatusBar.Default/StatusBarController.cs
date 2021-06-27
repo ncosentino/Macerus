@@ -5,7 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 
-using Macerus.Plugins.Features.GameObjects.Skills.Api;
+using Macerus.Plugins.Features.GameObjects.Skills;
 using Macerus.Plugins.Features.Mapping;
 using Macerus.Plugins.Features.Stats.Api;
 using Macerus.Plugins.Features.StatusBar.Api;
@@ -111,33 +111,28 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 return;
             }
 
-            var player = _lazyRosterManager.Value.ActiveControlledActor;
-            if (player == null)
+            var actor = _lazyRosterManager.Value.ActiveControlledActor;
+            if (actor == null)
             {
                 return;
             }
 
             var resourcesViewModels = await GetResourceViewModelsAsync(
-                player,
+                actor,
                 _lazyCurrentAndMaxResourceIdentifiers.Value)
                 .ConfigureAwait(false);
 
             _statusBarViewModel.UpdateResource(resourcesViewModels.First(), true);
             _statusBarViewModel.UpdateResource(resourcesViewModels.Last(), false);
 
-            var skills = player
-                .GetOnly<IHasSkillsBehavior>()
-                .Skills
-                .Where(x => !x.Has<IHasEnchantmentsBehavior>())
-                .ToArray();
+            var skills = GetSimulatedQuickSlotSkills(actor).ToArray();
             var abilityViewModels = await CreateAbilityViewModelsAsync(
-                player, 
+                actor, 
                 skills)
                 .ConfigureAwait(false);
-
             _statusBarViewModel.UpdateAbilities(abilityViewModels);
 
-            _statusBarViewModel.CanCompleteTurn = await GetCanCompleteTurn(player)
+            _statusBarViewModel.CanCompleteTurn = await GetCanCompleteTurnAsync(actor)
                 .ConfigureAwait(false);
         }
 
@@ -145,18 +140,12 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             IGameObject actor,
             int slotIndex)
         {
-            // FIXME: we actually need to map the index to some sort of quick
-            // slot concept, not just full list of skills
-            var skills = actor
-                .GetOnly<IHasSkillsBehavior>()
-                .Skills
-                .ToArray();
-            if (slotIndex < 0 || slotIndex >= skills.Length)
+            var skill = GetSimulatedQuickSlotSkill(actor, slotIndex);
+            if (skill == null)
             {
                 return;
             }
 
-            var skill = skills[slotIndex];
             if (!await _skillUsage
                 .CanUseSkillAsync(
                     actor,
@@ -170,7 +159,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 actor,
                 skill);
             await _skillHandlerFacade
-                .HandleAsync(
+                .HandleSkillAsync(
                     actor,
                     skill)
                 .ConfigureAwait(false);
@@ -189,19 +178,13 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             IGameObject actor,
             int slotIndex)
         {
-            // FIXME: we actually need to map the index to some sort of quick
-            // slot concept, not just full list of skills
-            var skills = actor
-                .GetOnly<IHasSkillsBehavior>()
-                .Skills
-                .ToArray();
-            if (slotIndex < 0 || slotIndex >= skills.Length)
+            var skill = GetSimulatedQuickSlotSkill(actor, slotIndex);
+            if (skill == null)
             {
                 return;
             }
 
-            var skill = skills[slotIndex];
-            var skillTargetLocations = new Dictionary<int, HashSet<Vector2>>();
+            var skillEffectTargetLocations = new Dictionary<int, HashSet<Vector2>>();
 
             if (!await _skillUsage
                 .CanUseSkillAsync(
@@ -211,33 +194,60 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             {
                 _mapTraversableHighlighter
                     .Value
-                    .SetTargettedTiles(skillTargetLocations);
+                    .SetTargettedTiles(skillEffectTargetLocations);
                 return;
             }
 
-            foreach (var s in _skillAmenity.GetSkillsFromCombination(skill))
+            foreach (var skillEffect in _skillAmenity.GetAllSkillEffects(skill))
             {
-                var targetsByTeam = _skillTargetingAmenity.FindTargetLocationsForSkill(
+                var targetsByTeam = _skillTargetingAmenity.FindTargetLocationsForSkillEffect(
                     actor,
-                    s);
+                    skillEffect);
 
-                if (!skillTargetLocations.ContainsKey(targetsByTeam.Item1))
+                if (!skillEffectTargetLocations.ContainsKey(targetsByTeam.Item1))
                 {
-                    skillTargetLocations.Add(targetsByTeam.Item1, new HashSet<Vector2>());
+                    skillEffectTargetLocations.Add(targetsByTeam.Item1, new HashSet<Vector2>());
                 }
 
                 foreach (var t in targetsByTeam.Item2)
                 {
-                    skillTargetLocations[targetsByTeam.Item1].Add(t);
+                    skillEffectTargetLocations[targetsByTeam.Item1].Add(t);
                 }
             }
 
             _mapTraversableHighlighter
                 .Value
-                .SetTargettedTiles(skillTargetLocations);
+                .SetTargettedTiles(skillEffectTargetLocations);
         }
 
-        private async Task<bool> GetCanCompleteTurn(IGameObject actor)
+        private IEnumerable<IGameObject> GetSimulatedQuickSlotSkills(IGameObject actor)
+        {
+            var skills = actor
+                .GetOnly<IHasSkillsBehavior>()
+                .Skills
+                // FIXME: we just need this filter here for now since we don't
+                // actuallt have an assignable quick-slot concept and therefor
+                // need to skip over passives for now
+                .Where(x => !_skillAmenity.IsPurelyPassiveSkill(x));
+            return skills;
+        }
+
+        private IGameObject GetSimulatedQuickSlotSkill(
+            IGameObject actor,
+            int slotIndex)
+        {
+            // FIXME: we actually need to map the index to some sort of quick
+            // slot concept, not just full list of skills
+            var skills = GetSimulatedQuickSlotSkills(actor).ToArray();
+            if (slotIndex < 0 || slotIndex >= skills.Length)
+            {
+                return null;
+            }
+
+            return skills[slotIndex];
+        }
+
+        private async Task<bool> GetCanCompleteTurnAsync(IGameObject actor)
         {
             if (!_lazyCombatTurnManager.Value.InCombat)
             {

@@ -9,7 +9,7 @@ using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Default;
 using Macerus.Plugins.Features.GameObjects.Actors.Default.Animations;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
-using Macerus.Plugins.Features.GameObjects.Skills.Api;
+using Macerus.Plugins.Features.GameObjects.Skills;
 using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Framework;
@@ -121,7 +121,6 @@ namespace Macerus.Plugins.Content.Actors
                                 {
                                     [new StringIdentifier("default-attack")] = 1,
                                     [new StringIdentifier("default-defend")] = 1,
-                                    [new StringIdentifier("default-pass")] = 1,
                                     [new StringIdentifier("heal")] = 1,
                                     [new StringIdentifier("fireball")] = 1,
                                     [new StringIdentifier("passive-green-glow")] = 1,
@@ -179,7 +178,6 @@ namespace Macerus.Plugins.Content.Actors
                                 {
                                     [new StringIdentifier("default-attack")] = 1,
                                     [new StringIdentifier("default-defend")] = 1,
-                                    [new StringIdentifier("default-pass")] = 1,
                                     [new StringIdentifier("fireball")] = 1,
                                 }),
                                 new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
@@ -248,7 +246,6 @@ namespace Macerus.Plugins.Content.Actors
                                 {
                                     [new StringIdentifier("default-attack")] = 1,
                                     [new StringIdentifier("default-defend")] = 1,
-                                    [new StringIdentifier("default-pass")] = 1,
                                 }),
                                 new SpawnWithItemsGeneratorComponent(new StringIdentifier("test-skeleton-drop")),
                                 new SpawnWithEquipmentGeneratorComponent(

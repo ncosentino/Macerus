@@ -21,15 +21,15 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<EnchantTargetsSkillHandler>()
+                .RegisterType<EnchantTargetsSkillEffectHandler>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<AnimateSkillUserSkillHandler>()
+                .RegisterType<AnimateSkillUserSkillEffectHandler>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<InflictDamageSkillHandler>()
+                .RegisterType<InflictDamageSkillEffectHandler>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder

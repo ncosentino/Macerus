@@ -1,4 +1,4 @@
-﻿namespace Macerus.Plugins.Features.GameObjects.Skills.Api
+﻿namespace Macerus.Plugins.Features.GameObjects.Skills
 {
     public interface IDiscoverableSkillHandler : ISkillHandler
     {

@@ -2,20 +2,19 @@
 using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
-using Macerus.Plugins.Features.GameObjects.Skills.Api;
+using Macerus.Plugins.Features.GameObjects.Skills;
 
 using NexusLabs.Contracts;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
+using ProjectXyz.Plugins.Features.GameObjects.Skills.Effects;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
-
     public sealed class SkillAmenity : ISkillAmenity
     {
         private readonly ISkillIdentifiers _skillIdentifiers;
@@ -51,42 +50,24 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             return skills.Single();
         }
 
-        public IEnumerable<IGameObject> GetSkillsFromCombination(IGameObject skill)
+        public bool IsPurelyPassiveSkill(IGameObject skill)
         {
-            var skillQueue = new Queue<IGameObject>(new[]
+            var passive = GetAllSkillEffects(skill).All(x => x.Has<IPassiveSkillEffectBehavior>());
+            return passive;
+        }
+
+        public IEnumerable<IGameObject> GetAllSkillEffects(IGameObject skill)
+        {
+            var skillEffectBehavior = skill.GetOnly<ISkillEffectBehavior>();
+
+            foreach (var executor in skillEffectBehavior.EffectExecutors)
             {
-                skill
-            });
-
-            var visited = new HashSet<IIdentifier>();
-            while (skillQueue.Count > 0)
-            {
-                var currentSkill = skillQueue.Dequeue();
-                var skillId = currentSkill.GetOnly<IReadOnlyIdentifierBehavior>().Id;
-                if (visited.Contains(skillId))
+                foreach (var executorBehavior in executor.Get<ISkillEffectExecutorBehavior>())
                 {
-                    continue;
-                }
-
-                visited.Add(skillId);
-
-                var leafNode = true;
-                if (currentSkill.TryGetFirst<ICombinationSkillBehavior>(out var combinationBehavior))
-                {
-                    foreach (var skillExecutor in combinationBehavior.SkillExecutors)
+                    foreach (var skillEffect in executorBehavior.Effects)
                     {
-                        foreach (var subSkillId in skillExecutor.SkillIdentifiers)
-                        {
-                            var subSkill = GetSkillById(subSkillId);
-                            skillQueue.Enqueue(subSkill);
-                            leafNode = false;
-                        }
+                        yield return skillEffect;
                     }
-                }
-
-                if (leafNode)
-                {
-                    yield return currentSkill;
                 }
             }
         }

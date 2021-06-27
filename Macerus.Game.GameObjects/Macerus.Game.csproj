@@ -19,7 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.8" />
-    <PackageReference Include="NexusLabs.Contracts" Version="0.0.3" />
+    <PackageReference Include="NexusLabs.Contracts" Version="0.0.4" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ProjectXyz.Api.Framework">

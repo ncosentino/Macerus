@@ -2,11 +2,11 @@
 
 using ProjectXyz.Api.GameObjects;
 
-namespace Macerus.Plugins.Features.GameObjects.Skills.Api
+namespace Macerus.Plugins.Features.GameObjects.Skills
 {
-    public interface ISkillHandler
+    public interface ISkillHandlerFacade
     {
-        Task HandleAsync(
+        Task HandleSkillAsync(
             IGameObject user,
             IGameObject skill);
     }

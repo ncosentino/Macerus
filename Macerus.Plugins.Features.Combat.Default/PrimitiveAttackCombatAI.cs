@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.GameObjects.Actors;
-using Macerus.Plugins.Features.GameObjects.Skills.Api;
+using Macerus.Plugins.Features.GameObjects.Skills;
 using Macerus.Plugins.Features.Stats.Api;
 
 using NexusLabs.Contracts;
@@ -124,13 +124,16 @@ namespace Macerus.Plugins.Features.Combat.Default
             var skills = actor
                 .GetOnly<IHasSkillsBehavior>()
                 .Skills;
+
+            // find the first skill that can be used in combat with any
+            // effect that inflicts damage
             var firstUsableSkill = skills
-                .FirstOrDefault(s => _lazySkillAmenity
-                    .Value
-                    .GetSkillsFromCombination(s)
-                    .Any(sc =>
-                        sc.Has<IInflictDamageBehavior>() &&
-                        sc.Has<IUseInCombatBehavior>()));
+                .FirstOrDefault(s => 
+                    s.Has<IUseInCombatBehavior>() &&
+                    _lazySkillAmenity
+                        .Value
+                        .GetAllSkillEffects(s)
+                        .Any(skillEffect => skillEffect.Has<IInflictDamageBehavior>()));
             if (firstUsableSkill == null)
             {
                 _logger.Info(
@@ -154,7 +157,7 @@ namespace Macerus.Plugins.Features.Combat.Default
 
             await _lazySkillHandlerFacade
                 .Value
-                .HandleAsync(
+                .HandleSkillAsync(
                     actor,
                     firstUsableSkill)
                 .ConfigureAwait(false);

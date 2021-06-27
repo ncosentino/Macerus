@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-using Macerus.Plugins.Features.GameObjects.Skills.Api;
+using Macerus.Plugins.Features.GameObjects.Skills;
 
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.GameObjects;
@@ -10,13 +10,13 @@ using ProjectXyz.Plugins.Features.GameObjects.Skills;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
-    public sealed class EnchantTargetsSkillHandler : IDiscoverableSkillHandler
+    public sealed class EnchantTargetsSkillEffectHandler : IDiscoverableSkillEffectHandler
     {
         private readonly ILogger _logger;
         private readonly IEnchantmentLoader _enchantmentLoader;
         private readonly ISkillTargetingAmenity _skillTargetingAmenity;
 
-        public EnchantTargetsSkillHandler(
+        public EnchantTargetsSkillEffectHandler(
             ILogger logger,
             IEnchantmentLoader enchantmentLoader,
             ISkillTargetingAmenity skillTargetingAmenity)
@@ -30,27 +30,24 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 
         public async Task HandleAsync(
             IGameObject user,
-            IGameObject skill)
+            IGameObject skillEffect)
         {
-            if (!skill.TryGetFirst<IApplyEnchantmentsBehavior>(out var enchantTargetsBehavior))
+            if (!skillEffect.TryGetFirst<IApplyEnchantmentsBehavior>(out var enchantTargetsBehavior))
             {
                 return;
             }
 
             var statefulEnchantments = _enchantmentLoader
                 .LoadForEnchantmenDefinitionIds(enchantTargetsBehavior.EnchantmentDefinitionIds);
-
-            var skillName = skill.GetOnly<IIdentifierBehavior>();
-            var skillTargets = _skillTargetingAmenity.FindTargetsForSkill(
+            var skillTargets = _skillTargetingAmenity.FindTargetsForSkillEffect(
                 user,
-                skill);
+                skillEffect);
 
             foreach (var target in skillTargets)
             {
                 var targetEnchantmentsBehavior = target.GetOnly<IHasEnchantmentsBehavior>();
                 targetEnchantmentsBehavior.AddEnchantments(statefulEnchantments);
-
-                _logger.Debug($"{user} enchanted {target} using skill {skillName.Id}.");
+                _logger.Debug($"{user} enchanted {target} using skill effect '{skillEffect}'.");
             }
         }
     }

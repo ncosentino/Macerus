@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Triggers;
-using Macerus.Plugins.Features.GameObjects.Skills.Api;
+using Macerus.Plugins.Features.GameObjects.Skills;
 using Macerus.Plugins.Features.Stats.Api;
 
 using ProjectXyz.Api.Enchantments.Stats;
@@ -16,7 +16,7 @@ using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
-    public sealed class InflictDamageSkillHandler : IDiscoverableSkillHandler
+    public sealed class InflictDamageSkillEffectHandler : IDiscoverableSkillEffectHandler
     {
         private readonly ICombatStatIdentifiers _combatStatIdentifiers;
         private readonly ISkillTargetingAmenity _skillTargetingAmenity;
@@ -25,7 +25,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
         private readonly ILogger _logger;
         private readonly IHitTriggerMechanicSource _hitTriggerMechanicSource;
 
-        public InflictDamageSkillHandler(
+        public InflictDamageSkillEffectHandler(
             ICombatStatIdentifiers combatStatIdentifiers,
             ISkillTargetingAmenity skillTargetingAmenity,
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
@@ -45,9 +45,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 
         public async Task HandleAsync(
             IGameObject user,
-            IGameObject skill)
+            IGameObject skillEffect)
         {
-            if (!skill.TryGetFirst<IInflictDamageBehavior>(out var inflictDamageBehavior))
+            if (!skillEffect.TryGetFirst<IInflictDamageBehavior>(out var inflictDamageBehavior))
             {
                 return;
             }
@@ -61,10 +61,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                     Enumerable.Empty<IComponent>(),
                     userEnchantments.Enchantments));
 
-            var skillName = skill.GetOnly<IIdentifierBehavior>();
-            var skillTargets = _skillTargetingAmenity.FindTargetsForSkill(
+            var skillTargets = _skillTargetingAmenity.FindTargetsForSkillEffect(
                 user, 
-                skill);
+                skillEffect);
 
             foreach (var target in skillTargets)
             {
@@ -77,12 +76,12 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 var targetStatsBehavior = target.GetOnly<IHasMutableStatsBehavior>();
                 targetStatsBehavior.MutateStats(targetStats => targetStats[_combatStatIdentifiers.CurrentLifeStatId] -= totalDamage);
 
-                _logger.Debug($"{user} inflicted {totalDamage} ({damageStats} - {resistStats}) to {target} using {skillName.Id}");
+                _logger.Debug($"{user} inflicted {totalDamage} ({damageStats} - {resistStats}) to {target} using skill effect '{skillEffect}'");
                 await _hitTriggerMechanicSource
                     .ActorHitTriggeredAsync(
                         user,
                         target,
-                        skill)
+                        skillEffect)
                     .ConfigureAwait(false);
             }
         }

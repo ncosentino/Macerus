@@ -67,7 +67,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Ga
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Skills", "Skills", "{86014C1C-18FA-4FC5-B76C-0FFD8D2A3E19}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Skills.Default", "Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.Default.csproj", "{0E65B42E-E2B3-4C8F-B47A-D896FE0D1B39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Skills.Default", "Macerus.Plugins.Features.GameObjects.Skills.Default\Macerus.Plugins.Features.GameObjects.Skills.Default.csproj", "{0E65B42E-E2B3-4C8F-B47A-D896FE0D1B39}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Enchantments", "Macerus.Plugins.Features.GameObjects.Enchantments\Macerus.Plugins.Features.GameObjects.Enchantments.csproj", "{F747205A-630F-42CC-ACEF-2766D71CE2BB}"
 EndProject
@@ -115,7 +115,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Ga
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Combat.Api", "Macerus.Plugins.Features.Combat.Api\Macerus.Plugins.Features.Combat.Api.csproj", "{A4D54C37-D8E4-479C-8004-B029D7A3ED68}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Skills.Api", "Macerus.Plugins.Features.GameObjects.Skills.Api\Macerus.Plugins.Features.GameObjects.Skills.Api.csproj", "{BAA67D56-CAFB-4A18-90A3-0EB097FD90C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Skills", "Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.csproj", "{BAA67D56-CAFB-4A18-90A3-0EB097FD90C4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Inventory", "Inventory", "{B94F2FF0-9DA5-44F6-BDA6-FE49EBEF391D}"
 EndProject
@@ -229,9 +229,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Pa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripting", "Scripting", "{64A34C60-99CB-4202-8240-E934D1F38070}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Scripting", "Macerus.Plugins.Features.Scripting\Macerus.Plugins.Features.Scripting.csproj", "{65BD2317-85A2-4E04-9F24-321C787E2A91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Scripting", "Macerus.Plugins.Features.Scripting\Macerus.Plugins.Features.Scripting.csproj", "{65BD2317-85A2-4E04-9F24-321C787E2A91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Scripting.Default", "Macerus.Plugins.Features.Scripting.Default\Macerus.Plugins.Features.Scripting.Default.csproj", "{475837BF-1158-4977-811E-9415BE4C27F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Scripting.Default", "Macerus.Plugins.Features.Scripting.Default\Macerus.Plugins.Features.Scripting.Default.csproj", "{475837BF-1158-4977-811E-9415BE4C27F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

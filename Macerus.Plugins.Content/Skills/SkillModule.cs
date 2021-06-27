@@ -4,11 +4,11 @@ using System.Linq;
 using Autofac;
 
 using Macerus.Plugins.Features.GameObjects.Actors;
-using Macerus.Plugins.Features.GameObjects.Skills.Default;
 
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
+using ProjectXyz.Plugins.Features.GameObjects.Skills.Effects;
 
 namespace Macerus.Plugins.Content.Skills
 {
@@ -26,47 +26,51 @@ namespace Macerus.Plugins.Content.Skills
                             .FromId("default-attack")
                             .WithDisplayName("Attack")
                             .WithDisplayIcon(@"graphics\skills\default-attack")
-                            .Enchant("default-attack")
-                            .InflictDamage()
-                            .CanBeUsedInCombat()
-                            .StartsAtOffsetFromUser(0, 0)
-                            .TargetsPattern(
-                                Tuple.Create(0, 1))
-                            .AffectsTeams(1)
                             .WithActorAnimation(actorIdentifiers.AnimationStrike)
-                            .End(),
+                            .CanBeUsedInCombat()
+                            .HasEffects(
+                                SkillEffectExecutors.Single(
+                                    SkillEffectDefinition
+                                        .New
+                                        .InflictDamage()
+                                        .Enchant("default-attack")
+                                        .Targets(
+                                            new [] { 1 },
+                                            Tuple.Create(0, 0),
+                                            Tuple.Create(0, 1)))),
                         SkillDefinition
                             .FromId("default-defend")
                             .WithDisplayName("Defend")
                             .WithDisplayIcon(@"graphics\skills\default-defend")
-                            .Enchant("increase-armor")
-                            .CanBeUsedInCombat()
-                            .StartsAtOffsetFromUser(0, 0)
-                            .TargetsPattern(
-                                Tuple.Create(0,0))
-                            .AffectsTeams(0)
                             .WithActorAnimation(actorIdentifiers.AnimationStrike) // FIXME: wrong animation
-                            .End(),
-                        SkillDefinition
-                            .FromId("default-pass")
-                            .WithDisplayName("Pass")
-                            .WithDisplayIcon(@"graphics\skills\default-pass")
                             .CanBeUsedInCombat()
-                            //.WithActorAnimation(xxx) no animation for passing?
-                            .End(),
+                            .HasEffects(
+                                SkillEffectExecutors.Single(
+                                    SkillEffectDefinition
+                                        .New
+                                        .InflictDamage()
+                                        .Enchant("increase-armor")
+                                        .Targets(
+                                            new [] { 0 },
+                                            Tuple.Create(0, 0),
+                                            Tuple.Create(0, 0)))),
                         SkillDefinition
                             .FromId("heal")
                             .WithDisplayName("Heal")
                             .WithDisplayIcon(@"graphics\skills\heal")
                             .WithResourceRequirement(4, 20)
-                            .Enchant("heal-self")
-                            .CanBeUsedOutOfCombat()
                             .CanBeUsedInCombat()
-                            .AffectsTeams(0)
-                            .StartsAtOffsetFromUser(0, 0)
-                            .TargetsPattern()
+                            .CanBeUsedOutOfCombat()
                             .WithActorAnimation(actorIdentifiers.AnimationCast)
-                            .End(),
+                            .HasEffects(
+                                SkillEffectExecutors.Single(
+                                    SkillEffectDefinition
+                                        .New
+                                        .Enchant("heal-self")
+                                        .Targets(
+                                            new [] { 0 },
+                                            Tuple.Create(0, 0),
+                                            Tuple.Create(0, 0)))),
                         SkillDefinition
                             .FromId("fireball")
                             .WithDisplayName("Fireball")
@@ -74,46 +78,46 @@ namespace Macerus.Plugins.Content.Skills
                             .WithResourceRequirement(4, 10)
                             .CanBeUsedInCombat()
                             .WithActorAnimation(actorIdentifiers.AnimationCast)
-                            .IsACombinationOf(
-                                MacerusExecuteSkills.InParallel(
-                                    SkillDefinition
-                                        .Anonymous()
+                            .HasEffects(
+                                SkillEffectExecutors.Parallel(
+                                    SkillEffectDefinition
+                                        .New
                                         .Enchant("increase-fire-damage")
-                                        .AffectsTeams(0)
-                                        .StartsAtOffsetFromUser(0, 0)
-                                        .TargetsPattern(),
-                                    SkillDefinition
-                                        .Anonymous()
-                                        .Enchant("on-hit-heal")
-                                        .AffectsTeams(0)
-                                        .StartsAtOffsetFromUser(0, 0)
-                                        .TargetsPattern()),
-                                MacerusExecuteSkills.InSequence(
-                                    SkillDefinition
-                                        .Anonymous()
+                                        .Targets(
+                                            new [] { 0 },
+                                            Tuple.Create(0, 0),
+                                            Tuple.Create(0, 0))),
+                                SkillEffectExecutors.Sequence(
+                                    SkillEffectDefinition
+                                        .New
                                         .InflictDamage()
-                                        .AffectsTeams(1)
-                                        .StartsAtOffsetFromUser(0, 1)
-                                        .TargetsPattern(
+                                        .Targets(
+                                            new [] { 1 },
                                             Tuple.Create(0, 1),
-                                            Tuple.Create(0, 2))))
-                            .End(),
+                                            Tuple.Create(0, 1),
+                                            Tuple.Create(0, 2)))),
                         SkillDefinition
                             .FromId("passive-green-glow")
-                            .CanBeUsedInCombat()
-                            .CanBeUsedOutOfCombat()
-                            .EnchantPassive("green-glow-ench")
-                            .End(),
+                            .WithDisplayName("Passive Green Glow")
+                            .WithDisplayIcon(@"graphics\skills\heal")
+                            //.CanBeUsedInCombat()
+                            //.CanBeUsedOutOfCombat()
+                            .HasEffects(
+                                SkillEffectExecutors.Single(
+                                    SkillEffectDefinition.New.EnchantPassive("heal-self"))),
                         SkillDefinition
                             .FromId("passive-rain")
-                            .CanBeUsedInCombat()
-                            .CanBeUsedOutOfCombat()
-                            .EnchantPassive(
-                                "passive-rain-weight",
-                                "passive-rain-min",
-                                "passive-rain-max")
-                            .End(),
-                    }.SelectMany(x => x);
+                            .WithDisplayName("Passive Rain")
+                            .WithDisplayIcon(@"graphics\skills\heal")
+                            //.CanBeUsedInCombat()
+                            //.CanBeUsedOutOfCombat()
+                            .HasEffects(
+                                SkillEffectExecutors.Single(
+                                    SkillEffectDefinition.New.EnchantPassive(
+                                        "passive-rain-weight",
+                                        "passive-rain-min",
+                                        "passive-rain-max"))),
+                    };
 
                     var attributeFilter = c.Resolve<IAttributeFilterer>();
                     var repository = new InMemorySkillDefinitionRepository(

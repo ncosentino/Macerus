@@ -97,7 +97,7 @@ namespace Macerus.Plugins.Content.Enchantments
 
             _current = new EnchantmentDefinition(
                 _current.SupportedAttributes,
-                _current.GeneratorComponents.AppendSingle(new EnchantmentTargetGeneratorComponent(new StringIdentifier("owner")))); // FIXME: this will need to be owner.owner.owner
+                _current.GeneratorComponents.AppendSingle(new EnchantmentTargetGeneratorComponent(new StringIdentifier("owner.owner.owner"))));
 
             return this;
         }
@@ -110,7 +110,7 @@ namespace Macerus.Plugins.Content.Enchantments
 
             _current = new EnchantmentDefinition(
                 _current.SupportedAttributes,
-                _current.GeneratorComponents.AppendSingle(new EnchantmentTargetGeneratorComponent(new StringIdentifier("owner"))));// FIXME: this will need to be owner.owner.owner
+                _current.GeneratorComponents.AppendSingle(new EnchantmentTargetGeneratorComponent(new StringIdentifier("owner.owner.owner"))));
 
             return this;
         }
