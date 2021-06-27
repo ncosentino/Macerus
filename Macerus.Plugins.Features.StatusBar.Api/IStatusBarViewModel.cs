@@ -5,6 +5,8 @@ namespace Macerus.Plugins.Features.StatusBar.Api
 {
     public interface IStatusBarViewModel : INotifyPropertyChanged
     {
+        bool IsOpen { get; set; }
+
         IStatusBarResourceViewModel LeftResource { get; }
 
         IStatusBarResourceViewModel RightResource { get; }

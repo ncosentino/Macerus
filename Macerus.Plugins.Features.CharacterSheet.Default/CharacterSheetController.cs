@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.CharacterSheet.Api;
+using Macerus.Plugins.Features.Mapping;
 using Macerus.Plugins.Features.Stats.Api;
 
-using NexusLabs.Contracts;
-
-using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Stats;
-using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.CharacterSheet.Default
 {
@@ -18,17 +14,17 @@ namespace Macerus.Plugins.Features.CharacterSheet.Default
     {
         private readonly ICharacterSheetViewModel _characterSheetViewModel;
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
-        private readonly IReadOnlyMapGameObjectManager _mapGameObjectManager;
+        private readonly IReadOnlyMappingAmenity _mappingAmenity;
         private readonly IReadOnlyStatDefinitionToTermMappingRepository _statDefinitionToTermMappingRepository;
 
         public CharacterSheetController(
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
-            IReadOnlyMapGameObjectManager readOnlyMapGameObjectManager,
+            IReadOnlyMappingAmenity mappingAmenity,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
             ICharacterSheetViewModel characterSheetViewModel)
         {
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
-            _mapGameObjectManager = readOnlyMapGameObjectManager;
+            _mappingAmenity = mappingAmenity;
             _statDefinitionToTermMappingRepository = statDefinitionToTermMappingRepository;
             _characterSheetViewModel = characterSheetViewModel;
 
@@ -60,13 +56,7 @@ namespace Macerus.Plugins.Features.CharacterSheet.Default
             object sender,
             EventArgs e)
         {
-            var player = _mapGameObjectManager
-                .GameObjects
-                .FirstOrDefault(x => x.Has<IPlayerControlledBehavior>());
-            Contract.RequiresNotNull(
-                player,
-                $"Expecting to find game object on map with behavior '{typeof(IPlayerControlledBehavior)}'.");
-
+            var player = _mappingAmenity.GetActivePlayerControlled();
             var stats = new Dictionary<string, Tuple<string, string>>()
             {
                 {"LIFE", Tuple.Create("LIFE_CURRENT", "LIFE_MAXIMUM") },

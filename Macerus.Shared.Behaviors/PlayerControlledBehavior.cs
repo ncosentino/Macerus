@@ -9,5 +9,6 @@ namespace Macerus.Shared.Behaviors
         BaseBehavior,
         IPlayerControlledBehavior
     {
+        public bool IsActive { get; set; }
     }
 }

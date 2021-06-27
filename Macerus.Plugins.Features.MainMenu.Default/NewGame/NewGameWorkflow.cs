@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
+using Macerus.Plugins.Features.StatusBar.Api;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
@@ -27,6 +29,7 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
         private readonly Lazy<IActorGeneratorFacade> _lazyActorGeneratorFacade;
         private readonly Lazy<IMapManager> _lazyMapManager;
         private readonly Lazy<IRosterManager> _lazyRosterManager;
+        private readonly Lazy<IStatusBarViewModel> _lazyStatusBarViewModel;
 
         public NewGameWorkflow(
             Lazy<IMapStateRepository> lazyMapStateRepository,
@@ -36,7 +39,8 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             Lazy<IMacerusActorIdentifiers> lazyMacerusActorIdentifiers,
             Lazy<IActorGeneratorFacade> lazyActorGeneratorFacade,
             Lazy<IMapManager> lazyMapManager,
-            Lazy<IRosterManager> lazyRosterManager)
+            Lazy<IRosterManager> lazyRosterManager,
+            Lazy<IStatusBarViewModel> lazyStatusBarViewModel)
         {
             _lazyMapStateRepository = lazyMapStateRepository;
             _lazyGameObjectRepository = lazyGameObjectRepository;
@@ -46,6 +50,7 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             _lazyActorGeneratorFacade = lazyActorGeneratorFacade;
             _lazyMapManager = lazyMapManager;
             _lazyRosterManager = lazyRosterManager;
+            _lazyStatusBarViewModel = lazyStatusBarViewModel;
         }
 
         public async Task RunAsync()
@@ -59,11 +64,14 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             _lazyGameObjectRepository.Value.Save(player);
             _lazyRosterManager.Value.AddToRoster(player);
             player.GetOnly<IRosterBehavior>().IsPartyLeader = true;
+            player.GetOnly<IPlayerControlledBehavior>().IsActive = true;
 
             var mercenary = CreateActor(new StringIdentifier("test-mercenary"));
             _lazyGameObjectRepository.Value.Save(mercenary);
             _lazyRosterManager.Value.AddToRoster(mercenary);
             mercenary.GetOnly<IRosterBehavior>().IsActiveParty = true;
+
+            _lazyStatusBarViewModel.Value.IsOpen = true;
 
             await _lazyMapManager
                 .Value

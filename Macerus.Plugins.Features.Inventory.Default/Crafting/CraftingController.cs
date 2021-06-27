@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 
-using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.Inventory.Api;
 using Macerus.Plugins.Features.Inventory.Api.Crafting;
 using Macerus.Plugins.Features.Inventory.Api.HoverCards;
 using Macerus.Plugins.Features.Inventory.Default.HoverCards;
+using Macerus.Plugins.Features.Mapping;
 
 using NexusLabs.Contracts;
 
@@ -16,7 +16,6 @@ using ProjectXyz.Framework.ViewWelding.Api.Welders;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Crafting.Api;
-using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.Inventory.Default.Crafting
 {
@@ -27,7 +26,7 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
         private readonly IFilterContextProvider _filterContextProvider;
         private readonly IBagItemSetFactory _bagItemSetFactory;
         private readonly ICraftingWindowViewModel _craftingWindowViewModel;
-        private readonly IMapGameObjectManager _mapGameObjectManager;
+        private readonly IReadOnlyMappingAmenity _mappingAmenity;
         private readonly IItemSetController _itemSetController;
         private readonly IItemSlotCollectionViewModel _craftingBagItemSlotCollectionViewModel;
         private readonly IItemToItemSlotViewModelConverter _bagToItemSlotViewModelConverter;
@@ -42,7 +41,7 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
             IFilterContextProvider filterContextProvider,
             IBagItemSetFactory bagItemSetFactory,
             ICraftingWindowViewModel craftingWindowViewModel,
-            IMapGameObjectManager mapGameObjectManager,
+            IReadOnlyMappingAmenity mappingAmenity,
             IItemSetController itemSetController,
             IItemSlotCollectionViewModel craftingBagItemSlotCollectionViewModel,
             IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter,
@@ -55,7 +54,7 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
             _filterContextProvider = filterContextProvider;
             _bagItemSetFactory = bagItemSetFactory;
             _craftingWindowViewModel = craftingWindowViewModel;
-            _mapGameObjectManager = mapGameObjectManager;
+            _mappingAmenity = mappingAmenity;
             _itemSetController = itemSetController;
             _craftingBagItemSlotCollectionViewModel = craftingBagItemSlotCollectionViewModel;
             _bagToItemSlotViewModelConverter = bagToItemSlotViewModelConverter;
@@ -97,13 +96,7 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
                 _bagBinder == null,
                 $"Expecting '{nameof(_bagBinder)}' to be null.");
 
-            var player = _mapGameObjectManager
-                .GameObjects
-                .FirstOrDefault(x => x.Has<IPlayerControlledBehavior>());
-            Contract.RequiresNotNull(
-                player,
-                $"Expecting to find game object on map with behavior '{typeof(IPlayerControlledBehavior)}'.");
-
+            var player = _mappingAmenity.GetActivePlayerControlled();
             var craftingInventoryBehavior = player
                 .Get<IItemContainerBehavior>()
                 .FirstOrDefault(x => x.ContainerId.Equals(_macerusActorIdentifiers.CraftingInventoryIdentifier));

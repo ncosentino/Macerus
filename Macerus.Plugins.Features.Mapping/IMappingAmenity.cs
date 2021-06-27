@@ -1,12 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
-
-using ProjectXyz.Api.GameObjects;
-
-namespace Macerus.Plugins.Features.Mapping
+﻿namespace Macerus.Plugins.Features.Mapping
 {
-    public interface IMappingAmenity
+    public interface IMappingAmenity : IReadOnlyMappingAmenity
     {
-        IEnumerable<Vector2> GetAllowedPathDestinationsForActor(IGameObject actor);
     }
 }

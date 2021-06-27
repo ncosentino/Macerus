@@ -5,7 +5,6 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 
-using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Mapping;
 using Macerus.Plugins.Features.Stats.Api;
@@ -17,7 +16,6 @@ using ProjectXyz.Api.Stats;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
-using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Plugins.Features.TurnBased;
 using ProjectXyz.Shared.Framework;
 
@@ -33,14 +31,14 @@ namespace Macerus.Plugins.Features.StatusBar.Default
         private readonly ISkillTargetingAmenity _skillTargetingAmenity;
         private readonly ISkillAmenity _skillAmenity;
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
-        private readonly IReadOnlyMapGameObjectManager _mapGameObjectManager;
+        private readonly Lazy<IReadOnlyMappingAmenity> _lazyMappingAmenity;
         private readonly IReadOnlyStatDefinitionToTermMappingRepository _statDefinitionToTermMappingRepository;
 
         private readonly Lazy<IReadOnlyCollection<Tuple<IIdentifier, IIdentifier, IIdentifier>>> _lazyCurrentAndMaxResourceIdentifiers;
 
         public StatusBarController(
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
-            IReadOnlyMapGameObjectManager readOnlyMapGameObjectManager,
+            Lazy<IReadOnlyMappingAmenity> lazyMappingAmenity,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
             IStatusBarViewModel statusBarViewModel,
             ISkillUsage skillUsage,
@@ -51,7 +49,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             ISkillAmenity skillAmenity)
         {
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
-            _mapGameObjectManager = readOnlyMapGameObjectManager;
+            _lazyMappingAmenity = lazyMappingAmenity;
             _statDefinitionToTermMappingRepository = statDefinitionToTermMappingRepository;
             _statusBarViewModel = statusBarViewModel;
             _skillUsage = skillUsage;
@@ -95,16 +93,16 @@ namespace Macerus.Plugins.Features.StatusBar.Default
 
         public async Task UpdateAsync(ISystemUpdateContext context)
         {
-            var player = _mapGameObjectManager
-                .GameObjects
-                .FirstOrDefault(x => x.Has<IPlayerControlledBehavior>());
-
-            // no player loaded up? no status to update.
-            if (player == null)
+            if (!_statusBarViewModel.IsOpen)
             {
                 return;
             }
-                        
+
+            if (!_lazyMappingAmenity.Value.TryGetActivePlayerControlled(out var player))
+            {
+                return;
+            }
+
             var resourcesViewModels = await GetResourceViewModelsAsync(
                 player,
                 _lazyCurrentAndMaxResourceIdentifiers.Value)

@@ -11,10 +11,26 @@ namespace Macerus.Plugins.Features.StatusBar.Default
         IStatusBarViewModel
     {
         private readonly List<IStatusBarAbilityViewModel> _abilityViewModels;
+        private bool _isOpen;
 
         public StatusBarViewModel()
         {
             _abilityViewModels = new List<IStatusBarAbilityViewModel>();
+        }
+
+        public bool IsOpen 
+        {
+            get => _isOpen; 
+            set
+            {
+                if (_isOpen == value)
+                {
+                    return;
+                }
+
+                _isOpen = value;
+                OnPropertyChanged();
+            }
         }
 
         public IStatusBarResourceViewModel LeftResource { get; private set; }

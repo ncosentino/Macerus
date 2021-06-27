@@ -8,6 +8,7 @@ using Macerus.Plugins.Features.DataPersistence;
 using Macerus.Plugins.Features.Gui.Api.SceneTransitions;
 using Macerus.Plugins.Features.InGameMenu.Api;
 using Macerus.Plugins.Features.MainMenu.Api;
+using Macerus.Plugins.Features.StatusBar.Api;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Combat.Api;
@@ -26,6 +27,7 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
         private readonly Lazy<IMapManager> _lazyMapManager;
         private readonly Lazy<ICombatTurnManager> _lazyCombatTurnManager;
         private readonly Lazy<IDataPersistenceManager> _lazyDayaPersistenceManager;
+        private readonly Lazy<IStatusBarViewModel> _lazyStatusBarViewModel;
 
         public InGameMenuController(
             IInGameMenuViewModel inGameMenuViewModel,
@@ -35,7 +37,8 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
             IMainMenuController mainMenuController,
             Lazy<IMapManager> lazyMapManager,
             Lazy<ICombatTurnManager> lazyCombatTurnManager,
-            Lazy<IDataPersistenceManager> lazyDayaPersistenceManager)
+            Lazy<IDataPersistenceManager> lazyDayaPersistenceManager,
+            Lazy<IStatusBarViewModel> lazyStatusBarViewModel)
         {
             _inGameMenuViewModel = inGameMenuViewModel;
             _sceneManager = sceneManager;
@@ -45,6 +48,7 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
             _lazyMapManager = lazyMapManager;
             _lazyCombatTurnManager = lazyCombatTurnManager;
             _lazyDayaPersistenceManager = lazyDayaPersistenceManager;
+            _lazyStatusBarViewModel = lazyStatusBarViewModel;
             _inGameMenuViewModel.RequestExit += InGameMenuViewModel_RequestExit;
             _inGameMenuViewModel.RequestClose += InGameMenuViewModel_RequestClose;
             _inGameMenuViewModel.RequestOptions += InGameMenuViewModel_RequestOptions;
@@ -87,6 +91,8 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
                 TimeSpan.FromSeconds(1),
                 async () =>
                 {
+                    _lazyStatusBarViewModel.Value.IsOpen = false;
+
                     // FIXME: we want to probably have common logic across all
                     // the spots that do this game state resetting
                     _lazyCombatTurnManager.Value.EndCombat(
