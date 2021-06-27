@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
+using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Stats.Api;
 
@@ -36,6 +38,12 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             IGameObject actor,
             IGameObject skill)
         {
+            if (actor.TryGetFirst<IReadOnlyMovementBehavior>(out var movementBehavior) &&
+                movementBehavior.IsMovementIntended())
+            {
+                return false;
+            }
+
             if (_combatTurnManager.InCombat)
             {
                 if (!skill.Has<IUseInCombatBehavior>() ||

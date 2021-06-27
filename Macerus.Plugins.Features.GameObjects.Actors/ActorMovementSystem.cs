@@ -102,6 +102,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
                 }
 
                 UpdateDirection(movementBehavior);
+
                 UpdateAnimation(
                     movementBehavior,
                     dynamicAnimationBehavior,
@@ -151,7 +152,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             var velocityX = movementBehavior.VelocityX;
             var velocityY = movementBehavior.VelocityY;
 
-            if (Math.Abs(throttleX) > 0 || Math.Abs(throttleY) > 0)
+            if (movementBehavior.HasThrottle())
             {
                 if (throttleX > 0)
                 {
@@ -193,15 +194,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             IDynamicAnimationBehavior animationBehavior,
             double elapsedSeconds)
         {
-            var throttleX = movementBehavior.ThrottleX;
-            var throttleY = movementBehavior.ThrottleY;
-            var velocityX = movementBehavior.VelocityX;
-            var velocityY = movementBehavior.VelocityY;
-
-            var throttle = new Vector2((float)throttleX, (float)throttleY);
-            var velocity = new Vector2((float)velocityX, (float)velocityY);
-
-            if (throttle.LengthSquared() > 0 || velocity.LengthSquared() > 0)
+            if (movementBehavior.IsMovementIntended())
             {
                 animationBehavior.BaseAnimationId = _actorIdentifiers.AnimationWalk;
             }
@@ -222,11 +215,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             IPositionBehavior positionBehavior,
             double elapsedSeconds)
         {
-            var throttleX = movementBehavior.ThrottleX;
-            var throttleY = movementBehavior.ThrottleY;
-
-            if (Math.Abs(throttleX) > 0 ||
-                Math.Abs(throttleY) > 0)
+            if (movementBehavior.HasThrottle())
             {
                 movementBehavior.SetWalkPath(Enumerable.Empty<Vector2>());
             }
