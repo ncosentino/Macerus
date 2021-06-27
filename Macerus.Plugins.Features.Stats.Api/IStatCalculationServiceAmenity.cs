@@ -17,7 +17,16 @@ namespace Macerus.Plugins.Features.Stats.Api
             IGameObject gameObject,
             IIdentifier statDefinitionId,
             IStatCalculationContext statCalculationContext);
-        
+
+        Task<double> GetStatValueAsync(
+            IGameObject gameObject,
+            IIdentifier statDefinitionId);
+
+        Task<double> GetStatValueAsync(
+            IGameObject gameObject,
+            IIdentifier statDefinitionId,
+            IStatCalculationContext statCalculationContext);
+
         IReadOnlyDictionary<IIdentifier, double> GetStatValues(
             IGameObject gameObject,
             IEnumerable<IIdentifier> statDefinitionIds);

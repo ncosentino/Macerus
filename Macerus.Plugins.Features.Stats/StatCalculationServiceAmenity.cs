@@ -57,6 +57,29 @@ namespace Macerus.Plugins.Features.Stats
             return value;
         }
 
+        public async Task<double> GetStatValueAsync(
+            IGameObject gameObject,
+            IIdentifier statDefinitionId) => await 
+                GetStatValueAsync(
+                    gameObject,
+                    statDefinitionId,
+                    EmptyStatCalculationContext)
+                .ConfigureAwait(false);
+
+        public async Task<double> GetStatValueAsync(
+            IGameObject gameObject,
+            IIdentifier statDefinitionId,
+            IStatCalculationContext statCalculationContext)
+        {
+            var value = await Task
+                .Run(() => _statCalculationService.GetStatValue(
+                    gameObject,
+                    statDefinitionId,
+                    statCalculationContext))
+                .ConfigureAwait(false);
+            return value;
+        }
+
         public IReadOnlyDictionary<IIdentifier, double> GetStatValues(
             IGameObject gameObject,
             IEnumerable<IIdentifier> statDefinitionIds)
@@ -87,7 +110,9 @@ namespace Macerus.Plugins.Features.Stats
                 tasks.Add(statTast);
             }
 
-            await Task.WhenAll(tasks);
+            await Task
+                .WhenAll(tasks)
+                .ConfigureAwait(false);
 
             var results = tasks.ToDictionary(
                 x => x.Result.Item1,
