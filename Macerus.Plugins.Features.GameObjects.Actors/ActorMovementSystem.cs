@@ -147,45 +147,17 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
             // superior feedback to the user that you're trying to move in a 
             // particular direction over the direction you may actually have 
             // velocity in. if there's no throttle we can rely on velocity.
-            var throttleX = movementBehavior.ThrottleX;
-            var throttleY = movementBehavior.ThrottleY;
-            var velocityX = movementBehavior.VelocityX;
-            var velocityY = movementBehavior.VelocityY;
-
             if (movementBehavior.HasThrottle())
             {
-                if (throttleX > 0)
-                {
-                    movementBehavior.Direction = 2;
-                }
-                else if (throttleX < 0)
-                {
-                    movementBehavior.Direction = 0;
-                }
-                else if (throttleY > 0)
-                {
-                    movementBehavior.Direction = 1;
-                }
-                else if (throttleY < 0)
-                {
-                    movementBehavior.Direction = 3;
-                }
+                var throttleX = movementBehavior.ThrottleX;
+                var throttleY = movementBehavior.ThrottleY;
+                movementBehavior.SetDirectionByVector(throttleX, throttleY);
             }
-            else if (velocityX > 0)
+            else if (movementBehavior.HasVelocity())
             {
-                movementBehavior.Direction = 2;
-            }
-            else if (velocityX < 0)
-            {
-                movementBehavior.Direction = 0;
-            }
-            else if (velocityY > 0)
-            {
-                movementBehavior.Direction = 1;
-            }
-            else if (velocityY < 0)
-            {
-                movementBehavior.Direction = 3;
+                var velocityX = movementBehavior.VelocityX;
+                var velocityY = movementBehavior.VelocityY;
+                movementBehavior.SetDirectionByVector(velocityX, velocityY);
             }
         }
 

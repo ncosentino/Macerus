@@ -38,5 +38,37 @@ namespace Macerus.Api.Behaviors
                 movementBehavior.HasThrottle() ||
                 movementBehavior.HasVelocity();
         }
+
+        public static int SetDirectionByVector(
+            this IMovementBehavior movementBehavior,
+            Vector2 directionalVector) => SetDirectionByVector(
+                movementBehavior,
+                directionalVector.X,
+                directionalVector.Y);
+
+        public static int SetDirectionByVector(
+            this IMovementBehavior movementBehavior,
+            double x,
+            double y)
+        {
+            if (x > 0)
+            {
+                movementBehavior.Direction = 2;
+            }
+            else if (x < 0)
+            {
+                movementBehavior.Direction = 0;
+            }
+            else if (y > 0)
+            {
+                movementBehavior.Direction = 1;
+            }
+            else
+            {
+                movementBehavior.Direction = 3;
+            }
+
+            return movementBehavior.Direction;
+        }
     }
 }
