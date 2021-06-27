@@ -30,14 +30,15 @@ namespace Macerus.Headless
                 }
             }
 
-            public void Error(string message)
-            {
-                throw new NotImplementedException();
-            }
+            public void Error(string message) =>
+                Error(message, null);
 
             public void Error(string message, object data)
             {
-                throw new NotImplementedException();
+                var innerException = data as Exception;
+                throw new Exception(
+                    message,
+                    innerException);
             }
 
             public void Info(string message) => Info(message, null);
