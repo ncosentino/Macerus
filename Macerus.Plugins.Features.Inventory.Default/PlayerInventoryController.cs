@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 
-using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.Inventory.Api;
 using Macerus.Plugins.Features.Inventory.Api.HoverCards;
@@ -14,7 +13,7 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Framework.ViewWelding.Api;
 using ProjectXyz.Framework.ViewWelding.Api.Welders;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.Mapping;
+using ProjectXyz.Plugins.Features.PartyManagement;
 
 namespace Macerus.Plugins.Features.Inventory.Default
 {
@@ -31,6 +30,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
         private readonly IViewWelderFactory _viewWelderFactory;
         private readonly IHoverCardViewFactory _hoverCardViewFactory;
         private readonly IBehaviorsToHoverCardPartViewModelConverterFacade _behaviorsToHoverCardPartViewModelConverter;
+        private readonly IObservableRosterManager _rosterManager;
         private readonly IItemToItemSlotViewModelConverter _equipmentToItemSlotViewModelConverter;
 
         private IItemSetToViewModelBinder _equipmentBinder;
@@ -48,7 +48,8 @@ namespace Macerus.Plugins.Features.Inventory.Default
             IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter,
             IViewWelderFactory viewWelderFactory,
             IHoverCardViewFactory hoverCardViewFactory,
-            IBehaviorsToHoverCardPartViewModelConverterFacade behaviorsToHoverCardPartViewModelConverter)
+            IBehaviorsToHoverCardPartViewModelConverterFacade behaviorsToHoverCardPartViewModelConverter,
+            IObservableRosterManager rosterManager)
         {
             _macerusActorIdentifiers = macerusActorIdentifiers;
             _bagItemSetFactory = bagItemSetFactory;
@@ -62,8 +63,10 @@ namespace Macerus.Plugins.Features.Inventory.Default
             _viewWelderFactory = viewWelderFactory;
             _hoverCardViewFactory = hoverCardViewFactory;
             _behaviorsToHoverCardPartViewModelConverter = behaviorsToHoverCardPartViewModelConverter;
+            _rosterManager = rosterManager;
             _playerInventoryViewModel.Opened += PlayerInventoryViewModel_Opened;
             _playerInventoryViewModel.Closed += PlayerInventoryViewModel_Closed;
+            _rosterManager.ControlledActorChanged += RosterManager_ControlledActorChanged;
         }
 
         public delegate PlayerInventoryController Factory(
@@ -90,9 +93,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             return _playerInventoryViewModel.IsOpen;
         }
 
-        private void PlayerInventoryViewModel_Opened(
-            object sender,
-            EventArgs e)
+        private void Recreate()
         {
             Contract.Requires(
                 _equipmentBinder == null,
@@ -129,6 +130,44 @@ namespace Macerus.Plugins.Features.Inventory.Default
             _bagBinder.RefreshViewModel();
         }
 
+        private void TearDown()
+        {
+            Contract.RequiresNotNull(
+                _equipmentBinder,
+                $"Expecting '{nameof(_equipmentBinder)}' to not be null.");
+            Contract.RequiresNotNull(
+                _bagBinder,
+                $"Expecting '{nameof(_bagBinder)}' to not be null.");
+
+            _itemSetController.EndPendingDragDrop();
+            _itemSetController.Unregister(_equipmentBinder);
+            _itemSetController.Unregister(_bagBinder);
+
+            _equipmentBinder.RequestPopulateHoverCardContent -= ItemBinder_RequestPopulateHoverCardContent;
+            _equipmentBinder = null;
+
+            _bagBinder.RequestPopulateHoverCardContent -= ItemBinder_RequestPopulateHoverCardContent;
+            _bagBinder = null;
+        }
+
+        private void RosterManager_ControlledActorChanged(
+            object sender,
+            EventArgs e)
+        {
+            if (_playerInventoryViewModel.IsOpen)
+            {
+                TearDown();
+                Recreate();
+            }
+        }
+
+        private void PlayerInventoryViewModel_Opened(
+            object sender,
+            EventArgs e)
+        {
+            Recreate();   
+        }
+
         private void ItemBinder_RequestPopulateHoverCardContent(
             object sender,
             PopulateHoverCardFromItemEventArgs e)
@@ -147,22 +186,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             object sender,
             EventArgs e)
         {
-            Contract.RequiresNotNull(
-                _equipmentBinder,
-                $"Expecting '{nameof(_equipmentBinder)}' to not be null.");
-            Contract.RequiresNotNull(
-                _bagBinder,
-                $"Expecting '{nameof(_bagBinder)}' to not be null.");
-
-            _itemSetController.EndPendingDragDrop();
-            _itemSetController.Unregister(_equipmentBinder);
-            _itemSetController.Unregister(_bagBinder);
-
-            _equipmentBinder.RequestPopulateHoverCardContent -= ItemBinder_RequestPopulateHoverCardContent;
-            _equipmentBinder = null;
-
-            _bagBinder.RequestPopulateHoverCardContent -= ItemBinder_RequestPopulateHoverCardContent;
-            _bagBinder = null;
+            TearDown();
         }
     }
 }
