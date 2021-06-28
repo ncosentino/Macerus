@@ -134,8 +134,12 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 .GetOnly<IHasSkillsBehavior>()
                 .Skills
                 .ToArray();
-            var skill = skills[slotIndex];
+            if (slotIndex < 0 || slotIndex >= skills.Length)
+            {
+                return;
+            }
 
+            var skill = skills[slotIndex];
             if (!await _skillUsage
                 .CanUseSkillAsync(
                     actor,
@@ -158,15 +162,19 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             IGameObject actor,
             int slotIndex)
         {
-            var skillTargetLocations = new Dictionary<int, HashSet<Vector2>>();
-
             // FIXME: we actually need to map the index to some sort of quick
             // slot concept, not just full list of skills
             var skills = actor
                 .GetOnly<IHasSkillsBehavior>()
                 .Skills
                 .ToArray();
+            if (slotIndex < 0 || slotIndex >= skills.Length)
+            {
+                return;
+            }
+
             var skill = skills[slotIndex];
+            var skillTargetLocations = new Dictionary<int, HashSet<Vector2>>();
 
             if (!await _skillUsage
                 .CanUseSkillAsync(
