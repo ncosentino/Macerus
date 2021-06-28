@@ -2,8 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using Macerus.Plugins.Features.Camera;
+
+using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Combat.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.PartyManagement;
 
 namespace Macerus.Plugins.Features.Combat.Default
@@ -12,16 +16,18 @@ namespace Macerus.Plugins.Features.Combat.Default
     {
         private readonly IObservableCombatTurnManager _combatTurnManager;
         private readonly Lazy<IRosterManager> _lazyRosterManager;
+        private readonly Lazy<ICameraManager> _lazyCameraManager;
 
         public int? Priority => null;
 
         public PlayerControlledCombatSystem(
             IObservableCombatTurnManager combatTurnManager,
-            Lazy<IRosterManager> lazyRosterManager)
+            Lazy<IRosterManager> lazyRosterManager,
+            Lazy<ICameraManager> lazyCameraManager)
         {
             _combatTurnManager = combatTurnManager;
             _lazyRosterManager = lazyRosterManager;
-            
+            _lazyCameraManager = lazyCameraManager;
             _combatTurnManager.TurnProgressed += CombatTurnManager_TurnProgressed;
             _combatTurnManager.CombatStarted += CombatTurnManager_CombatStarted;
             _combatTurnManager.CombatEnded += CombatTurnManager_CombatEnded;
@@ -29,6 +35,18 @@ namespace Macerus.Plugins.Features.Combat.Default
 
         public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
         {
+        }
+
+        private void ActivatePlayerOrFollowNpc(IGameObject actor)
+        {
+            if (actor.Has<IPlayerControlledBehavior>())
+            {
+                _lazyRosterManager.Value.SetActorToControl(actor);
+            }
+            else
+            {
+                _lazyCameraManager.Value.SetFollowTarget(actor);
+            }
         }
       
         private void CombatTurnManager_CombatEnded(
@@ -45,7 +63,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             TurnProgressedEventArgs e)
         {
             var nextActor = e.ActorWithNextTurn;
-            _lazyRosterManager.Value.SetActorToControl(nextActor);
+            ActivatePlayerOrFollowNpc(nextActor);
         }
 
         private void CombatTurnManager_CombatStarted(
@@ -53,7 +71,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             CombatStartedEventArgs e)
         {
             var nextActor = e.ActorOrder.First();
-            _lazyRosterManager.Value.SetActorToControl(nextActor);
+            ActivatePlayerOrFollowNpc(nextActor);
         }
     }
 }
