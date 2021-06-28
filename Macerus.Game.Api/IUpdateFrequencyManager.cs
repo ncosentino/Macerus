@@ -2,10 +2,10 @@
 
 namespace Macerus.Game.Api
 {
-    public interface IUpdateFrequencyManager
+    public interface IUpdateFrequencyManager : IObservableUpdateFrequencyManager
     {
-        int MaxUpdatesPerSecond { get; set; }
+        new int MaxUpdatesPerSecond { get; set; }
 
-        TimeSpan UpdateStatusFrequency { get; set; }
+        new TimeSpan UpdateStatusFrequency { get; set; }
     }
 }
