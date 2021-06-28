@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
+using Macerus.Plugins.Features.Camera;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
@@ -16,15 +17,18 @@ namespace Macerus.Plugins.Features.Combat.Default
     {
         private readonly IObservableCombatTurnManager _combatTurnManager;
         private readonly Lazy<IReadOnlyRosterManager> _lazyRosterManager;
+        private readonly Lazy<ICameraManager> _lazyCameraManager;
 
         public int? Priority => null;
 
         public PlayerControlledCombatSystem(
             IObservableCombatTurnManager combatTurnManager,
-            Lazy<IReadOnlyRosterManager> lazyRosterManager)
+            Lazy<IReadOnlyRosterManager> lazyRosterManager,
+            Lazy<ICameraManager> lazyCameraManager)
         {
             _combatTurnManager = combatTurnManager;
             _lazyRosterManager = lazyRosterManager;
+            _lazyCameraManager = lazyCameraManager;
             _combatTurnManager.TurnProgressed += CombatTurnManager_TurnProgressed;
             _combatTurnManager.CombatStarted += CombatTurnManager_CombatStarted;
             _combatTurnManager.CombatEnded += CombatTurnManager_CombatEnded;
@@ -51,6 +55,11 @@ namespace Macerus.Plugins.Features.Combat.Default
 
                 var active = actor == target;
                 playerControlledBehavior.IsActive = active;
+
+                if (active)
+                {
+                    _lazyCameraManager.Value.SetFollowTarget(actor);
+                }
             }
         }
 

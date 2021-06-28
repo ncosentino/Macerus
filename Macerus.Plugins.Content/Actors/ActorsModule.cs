@@ -167,7 +167,7 @@ namespace Macerus.Plugins.Content.Actors
                                         new SizeBehavior(1, 1),
                                         new MovementBehavior(),
                                         new RosterBehavior(),
-                                        new CombatAIBehavior(),
+                                        new PlayerControlledBehavior(),
                                         new SkipMapSaveStateBehavior(),
                                         new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),
                                         new CanEquipBehavior(humanoidEquipSlotIds),

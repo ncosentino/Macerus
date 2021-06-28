@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
     <ProjectReference Include="..\Macerus.Game.Api\Macerus.Game.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Camera\Macerus.Plugins.Features.Camera.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Generation\Macerus.Plugins.Features.GameObjects.Actors.Generation.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Gui.Default\Macerus.Plugins.Features.Gui.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.LoadingScreen.Api\Macerus.Plugins.Features.LoadingScreen.Api.csproj" />
