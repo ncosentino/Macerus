@@ -13,6 +13,11 @@ namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder
     {
         private bool _isOpen;
 
+        public CombatTurnOrderViewModel()
+        {
+            Portraits = new ICombatTurnOrderPortraitViewModel[0];
+        }
+
         public event EventHandler<EventArgs> Opened;
 
         public event EventHandler<EventArgs> Closed;
@@ -24,10 +29,21 @@ namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder
             get => _isOpen;
             set
             {
-                if (_isOpen != value)
+                if (_isOpen == value)
                 {
-                    _isOpen = value;
-                    OnPropertyChanged();
+                    return;
+                }
+
+                _isOpen = value;
+                OnPropertyChanged();
+
+                if (_isOpen)
+                {
+                    Opened?.Invoke(this, EventArgs.Empty);
+                }
+                else
+                {
+                    Closed?.Invoke(this, EventArgs.Empty);
                 }
             }
         }

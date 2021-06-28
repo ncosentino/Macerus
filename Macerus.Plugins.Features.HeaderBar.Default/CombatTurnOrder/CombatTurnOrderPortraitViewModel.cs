@@ -1,4 +1,6 @@
-﻿using Macerus.Plugins.Features.Gui.Api;
+﻿using System;
+
+using Macerus.Plugins.Features.Gui.Api;
 using Macerus.Plugins.Features.Gui.Default;
 using Macerus.Plugins.Features.HeaderBar.Api.CombatTurnOrder;
 
@@ -24,6 +26,8 @@ namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder
             IconResourceId = iconResourceId;
         }
 
+        public event EventHandler<EventArgs> Activated;
+
         public IIdentifier IconResourceId { get; }
 
         public IIdentifier ActorIdentifier { get; }
@@ -33,5 +37,7 @@ namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder
         public IColor BackgroundColor { get; }
 
         public string ActorName { get; }
+
+        public void Activate() => Activated?.Invoke(this, EventArgs.Empty);
     }
 }

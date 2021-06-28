@@ -1,9 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
+using Macerus.Plugins.Features.Camera;
 using Macerus.Plugins.Features.HeaderBar.Api.CombatTurnOrder;
+using Macerus.Plugins.Features.Mapping;
 
-using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Combat.Api;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 
 namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder
 {
@@ -13,18 +18,23 @@ namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder
         private readonly IObservableCombatTurnManager _combatTurnManager;
         private readonly ICombatTurnOrderViewModel _combatTurnOrderViewModel;
         private readonly IGameObjectToCombatTurnOrderPortraitConverter _gameObjectToCombatTurnOrderPortraitConverter;
+        private readonly Lazy<ICameraManager> _lazyCameraManager;
+        private readonly Lazy<IMappingAmenity> _lazyMappingAmenity;
 
         public CombatTurnOrderController(
             IFilterContextProvider filterContextProvider,
             IObservableCombatTurnManager combatTurnManager,
             ICombatTurnOrderViewModel combatTurnOrderViewModel,
-            IGameObjectToCombatTurnOrderPortraitConverter gameObjectToCombatTurnOrderPortraitConverter)
+            IGameObjectToCombatTurnOrderPortraitConverter gameObjectToCombatTurnOrderPortraitConverter,
+            Lazy<ICameraManager> lazyCameraManager,
+            Lazy<IMappingAmenity> lazyMappingAmenity)
         {
             _filterContextProvider = filterContextProvider;
             _combatTurnManager = combatTurnManager;
             _combatTurnOrderViewModel = combatTurnOrderViewModel;
             _gameObjectToCombatTurnOrderPortraitConverter = gameObjectToCombatTurnOrderPortraitConverter;
-
+            _lazyCameraManager = lazyCameraManager;
+            _lazyMappingAmenity = lazyMappingAmenity;
             _combatTurnManager.CombatStarted += CombatTurnManager_CombatStarted;
             _combatTurnManager.CombatEnded += CombatTurnManager_CombatEnded;
         }
@@ -35,9 +45,34 @@ namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder
             var turnOrderSnapshot = _combatTurnManager.GetSnapshot(
                 filterContext,
                 20);
+
+            foreach (var portrait in _combatTurnOrderViewModel.Portraits)
+            {
+                portrait.Activated -= Portrait_Activated;
+            }
+
             var portraits = turnOrderSnapshot
                 .Select(_gameObjectToCombatTurnOrderPortraitConverter.Convert);
             _combatTurnOrderViewModel.UpdatePortraits(portraits);
+
+            foreach (var portrait in _combatTurnOrderViewModel.Portraits)
+            {
+                portrait.Activated += Portrait_Activated;
+            }
+        }
+
+        private void Portrait_Activated(
+            object sender,
+            EventArgs e)
+        {
+            var portrait = (ICombatTurnOrderPortraitViewModel)sender;
+            var actor = _lazyMappingAmenity
+                .Value
+                .GameObjects
+                .First(x => Equals(
+                    x.GetOnly<IIdentifierBehavior>().Id,
+                    portrait.ActorIdentifier));
+            _lazyCameraManager.Value.SetFollowTarget(actor);
         }
 
         private void CombatTurnManager_CombatStarted(

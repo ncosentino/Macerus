@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 using Macerus.Plugins.Features.Gui.Api;
 
@@ -8,6 +9,8 @@ namespace Macerus.Plugins.Features.HeaderBar.Api.CombatTurnOrder
 {
     public interface ICombatTurnOrderPortraitViewModel : INotifyPropertyChanged
     {
+        event EventHandler<EventArgs> Activated;
+
         IIdentifier IconResourceId { get; }
 
         IIdentifier ActorIdentifier { get; }
@@ -17,5 +20,7 @@ namespace Macerus.Plugins.Features.HeaderBar.Api.CombatTurnOrder
         IColor BackgroundColor { get; }
 
         string ActorName { get; }
+
+        void Activate();
     }
 }

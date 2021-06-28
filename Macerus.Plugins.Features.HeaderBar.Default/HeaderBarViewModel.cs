@@ -7,13 +7,5 @@ namespace Macerus.Plugins.Features.StatusBar.Default
         NotifierBase,
         IHeaderBarViewModel
     {
-        //public IEnumerable<IStatusBarAbilityViewModel> Abilities { get; private set; }
-
-        //public void UpdateAbilities(IEnumerable<IStatusBarAbilityViewModel> abilities)
-        //{
-        //    Abilities = abilities.ToArray();
-
-        //    OnPropertyChanged(nameof(Abilities));
-        //}
     }
 }
