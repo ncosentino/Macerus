@@ -6,13 +6,13 @@ using System.Numerics;
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Containers.Api.LootDrops;
 using Macerus.Plugins.Features.Inventory.Api;
+using Macerus.Plugins.Features.Mapping;
 
 using NexusLabs.Contracts;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.Inventory.Default
 {
@@ -20,19 +20,16 @@ namespace Macerus.Plugins.Features.Inventory.Default
     {
         private readonly ILootDropFactory _lootDropFactory;
         private readonly ILootDropIdentifiers _lootDropIdentifiers;
-        private readonly IMapGameObjectManager _mapGameObjectManager;
-        private readonly IMapProvider _mapProvider;
+        private readonly Lazy<IMappingAmenity> _lazyMappingAmenity;
 
         public DropToMapItemSet(
             ILootDropFactory lootDropFactory,
             ILootDropIdentifiers lootDropIdentifiers,
-            IMapGameObjectManager mapGameObjectManager,
-            IMapProvider mapProvider)
+            Lazy<IMappingAmenity> lazyMappingAmenity)
         {
             _lootDropFactory = lootDropFactory;
             _lootDropIdentifiers = lootDropIdentifiers;
-            _mapGameObjectManager = mapGameObjectManager;
-            _mapProvider = mapProvider;
+            _lazyMappingAmenity = lazyMappingAmenity;
         }
 
         public event EventHandler<EventArgs> ItemsChanged;
@@ -59,14 +56,13 @@ namespace Macerus.Plugins.Features.Inventory.Default
             IIdentifier itemIdToSwapOut,
             IGameObject itemToSwapIn)
         {
-            var activePlayerCharacter = _mapGameObjectManager
-                .GameObjects
-                .First(x => x.Has<IPlayerControlledBehavior>());
+            var activePlayerCharacter = _lazyMappingAmenity.Value.GetActivePlayerControlled();
             var playerPositionBehavior = activePlayerCharacter.GetOnly<IReadOnlyPositionBehavior>();
             var playerSizeBehavior = activePlayerCharacter.GetOnly<IReadOnlySizeBehavior>();
 
-            var loot = _mapProvider
-                .PathFinder
+            var loot = _lazyMappingAmenity
+                .Value
+                .CurrentPathFinder
                 .GetIntersectingGameObjects(
                     new Vector2((float)playerPositionBehavior.X, (float)playerPositionBehavior.Y),
                     new Vector2((float)playerSizeBehavior.Width, (float)playerSizeBehavior.Height))
@@ -99,7 +95,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
                     {
                         itemToSwapIn
                     });
-                _mapGameObjectManager.MarkForAddition(loot);
+                _lazyMappingAmenity.Value.MarkForAddition(loot);
             }
 
             return SwapResult.SuccessAndContinue;

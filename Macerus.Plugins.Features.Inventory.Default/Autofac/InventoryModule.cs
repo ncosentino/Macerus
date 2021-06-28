@@ -1,7 +1,10 @@
-﻿using Autofac;
+﻿using System;
+
+using Autofac;
 
 using Macerus.Plugins.Features.GameObjects.Containers.Api.LootDrops;
 using Macerus.Plugins.Features.Inventory.Api;
+using Macerus.Plugins.Features.Mapping;
 
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Mapping;
@@ -29,8 +32,7 @@ namespace Macerus.Plugins.Features.Inventory.Default.Autofac
                         new DropToMapItemSet(
                             x.Context.Resolve<ILootDropFactory>(),
                             x.Context.Resolve<ILootDropIdentifiers>(),
-                            x.Context.Resolve<IMapGameObjectManager>(),
-                            x.Context.Resolve<IMapProvider>()),
+                            x.Context.Resolve<Lazy<IMappingAmenity>>()),
                         x.Context.ResolveNamed<IItemSlotCollectionViewModel>(ITEM_SET_NAME_DROP_TO_MAP));
                     x.Instance.Register(dropToMapBinder);
                 });

@@ -33,8 +33,14 @@ namespace Macerus.Plugins.Features.Mapping.Default
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
         }
 
+        public IPathFinder CurrentPathFinder =>
+            _mapProvider.PathFinder;
+
         public IReadOnlyCollection<IGameObject> GameObjects =>
             _mapGameObjectManager.GameObjects;
+
+        public void MarkForAddition(IGameObject obj) =>
+            _mapGameObjectManager.MarkForAddition(obj);
 
         public IEnumerable<Vector2> GetAllowedPathDestinationsForActor(IGameObject actor)
         {

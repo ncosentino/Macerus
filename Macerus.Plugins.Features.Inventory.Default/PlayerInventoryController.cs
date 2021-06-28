@@ -6,6 +6,7 @@ using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.Inventory.Api;
 using Macerus.Plugins.Features.Inventory.Api.HoverCards;
 using Macerus.Plugins.Features.Inventory.Default.HoverCards;
+using Macerus.Plugins.Features.Mapping;
 
 using NexusLabs.Contracts;
 
@@ -22,7 +23,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
         private readonly IMacerusActorIdentifiers _macerusActorIdentifiers;
         private readonly IBagItemSetFactory _bagItemSetFactory;
         private readonly IPlayerInventoryViewModel _playerInventoryViewModel;
-        private readonly IMapGameObjectManager _mapGameObjectManager;
+        private readonly Lazy<IMappingAmenity> _lazyMappingAmenity;
         private readonly IItemSetController _itemSetController;
         private readonly IItemSlotCollectionViewModel _playerEquipmentItemSlotCollectionViewModel;
         private readonly IItemSlotCollectionViewModel _playerBagItemSlotCollectionViewModel;
@@ -39,7 +40,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             IMacerusActorIdentifiers macerusActorIdentifiers,
             IBagItemSetFactory bagItemSetFactory,
             IPlayerInventoryViewModel playerInventoryViewModel,
-            IMapGameObjectManager mapGameObjectManager,
+            Lazy<IMappingAmenity> lazyMappingAmenity,
             IItemSetController itemSetController,
             IItemSlotCollectionViewModel playerEquipmentItemSlotCollectionViewModel,
             IItemSlotCollectionViewModel playerBagItemSlotCollectionViewModel,
@@ -52,7 +53,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             _macerusActorIdentifiers = macerusActorIdentifiers;
             _bagItemSetFactory = bagItemSetFactory;
             _playerInventoryViewModel = playerInventoryViewModel;
-            _mapGameObjectManager = mapGameObjectManager;
+            _lazyMappingAmenity = lazyMappingAmenity;
             _itemSetController = itemSetController;
             _playerEquipmentItemSlotCollectionViewModel = playerEquipmentItemSlotCollectionViewModel;
             _playerBagItemSlotCollectionViewModel = playerBagItemSlotCollectionViewModel;
@@ -100,13 +101,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 _bagBinder == null,
                 $"Expecting '{nameof(_bagBinder)}' to be null.");
 
-            var player = _mapGameObjectManager
-                .GameObjects
-                .FirstOrDefault(x => x.Has<IPlayerControlledBehavior>());
-            Contract.RequiresNotNull(
-                player,
-                $"Expecting to find game object on map with behavior '{typeof(IPlayerControlledBehavior)}'.");
-
+            var player = _lazyMappingAmenity.Value.GetActivePlayerControlled();
             var playerEquipmentBehavior = player.GetOnly<ICanEquipBehavior>();
             var playerInventoryBehavior = player
                 .Get<IItemContainerBehavior>()
