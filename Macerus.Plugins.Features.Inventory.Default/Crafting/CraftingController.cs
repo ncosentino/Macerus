@@ -16,6 +16,7 @@ using ProjectXyz.Framework.ViewWelding.Api.Welders;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Crafting.Api;
+using ProjectXyz.Plugins.Features.PartyManagement;
 
 namespace Macerus.Plugins.Features.Inventory.Default.Crafting
 {
@@ -33,6 +34,7 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
         private readonly IViewWelderFactory _viewWelderFactory;
         private readonly IHoverCardViewFactory _hoverCardViewFactory;
         private readonly IBehaviorsToHoverCardPartViewModelConverterFacade _behaviorsToHoverCardPartViewModelConverter;
+        private readonly IObservableRosterManager _rosterManager;
         private IItemSetToViewModelBinder _bagBinder;
 
         public CraftingController(
@@ -47,7 +49,8 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
             IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter,
             IViewWelderFactory viewWelderFactory,
             IHoverCardViewFactory hoverCardViewFactory,
-            IBehaviorsToHoverCardPartViewModelConverterFacade behaviorsToHoverCardPartViewModelConverter)
+            IBehaviorsToHoverCardPartViewModelConverterFacade behaviorsToHoverCardPartViewModelConverter,
+            IObservableRosterManager rosterManager)
         {
             _macerusActorIdentifiers = macerusActorIdentifiers;
             _craftingHandler = craftingHandler;
@@ -61,9 +64,11 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
             _viewWelderFactory = viewWelderFactory;
             _hoverCardViewFactory = hoverCardViewFactory;
             _behaviorsToHoverCardPartViewModelConverter = behaviorsToHoverCardPartViewModelConverter;
+            _rosterManager = rosterManager;
             _craftingWindowViewModel.Opened += CraftingWindowViewModel_Opened;
             _craftingWindowViewModel.Closed += CraftingWindowViewModel_Closed;
             _craftingWindowViewModel.RequestCraft += CraftingWindowViewModel_RequestCraft;
+            _rosterManager.ControlledActorChanged += RosterManager_ControlledActorChanged;
         }
 
         public delegate CraftingController Factory(
@@ -88,13 +93,11 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
             return _craftingWindowViewModel.IsOpen;
         }
 
-        private void CraftingWindowViewModel_Opened(
-            object sender,
-            EventArgs e)
+        private void Recreate()
         {
             Contract.Requires(
-                _bagBinder == null,
-                $"Expecting '{nameof(_bagBinder)}' to be null.");
+               _bagBinder == null,
+               $"Expecting '{nameof(_bagBinder)}' to be null.");
 
             var player = _mappingAmenity.GetActivePlayerControlled();
             var craftingInventoryBehavior = player
@@ -115,6 +118,37 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
             _bagBinder.RefreshViewModel();
         }
 
+        private void TearDown()
+        {
+            Contract.RequiresNotNull(
+                _bagBinder,
+                $"Expecting '{nameof(_bagBinder)}' to not be null.");
+
+            _itemSetController.EndPendingDragDrop();
+            _itemSetController.Unregister(_bagBinder);
+
+            _bagBinder.RequestPopulateHoverCardContent -= ItemBinder_RequestPopulateHoverCardContent;
+            _bagBinder = null;
+        }
+
+        private void RosterManager_ControlledActorChanged(
+            object sender,
+            EventArgs e)
+        {
+            if (_craftingWindowViewModel.IsOpen)
+            {
+                TearDown();
+                Recreate();
+            }
+        }
+
+        private void CraftingWindowViewModel_Opened(
+            object sender,
+            EventArgs e)
+        {
+            Recreate();
+        }
+
         private void ItemBinder_RequestPopulateHoverCardContent(
             object sender,
             PopulateHoverCardFromItemEventArgs e)
@@ -133,15 +167,7 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
             object sender,
             EventArgs e)
         {
-            Contract.RequiresNotNull(
-                _bagBinder,
-                $"Expecting '{nameof(_bagBinder)}' to not be null.");
-
-            _itemSetController.EndPendingDragDrop();
-            _itemSetController.Unregister(_bagBinder);
-
-            _bagBinder.RequestPopulateHoverCardContent -= ItemBinder_RequestPopulateHoverCardContent;
-            _bagBinder = null;
+            TearDown();
         }
 
         private void CraftingWindowViewModel_RequestCraft(
