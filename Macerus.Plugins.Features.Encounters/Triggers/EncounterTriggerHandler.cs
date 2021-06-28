@@ -6,6 +6,7 @@ using NexusLabs.Framework;
 
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 
 namespace Macerus.Plugins.Features.Encounters.Triggers
 {

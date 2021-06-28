@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />
     <ProjectReference Include="..\Macerus.Api.GameObjects\Macerus.Api.GameObjects.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Camera\Macerus.Plugins.Features.Camera.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Api\Macerus.Plugins.Features.GameObjects.Actors.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Generation\Macerus.Plugins.Features.GameObjects.Actors.Generation.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Interactions.Api\Macerus.Plugins.Features.Interactions.Api.csproj" />

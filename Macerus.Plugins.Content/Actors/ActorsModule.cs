@@ -20,6 +20,7 @@ using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
+using ProjectXyz.Plugins.Features.GameObjects.Actors;
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Plugins.Features.PartyManagement.Default;
 using ProjectXyz.Plugins.Stats;

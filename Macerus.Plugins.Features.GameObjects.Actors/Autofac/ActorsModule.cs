@@ -39,6 +39,10 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Autofac
                 .RegisterType<CorpseInteractionHandler>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<CameraFollowingSystem>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

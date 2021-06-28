@@ -10,6 +10,7 @@ using NexusLabs.Contracts;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.Mapping.Default
@@ -76,8 +77,8 @@ namespace Macerus.Plugins.Features.Mapping.Default
             Contract.RequiresNotNull(
                 actor,
                 $"Expecting to find game object on map with behavior " +
-                $"'{typeof(IPlayerControlledBehavior)}' with property " +
-                $"'{nameof(IPlayerControlledBehavior.IsActive)}' set to true.");
+                $"'{typeof(IReadOnlyPlayerControlledBehavior)}' with property " +
+                $"'{nameof(IReadOnlyPlayerControlledBehavior.IsActive)}' set to true.");
             return actor;
         }
 
@@ -86,7 +87,7 @@ namespace Macerus.Plugins.Features.Mapping.Default
             actor = _mapGameObjectManager
                 .GameObjects
                 .FirstOrDefault(x =>
-                    x.TryGetFirst<IPlayerControlledBehavior>(out var playerControlledBehavior) &&
+                    x.TryGetFirst<IReadOnlyPlayerControlledBehavior>(out var playerControlledBehavior) &&
                     playerControlledBehavior.IsActive);
             return actor != null;
         }

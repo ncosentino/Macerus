@@ -2,9 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
-using Macerus.Plugins.Features.Camera;
 using Macerus.Plugins.Features.GameObjects.Actors.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 using Macerus.Plugins.Features.StatusBar.Api;
@@ -31,7 +29,6 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
         private readonly Lazy<IMapManager> _lazyMapManager;
         private readonly Lazy<IRosterManager> _lazyRosterManager;
         private readonly Lazy<IStatusBarViewModel> _lazyStatusBarViewModel;
-        private readonly Lazy<ICameraManager> _lazyCameraManager;
 
         public NewGameWorkflow(
             Lazy<IMapStateRepository> lazyMapStateRepository,
@@ -42,8 +39,7 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             Lazy<IActorGeneratorFacade> lazyActorGeneratorFacade,
             Lazy<IMapManager> lazyMapManager,
             Lazy<IRosterManager> lazyRosterManager,
-            Lazy<IStatusBarViewModel> lazyStatusBarViewModel,
-            Lazy<ICameraManager> lazyCameraManager)
+            Lazy<IStatusBarViewModel> lazyStatusBarViewModel)
         {
             _lazyMapStateRepository = lazyMapStateRepository;
             _lazyGameObjectRepository = lazyGameObjectRepository;
@@ -54,7 +50,6 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             _lazyMapManager = lazyMapManager;
             _lazyRosterManager = lazyRosterManager;
             _lazyStatusBarViewModel = lazyStatusBarViewModel;
-            _lazyCameraManager = lazyCameraManager;
         }
 
         public async Task RunAsync()
@@ -68,9 +63,7 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             _lazyGameObjectRepository.Value.Save(player);
             _lazyRosterManager.Value.AddToRoster(player);
             player.GetOnly<IRosterBehavior>().IsPartyLeader = true;
-            player.GetOnly<IPlayerControlledBehavior>().IsActive = true;
-
-            _lazyCameraManager.Value.SetFollowTarget(player);
+            _lazyRosterManager.Value.SetActorToControl(player);
 
             var mercenary = CreateActor(new StringIdentifier("test-mercenary"));
             _lazyGameObjectRepository.Value.Save(mercenary);
