@@ -50,7 +50,7 @@ namespace Macerus.Tests.Plugins.Features.Encounters
         [Fact]
         private void StartEncounter_TestEncounter_ExpectedState()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async player =>
             {
                 var filterContext = _filterContextProvider.GetContext();
                 await _encounterManager.StartEncounterAsync(
@@ -77,7 +77,7 @@ namespace Macerus.Tests.Plugins.Features.Encounters
         [Fact]
         private void EndCombat_TestEncounterPlayerWins_TriggerOnCombatEndSpawners()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async player =>
             {
                 var filterContext = _filterContextProvider.GetContext();
                 await _encounterManager.StartEncounterAsync(
@@ -121,7 +121,7 @@ namespace Macerus.Tests.Plugins.Features.Encounters
         [Fact]
         private void EndCombat_UseReturnDoor_BackToStartMapAtSpecifiedLocation()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
+            _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async player =>
             {
                 var filterContext = _filterContextProvider.GetContext();
                 await _encounterManager.StartEncounterAsync(

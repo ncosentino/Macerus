@@ -3,7 +3,7 @@
 using Autofac;
 
 using Macerus.Plugins.Features.Combat.Api;
-using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;

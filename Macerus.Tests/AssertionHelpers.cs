@@ -1,14 +1,13 @@
 ﻿using System.Linq;
 
-using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
-using ProjectXyz.Api.GameObjects.Behaviors;
-using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Stats;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Socketing.Api;
 using ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api;

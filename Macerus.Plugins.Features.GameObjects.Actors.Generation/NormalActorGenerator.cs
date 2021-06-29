@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
-using Macerus.Plugins.Features.GameObjects.Actors.Api;
 
-using ProjectXyz.Api.GameObjects.Behaviors;
-using ProjectXyz.Plugins.Features.Filtering.Api;
-using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Shared.Game.Behaviors;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
 {

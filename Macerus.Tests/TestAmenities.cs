@@ -15,6 +15,7 @@ using ProjectXyz.Game.Api;
 using ProjectXyz.Game.Core;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.Mapping;
+using ProjectXyz.Plugins.Features.PartyManagement;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;
@@ -32,6 +33,7 @@ namespace Macerus.Tests
         private readonly IFilterContextAmenity _filterContextAmenity;
         private readonly IActorIdentifiers _actorIdentifiers;
         private readonly IGameObjectIdentifiers _gameObjectIdentifiers;
+        private readonly IRosterManager _rosterManager;
 
         public TestAmenities(MacerusContainer container)
         {
@@ -44,6 +46,7 @@ namespace Macerus.Tests
             _filterContextAmenity = _container.Resolve<IFilterContextAmenity>();
             _actorIdentifiers = _container.Resolve<IActorIdentifiers>();
             _gameObjectIdentifiers = _container.Resolve<IGameObjectIdentifiers>();
+            _rosterManager = _container.Resolve<IRosterManager>();
         }
 
         public IGameObject CreatePlayerInstance()
@@ -63,7 +66,7 @@ namespace Macerus.Tests
             return player;
         }
 
-        public async Task UsingCleanMapAndObjectsWithPlayer(Func<IGameObject, Task> callback)
+        public async Task UsingCleanMapAndObjectsWithPlayerAsync(Func<IGameObject, Task> callback)
         {
             var actor = CreatePlayerInstance();
             await UsingCleanMapAndObjects(async () =>
@@ -84,6 +87,10 @@ namespace Macerus.Tests
             _mapManager.UnloadMap();
             Assert.Empty(_mapGameObjectManager.GameObjects);
 
+            _rosterManager.ClearRoster();
+            Assert.Empty(_rosterManager.FullRoster);
+            Assert.Empty(_rosterManager.ActiveParty);
+
             try
             {
                 await callback.Invoke();
@@ -92,6 +99,10 @@ namespace Macerus.Tests
             {
                 _mapManager.UnloadMap();
                 Assert.Empty(_mapGameObjectManager.GameObjects);
+
+                _rosterManager.ClearRoster();
+                Assert.Empty(_rosterManager.FullRoster);
+                Assert.Empty(_rosterManager.ActiveParty);
             }
         }
 

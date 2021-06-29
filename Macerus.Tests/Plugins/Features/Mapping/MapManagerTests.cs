@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 
-using Macerus.Api.Behaviors;
+using Macerus.Api.Behaviors.Filtering;
 using Macerus.Api.GameObjects;
+using Macerus.Plugins.Features.GameObjects.Actors;
+using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.Mapping;
+using ProjectXyz.Plugins.Features.PartyManagement;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;
@@ -20,6 +26,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
         private static readonly IMapManager _mapManager;
         private static readonly IMapGameObjectManager _mapGameObjectManager;
         private static readonly IGameObjectRepositoryAmenity _gameObjectRepositoryAmenity;
+        private static readonly IRosterManager _rosterManager;
 
         static MapManagerTests()
         {
@@ -29,21 +36,23 @@ namespace Macerus.Tests.Plugins.Features.Mapping
             _mapManager = _container.Resolve<IMapManager>();
             _mapGameObjectManager = _container.Resolve<IMapGameObjectManager>();
             _gameObjectRepositoryAmenity = _container.Resolve<IGameObjectRepositoryAmenity>();
+            _rosterManager = _container.Resolve<IRosterManager>();
         }
 
         [Fact]
-        private void SwitchMap_SameMap_NoOpSamePlayer()
+        private async Task SwitchMap_SameMap_NoOpSamePlayer()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(async ___ =>
+            await _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async ___ =>
             {
-                await _mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
-
                 var uniqueStatId = new StringIdentifier(Guid.NewGuid().ToString());
-                var player = _mapGameObjectManager
-                    .GameObjects
-                    .Single(x => x.Has<IPlayerControlledBehavior>());
+                var player = CreatePlayerInstance(_container);
                 var playerStats = player.GetOnly<IHasMutableStatsBehavior>();
                 playerStats.MutateStats(stats => stats.Add(uniqueStatId, 123));
+
+                player.GetOnly<IRosterBehavior>().IsPartyLeader = true;
+                _rosterManager.AddToRoster(player);
+
+                await _mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
 
                 int mapChangeCount = 0;
                 _mapManager.MapChanged += (_, __) => mapChangeCount++;
@@ -61,18 +70,19 @@ namespace Macerus.Tests.Plugins.Features.Mapping
         }
 
         [Fact]
-        private void SwitchMap_IntermediateThenBackToSameMap_PlayerPersistsAcrossMaps()
+        private async Task SwitchMap_IntermediateThenBackToSameMap_PlayerPersistsAcrossMaps()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(async _ =>
+            await _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async _ =>
             {
-                await _mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
-
                 var uniqueStatId = new StringIdentifier(Guid.NewGuid().ToString());
-                var player = _mapGameObjectManager
-                    .GameObjects
-                    .Single(x => x.Has<IPlayerControlledBehavior>());
+                var player = CreatePlayerInstance(_container);
                 var playerStats = player.GetOnly<IHasMutableStatsBehavior>();
                 playerStats.MutateStats(stats => stats.Add(uniqueStatId, 123));
+
+                player.GetOnly<IRosterBehavior>().IsPartyLeader = true;
+                _rosterManager.AddToRoster(player);
+
+                await _mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
 
                 await _mapManager.SwitchMapAsync(new StringIdentifier("test_encounter_map"));
                 player = _mapGameObjectManager
@@ -100,6 +110,27 @@ namespace Macerus.Tests.Plugins.Features.Mapping
                 Assert.Equal(player, playerInRepository);
                 Assert.Equal(123d, playerStats.BaseStats[uniqueStatId]);
             });
+        }
+
+        private IGameObject CreatePlayerInstance(MacerusContainer container)
+        {
+            var filterContextAmenity = container.Resolve<IFilterContextAmenity>();
+            var actorIdentifiers = container.Resolve<IMacerusActorIdentifiers>();
+            var gameObjectIdentifiers = container.Resolve<IGameObjectIdentifiers>();
+            var actorGeneratorFacade = container.Resolve<IActorGeneratorFacade>();
+            var context = filterContextAmenity.CreateFilterContextForSingle(
+                filterContextAmenity.CreateRequiredAttribute(
+                    gameObjectIdentifiers.FilterContextTypeId,
+                    actorIdentifiers.ActorTypeIdentifier),
+                filterContextAmenity.CreateRequiredAttribute(
+                    actorIdentifiers.ActorDefinitionIdentifier,
+                    new StringIdentifier("player")));
+            var player = actorGeneratorFacade
+                .GenerateActors(
+                    context,
+                    new IGeneratorComponent[] { })
+                .Single();
+            return player;
         }
     }
 }

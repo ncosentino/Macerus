@@ -15,7 +15,7 @@ using Macerus.Plugins.Features.DataPersistence;
 using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 using Macerus.Plugins.Features.GameObjects.Actors;
-using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors.Default;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Interactions.Api;

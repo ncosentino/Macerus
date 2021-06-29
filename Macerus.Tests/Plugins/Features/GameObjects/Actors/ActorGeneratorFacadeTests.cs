@@ -1,13 +1,13 @@
 ﻿using System.Linq;
 
-using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
-using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;

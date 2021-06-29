@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
-using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.Mapping;
 using Macerus.Plugins.Features.Stats.Api;
 

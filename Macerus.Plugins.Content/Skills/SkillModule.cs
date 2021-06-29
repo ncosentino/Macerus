@@ -3,7 +3,7 @@ using System.Linq;
 
 using Autofac;
 
-using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Skills.Default;
 
 using ProjectXyz.Framework.Autofac;

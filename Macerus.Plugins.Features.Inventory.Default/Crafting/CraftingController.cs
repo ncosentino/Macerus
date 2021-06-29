@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.Inventory.Api;
 using Macerus.Plugins.Features.Inventory.Api.Crafting;
 using Macerus.Plugins.Features.Inventory.Api.HoverCards;

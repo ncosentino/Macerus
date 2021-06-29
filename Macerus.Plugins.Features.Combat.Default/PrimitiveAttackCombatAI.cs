@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Combat.Api;
-using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Stats.Api;
 

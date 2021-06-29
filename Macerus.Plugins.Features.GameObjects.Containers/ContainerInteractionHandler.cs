@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Api;
 using Macerus.Plugins.Features.Interactions.Api;

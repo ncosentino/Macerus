@@ -56,7 +56,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects
         [Fact]
         private async Task SerializeAndDeserialize_Player_ExpectedResults()
         {
-            await _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
+            await _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async player =>
             {
                 var result = Exercise(player);
 
@@ -79,8 +79,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects
 
                 // ensure we have our expected animation
                 var animationBehavior = result.Item1.Behaviors.GetOnly<IReadOnlyDynamicAnimationBehavior>();
-                Assert.Equal("$actor$", animationBehavior.SourcePattern);
-                Assert.Equal(new StringIdentifier("$actor$_stand_forward"), animationBehavior.BaseAnimationId);
+                Assert.Equal(new StringIdentifier("$actor$_stand_$direction$"), animationBehavior.BaseAnimationId);
                 Assert.Equal(0, animationBehavior.CurrentFrameIndex);
                 Assert.True(
                     animationBehavior.Visible,

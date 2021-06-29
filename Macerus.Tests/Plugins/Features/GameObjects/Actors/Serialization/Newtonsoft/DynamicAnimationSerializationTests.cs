@@ -2,7 +2,7 @@
 using System.Text;
 
 using Macerus.Api.Behaviors;
-using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors;
 
 using ProjectXyz.Api.Data.Serialization;
 using ProjectXyz.Shared.Framework;
@@ -29,7 +29,6 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors.Serialization.Newton
         private void FullSerialize_ValidBehavior_EquivalentDeserialized()
         {
             var behavior = _dynamicAnimationBehaviorFactory.Create(
-                "source pattern",
                 new StringIdentifier("base animation id"),
                 true,
                 123);
@@ -46,7 +45,6 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors.Serialization.Newton
             }
 
             Assert.Equal(123, result.CurrentFrameIndex);
-            Assert.Equal("source pattern", result.SourcePattern);
             Assert.Equal(new StringIdentifier("base animation id"), result.BaseAnimationId);
             Assert.True(
                 result.Visible,

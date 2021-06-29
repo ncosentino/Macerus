@@ -150,7 +150,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
         [Fact]
         public async Task GenerateLoot_PlayerStatsRequiredPlayerPresentStatsMet_ExpectedDropTable()
         {
-            await _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
+            await _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async player =>
             {
                 player
                     .GetOnly<IHasMutableStatsBehavior>()
@@ -176,7 +176,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
         [Fact]
         public async Task GenerateLoot_PlayerStatsRequiredPlayerPresentStatsNotMet_ThrowsNoValidTable()
         {
-            await _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
+            await _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async player =>
             {
                 player
                     .GetOnly<IHasMutableStatsBehavior>()

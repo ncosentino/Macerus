@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{BD27FEF7-8B2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{42E42C5A-EE1F-49F3-9DB6-F4295A4A396D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Actors", "Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj", "{9B52B191-530A-48CF-A712-78AEBC2E9E46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Actors.Default", "Macerus.Plugins.Features.GameObjects.Actors.Default\Macerus.Plugins.Features.GameObjects.Actors.Default.csproj", "{9B52B191-530A-48CF-A712-78AEBC2E9E46}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Api.Behaviors", "Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj", "{5F24115E-512F-48BA-AD4A-282E5DAA7DC6}"
 EndProject
@@ -125,7 +125,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Items.Generation.Api", "Macerus.Plugins.Features.GameObjects.Items.Generation.Api\Macerus.Plugins.Features.GameObjects.Items.Generation.Api.csproj", "{E6955FDF-C37A-45D8-BD0C-FA86F3441CDA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Actors.Api", "Macerus.Plugins.Features.GameObjects.Actors.Api\Macerus.Plugins.Features.GameObjects.Actors.Api.csproj", "{44F38BAC-848A-4488-A6EA-E81643846A11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Actors", "Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj", "{44F38BAC-848A-4488-A6EA-E81643846A11}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interactions", "Interactions", "{BE0B7461-E600-41DA-AEB3-D352EEE72047}"
 EndProject
@@ -207,13 +207,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Da
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Audio", "Audio", "{8D2462E5-6EE0-48F2-973A-09EF1E73BADB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Audio", "Macerus.Plugins.Features.Audio\Macerus.Plugins.Features.Audio.csproj", "{214A062C-490A-4D2D-AB12-4B18A1E58A2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Audio", "Macerus.Plugins.Features.Audio\Macerus.Plugins.Features.Audio.csproj", "{214A062C-490A-4D2D-AB12-4B18A1E58A2C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Camera", "Camera", "{6A4FADDE-00A6-4178-9F29-401524E0D2C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Camera", "Macerus.Plugins.Features.Camera\Macerus.Plugins.Features.Camera.csproj", "{13FA2149-7B61-4CE3-904B-4F6270FAC69C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Camera", "Macerus.Plugins.Features.Camera\Macerus.Plugins.Features.Camera.csproj", "{13FA2149-7B61-4CE3-904B-4F6270FAC69C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Camera.Default", "Macerus.Plugins.Features.Camera.Default\Macerus.Plugins.Features.Camera.Default.csproj", "{9F52C33D-A1A8-4DEA-AF36-E13EF6C7F0EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Camera.Default", "Macerus.Plugins.Features.Camera.Default\Macerus.Plugins.Features.Camera.Default.csproj", "{9F52C33D-A1A8-4DEA-AF36-E13EF6C7F0EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,16 +1,16 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
-using Macerus.Api.Behaviors;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.GameObjects.Actors;
-using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors.Default;
 using Macerus.Plugins.Features.Interactions.Api;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Shared.Framework;
 
@@ -61,9 +61,9 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
         }
 
         [Fact]
-        private void Interact_NotDead_NoItemsTransfered()
+        private async Task Interact_NotDead_NoItemsTransfered()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
+            await _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async player =>
             {
                 var skeleton = await SetupAsync();
 
@@ -101,9 +101,9 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
         }
 
         [Fact]
-        private void Interact_Dead_AllItemsTransfered()
+        private async Task Interact_Dead_AllItemsTransfered()
         {
-            _testAmenities.UsingCleanMapAndObjectsWithPlayer(async player =>
+            await _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async player =>
             {
                 var skeleton = await SetupAsync();
 

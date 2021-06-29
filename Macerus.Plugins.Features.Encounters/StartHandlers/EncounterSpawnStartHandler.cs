@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
-using Macerus.Plugins.Features.GameObjects.Actors.Api;
+using Macerus.Plugins.Features.GameObjects.Actors;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
