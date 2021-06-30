@@ -252,7 +252,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
                 currentWalkPoint.Value,
                 lerpPercent);
 
-            var directionUnitVector = Vector2.Normalize(nextPosition - new Vector2((float)positionBehavior.X, (float)positionBehavior.Y));
+            var directionUnitVector = nextPosition - new Vector2((float)positionBehavior.X, (float)positionBehavior.Y);
+            directionUnitVector = directionUnitVector == Vector2.Zero ? Vector2.Zero : Vector2.Normalize(directionUnitVector);
+
             var velocity = speed * directionUnitVector;
             movementBehavior.SetVelocity(velocity.X, velocity.Y);
         }

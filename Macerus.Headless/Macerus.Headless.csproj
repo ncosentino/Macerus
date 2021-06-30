@@ -47,6 +47,7 @@
     <PackageReference Include="ProjectXyz" Version="1.0.*" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\ActorsModule.cs" />
     <Compile Include="Modules\MappingModule.cs" />
     <Compile Include="Modules\ConsoleModule.cs" />
     <Compile Include="Modules\AnimationModule.cs" />

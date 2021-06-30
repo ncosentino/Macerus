@@ -6,9 +6,12 @@ namespace Macerus.Api.Behaviors
     {
         public static Vector2 GetThrottleDirection(this IReadOnlyMovementBehavior movementBehavior)
         {
-            var directionVector = Vector2.Normalize(new Vector2(
+            var throttleVector = new Vector2(
                 (float)movementBehavior.ThrottleX,
-                (float)movementBehavior.ThrottleY));
+                (float)movementBehavior.ThrottleY);
+            var directionVector = throttleVector == Vector2.Zero 
+                ? Vector2.Zero
+                : Vector2.Normalize(throttleVector);
             return directionVector;
         }
 
@@ -20,9 +23,12 @@ namespace Macerus.Api.Behaviors
 
         public static Vector2 GetVelocityDirection(this IReadOnlyMovementBehavior movementBehavior)
         {
-            var directionVector = Vector2.Normalize(new Vector2(
+            var velocityVector = new Vector2(
                 (float)movementBehavior.VelocityX,
-                (float)movementBehavior.VelocityY));
+                (float)movementBehavior.VelocityY);
+            var directionVector = velocityVector == Vector2.Zero
+                 ? Vector2.Zero
+                 : Vector2.Normalize(velocityVector);
             return directionVector;
         }
 

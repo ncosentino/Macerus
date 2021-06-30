@@ -13,8 +13,6 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
         private readonly IObservableRosterManager _rosterManager;
         private readonly Lazy<ICameraManager> _lazyCameraManager;
 
-        public int? Priority => null;
-
         public CameraFollowingSystem(
             IObservableRosterManager rosterManager,
             Lazy<ICameraManager> lazyCameraManager)
@@ -24,6 +22,8 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
 
             _rosterManager.ControlledActorChanged += RosterManager_ControlledActorChanged;
         }
+
+        public int? Priority => null;
 
         public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
         {

@@ -16,6 +16,7 @@ using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
 using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Default;
+using Macerus.Plugins.Features.GameObjects.Actors.Default.AI;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Interactions.Api;
@@ -33,6 +34,7 @@ using ProjectXyz.Game.Api;
 using ProjectXyz.Game.Interface.Engine;
 using ProjectXyz.Plugins.Features.Behaviors.Default;
 using ProjectXyz.Plugins.Features.Combat.Api;
+using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.Mapping;
@@ -48,7 +50,43 @@ namespace Macerus.Headless
         {
             var container = new MacerusContainer();
 
-            await new AnimateExercise().Go(container);
+            await new NpcAIExercise().Go(container);
+        }
+    }
+
+    public sealed class NpcAIExercise
+    {
+        public async Task Go(MacerusContainer container)
+        {
+            var npc = container.Resolve<IGameObjectFactory>().Create(new IBehavior[]
+            {
+                new PositionBehavior(40, -16),
+                new SizeBehavior(0, 0),
+                new MovementBehavior(),
+                container.Resolve<IDynamicAnimationBehaviorFactory>().Create(
+                    new StringIdentifier(string.Empty),
+                    true,
+                    0),
+                new AIBehavior(),
+                new WalkZoneAITaskBehavior(1, 40, -16, 10, 2),
+                new IdleAITaskBehavior(1, TimeSpan.Zero, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(2)),
+            });
+            var movementBehavior = npc.GetOnly<IMovementBehavior>();
+            movementBehavior.Direction = 3;
+            npc.GetOnly<IDynamicAnimationBehavior>().BaseAnimationId = container.Resolve<IMacerusActorIdentifiers>().AnimationStand;
+
+            var mapManager = container.Resolve<IMapManager>();
+            await mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
+
+            var mapGameObjectManager = container.Resolve<IMapGameObjectManager>();
+            mapGameObjectManager.MarkForAddition(npc);
+            mapGameObjectManager.Synchronize();
+
+            var gameEngine = container.Resolve<IGameEngine>();
+            while (true)
+            {
+                await gameEngine.UpdateAsync();
+            }
         }
     }
 
@@ -398,56 +436,4 @@ namespace Macerus.Headless
             Console.ReadLine();
         }
     }
-
-    //public sealed class DummyModule : SingleRegistrationModule
-    //{
-    //    protected override void SafeLoad(ContainerBuilder builder)
-    //    {
-    //        builder
-    //            .RegisterType<FakeMovementSystem>()
-    //            .AsImplementedInterfaces()
-    //            .SingleInstance();
-    //    }
-
-    //    private sealed class FakeMovementSystem : IDiscoverableSystem
-    //    {
-    //        private readonly IBehaviorFinder _behaviorFinder;
-
-    //        public FakeMovementSystem(IBehaviorFinder behaviorFinder)
-    //        {
-    //            _behaviorFinder = behaviorFinder;
-    //        }
-
-    //        public int? Priority => null;
-
-    //        public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
-    //        {
-    //            var elapsedTime = systemUpdateContext
-    //                .GetFirst<IComponent<IElapsedTime>>()
-    //                .Value;
-    //            var elapsedSeconds = ((IInterval<double>)elapsedTime.Interval).Value / 1000;
-    //            var gameObjects = systemUpdateContext
-    //                .GetFirst<IComponent<ITurnInfo>>()
-    //                .Value
-    //                .AllGameObjects;
-
-    //            foreach (var gameObject in gameObjects)
-    //            {
-    //                if (!_behaviorFinder.TryFind<IReadOnlyMovementBehavior, IPositionBehavior>(
-    //                    gameObject, 
-    //                    out var behaviors))
-    //                {
-    //                    continue;
-    //                }
-
-    //                var movementBehavior = behaviors.Item1;
-    //                var locationBehavior = behaviors.Item2;
-
-    //                locationBehavior.SetPosition(
-    //                    locationBehavior.X + movementBehavior.VelocityX * elapsedSeconds,
-    //                    locationBehavior.Y + movementBehavior.VelocityY * elapsedSeconds);
-    //            }
-    //        }
-    //    }
-    //}
 }
