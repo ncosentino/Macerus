@@ -71,7 +71,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             UseSkill
         }
 
-        public bool Execute(
+        public async Task<bool> ExecuteAsync(
             IGameObject actor,
             IReadOnlyCollection<IGameObject> combatGameObjects,
             IInterval<double> elapsed)
@@ -89,9 +89,10 @@ namespace Macerus.Plugins.Features.Combat.Default
                         combatGameObjects);
                     break;
                 case CombatState.IdentifyWalkTarget:
-                    turnShouldEnd = PickWalkTarget(
+                    turnShouldEnd = await PickWalkTargetAsync(
                         actor,
-                        _combatTarget);
+                        _combatTarget)
+                        .ConfigureAwait(false);
                     break;
                 case CombatState.WalkToTarget:
                     turnShouldEnd = WalkToTarget(
@@ -231,7 +232,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             }
         }
 
-        private bool PickWalkTarget(
+        private async Task<bool> PickWalkTargetAsync(
             IGameObject actor,
             IGameObject target)
         {
@@ -305,11 +306,13 @@ namespace Macerus.Plugins.Features.Combat.Default
                 destinationLocation = fallbackDestinationLocation;
             }
 
-            var walkPath = pathFinder.FindPath(
-                actorLocation,
-                destinationLocation,
-                actorSize,
-                canMoveDiagonally);
+            var walkPath = await pathFinder
+                .FindPathAsync(
+                    actorLocation,
+                    destinationLocation,
+                    actorSize,
+                    canMoveDiagonally)
+                .ConfigureAwait(false);
             var pointsToWalk = new Queue<Vector2>(
                 new[] { actorLocation }
                 .Concat(walkPath.Positions));

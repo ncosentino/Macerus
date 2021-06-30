@@ -79,7 +79,7 @@ namespace Macerus.Plugins.Features.Combat.Default
                 return;
             }
 
-            if (currentCombatAI.Execute(
+            if (await currentCombatAI.ExecuteAsync(
                 currentActor,
                 new HashSet<IGameObject>(_combatGameObjectProvider.GetGameObjects()),
                 elapsed))
