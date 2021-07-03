@@ -7,6 +7,6 @@ namespace Macerus.Plugins.Features.Mapping
     {
         void SetTraversableTiles(IEnumerable<Vector2> traversableTiles);
 
-        void SetTargettedTiles(Dictionary<int, HashSet<Vector2>> traversableTiles);
+        void SetTargettedTiles(IReadOnlyDictionary<int, HashSet<Vector2>> targettedTiles);
     }
 }
