@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-using Macerus.Plugins.Features.Gui.Api;
+using Macerus.Plugins.Features.Gui;
 
 using ProjectXyz.Api.GameObjects;
 

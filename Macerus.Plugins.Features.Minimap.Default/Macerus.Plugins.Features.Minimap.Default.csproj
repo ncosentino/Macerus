@@ -6,12 +6,14 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-    <PackageReference Include="ProjectXyz" Version="1.0.*" />
     <PackageReference Include="NexusLabs.Contracts" Version="0.0.3" />
+    <PackageReference Include="ProjectXyz" Version="1.0.*" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Macerus.Plugins.Features.Gui.Default\Macerus.Plugins.Features.Gui.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Gui\Macerus.Plugins.Features.Gui.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Minimap\Macerus.Plugins.Features.Minimap.csproj" />
   </ItemGroup>
 
 </Project>

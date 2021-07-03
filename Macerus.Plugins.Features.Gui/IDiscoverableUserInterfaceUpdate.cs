@@ -1,4 +1,4 @@
-﻿namespace Macerus.Plugins.Features.Gui.Api
+﻿namespace Macerus.Plugins.Features.Gui
 {
     public interface IDiscoverableUserInterfaceUpdate : IUserInterfaceUpdate
     {

@@ -69,7 +69,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Skills.Api\Macerus.Plugins.Features.GameObjects.Skills.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Static\Macerus.Plugins.Features.GameObjects.Static.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.Gui.Api\Macerus.Plugins.Features.Gui.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Gui\Macerus.Plugins.Features.Gui.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Gui.Default\Macerus.Plugins.Features.Gui.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.HeaderBar.Api\Macerus.Plugins.Features.HeaderBar.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.HeaderBar.Default\Macerus.Plugins.Features.HeaderBar.Default.csproj" />
@@ -87,6 +87,8 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.MainMenu.Default\Macerus.Plugins.Features.MainMenu.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Mapping.Default\Macerus.Plugins.Features.Mapping.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Mapping\Macerus.Plugins.Features.Mapping.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Minimap.Default\Macerus.Plugins.Features.Minimap.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Minimap\Macerus.Plugins.Features.Minimap.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Stats.Api\Macerus.Plugins.Features.Stats.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.StatusBar.Api\Macerus.Plugins.Features.StatusBar.Api.csproj" />

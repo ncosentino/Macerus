@@ -5,7 +5,7 @@ using System.Linq;
 using Macerus.Game.Api;
 using Macerus.Game.Api.Scenes;
 using Macerus.Plugins.Features.DataPersistence;
-using Macerus.Plugins.Features.Gui.Api.SceneTransitions;
+using Macerus.Plugins.Features.Gui.SceneTransitions;
 using Macerus.Plugins.Features.InGameMenu.Api;
 using Macerus.Plugins.Features.MainMenu.Api;
 using Macerus.Plugins.Features.StatusBar.Api;

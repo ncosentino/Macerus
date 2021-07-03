@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-using Macerus.Plugins.Features.Gui.Api;
+using Macerus.Plugins.Features.Gui;
 
 using ProjectXyz.Api.Framework;
 

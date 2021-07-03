@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Macerus.Plugins.Features.Gui.Api;
-
 using ProjectXyz.Api.Systems;
 
 namespace Macerus.Plugins.Features.Gui.Default

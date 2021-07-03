@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using Macerus.Plugins.Features.Gui.Api;
-using Macerus.Plugins.Features.Gui.Api.SceneTransitions;
+using Macerus.Plugins.Features.Gui.SceneTransitions;
 
 using ProjectXyz.Api.Systems;
 

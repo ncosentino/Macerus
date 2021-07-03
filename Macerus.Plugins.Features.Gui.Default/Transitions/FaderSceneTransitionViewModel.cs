@@ -1,4 +1,4 @@
-﻿using Macerus.Plugins.Features.Gui.Api.SceneTransitions;
+﻿using Macerus.Plugins.Features.Gui.SceneTransitions;
 
 namespace Macerus.Plugins.Features.Gui.Default.SceneTransitions
 {

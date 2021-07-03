@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using Macerus.Plugins.Features.Gui.Api;
+using Macerus.Plugins.Features.Gui;
 
 namespace Macerus.Plugins.Features.HeaderBar.Api.CombatTurnOrder
 {

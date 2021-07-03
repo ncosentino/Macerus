@@ -1,6 +1,4 @@
-﻿using Macerus.Plugins.Features.Gui.Api;
-
-namespace Macerus.Plugins.Features.Gui.Default
+﻿namespace Macerus.Plugins.Features.Gui.Default
 {
     public struct Color : IColor
     {

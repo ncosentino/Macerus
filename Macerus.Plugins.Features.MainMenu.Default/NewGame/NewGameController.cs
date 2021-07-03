@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 
 using Macerus.Game.Api.Scenes;
-using Macerus.Plugins.Features.Gui.Api.SceneTransitions;
+using Macerus.Plugins.Features.Gui.SceneTransitions;
 using Macerus.Plugins.Features.LoadingScreen.Api;
 using Macerus.Plugins.Features.MainMenu.Api;
 using Macerus.Plugins.Features.MainMenu.Api.NewGame;

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Macerus.Plugins.Features.Gui.Api.SceneTransitions
+namespace Macerus.Plugins.Features.Gui.SceneTransitions
 {
     public interface IFaderSceneTransitionViewModel : INotifyPropertyChanged
     {

@@ -137,7 +137,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MainMenu", "MainMenu", "{2C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gui", "Gui", "{567841EF-7021-4259-8A13-6830AC9C624B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Gui.Api", "Macerus.Plugins.Features.Gui.Api\Macerus.Plugins.Features.Gui.Api.csproj", "{8E80BA20-4A91-4FC4-9999-A290D6ED582B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Gui", "Macerus.Plugins.Features.Gui\Macerus.Plugins.Features.Gui.csproj", "{8E80BA20-4A91-4FC4-9999-A290D6ED582B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Gui.Default", "Macerus.Plugins.Features.Gui.Default\Macerus.Plugins.Features.Gui.Default.csproj", "{4ED65243-2728-4321-AC1A-E549702C485B}"
 EndProject
@@ -214,6 +214,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Camera", "Macerus.Plugins.Features.Camera\Macerus.Plugins.Features.Camera.csproj", "{13FA2149-7B61-4CE3-904B-4F6270FAC69C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Camera.Default", "Macerus.Plugins.Features.Camera.Default\Macerus.Plugins.Features.Camera.Default.csproj", "{9F52C33D-A1A8-4DEA-AF36-E13EF6C7F0EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Minimap", "Minimap", "{B7931800-9029-4A20-8E2A-3428A0F600D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Minimap", "Macerus.Plugins.Features.Minimap\Macerus.Plugins.Features.Minimap.csproj", "{E593BA50-6C79-43A0-A541-EF337D6BC731}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Minimap.Default", "Macerus.Plugins.Features.Minimap.Default\Macerus.Plugins.Features.Minimap.Default.csproj", "{ADAC7B83-4F77-4D92-9764-F9BF6311B212}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -505,6 +511,14 @@ Global
 		{9F52C33D-A1A8-4DEA-AF36-E13EF6C7F0EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F52C33D-A1A8-4DEA-AF36-E13EF6C7F0EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F52C33D-A1A8-4DEA-AF36-E13EF6C7F0EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E593BA50-6C79-43A0-A541-EF337D6BC731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E593BA50-6C79-43A0-A541-EF337D6BC731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E593BA50-6C79-43A0-A541-EF337D6BC731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E593BA50-6C79-43A0-A541-EF337D6BC731}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADAC7B83-4F77-4D92-9764-F9BF6311B212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADAC7B83-4F77-4D92-9764-F9BF6311B212}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADAC7B83-4F77-4D92-9764-F9BF6311B212}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADAC7B83-4F77-4D92-9764-F9BF6311B212}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -608,6 +622,9 @@ Global
 		{6A4FADDE-00A6-4178-9F29-401524E0D2C4} = {33A6C169-52DA-446B-A241-FEC05722752A}
 		{13FA2149-7B61-4CE3-904B-4F6270FAC69C} = {6A4FADDE-00A6-4178-9F29-401524E0D2C4}
 		{9F52C33D-A1A8-4DEA-AF36-E13EF6C7F0EB} = {6A4FADDE-00A6-4178-9F29-401524E0D2C4}
+		{B7931800-9029-4A20-8E2A-3428A0F600D1} = {33A6C169-52DA-446B-A241-FEC05722752A}
+		{E593BA50-6C79-43A0-A541-EF337D6BC731} = {B7931800-9029-4A20-8E2A-3428A0F600D1}
+		{ADAC7B83-4F77-4D92-9764-F9BF6311B212} = {B7931800-9029-4A20-8E2A-3428A0F600D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}

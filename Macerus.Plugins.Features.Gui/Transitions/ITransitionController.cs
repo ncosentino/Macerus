@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Macerus.Plugins.Features.Gui.Api.SceneTransitions
+namespace Macerus.Plugins.Features.Gui.SceneTransitions
 {
     public interface ITransitionController
     {

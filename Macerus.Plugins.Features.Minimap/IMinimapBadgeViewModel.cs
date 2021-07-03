@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace Macerus.Plugins.Features.Gui.Api
+namespace Macerus.Plugins.Features.Minimap
 {
-    public interface IWindowViewModel : INotifyPropertyChanged
+    public interface IMinimapBadgeViewModel : INotifyPropertyChanged
     {
         event EventHandler<EventArgs> Opened;
 
