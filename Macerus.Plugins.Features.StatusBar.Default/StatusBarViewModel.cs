@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Macerus.Plugins.Features.Gui.Default;
@@ -12,11 +13,15 @@ namespace Macerus.Plugins.Features.StatusBar.Default
     {
         private readonly List<IStatusBarAbilityViewModel> _abilityViewModels;
         private bool _isOpen;
+        private bool _canCompleteTurn;
 
-        public StatusBarViewModel()
+        public StatusBarViewModel(IStatusBarStringProvider stringProvider)
         {
             _abilityViewModels = new List<IStatusBarAbilityViewModel>();
+            StringProvider = stringProvider;
         }
+
+        public event EventHandler<EventArgs> RequestCompleteTurn;
 
         public bool IsOpen 
         {
@@ -33,11 +38,28 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             }
         }
 
+        public bool CanCompleteTurn
+        {
+            get => _canCompleteTurn;
+            set
+            {
+                if (_canCompleteTurn == value)
+                {
+                    return;
+                }
+
+                _canCompleteTurn = value;
+                OnPropertyChanged();
+            }
+        }
+
         public IStatusBarResourceViewModel LeftResource { get; private set; }
 
         public IStatusBarResourceViewModel RightResource { get; private set; }
 
-        public IReadOnlyCollection<IStatusBarAbilityViewModel> Abilities => _abilityViewModels;
+        public IReadOnlyCollection<IStatusBarAbilityViewModel> Abilities => _abilityViewModels;        
+
+        public IStatusBarStringProvider StringProvider { get; }
 
         public void UpdateResource(IStatusBarResourceViewModel resource, bool left)
         {
@@ -106,5 +128,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 return;
             }
         }
+
+        public void CompleteTurn() => RequestCompleteTurn?.Invoke(this, EventArgs.Empty);
     }
 }

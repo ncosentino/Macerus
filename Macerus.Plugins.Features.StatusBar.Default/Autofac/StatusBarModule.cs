@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Macerus.Plugins.Features.StatusBar.Api;
+
 using ProjectXyz.Framework.Autofac;
 
 namespace Macerus.Plugins.Features.StatusBar.Default.Autofac
@@ -9,8 +9,12 @@ namespace Macerus.Plugins.Features.StatusBar.Default.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
+                .RegisterType<StatusBarStringProvider>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<StatusBarViewModel>()
-                .As<IStatusBarViewModel>()
+                .AsImplementedInterfaces()
                 .SingleInstance();
             builder
                 .RegisterType<StatusBarController>()

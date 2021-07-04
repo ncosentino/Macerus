@@ -1,17 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Macerus.Plugins.Features.StatusBar.Api
 {
-    public interface IStatusBarViewModel : INotifyPropertyChanged
+    public interface IStatusBarViewModel : IObservableStatusBarViewModel
     {
-        bool IsOpen { get; set; }
+        new bool CanCompleteTurn { get; set; }
 
-        IStatusBarResourceViewModel LeftResource { get; }
-
-        IStatusBarResourceViewModel RightResource { get; }
-
-        IReadOnlyCollection<IStatusBarAbilityViewModel> Abilities { get; }
+        new bool IsOpen { get; set; }
 
         void UpdateResource(
             IStatusBarResourceViewModel resource,
@@ -19,5 +14,7 @@ namespace Macerus.Plugins.Features.StatusBar.Api
 
         void UpdateAbilities(
             IReadOnlyCollection<IStatusBarAbilityViewModel> abilities);
+
+        void CompleteTurn();
     }
 }

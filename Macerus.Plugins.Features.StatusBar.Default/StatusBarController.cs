@@ -10,11 +10,15 @@ using Macerus.Plugins.Features.Mapping;
 using Macerus.Plugins.Features.Stats.Api;
 using Macerus.Plugins.Features.StatusBar.Api;
 
+using NexusLabs.Contracts;
+
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Stats;
 using ProjectXyz.Api.Systems;
+using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Plugins.Features.TurnBased;
 using ProjectXyz.Shared.Framework;
@@ -26,38 +30,44 @@ namespace Macerus.Plugins.Features.StatusBar.Default
         private readonly IStatusBarViewModel _statusBarViewModel;
         private readonly ISkillUsage _skillUsage;
         private readonly ISkillHandlerFacade _skillHandlerFacade;
-        private readonly ITurnBasedManager _turnBasedManager;
+        private readonly Lazy<ITurnBasedManager> _lazyTurnBasedManager;
         private readonly Lazy<IMapTraversableHighlighter> _mapTraversableHighlighter;
         private readonly ISkillTargetingAmenity _skillTargetingAmenity;
         private readonly ISkillAmenity _skillAmenity;
-        private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
+        private readonly Lazy<ICombatTurnManager> _lazyCombatTurnManager;
+        private readonly IFilterContextProvider _filterContextProvider;
+        private readonly Lazy<IStatCalculationServiceAmenity> _lazyStatCalculationServiceAmenity;
         private readonly Lazy<IReadOnlyMappingAmenity> _lazyMappingAmenity;
         private readonly IReadOnlyStatDefinitionToTermMappingRepository _statDefinitionToTermMappingRepository;
 
         private readonly Lazy<IReadOnlyCollection<Tuple<IIdentifier, IIdentifier, IIdentifier>>> _lazyCurrentAndMaxResourceIdentifiers;
 
         public StatusBarController(
-            IStatCalculationServiceAmenity statCalculationServiceAmenity,
+            Lazy<IStatCalculationServiceAmenity> lazyStatCalculationServiceAmenity,
             Lazy<IReadOnlyMappingAmenity> lazyMappingAmenity,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
             IStatusBarViewModel statusBarViewModel,
             ISkillUsage skillUsage,
             ISkillHandlerFacade skillHandlerFacade,
-            ITurnBasedManager turnBasedManager,
+            Lazy<ITurnBasedManager> lazyTurnBasedManager,
             Lazy<IMapTraversableHighlighter> mapTraversableHighlighter,
             ISkillTargetingAmenity skillTargetingAmenity,
-            ISkillAmenity skillAmenity)
+            ISkillAmenity skillAmenity,
+            Lazy<ICombatTurnManager> lazyCombatTurnManager,
+            IFilterContextProvider filterContextProvider)
         {
-            _statCalculationServiceAmenity = statCalculationServiceAmenity;
+            _lazyStatCalculationServiceAmenity = lazyStatCalculationServiceAmenity;
             _lazyMappingAmenity = lazyMappingAmenity;
             _statDefinitionToTermMappingRepository = statDefinitionToTermMappingRepository;
             _statusBarViewModel = statusBarViewModel;
             _skillUsage = skillUsage;
             _skillHandlerFacade = skillHandlerFacade;
-            _turnBasedManager = turnBasedManager;
+            _lazyTurnBasedManager = lazyTurnBasedManager;
             _mapTraversableHighlighter = mapTraversableHighlighter;
             _skillTargetingAmenity = skillTargetingAmenity;
             _skillAmenity = skillAmenity;
+            _lazyCombatTurnManager = lazyCombatTurnManager;
+            _filterContextProvider = filterContextProvider;
             _lazyCurrentAndMaxResourceIdentifiers = new Lazy<IReadOnlyCollection<Tuple<IIdentifier, IIdentifier, IIdentifier>>>(() =>
             {
                 // FIXME: make the key a resource name identifier for localized lookup?
@@ -85,6 +95,8 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             // FIXME: MySQL implementations at least before .NET 4.5 have
             // issues with async await support and can literally deadlock
             object hackToResolveResourceIds = _lazyCurrentAndMaxResourceIdentifiers.Value;
+
+            _statusBarViewModel.RequestCompleteTurn += StatusBarViewModel_RequestCompleteTurn;
         }
 
         public delegate StatusBarController Factory();
@@ -122,6 +134,9 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 .ConfigureAwait(false);
 
             _statusBarViewModel.UpdateAbilities(abilityViewModels);
+
+            _statusBarViewModel.CanCompleteTurn = await GetCanCompleteTurn(player)
+                .ConfigureAwait(false);
         }
 
         public async Task ActivateSkillSlotAsync(
@@ -155,7 +170,6 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             _skillHandlerFacade.Handle(
                 actor,
                 skill);
-            _turnBasedManager.SetApplicableObjects(new[] { actor });
         }
 
         public async Task PreviewSkillSlotAsync(
@@ -210,13 +224,27 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 .SetTargettedTiles(skillTargetLocations);
         }
 
+        private async Task<bool> GetCanCompleteTurn(IGameObject actor)
+        {
+            if (!_lazyCombatTurnManager.Value.InCombat)
+            {
+                return false;
+            }
+
+            var filterContext = _filterContextProvider.GetContext();
+            var actorWithCurrentTurn = _lazyCombatTurnManager.Value.GetSnapshot(filterContext, 1).Single();
+            var canCompleteTurn = Equals(actor, actorWithCurrentTurn);
+            return canCompleteTurn;
+        }
+
         private async Task<List<IStatusBarResourceViewModel>> GetResourceViewModelsAsync(
             IGameObject actor,
             IEnumerable<Tuple<IIdentifier, IIdentifier, IIdentifier>> currentAndMaxStatIdentifiers)
         {
             var resourcesViewModels = new List<IStatusBarResourceViewModel>();
 
-            var resources = await _statCalculationServiceAmenity
+            var resources = await _lazyStatCalculationServiceAmenity
+                .Value
                 .GetStatValuesAsync(
                     actor,
                     currentAndMaxStatIdentifiers.SelectMany(x => new[] { x.Item1, x.Item2 }))
@@ -261,6 +289,18 @@ namespace Macerus.Plugins.Features.StatusBar.Default
 
             // we do this to respect the order of the skills
             return skills.Select(x => viewModels[x]).ToArray();
+        }
+
+        private void StatusBarViewModel_RequestCompleteTurn(
+            object sender,
+            EventArgs e)
+        {
+            Contract.Requires(
+                _lazyMappingAmenity.Value.TryGetActivePlayerControlled(out var actor),
+                $"Could not get the active player-controlled actor.");
+            _lazyTurnBasedManager
+                .Value
+                .SetApplicableObjects(new[] { actor });
         }
     }
 }
