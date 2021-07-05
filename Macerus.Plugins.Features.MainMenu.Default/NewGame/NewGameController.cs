@@ -70,8 +70,9 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
                     // FIXME: what is this clusterf*ck with async call backs
                     // and starting up a new task all about? we must be able to
                     // simplify this nonsense
-                    createNewGameTask = Task
-                        .Run(async () => await _lazyNewGameWorkflow.Value.RunAsync())
+                    createNewGameTask = _lazyNewGameWorkflow
+                        .Value
+                        .RunAsync()
                         .ContinueWith(t =>
                         {
                             _sceneManager.BeginNavigateToScene(
