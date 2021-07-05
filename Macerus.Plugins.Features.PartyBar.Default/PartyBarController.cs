@@ -4,7 +4,6 @@ using System.Numerics;
 using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
-using Macerus.Plugins.Features.Camera;
 using Macerus.Plugins.Features.Mapping;
 
 using ProjectXyz.Api.GameObjects;
@@ -21,7 +20,6 @@ namespace Macerus.Plugins.Features.PartyBar.Default
         private readonly Lazy<IRosterManager> _lazyRosterManager;
         private readonly IPartyBarViewModel _partyBarViewModel;
         private readonly IGameObjectToPartyBarPortraitConverter _gameObjectToPartyBarPortraitConverter;
-        private readonly Lazy<ICameraManager> _lazyCameraManager;
         private readonly Lazy<ICombatTurnManager> _lazyCombatTurnManager;
         private readonly Lazy<IMappingAmenity> _lazyMappingAmenity;
 
@@ -29,14 +27,12 @@ namespace Macerus.Plugins.Features.PartyBar.Default
             IPartyBarViewModel combatTurnOrderViewModel,
             IGameObjectToPartyBarPortraitConverter gameObjectToPartyBarPortraitConverter,
             Lazy<IRosterManager> lazyRosterManager,
-            Lazy<ICameraManager> lazyCameraManager,
             Lazy<ICombatTurnManager> lazyCombatTurnManager,
             Lazy<IMappingAmenity> lazyMappingAmenity)
         {
             _partyBarViewModel = combatTurnOrderViewModel;
             _gameObjectToPartyBarPortraitConverter = gameObjectToPartyBarPortraitConverter;
             _lazyRosterManager = lazyRosterManager;
-            _lazyCameraManager = lazyCameraManager;
             _lazyCombatTurnManager = lazyCombatTurnManager;
             _lazyMappingAmenity = lazyMappingAmenity;
 
@@ -91,12 +87,9 @@ namespace Macerus.Plugins.Features.PartyBar.Default
                     portrait.ActorIdentifier));
 
             // different behavior for the user if we're in combat or not...
-            // game logic is not to activate actors out of order
-            if (_lazyCombatTurnManager.Value.InCombat)
-            {
-                _lazyCameraManager.Value.SetFollowTarget(actor);
-            }
-            else if (!Equals(actor, _lazyRosterManager.Value.ActivePartyLeader))
+            // game logic is not to switch leadership in combat
+            if (!_lazyCombatTurnManager.Value.InCombat &&
+                !Equals(actor, _lazyRosterManager.Value.ActivePartyLeader))
             {
                 var currentLeader = _lazyRosterManager.Value.ActivePartyLeader;
 
@@ -119,8 +112,9 @@ namespace Macerus.Plugins.Features.PartyBar.Default
                 _lazyMappingAmenity.Value.MarkForRemoval(currentLeader);
 
                 actor.GetOnly<IRosterBehavior>().IsPartyLeader = true;
-                actor.GetOnly<IPlayerControlledBehavior>().IsActive = true;
             }
+
+            actor.GetOnly<IPlayerControlledBehavior>().IsActive = true;
         }
 
         private void RosterManager_ControlledActorChanged(
