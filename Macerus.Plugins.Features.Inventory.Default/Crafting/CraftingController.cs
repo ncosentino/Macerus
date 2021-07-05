@@ -6,7 +6,6 @@ using Macerus.Plugins.Features.Inventory.Api;
 using Macerus.Plugins.Features.Inventory.Api.Crafting;
 using Macerus.Plugins.Features.Inventory.Api.HoverCards;
 using Macerus.Plugins.Features.Inventory.Default.HoverCards;
-using Macerus.Plugins.Features.Mapping;
 
 using NexusLabs.Contracts;
 
@@ -27,14 +26,13 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
         private readonly IFilterContextProvider _filterContextProvider;
         private readonly IBagItemSetFactory _bagItemSetFactory;
         private readonly ICraftingWindowViewModel _craftingWindowViewModel;
-        private readonly IReadOnlyMappingAmenity _mappingAmenity;
         private readonly IItemSetController _itemSetController;
         private readonly IItemSlotCollectionViewModel _craftingBagItemSlotCollectionViewModel;
         private readonly IItemToItemSlotViewModelConverter _bagToItemSlotViewModelConverter;
         private readonly IViewWelderFactory _viewWelderFactory;
         private readonly IHoverCardViewFactory _hoverCardViewFactory;
         private readonly IBehaviorsToHoverCardPartViewModelConverterFacade _behaviorsToHoverCardPartViewModelConverter;
-        private readonly IObservableRosterManager _rosterManager;
+        private readonly Lazy<IObservableRosterManager> _lazyRosterManager;
         private IItemSetToViewModelBinder _bagBinder;
 
         public CraftingController(
@@ -43,32 +41,33 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
             IFilterContextProvider filterContextProvider,
             IBagItemSetFactory bagItemSetFactory,
             ICraftingWindowViewModel craftingWindowViewModel,
-            IReadOnlyMappingAmenity mappingAmenity,
             IItemSetController itemSetController,
             IItemSlotCollectionViewModel craftingBagItemSlotCollectionViewModel,
             IItemToItemSlotViewModelConverter bagToItemSlotViewModelConverter,
             IViewWelderFactory viewWelderFactory,
             IHoverCardViewFactory hoverCardViewFactory,
             IBehaviorsToHoverCardPartViewModelConverterFacade behaviorsToHoverCardPartViewModelConverter,
-            IObservableRosterManager rosterManager)
+            Lazy<IObservableRosterManager> lazyRosterManager)
         {
             _macerusActorIdentifiers = macerusActorIdentifiers;
             _craftingHandler = craftingHandler;
             _filterContextProvider = filterContextProvider;
             _bagItemSetFactory = bagItemSetFactory;
             _craftingWindowViewModel = craftingWindowViewModel;
-            _mappingAmenity = mappingAmenity;
             _itemSetController = itemSetController;
             _craftingBagItemSlotCollectionViewModel = craftingBagItemSlotCollectionViewModel;
             _bagToItemSlotViewModelConverter = bagToItemSlotViewModelConverter;
             _viewWelderFactory = viewWelderFactory;
             _hoverCardViewFactory = hoverCardViewFactory;
             _behaviorsToHoverCardPartViewModelConverter = behaviorsToHoverCardPartViewModelConverter;
-            _rosterManager = rosterManager;
+            _lazyRosterManager = lazyRosterManager;
+            
             _craftingWindowViewModel.Opened += CraftingWindowViewModel_Opened;
             _craftingWindowViewModel.Closed += CraftingWindowViewModel_Closed;
             _craftingWindowViewModel.RequestCraft += CraftingWindowViewModel_RequestCraft;
-            _rosterManager.ControlledActorChanged += RosterManager_ControlledActorChanged;
+
+            // FIXME: this sort of defeats the point of Lazy<T>
+            _lazyRosterManager.Value.ControlledActorChanged += RosterManager_ControlledActorChanged;
         }
 
         public delegate CraftingController Factory(
@@ -99,7 +98,7 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
                _bagBinder == null,
                $"Expecting '{nameof(_bagBinder)}' to be null.");
 
-            var player = _mappingAmenity.GetActivePlayerControlled();
+            var player = _lazyRosterManager.Value.CurrentlyControlledActor;
             var craftingInventoryBehavior = player
                 .Get<IItemContainerBehavior>()
                 .FirstOrDefault(x => x.ContainerId.Equals(_macerusActorIdentifiers.CraftingInventoryIdentifier));

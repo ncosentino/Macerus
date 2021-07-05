@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
+using Macerus.Plugins.Features.PartyBar;
 using Macerus.Plugins.Features.StatusBar.Api;
 
 using ProjectXyz.Api.Framework;
@@ -29,6 +30,7 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
         private readonly Lazy<IMapManager> _lazyMapManager;
         private readonly Lazy<IRosterManager> _lazyRosterManager;
         private readonly Lazy<IStatusBarViewModel> _lazyStatusBarViewModel;
+        private readonly Lazy<IPartyBarController> _lazyPartyBarController;
 
         public NewGameWorkflow(
             Lazy<IMapStateRepository> lazyMapStateRepository,
@@ -39,7 +41,8 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             Lazy<IActorGeneratorFacade> lazyActorGeneratorFacade,
             Lazy<IMapManager> lazyMapManager,
             Lazy<IRosterManager> lazyRosterManager,
-            Lazy<IStatusBarViewModel> lazyStatusBarViewModel)
+            Lazy<IStatusBarViewModel> lazyStatusBarViewModel,
+            Lazy<IPartyBarController> lazyPartyBarController)
         {
             _lazyMapStateRepository = lazyMapStateRepository;
             _lazyGameObjectRepository = lazyGameObjectRepository;
@@ -50,6 +53,7 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             _lazyMapManager = lazyMapManager;
             _lazyRosterManager = lazyRosterManager;
             _lazyStatusBarViewModel = lazyStatusBarViewModel;
+            _lazyPartyBarController = lazyPartyBarController;
         }
 
         public async Task RunAsync()
@@ -71,6 +75,7 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             mercenary.GetOnly<IRosterBehavior>().IsActiveParty = true;
 
             _lazyStatusBarViewModel.Value.IsOpen = true;
+            _lazyPartyBarController.Value.ShowPartyBar();
 
             await _lazyMapManager
                 .Value

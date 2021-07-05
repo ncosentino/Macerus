@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.Camera;
 using Macerus.Plugins.Features.HeaderBar.Api.CombatTurnOrder;
 using Macerus.Plugins.Features.Mapping;
 
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
@@ -37,6 +39,12 @@ namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder
             _lazyMappingAmenity = lazyMappingAmenity;
             _combatTurnManager.CombatStarted += CombatTurnManager_CombatStarted;
             _combatTurnManager.CombatEnded += CombatTurnManager_CombatEnded;
+        }
+
+        public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
+        {
+            // no-op
+            return;
         }
 
         private void RefreshPortraits()

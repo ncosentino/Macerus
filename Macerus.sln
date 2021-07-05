@@ -217,9 +217,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Ca
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Minimap", "Minimap", "{B7931800-9029-4A20-8E2A-3428A0F600D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Minimap", "Macerus.Plugins.Features.Minimap\Macerus.Plugins.Features.Minimap.csproj", "{E593BA50-6C79-43A0-A541-EF337D6BC731}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Minimap", "Macerus.Plugins.Features.Minimap\Macerus.Plugins.Features.Minimap.csproj", "{E593BA50-6C79-43A0-A541-EF337D6BC731}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Minimap.Default", "Macerus.Plugins.Features.Minimap.Default\Macerus.Plugins.Features.Minimap.Default.csproj", "{ADAC7B83-4F77-4D92-9764-F9BF6311B212}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Minimap.Default", "Macerus.Plugins.Features.Minimap.Default\Macerus.Plugins.Features.Minimap.Default.csproj", "{ADAC7B83-4F77-4D92-9764-F9BF6311B212}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PartyBar", "PartyBar", "{343AD0F0-5DCA-4618-890B-9A90E12CE4C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.PartyBar", "Macerus.Plugins.Features.PartyBar\Macerus.Plugins.Features.PartyBar.csproj", "{FCE60B4C-3677-4AD1-890C-7BDAF719F945}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.PartyBar.Default", "Macerus.Plugins.Features.PartyBar.Default\Macerus.Plugins.Features.PartyBar.Default.csproj", "{2B159641-FA2A-464D-8BB5-C785AF11C6EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -519,6 +525,14 @@ Global
 		{ADAC7B83-4F77-4D92-9764-F9BF6311B212}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADAC7B83-4F77-4D92-9764-F9BF6311B212}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADAC7B83-4F77-4D92-9764-F9BF6311B212}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCE60B4C-3677-4AD1-890C-7BDAF719F945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCE60B4C-3677-4AD1-890C-7BDAF719F945}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCE60B4C-3677-4AD1-890C-7BDAF719F945}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCE60B4C-3677-4AD1-890C-7BDAF719F945}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B159641-FA2A-464D-8BB5-C785AF11C6EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B159641-FA2A-464D-8BB5-C785AF11C6EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B159641-FA2A-464D-8BB5-C785AF11C6EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B159641-FA2A-464D-8BB5-C785AF11C6EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -625,6 +639,9 @@ Global
 		{B7931800-9029-4A20-8E2A-3428A0F600D1} = {33A6C169-52DA-446B-A241-FEC05722752A}
 		{E593BA50-6C79-43A0-A541-EF337D6BC731} = {B7931800-9029-4A20-8E2A-3428A0F600D1}
 		{ADAC7B83-4F77-4D92-9764-F9BF6311B212} = {B7931800-9029-4A20-8E2A-3428A0F600D1}
+		{343AD0F0-5DCA-4618-890B-9A90E12CE4C8} = {33A6C169-52DA-446B-A241-FEC05722752A}
+		{FCE60B4C-3677-4AD1-890C-7BDAF719F945} = {343AD0F0-5DCA-4618-890B-9A90E12CE4C8}
+		{2B159641-FA2A-464D-8BB5-C785AF11C6EB} = {343AD0F0-5DCA-4618-890B-9A90E12CE4C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}

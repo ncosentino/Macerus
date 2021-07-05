@@ -7,7 +7,7 @@ using Macerus.Plugins.Features.Inventory.Api;
 using Macerus.Plugins.Features.Mapping;
 
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.Mapping;
+using ProjectXyz.Plugins.Features.PartyManagement;
 
 namespace Macerus.Plugins.Features.Inventory.Default.Autofac
 {
@@ -32,7 +32,8 @@ namespace Macerus.Plugins.Features.Inventory.Default.Autofac
                         new DropToMapItemSet(
                             x.Context.Resolve<ILootDropFactory>(),
                             x.Context.Resolve<ILootDropIdentifiers>(),
-                            x.Context.Resolve<Lazy<IMappingAmenity>>()),
+                            x.Context.Resolve<Lazy<IMappingAmenity>>(),
+                            x.Context.Resolve<Lazy<IReadOnlyRosterManager>>()),
                         x.Context.ResolveNamed<IItemSlotCollectionViewModel>(ITEM_SET_NAME_DROP_TO_MAP));
                     x.Instance.Register(dropToMapBinder);
                 });

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Macerus.Plugins.Features.CharacterSheet.Api;
-using Macerus.Plugins.Features.Mapping;
 using Macerus.Plugins.Features.Stats.Api;
 
 using ProjectXyz.Api.Stats;
+using ProjectXyz.Plugins.Features.PartyManagement;
 
 namespace Macerus.Plugins.Features.CharacterSheet.Default
 {
@@ -14,17 +14,17 @@ namespace Macerus.Plugins.Features.CharacterSheet.Default
     {
         private readonly ICharacterSheetViewModel _characterSheetViewModel;
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
-        private readonly IReadOnlyMappingAmenity _mappingAmenity;
+        private readonly Lazy<IReadOnlyRosterManager> _lazyRosterManager;
         private readonly IReadOnlyStatDefinitionToTermMappingRepository _statDefinitionToTermMappingRepository;
 
         public CharacterSheetController(
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
-            IReadOnlyMappingAmenity mappingAmenity,
+            Lazy<IReadOnlyRosterManager> lazyRosterManager,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
             ICharacterSheetViewModel characterSheetViewModel)
         {
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
-            _mappingAmenity = mappingAmenity;
+            _lazyRosterManager = lazyRosterManager;
             _statDefinitionToTermMappingRepository = statDefinitionToTermMappingRepository;
             _characterSheetViewModel = characterSheetViewModel;
 
@@ -56,7 +56,7 @@ namespace Macerus.Plugins.Features.CharacterSheet.Default
             object sender,
             EventArgs e)
         {
-            var player = _mappingAmenity.GetActivePlayerControlled();
+            var player = _lazyRosterManager.Value.CurrentlyControlledActor;
             var stats = new Dictionary<string, Tuple<string, string>>()
             {
                 {"LIFE", Tuple.Create("LIFE_CURRENT", "LIFE_MAXIMUM") },

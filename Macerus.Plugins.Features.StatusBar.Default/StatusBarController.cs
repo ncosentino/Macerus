@@ -20,6 +20,7 @@ using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
+using ProjectXyz.Plugins.Features.PartyManagement;
 using ProjectXyz.Plugins.Features.TurnBased;
 using ProjectXyz.Shared.Framework;
 
@@ -37,14 +38,14 @@ namespace Macerus.Plugins.Features.StatusBar.Default
         private readonly Lazy<ICombatTurnManager> _lazyCombatTurnManager;
         private readonly IFilterContextProvider _filterContextProvider;
         private readonly Lazy<IStatCalculationServiceAmenity> _lazyStatCalculationServiceAmenity;
-        private readonly Lazy<IReadOnlyMappingAmenity> _lazyMappingAmenity;
+        private readonly Lazy<IReadOnlyRosterManager> _lazyRosterManager;
         private readonly IReadOnlyStatDefinitionToTermMappingRepository _statDefinitionToTermMappingRepository;
 
         private readonly Lazy<IReadOnlyCollection<Tuple<IIdentifier, IIdentifier, IIdentifier>>> _lazyCurrentAndMaxResourceIdentifiers;
 
         public StatusBarController(
             Lazy<IStatCalculationServiceAmenity> lazyStatCalculationServiceAmenity,
-            Lazy<IReadOnlyMappingAmenity> lazyMappingAmenity,
+            Lazy<IReadOnlyRosterManager> lazyRosterManager,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
             IStatusBarViewModel statusBarViewModel,
             ISkillUsage skillUsage,
@@ -57,7 +58,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             IFilterContextProvider filterContextProvider)
         {
             _lazyStatCalculationServiceAmenity = lazyStatCalculationServiceAmenity;
-            _lazyMappingAmenity = lazyMappingAmenity;
+            _lazyRosterManager = lazyRosterManager;
             _statDefinitionToTermMappingRepository = statDefinitionToTermMappingRepository;
             _statusBarViewModel = statusBarViewModel;
             _skillUsage = skillUsage;
@@ -110,7 +111,8 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 return;
             }
 
-            if (!_lazyMappingAmenity.Value.TryGetActivePlayerControlled(out var player))
+            var player = _lazyRosterManager.Value.CurrentlyControlledActor;
+            if (player == null)
             {
                 return;
             }
@@ -295,8 +297,9 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             object sender,
             EventArgs e)
         {
-            Contract.Requires(
-                _lazyMappingAmenity.Value.TryGetActivePlayerControlled(out var actor),
+            var actor = _lazyRosterManager.Value.CurrentlyControlledActor;
+            Contract.RequiresNotNull(
+                actor,
                 $"Could not get the active player-controlled actor.");
             _lazyTurnBasedManager
                 .Value

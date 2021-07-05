@@ -13,6 +13,7 @@ using NexusLabs.Contracts;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.PartyManagement;
 
 namespace Macerus.Plugins.Features.Inventory.Default
 {
@@ -21,15 +22,18 @@ namespace Macerus.Plugins.Features.Inventory.Default
         private readonly ILootDropFactory _lootDropFactory;
         private readonly ILootDropIdentifiers _lootDropIdentifiers;
         private readonly Lazy<IMappingAmenity> _lazyMappingAmenity;
+        private readonly Lazy<IReadOnlyRosterManager> _lazyRosterManager;
 
         public DropToMapItemSet(
             ILootDropFactory lootDropFactory,
             ILootDropIdentifiers lootDropIdentifiers,
-            Lazy<IMappingAmenity> lazyMappingAmenity)
+            Lazy<IMappingAmenity> lazyMappingAmenity,
+            Lazy<IReadOnlyRosterManager> lazyRosterManager)
         {
             _lootDropFactory = lootDropFactory;
             _lootDropIdentifiers = lootDropIdentifiers;
             _lazyMappingAmenity = lazyMappingAmenity;
+            _lazyRosterManager = lazyRosterManager;
         }
 
         public event EventHandler<EventArgs> ItemsChanged;
@@ -56,7 +60,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             IIdentifier itemIdToSwapOut,
             IGameObject itemToSwapIn)
         {
-            var activePlayerCharacter = _lazyMappingAmenity.Value.GetActivePlayerControlled();
+            var activePlayerCharacter = _lazyRosterManager.Value.CurrentlyControlledActor;
             var playerPositionBehavior = activePlayerCharacter.GetOnly<IReadOnlyPositionBehavior>();
             var playerSizeBehavior = activePlayerCharacter.GetOnly<IReadOnlySizeBehavior>();
 

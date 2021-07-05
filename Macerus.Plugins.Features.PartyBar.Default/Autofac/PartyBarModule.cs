@@ -2,22 +2,22 @@
 
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder.Autofac
+namespace Macerus.Plugins.Features.PartyBar.Default.Autofac
 {
-    public sealed class CombatTurnOrderModule : SingleRegistrationModule
+    public sealed class PartyBarModule : SingleRegistrationModule
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<GameObjectToCombatTurnOrderPortraitConverter>()
+                .RegisterType<GameObjectToPartyBarPortraitConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<CombatTurnOrderViewModel>()
+                .RegisterType<PartyBarViewModel>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<CombatTurnOrderController>()
+                .RegisterType<PartyBarController>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

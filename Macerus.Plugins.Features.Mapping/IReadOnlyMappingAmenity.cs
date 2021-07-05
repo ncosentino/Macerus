@@ -12,10 +12,6 @@ namespace Macerus.Plugins.Features.Mapping
 
         IReadOnlyCollection<IGameObject> GameObjects { get; }
 
-        bool TryGetActivePlayerControlled(out IGameObject actor);
-
-        IGameObject GetActivePlayerControlled();
-
         IEnumerable<Vector2> GetAllowedPathDestinationsForActor(IGameObject actor);
     }
 }
