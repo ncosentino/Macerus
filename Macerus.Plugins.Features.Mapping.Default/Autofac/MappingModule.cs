@@ -28,6 +28,11 @@ namespace Macerus.Plugins.Features.Mapping.Default.Autofac
                .RegisterType<MapStateRepository>()
                .AsImplementedInterfaces()
                .SingleInstance();
+            builder
+               .RegisterType<NoneMapTraversableHighlighter>()
+               .AsImplementedInterfaces()
+               .IfNotRegistered(typeof(IMapTraversableHighlighter))
+               .SingleInstance();
         }
     }
 }

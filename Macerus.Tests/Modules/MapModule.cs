@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Numerics;
 using System.Threading.Tasks;
 
 using Autofac;
@@ -24,21 +22,6 @@ namespace Macerus.Tests.Modules
                 .RegisterType<MapResourceLoader>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
-            builder
-                .RegisterType<MapTraversableHighlighter>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-        }
-
-        public sealed class MapTraversableHighlighter : IMapTraversableHighlighter
-        {
-            public void SetTargettedTiles(Dictionary<int, HashSet<Vector2>> traversableTiles)
-            {
-            }
-
-            public void SetTraversableTiles(IEnumerable<Vector2> traversableTiles)
-            {
-            }
         }
 
         public sealed class MappingAssetPaths : IMappingAssetPaths

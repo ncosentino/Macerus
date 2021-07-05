@@ -24,21 +24,6 @@ namespace Macerus.Headless
                 .RegisterType<MapResourceLoader>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
-            builder
-                .RegisterType<MapTraversableHighlighter>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-        }
-    }
-
-    public sealed class MapTraversableHighlighter : IMapTraversableHighlighter
-    {
-        public void SetTargettedTiles(Dictionary<int, HashSet<Vector2>> traversableTiles)
-        {
-        }
-
-        public void SetTraversableTiles(IEnumerable<Vector2> traversableTiles)
-        {
         }
     }
 
