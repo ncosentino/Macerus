@@ -119,7 +119,7 @@ namespace Macerus.Plugins.Features.PartyBar.Default
                 _lazyMappingAmenity.Value.MarkForRemoval(currentLeader);
 
                 actor.GetOnly<IRosterBehavior>().IsPartyLeader = true;
-                _lazyRosterManager.Value.SetActorToControl(actor);
+                actor.GetOnly<IPlayerControlledBehavior>().IsActive = true;
             }
         }
 

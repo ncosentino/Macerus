@@ -39,9 +39,9 @@ namespace Macerus.Plugins.Features.Combat.Default
 
         private void ActivatePlayerOrFollowNpc(IGameObject actor)
         {
-            if (actor.Has<IPlayerControlledBehavior>())
+            if (actor.TryGetFirst<IPlayerControlledBehavior>(out var playerControlledBehavior))
             {
-                _lazyRosterManager.Value.SetActorToControl(actor);
+                playerControlledBehavior.IsActive = true;
             }
             else
             {
@@ -53,9 +53,11 @@ namespace Macerus.Plugins.Features.Combat.Default
             object sender,
             CombatEndedEventArgs e)
         {
-            _lazyRosterManager.Value.SetActorToControl(_lazyRosterManager
+            _lazyRosterManager
                 .Value
-                .ActivePartyLeader);
+                .ActivePartyLeader
+                .GetOnly<IPlayerControlledBehavior>()
+                .IsActive = true;
         }
 
         private void CombatTurnManager_TurnProgressed(

@@ -56,7 +56,7 @@ namespace Macerus.Plugins.Features.CharacterSheet.Default
             object sender,
             EventArgs e)
         {
-            var player = _lazyRosterManager.Value.CurrentlyControlledActor;
+            var player = _lazyRosterManager.Value.ActiveControlledActor;
             var stats = new Dictionary<string, Tuple<string, string>>()
             {
                 {"LIFE", Tuple.Create("LIFE_CURRENT", "LIFE_MAXIMUM") },

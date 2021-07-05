@@ -98,7 +98,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
                 _bagBinder == null,
                 $"Expecting '{nameof(_bagBinder)}' to be null.");
 
-            var player = _rosterManager.CurrentlyControlledActor;
+            var player = _rosterManager.ActiveControlledActor;
             var playerEquipmentBehavior = player.GetOnly<ICanEquipBehavior>();
             var playerInventoryBehavior = player
                 .Get<IItemContainerBehavior>()

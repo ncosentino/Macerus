@@ -33,7 +33,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
             object sender,
             EventArgs e)
         {
-            _lazyCameraManager.Value.SetFollowTarget(_rosterManager.CurrentlyControlledActor);
+            _lazyCameraManager.Value.SetFollowTarget(_rosterManager.ActiveControlledActor);
         }
     }
 }

@@ -111,7 +111,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 return;
             }
 
-            var player = _lazyRosterManager.Value.CurrentlyControlledActor;
+            var player = _lazyRosterManager.Value.ActiveControlledActor;
             if (player == null)
             {
                 return;
@@ -297,7 +297,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             object sender,
             EventArgs e)
         {
-            var actor = _lazyRosterManager.Value.CurrentlyControlledActor;
+            var actor = _lazyRosterManager.Value.ActiveControlledActor;
             Contract.RequiresNotNull(
                 actor,
                 $"Could not get the active player-controlled actor.");

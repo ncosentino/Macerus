@@ -98,7 +98,7 @@ namespace Macerus.Plugins.Features.Inventory.Default.Crafting
                _bagBinder == null,
                $"Expecting '{nameof(_bagBinder)}' to be null.");
 
-            var player = _lazyRosterManager.Value.CurrentlyControlledActor;
+            var player = _lazyRosterManager.Value.ActiveControlledActor;
             var craftingInventoryBehavior = player
                 .Get<IItemContainerBehavior>()
                 .FirstOrDefault(x => x.ContainerId.Equals(_macerusActorIdentifiers.CraftingInventoryIdentifier));

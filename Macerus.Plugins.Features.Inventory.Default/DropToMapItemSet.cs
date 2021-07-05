@@ -60,7 +60,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             IIdentifier itemIdToSwapOut,
             IGameObject itemToSwapIn)
         {
-            var activePlayerCharacter = _lazyRosterManager.Value.CurrentlyControlledActor;
+            var activePlayerCharacter = _lazyRosterManager.Value.ActiveControlledActor;
             var playerPositionBehavior = activePlayerCharacter.GetOnly<IReadOnlyPositionBehavior>();
             var playerSizeBehavior = activePlayerCharacter.GetOnly<IReadOnlySizeBehavior>();
 

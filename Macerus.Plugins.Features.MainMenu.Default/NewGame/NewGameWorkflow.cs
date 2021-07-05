@@ -67,7 +67,6 @@ namespace Macerus.Plugins.Features.MainMenu.Default.NewGame
             _lazyGameObjectRepository.Value.Save(player);
             _lazyRosterManager.Value.AddToRoster(player);
             player.GetOnly<IRosterBehavior>().IsPartyLeader = true;
-            _lazyRosterManager.Value.SetActorToControl(player);
 
             var mercenary = CreateActor(new StringIdentifier("test-mercenary"));
             _lazyGameObjectRepository.Value.Save(mercenary);
