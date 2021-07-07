@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace Macerus.Api.Behaviors
 {
@@ -57,21 +58,27 @@ namespace Macerus.Api.Behaviors
             double x,
             double y)
         {
-            if (x > 0)
+            if (Math.Abs(x) > Math.Abs(y))
             {
-                movementBehavior.Direction = 2;
-            }
-            else if (x < 0)
-            {
-                movementBehavior.Direction = 0;
-            }
-            else if (y > 0)
-            {
-                movementBehavior.Direction = 1;
+                if (x > 0)
+                {
+                    movementBehavior.Direction = 2;
+                }
+                else if (x < 0)
+                {
+                    movementBehavior.Direction = 0;
+                }
             }
             else
             {
-                movementBehavior.Direction = 3;
+                if (y > 0)
+                {
+                    movementBehavior.Direction = 1;
+                }
+                else
+                {
+                    movementBehavior.Direction = 3;
+                }
             }
 
             return movementBehavior.Direction;
