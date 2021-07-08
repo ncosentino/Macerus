@@ -6,6 +6,7 @@ using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Stats.Api;
 
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
@@ -44,18 +45,15 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
             var turnInfo = systemUpdateContext
                 .GetFirst<IComponent<ITurnInfo>>()
                 .Value;
-            if (turnInfo.ElapsedTurns == 0)
+            var elapsedTime = systemUpdateContext
+                .GetFirst<IComponent<IElapsedTime>>()
+                .Value;
+
+            _nextTriggerAccumulator += ((IInterval<double>)elapsedTime.Interval).Value / 1000;
+            const double TURNS_BEFORE_UPDATING = 0.3;
+            if (_nextTriggerAccumulator < TURNS_BEFORE_UPDATING)
             {
                 return;
-            }
-            else if (turnInfo.ElapsedTurns != 1)
-            {
-                _nextTriggerAccumulator += turnInfo.ElapsedTurns;
-                const double TURNS_BEFORE_UPDATING = 0.3;
-                if (_nextTriggerAccumulator < TURNS_BEFORE_UPDATING)
-                {
-                    return;
-                }
             }
 
             _nextTriggerAccumulator = 0;
@@ -65,6 +63,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
             // usually not the one with the active turn
             foreach (var entry in GetSupportedEntries(turnInfo.AllGameObjects))
             {
+                await Task.Yield();
                 var currentLife = _statCalculationServiceAmenity.GetStatValue(
                     entry.Item1.Owner,
                     _combatStatIdentifiers.CurrentLifeStatId);

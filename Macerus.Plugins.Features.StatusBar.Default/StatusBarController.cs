@@ -172,6 +172,15 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             _skillHandlerFacade.Handle(
                 actor,
                 skill);
+            await ClearSkillSlotPreviewAsync().ConfigureAwait(false);
+        }
+
+        public async Task ClearSkillSlotPreviewAsync()
+        {
+            var skillTargetLocations = new Dictionary<int, HashSet<Vector2>>();
+            _mapTraversableHighlighter
+                .Value
+                .SetTargettedTiles(skillTargetLocations);
         }
 
         public async Task PreviewSkillSlotAsync(

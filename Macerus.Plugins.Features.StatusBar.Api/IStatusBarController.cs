@@ -12,6 +12,8 @@ namespace Macerus.Plugins.Features.StatusBar.Api
             IGameObject actor,
             int slotIndex);
 
+        Task ClearSkillSlotPreviewAsync();
+
         Task PreviewSkillSlotAsync(
             IGameObject actor,
             int slotIndex);
