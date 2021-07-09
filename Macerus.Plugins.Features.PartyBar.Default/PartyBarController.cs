@@ -45,6 +45,8 @@ namespace Macerus.Plugins.Features.PartyBar.Default
             RefreshPortraits();
         }
 
+        public double UpdateIntervalInSeconds { get; } = TimeSpan.FromDays(99).TotalSeconds;
+
         public void ShowPartyBar() => _partyBarViewModel.Open();
 
         public void ClosePartyBar() => _partyBarViewModel.Close();

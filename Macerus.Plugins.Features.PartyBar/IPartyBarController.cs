@@ -2,7 +2,7 @@
 
 namespace Macerus.Plugins.Features.PartyBar
 {
-    public interface IPartyBarController : IUserInterfaceUpdate
+    public interface IPartyBarController : IDiscoverableUserInterfaceUpdate
     {
         void ShowPartyBar();
 

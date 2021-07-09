@@ -41,6 +41,8 @@ namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder
             _combatTurnManager.CombatEnded += CombatTurnManager_CombatEnded;
         }
 
+        public double UpdateIntervalInSeconds { get; } = TimeSpan.FromDays(99).TotalSeconds;
+
         public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
         {
             // no-op
