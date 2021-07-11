@@ -244,16 +244,11 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
 
             movementBehavior.CurrentWalkSegmentElapsedTime += TimeSpan.FromSeconds(elapsedSeconds);
             var speed = GetMaxVelocityAbs();
-            var distanceToTravel = speed * (float)movementBehavior.CurrentWalkSegmentElapsedTime.TotalSeconds;
 
-            var lerpPercent = Math.Max(0, Math.Min(1, (float)(distanceToTravel / movementBehavior.CurrentWalkSegmentDistance)));
-            var nextPosition = Lerp(
-                movementBehavior.CurrentWalkSource.Value,
-                currentWalkPoint.Value,
-                lerpPercent);
-
-            var directionUnitVector = nextPosition - new Vector2((float)positionBehavior.X, (float)positionBehavior.Y);
-            directionUnitVector = directionUnitVector == Vector2.Zero ? Vector2.Zero : Vector2.Normalize(directionUnitVector);
+            var directionUnitVector = movementBehavior.CurrentWalkTarget.Value - new Vector2((float)positionBehavior.X, (float)positionBehavior.Y);
+            directionUnitVector = directionUnitVector == Vector2.Zero
+                ? Vector2.Zero 
+                : Vector2.Normalize(directionUnitVector);
 
             var velocity = speed * directionUnitVector;
             movementBehavior.SetVelocity(velocity.X, velocity.Y);
