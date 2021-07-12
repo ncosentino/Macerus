@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Combat.Api;
+using Macerus.Plugins.Features.GameObjects.Actors.Death;
 using Macerus.Plugins.Features.Stats.Api;
 
 using ProjectXyz.Api.Framework;
@@ -13,38 +14,44 @@ using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
-using ProjectXyz.Plugins.Features.TurnBased;
+using ProjectXyz.Plugins.Features.Mapping;
 
-namespace Macerus.Plugins.Features.GameObjects.Actors.Default
+namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Death
 {
-    public sealed class ActorDeathAnimationSystem : IDiscoverableSystem
+    public sealed class ActorDeathSystem : IDiscoverableSystem
     {
         private readonly IBehaviorFinder _behaviorFinder;
         private readonly IActorIdentifiers _actorIdentifiers;
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
         private readonly ICombatStatIdentifiers _combatStatIdentifiers;
+        private readonly IDeathTriggerMechanicSource _deathTriggerMechanicSource;
+        private readonly IReadOnlyMapGameObjectManager _mapGameObjectManager;
+        private readonly ConcurrentDictionary<IGameObject, IHasStatsBehavior> _actors;
 
         private double _nextTriggerAccumulator;
 
-        public ActorDeathAnimationSystem(
+        public ActorDeathSystem(
             IBehaviorFinder behaviorFinder,
             IActorIdentifiers actorIdentifiers,
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
-            ICombatStatIdentifiers combatStatIdentifiers)
+            ICombatStatIdentifiers combatStatIdentifiers,
+            IDeathTriggerMechanicSource deathTriggerMechanicSource,
+            IReadOnlyMapGameObjectManager mapGameObjectManager)
         {
+            _actors = new ConcurrentDictionary<IGameObject, IHasStatsBehavior>();
             _behaviorFinder = behaviorFinder;
             _actorIdentifiers = actorIdentifiers;
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
             _combatStatIdentifiers = combatStatIdentifiers;
+            _deathTriggerMechanicSource = deathTriggerMechanicSource;
+            _mapGameObjectManager = mapGameObjectManager;
+            _mapGameObjectManager.Synchronized += MapGameObjectManager_Synchronized;
         }
 
         public int? Priority => null;
 
         public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
         {
-            var turnInfo = systemUpdateContext
-                .GetFirst<IComponent<ITurnInfo>>()
-                .Value;
             var elapsedTime = systemUpdateContext
                 .GetFirst<IComponent<IElapsedTime>>()
                 .Value;
@@ -58,35 +65,48 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
 
             _nextTriggerAccumulator = 0;
 
-            // we want to iterate over all the game objects, not just the ones
-            // with the current turn, especially because the actor dying is
-            // usually not the one with the active turn
-            foreach (var entry in GetSupportedEntries(turnInfo.AllGameObjects))
+            foreach (var entry in _actors)
             {
                 await Task.Yield();
                 var currentLife = _statCalculationServiceAmenity.GetStatValue(
-                    entry.Item1.Owner,
+                    entry.Key,
                     _combatStatIdentifiers.CurrentLifeStatId);
                 if (currentLife <= 0)
                 {
-                    entry.Item2.BaseAnimationId = _actorIdentifiers.AnimationDeath;
+                    await _deathTriggerMechanicSource.ActorDeathTriggeredAsync(entry.Key);
                 }
             }
         }
 
-        private IEnumerable<Tuple<IHasStatsBehavior, IDynamicAnimationBehavior>> GetSupportedEntries(IEnumerable<IGameObject> gameObjects)
+        private IEnumerable<Tuple<IHasStatsBehavior, ITypeIdentifierBehavior>> GetSupportedEntries(IEnumerable<IGameObject> gameObjects)
         {
             foreach (var gameObject in gameObjects)
             {
-                Tuple<IHasStatsBehavior, IDynamicAnimationBehavior> requiredBehaviors;
+                Tuple<IHasStatsBehavior, ITypeIdentifierBehavior> requiredBehaviors;
                 if (!_behaviorFinder.TryFind(
                     gameObject,
-                    out requiredBehaviors))
+                    out requiredBehaviors) ||
+                    !Equals(requiredBehaviors.Item2.TypeId, _actorIdentifiers.ActorTypeIdentifier))
                 {
                     continue;
                 }
 
                 yield return requiredBehaviors;
+            }
+        }
+
+        private void MapGameObjectManager_Synchronized(
+            object sender,
+            GameObjectsSynchronizedEventArgs e)
+        {
+            foreach (var supportedEntry in GetSupportedEntries(e.Added))
+            {
+                _actors[supportedEntry.Item1.Owner] = supportedEntry.Item1;
+            }
+
+            foreach (var removed in e.Removed)
+            {
+                _actors.TryRemove(removed, out _);
             }
         }
     }
