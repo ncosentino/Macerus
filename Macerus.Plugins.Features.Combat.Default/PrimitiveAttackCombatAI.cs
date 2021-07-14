@@ -152,9 +152,12 @@ namespace Macerus.Plugins.Features.Combat.Default
                 actor,
                 firstUsableSkill);
 
-            _lazySkillHandlerFacade.Value.Handle(
-                actor,
-                firstUsableSkill);
+            await _lazySkillHandlerFacade
+                .Value
+                .HandleAsync(
+                    actor,
+                    firstUsableSkill)
+                .ConfigureAwait(false);
             _logger.Info(
                 $"'{actor}' used skill '{firstUsableSkill}' on '{target}'.");
             return true;

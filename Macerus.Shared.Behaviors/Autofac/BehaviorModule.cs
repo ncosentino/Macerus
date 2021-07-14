@@ -1,6 +1,7 @@
 ﻿using Autofac;
 
 using Macerus.Shared.Behaviors.Filtering;
+using Macerus.Shared.Behaviors.Triggering;
 
 using ProjectXyz.Framework.Autofac;
 
@@ -20,6 +21,10 @@ namespace Macerus.Shared.Behaviors.Autofac
                 .SingleInstance();
             builder
                 .RegisterType<FilterContextAmenity>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<EnchantmentOnHitTriggerMechanicFactory>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

@@ -169,9 +169,11 @@ namespace Macerus.Plugins.Features.StatusBar.Default
             _skillUsage.UseRequiredResources(
                 actor,
                 skill);
-            _skillHandlerFacade.Handle(
-                actor,
-                skill);
+            await _skillHandlerFacade
+                .HandleAsync(
+                    actor,
+                    skill)
+                .ConfigureAwait(false);
             await ClearSkillSlotPreviewAsync().ConfigureAwait(false);
         }
 

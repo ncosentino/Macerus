@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.Combat.Api;
-using Macerus.Plugins.Features.GameObjects.Actors.Death;
+using Macerus.Plugins.Features.GameObjects.Actors.Triggers;
 using Macerus.Plugins.Features.Stats.Api;
 
 using ProjectXyz.Api.Framework;
@@ -16,7 +16,7 @@ using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.Mapping;
 
-namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Death
+namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Triggers.Death
 {
     public sealed class ActorDeathSystem : IDiscoverableSystem
     {

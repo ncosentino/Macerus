@@ -1,6 +1,8 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.Combat.Api;
+using Macerus.Plugins.Features.GameObjects.Actors.Triggers;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Stats.Api;
 
@@ -21,24 +23,27 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
         private readonly IStatCalculationContextFactory _statCalculationContextFactory;
         private readonly ILogger _logger;
+        private readonly IHitTriggerMechanicSource _hitTriggerMechanicSource;
 
         public InflictDamageSkillHandler(
             ICombatStatIdentifiers combatStatIdentifiers,
             ISkillTargetingAmenity skillTargetingAmenity,
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
             IStatCalculationContextFactory statCalculationContextFactory,
-            ILogger logger)
+            ILogger logger,
+            IHitTriggerMechanicSource hitTriggerMechanicSource)
         {
             _combatStatIdentifiers = combatStatIdentifiers;
             _skillTargetingAmenity = skillTargetingAmenity;
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
             _statCalculationContextFactory = statCalculationContextFactory;
             _logger = logger;
+            _hitTriggerMechanicSource = hitTriggerMechanicSource;
         }
 
         public int? Priority { get; } = null;
 
-        public void Handle(
+        public async Task HandleAsync(
             IGameObject user,
             IGameObject skill)
         {
@@ -73,6 +78,12 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 targetStatsBehavior.MutateStats(targetStats => targetStats[_combatStatIdentifiers.CurrentLifeStatId] -= totalDamage);
 
                 _logger.Debug($"{user} inflicted {totalDamage} ({damageStats} - {resistStats}) to {target} using {skillName.Id}");
+                await _hitTriggerMechanicSource
+                    .ActorHitTriggeredAsync(
+                        user,
+                        target,
+                        skill)
+                    .ConfigureAwait(false);
             }
         }
     }

@@ -3,11 +3,9 @@
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Triggering;
 
-namespace Macerus.Plugins.Features.GameObjects.Actors.Death
+namespace Macerus.Plugins.Features.GameObjects.Actors.Triggers
 {
-    public interface IDeathTriggerMechanicSource :
-        ITriggerSourceMechanic,
-        IDiscoverableTriggerMechanicRegistrar
+    public interface IDeathTriggerMechanic : IDiscoverableTriggerMechanic
     {
         Task ActorDeathTriggeredAsync(IGameObject actor);
     }

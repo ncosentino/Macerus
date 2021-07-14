@@ -81,6 +81,12 @@ namespace Macerus.Plugins.Content.Skills
                                         .Enchant("increase-fire-damage")
                                         .AffectsTeams(0)
                                         .StartsAtOffsetFromUser(0, 0)
+                                        .TargetsPattern(),
+                                    SkillDefinition
+                                        .Anonymous()
+                                        .Enchant("on-hit-heal")
+                                        .AffectsTeams(0)
+                                        .StartsAtOffsetFromUser(0, 0)
                                         .TargetsPattern()),
                                 MacerusExecuteSkills.InSequence(
                                     SkillDefinition

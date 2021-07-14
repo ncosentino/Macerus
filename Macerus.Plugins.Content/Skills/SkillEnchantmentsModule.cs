@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Autofac;
 
+using Macerus.Plugins.Features.GameObjects.Actors.Triggers;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
+using Macerus.Shared.Behaviors.Triggering;
 
 using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Calculations;
@@ -36,6 +39,9 @@ namespace Macerus.Plugins.Content.Skills
                     var enchantmentTemplate = new EnchantmentTemplate(
                         c.Resolve<ICalculationPriorityFactory>(),
                         c.Resolve<IEnchantmentIdentifiers>());
+                    var hitTriggerMechanicSource = c.Resolve<Lazy<IHitTriggerMechanicSource>>();
+                    var attributeFilterer = c.Resolve<Lazy<IAttributeFilterer>>();
+                    var enchantmentLoader = c.Resolve<Lazy<IEnchantmentLoader>>();
                     var enchantmentDefinitions = new[]
                     {
                         enchantmentTemplate.CreateSkillEnchantment(
@@ -57,6 +63,19 @@ namespace Macerus.Plugins.Content.Skills
                                     }),
                             }),
                         enchantmentTemplate.CreateSkillEnchantment(
+                            new StringIdentifier("heal-self-immediate"),
+                            new IntIdentifier(2), // life current
+                            new IGeneratorComponent[]
+                            {
+                                new StatefulBehaviorGeneratorComponent(() =>
+                                    new IBehavior[]
+                                    {
+                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "LIFE_CURRENT + 10"),
+                                        new ExpiryTriggerBehavior(new DurationInActionsTriggerBehavior(1)),
+                                        new AppliesToBaseStat()
+                                    }),
+                            }),
+                        enchantmentTemplate.CreateSkillEnchantment(
                             new StringIdentifier("increase-fire-damage"),
                             new StringIdentifier("firedmg"),
                             new IGeneratorComponent[]
@@ -67,6 +86,27 @@ namespace Macerus.Plugins.Content.Skills
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "FIRE_DAMAGE + 30"),
                                         new ExpiryTriggerBehavior(new DurationInActionsTriggerBehavior(1)),
                                         new AppliesToBaseStat()
+                                    }),
+                            }),
+                        enchantmentTemplate.CreateSkillEnchantment(
+                            new StringIdentifier("on-hit-heal"),
+                            new StringIdentifier("firedmg"),
+                            new IGeneratorComponent[]
+                            {
+                                new StatefulBehaviorGeneratorComponent(() =>
+                                    new IBehavior[]
+                                    {
+                                        new ExpiryTriggerBehavior(new DurationInActionsTriggerBehavior(1)),
+                                        new EnchantmentOnHitBehavior(
+                                            new IFilterAttributeValue[] { new TrueAttributeFilterValue() },
+                                            new IFilterAttributeValue[] { new TrueAttributeFilterValue() },
+                                            new IFilterAttributeValue[] { new TrueAttributeFilterValue() },
+                                            new IIdentifier[]
+                                            {
+                                                new StringIdentifier("heal-self-immediate"),
+                                            },
+                                            new IIdentifier[] { },
+                                            true)
                                     }),
                             }),
                         enchantmentTemplate.CreateSkillEnchantment(

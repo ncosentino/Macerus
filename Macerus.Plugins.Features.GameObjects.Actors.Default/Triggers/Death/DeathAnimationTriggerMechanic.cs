@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
-using Macerus.Plugins.Features.GameObjects.Actors.Death;
+using Macerus.Plugins.Features.GameObjects.Actors.Triggers;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 
-namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Death
+namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Triggers.Death
 {
     public sealed class DeathAnimationTriggerMechanic : IDeathTriggerMechanic
     {

@@ -50,7 +50,7 @@ namespace Macerus.Headless
         {
             var container = new MacerusContainer();
 
-            await new NpcAIExercise().Go(container);
+            await new SkillCastExercise().Go(container);
         }
     }
 
@@ -402,6 +402,7 @@ namespace Macerus.Headless
                 logger.Info($"Player targets the enemy at: ({targetLocation.X}, {targetLocation.Y})");
 
                 playerMovement.SetWalkPath(new[] {
+                    new Vector2((float)playerLocation.X, (float)playerLocation.Y),
                     new Vector2((float)targetLocation.X, (float)targetLocation.Y - 1),
                 });
 
@@ -425,13 +426,13 @@ namespace Macerus.Headless
 
                     playerMovement.Direction = 1;
                     logger.Info($"Player turned to direction {playerMovement.Direction} to cast");
-                    skillHandlerFacade.Handle(player, skill);
+                    await skillHandlerFacade
+                        .HandleAsync(player, skill)
+                        .ConfigureAwait(false);
 
                     keepRunning = false;
                 }
-
             }
-
 
             Console.ReadLine();
         }

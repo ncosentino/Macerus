@@ -29,7 +29,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 .ToArray();
         }
 
-        public void Handle(
+        public async Task HandleAsync(
             IGameObject user,
             IGameObject skill)
         {
@@ -50,7 +50,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 {
                     foreach (var s in skillsToExecute)
                     {
-                        HandleSkill(user, s);
+                        await HandleSkillAsync(user, s).ConfigureAwait(false);
                     }
 
                     continue;
@@ -58,19 +58,21 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 
                 if (executor is IParallelSkillExecutorBehavior)
                 {
-                    Parallel.ForEach(skillsToExecute, (s) => HandleSkill(user, s));
-
+                    var tasks = skillsToExecute.Select(s => HandleSkillAsync(user, s));
+                    await Task
+                        .WhenAll(tasks)
+                        .ConfigureAwait(false);
                     continue;
                 }
             }
         }
 
-        private void HandleSkill(IGameObject user, IGameObject skill)
-         {
-             foreach (var handler in _skillHandlers)
-             {
-                 handler.Handle(user, skill);
-             }
-         }
+        private async Task HandleSkillAsync(IGameObject user, IGameObject skill)
+        {
+            foreach (var handler in _skillHandlers)
+            {
+                await handler.HandleAsync(user, skill);
+            }
+        }
     }
 }

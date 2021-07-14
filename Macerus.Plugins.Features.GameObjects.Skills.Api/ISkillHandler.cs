@@ -1,10 +1,12 @@
-﻿using ProjectXyz.Api.GameObjects;
+﻿using System.Threading.Tasks;
+
+using ProjectXyz.Api.GameObjects;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Api
 {
     public interface ISkillHandler
     {
-        void Handle(
+        Task HandleAsync(
             IGameObject user,
             IGameObject skill);
     }

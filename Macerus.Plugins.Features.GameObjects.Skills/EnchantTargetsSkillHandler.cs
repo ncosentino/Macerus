@@ -1,4 +1,6 @@
-﻿using Macerus.Plugins.Features.GameObjects.Skills.Api;
+﻿using System.Threading.Tasks;
+
+using Macerus.Plugins.Features.GameObjects.Skills.Api;
 
 using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.GameObjects;
@@ -26,7 +28,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 
         public int? Priority { get; } = int.MinValue;
 
-        public void Handle(
+        public async Task HandleAsync(
             IGameObject user,
             IGameObject skill)
         {

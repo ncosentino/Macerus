@@ -2,9 +2,9 @@
 
 using ProjectXyz.Shared.Game.Behaviors;
 
-namespace Macerus.Shared.Behaviors
+namespace Macerus.Shared.Behaviors.Triggering
 {
-    public sealed class TriggerOnCombatEndBehavior : 
+    public sealed class TriggerOnCombatEndBehavior :
         BaseBehavior,
         ITriggerOnCombatEndBehavior
     {

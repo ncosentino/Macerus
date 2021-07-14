@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using Macerus.Plugins.Features.GameObjects.Actors.Death;
+using Macerus.Plugins.Features.GameObjects.Actors.Triggers;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Triggering;

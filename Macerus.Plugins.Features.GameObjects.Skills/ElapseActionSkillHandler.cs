@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 
@@ -18,7 +19,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 
         public int? Priority { get; } = null;
 
-        public void Handle(
+        public async Task HandleAsync(
             IGameObject user,
             IGameObject skill)
         {
