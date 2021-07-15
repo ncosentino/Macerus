@@ -75,7 +75,7 @@ namespace Macerus.Plugins.Features.Combat.Default
                 .BaseStats[_combatStatIdentifiers.CurrentLifeStatId];
             if (currentLife <= 0)
             {
-                _turnBasedManager.SetApplicableObjects(new[] { currentActor });
+                _turnBasedManager.NotifyTurnTaken(currentActor);
                 return;
             }
 
@@ -84,7 +84,7 @@ namespace Macerus.Plugins.Features.Combat.Default
                 new HashSet<IGameObject>(_combatGameObjectProvider.GetGameObjects()),
                 elapsed))
             {
-                _turnBasedManager.SetApplicableObjects(new[] { currentActor });
+                _turnBasedManager.NotifyTurnTaken(currentActor);
             }
         }
 

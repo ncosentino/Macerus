@@ -35,7 +35,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.AI
                 .Value;
             var elapsedSeconds = ((IInterval<double>)elapsedTime.Interval).Value / 1000;
 
-            var tasks = GetGameObjectsWithAITaskToInitialize(turnInfo.AllGameObjects)
+            var tasks = GetGameObjectsWithAITaskToInitialize(turnInfo.ApplicableGameObjects)
                 .Select(objectWithAITask =>
                 {
                     var gameObject = objectWithAITask.Item1;
@@ -43,7 +43,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.AI
                     var idleAITaskBehavior = objectWithAITask.Item3;
                     return InitializeIdleWaitAsync(gameObject, aiBehavior, idleAITaskBehavior);
                 })
-                .Concat(GetGameObjectsWithAITask(turnInfo.AllGameObjects)
+                .Concat(GetGameObjectsWithAITask(turnInfo.ApplicableGameObjects)
                 .Select(objectWithAITask =>
                 {
                     var gameObject = objectWithAITask.Item1;

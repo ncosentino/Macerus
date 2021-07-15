@@ -28,7 +28,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Animations
                 .Interval;
             var elapsedSeconds = elapsed.Value / 1000;
             await Task
-               .WhenAll(GetDynamicAnimationBehaviors(turnInfo.AllGameObjects).Select(b => b.UpdateAnimationAsync(elapsedSeconds)))
+               .WhenAll(GetDynamicAnimationBehaviors(turnInfo.ApplicableGameObjects).Select(b => b.UpdateAnimationAsync(elapsedSeconds)))
                .ConfigureAwait(false);
         }
 

@@ -48,7 +48,7 @@ namespace Macerus.Headless.Modules
                 var gameObjects = systemUpdateContext
                     .GetFirst<IComponent<ITurnInfo>>()
                     .Value
-                    .AllGameObjects;
+                    .ApplicableGameObjects;
 
                 foreach (var gameObject in gameObjects)
                 {

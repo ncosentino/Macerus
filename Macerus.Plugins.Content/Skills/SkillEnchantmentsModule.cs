@@ -52,7 +52,7 @@ namespace Macerus.Plugins.Content.Skills
                                     new IBehavior[]
                                     {
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "LIFE_CURRENT + (LIFE_MAXIMUM * 0.1 * $PER_TURN)"),
-                                        new ExpiryTriggerBehavior(new DurationTriggerBehavior(5)),
+                                        new ExpiryTriggerBehavior(new DurationInTurnsTriggerBehavior(5)),
                                         new AppliesToBaseStat()
                                     }),
                             }),
@@ -65,7 +65,7 @@ namespace Macerus.Plugins.Content.Skills
                                     new IBehavior[]
                                     {
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "FIRE_DAMAGE + 30"),
-                                        new ExpiryTriggerBehavior(new DurationTriggerBehavior(5)),
+                                        new ExpiryTriggerBehavior(new DurationInActionsTriggerBehavior(1)),
                                         new AppliesToBaseStat()
                                     }),
                             }),
@@ -78,7 +78,7 @@ namespace Macerus.Plugins.Content.Skills
                                     new IBehavior[]
                                     {
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "PHYSICAL_DAMAGE + 5"),
-                                        new ExpiryTriggerBehavior(new DurationTriggerBehavior(1)),
+                                        new ExpiryTriggerBehavior(new DurationInActionsTriggerBehavior(1)),
                                         new AppliesToBaseStat()
                                     }),
                             }),
@@ -91,7 +91,7 @@ namespace Macerus.Plugins.Content.Skills
                                     new IBehavior[]
                                     {
                                         new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "ARMOR + 10"),
-                                        new ExpiryTriggerBehavior(new DurationTriggerBehavior(1)),
+                                        new ExpiryTriggerBehavior(new DurationInActionsTriggerBehavior(1)),
                                         new AppliesToBaseStat()
                                     }),
                             }),

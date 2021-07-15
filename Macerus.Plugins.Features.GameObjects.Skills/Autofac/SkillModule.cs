@@ -33,6 +33,10 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
+                .RegisterType<ElapseActionSkillHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<SkillTargetingAmenity>()
                 .AsImplementedInterfaces()
                 .SingleInstance();

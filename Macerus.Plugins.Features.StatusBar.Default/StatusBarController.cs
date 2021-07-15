@@ -312,7 +312,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 $"Could not get the active player-controlled actor.");
             _lazyTurnBasedManager
                 .Value
-                .SetApplicableObjects(new[] { actor });
+                .NotifyTurnTaken(actor);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
                 .Value;
             var elapsedSeconds = ((IInterval<double>)elapsedTime.Interval).Value / 1000;
 
-            foreach (var supportedEntry in GetSupportedEntries(turnInfo.AllGameObjects))
+            foreach (var supportedEntry in GetSupportedEntries(turnInfo.ApplicableGameObjects))
             {
                 var movementBehavior = supportedEntry.Item1;
                 var dynamicAnimationBehavior = supportedEntry.Item2;

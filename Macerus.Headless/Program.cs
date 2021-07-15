@@ -323,7 +323,7 @@ namespace Macerus.Headless
                     .Single();
                 if (actorWithCurrentTurn.Has<IPlayerControlledBehavior>())
                 {
-                    turnBasedManager.SetApplicableObjects(new[] { actorWithCurrentTurn });
+                    turnBasedManager.NotifyTurnTaken(actorWithCurrentTurn);
                     logger.Info("Skipping player turn...");
                 }
             }

@@ -2,7 +2,6 @@
 
 using Macerus.Plugins.Features.Combat.Api;
 
-using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
@@ -21,8 +20,6 @@ namespace Macerus.Plugins.Features.Combat.Default
         private readonly IFilterContextProvider _filterContextProvider;
         private readonly IWinConditionHandlerFacade _winConditionHandler;
         private readonly ILogger _logger;
-
-        private double _nextWinConditionCheckAccumulator;
 
         public CombatSystem(
             ICombatTurnManager combatTurnManager,
@@ -50,8 +47,8 @@ namespace Macerus.Plugins.Features.Combat.Default
             var turnInfo = systemUpdateContext
                 .GetFirst<IComponent<ITurnInfo>>()
                 .Value;
-            var elapsedTime = systemUpdateContext
-                .GetFirst<IComponent<IElapsedTime>>()
+            var actionInfo = systemUpdateContext
+                .GetFirst<IComponent<IActionInfo>>()
                 .Value;
 
             if (turnInfo.ElapsedTurns == 1)
@@ -62,17 +59,12 @@ namespace Macerus.Plugins.Features.Combat.Default
                     1);
             }
 
-            const double SECONDS_BEFORE_WIN_CHECK = 0.3;
-            _nextWinConditionCheckAccumulator += ((IInterval<double>)elapsedTime.Interval).Value / 1000;
-            if (_nextWinConditionCheckAccumulator >= SECONDS_BEFORE_WIN_CHECK)
+            if (actionInfo.ElapsedActions > 0)
             {
-                _nextWinConditionCheckAccumulator = 0;
-
                 if (_winConditionHandler.CheckWinConditions(
                     out var winningTeam,
                     out var losingTeams))
                 {
-                    _turnBasedManager.GlobalSync = true;
                     _turnBasedManager.SyncTurnsFromElapsedTime = true;
                     _combatTurnManager.EndCombat(
                         winningTeam,

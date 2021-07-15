@@ -26,10 +26,7 @@ namespace Macerus.Plugins.Features.Encounters
             IGameObject encounter,
             IFilterContext filterContext)
         {
-            _turnBasedManager.ClearApplicableOnUpdate = true;
-            _turnBasedManager.GlobalSync = false;
             _turnBasedManager.SyncTurnsFromElapsedTime = false;
-
             _combatTurnManager.StartCombat(filterContext);
         }
     }

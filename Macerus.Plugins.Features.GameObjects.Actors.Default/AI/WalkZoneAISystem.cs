@@ -39,7 +39,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.AI
                 .GetFirst<IComponent<ITurnInfo>>()
                 .Value;
 
-            var tasks = GetGameObjectsWithAITaskToInitialize(turnInfo.AllGameObjects)
+            var tasks = GetGameObjectsWithAITaskToInitialize(turnInfo.ApplicableGameObjects)
                 .Select(objectWithAITask =>
                 {
                     var gameObject = objectWithAITask.Item1;
@@ -47,7 +47,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.AI
                     var walkZoneAITaskBehavior = objectWithAITask.Item3;
                     return InitializeWalkZoneAsync(gameObject, aiBehavior, walkZoneAITaskBehavior);
                 })
-                .Concat(GetGameObjectsWithAITask(turnInfo.AllGameObjects)
+                .Concat(GetGameObjectsWithAITask(turnInfo.ApplicableGameObjects)
                 .Select(objectWithAITask =>
                 {
                     var gameObject = objectWithAITask.Item1;

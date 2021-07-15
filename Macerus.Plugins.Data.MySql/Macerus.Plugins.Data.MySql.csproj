@@ -23,7 +23,7 @@
     <PackageReference Include="K4os.Hash.xxHash" Version="1.0.6" />
     <PackageReference Include="MySql.Data" Version="8.0.23" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.5" />
+    <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.8" />
     <PackageReference Include="NexusLabs.Contracts" Version="0.0.3" />
     <PackageReference Include="NexusLabs.Framework" Version="0.0.10" />
     <PackageReference Include="ProjectXyz" Version="1.0.*" />

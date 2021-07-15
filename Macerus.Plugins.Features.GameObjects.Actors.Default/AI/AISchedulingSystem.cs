@@ -31,7 +31,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.AI
                 .GetFirst<IComponent<ITurnInfo>>()
                 .Value;
 
-            var tasks = GetGameObjectsWithUnscheduledAI(turnInfo.AllGameObjects)
+            var tasks = GetGameObjectsWithUnscheduledAI(turnInfo.ApplicableGameObjects)
                 .Select(objectWithUnscheduledAI =>
                 {
                     var gameObject = objectWithUnscheduledAI.Item1;
