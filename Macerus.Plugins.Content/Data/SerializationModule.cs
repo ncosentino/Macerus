@@ -10,6 +10,7 @@ using Macerus.Plugins.Features.GameObjects.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Static.Doors;
 using Macerus.Plugins.Features.Mapping;
 using Macerus.Shared.Behaviors;
+using Macerus.Shared.Behaviors.Triggering;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
@@ -64,6 +65,7 @@ namespace Macerus.Plugins.Content.Data
                         [typeof(HasFogOfWarBehavior)] = "HasFogOfWarBehavior",
                         [typeof(EditorPrefabResourceIdBehavior)] = "EditorPrefabIdBehavior",
                         [typeof(EditorNameBehavior)] = "ename",
+                        [typeof(TriggerOnCombatEndBehavior)] = "TriggerOnCombatEndBehavior",
                     };
                     mapping.AddRange(WithCollectionMappings<MapLayersBehavior>("MapLayersBehavior"));
                     mapping.AddRange(WithCollectionMappings<MapLayer>("MapLayer"));

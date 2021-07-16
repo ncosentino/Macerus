@@ -827,7 +827,7 @@
               }
             },
             {
-              "SerializableId": "Macerus.Shared.Behaviors.TriggerOnCombatEndBehavior, Macerus.Shared.Behaviors, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "SerializableId": "TriggerOnCombatEndBehavior",
               "Data": null
             },
             {
@@ -964,7 +964,7 @@
               }
             },
             {
-              "SerializableId": "Macerus.Shared.Behaviors.TriggerOnCombatEndBehavior, Macerus.Shared.Behaviors, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "SerializableId": "TriggerOnCombatEndBehavior",
               "Data": null
             },
             {
