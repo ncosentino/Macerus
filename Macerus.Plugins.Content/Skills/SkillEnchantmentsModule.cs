@@ -4,6 +4,7 @@ using System.Linq;
 
 using Autofac;
 
+using Macerus.Plugins.Content.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Actors.Triggers;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
 using Macerus.Shared.Behaviors.Triggering;
@@ -15,13 +16,11 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.BaseStatEnchantments.Enchantments;
 using ProjectXyz.Plugins.Features.Enchantments.Generation;
 using ProjectXyz.Plugins.Features.Enchantments.Generation.InMemory;
 using ProjectXyz.Plugins.Features.ExpiringEnchantments;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes; // FIXME: dependency on non-API
-using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;  // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Plugins.Features.TurnBased.Default.Duration;
 using ProjectXyz.Shared.Framework;
@@ -42,55 +41,40 @@ namespace Macerus.Plugins.Content.Skills
                     var hitTriggerMechanicSource = c.Resolve<Lazy<IHitTriggerMechanicSource>>();
                     var attributeFilterer = c.Resolve<Lazy<IAttributeFilterer>>();
                     var enchantmentLoader = c.Resolve<Lazy<IEnchantmentLoader>>();
+                    var enchantmentDefinitionBuilder = c.Resolve<EnchantmentDefinitionBuilder>();
                     var enchantmentDefinitions = new[]
                     {
-                        enchantmentTemplate.CreateSkillEnchantment(
-                            new StringIdentifier("green-glow-ench"),
-                            new IntIdentifier(8), // green light radius
-                            1,
-                            1),
-                        enchantmentTemplate.CreateSkillEnchantment(
-                            new StringIdentifier("heal-self"),
-                            new IntIdentifier(2), // life current
-                            new IGeneratorComponent[]
-                            {
-                                new StatefulBehaviorGeneratorComponent(() =>
-                                    new IBehavior[]
-                                    {
-                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "LIFE_CURRENT + (LIFE_MAXIMUM * 0.1 * $PER_TURN)"),
-                                        new ExpiryTriggerBehavior(new DurationInTurnsTriggerBehavior(5)),
-                                        new AppliesToBaseStat()
-                                    }),
-                            }),
-                        enchantmentTemplate.CreateSkillEnchantment(
-                            new StringIdentifier("heal-self-immediate"),
-                            new IntIdentifier(2), // life current
-                            new IGeneratorComponent[]
-                            {
-                                new StatefulBehaviorGeneratorComponent(() =>
-                                    new IBehavior[]
-                                    {
-                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "LIFE_CURRENT + 10"),
-                                        new ExpiryTriggerBehavior(new DurationInActionsTriggerBehavior(1)),
-                                        new AppliesToBaseStat()
-                                    }),
-                            }),
-                        enchantmentTemplate.CreateSkillEnchantment(
-                            new StringIdentifier("increase-fire-damage"),
-                            new StringIdentifier("firedmg"),
-                            new IGeneratorComponent[]
-                            {
-                                new StatefulBehaviorGeneratorComponent(() =>
-                                    new IBehavior[]
-                                    {
-                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "FIRE_DAMAGE + 30"),
-                                        new ExpiryTriggerBehavior(new DurationInActionsTriggerBehavior(1)),
-                                        new AppliesToBaseStat()
-                                    }),
-                            }),
+                        enchantmentDefinitionBuilder
+                            .WithEnchantmentDefinitionId(new StringIdentifier("green-glow-ench"))
+                            .ThatAppliesEffectsToSkillUser()
+                            .ThatHasValueInRange(
+                                new IntIdentifier(8), // green light radius
+                                1,
+                                1) 
+                            .Build(),
+                        enchantmentDefinitionBuilder
+                            .WithEnchantmentDefinitionId(new StringIdentifier("heal-self"))
+                            .WithStatDefinitionId(new IntIdentifier(2)) // life current
+                            .ThatAppliesEffectsToSkillUser()
+                            .ThatModifiesBaseStatWithExpression("LIFE_CURRENT + (LIFE_MAXIMUM * 0.1 * $PER_TURN)")
+                            .ThatExpiresAfterTurns(5)
+                            .Build(),
+                        enchantmentDefinitionBuilder
+                            .WithEnchantmentDefinitionId(new StringIdentifier("heal-self-immediate"))
+                            .WithStatDefinitionId(new IntIdentifier(2)) // life current
+                            .ThatAppliesEffectsToSkillUser()
+                            .ThatModifiesBaseStatWithExpression("LIFE_CURRENT + 10")
+                            .ThatAppliesInstantlyAsSingleUse()
+                            .Build(),
+                        enchantmentDefinitionBuilder
+                            .WithEnchantmentDefinitionId(new StringIdentifier("increase-fire-damage"))
+                            .WithStatDefinitionId(new StringIdentifier("firedmg"))
+                            .ThatAppliesEffectsToSkillUser()
+                            .ThatModifiesBaseStatWithExpression("FIRE_DAMAGE + 30")
+                            .ThatAppliesInstantlyForAttack()
+                            .Build(),
                         enchantmentTemplate.CreateSkillEnchantment(
                             new StringIdentifier("on-hit-heal"),
-                            new StringIdentifier("firedmg"),
                             new IGeneratorComponent[]
                             {
                                 new StatefulBehaviorGeneratorComponent(() =>
@@ -109,65 +93,38 @@ namespace Macerus.Plugins.Content.Skills
                                             true)
                                     }),
                             }),
-                        enchantmentTemplate.CreateSkillEnchantment(
-                            new StringIdentifier("default-attack"),
-                            new StringIdentifier("physicaldmg"),
-                            new IGeneratorComponent[]
-                            {
-                                new StatefulBehaviorGeneratorComponent(() =>
-                                    new IBehavior[]
-                                    {
-                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "PHYSICAL_DAMAGE + 5"),
-                                        new ExpiryTriggerBehavior(new DurationInActionsTriggerBehavior(1)),
-                                        new AppliesToBaseStat()
-                                    }),
-                            }),
-                        enchantmentTemplate.CreateSkillEnchantment(
-                            new StringIdentifier("increase-armor"),
-                            new StringIdentifier("armor"),
-                            new IGeneratorComponent[]
-                            {
-                                new StatefulBehaviorGeneratorComponent(() =>
-                                    new IBehavior[]
-                                    {
-                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "ARMOR + 10"),
-                                        new ExpiryTriggerBehavior(new DurationInActionsTriggerBehavior(1)),
-                                        new AppliesToBaseStat()
-                                    }),
-                            }),
-                        enchantmentTemplate.CreateSkillEnchantment(
-                            new StringIdentifier("passive-rain-weight"),
-                            new StringIdentifier("rain-weight"),
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new IBehavior[]
-                                    {
-                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "RAIN_WEIGHT * 10"),
-                                    }),
-                            }),
-                        enchantmentTemplate.CreateSkillEnchantment(
-                            new StringIdentifier("passive-rain-min"),
-                            new StringIdentifier("rain-duration-minimum"),
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new IBehavior[]
-                                    {
-                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "RAIN_DURATION_MINIMUM * 2"),
-                                    }),
-                            }),
-                        enchantmentTemplate.CreateSkillEnchantment(
-                            new StringIdentifier("passive-rain-max"),
-                            new StringIdentifier("rain-duration-maximum"),
-                            new IGeneratorComponent[]
-                            {
-                                new StatelessBehaviorGeneratorComponent(
-                                    new IBehavior[]
-                                    {
-                                        new EnchantmentExpressionBehavior(calculationPriorityFactory.Create<int>(1), "RAIN_DURATION_MAXIMUM * 2.5"),
-                                    }),
-                            })
+                        enchantmentDefinitionBuilder
+                            .WithEnchantmentDefinitionId(new StringIdentifier("default-attack"))
+                            .WithStatDefinitionId(new StringIdentifier("physicaldmg"))
+                            .ThatAppliesEffectsToSkillUser()
+                            .ThatModifiesBaseStatWithExpression("PHYSICAL_DAMAGE + 5")
+                            .ThatAppliesInstantlyForAttack()
+                            .Build(),
+                        enchantmentDefinitionBuilder
+                            .WithEnchantmentDefinitionId(new StringIdentifier("increase-armor"))
+                            .WithStatDefinitionId(new StringIdentifier("armor"))
+                            .ThatAppliesEffectsToSkillUser()
+                            .ThatModifiesBaseStatWithExpression("ARMOR + 10")
+                            .ThatExpiresAfterTurns(1)
+                            .Build(),
+                        enchantmentDefinitionBuilder
+                            .WithEnchantmentDefinitionId(new StringIdentifier("passive-rain-weight"))
+                            .WithStatDefinitionId(new StringIdentifier("rain-weight"))
+                            .ThatsUsedForPassiveSkill()
+                            .ThatModifiesBaseStatWithExpression("RAIN_WEIGHT * 10")
+                            .Build(),
+                        enchantmentDefinitionBuilder
+                            .WithEnchantmentDefinitionId(new StringIdentifier("passive-rain-min"))
+                            .WithStatDefinitionId(new StringIdentifier("rain-duration-minimum"))
+                            .ThatsUsedForPassiveSkill()
+                            .ThatModifiesBaseStatWithExpression("RAIN_DURATION_MINIMUM * 2")
+                            .Build(),
+                        enchantmentDefinitionBuilder
+                            .WithEnchantmentDefinitionId(new StringIdentifier("passive-rain-max"))
+                            .WithStatDefinitionId(new StringIdentifier("rain-duration-maximum"))
+                            .ThatsUsedForPassiveSkill()
+                            .ThatModifiesBaseStatWithExpression("RAIN_DURATION_MAXIMUM * 2.5")
+                            .Build(),
                     };
                     var repository = new InMemoryEnchantmentDefinitionRepository(
                         c.Resolve<IAttributeFilterer>(),
@@ -214,9 +171,27 @@ namespace Macerus.Plugins.Content.Skills
 
         public IEnchantmentDefinition CreateSkillEnchantment(
             IIdentifier skillDefinitionId,
+            IEnumerable<IGeneratorComponent> components) =>
+            CreateSkillEnchantment(
+                skillDefinitionId,
+                null,
+                components);
+
+        public IEnchantmentDefinition CreateSkillEnchantment(
+            IIdentifier skillDefinitionId,
             IIdentifier statDefinitionId,
             IEnumerable<IGeneratorComponent> components)
         {
+            var allComponents = new List<IGeneratorComponent>(
+                new IGeneratorComponent[]
+                {
+                    new EnchantmentTargetGeneratorComponent(new StringIdentifier("owner")),
+                }.Concat(components));
+            if (statDefinitionId != null)
+            {
+                allComponents.Add(new HasStatGeneratorComponent(statDefinitionId));
+            }
+
             var enchantmentDefinition = new EnchantmentDefinition(
                 new[]
                 {
@@ -225,11 +200,7 @@ namespace Macerus.Plugins.Content.Skills
                         new IdentifierFilterAttributeValue(skillDefinitionId),
                         true),
                 },
-                new IGeneratorComponent[]
-                {
-                    new EnchantmentTargetGeneratorComponent(new StringIdentifier("owner")),
-                    new HasStatGeneratorComponent(statDefinitionId),
-                }.Concat(components));
+                allComponents);
             return enchantmentDefinition;
         }
     }
