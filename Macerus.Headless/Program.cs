@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -21,6 +20,7 @@ using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 using Macerus.Plugins.Features.GameObjects.Skills.Api;
 using Macerus.Plugins.Features.Interactions.Api;
 using Macerus.Plugins.Features.MainMenu.Default.NewGame;
+using Macerus.Plugins.Features.Scripting;
 using Macerus.Plugins.Features.StatusBar.Api;
 using Macerus.Shared.Behaviors;
 
@@ -49,8 +49,58 @@ namespace Macerus.Headless
         public static async Task Main(string[] args)
         {
             var container = new MacerusContainer();
+            await new ScriptExercise().Go(container);
+        }
+    }
 
-            await new SkillCastExercise().Go(container);
+    public sealed class ScriptExercise
+    {
+        public async Task Go(MacerusContainer container)
+        {
+            string code = @"
+    using System;
+    using System.Threading.Tasks;
+
+    using ProjectXyz.Api.Framework;
+    using ProjectXyz.Shared.Framework;
+
+    using Macerus.Headless;
+    using Macerus.Plugins.Features.Scripting;
+    using Macerus.Plugins.Features.GameObjects.Skills.Api;
+
+    namespace The.Name.Space
+    {
+        public class MyScript : IScript
+        {
+            private readonly Params _parameters;
+
+            public MyScript(Params parameters)
+            {
+                _parameters = parameters;
+            }
+
+            public async Task RunAsync()
+            {
+                var isSet = _parameters.SkillAmenity != null;
+                var identifier = new StringIdentifier(""Params Has Property Set: "" + isSet);
+                Console.WriteLine(identifier.ToString());
+            }
+        }
+
+        public class Params : IScriptConstructorParameters
+        {
+            public ISkillAmenity SkillAmenity { get; set; }
+        }
+    }
+";
+
+            var scriptCompiler = container.Resolve<IScriptCompiler>();
+            var script = await scriptCompiler
+                .CompileFromRawAsync(code, "The.Name.Space.MyScript")
+                .ConfigureAwait(false);
+            await script
+                .RunAsync()
+                .ConfigureAwait(false);
         }
     }
 

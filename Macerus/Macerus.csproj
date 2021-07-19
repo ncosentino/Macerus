@@ -91,6 +91,8 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.Minimap\Macerus.Plugins.Features.Minimap.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.PartyBar.Default\Macerus.Plugins.Features.PartyBar.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.PartyBar\Macerus.Plugins.Features.PartyBar.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Scripting.Default\Macerus.Plugins.Features.Scripting.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Scripting\Macerus.Plugins.Features.Scripting.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Stats.Api\Macerus.Plugins.Features.Stats.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.StatusBar.Api\Macerus.Plugins.Features.StatusBar.Api.csproj" />
