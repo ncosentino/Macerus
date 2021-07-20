@@ -24,19 +24,24 @@ namespace Macerus.Plugins.Features.Scripting.Default
             _scriptReferenceCalculator = scriptReferenceCalculator;
         }
 
-        public async Task<IScript> CompileFromRawAsync(
+        public async Task<ICompiledScript> CompileFromRawAsync(
             string rawScript,
-            string fullClassName)
+            string fullClassName,
+            bool singleInstance)
         {
             var script = await Task
-                .Run(() => CompileFromRawTaskBody(rawScript, fullClassName))
+                .Run(() => CompileFromRawTaskBody(
+                    rawScript,
+                    fullClassName,
+                    singleInstance))
                 .ConfigureAwait(false);
             return script;
         }
 
-        private IScript CompileFromRawTaskBody(
+        private ICompiledScript CompileFromRawTaskBody(
             string rawScript,
-            string fullClassName)
+            string fullClassName,
+            bool singleInstance)
         {
             var parameters = new CompilerParameters();
 
@@ -75,10 +80,59 @@ namespace Macerus.Plugins.Features.Scripting.Default
                 _lifetimeScope.InjectUnsetProperties(constructorParametersInstance);
             }
 
-            var scriptInstance = constructorWithDependencyInjection == null
+            var createScriptMethod = new Func<IScript>(() => constructorWithDependencyInjection == null
                 ? (IScript)Activator.CreateInstance(scriptType)
-                : (IScript)constructorWithDependencyInjection.Invoke(new[] { constructorParametersInstance });
+                : (IScript)constructorWithDependencyInjection.Invoke(new[] { constructorParametersInstance }));
+            var scriptInstance = singleInstance
+                ? (ICompiledScript)new SingleInstanceScript(
+                    createScriptMethod.Invoke(),
+                    fullClassName)
+                : (ICompiledScript)new NewInstanceScript(
+                    createScriptMethod,
+                    fullClassName);
             return scriptInstance;
         }
+    }
+
+    public sealed class SingleInstanceScript : ICompiledScript
+    {
+        private readonly IScript _wrappedScript;
+        private readonly string _name;
+
+        public SingleInstanceScript(
+            IScript wrappedScript,
+            string name)
+        {
+            _wrappedScript = wrappedScript;
+            _name = name;
+        }
+
+        public Task RunAsync() => _wrappedScript.RunAsync();
+
+        public override string ToString() =>
+            $"Singleton Script: {_name}";
+    }
+
+    public sealed class NewInstanceScript : ICompiledScript
+    {
+        private readonly Func<IScript> _createScriptCallback;
+        private readonly string _name;
+
+        public NewInstanceScript(
+            Func<IScript> createScriptCallback,
+            string name)
+        {
+            _createScriptCallback = createScriptCallback;
+            _name = name;
+        }
+
+        public async Task RunAsync()
+        {
+            var instance = _createScriptCallback.Invoke();
+            await instance.RunAsync().ConfigureAwait(false);
+        }
+
+        public override string ToString() =>
+            $"New-Instance Script: {_name}";
     }
 }

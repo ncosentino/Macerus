@@ -5,8 +5,9 @@ namespace Macerus.Plugins.Features.Scripting
 {
     public interface IScriptCompiler
     {
-        Task<IScript> CompileFromRawAsync(
+        Task<ICompiledScript> CompileFromRawAsync(
             string rawScript,
-            string fullClassName);
+            string fullClassName,
+            bool singleInstance);
     }
 }

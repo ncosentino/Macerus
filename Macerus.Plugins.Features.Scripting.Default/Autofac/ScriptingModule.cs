@@ -16,6 +16,10 @@ namespace Macerus.Plugins.Features.Scripting.Default.Autofac
                 .RegisterType<ScriptReferenceCalculator>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<ScriptRepositoryFacade>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

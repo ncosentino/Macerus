@@ -73,6 +73,7 @@ namespace Macerus.Headless
         public class MyScript : IScript
         {
             private readonly Params _parameters;
+            private int _counter = 0;
 
             public MyScript(Params parameters)
             {
@@ -84,6 +85,9 @@ namespace Macerus.Headless
                 var isSet = _parameters.SkillAmenity != null;
                 var identifier = new StringIdentifier(""Params Has Property Set: "" + isSet);
                 Console.WriteLine(identifier.ToString());
+
+                _counter++;
+                Console.WriteLine(""Counter: "" + _counter);
             }
         }
 
@@ -96,11 +100,15 @@ namespace Macerus.Headless
 
             var scriptCompiler = container.Resolve<IScriptCompiler>();
             var script = await scriptCompiler
-                .CompileFromRawAsync(code, "The.Name.Space.MyScript")
+                .CompileFromRawAsync(code, "The.Name.Space.MyScript", false)
                 .ConfigureAwait(false);
             await script
                 .RunAsync()
                 .ConfigureAwait(false);
+            await script
+                .RunAsync()
+                .ConfigureAwait(false);
+            Console.ReadLine();
         }
     }
 
