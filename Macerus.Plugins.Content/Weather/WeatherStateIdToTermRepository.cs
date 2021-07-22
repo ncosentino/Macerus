@@ -1,19 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using ProjectXyz.Api.Framework;
-using ProjectXyz.Plugins.Features.StateEnchantments.Api;
-using ProjectXyz.Plugins.Features.StateEnchantments.Shared;
-using ProjectXyz.Shared.Framework;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.States;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.States.Default;
+using ProjectXyz.Plugins.Features.Weather;
 
 namespace Macerus.Plugins.Content.Weather
 {
     public sealed class WeatherStateIdToTermRepository : IDiscoverableStateIdToTermRepository
     {
+        private readonly IWeatherIdentifiers _weatherIdentifiers;
+
+        public WeatherStateIdToTermRepository(IWeatherIdentifiers weatherIdentifiers)
+        {
+            _weatherIdentifiers = weatherIdentifiers;
+        }
+
         public IEnumerable<IStateIdToTermMapping> GetStateIdToTermMappings()
         {
             yield return new StateIdToTermMapping(
-                new StringIdentifier("Weather"),
+                _weatherIdentifiers.WeatherStateTypeId,
                 new TermMapping(
                     new KeyValuePair<IIdentifier, string>[]
                     {

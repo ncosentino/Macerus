@@ -1,5 +1,5 @@
 ﻿using ProjectXyz.Api.Framework;
-using ProjectXyz.Plugins.Features.Weather.Api;
+using ProjectXyz.Plugins.Features.Weather;
 
 namespace Macerus.Plugins.Features.Weather
 {

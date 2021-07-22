@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using ProjectXyz.Plugins.Features.StateEnchantments.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.States;
 
 namespace Macerus.Plugins.Features.GameObjects.Enchantments
 {

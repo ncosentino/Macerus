@@ -26,6 +26,7 @@ using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Plugins.Features.Mapping.Default;
+using ProjectXyz.Plugins.Features.Weather.Default;
 using ProjectXyz.Shared.Data.Serialization;
 using ProjectXyz.Shared.Framework;
 
@@ -66,6 +67,7 @@ namespace Macerus.Plugins.Content.Data
                         [typeof(EditorPrefabResourceIdBehavior)] = "EditorPrefabIdBehavior",
                         [typeof(EditorNameBehavior)] = "ename",
                         [typeof(TriggerOnCombatEndBehavior)] = "TriggerOnCombatEndBehavior",
+                        [typeof(MapWeatherTableBehavior)] = "MapWeatherTableBehavior",                        
                     };
                     mapping.AddRange(WithCollectionMappings<MapLayersBehavior>("MapLayersBehavior"));
                     mapping.AddRange(WithCollectionMappings<MapLayer>("MapLayer"));

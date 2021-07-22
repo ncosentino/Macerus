@@ -2,11 +2,11 @@
 
 using NexusLabs.Contracts;
 
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
-using ProjectXyz.Api.Framework;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
-using ProjectXyz.Plugins.Features.Weather.Api;
+using ProjectXyz.Plugins.Features.Weather;
 
 namespace Macerus.Plugins.Features.Weather
 {

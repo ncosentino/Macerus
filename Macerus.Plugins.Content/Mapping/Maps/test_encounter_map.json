@@ -16971,7 +16971,7 @@
             "Data": null
           },
           {
-            "SerializableId": "ProjectXyz.Plugins.Features.Weather.MapWeatherTableBehavior, ProjectXyz.Plugins.Features.Weather.Default, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "SerializableId": "MapWeatherTableBehavior",
             "Data": {
               "weatherTableId": {
                 "SerializableId": "sid",

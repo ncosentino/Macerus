@@ -2,10 +2,10 @@
 
 using Macerus.Shared.Behaviors;
 
-using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.Weather.Api;
+using ProjectXyz.Plugins.Features.Weather;
 
 namespace Macerus.Plugins.Features.Weather
 {

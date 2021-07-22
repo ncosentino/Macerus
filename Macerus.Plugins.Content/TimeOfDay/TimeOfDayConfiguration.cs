@@ -1,4 +1,4 @@
-﻿using ProjectXyz.Plugins.Features.TimeOfDay;
+﻿using ProjectXyz.Plugins.Features.TimeOfDay.Default;
 
 namespace Macerus.Plugins.Content.TimeOfDay
 {

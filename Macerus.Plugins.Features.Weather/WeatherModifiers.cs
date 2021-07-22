@@ -13,7 +13,7 @@ using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api;
 using ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api.Handlers;
 using ProjectXyz.Plugins.Features.Mapping;
-using ProjectXyz.Plugins.Features.Weather.Api;
+using ProjectXyz.Plugins.Features.Weather;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.Weather

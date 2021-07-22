@@ -16956,17 +16956,17 @@
                   }
                }
             },
-            {
-               "SerializableId":"ProjectXyz.Plugins.Features.Weather.MapWeatherTableBehavior, ProjectXyz.Plugins.Features.Weather.Default, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-               "Data":{
-                  "weatherTableId":{
-                     "SerializableId":"sid",
-                     "Data":{
-                        "identifier":"sample weather"
-                     }
-                  }
-               }
+          {
+            "SerializableId": "MapWeatherTableBehavior",
+            "Data": {
+              "weatherTableId": {
+                "SerializableId": "sid",
+                "Data": {
+                  "identifier": "sample weather"
+                }
+              }
             }
+          }
          ]
       }
    }

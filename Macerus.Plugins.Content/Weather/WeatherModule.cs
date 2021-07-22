@@ -9,7 +9,7 @@ using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.BoundedStats;
 using ProjectXyz.Plugins.Features.BoundedStats.Api;
 using ProjectXyz.Plugins.Features.Weather;
-using ProjectXyz.Plugins.Features.Weather.Api;
+using ProjectXyz.Plugins.Features.Weather.Default;
 using ProjectXyz.Plugins.Stats;
 using ProjectXyz.Shared.Framework;
 
