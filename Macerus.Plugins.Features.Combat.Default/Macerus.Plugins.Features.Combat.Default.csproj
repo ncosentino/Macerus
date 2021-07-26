@@ -8,7 +8,7 @@
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="ProjectXyz" Version="1.0.*" />
     <PackageReference Include="NexusLabs.Contracts" Version="0.0.4.0" />
-    <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.8.0" />
+    <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.10" />
   </ItemGroup>
 
   <ItemGroup>
