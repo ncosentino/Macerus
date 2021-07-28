@@ -8,6 +8,7 @@ using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Default;
 using Macerus.Plugins.Features.GameObjects.Actors.Default.Animations;
+using Macerus.Plugins.Features.GameObjects.Actors.Default.Interactions;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 using Macerus.Plugins.Features.GameObjects.Skills;
 using Macerus.Shared.Behaviors;
@@ -108,6 +109,7 @@ namespace Macerus.Plugins.Content.Actors
                                         new SizeBehavior(1, 1),
                                         new MovementBehavior(),
                                         new PlayerControlledBehavior(),
+                                        new ActorInteractablesBehavior(),
                                         new RosterBehavior(),
                                         new SkipMapSaveStateBehavior(),
                                         new ItemContainerBehavior(actorIdentifiers.InventoryIdentifier),

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Numerics;
 
 namespace Macerus.Api.Behaviors
@@ -44,6 +45,11 @@ namespace Macerus.Api.Behaviors
             return
                 movementBehavior.HasThrottle() ||
                 movementBehavior.HasVelocity();
+        }
+
+        public static void ClearWalkPath(this IMovementBehavior movementBehavior)
+        {
+            movementBehavior.SetWalkPath(Enumerable.Empty<Vector2>());
         }
 
         public static int SetDirectionByVector(
