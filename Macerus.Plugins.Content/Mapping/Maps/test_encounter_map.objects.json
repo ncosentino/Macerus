@@ -396,12 +396,6 @@
               }
             },
             {
-              "SerializableId": "Macerus.Plugins.Features.GameObjects.Containers.Sounds.ContainerMakesNoiseBehavior, Macerus.Plugins.Features.GameObjects.Containers.Sounds, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-              "Data": {
-
-              }
-            },
-            {
               "SerializableId": "bcollide",
               "Data": {
                 "x": 0.0,
@@ -1040,12 +1034,6 @@
                                 "identifier": "any_normal_magic_rare_10x_lvl10"
                               }
                             }
-                          }
-                        },
-                        {
-                          "SerializableId": "Macerus.Plugins.Features.GameObjects.Containers.Sounds.ContainerMakesNoiseBehavior, Macerus.Plugins.Features.GameObjects.Containers.Sounds, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-                          "Data": {
-
                           }
                         },
                         {

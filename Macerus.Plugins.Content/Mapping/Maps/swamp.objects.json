@@ -1069,12 +1069,6 @@
               }
             },
             {
-              "SerializableId": "Macerus.Plugins.Features.GameObjects.Containers.Sounds.ContainerMakesNoiseBehavior, Macerus.Plugins.Features.GameObjects.Containers.Sounds, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-              "Data": {
-
-              }
-            },
-            {
               "SerializableId": "EditorPrefabIdBehavior",
               "Data": {
                 "prefabResourceId": {

@@ -111,8 +111,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stats", "Stats", "{F7A4EA31
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Stats", "Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj", "{176A983C-1EB2-4E3D-9657-8A41749FA341}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Containers.Sounds", "Macerus.Plugins.Features.GameObjects.Containers.Sounds\Macerus.Plugins.Features.GameObjects.Containers.Sounds.csproj", "{E7A60ECD-C140-44AD-8758-7B1250537188}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Combat.Api", "Macerus.Plugins.Features.Combat.Api\Macerus.Plugins.Features.Combat.Api.csproj", "{A4D54C37-D8E4-479C-8004-B029D7A3ED68}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Skills", "Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.csproj", "{BAA67D56-CAFB-4A18-90A3-0EB097FD90C4}"
@@ -232,6 +230,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Scripting", "Macerus.Plugins.Features.Scripting\Macerus.Plugins.Features.Scripting.csproj", "{65BD2317-85A2-4E04-9F24-321C787E2A91}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Scripting.Default", "Macerus.Plugins.Features.Scripting.Default\Macerus.Plugins.Features.Scripting.Default.csproj", "{475837BF-1158-4977-811E-9415BE4C27F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Audio.SoundGeneration", "Macerus.Plugins.Features.Audio.SoundGeneration\Macerus.Plugins.Features.Audio.SoundGeneration.csproj", "{DDDF33AC-591F-485C-B491-D19C8928F9CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Audio.SoundGeneration.Default", "Macerus.Plugins.Features.Audio.SoundGeneration.Default\Macerus.Plugins.Features.Audio.SoundGeneration.Default.csproj", "{82E58825-956D-42C5-A515-303C7D072B73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Audio.Default", "Macerus.Plugins.Features.Audio.Default\Macerus.Plugins.Features.Audio.Default.csproj", "{A8FE162C-9822-49D6-9DBC-EC9E1883A25E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -375,10 +379,6 @@ Global
 		{176A983C-1EB2-4E3D-9657-8A41749FA341}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{176A983C-1EB2-4E3D-9657-8A41749FA341}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{176A983C-1EB2-4E3D-9657-8A41749FA341}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E7A60ECD-C140-44AD-8758-7B1250537188}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E7A60ECD-C140-44AD-8758-7B1250537188}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E7A60ECD-C140-44AD-8758-7B1250537188}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7A60ECD-C140-44AD-8758-7B1250537188}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A4D54C37-D8E4-479C-8004-B029D7A3ED68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A4D54C37-D8E4-479C-8004-B029D7A3ED68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4D54C37-D8E4-479C-8004-B029D7A3ED68}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -547,6 +547,18 @@ Global
 		{475837BF-1158-4977-811E-9415BE4C27F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{475837BF-1158-4977-811E-9415BE4C27F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{475837BF-1158-4977-811E-9415BE4C27F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDDF33AC-591F-485C-B491-D19C8928F9CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDDF33AC-591F-485C-B491-D19C8928F9CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDDF33AC-591F-485C-B491-D19C8928F9CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDDF33AC-591F-485C-B491-D19C8928F9CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82E58825-956D-42C5-A515-303C7D072B73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82E58825-956D-42C5-A515-303C7D072B73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82E58825-956D-42C5-A515-303C7D072B73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82E58825-956D-42C5-A515-303C7D072B73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8FE162C-9822-49D6-9DBC-EC9E1883A25E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8FE162C-9822-49D6-9DBC-EC9E1883A25E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8FE162C-9822-49D6-9DBC-EC9E1883A25E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8FE162C-9822-49D6-9DBC-EC9E1883A25E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -599,7 +611,6 @@ Global
 		{C6353D22-5936-4991-9094-B21BBF65C767} = {C8C2E0C1-7BA7-485C-8AC8-8EC0C320AC4A}
 		{F7A4EA31-5774-4ADF-A504-85F69A763FA5} = {33A6C169-52DA-446B-A241-FEC05722752A}
 		{176A983C-1EB2-4E3D-9657-8A41749FA341} = {F7A4EA31-5774-4ADF-A504-85F69A763FA5}
-		{E7A60ECD-C140-44AD-8758-7B1250537188} = {8989A7CB-427A-4954-8118-238604017FE8}
 		{A4D54C37-D8E4-479C-8004-B029D7A3ED68} = {9DFE0CE3-ECC8-4FCF-BE6A-94859F543B13}
 		{BAA67D56-CAFB-4A18-90A3-0EB097FD90C4} = {86014C1C-18FA-4FC5-B76C-0FFD8D2A3E19}
 		{B94F2FF0-9DA5-44F6-BDA6-FE49EBEF391D} = {33A6C169-52DA-446B-A241-FEC05722752A}
@@ -659,6 +670,9 @@ Global
 		{64A34C60-99CB-4202-8240-E934D1F38070} = {33A6C169-52DA-446B-A241-FEC05722752A}
 		{65BD2317-85A2-4E04-9F24-321C787E2A91} = {64A34C60-99CB-4202-8240-E934D1F38070}
 		{475837BF-1158-4977-811E-9415BE4C27F6} = {64A34C60-99CB-4202-8240-E934D1F38070}
+		{DDDF33AC-591F-485C-B491-D19C8928F9CA} = {8D2462E5-6EE0-48F2-973A-09EF1E73BADB}
+		{82E58825-956D-42C5-A515-303C7D072B73} = {8D2462E5-6EE0-48F2-973A-09EF1E73BADB}
+		{A8FE162C-9822-49D6-9DBC-EC9E1883A25E} = {8D2462E5-6EE0-48F2-973A-09EF1E73BADB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}

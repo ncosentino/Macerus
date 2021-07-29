@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using Macerus.Plugins.Features.Audio;
 using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Containers.Api;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Api;
@@ -13,23 +14,27 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping;
+using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers
 {
     public sealed class ContainerInteractionHandler : IDiscoverableInteractionHandler
     {
-        private readonly IMacerusActorIdentifiers _macerusActorIdentifiers;
-        private readonly IMapGameObjectManager _mapGameObjectManager;
-        private readonly ILootGeneratorAmenity _lootGeneratorAmenity;
+        private readonly Lazy<IMacerusActorIdentifiers> _lazyMacerusActorIdentifiers;
+        private readonly Lazy<IMapGameObjectManager> _lazyMapGameObjectManager;
+        private readonly Lazy<ILootGeneratorAmenity> _lazyLootGeneratorAmenity;
+        private readonly Lazy<IAudioManager> _lazyAudioManager;
 
         public ContainerInteractionHandler(
-            IMacerusActorIdentifiers macerusActorIdentifiers,
-            IMapGameObjectManager mapGameObjectManager,
-            ILootGeneratorAmenity lootGeneratorAmenity)
+            Lazy<IMacerusActorIdentifiers> lazyMacerusActorIdentifiers,
+            Lazy<IMapGameObjectManager> lazyMapGameObjectManager,
+            Lazy<ILootGeneratorAmenity> lazyLootGeneratorAmenity,
+            Lazy<IAudioManager> lazyAudioManager)
         {
-            _macerusActorIdentifiers = macerusActorIdentifiers;
-            _mapGameObjectManager = mapGameObjectManager;
-            _lootGeneratorAmenity = lootGeneratorAmenity;
+            _lazyMacerusActorIdentifiers = lazyMacerusActorIdentifiers;
+            _lazyMapGameObjectManager = lazyMapGameObjectManager;
+            _lazyLootGeneratorAmenity = lazyLootGeneratorAmenity;
+            _lazyAudioManager = lazyAudioManager;
         }
 
         public Type InteractableType { get; } = typeof(ContainerInteractableBehavior);
@@ -43,7 +48,9 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
 
             var actorInventory = actor
                 .Get<IItemContainerBehavior>()
-                .SingleOrDefault(x => x.ContainerId.Equals(_macerusActorIdentifiers.InventoryIdentifier));
+                .SingleOrDefault(x => x.ContainerId.Equals(_lazyMacerusActorIdentifiers
+                    .Value
+                    .InventoryIdentifier));
             Contract.RequiresNotNull(
                 actorInventory,
                 $"'{actor}' did not have a matching '{typeof(IItemContainerBehavior)}'.");
@@ -70,9 +77,14 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 }
             }
 
+            await _lazyAudioManager
+                .Value
+                .PlaySoundEffectAsync(new StringIdentifier("FIXME: put an actual resource ID here"))
+                .ConfigureAwait(false);
+
             if (interactableBehavior.DestroyOnUse)
             {
-                _mapGameObjectManager.MarkForRemoval(interactableObject);
+                _lazyMapGameObjectManager.Value.MarkForRemoval(interactableObject);
             }
         }
 
@@ -88,7 +100,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 }
 
                 var dropTableId = containerGenerateItemsBehavior.DropTableId;
-                var generatedItems = _lootGeneratorAmenity.GenerateLoot(dropTableId);
+                var generatedItems = _lazyLootGeneratorAmenity.Value.GenerateLoot(dropTableId);
                 foreach (var generatedItem in generatedItems)
                 {
                     if (!sourceItemContainer.TryAddItem(generatedItem))

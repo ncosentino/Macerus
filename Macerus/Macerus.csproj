@@ -35,6 +35,9 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.Animations.Api\Macerus.Plugins.Features.Animations.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Animations.Default\Macerus.Plugins.Features.Animations.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Animations.Lpc\Macerus.Plugins.Features.Animations.Lpc.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Audio.Default\Macerus.Plugins.Features.Audio.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Audio.SoundGeneration.Default\Macerus.Plugins.Features.Audio.SoundGeneration.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Audio.SoundGeneration\Macerus.Plugins.Features.Audio.SoundGeneration.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Audio\Macerus.Plugins.Features.Audio.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Camera.Default\Macerus.Plugins.Features.Camera.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Camera\Macerus.Plugins.Features.Camera.csproj" />
@@ -51,7 +54,6 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Generation\Macerus.Plugins.Features.GameObjects.Actors.Generation.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Default\Macerus.Plugins.Features.GameObjects.Actors.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Containers.Api\Macerus.Plugins.Features.GameObjects.Containers.Api.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Containers.Sounds\Macerus.Plugins.Features.GameObjects.Containers.Sounds.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Containers\Macerus.Plugins.Features.GameObjects.Containers.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments\Macerus.Plugins.Features.GameObjects.Enchantments.csproj" />
