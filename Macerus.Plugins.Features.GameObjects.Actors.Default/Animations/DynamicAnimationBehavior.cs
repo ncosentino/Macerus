@@ -69,18 +69,22 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Animations
                 _secondsElapsedOnFrame = 0;
                 _currentAnimation = null;
 
-                AnimationFrameChanged?.Invoke(
-                    this,
-                    new AnimationFrameEventArgs(null, null));
+                await AnimationFrameChanged
+                    .InvokeOrderedAsync(
+                        this,
+                        new AnimationFrameEventArgs(null, null))
+                    .ConfigureAwait(false);
                 return;
             }
 
             if (currentAnimationId == null ||
                 !Visible)
             {
-                AnimationFrameChanged?.Invoke(
-                    this,
-                    new AnimationFrameEventArgs(null, null));
+                await AnimationFrameChanged
+                    .InvokeOrderedAsync(
+                        this,
+                        new AnimationFrameEventArgs(null, null))
+                    .ConfigureAwait(false);
                 return;
             }
 
@@ -168,11 +172,13 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Animations
             // cache this because we use it a lot internally
             _cachedAnimationSpeedMultiplier = animationMultipliers.AnimationSpeedMultiplier;
 
-            AnimationFrameChanged?.Invoke(
-                this,
-                new AnimationFrameEventArgs(
-                    currentFrame,
-                    animationMultipliers));
+            await AnimationFrameChanged
+                .InvokeOrderedAsync(
+                    this,
+                    new AnimationFrameEventArgs(
+                        currentFrame,
+                        animationMultipliers))
+                .ConfigureAwait(false);
         }
 
         public async Task<IAnimationMultipliers> GetAnimationMultipliersAsync()
