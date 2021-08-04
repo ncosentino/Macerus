@@ -12,6 +12,23 @@ namespace Macerus.Plugins.Features.Gui.Default.Autofac
                 .RegisterType<UserInterfaceSystem>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<ModalManager>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<ModalContentConverterFacade>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<ModalButtonViewModelFactory>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<NoneModalContentPresenter>()
+                .AsImplementedInterfaces()
+                .IfNotRegistered(typeof(IModalContentPresenter))
+                .SingleInstance();
         }
     }
 }

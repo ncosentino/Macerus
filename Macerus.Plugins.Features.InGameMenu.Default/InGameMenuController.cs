@@ -5,6 +5,7 @@ using System.Linq;
 using Macerus.Game.Api;
 using Macerus.Game.Api.Scenes;
 using Macerus.Plugins.Features.DataPersistence;
+using Macerus.Plugins.Features.Gui;
 using Macerus.Plugins.Features.Gui.SceneTransitions;
 using Macerus.Plugins.Features.InGameMenu.Api;
 using Macerus.Plugins.Features.MainMenu.Api;
@@ -24,6 +25,7 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
         private readonly IApplication _application;
         private readonly ITransitionController _transitionController;
         private readonly IMainMenuController _mainMenuController;
+        private readonly Lazy<IModalManager> _lazyModalManager;
         private readonly Lazy<IMapManager> _lazyMapManager;
         private readonly Lazy<ICombatTurnManager> _lazyCombatTurnManager;
         private readonly Lazy<IDataPersistenceManager> _lazyDayaPersistenceManager;
@@ -35,6 +37,7 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
             IApplication application,
             ITransitionController transitionController,
             IMainMenuController mainMenuController,
+            Lazy<IModalManager> lazyModalManager,
             Lazy<IMapManager> lazyMapManager,
             Lazy<ICombatTurnManager> lazyCombatTurnManager,
             Lazy<IDataPersistenceManager> lazyDayaPersistenceManager,
@@ -45,6 +48,7 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
             _application = application;
             _transitionController = transitionController;
             _mainMenuController = mainMenuController;
+            _lazyModalManager = lazyModalManager;
             _lazyMapManager = lazyMapManager;
             _lazyCombatTurnManager = lazyCombatTurnManager;
             _lazyDayaPersistenceManager = lazyDayaPersistenceManager;
@@ -82,10 +86,21 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
             // FIXME: navigate to options pls
         }
 
-        private void InGameMenuViewModel_RequestGoToMainMenu(
+        private async void InGameMenuViewModel_RequestGoToMainMenu(
             object sender,
             EventArgs e)
         {
+            if (!await _lazyModalManager
+                .Value
+                .ShowAndWaitYesNoAsync(
+                    "Would you like to go to the main menu? All " +
+                    "unsaved progress will be lost.\r\n" +
+                    "// FIXME: load this from a resource ID")
+                .ConfigureAwait(false))
+            {
+                return;
+            }
+
             _transitionController.StartTransition(
                 TimeSpan.FromSeconds(1),
                 TimeSpan.FromSeconds(1),
@@ -135,8 +150,19 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
         }
 
         // FIXME: actually open up a save/load menu for this
-        private void InGameMenuViewModel_RequestLoadGame(object sender, EventArgs e)
+        private async void InGameMenuViewModel_RequestLoadGame(object sender, EventArgs e)
         {
+            if (!await _lazyModalManager
+                .Value
+                .ShowAndWaitYesNoAsync(
+                    "Are you sure you'd like to load from this save? All " +
+                    "unsaved progress will be lost.\r\n" +
+                    "// FIXME: load this from a resource ID")
+                .ConfigureAwait(false))
+            {
+                return;
+            }
+
             _transitionController.StartTransition(
                 TimeSpan.FromSeconds(0.3),
                 TimeSpan.FromSeconds(0.3),

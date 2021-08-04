@@ -51,13 +51,13 @@ namespace Macerus.Plugins.Features.Gui.Default.SceneTransitions
             {
                 if (_transitionPackage.TransitionOut)
                 {
-                    await (_transitionPackage.TransitionedOutCallbackAsync?.Invoke() ?? Task.CompletedTask);
+                    await (_transitionPackage.TransitionedOutCallbackAsync?.Invoke() ?? Task.CompletedTask).ConfigureAwait(false);
                     _transitionPackage.TransitionOut = false;
                     _transitionPackage.ElapsedPhaseTime = TimeSpan.FromSeconds(0);
                 }
                 else
                 {
-                    await (_transitionPackage.TransitionedInCallbackAsync?.Invoke() ?? Task.CompletedTask);
+                    await (_transitionPackage.TransitionedInCallbackAsync?.Invoke() ?? Task.CompletedTask).ConfigureAwait(false);
                     _transitionPackage = null;
                 }
 
