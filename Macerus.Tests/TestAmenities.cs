@@ -72,8 +72,9 @@ namespace Macerus.Tests
             await UsingCleanMapAndObjects(async () =>
             {
                 _mapGameObjectManager.MarkForAddition(actor);
-                _mapGameObjectManager.Synchronize();
-
+                await _mapGameObjectManager
+                    .SynchronizeAsync()
+                    .ConfigureAwait(false);
                 await callback.Invoke(actor);
             });
         }
@@ -84,7 +85,9 @@ namespace Macerus.Tests
                 _gameObjectRepository,
                 _mapStateRepository);
 
-            _mapManager.UnloadMap();
+            await _mapManager
+                .UnloadMapAsync()
+                .ConfigureAwait(false);
             Assert.Empty(_mapGameObjectManager.GameObjects);
 
             _rosterManager.ClearRoster();
@@ -97,7 +100,9 @@ namespace Macerus.Tests
             }
             finally
             {
-                _mapManager.UnloadMap();
+                await _mapManager
+                    .UnloadMapAsync()
+                    .ConfigureAwait(false);
                 Assert.Empty(_mapGameObjectManager.GameObjects);
 
                 _rosterManager.ClearRoster();

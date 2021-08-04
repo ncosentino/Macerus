@@ -113,7 +113,10 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
                     _lazyCombatTurnManager.Value.EndCombat(
                         Enumerable.Empty<IGameObject>(),
                         new Dictionary<int, IReadOnlyCollection<IGameObject>>());
-                    _lazyMapManager.Value.UnloadMap();
+                    await _lazyMapManager
+                        .Value
+                        .UnloadMapAsync()
+                        .ConfigureAwait(false);
                     _mainMenuController.OpenMenu();
                     _sceneManager.NavigateToScene(new StringIdentifier("MainMenu"));
                 },
@@ -143,7 +146,10 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
                 TimeSpan.FromSeconds(0.3),
                 async () =>
                 {
-                    await _lazyDayaPersistenceManager.Value.SaveAsync(FAKE_GAME_ID);
+                    await _lazyDayaPersistenceManager
+                        .Value
+                        .SaveAsync(FAKE_GAME_ID)
+                        .ConfigureAwait(false);
                     CloseMenu();
                 },
                 async () => { });
@@ -173,8 +179,14 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
                     _lazyCombatTurnManager.Value.EndCombat(
                         Enumerable.Empty<IGameObject>(),
                         new Dictionary<int, IReadOnlyCollection<IGameObject>>());
-                    _lazyMapManager.Value.UnloadMap();
-                    await _lazyDayaPersistenceManager.Value.LoadAsync(FAKE_GAME_ID);
+                    await _lazyMapManager
+                        .Value
+                        .UnloadMapAsync()
+                        .ConfigureAwait(false);
+                    await _lazyDayaPersistenceManager
+                        .Value
+                        .LoadAsync(FAKE_GAME_ID)
+                        .ConfigureAwait(false);
                     CloseMenu();
                 },
                 async () => { });

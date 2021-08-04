@@ -11,6 +11,7 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping;
+using System.Threading.Tasks;
 
 namespace Macerus.Plugins.Features.Encounters
 {
@@ -36,7 +37,7 @@ namespace Macerus.Plugins.Features.Encounters
             _logger = logger;
         }
 
-        public void PlaceGameObjects(IEnumerable<IGameObject> gameObjectsToPlace)
+        public async Task PlaceGameObjectsAsync(IEnumerable<IGameObject> gameObjectsToPlace)
         {
             var spawnPositionEntries = _mapGameObjectManager
                 .GameObjects
@@ -78,7 +79,9 @@ namespace Macerus.Plugins.Features.Encounters
             }
 
             // force synchronization so later handlers can operate
-            _mapGameObjectManager.Synchronize();
+            await _mapGameObjectManager
+                .SynchronizeAsync()
+                .ConfigureAwait(false);
         }
     }
 }

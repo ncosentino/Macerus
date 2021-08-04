@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using ProjectXyz.Api.GameObjects;
 
@@ -6,6 +7,6 @@ namespace Macerus.Plugins.Features.Encounters
 {
     public interface IEncounterGameObjectPlacer
     {
-        void PlaceGameObjects(IEnumerable<IGameObject> gameObjectsToPlace);
+        Task PlaceGameObjectsAsync(IEnumerable<IGameObject> gameObjectsToPlace);
     }
 }

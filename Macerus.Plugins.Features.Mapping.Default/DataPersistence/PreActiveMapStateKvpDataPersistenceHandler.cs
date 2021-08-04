@@ -19,12 +19,16 @@ namespace Macerus.Plugins.Features.Mapping.Default.DataPersistence
 
         public async Task WriteAsync(IKvpDataStoreWriter writer)
         {
-            await _mapManager.SaveActiveMapStateAsync();
+            await _mapManager
+                .SaveActiveMapStateAsync()
+                .ConfigureAwait(false);
         }
 
         public async Task ReadAsync(IKvpDataStoreReader reader)
         {
-            _mapManager.UnloadMap();
+            await _mapManager
+                .UnloadMapAsync()
+                .ConfigureAwait(false);
         }
     }
 }

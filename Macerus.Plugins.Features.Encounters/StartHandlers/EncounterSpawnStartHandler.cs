@@ -82,7 +82,9 @@ namespace Macerus.Plugins.Features.Encounters
             var actors = mapActors
                 .Concat(spawns)
                 .ToArray();
-            _encounterGameObjectPlacer.PlaceGameObjects(actors);
+            await _encounterGameObjectPlacer
+                .PlaceGameObjectsAsync(actors)
+                .ConfigureAwait(false);
         }
     }
 }

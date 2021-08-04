@@ -138,7 +138,9 @@ namespace Macerus.Headless
 
             var mapGameObjectManager = container.Resolve<IMapGameObjectManager>();
             mapGameObjectManager.MarkForAddition(npc);
-            mapGameObjectManager.Synchronize();
+            await mapGameObjectManager
+                .SynchronizeAsync()
+                .ConfigureAwait(false);
 
             var gameEngine = container.Resolve<IGameEngine>();
             while (true)

@@ -44,7 +44,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
                 
                 _mapGameObjectManager.MarkForAddition(player);
-                _mapGameObjectManager.Synchronize();
+                await _mapGameObjectManager
+                    .SynchronizeAsync()
+                    .ConfigureAwait(false);
 
                 var inputWeights = new Dictionary<IIdentifier, double>()
                 {
@@ -71,7 +73,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
                 _mapGameObjectManager.MarkForAddition(
                     player,
                     _testAmenities.CreatePlayerInstance());
-                _mapGameObjectManager.Synchronize();
+                await _mapGameObjectManager
+                    .SynchronizeAsync()
+                    .ConfigureAwait(false);
 
                 var inputWeights = new Dictionary<IIdentifier, double>()
                 {
@@ -96,7 +100,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
 
                 _mapGameObjectManager.MarkForAddition(player);
-                _mapGameObjectManager.Synchronize();
+                await _mapGameObjectManager
+                    .SynchronizeAsync()
+                    .ConfigureAwait(false);
 
                 var result = _weatherModifiers.GetMinimumDuration(
                     WeatherIds.Rain,
@@ -120,7 +126,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
                 _mapGameObjectManager.MarkForAddition(
                     player,
                     _testAmenities.CreatePlayerInstance());
-                _mapGameObjectManager.Synchronize();
+                await _mapGameObjectManager
+                    .SynchronizeAsync()
+                    .ConfigureAwait(false);
 
                 var result = _weatherModifiers.GetMinimumDuration(
                     WeatherIds.Rain,
@@ -142,7 +150,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
                     .Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-rain")) });
 
                 _mapGameObjectManager.MarkForAddition(player);
-                _mapGameObjectManager.Synchronize();
+                await _mapGameObjectManager
+                    .SynchronizeAsync()
+                    .ConfigureAwait(false);
 
                 var result = _weatherModifiers.GetMaximumDuration(WeatherIds.Rain, 10000);
 
@@ -163,7 +173,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
                 _mapGameObjectManager.MarkForAddition(
                     player,
                     _testAmenities.CreatePlayerInstance());
-                _mapGameObjectManager.Synchronize();
+                await _mapGameObjectManager
+                    .SynchronizeAsync()
+                    .ConfigureAwait(false);
 
                 var result = _weatherModifiers.GetMaximumDuration(WeatherIds.Rain, 10000);
 
