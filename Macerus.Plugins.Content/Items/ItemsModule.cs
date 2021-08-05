@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Autofac;
 
@@ -6,6 +7,8 @@ using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Content.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Socketing;
+using Macerus.Plugins.Features.Inventory.Default.HoverCards;
+using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects.Generation;
@@ -27,6 +30,18 @@ namespace Macerus.Plugins.Content.Items
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
+               .Register(x =>
+               {
+                   var loadOrder = new HoverCardPartConverterLoadOrder(new Dictionary<Type, int>()
+                   {
+                       [typeof(NameHoverCardPartConverter)] = int.MinValue,
+                       [typeof(BaseStatsHoverCardPartConverter)] = int.MinValue + 1,
+                   });
+                   return loadOrder;
+               })
+               .AsImplementedInterfaces()
+               .SingleInstance();
+            builder
                 .Register(c =>
                 {
                     var itemIdentifiers = c.Resolve<IItemIdentifiers>();
@@ -43,13 +58,17 @@ namespace Macerus.Plugins.Content.Items
                             },
                             new IGeneratorComponent[]
                             {
-                               new NameGeneratorComponent("Leather Gloves"),
-                               new IconGeneratorComponent(@"graphics\items\gloves\leather gloves"),
-                               new EquippableGeneratorComponent(new[] { new StringIdentifier("hands") }),
-                               new SocketGeneratorComponent(new[]
+                                new NameGeneratorComponent("Leather Gloves"),
+                                new IconGeneratorComponent(@"graphics\items\gloves\leather gloves"),
+                                new EquippableGeneratorComponent(new[] { new StringIdentifier("hands") }),
+                                new SocketGeneratorComponent(new[]
                                 {
                                     KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 4)),
-                                })
+                                }),
+                                new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
+                                {
+                                    [new StringIdentifier("armor")] = 1, // FIXME: just for testing
+                                }),
                             }),
                         new ItemDefinition(
                             new[]
@@ -67,7 +86,11 @@ namespace Macerus.Plugins.Content.Items
                                 new SocketGeneratorComponent(new[]
                                 {
                                     KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 4)),
-                                })
+                                }),
+                                new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
+                                {
+                                    [new StringIdentifier("armor")] = 1, // FIXME: just for testing
+                                }),
                             }),
                         new ItemDefinition(
                             new[]
@@ -85,7 +108,11 @@ namespace Macerus.Plugins.Content.Items
                                 new SocketGeneratorComponent(new[]
                                 {
                                     KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 6)),
-                                })
+                                }),
+                                new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
+                                {
+                                    [new StringIdentifier("armor")] = 3, // FIXME: just for testing
+                                }),
                             }),
                         new ItemDefinition(
                             new[]

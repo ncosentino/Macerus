@@ -18,7 +18,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Skills\Macerus.Plugins.Features.GameObjects.Skills.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Mapping\Macerus.Plugins.Features.Mapping.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.Stats.Api\Macerus.Plugins.Features.Stats.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj" />
   </ItemGroup>
 
 </Project>

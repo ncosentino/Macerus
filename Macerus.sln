@@ -109,7 +109,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.An
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Stats", "Stats", "{F7A4EA31-5774-4ADF-A504-85F69A763FA5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Stats", "Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj", "{176A983C-1EB2-4E3D-9657-8A41749FA341}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Stats.Default", "Macerus.Plugins.Features.Stats.Default\Macerus.Plugins.Features.Stats.Default.csproj", "{176A983C-1EB2-4E3D-9657-8A41749FA341}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Combat.Api", "Macerus.Plugins.Features.Combat.Api\Macerus.Plugins.Features.Combat.Api.csproj", "{A4D54C37-D8E4-479C-8004-B029D7A3ED68}"
 EndProject
@@ -171,7 +171,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MapEditor", "MapEditor", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.ContentCreator.MapEditor.Behaviors.Shared", "Macerus.ContentCreator.MapEditor.Behaviors.Shared\Macerus.ContentCreator.MapEditor.Behaviors.Shared.csproj", "{5B0402B7-E052-466D-91DD-3570811E9E67}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Stats.Api", "Macerus.Plugins.Features.Stats.Api\Macerus.Plugins.Features.Stats.Api.csproj", "{3BF28854-95F2-4C21-8164-FA8A087F7552}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Stats", "Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj", "{3BF28854-95F2-4C21-8164-FA8A087F7552}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hud", "Hud", "{660AE7F3-B16D-4296-BD98-546C9B50E0E8}"
 EndProject
@@ -231,11 +231,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Sc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Scripting.Default", "Macerus.Plugins.Features.Scripting.Default\Macerus.Plugins.Features.Scripting.Default.csproj", "{475837BF-1158-4977-811E-9415BE4C27F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Audio.SoundGeneration", "Macerus.Plugins.Features.Audio.SoundGeneration\Macerus.Plugins.Features.Audio.SoundGeneration.csproj", "{DDDF33AC-591F-485C-B491-D19C8928F9CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Audio.SoundGeneration", "Macerus.Plugins.Features.Audio.SoundGeneration\Macerus.Plugins.Features.Audio.SoundGeneration.csproj", "{DDDF33AC-591F-485C-B491-D19C8928F9CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Audio.SoundGeneration.Default", "Macerus.Plugins.Features.Audio.SoundGeneration.Default\Macerus.Plugins.Features.Audio.SoundGeneration.Default.csproj", "{82E58825-956D-42C5-A515-303C7D072B73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Audio.SoundGeneration.Default", "Macerus.Plugins.Features.Audio.SoundGeneration.Default\Macerus.Plugins.Features.Audio.SoundGeneration.Default.csproj", "{82E58825-956D-42C5-A515-303C7D072B73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Audio.Default", "Macerus.Plugins.Features.Audio.Default\Macerus.Plugins.Features.Audio.Default.csproj", "{A8FE162C-9822-49D6-9DBC-EC9E1883A25E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Audio.Default", "Macerus.Plugins.Features.Audio.Default\Macerus.Plugins.Features.Audio.Default.csproj", "{A8FE162C-9822-49D6-9DBC-EC9E1883A25E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{8B252C85-1DC6-47B4-AA61-ADEE6B3B9851}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Resources", "Macerus.Plugins.Features.Resources\Macerus.Plugins.Features.Resources.csproj", "{4E2C2AB9-22F2-4413-993D-71F962F58976}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Resources.Default", "Macerus.Plugins.Features.Resources.Default\Macerus.Plugins.Features.Resources.Default.csproj", "{F57512C5-7177-4ABC-A807-E07003F38E32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -559,6 +565,14 @@ Global
 		{A8FE162C-9822-49D6-9DBC-EC9E1883A25E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8FE162C-9822-49D6-9DBC-EC9E1883A25E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8FE162C-9822-49D6-9DBC-EC9E1883A25E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E2C2AB9-22F2-4413-993D-71F962F58976}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E2C2AB9-22F2-4413-993D-71F962F58976}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E2C2AB9-22F2-4413-993D-71F962F58976}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E2C2AB9-22F2-4413-993D-71F962F58976}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F57512C5-7177-4ABC-A807-E07003F38E32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F57512C5-7177-4ABC-A807-E07003F38E32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F57512C5-7177-4ABC-A807-E07003F38E32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F57512C5-7177-4ABC-A807-E07003F38E32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -673,6 +687,9 @@ Global
 		{DDDF33AC-591F-485C-B491-D19C8928F9CA} = {8D2462E5-6EE0-48F2-973A-09EF1E73BADB}
 		{82E58825-956D-42C5-A515-303C7D072B73} = {8D2462E5-6EE0-48F2-973A-09EF1E73BADB}
 		{A8FE162C-9822-49D6-9DBC-EC9E1883A25E} = {8D2462E5-6EE0-48F2-973A-09EF1E73BADB}
+		{8B252C85-1DC6-47B4-AA61-ADEE6B3B9851} = {33A6C169-52DA-446B-A241-FEC05722752A}
+		{4E2C2AB9-22F2-4413-993D-71F962F58976} = {8B252C85-1DC6-47B4-AA61-ADEE6B3B9851}
+		{F57512C5-7177-4ABC-A807-E07003F38E32} = {8B252C85-1DC6-47B4-AA61-ADEE6B3B9851}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}

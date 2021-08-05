@@ -36,7 +36,10 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items\Macerus.Plugins.Features.GameObjects.Items.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Skills.Default\Macerus.Plugins.Features.GameObjects.Skills.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Static\Macerus.Plugins.Features.GameObjects.Static.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Inventory.Api\Macerus.Plugins.Features.Inventory.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Inventory.Default\Macerus.Plugins.Features.Inventory.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Mapping.Default\Macerus.Plugins.Features.Mapping.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Resources.Default\Macerus.Plugins.Features.Resources.Default.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -118,6 +118,55 @@ INSERT INTO `rare_name_affixes` VALUES (1,'Armageddon',1),(2,'Beast',1),(3,'Bitt
 UNLOCK TABLES;
 
 --
+-- Table structure for table `resource_cultures`
+--
+
+DROP TABLE IF EXISTS `resource_cultures`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `resource_cultures` (
+  `id` int NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idresource_cultures_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `resource_cultures`
+--
+
+LOCK TABLES `resource_cultures` WRITE;
+/*!40000 ALTER TABLE `resource_cultures` DISABLE KEYS */;
+/*!40000 ALTER TABLE `resource_cultures` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `resources_strings`
+--
+
+DROP TABLE IF EXISTS `resources_strings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `resources_strings` (
+  `id` varchar(256) NOT NULL,
+  `culture_id` int NOT NULL,
+  `value` text NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `resources_strings`
+--
+
+LOCK TABLES `resources_strings` WRITE;
+/*!40000 ALTER TABLE `resources_strings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `resources_strings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `stat_definition_bounds`
 --
 
@@ -168,6 +217,32 @@ LOCK TABLES `stat_definitions` WRITE;
 INSERT INTO `stat_definitions` VALUES (1,'LIFE_MAXIMUM'),(2,'LIFE_CURRENT'),(3,'MANA_MAXIMUM'),(4,'MANA_CURRENT'),(5,'LIGHT_RADIUS_RADIUS'),(6,'LIGHT_RADIUS_INTENSITY'),(7,'LIGHT_RADIUS_RED'),(8,'LIGHT_RADIUS_GREEN'),(9,'LIGHT_RADIUS_BLUE');
 /*!40000 ALTER TABLE `stat_definitions` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `stat_definitions_to_resources_strings`
+--
+
+DROP TABLE IF EXISTS `stat_definitions_to_resources_strings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `stat_definitions_to_resources_strings` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `stat_definition_id` int NOT NULL,
+  `resources_strings_id` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `stat_definition_id_UNIQUE` (`stat_definition_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stat_definitions_to_resources_strings`
+--
+
+LOCK TABLES `stat_definitions_to_resources_strings` WRITE;
+/*!40000 ALTER TABLE `stat_definitions_to_resources_strings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stat_definitions_to_resources_strings` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -178,4 +253,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-09 17:11:48
+-- Dump completed on 2021-08-04 22:44:41

@@ -1,7 +1,7 @@
 ﻿using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Gui.Default;
 using Macerus.Plugins.Features.HeaderBar.Api.CombatTurnOrder;
-using Macerus.Plugins.Features.Stats.Api;
+using Macerus.Plugins.Features.Stats;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;

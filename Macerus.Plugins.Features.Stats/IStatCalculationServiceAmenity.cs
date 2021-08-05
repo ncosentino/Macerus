@@ -5,7 +5,7 @@ using ProjectXyz.Api.Enchantments.Stats;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 
-namespace Macerus.Plugins.Features.Stats.Api
+namespace Macerus.Plugins.Features.Stats
 {
     public interface IStatCalculationServiceAmenity
     {

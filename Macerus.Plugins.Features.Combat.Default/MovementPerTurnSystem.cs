@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.Mapping;
-using Macerus.Plugins.Features.Stats.Api;
+using Macerus.Plugins.Features.Stats;
 
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;

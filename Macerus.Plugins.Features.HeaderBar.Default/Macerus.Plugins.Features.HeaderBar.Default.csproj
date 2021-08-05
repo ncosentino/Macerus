@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net46</TargetFramework>
@@ -17,7 +17,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.Gui.Default\Macerus.Plugins.Features.Gui.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.HeaderBar.Api\Macerus.Plugins.Features.HeaderBar.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Mapping\Macerus.Plugins.Features.Mapping.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.Stats.Api\Macerus.Plugins.Features.Stats.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj" />
   </ItemGroup>
 
 </Project>

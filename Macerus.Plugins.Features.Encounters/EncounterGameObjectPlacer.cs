@@ -2,7 +2,7 @@
 using System.Linq;
 
 using Macerus.Plugins.Features.Combat.Api;
-using Macerus.Plugins.Features.Stats.Api;
+using Macerus.Plugins.Features.Stats;
 
 using NexusLabs.Framework;
 

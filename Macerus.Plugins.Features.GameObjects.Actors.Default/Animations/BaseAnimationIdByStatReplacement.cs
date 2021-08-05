@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
-using Macerus.Plugins.Features.Stats.Api;
+using Macerus.Plugins.Features.Stats;
 
 using NexusLabs.Collections.Generic;
 

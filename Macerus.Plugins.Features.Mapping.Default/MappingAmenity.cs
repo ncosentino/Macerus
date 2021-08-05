@@ -3,7 +3,7 @@ using System.Numerics;
 
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Actors;
-using Macerus.Plugins.Features.Stats.Api;
+using Macerus.Plugins.Features.Stats;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;

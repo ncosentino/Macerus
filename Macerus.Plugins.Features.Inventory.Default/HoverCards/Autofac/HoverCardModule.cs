@@ -25,9 +25,18 @@ namespace Macerus.Plugins.Features.Inventory.Default.HoverCards.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
+                .RegisterType<BaseStatsHoverCardPartConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<NoneHoverCardViewFactory>()
                 .AsImplementedInterfaces()
                 .IfNotRegistered(typeof(IHoverCardViewFactory))
+                .SingleInstance();
+            builder
+                .RegisterType<NoneHoverCardPartConverterLoadOrder>()
+                .AsImplementedInterfaces()
+                .IfNotRegistered(typeof(IHoverCardPartConverterLoadOrder))
                 .SingleInstance();
         }
 
@@ -38,6 +47,11 @@ namespace Macerus.Plugins.Features.Inventory.Default.HoverCards.Autofac
                     $"If you would like hover card support, please implement an " +
                     $"'{typeof(IHoverCardViewFactory)}' in the view technology " +
                     $"of your choice.");
+        }
+
+        private sealed class NoneHoverCardPartConverterLoadOrder : IHoverCardPartConverterLoadOrder
+        {
+            public int GetOrder(IBehaviorsToHoverCardPartViewModelConverter converter) => int.MaxValue;
         }
     }
 }

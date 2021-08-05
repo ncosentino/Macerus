@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Macerus.Plugins.Features.CharacterSheet.Api;
-using Macerus.Plugins.Features.Stats.Api;
+using Macerus.Plugins.Features.Stats;
 
 using ProjectXyz.Api.Stats;
 using ProjectXyz.Plugins.Features.PartyManagement;

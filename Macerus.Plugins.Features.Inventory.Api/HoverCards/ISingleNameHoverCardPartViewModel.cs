@@ -4,12 +4,4 @@
     {
         string Name { get; }
     }
-
-    //public sealed class HoverCardViewFactory : IHoverCardViewFactory
-    //{
-    //    public IHoverCardView Create(IHoverCardViewModel viewModel)
-    //    {
-
-    //    }
-    //}
 }

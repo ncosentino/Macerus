@@ -15,7 +15,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.CharacterSheet.Api\Macerus.Plugins.Features.CharacterSheet.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Gui.Default\Macerus.Plugins.Features.Gui.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Mapping\Macerus.Plugins.Features.Mapping.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.Stats.Api\Macerus.Plugins.Features.Stats.Api.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj" />
   </ItemGroup>
 
 </Project>

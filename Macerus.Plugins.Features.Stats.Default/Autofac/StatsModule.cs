@@ -2,7 +2,7 @@
 
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Plugins.Features.Stats.Autofac
+namespace Macerus.Plugins.Features.Stats.Default.Autofac
 {
     public sealed class StatsModule : SingleRegistrationModule
     {
@@ -10,6 +10,10 @@ namespace Macerus.Plugins.Features.Stats.Autofac
         {
             builder
                 .RegisterType<StatCalculationServiceAmenity>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<StatResourceProvider>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

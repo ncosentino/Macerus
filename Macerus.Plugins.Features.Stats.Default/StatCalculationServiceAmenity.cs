@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Macerus.Plugins.Features.Stats.Api;
-
 using ProjectXyz.Api.Enchantments.Stats;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.GameObjects.StatCalculation.Api;
 
-namespace Macerus.Plugins.Features.Stats
+namespace Macerus.Plugins.Features.Stats.Default
 {
     public sealed class StatCalculationServiceAmenity : IStatCalculationServiceAmenity
     {
@@ -59,7 +57,7 @@ namespace Macerus.Plugins.Features.Stats
 
         public async Task<double> GetStatValueAsync(
             IGameObject gameObject,
-            IIdentifier statDefinitionId) => await 
+            IIdentifier statDefinitionId) => await
                 GetStatValueAsync(
                     gameObject,
                     statDefinitionId,

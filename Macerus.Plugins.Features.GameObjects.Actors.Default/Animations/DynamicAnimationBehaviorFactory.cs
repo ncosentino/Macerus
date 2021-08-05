@@ -1,6 +1,6 @@
 ﻿using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Animations.Api;
-using Macerus.Plugins.Features.Stats.Api;
+using Macerus.Plugins.Features.Stats;
 
 using ProjectXyz.Api.Framework;
 
