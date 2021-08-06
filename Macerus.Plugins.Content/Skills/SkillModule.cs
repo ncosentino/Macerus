@@ -104,7 +104,7 @@ namespace Macerus.Plugins.Content.Skills
                             //.CanBeUsedOutOfCombat()
                             .HasEffects(
                                 SkillEffectExecutors.Single(
-                                    SkillEffectDefinition.New.EnchantPassive("heal-self"))),
+                                    SkillEffectDefinition.New.EnchantPassive("green-glow-ench"))),
                         SkillDefinition
                             .FromId("passive-rain")
                             .WithDisplayName("Passive Rain")

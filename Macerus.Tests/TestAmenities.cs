@@ -13,6 +13,7 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Game.Api;
 using ProjectXyz.Game.Core;
+using ProjectXyz.Game.Interface.Engine;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Plugins.Features.PartyManagement;
@@ -34,6 +35,8 @@ namespace Macerus.Tests
         private readonly IActorIdentifiers _actorIdentifiers;
         private readonly IGameObjectIdentifiers _gameObjectIdentifiers;
         private readonly IRosterManager _rosterManager;
+        private readonly IGameEngine _gameEngine;
+        private readonly IRealTimeManager _realTimeManager;
 
         public TestAmenities(MacerusContainer container)
         {
@@ -47,6 +50,8 @@ namespace Macerus.Tests
             _actorIdentifiers = _container.Resolve<IActorIdentifiers>();
             _gameObjectIdentifiers = _container.Resolve<IGameObjectIdentifiers>();
             _rosterManager = _container.Resolve<IRosterManager>();
+            _gameEngine = _container.Resolve<IGameEngine>();
+            _realTimeManager = _container.Resolve<IRealTimeManager>();
         }
 
         public IGameObject CreatePlayerInstance()
@@ -109,6 +114,29 @@ namespace Macerus.Tests
                 Assert.Empty(_rosterManager.FullRoster);
                 Assert.Empty(_rosterManager.ActiveParty);
             }
+        }
+
+        public Task ExecuteBetweenGameEngineUpdatesAsync(TimeSpan elapsed, Func<Task> callback) =>
+            ExecuteBetweenGameEngineUpdatesAsync(DateTime.UtcNow, elapsed, callback);
+
+        public async Task ExecuteBetweenGameEngineUpdatesAsync(
+            DateTime startTime,
+            TimeSpan elapsed,
+            Func<Task> callback)
+        {
+            _realTimeManager.SetTimeUtc(startTime);
+            await _gameEngine
+                .UpdateAsync()
+                .ConfigureAwait(false);
+
+            await callback
+                .Invoke()
+                .ConfigureAwait(false);
+
+            _realTimeManager.SetTimeUtc(startTime + elapsed);
+            await _gameEngine
+                .UpdateAsync()
+                .ConfigureAwait(false);
         }
 
         private void ResetGameObjectManagerHack(

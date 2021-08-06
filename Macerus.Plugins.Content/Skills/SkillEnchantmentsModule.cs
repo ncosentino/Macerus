@@ -46,7 +46,7 @@ namespace Macerus.Plugins.Content.Skills
                     {
                         enchantmentDefinitionBuilder
                             .WithEnchantmentDefinitionId(new StringIdentifier("green-glow-ench"))
-                            .ThatAppliesEffectsToSkillUser()
+                            .ThatsUsedForPassiveSkill()
                             .ThatHasValueInRange(
                                 new IntIdentifier(8), // green light radius
                                 1,
