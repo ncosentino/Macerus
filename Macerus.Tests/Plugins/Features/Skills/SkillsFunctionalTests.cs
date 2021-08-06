@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Skills;
 using Macerus.Plugins.Features.Stats;
 
@@ -47,17 +48,10 @@ namespace Macerus.Tests.Plugins.Features.Weather
             await _testAmenities.UsingCleanMapAndObjects(async () =>
             {
                 var player = _testAmenities.CreatePlayerInstance();
+                _skillAmenity.EnsureHasSkill(
+                    player,
+                    new StringIdentifier("passive-green-glow"));
 
-                var skillsBehavior = player.GetOnly<IHasSkillsBehavior>();
-
-                // add skill if the actor doesn't have it already
-                if (!skillsBehavior.Skills.Any(x => Equals(
-                    x.GetOnly<IReadOnlyIdentifierBehavior>().Id,
-                    new StringIdentifier("passive-green-glow"))))
-                {
-                    skillsBehavior.Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("passive-green-glow")) });
-                }                    
-                
                 _mapGameObjectManager.MarkForAddition(player);
                 await _mapGameObjectManager
                     .SynchronizeAsync()
@@ -74,6 +68,38 @@ namespace Macerus.Tests.Plugins.Features.Weather
         }
 
         [Fact]
+        private async Task UseSkill_HealSelf_ExpectedCastAnimation()
+        {
+            await _testAmenities.UsingCleanMapAndObjects(async () =>
+            {
+                var player = _testAmenities.CreatePlayerInstance();
+                var statsBehavior = player.GetOnly<IHasMutableStatsBehavior>();
+
+                statsBehavior.MutateStats(stats =>
+                {
+                    stats[new IntIdentifier(2)] = 1; // life current
+                });
+
+                var skill = _skillAmenity.EnsureHasSkill(
+                    player,
+                    new StringIdentifier("heal"));
+
+                _mapGameObjectManager.MarkForAddition(player);
+                await _mapGameObjectManager
+                    .SynchronizeAsync()
+                    .ConfigureAwait(false);
+
+                await _skillHandlerFacade
+                    .HandleSkillAsync(
+                        player,
+                        skill)
+                    .ConfigureAwait(false);
+
+                Assert.Equal(new StringIdentifier("$actor$_cast_$direction$"), player.GetOnly<IDynamicAnimationBehavior>().BaseAnimationId);
+            });
+        }
+
+        [Fact]
         private async Task UseSkill_HealSelfSingleUpdate10Seconds_ExpectedStatValue()
         {
             await _testAmenities.UsingCleanMapAndObjects(async () =>
@@ -87,17 +113,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
                     stats[new IntIdentifier(2)] = 1; // life current
                 });
 
-                // add skill if the actor doesn't have it already
-                if (!skillsBehavior.Skills.Any(x => Equals(
-                    x.GetOnly<IReadOnlyIdentifierBehavior>().Id,
-                    new StringIdentifier("heal"))))
-                {
-                    skillsBehavior.Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("heal")) });
-                }
-
-                var skill = skillsBehavior.Skills.Single(x => Equals(
-                    x.GetOnly<IReadOnlyIdentifierBehavior>().Id,
-                    new StringIdentifier("heal")));
+                var skill = _skillAmenity.EnsureHasSkill(
+                    player,
+                    new StringIdentifier("heal"));
 
                 _mapGameObjectManager.MarkForAddition(player);
                 await _mapGameObjectManager
@@ -136,17 +154,9 @@ namespace Macerus.Tests.Plugins.Features.Weather
                     stats[new IntIdentifier(2)] = 1; // life current
                 });
 
-                // add skill if the actor doesn't have it already
-                if (!skillsBehavior.Skills.Any(x => Equals(
-                    x.GetOnly<IReadOnlyIdentifierBehavior>().Id,
-                    new StringIdentifier("heal"))))
-                {
-                    skillsBehavior.Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("heal")) });
-                }
-
-                var skill = skillsBehavior.Skills.Single(x => Equals(
-                    x.GetOnly<IReadOnlyIdentifierBehavior>().Id,
-                    new StringIdentifier("heal")));
+                var skill = _skillAmenity.EnsureHasSkill(
+                    player,
+                    new StringIdentifier("heal"));
 
                 _mapGameObjectManager.MarkForAddition(player);
                 await _mapGameObjectManager

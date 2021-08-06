@@ -2,12 +2,12 @@
 using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
-using Macerus.Plugins.Features.GameObjects.Skills;
 
 using NexusLabs.Contracts;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
@@ -32,6 +32,27 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             _skillRepository = skillRepository;
             _filterContextFactory = filterContextFactory;
             _filterContextAmenity = filterContextAmenity;
+        }
+
+        public IGameObject EnsureHasSkill(
+            IGameObject actor,
+            IIdentifier skillDefinitionId)
+        {
+            var skillsBehavior = actor.GetOnly<IHasSkillsBehavior>();
+
+            var skill = skillsBehavior
+                .Skills
+                .FirstOrDefault(x => Equals(
+                    x.GetOnly<IReadOnlyIdentifierBehavior>().Id,
+                    skillDefinitionId));
+            if (skill != null)
+            {
+                return skill;
+            }
+
+            skill = GetSkillById(skillDefinitionId);
+            skillsBehavior.Add(new[] { skill });
+            return skill;
         }
 
         public IGameObject GetSkillById(IIdentifier skillDefinitionId)

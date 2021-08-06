@@ -7,6 +7,10 @@ namespace Macerus.Plugins.Features.GameObjects.Skills
 {
     public interface ISkillAmenity
     {
+        IGameObject EnsureHasSkill(
+            IGameObject actor,
+            IIdentifier skillDefinitionId);
+
         IGameObject GetSkillById(IIdentifier skillDefinitionId);
 
         IEnumerable<IGameObject> GetAllSkillEffects(IGameObject skill);
