@@ -16,6 +16,7 @@ using Xunit;
 
 namespace Macerus.Tests.Plugins.Features.Weather
 {
+    [CollectionDefinition(nameof(SkillsFunctionalTests), DisableParallelization = true)]
     public sealed class SkillsFunctionalTests
     {
         private static readonly MacerusContainer _container;
@@ -73,7 +74,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
         }
 
         [Fact]
-        private async Task UseSkill_HealSelf_ExpectedStatValue()
+        private async Task UseSkill_HealSelfSingleUpdate10Seconds_ExpectedStatValue()
         {
             await _testAmenities.UsingCleanMapAndObjects(async () =>
             {
@@ -117,7 +118,68 @@ namespace Macerus.Tests.Plugins.Features.Weather
                         new IntIdentifier(2)) // life current
                     .ConfigureAwait(false);
 
-                Assert.Equal(10, statValue); // fully healed, but this might break easily
+                Assert.Equal(6, statValue); // healed 10% max life over 5 turns (so... 1+5=6)
+            });
+        }
+
+        [Fact]
+        private async Task UseSkill_HealSelf10Updates1Second_ExpectedStatValue()
+        {
+            await _testAmenities.UsingCleanMapAndObjects(async () =>
+            {
+                var player = _testAmenities.CreatePlayerInstance();
+                var skillsBehavior = player.GetOnly<IHasSkillsBehavior>();
+                var statsBehavior = player.GetOnly<IHasMutableStatsBehavior>();
+
+                statsBehavior.MutateStats(stats =>
+                {
+                    stats[new IntIdentifier(2)] = 1; // life current
+                });
+
+                // add skill if the actor doesn't have it already
+                if (!skillsBehavior.Skills.Any(x => Equals(
+                    x.GetOnly<IReadOnlyIdentifierBehavior>().Id,
+                    new StringIdentifier("heal"))))
+                {
+                    skillsBehavior.Add(new[] { _skillAmenity.GetSkillById(new StringIdentifier("heal")) });
+                }
+
+                var skill = skillsBehavior.Skills.Single(x => Equals(
+                    x.GetOnly<IReadOnlyIdentifierBehavior>().Id,
+                    new StringIdentifier("heal")));
+
+                _mapGameObjectManager.MarkForAddition(player);
+                await _mapGameObjectManager
+                    .SynchronizeAsync()
+                    .ConfigureAwait(false);
+
+                var startTime = DateTime.UtcNow;
+                _realTimeManager.SetTimeUtc(startTime);
+                await _gameEngine
+                    .UpdateAsync()
+                    .ConfigureAwait(false);
+
+                await _skillHandlerFacade
+                    .HandleSkillAsync(
+                        player,
+                        skill)
+                    .ConfigureAwait(false);
+
+                for (int i = 0; i < 10; i++)
+                {
+                    _realTimeManager.SetTimeUtc(startTime + TimeSpan.FromMilliseconds(1000 * (i + 1)));
+                    await _gameEngine
+                        .UpdateAsync()
+                        .ConfigureAwait(false);
+                }
+
+                var statValue = await _statCalculationServiceAmenity
+                    .GetStatValueAsync(
+                        player,
+                        new IntIdentifier(2)) // life current
+                    .ConfigureAwait(false);
+
+                Assert.Equal(6, statValue); // healed 10% max life over 5 turns (so... 1+5=6)
             });
         }
     }

@@ -56,7 +56,7 @@ namespace Macerus.Plugins.Content.Skills
                             .WithEnchantmentDefinitionId(new StringIdentifier("heal-self"))
                             .WithStatDefinitionId(new IntIdentifier(2)) // life current
                             .ThatAppliesEffectsToSkillUser()
-                            .ThatModifiesBaseStatWithExpression("LIFE_CURRENT + (LIFE_MAXIMUM * 0.1 * $PER_TURN)")
+                            .ThatModifiesBaseStatWithExpression("LIFE_CURRENT + (LIFE_MAXIMUM * 0.1 * MIN($PER_TURN, 5))")
                             .ThatExpiresAfterTurns(5)
                             .Build(),
                         enchantmentDefinitionBuilder
