@@ -452,7 +452,7 @@
               }
             },
             {
-              "SerializableId": "Macerus.Plugins.Features.Encounters.EncounterSpawnLocationBehavior, Macerus.Plugins.Features.Encounters, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "SerializableId": "EncounterSpawnLocationBehavior",
               "Data": {
                 "allowedTeams": {
                   "SerializableId": "int[Array]",
@@ -509,7 +509,7 @@
               }
             },
             {
-              "SerializableId": "Macerus.Plugins.Features.Encounters.EncounterSpawnLocationBehavior, Macerus.Plugins.Features.Encounters, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "SerializableId": "EncounterSpawnLocationBehavior",
               "Data": {
                 "allowedTeams": {
                   "SerializableId": "int[Array]",
@@ -570,7 +570,7 @@
               }
             },
             {
-              "SerializableId": "Macerus.Plugins.Features.Encounters.EncounterSpawnLocationBehavior, Macerus.Plugins.Features.Encounters, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "SerializableId": "EncounterSpawnLocationBehavior",
               "Data": {
                 "allowedTeams": {
                   "SerializableId": "int[Array]",
@@ -631,7 +631,7 @@
               }
             },
             {
-              "SerializableId": "Macerus.Plugins.Features.Encounters.EncounterSpawnLocationBehavior, Macerus.Plugins.Features.Encounters, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "SerializableId": "EncounterSpawnLocationBehavior",
               "Data": {
                 "allowedTeams": {
                   "SerializableId": "int[Array]",
@@ -692,7 +692,7 @@
               }
             },
             {
-              "SerializableId": "Macerus.Plugins.Features.Encounters.EncounterSpawnLocationBehavior, Macerus.Plugins.Features.Encounters, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "SerializableId": "EncounterSpawnLocationBehavior",
               "Data": {
                 "allowedTeams": {
                   "SerializableId": "int[Array]",
@@ -753,7 +753,7 @@
               }
             },
             {
-              "SerializableId": "Macerus.Plugins.Features.Encounters.EncounterSpawnLocationBehavior, Macerus.Plugins.Features.Encounters, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "SerializableId": "EncounterSpawnLocationBehavior",
               "Data": {
                 "allowedTeams": {
                   "SerializableId": "int[Array]",
