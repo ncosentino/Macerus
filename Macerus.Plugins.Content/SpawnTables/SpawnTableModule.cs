@@ -3,14 +3,14 @@
 using Autofac;
 
 using Macerus.Api.Behaviors.Filtering;
+using Macerus.Plugins.Features.Encounters.Default.SpawnTables;
 using Macerus.Plugins.Features.Encounters.SpawnTables;
-using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
-using Macerus.Plugins.Features.Encounters.SpawnTables.Api.Standard;
+using Macerus.Plugins.Features.Encounters.SpawnTables.Standard;
 
-using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Shared.Framework;
 

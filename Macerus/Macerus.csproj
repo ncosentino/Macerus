@@ -49,6 +49,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.DataPersistence.Kvp.InMemory\Macerus.Plugins.Features.DataPersistence.Kvp.InMemory.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.DataPersistence.Kvp\Macerus.Plugins.Features.DataPersistence.Kvp.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.DataPersistence\Macerus.Plugins.Features.DataPersistence.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Encounters.Default\Macerus.Plugins.Features.Encounters.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Encounters\Macerus.Plugins.Features.Encounters.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors\Macerus.Plugins.Features.GameObjects.Actors.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Generation\Macerus.Plugins.Features.GameObjects.Actors.Generation.csproj" />

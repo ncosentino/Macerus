@@ -4,11 +4,12 @@ using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Combat.Default;
 using Macerus.Plugins.Features.Encounters;
-using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
+using Macerus.Plugins.Features.Encounters.Default;
+using Macerus.Plugins.Features.Encounters.SpawnTables;
 
-using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Shared.Framework;

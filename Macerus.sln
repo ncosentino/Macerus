@@ -239,9 +239,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Au
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{8B252C85-1DC6-47B4-AA61-ADEE6B3B9851}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Resources", "Macerus.Plugins.Features.Resources\Macerus.Plugins.Features.Resources.csproj", "{4E2C2AB9-22F2-4413-993D-71F962F58976}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Resources", "Macerus.Plugins.Features.Resources\Macerus.Plugins.Features.Resources.csproj", "{4E2C2AB9-22F2-4413-993D-71F962F58976}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Resources.Default", "Macerus.Plugins.Features.Resources.Default\Macerus.Plugins.Features.Resources.Default.csproj", "{F57512C5-7177-4ABC-A807-E07003F38E32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Resources.Default", "Macerus.Plugins.Features.Resources.Default\Macerus.Plugins.Features.Resources.Default.csproj", "{F57512C5-7177-4ABC-A807-E07003F38E32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Encounters.Default", "Macerus.Plugins.Features.Encounters.Default\Macerus.Plugins.Features.Encounters.Default.csproj", "{DCC4606F-0A23-4EEC-A84A-2E7C8E44B586}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -573,6 +575,10 @@ Global
 		{F57512C5-7177-4ABC-A807-E07003F38E32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F57512C5-7177-4ABC-A807-E07003F38E32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F57512C5-7177-4ABC-A807-E07003F38E32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCC4606F-0A23-4EEC-A84A-2E7C8E44B586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCC4606F-0A23-4EEC-A84A-2E7C8E44B586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCC4606F-0A23-4EEC-A84A-2E7C8E44B586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCC4606F-0A23-4EEC-A84A-2E7C8E44B586}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -690,6 +696,7 @@ Global
 		{8B252C85-1DC6-47B4-AA61-ADEE6B3B9851} = {33A6C169-52DA-446B-A241-FEC05722752A}
 		{4E2C2AB9-22F2-4413-993D-71F962F58976} = {8B252C85-1DC6-47B4-AA61-ADEE6B3B9851}
 		{F57512C5-7177-4ABC-A807-E07003F38E32} = {8B252C85-1DC6-47B4-AA61-ADEE6B3B9851}
+		{DCC4606F-0A23-4EEC-A84A-2E7C8E44B586} = {8F41D1F8-79D3-4366-9F46-402887730310}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}

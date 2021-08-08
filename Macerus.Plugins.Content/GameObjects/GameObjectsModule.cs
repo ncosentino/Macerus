@@ -4,19 +4,19 @@ using System.Collections.Generic;
 using Autofac;
 
 using Macerus.Game;
-using Macerus.Plugins.Features.Encounters;
-using Macerus.Plugins.Features.Encounters.Triggers;
+using Macerus.Plugins.Features.Encounters.Default;
+using Macerus.Plugins.Features.Encounters.Default.Triggers;
 using Macerus.Plugins.Features.GameObjects.Containers;
+using Macerus.Plugins.Features.GameObjects.Containers.Api.LootDrops;
 using Macerus.Shared.Behaviors;
 
-using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Shared.Framework;
-using Macerus.Plugins.Features.GameObjects.Containers.Api.LootDrops;
 
 namespace Macerus.Plugins.Content.GameObjects
 {

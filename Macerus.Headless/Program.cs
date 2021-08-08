@@ -12,7 +12,7 @@ using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.DataPersistence;
 using Macerus.Plugins.Features.Encounters;
-using Macerus.Plugins.Features.Encounters.SpawnTables.Api;
+using Macerus.Plugins.Features.Encounters.SpawnTables;
 using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Default;
 using Macerus.Plugins.Features.GameObjects.Actors.Default.AI;

@@ -5,7 +5,7 @@ using System.Linq;
 using Autofac;
 
 using Macerus.ContentCreator.MapEditor.Behaviors.Shared;
-using Macerus.Plugins.Features.Encounters.Triggers;
+using Macerus.Plugins.Features.Encounters.Default.Triggers;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Static.Doors;
 using Macerus.Plugins.Features.Mapping;

@@ -57,6 +57,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Api\Macerus.Plugins.Features.Combat.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Combat.Default\Macerus.Plugins.Features.Combat.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.DataPersistence.Kvp\Macerus.Plugins.Features.DataPersistence.Kvp.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Encounters.Default\Macerus.Plugins.Features.Encounters.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Encounters\Macerus.Plugins.Features.Encounters.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Default\Macerus.Plugins.Features.GameObjects.Actors.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Containers\Macerus.Plugins.Features.GameObjects.Containers.csproj" />
