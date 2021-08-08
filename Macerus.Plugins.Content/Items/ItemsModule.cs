@@ -51,6 +51,18 @@ namespace Macerus.Plugins.Content.Items
                         new ItemDefinition(
                             new[]
                             {
+                                filterContextAmenity.CreateRequiredAttribute(
+                                    itemIdentifiers.ItemDefinitionIdentifier,
+                                    new StringIdentifier("gold")),
+                            },
+                            new IGeneratorComponent[]
+                            {
+                                new NameGeneratorComponent("Gold"),
+                                new IconGeneratorComponent(@"graphics\items\gold"),
+                            }),
+                        new ItemDefinition(
+                            new[]
+                            {
                                 EnchantmentFilterAttributes.AllowsNormalMagicAndRareAffix,
                                 filterContextAmenity.CreateSupportedAttribute(
                                     itemIdentifiers.ItemDefinitionIdentifier,
