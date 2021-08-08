@@ -8,7 +8,7 @@ using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;

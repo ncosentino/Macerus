@@ -12,7 +12,7 @@ using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes; // FIXME: dependency on non-API
-using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic

@@ -5,7 +5,7 @@ using Macerus.Plugins.Features.GameObjects.Items.Affixes.Api;
 
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;

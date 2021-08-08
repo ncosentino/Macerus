@@ -14,7 +14,7 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Items;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory;
 using ProjectXyz.Shared.Framework;

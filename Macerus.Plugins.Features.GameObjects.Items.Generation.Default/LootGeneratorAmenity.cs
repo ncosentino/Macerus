@@ -7,7 +7,7 @@ using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Filtering.Default;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Api.Generation.DropTables;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.DropTables;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Default
 {

@@ -4,7 +4,7 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Crafting.Default;
-using ProjectXyz.Plugins.Features.GameObjects.Items.Filtering;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Default.Filtering;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Crafting
