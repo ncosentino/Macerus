@@ -15,7 +15,6 @@ namespace Macerus.Plugins.Features.Combat.Default
 {
     public sealed class CombatSystem : IDiscoverableSystem
     {
-        private readonly ITurnBasedManager _turnBasedManager;
         private readonly ICombatTurnManager _combatTurnManager;
         private readonly IFilterContextProvider _filterContextProvider;
         private readonly IWinConditionHandlerFacade _winConditionHandler;
@@ -25,14 +24,12 @@ namespace Macerus.Plugins.Features.Combat.Default
             ICombatTurnManager combatTurnManager,
             IFilterContextProvider filterContextProvider,
             IWinConditionHandlerFacade winConditionHandler,
-            ILogger logger,
-            ITurnBasedManager turnBasedManager)
+            ILogger logger)
         {
             _combatTurnManager = combatTurnManager;
             _filterContextProvider = filterContextProvider;
             _winConditionHandler = winConditionHandler;
             _logger = logger;
-            _turnBasedManager = turnBasedManager;
         }
 
         public int? Priority => null;
@@ -54,9 +51,11 @@ namespace Macerus.Plugins.Features.Combat.Default
             if (turnInfo.ElapsedTurns == 1)
             {
                 var filterContext = _filterContextProvider.GetContext();
-                _combatTurnManager.ProgressTurn(
-                    filterContext,
-                    1);
+                await _combatTurnManager
+                    .ProgressTurnAsync(
+                        filterContext,
+                        1)
+                    .ConfigureAwait(false);
             }
 
             if (actionInfo.ElapsedActions > 0)
@@ -65,10 +64,11 @@ namespace Macerus.Plugins.Features.Combat.Default
                     out var winningTeam,
                     out var losingTeams))
                 {
-                    _turnBasedManager.SyncTurnsFromElapsedTime = true;
-                    _combatTurnManager.EndCombat(
-                        winningTeam,
-                        losingTeams);
+                    await _combatTurnManager
+                        .EndCombatAsync(
+                            winningTeam,
+                            losingTeams)
+                        .ConfigureAwait(false);
                 }
             }
         }

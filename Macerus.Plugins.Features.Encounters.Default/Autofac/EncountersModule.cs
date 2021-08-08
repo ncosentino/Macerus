@@ -3,6 +3,7 @@ using System.Linq;
 
 using Autofac;
 
+using Macerus.Plugins.Features.Encounters.Default.EndHandlers;
 using Macerus.Plugins.Features.Encounters.Default.SpawnTables;
 using Macerus.Plugins.Features.Encounters.Default.SpawnTables.Actors;
 using Macerus.Plugins.Features.Encounters.Default.SpawnTables.Linked;
@@ -41,6 +42,19 @@ namespace Macerus.Plugins.Features.Encounters.Default.Autofac
             builder
                 .RegisterType<EncounterDebugPrinterStartHandler>()
                 .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<EndEncounterHandlerFacade>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<EncounterTurnBasedEndHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<NoneEncounterEndLoadOrder>()
+                .AsImplementedInterfaces()
+                .IfNotRegistered(typeof(IEncounterStartLoaderOrder))
                 .SingleInstance();
             builder
                 .RegisterType<EncounterRepository>()

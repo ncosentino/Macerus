@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors.Filtering;
+using Macerus.Plugins.Features.Encounters;
+using Macerus.Plugins.Features.Encounters.Default;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 using Macerus.Plugins.Features.Mapping.Default;
 
@@ -15,6 +17,8 @@ using ProjectXyz.Game.Api;
 using ProjectXyz.Game.Core;
 using ProjectXyz.Game.Interface.Engine;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Default;
+using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Plugins.Features.Mapping;
@@ -39,6 +43,7 @@ namespace Macerus.Tests
         private readonly IRosterManager _rosterManager;
         private readonly IGameEngine _gameEngine;
         private readonly IRealTimeManager _realTimeManager;
+        private readonly IEncounterManager _encounterManager;
 
         public TestAmenities(MacerusContainer container)
         {
@@ -54,6 +59,7 @@ namespace Macerus.Tests
             _rosterManager = _container.Resolve<IRosterManager>();
             _gameEngine = _container.Resolve<IGameEngine>();
             _realTimeManager = _container.Resolve<IRealTimeManager>();
+            _encounterManager = _container.Resolve<IEncounterManager>();
         }
 
         public IGameObject CreatePlayerInstance()
@@ -75,9 +81,10 @@ namespace Macerus.Tests
 
         public async Task UsingCleanMapAndObjectsWithPlayerAsync(Func<IGameObject, Task> callback)
         {
-            var actor = CreatePlayerInstance();
             await UsingCleanMapAndObjects(async () =>
             {
+                var actor = CreatePlayerInstance();
+
                 _mapGameObjectManager.MarkForAddition(actor);
                 await _mapGameObjectManager
                     .SynchronizeAsync()
@@ -91,6 +98,7 @@ namespace Macerus.Tests
             ResetGameObjectManagerHack(
                 _gameObjectRepository,
                 _mapStateRepository);
+            await ResetEncounterManagerHackAsync(_encounterManager);
 
             await _mapManager
                 .UnloadMapAsync()
@@ -116,6 +124,11 @@ namespace Macerus.Tests
                 Assert.Empty(_rosterManager.FullRoster);
                 Assert.Empty(_rosterManager.ActiveParty);
             }
+
+            await ResetEncounterManagerHackAsync(_encounterManager);
+            ResetGameObjectManagerHack(
+                _gameObjectRepository,
+                _mapStateRepository);
         }
 
         public Task ExecuteBetweenGameEngineUpdatesAsync(TimeSpan elapsed, Func<Task> callback) =>
@@ -157,6 +170,21 @@ namespace Macerus.Tests
                 var cache2 = (Dictionary<IIdentifier, List<IIdentifier>>)cacheField.GetValue(mapStateRepository);
                 cache2.Clear();
             }
+        }
+
+        private async Task ResetEncounterManagerHackAsync(IEncounterManager encounterManager)
+        {
+            var encounterField = typeof(EncounterManager)
+                .GetField("_encounter", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            if (encounterField.GetValue(_encounterManager) != null)
+            {
+                await _encounterManager
+                    .EndEncounterAsync(new FilterContext(new FilterAttribute[0]))
+                    .ConfigureAwait(false);
+            }
+
+            encounterField.SetValue(encounterManager, null);
         }
     }
 }

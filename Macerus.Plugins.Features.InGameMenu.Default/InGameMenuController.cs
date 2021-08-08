@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Macerus.Game.Api;
 using Macerus.Game.Api.Scenes;
@@ -79,6 +80,23 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
             return _inGameMenuViewModel.IsOpen;
         }
 
+        private async Task ClearGameStateAsync()
+        {
+            // FIXME: we want to probably have common logic across all
+            // the spots that do this game state resetting... is that actually
+            // supposed to live in this class?
+            await _lazyCombatTurnManager
+                .Value
+                .EndCombatAsync(
+                    Enumerable.Empty<IGameObject>(),
+                    new Dictionary<int, IReadOnlyCollection<IGameObject>>())
+                .ConfigureAwait(false);
+            await _lazyMapManager
+                .Value
+                .UnloadMapAsync()
+                .ConfigureAwait(false);
+        }
+
         private void InGameMenuViewModel_RequestOptions(
             object sender,
             EventArgs e)
@@ -108,15 +126,7 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
                 {
                     _lazyStatusBarViewModel.Value.IsOpen = false;
 
-                    // FIXME: we want to probably have common logic across all
-                    // the spots that do this game state resetting
-                    _lazyCombatTurnManager.Value.EndCombat(
-                        Enumerable.Empty<IGameObject>(),
-                        new Dictionary<int, IReadOnlyCollection<IGameObject>>());
-                    await _lazyMapManager
-                        .Value
-                        .UnloadMapAsync()
-                        .ConfigureAwait(false);
+                    await ClearGameStateAsync().ConfigureAwait(false);
                     _mainMenuController.OpenMenu();
                     _sceneManager.NavigateToScene(new StringIdentifier("MainMenu"));
                 },
@@ -174,15 +184,7 @@ namespace Macerus.Plugins.Features.InGameMenu.Default
                 TimeSpan.FromSeconds(0.3),
                 async () =>
                 {
-                    // FIXME: we want to probably have common logic across all
-                    // the spots that do this game state resetting
-                    _lazyCombatTurnManager.Value.EndCombat(
-                        Enumerable.Empty<IGameObject>(),
-                        new Dictionary<int, IReadOnlyCollection<IGameObject>>());
-                    await _lazyMapManager
-                        .Value
-                        .UnloadMapAsync()
-                        .ConfigureAwait(false);
+                    await ClearGameStateAsync().ConfigureAwait(false);
                     await _lazyDayaPersistenceManager
                         .Value
                         .LoadAsync(FAKE_GAME_ID)

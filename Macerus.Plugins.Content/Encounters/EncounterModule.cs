@@ -8,6 +8,7 @@ using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Combat.Default;
 using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.Default;
+using Macerus.Plugins.Features.Encounters.Default.EndHandlers;
 using Macerus.Plugins.Features.Encounters.Default.StartHandlers;
 using Macerus.Plugins.Features.Encounters.SpawnTables;
 
@@ -70,6 +71,13 @@ namespace Macerus.Plugins.Content.Encounters
                     [typeof(EncounterTurnBasedStartHandler)] = int.MaxValue - 20000,
                     [typeof(EncounterCombatStartHandler)] = int.MaxValue - 10000,
                     [typeof(EncounterDebugPrinterStartHandler)] = int.MaxValue,
+                }))
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .Register(c => new EncounterEndLoadOrder(new Dictionary<Type, int>()
+                {
+                    [typeof(EncounterTurnBasedEndHandler)] = 10000,
                 }))
                 .AsImplementedInterfaces()
                 .SingleInstance();

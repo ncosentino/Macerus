@@ -53,11 +53,14 @@ namespace Macerus.Plugins.Features.Combat.Default
             object sender,
             CombatEndedEventArgs e)
         {
-            _lazyRosterManager
+            var leader = _lazyRosterManager
                 .Value
-                .ActivePartyLeader
-                .GetOnly<IPlayerControlledBehavior>()
+                .ActivePartyLeader;
+            if (leader != null)
+            {
+                leader.GetOnly<IPlayerControlledBehavior>()
                 .IsActive = true;
+            }
         }
 
         private void CombatTurnManager_TurnProgressed(
