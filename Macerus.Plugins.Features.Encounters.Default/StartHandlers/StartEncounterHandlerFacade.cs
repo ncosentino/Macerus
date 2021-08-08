@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,18 +10,24 @@ namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
 {
     public sealed class StartEncounterHandlerFacade : IStartEncounterHandlerFacade
     {
-        private readonly IReadOnlyCollection<IDiscoverableStartEncounterHandler> _startEncounterHandlers;
+        private readonly Lazy<IReadOnlyCollection<IDiscoverableStartEncounterHandler>> _lazyStartEncounterHandlers;
 
-        public StartEncounterHandlerFacade(IEnumerable<IDiscoverableStartEncounterHandler> startEncounterHandlers)
+        public StartEncounterHandlerFacade(
+            Lazy<IEnumerable<IDiscoverableStartEncounterHandler>> lazyStartEncounterHandlers,
+            IEncounterStartLoaderOrder encounterStartLoaderOrder)
         {
-            _startEncounterHandlers = startEncounterHandlers.ToArray();
+            _lazyStartEncounterHandlers = new Lazy<IReadOnlyCollection<IDiscoverableStartEncounterHandler>>(() =>
+                lazyStartEncounterHandlers
+                    .Value
+                    .OrderBy(x => encounterStartLoaderOrder.GetOrder(x))
+                    .ToArray());
         }
 
         public async Task HandleAsync(
             IGameObject encounter,
             IFilterContext filterContext)
         {
-            foreach (var handler in _startEncounterHandlers.OrderBy(x => x.Priority))
+            foreach (var handler in _lazyStartEncounterHandlers.Value)
             {
                 await handler
                     .HandleAsync(

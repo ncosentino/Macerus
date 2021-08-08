@@ -2,6 +2,5 @@
 {
     public interface IDiscoverableStartEncounterHandler : IStartEncounterHandler
     {
-        int Priority { get; }
     }
 }

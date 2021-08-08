@@ -43,8 +43,6 @@ namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
             _lazyMacerusActorIdentifiers = lazyMacerusActorIdentifiers;
         }
 
-        public int Priority => 20000;
-
         public async Task HandleAsync(
             IGameObject encounter,
             IFilterContext filterContext)

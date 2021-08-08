@@ -29,8 +29,6 @@ namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
             _logger = logger;
         }
 
-        public int Priority => int.MaxValue;
-
         public async Task HandleAsync(
             IGameObject encounter,
             IFilterContext filterContext)

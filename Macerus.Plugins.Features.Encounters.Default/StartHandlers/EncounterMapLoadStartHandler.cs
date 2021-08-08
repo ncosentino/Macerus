@@ -22,8 +22,6 @@ namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
             _mapManager = mapManager;
         }
 
-        public int Priority => 10000;
-
         public async Task HandleAsync(
             IGameObject encounter,
             IFilterContext filterContext)

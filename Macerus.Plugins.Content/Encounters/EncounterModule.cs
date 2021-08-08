@@ -1,10 +1,14 @@
-﻿using Autofac;
+﻿using System;
+using System.Collections.Generic;
+
+using Autofac;
 
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Combat.Default;
 using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.Default;
+using Macerus.Plugins.Features.Encounters.Default.StartHandlers;
 using Macerus.Plugins.Features.Encounters.SpawnTables;
 
 using ProjectXyz.Api.GameObjects.Generation;
@@ -37,6 +41,7 @@ namespace Macerus.Plugins.Content.Encounters
                             new IGeneratorComponent[]
                             {
                                 new StatelessBehaviorGeneratorComponent(
+                                    new EncounterCombatBehavior(),
                                     new EncounterMapFilterBehavior(new[] 
                                     {
                                         filterContextAmenity.CreateRequiredAttribute(
@@ -55,6 +60,17 @@ namespace Macerus.Plugins.Content.Encounters
                         encounterDefinitions);
                     return encounterDefinitionRepository;
                 })
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .Register(c => new EncounterStartLoadOrder(new Dictionary<Type, int>()
+                {
+                    [typeof(EncounterMapLoadStartHandler)] = 10000,
+                    [typeof(EncounterSpawnStartHandler)] = 20000,
+                    [typeof(EncounterTurnBasedStartHandler)] = int.MaxValue - 20000,
+                    [typeof(EncounterCombatStartHandler)] = int.MaxValue - 10000,
+                    [typeof(EncounterDebugPrinterStartHandler)] = int.MaxValue,
+                }))
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }
