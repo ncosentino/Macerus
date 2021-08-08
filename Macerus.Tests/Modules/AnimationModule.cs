@@ -13,7 +13,7 @@ namespace Macerus.Tests.Modules
             builder
                 .Register(c => new LpcAnimationDiscovererSettings(
                     @"..\..\..\..\Macerus.Plugins.Content",
-                    @"Graphics\Actors\LpcUniversal"))
+                    @"Resources\Graphics\Actors\LpcUniversal"))
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

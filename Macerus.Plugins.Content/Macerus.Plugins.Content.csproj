@@ -5,12 +5,45 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Graphics\Actors\LpcUniversal\player_male.png" />
-    <None Remove="Graphics\Actors\LpcUniversal\skeleton_basic.png" />
     <None Remove="Mapping\Maps\swamp.json" />
     <None Remove="Mapping\Maps\swamp.objects.json" />
     <None Remove="Mapping\Maps\test_encounter_map.json" />
     <None Remove="Mapping\Maps\test_encounter_map.objects.json" />
+    <None Remove="Resources\Graphics\Actors\LpcUniversal\player_male.png" />
+    <None Remove="Resources\Graphics\Actors\LpcUniversal\skeleton_basic.png" />
+    <None Remove="Resources\Graphics\Actors\Portraits\do-not-distribute\test-player-male.jpg" />
+    <None Remove="Resources\Graphics\Actors\Portraits\do-not-distribute\test-skeleton.png" />
+    <None Remove="Resources\Graphics\Containers\chest.png" />
+    <None Remove="Resources\Graphics\Containers\lootbag.png" />
+    <None Remove="Resources\Graphics\Gui\Hud\Circle.png" />
+    <None Remove="Resources\Graphics\Gui\Hud\dragon.png" />
+    <None Remove="Resources\Graphics\Gui\Hud\Square.png" />
+    <None Remove="Resources\Graphics\Gui\Inventory\Background.png" />
+    <None Remove="Resources\Graphics\Gui\Inventory\empty amulet slot.png" />
+    <None Remove="Resources\Graphics\Gui\Inventory\empty belt slot.png" />
+    <None Remove="Resources\Graphics\Gui\Inventory\empty body slot.png" />
+    <None Remove="Resources\Graphics\Gui\Inventory\empty boots slot.png" />
+    <None Remove="Resources\Graphics\Gui\Inventory\empty cloak slot.png" />
+    <None Remove="Resources\Graphics\Gui\Inventory\empty gloves slot.png" />
+    <None Remove="Resources\Graphics\Gui\Inventory\empty hand slot.png" />
+    <None Remove="Resources\Graphics\Gui\Inventory\empty helm slot.png" />
+    <None Remove="Resources\Graphics\Gui\Inventory\empty inventory slot.png" />
+    <None Remove="Resources\Graphics\Gui\Inventory\empty ring slot.png" />
+    <None Remove="Resources\Graphics\Gui\Inventory\square equipment slot.png" />
+    <None Remove="Resources\Graphics\Gui\Inventory\tall equipment slot.png" />
+    <None Remove="Resources\Graphics\Gui\MainMenu\background.jpg" />
+    <None Remove="Resources\Graphics\Items\Body\cloth_armor.png" />
+    <None Remove="Resources\Graphics\Items\Gems\ruby.png" />
+    <None Remove="Resources\Graphics\Items\Gloves\leather gloves.png" />
+    <None Remove="Resources\Graphics\Items\gold.png" />
+    <None Remove="Resources\Graphics\Items\Helms\hood.png" />
+    <None Remove="Resources\Graphics\Items\junk.png" />
+    <None Remove="Resources\Graphics\Skills\default-attack.png" />
+    <None Remove="Resources\Graphics\Skills\default-defend.png" />
+    <None Remove="Resources\Graphics\Skills\default-pass.png" />
+    <None Remove="Resources\Graphics\Skills\elder.png" />
+    <None Remove="Resources\Graphics\Skills\fireball.png" />
+    <None Remove="Resources\Graphics\Skills\heal.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,12 +76,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Graphics\Actors\LpcUniversal\player_male.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Graphics\Actors\LpcUniversal\skeleton_basic.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Mapping\Maps\swamp.objects.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -59,6 +86,111 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Mapping\Maps\test_encounter_map.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Actors\LpcUniversal\player_male.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Actors\LpcUniversal\skeleton_basic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Actors\Portraits\do-not-distribute\test-player-male.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Actors\Portraits\do-not-distribute\test-skeleton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Containers\chest.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Containers\lootbag.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Hud\Circle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Hud\dragon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Hud\Square.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Inventory\Background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Inventory\empty amulet slot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Inventory\empty belt slot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Inventory\empty body slot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Inventory\empty boots slot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Inventory\empty cloak slot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Inventory\empty gloves slot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Inventory\empty hand slot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Inventory\empty helm slot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Inventory\empty inventory slot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Inventory\empty ring slot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Inventory\square equipment slot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\Inventory\tall equipment slot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Gui\MainMenu\background.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Body\cloth_armor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Gems\ruby.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Gloves\leather gloves.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Items\gold.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Helms\hood.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Items\junk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Skills\default-attack.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Skills\default-defend.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Skills\default-pass.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Skills\elder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Skills\fireball.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Graphics\Skills\heal.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
