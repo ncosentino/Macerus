@@ -16,7 +16,7 @@ namespace Macerus.Shared.Behaviors.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<HasMutableStatsGeneratorComponentToBehaviorConverter>()
+                .RegisterType<HasStatsGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder

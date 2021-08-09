@@ -98,7 +98,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 return;
             }
 
-            var actorMutableStats = actor.GetOnly<IHasMutableStatsBehavior>();
+            var actorMutableStats = actor.GetOnly<IHasStatsBehavior>();
             actorMutableStats.MutateStats(stats =>
             {
                 foreach (var requiredResourceKvp in skillResourceUsageBehavior.StaticStatRequirements)

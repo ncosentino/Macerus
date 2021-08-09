@@ -46,7 +46,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
             {
                 var uniqueStatId = new StringIdentifier(Guid.NewGuid().ToString());
                 var player = CreatePlayerInstance(_container);
-                var playerStats = player.GetOnly<IHasMutableStatsBehavior>();
+                var playerStats = player.GetOnly<IHasStatsBehavior>();
                 playerStats.MutateStats(stats => stats.Add(uniqueStatId, 123));
 
                 player.GetOnly<IRosterBehavior>().IsPartyLeader = true;
@@ -61,7 +61,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
                 var playerAfter = _mapGameObjectManager
                     .GameObjects
                     .Single(x => x.Has<IPlayerControlledBehavior>());
-                playerStats = playerAfter.GetOnly<IHasMutableStatsBehavior>();
+                playerStats = playerAfter.GetOnly<IHasStatsBehavior>();
 
                 Assert.Equal(player, playerAfter);
                 Assert.Equal(123d, playerStats.BaseStats[uniqueStatId]);
@@ -76,7 +76,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
             {
                 var uniqueStatId = new StringIdentifier(Guid.NewGuid().ToString());
                 var player = CreatePlayerInstance(_container);
-                var playerStats = player.GetOnly<IHasMutableStatsBehavior>();
+                var playerStats = player.GetOnly<IHasStatsBehavior>();
                 playerStats.MutateStats(stats => stats.Add(uniqueStatId, 123));
 
                 player.GetOnly<IRosterBehavior>().IsPartyLeader = true;
@@ -88,7 +88,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
                 player = _mapGameObjectManager
                     .GameObjects
                     .Single(x => x.Has<IPlayerControlledBehavior>());
-                playerStats = player.GetOnly<IHasMutableStatsBehavior>();
+                playerStats = player.GetOnly<IHasStatsBehavior>();
 
                 var playerInRepository = _gameObjectRepositoryAmenity.LoadGameObject(player
                     .GetOnly<IIdentifierBehavior>()
@@ -101,7 +101,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
                 player = _mapGameObjectManager
                     .GameObjects
                     .Single(x => x.Has<IPlayerControlledBehavior>());
-                playerStats = player.GetOnly<IHasMutableStatsBehavior>();
+                playerStats = player.GetOnly<IHasStatsBehavior>();
 
                 playerInRepository = _gameObjectRepositoryAmenity.LoadGameObject(player
                     .GetOnly<IIdentifierBehavior>()

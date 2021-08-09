@@ -58,7 +58,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 .Where(x => targetCombatTeam
                     .AffectedTeamIds
                     .Contains(new IntIdentifier((int)x
-                        .GetOnly<IHasMutableStatsBehavior>()
+                        .GetOnly<IHasStatsBehavior>()
                         .BaseStats[_combatTeamIdentifiers.CombatTeamStatDefinitionId])))
                 .Where(x => affectedPositions.Contains(
                     Tuple.Create(

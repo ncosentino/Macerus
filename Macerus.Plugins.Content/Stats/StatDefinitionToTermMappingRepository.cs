@@ -4,8 +4,8 @@ using System.Globalization;
 
 using ProjectXyz.Api.Data.Databases;
 using ProjectXyz.Api.Framework;
-using ProjectXyz.Api.Stats;
-using ProjectXyz.Plugins.Stats;
+using ProjectXyz.Plugins.Features.Stats;
+using ProjectXyz.Plugins.Features.Stats.Default;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Stats

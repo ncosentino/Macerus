@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data;
+using System.Linq;
 
 using ProjectXyz.Api.Data.Databases;
-using ProjectXyz.Plugins.Features.BoundedStats.Api;
+using ProjectXyz.Plugins.Features.Stats.Bounded;
+using ProjectXyz.Plugins.Features.Stats.Bounded.Default;
 using ProjectXyz.Shared.Framework;
-using ProjectXyz.Plugins.Features.BoundedStats;
 
 namespace Macerus.Plugins.Content.Stats
 {

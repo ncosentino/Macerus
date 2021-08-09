@@ -327,7 +327,7 @@ namespace Macerus.Plugins.Features.Combat.Default
                 string.Join("\r\n", pointsToWalk.Select(p => $"\t({p.X},{p.Y})")));
             actor.GetOnly<IMovementBehavior>().SetWalkPath(pointsToWalk);
             actor
-                .GetOnly<IHasMutableStatsBehavior>()
+                .GetOnly<IHasStatsBehavior>()
                 .MutateStats(stats => stats[_actorIdentifiers.MoveDistancePerTurnCurrentStatDefinitionId] -= walkPath.TotalDistance);
 
             _combatState = CombatState.WalkToTarget;
@@ -357,7 +357,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             var target = combatGameObjects
                 .FirstOrDefault(potentialTarget =>
                 {
-                    if (!potentialTarget.TryGetFirst<IHasMutableStatsBehavior>(out var targetStatsBehavior))
+                    if (!potentialTarget.TryGetFirst<IHasStatsBehavior>(out var targetStatsBehavior))
                     {
                         return false;
                     }

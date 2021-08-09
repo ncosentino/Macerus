@@ -1,7 +1,7 @@
 ﻿using System;
 
 using ProjectXyz.Api.Framework;
-using ProjectXyz.Api.Stats;
+using ProjectXyz.Plugins.Features.Stats;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors.Default.LightRadius
 {

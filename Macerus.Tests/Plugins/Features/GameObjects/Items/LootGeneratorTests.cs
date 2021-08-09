@@ -153,7 +153,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
             await _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async player =>
             {
                 player
-                    .GetOnly<IHasMutableStatsBehavior>()
+                    .GetOnly<IHasStatsBehavior>()
                     .MutateStats(stats => stats[new IntIdentifier(1)] = 15);
 
                 var context = _filterContextProvider
@@ -179,7 +179,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
             await _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async player =>
             {
                 player
-                    .GetOnly<IHasMutableStatsBehavior>()
+                    .GetOnly<IHasStatsBehavior>()
                     .MutateStats(stats => stats[new IntIdentifier(1)] = 5);
 
                 var context = _filterContextProvider

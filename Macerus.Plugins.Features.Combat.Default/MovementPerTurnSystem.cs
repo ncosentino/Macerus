@@ -90,7 +90,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             var tasks = actors
                 .Select(actor => Task.Run(async () =>
                 {
-                    var mutableStats = actor.GetOnly<IHasMutableStatsBehavior>();
+                    var mutableStats = actor.GetOnly<IHasStatsBehavior>();
                     var calculatedStats = await _statCalculationServiceAmenity.GetStatValuesAsync(
                         actor,
                         new[]

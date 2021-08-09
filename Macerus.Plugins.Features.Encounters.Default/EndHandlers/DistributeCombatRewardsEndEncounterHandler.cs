@@ -58,7 +58,7 @@ namespace Macerus.Plugins.Features.Encounters.Default.EndHandlers
             if (combatRewardsBehavior.Experience > 0)
             {
                 var experienceSlice = combatRewardsBehavior.Experience / (double)_lazyRosterManager.Value.ActiveParty.Count;
-                foreach (var statsBehavior in _lazyRosterManager.Value.ActiveParty.Select(x => x.GetOnly<IHasMutableStatsBehavior>()))
+                foreach (var statsBehavior in _lazyRosterManager.Value.ActiveParty.Select(x => x.GetOnly<IHasStatsBehavior>()))
                 {
                     statsBehavior.MutateStats(stats => stats[_macerusActorIdentifiers.CurrentExperienceStatDefinitionId] += experienceSlice);
                 }

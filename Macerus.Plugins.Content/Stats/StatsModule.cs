@@ -7,7 +7,7 @@ using Macerus.Plugins.Features.GameObjects.Actors;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Stats;
+using ProjectXyz.Plugins.Features.Stats.Default;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Stats

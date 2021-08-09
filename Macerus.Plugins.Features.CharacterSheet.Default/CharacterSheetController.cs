@@ -5,7 +5,7 @@ using System.Linq;
 using Macerus.Plugins.Features.CharacterSheet.Api;
 using Macerus.Plugins.Features.Stats;
 
-using ProjectXyz.Api.Stats;
+using ProjectXyz.Plugins.Features.Stats;
 using ProjectXyz.Plugins.Features.PartyManagement;
 
 namespace Macerus.Plugins.Features.CharacterSheet.Default

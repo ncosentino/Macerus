@@ -6,9 +6,9 @@ using ProjectXyz.Api.GameObjects.Generation;
 
 namespace Macerus.Shared.Behaviors
 {
-    public sealed class HasMutableStatsGeneratorComponent : IGeneratorComponent
+    public sealed class HasStatsGeneratorComponent : IGeneratorComponent
     {
-        public HasMutableStatsGeneratorComponent(IEnumerable<KeyValuePair<IIdentifier, double>> stats)
+        public HasStatsGeneratorComponent(IEnumerable<KeyValuePair<IIdentifier, double>> stats)
         {
             Stats = stats.ToDictionary(
                 x => x.Key,

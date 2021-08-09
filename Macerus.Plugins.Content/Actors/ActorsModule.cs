@@ -24,7 +24,7 @@ using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Actors;
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
 using ProjectXyz.Plugins.Features.PartyManagement.Default;
-using ProjectXyz.Plugins.Stats;
+using ProjectXyz.Plugins.Features.Stats.Default;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Actors
@@ -65,7 +65,7 @@ namespace Macerus.Plugins.Content.Actors
             builder
                 .Register(c =>
                 {
-                    var hasMutableStatsBehaviorFactory = c.Resolve<IHasMutableStatsBehaviorFactory>();
+                    var hasStatsBehaviorFactory = c.Resolve<IHasStatsBehaviorFactory>();
                     var filterContextAmenity = c.Resolve<IFilterContextAmenity>();
                     var gameObjectIdentifiers = c.Resolve<IGameObjectIdentifiers>();
                     var actorIdentifiers = c.Resolve<IMacerusActorIdentifiers>();
@@ -127,7 +127,7 @@ namespace Macerus.Plugins.Content.Actors
                                     [new StringIdentifier("fireball")] = 1,
                                     [new StringIdentifier("passive-green-glow")] = 1,
                                 }),
-                                new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
+                                new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
                                     [new IntIdentifier(1)] = 10,
                                     [new IntIdentifier(2)] = 100,
@@ -184,7 +184,7 @@ namespace Macerus.Plugins.Content.Actors
                                     [new StringIdentifier("default-defend")] = 1,
                                     [new StringIdentifier("fireball")] = 1,
                                 }),
-                                new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
+                                new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
                                     [new IntIdentifier(1)] = 10,
                                     [new IntIdentifier(2)] = 100,
@@ -232,7 +232,7 @@ namespace Macerus.Plugins.Content.Actors
                                         new HasPrefabResourceIdBehavior(new StringIdentifier("Mapping/Prefabs/Actors/Actor")),
                                         new HasDisplayIconBehavior(new StringIdentifier("graphics/actors/portraits/do-not-distribute/test-skeleton")),
                                     }),
-                                new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
+                                new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
                                     // FIXME: shouldn't need to rely on an override to set the animation?
                                     [new StringIdentifier("animation_override")] = 1,

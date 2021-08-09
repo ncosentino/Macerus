@@ -73,7 +73,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
             await _testAmenities.UsingCleanMapAndObjects(async () =>
             {
                 var player = _testAmenities.CreatePlayerInstance();
-                var statsBehavior = player.GetOnly<IHasMutableStatsBehavior>();
+                var statsBehavior = player.GetOnly<IHasStatsBehavior>();
 
                 statsBehavior.MutateStats(stats =>
                 {
@@ -106,7 +106,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
             {
                 var player = _testAmenities.CreatePlayerInstance();
                 var skillsBehavior = player.GetOnly<IHasSkillsBehavior>();
-                var statsBehavior = player.GetOnly<IHasMutableStatsBehavior>();
+                var statsBehavior = player.GetOnly<IHasStatsBehavior>();
 
                 statsBehavior.MutateStats(stats =>
                 {
@@ -147,7 +147,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
             {
                 var player = _testAmenities.CreatePlayerInstance();
                 var skillsBehavior = player.GetOnly<IHasSkillsBehavior>();
-                var statsBehavior = player.GetOnly<IHasMutableStatsBehavior>();
+                var statsBehavior = player.GetOnly<IHasStatsBehavior>();
 
                 statsBehavior.MutateStats(stats =>
                 {

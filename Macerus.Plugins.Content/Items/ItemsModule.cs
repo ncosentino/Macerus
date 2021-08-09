@@ -77,7 +77,7 @@ namespace Macerus.Plugins.Content.Items
                                 {
                                     KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 4)),
                                 }),
-                                new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
+                                new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
                                     [new StringIdentifier("armor")] = 1, // FIXME: just for testing
                                 }),
@@ -99,7 +99,7 @@ namespace Macerus.Plugins.Content.Items
                                 {
                                     KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 4)),
                                 }),
-                                new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
+                                new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
                                     [new StringIdentifier("armor")] = 1, // FIXME: just for testing
                                 }),
@@ -121,7 +121,7 @@ namespace Macerus.Plugins.Content.Items
                                 {
                                     KeyValuePair.Create((IIdentifier)new StringIdentifier("gem"), Tuple.Create(0, 6)),
                                 }),
-                                new HasMutableStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
+                                new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
                                     [new StringIdentifier("armor")] = 3, // FIXME: just for testing
                                 }),

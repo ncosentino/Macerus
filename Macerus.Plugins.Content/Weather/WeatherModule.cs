@@ -2,15 +2,15 @@
 
 using Autofac;
 
-using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
-using ProjectXyz.Plugins.Features.BoundedStats;
-using ProjectXyz.Plugins.Features.BoundedStats.Api;
+using ProjectXyz.Plugins.Features.Stats.Bounded;
+using ProjectXyz.Plugins.Features.Stats.Bounded.Default;
+using ProjectXyz.Plugins.Features.Stats.Default;
 using ProjectXyz.Plugins.Features.Weather;
 using ProjectXyz.Plugins.Features.Weather.Default;
-using ProjectXyz.Plugins.Stats;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Weather

@@ -119,7 +119,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                     .Count();
 
                 skeleton
-                    .GetOnly<IHasMutableStatsBehavior>()
+                    .GetOnly<IHasStatsBehavior>()
                     .MutateStats(stats => stats[_combatStatIdentifiers.CurrentLifeStatId] = 0);
 
                 await _interactionHandler.InteractAsync(player, skeleton.GetOnly<CorpseInteractableBehavior>());

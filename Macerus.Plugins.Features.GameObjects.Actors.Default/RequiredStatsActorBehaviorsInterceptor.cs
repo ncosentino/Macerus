@@ -3,7 +3,7 @@ using System.Linq;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
-using ProjectXyz.Api.Stats;
+using ProjectXyz.Plugins.Features.Stats;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 
@@ -27,7 +27,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
         IEnumerable<IBehavior> IActorBehaviorsInterceptor.Intercept(IReadOnlyCollection<IBehavior> behaviors)
         {
             var mutableStats = behaviors
-                .Get<IHasMutableStatsBehavior>()
+                .Get<IHasStatsBehavior>()
                 .First();
             mutableStats.MutateStats(stats =>
             {

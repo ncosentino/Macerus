@@ -9,7 +9,7 @@ using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Api.Stats;
+using ProjectXyz.Plugins.Features.Stats;
 using ProjectXyz.Plugins.Features.Enchantments.Generation;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
