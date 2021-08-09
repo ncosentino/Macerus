@@ -8,6 +8,8 @@ namespace Macerus.Api.Behaviors.Filtering
 {
     public interface IFilterContextAmenity
     {
+        IFilterContext GetContext();
+
         IFilterContext CopyWithAdditionalAttributes(
             IFilterContext filterContext,
             IEnumerable<IFilterAttribute> additionalFilterAttributes);
@@ -83,6 +85,10 @@ namespace Macerus.Api.Behaviors.Filtering
         IFilterAttribute CreateSupportedAttribute(
             IIdentifier id,
             string value);
+
+        IFilterAttribute CreateSupportedAttribute(
+            IIdentifier id,
+            bool value);
 
         IFilterAttribute CreateSupportedAttributeForAny(
             IIdentifier id,

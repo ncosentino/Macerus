@@ -9,6 +9,8 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Filtering.Default;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.DropTables;
 
+using NexusLabs.Contracts;
+
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Default
 {
     public sealed class LootGeneratorAmenity : ILootGeneratorAmenity
@@ -35,6 +37,8 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Default
 
         public IEnumerable<IGameObject> GenerateLoot(IIdentifier dropTableId)
         {
+            ArgumentContract.RequiresNotNull(dropTableId, nameof(dropTableId));
+
             var filterContext = _filterContextProvider.GetContext();
             var generatedItems = GenerateLoot(
                 dropTableId,
@@ -46,6 +50,9 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Default
             IIdentifier dropTableId,
             IFilterContext lootGeneratorContext)
         {
+            ArgumentContract.RequiresNotNull(dropTableId, nameof(dropTableId));
+            ArgumentContract.RequiresNotNull(lootGeneratorContext, nameof(lootGeneratorContext));
+
             var dropTable = _dropTableRepository.GetForDropTableId(dropTableId);
             var dropTableAttribute = _filterContextAmenity.CreateRequiredAttribute(
                 _dropTableIdentifiers.FilterContextDropTableIdentifier,

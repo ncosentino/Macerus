@@ -5,6 +5,7 @@ using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Plugins.Features.CommonBehaviors;
 
 namespace Macerus.Plugins.Features.Encounters.Default
 {
@@ -34,7 +35,10 @@ namespace Macerus.Plugins.Features.Encounters.Default
             var filterContext = _filterContextProvider.GetContext();
             var behaviors = _generatorComponentToBehaviorConverter.Convert(
                 filterContext,
-                Enumerable.Empty<IBehavior>(),
+                new IBehavior[]
+                {
+                    new IdentifierBehavior(encounterDefinitionId),
+                },
                 encounterDefinition.GeneratorComponents);
             var encounter = _gameObjectFactory.Create(behaviors);
             return encounter;

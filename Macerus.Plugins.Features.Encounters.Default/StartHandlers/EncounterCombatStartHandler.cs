@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
+using Macerus.Api.Behaviors.Filtering;
+using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.Encounters.EndHandlers;
-using Macerus.Plugins.Features.Gui;
 
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.Combat.Api;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 
 namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
 {
@@ -16,19 +21,22 @@ namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
     {
         private readonly Lazy<ICombatTurnManager> _lazyCombatTurnManager;
         private readonly Lazy<IEncounterManager> _lazyEncounterManager;
-        private readonly Lazy<IFilterContextProvider> _lazyFilterContextProvider;
-        private readonly Lazy<IModalManager> _lazyModalManager;
+        private readonly Lazy<IFilterContextAmenity> _lazyFilterContextAmenity;
+        private readonly Lazy<ICombatTeamIdentifiers> _lazyCombatTeamIdentifiers;
+        private readonly IEncounterIdentifiers _encounterIdentifiers;
 
         public EncounterCombatStartHandler(
             Lazy<ICombatTurnManager> lazyCombatTurnManager,
             Lazy<IEncounterManager> lazyEncounterManager,
-            Lazy<IFilterContextProvider> lazyFilterContextProvider,
-            Lazy<IModalManager> lazyModalManager)
+            Lazy<IFilterContextAmenity> lazyFilterContextAmenity,
+            Lazy<ICombatTeamIdentifiers> lazyCombatTeamIdentifiers,
+            IEncounterIdentifiers encounterIdentifiers)
         {
             _lazyCombatTurnManager = lazyCombatTurnManager;
             _lazyEncounterManager = lazyEncounterManager;
-            _lazyFilterContextProvider = lazyFilterContextProvider;
-            _lazyModalManager = lazyModalManager;
+            _lazyFilterContextAmenity = lazyFilterContextAmenity;
+            _lazyCombatTeamIdentifiers = lazyCombatTeamIdentifiers;
+            _encounterIdentifiers = encounterIdentifiers;
         }
 
         async Task IStartEncounterHandler.HandleAsync(
@@ -61,16 +69,33 @@ namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
         private async void CombatTurnManager_CombatEnded(object sender, CombatEndedEventArgs e)
         {
             _lazyCombatTurnManager.Value.CombatEnded -= CombatTurnManager_CombatEnded;
+            var playerWon = e
+                .WinningTeam
+                ?.Any(x => x.GetOnly<IHasStatsBehavior>().BaseStats[_lazyCombatTeamIdentifiers.Value.CombatTeamStatDefinitionId] == _lazyCombatTeamIdentifiers.Value.PlayerTeamStatValue);
 
-            var filterContext = _lazyFilterContextProvider.Value.GetContext();
+            var filterContext = _lazyFilterContextAmenity.Value.GetContext();
+            filterContext = _lazyFilterContextAmenity
+                .Value
+                .ExtendWithSupported(filterContext, new IFilterAttribute[]
+                {
+                    _lazyFilterContextAmenity
+                        .Value
+                        .CreateSupportedAttribute(
+                            _encounterIdentifiers.FilterEncounterCombatPlayerWonId,
+                            playerWon == true),
+                });
+
             await _lazyEncounterManager
                 .Value
-                .EndEncounterAsync(filterContext)
-                .ConfigureAwait(false);
-
-            await _lazyModalManager
-                .Value
-                .ShowAndWaitMessageBoxAsync("// FIXME: put a fun win screen here!")
+                .EndEncounterAsync(
+                    filterContext,
+                    new IBehavior[]
+                    {
+                        new EncounterCombatOutcomeBehavior(
+                            e.WinningTeam,
+                            e.LosingTeams,
+                            playerWon),
+                    })
                 .ConfigureAwait(false);
         }
     }

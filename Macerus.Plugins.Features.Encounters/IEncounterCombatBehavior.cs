@@ -1,5 +1,4 @@
-﻿
-using ProjectXyz.Api.GameObjects.Behaviors;
+﻿using ProjectXyz.Api.GameObjects.Behaviors;
 
 namespace Macerus.Plugins.Features.Encounters
 {

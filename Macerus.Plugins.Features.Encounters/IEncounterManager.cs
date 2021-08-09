@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 
 namespace Macerus.Plugins.Features.Encounters
@@ -14,6 +16,8 @@ namespace Macerus.Plugins.Features.Encounters
             IFilterContext filterContext,
             IIdentifier encounterDefinitioId);
 
-        Task EndEncounterAsync(IFilterContext filterContext);
+        Task EndEncounterAsync(
+            IFilterContext filterContext,
+            IEnumerable<IBehavior> additionalEncounterBehaviors);
     }
 }

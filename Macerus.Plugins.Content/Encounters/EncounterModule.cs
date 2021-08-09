@@ -26,6 +26,10 @@ namespace Macerus.Plugins.Content.Encounters
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
+                .RegisterType<EncounterIdentifiers>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .Register(c =>
                 {
                     var filterContextAmenity = c.Resolve<IFilterContextAmenity>();
@@ -43,6 +47,7 @@ namespace Macerus.Plugins.Content.Encounters
                             {
                                 new StatelessBehaviorGeneratorComponent(
                                     new EncounterCombatBehavior(),
+                                    new EncounterCombatRewardsBehavior(new StringIdentifier("test-encounter-win-drop")),
                                     new EncounterMapFilterBehavior(new[] 
                                     {
                                         filterContextAmenity.CreateRequiredAttribute(
@@ -78,6 +83,7 @@ namespace Macerus.Plugins.Content.Encounters
                 .Register(c => new EncounterEndLoadOrder(new Dictionary<Type, int>()
                 {
                     [typeof(EncounterTurnBasedEndHandler)] = 10000,
+                    [typeof(CombatOutcomeEndEncounterHandler)] = 20000,
                 }))
                 .AsImplementedInterfaces()
                 .SingleInstance();

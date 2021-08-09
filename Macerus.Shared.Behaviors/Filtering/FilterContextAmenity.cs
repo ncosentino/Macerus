@@ -2,14 +2,13 @@
 using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
-using Macerus.Api.GameObjects;
 
 using NexusLabs.Contracts;
 
-using ProjectXyz.Plugins.Features.Filtering.Api;
-using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
 
 namespace Macerus.Shared.Behaviors.Filtering
@@ -17,15 +16,21 @@ namespace Macerus.Shared.Behaviors.Filtering
     public sealed class FilterContextAmenity : IFilterContextAmenity
     {
         private readonly IFilterContextFactory _filterContextFactory;
+        private readonly IFilterContextProvider _filterContextProvider;
         private readonly IGameObjectIdentifiers _gameObjectIdentifiers;
 
         public FilterContextAmenity(
             IFilterContextFactory filterContextFactory,
+            IFilterContextProvider filterContextProvider,
             IGameObjectIdentifiers gameObjectIdentifiers)
         {
             _filterContextFactory = filterContextFactory;
+            _filterContextProvider = filterContextProvider;
             _gameObjectIdentifiers = gameObjectIdentifiers;
         }
+
+        public IFilterContext GetContext() =>
+            _filterContextProvider.GetContext();
 
         public IFilterContext CreateFilterContextForSingle(
             params IFilterAttribute[] attributes) =>
@@ -220,6 +225,17 @@ namespace Macerus.Shared.Behaviors.Filtering
             var filterAttribute = new FilterAttribute(
                 id,
                 new StringFilterAttributeValue(value),
+                false);
+            return filterAttribute;
+        }
+
+        public IFilterAttribute CreateSupportedAttribute(
+            IIdentifier id,
+            bool value)
+        {
+            var filterAttribute = new FilterAttribute(
+                id,
+                new BooleanFilterAttributeValue(value),
                 false);
             return filterAttribute;
         }

@@ -19,6 +19,11 @@ namespace Macerus.Plugins.Features.Encounters.Default.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
+                .RegisterType<NoneEncounterIdentifiers>()
+                .AsImplementedInterfaces()
+                .IfNotRegistered(typeof(IEncounterIdentifiers))
+                .SingleInstance();
+            builder
                 .RegisterType<StartEncounterHandlerFacade>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
@@ -49,6 +54,10 @@ namespace Macerus.Plugins.Features.Encounters.Default.Autofac
                 .SingleInstance();
             builder
                 .RegisterType<EncounterTurnBasedEndHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<CombatOutcomeEndEncounterHandler>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder

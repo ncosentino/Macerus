@@ -124,7 +124,7 @@ namespace Macerus.Tests.Plugins.Features.Encounters
                         .Equals(new StringIdentifier("container"))));
 
                 await _combatTurnManager.EndCombatAsync(
-                    Enumerable.Empty<IGameObject>(),
+                    new[] { actor },
                     new Dictionary<int, IReadOnlyCollection<IGameObject>>());
                 await _gameEngine.UpdateAsync();
 

@@ -12,6 +12,7 @@ using Macerus.Plugins.Features.Mapping.Default;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Game.Api;
 using ProjectXyz.Game.Core;
@@ -180,7 +181,9 @@ namespace Macerus.Tests
             if (encounterField.GetValue(_encounterManager) != null)
             {
                 await _encounterManager
-                    .EndEncounterAsync(new FilterContext(new FilterAttribute[0]))
+                    .EndEncounterAsync(
+                        new FilterContext(new FilterAttribute[0]),
+                        Enumerable.Empty<IBehavior>())
                     .ConfigureAwait(false);
             }
 
