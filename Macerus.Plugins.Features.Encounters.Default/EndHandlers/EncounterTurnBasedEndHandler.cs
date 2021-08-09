@@ -17,11 +17,12 @@ namespace Macerus.Plugins.Features.Encounters.Default.EndHandlers
             _turnBasedManager = turnBasedManager;
         }
 
-        public async Task HandleAsync(
+        public async Task<IGameObject> HandleAsync(
             IGameObject encounter,
             IFilterContext filterContext)
         {
             _turnBasedManager.SyncTurnsFromElapsedTime = true;
+            return encounter;
         }
     }
 }

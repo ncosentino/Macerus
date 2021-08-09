@@ -57,7 +57,15 @@ namespace Macerus.Plugins.Features.Encounters.Default.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<CombatOutcomeEndEncounterHandler>()
+                .RegisterType<CombatGenerateRewardsEndEncounterHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<DistributeCombatRewardsEndEncounterHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<DisplayResultsEndEncounterHandler>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder

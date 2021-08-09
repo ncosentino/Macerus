@@ -7,7 +7,7 @@ namespace Macerus.Plugins.Features.Encounters.EndHandlers
 {
     public interface IEndEncounterHandler
     {
-        Task HandleAsync(
+        Task<IGameObject> HandleAsync(
             IGameObject encounter,
             IFilterContext filterContext);
     }

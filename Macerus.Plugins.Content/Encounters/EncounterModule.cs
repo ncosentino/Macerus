@@ -47,7 +47,9 @@ namespace Macerus.Plugins.Content.Encounters
                             {
                                 new StatelessBehaviorGeneratorComponent(
                                     new EncounterCombatBehavior(),
-                                    new EncounterCombatRewardsBehavior(new StringIdentifier("test-encounter-win-drop")),
+                                    new EncounterGenerateCombatRewardsBehavior(
+                                        new StringIdentifier("test-encounter-win-drop"),
+                                        100),
                                     new EncounterMapFilterBehavior(new[] 
                                     {
                                         filterContextAmenity.CreateRequiredAttribute(
@@ -83,7 +85,9 @@ namespace Macerus.Plugins.Content.Encounters
                 .Register(c => new EncounterEndLoadOrder(new Dictionary<Type, int>()
                 {
                     [typeof(EncounterTurnBasedEndHandler)] = 10000,
-                    [typeof(CombatOutcomeEndEncounterHandler)] = 20000,
+                    [typeof(CombatGenerateRewardsEndEncounterHandler)] = 20000,
+                    [typeof(DistributeCombatRewardsEndEncounterHandler)] = 30000,
+                    [typeof(DisplayResultsEndEncounterHandler)] = 40000,
                 }))
                 .AsImplementedInterfaces()
                 .SingleInstance();

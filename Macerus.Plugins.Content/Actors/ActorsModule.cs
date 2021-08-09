@@ -139,6 +139,7 @@ namespace Macerus.Plugins.Content.Actors
                                     [new StringIdentifier("fireresist")] = 10, // FIXME: just for testing
                                     [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = 3, // FIXME: just for testing
                                     [actorIdentifiers.MoveDiagonallyStatDefinitionId] = 0, // FIXME: just for testing
+                                    [actorIdentifiers.CurrentExperienceStatDefinitionId] = 0,
                                 }),
                             },
                             new IFilterAttribute[]
@@ -195,6 +196,7 @@ namespace Macerus.Plugins.Content.Actors
                                     [new StringIdentifier("fireresist")] = 10, // FIXME: just for testing
                                     [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = 3, // FIXME: just for testing
                                     [actorIdentifiers.MoveDiagonallyStatDefinitionId] = 0, // FIXME: just for testing
+                                    [actorIdentifiers.CurrentExperienceStatDefinitionId] = 0,
                                 }),
                             },
                             new IFilterAttribute[]

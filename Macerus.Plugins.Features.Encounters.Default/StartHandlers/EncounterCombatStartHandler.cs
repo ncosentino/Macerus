@@ -58,12 +58,13 @@ namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
                 .ConfigureAwait(false);
         }
 
-        async Task IEndEncounterHandler.HandleAsync(
+        async Task<IGameObject> IEndEncounterHandler.HandleAsync(
             IGameObject encounter,
             IFilterContext filterContext)
         {
             // safety mechanism to unhook in case combat never ended before we need to handle again
             _lazyCombatTurnManager.Value.CombatEnded -= CombatTurnManager_CombatEnded;
+            return encounter;
         }
 
         private async void CombatTurnManager_CombatEnded(object sender, CombatEndedEventArgs e)

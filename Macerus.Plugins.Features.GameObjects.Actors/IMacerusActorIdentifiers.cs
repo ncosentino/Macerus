@@ -24,5 +24,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         IIdentifier AnimationActorPlaceholder { get; }
 
         IIdentifier GetAnimationDirectionId(int direction);
+
+        IIdentifier CurrentExperienceStatDefinitionId { get; }
+
+        IIdentifier ExperienceForNextLevelStatDefinitionId { get; }
     }
 }

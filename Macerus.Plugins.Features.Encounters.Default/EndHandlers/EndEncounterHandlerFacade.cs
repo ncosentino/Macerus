@@ -25,18 +25,20 @@ namespace Macerus.Plugins.Features.Encounters.Default.EndHandlers
                     .ToArray());
         }
 
-        public async Task HandleAsync(
+        public async Task<IGameObject> HandleAsync(
             IGameObject encounter,
             IFilterContext filterContext)
         {
             foreach (var handler in _lazyEndEncounterHandlers.Value)
             {
-                await handler
+                encounter = await handler
                     .HandleAsync(
                         encounter,
                         filterContext)
                     .ConfigureAwait(false);
             }
+
+            return encounter;
         }
     }
 }

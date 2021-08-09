@@ -66,6 +66,10 @@ namespace Macerus.Plugins.Content.Actors
 
         public IIdentifier MoveDiagonallyStatDefinitionId { get; } = new StringIdentifier("move diagonally");
 
+        public IIdentifier CurrentExperienceStatDefinitionId { get; } = new StringIdentifier("experience_current");
+
+        public IIdentifier ExperienceForNextLevelStatDefinitionId { get; } = new StringIdentifier("experience_next_level");
+
         public IIdentifier GetAnimationDirectionId(int direction)
         {
             if (_directionToAnimationId.TryGetValue(

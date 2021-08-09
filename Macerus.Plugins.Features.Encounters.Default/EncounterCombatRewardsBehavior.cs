@@ -1,4 +1,7 @@
-﻿using ProjectXyz.Api.Framework;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Plugins.Features.Encounters.Default
@@ -7,11 +10,14 @@ namespace Macerus.Plugins.Features.Encounters.Default
         BaseBehavior,
         IEncounterCombatRewardsBehavior
     {
-        public EncounterCombatRewardsBehavior(IIdentifier dropTableId)
+        public EncounterCombatRewardsBehavior(IEnumerable<IGameObject> loot, double experience)
         {
-            DropTableId = dropTableId;
+            Loot = loot.ToArray();
+            Experience = experience;
         }
 
-        public IIdentifier DropTableId { get; }
+        public IReadOnlyCollection<IGameObject> Loot { get; }
+
+        public double Experience { get; }
     }
 }
