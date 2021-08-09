@@ -35,6 +35,7 @@ namespace Macerus.Tests.Plugins.Features.Encounters
         private static readonly IGameEngine _gameEngine;
         private static readonly IInteractionHandler _interactionHandler;
         private static readonly IRosterManager _rosterManager;
+        private static readonly ITestModalContentPresenter _testModalContentPresenter;
 
         static EncounterManagerTests()
         {
@@ -50,6 +51,7 @@ namespace Macerus.Tests.Plugins.Features.Encounters
             _gameEngine = _container.Resolve<IGameEngine>(); // NOTE: we need this to resolve systems.
             _interactionHandler = _container.Resolve<IInteractionHandlerFacade>();
             _rosterManager = _container.Resolve<IRosterManager>();
+            _testModalContentPresenter = _container.Resolve<ITestModalContentPresenter>();
         }
 
         [Fact]
@@ -57,28 +59,38 @@ namespace Macerus.Tests.Plugins.Features.Encounters
         {
             await _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async actor =>
             {
-                _rosterManager.AddToRoster(actor);
-                actor.GetOnly<IRosterBehavior>().IsPartyLeader = true;
+                try
+                {
+                    _rosterManager.AddToRoster(actor);
+                    actor.GetOnly<IRosterBehavior>().IsPartyLeader = true;
 
-                var filterContext = _filterContextProvider.GetContext();
-                await _encounterManager.StartEncounterAsync(
-                    filterContext,
-                    new StringIdentifier("test-encounter"));
+                    var filterContext = _filterContextProvider.GetContext();
+                    await _encounterManager.StartEncounterAsync(
+                        filterContext,
+                        new StringIdentifier("test-encounter"));
 
-                Assert.True(
-                    _combatTurnManager.InCombat,
-                    $"Expected '{nameof(_combatTurnManager)}.{nameof(ICombatTurnManager.InCombat)}' to be true.");
-                Assert.Equal(new StringIdentifier("test_encounter_map"), _mapManager.ActiveMap.GetOnly<IIdentifierBehavior>().Id);
-                Assert.Single(_mapGameObjectManager.GameObjects.Where(x => x.Has<IPlayerControlledBehavior>()));
-                Assert.InRange(
-                    _mapGameObjectManager
-                        .GameObjects
-                        .Count(x => x
-                            .GetOnly<ITypeIdentifierBehavior>()
-                            .TypeId
-                            .Equals(_actorIdentifiers.ActorTypeIdentifier)),
-                    2,
-                    10);
+                    Assert.True(
+                        _combatTurnManager.InCombat,
+                        $"Expected '{nameof(_combatTurnManager)}.{nameof(ICombatTurnManager.InCombat)}' to be true.");
+                    Assert.Equal(new StringIdentifier("test_encounter_map"), _mapManager.ActiveMap.GetOnly<IIdentifierBehavior>().Id);
+                    Assert.Single(_mapGameObjectManager.GameObjects.Where(x => x.Has<IPlayerControlledBehavior>()));
+                    Assert.InRange(
+                        _mapGameObjectManager
+                            .GameObjects
+                            .Count(x => x
+                                .GetOnly<ITypeIdentifierBehavior>()
+                                .TypeId
+                                .Equals(_actorIdentifiers.ActorTypeIdentifier)),
+                        2,
+                        10);
+                }
+                finally
+                {
+                    _testModalContentPresenter.SetCallback(async buttons => buttons.Single().ButtonSelected());
+                    await _combatTurnManager.EndCombatAsync(
+                        Enumerable.Empty<IGameObject>(),
+                        new Dictionary<int, IReadOnlyCollection<IGameObject>>());
+                }
             });
         }
 
@@ -87,6 +99,8 @@ namespace Macerus.Tests.Plugins.Features.Encounters
         {
             await _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async actor =>
             {
+                _testModalContentPresenter.SetCallback(async buttons => buttons.Single().ButtonSelected());
+
                 _rosterManager.AddToRoster(actor);
                 actor.GetOnly<IRosterBehavior>().IsPartyLeader = true;
 
@@ -134,6 +148,8 @@ namespace Macerus.Tests.Plugins.Features.Encounters
         {
             await _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async actor =>
             {
+                _testModalContentPresenter.SetCallback(async buttons => buttons.Single().ButtonSelected());
+
                 _rosterManager.AddToRoster(actor);
                 actor.GetOnly<IRosterBehavior>().IsPartyLeader = true;
 

@@ -1,40 +1,43 @@
 ﻿using System;
 using System.Threading.Tasks;
 
+using Macerus.Plugins.Features.Encounters.EndHandlers;
+using Macerus.Plugins.Features.Gui;
+
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 
 namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
 {
-    public sealed class EncounterCombatStartHandler : IDiscoverableStartEncounterHandler
+    public sealed class EncounterCombatStartHandler : 
+        IDiscoverableStartEncounterHandler, 
+        IDiscoverableEndEncounterHandler
     {
         private readonly Lazy<ICombatTurnManager> _lazyCombatTurnManager;
         private readonly Lazy<IEncounterManager> _lazyEncounterManager;
         private readonly Lazy<IFilterContextProvider> _lazyFilterContextProvider;
+        private readonly Lazy<IModalManager> _lazyModalManager;
 
         public EncounterCombatStartHandler(
             Lazy<ICombatTurnManager> lazyCombatTurnManager,
             Lazy<IEncounterManager> lazyEncounterManager,
-            Lazy<IFilterContextProvider> lazyFilterContextProvider)
+            Lazy<IFilterContextProvider> lazyFilterContextProvider,
+            Lazy<IModalManager> lazyModalManager)
         {
             _lazyCombatTurnManager = lazyCombatTurnManager;
             _lazyEncounterManager = lazyEncounterManager;
             _lazyFilterContextProvider = lazyFilterContextProvider;
-
-            // FIXME: sorta defeats the point of lazy to hook here
-            _lazyEncounterManager.Value.EncounterChanged += EncounterManager_EncounterChanged;
+            _lazyModalManager = lazyModalManager;
         }
 
-        private void EncounterManager_EncounterChanged(object sender, EncounterChangedEventArgs e)
-        {
-            _lazyCombatTurnManager.Value.CombatEnded -= CombatTurnManager_CombatEnded;
-        }
-
-        public async Task HandleAsync(
+        async Task IStartEncounterHandler.HandleAsync(
             IGameObject encounter,
             IFilterContext filterContext)
         {
+            // safety mechanism to unhook in case combat never ended before we need to handle again
+            _lazyCombatTurnManager.Value.CombatEnded -= CombatTurnManager_CombatEnded;
+
             if (!encounter.TryGetFirst<IEncounterCombatBehavior>(out var combatBehavior))
             {
                 return;
@@ -47,6 +50,14 @@ namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
                 .ConfigureAwait(false);
         }
 
+        async Task IEndEncounterHandler.HandleAsync(
+            IGameObject encounter,
+            IFilterContext filterContext)
+        {
+            // safety mechanism to unhook in case combat never ended before we need to handle again
+            _lazyCombatTurnManager.Value.CombatEnded -= CombatTurnManager_CombatEnded;
+        }
+
         private async void CombatTurnManager_CombatEnded(object sender, CombatEndedEventArgs e)
         {
             _lazyCombatTurnManager.Value.CombatEnded -= CombatTurnManager_CombatEnded;
@@ -55,6 +66,11 @@ namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
             await _lazyEncounterManager
                 .Value
                 .EndEncounterAsync(filterContext)
+                .ConfigureAwait(false);
+
+            await _lazyModalManager
+                .Value
+                .ShowAndWaitMessageBoxAsync("// FIXME: put a fun win screen here!")
                 .ConfigureAwait(false);
         }
     }
