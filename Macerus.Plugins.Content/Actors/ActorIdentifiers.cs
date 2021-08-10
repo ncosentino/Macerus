@@ -70,6 +70,14 @@ namespace Macerus.Plugins.Content.Actors
 
         public IIdentifier ExperienceForNextLevelStatDefinitionId { get; } = new StringIdentifier("experience_next_level");
 
+        public IIdentifier LevelStatDefinitionId { get; } = new StringIdentifier("level");
+
+        public IIdentifier SkillPointsStatDefinitionId { get; } = new StringIdentifier("points_skill");
+
+        public IIdentifier AttributePointsStatDefinitionId { get; } = new StringIdentifier("points_attributes");
+
+        public IIdentifier AbilityPointsStatDefinitionId { get; } = new StringIdentifier("points_abilities");
+
         public IIdentifier GetAnimationDirectionId(int direction)
         {
             if (_directionToAnimationId.TryGetValue(

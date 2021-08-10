@@ -28,5 +28,13 @@ namespace Macerus.Plugins.Features.GameObjects.Actors
         IIdentifier CurrentExperienceStatDefinitionId { get; }
 
         IIdentifier ExperienceForNextLevelStatDefinitionId { get; }
+
+        IIdentifier LevelStatDefinitionId { get; }
+
+        IIdentifier SkillPointsStatDefinitionId { get; }
+
+        IIdentifier AttributePointsStatDefinitionId { get; }
+
+        IIdentifier AbilityPointsStatDefinitionId { get; }
     }
 }
