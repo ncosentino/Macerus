@@ -3,6 +3,8 @@ using Autofac;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Framework.Autofac;
 
+using Xunit.Sdk;
+
 namespace Macerus.Tests
 {
     public sealed class ConsoleLoggerModule : SingleRegistrationModule
@@ -28,14 +30,15 @@ namespace Macerus.Tests
                 }
             }
 
-            public void Error(string message)
-            {
-                throw new NotImplementedException();
-            }
+            public void Error(string message) => Error(message, null);
 
             public void Error(string message, object data)
             {
-                throw new NotImplementedException();
+                throw new XunitException(
+                    "An error was encountered:\r\n" +
+                    $"{message}\r\n" +
+                    $"Exception:\r\n" +
+                    $"{data}");
             }
 
             public void Info(string message)
