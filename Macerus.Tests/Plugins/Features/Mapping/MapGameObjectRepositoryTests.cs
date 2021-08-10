@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Containers;
@@ -15,7 +16,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
 {
     public sealed class MapGameObjectRepositoryTests
     {
-        private const int OBJ_COUNT_ON_TESTENCOUNTERMAP = 15;
+        private const int OBJ_COUNT_ON_TESTENCOUNTERMAP = 16;
 
         private static readonly MacerusContainer _container;
         private static readonly TestAmenities _testAmenities;
@@ -30,9 +31,9 @@ namespace Macerus.Tests.Plugins.Features.Mapping
         }
 
         [Fact]
-        private void LoadForMap_TestEncounterMap_WallHasExpectedBehaviors()
+        private async Task LoadForMap_TestEncounterMap_WallHasExpectedBehaviors()
         {
-            _testAmenities.UsingCleanMapAndObjects(async () =>
+            await _testAmenities.UsingCleanMapAndObjects(async () =>
             {
                 var gameObjects = (await _mapGameObjectRepository
                     .LoadForMapAsync(new StringIdentifier("test_encounter_map")))
@@ -131,9 +132,9 @@ namespace Macerus.Tests.Plugins.Features.Mapping
         }
 
         [Fact]
-        private void LoadForMap_TestEncounterMap_ContainerHasExpectedBehaviors()
+        private async Task LoadForMap_TestEncounterMap_ContainerHasExpectedBehaviors()
         {
-            _testAmenities.UsingCleanMapAndObjects(async () =>
+            await _testAmenities.UsingCleanMapAndObjects(async () =>
             {
                 var gameObjects = (await _mapGameObjectRepository
                     .LoadForMapAsync(new StringIdentifier("test_encounter_map")))
@@ -143,7 +144,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
 
                 var containerBehaviors = gameObjects[7].Behaviors;
 
-                Assert.Equal(12, containerBehaviors.Count);
+                Assert.Equal(11, containerBehaviors.Count);
                 Assert.Equal(
                     new StringIdentifier("container"),
                     containerBehaviors
@@ -228,7 +229,6 @@ namespace Macerus.Tests.Plugins.Features.Mapping
                         .Single()
                         .HasGeneratedItems,
                     "Expecting to not have generated items on use on container generate items behavior.");
-                Assert.Single(containerBehaviors.TakeTypes<IMakeNoiseBehaviour>());
                 Assert.Equal(
                     0,
                     containerBehaviors
@@ -274,9 +274,9 @@ namespace Macerus.Tests.Plugins.Features.Mapping
         }
 
         [Fact]
-        private void LoadForMap_TestEncounterMap_TriggerOnCombatEndDoorExpectedBehaviors()
+        private async Task LoadForMap_TestEncounterMap_TriggerOnCombatEndDoorExpectedBehaviors()
         {
-            _testAmenities.UsingCleanMapAndObjects(async () =>
+            await _testAmenities.UsingCleanMapAndObjects(async () =>
             {
                 var gameObjects = (await _mapGameObjectRepository
                     .LoadForMapAsync(new StringIdentifier("test_encounter_map")))
@@ -284,7 +284,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
 
                 Assert.Equal(OBJ_COUNT_ON_TESTENCOUNTERMAP, gameObjects.Length);
 
-                var targetBehaviors = gameObjects[13].Behaviors;
+                var targetBehaviors = gameObjects[14].Behaviors;
 
                 Assert.Equal(7, targetBehaviors.Count);
                 
