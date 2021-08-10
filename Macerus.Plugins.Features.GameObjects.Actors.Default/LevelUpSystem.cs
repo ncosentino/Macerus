@@ -43,7 +43,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
                     : null)
                 .Where(x => x != null))
             {
-                hasStatsBehavior.BaseStatChanged += HasStatsBehavior_BaseStatChanged;
+                hasStatsBehavior.BaseStatsChanged += HasStatsBehavior_BaseStatsChanged;
             }
 
             foreach (var hasStatsBehavior in e
@@ -53,15 +53,16 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
                     : null)
                 .Where(x => x != null))
             {
-                hasStatsBehavior.BaseStatChanged -= HasStatsBehavior_BaseStatChanged;
+                hasStatsBehavior.BaseStatsChanged -= HasStatsBehavior_BaseStatsChanged;
             }
         }
 
-        private void HasStatsBehavior_BaseStatChanged(
+        private void HasStatsBehavior_BaseStatsChanged(
             object sender,
-            StatChangedEventArgs e)
+            StatsChangedEventArgs e)
         {
-            if (!Equals(e.StatDefinitionId, _actorIdentifiers.CurrentExperienceStatDefinitionId))
+            if (!e.ChangedStats.Any(x => Equals(x.Key, _actorIdentifiers.CurrentExperienceStatDefinitionId)) &&
+                !e.AddedStats.Any(x => Equals(x.Key, _actorIdentifiers.CurrentExperienceStatDefinitionId)))
             {
                 return;
             }
@@ -82,11 +83,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
 
                 // FIXME: we need a formula here plzkthx
                 stats[_actorIdentifiers.ExperienceForNextLevelStatDefinitionId] = (stats[_actorIdentifiers.LevelStatDefinitionId] + 1) * 100;
+                stats[_actorIdentifiers.CurrentExperienceStatDefinitionId] = currentXp - nextXp;
 
                 stats[_actorIdentifiers.LevelStatDefinitionId]++;
-
-                // NOTE: we do this last because of the event handling for current xp
-                stats[_actorIdentifiers.CurrentExperienceStatDefinitionId] = currentXp - nextXp;
             });
         }
     }

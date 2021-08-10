@@ -37,6 +37,9 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
             {
                 var hasStatsBehavior = player.GetFirst<IHasStatsBehavior>();
 
+                var baseStatsChangedCount = 0;
+                hasStatsBehavior.BaseStatsChanged += (s, e) => baseStatsChangedCount++;
+
                 hasStatsBehavior.MutateStats(stats =>
                 {
                     stats[_actorIdentifiers.LevelStatDefinitionId] = 11;
@@ -44,6 +47,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                     stats[_actorIdentifiers.CurrentExperienceStatDefinitionId] = 150;
                 });
 
+                Assert.Equal(2, baseStatsChangedCount);
                 Assert.Equal(12, hasStatsBehavior.BaseStats[_actorIdentifiers.LevelStatDefinitionId]);
                 Assert.Equal(12 * 100, hasStatsBehavior.BaseStats[_actorIdentifiers.ExperienceForNextLevelStatDefinitionId]);
                 Assert.Equal(150 - 123, hasStatsBehavior.BaseStats[_actorIdentifiers.CurrentExperienceStatDefinitionId]);
