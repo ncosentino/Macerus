@@ -328,9 +328,10 @@ namespace Macerus.Headless
             // should be no-op
             await interactionHandler.InteractAsync(player, skeleton.GetOnly<CorpseInteractableBehavior>());
 
-            skeleton
+            await skeleton
                 .GetOnly<IHasStatsBehavior>()
-                .MutateStats(stats => stats[combatStatIdentifiers.CurrentLifeStatId] = 0);
+                .MutateStatsAsync(async stats => stats[combatStatIdentifiers.CurrentLifeStatId] = 0)
+                .ConfigureAwait(false);
             
             await interactionHandler.InteractAsync(player, skeleton.GetOnly<CorpseInteractableBehavior>());
         }

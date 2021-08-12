@@ -140,10 +140,6 @@ namespace Macerus.Plugins.Content.Actors
                                     [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = 3, // FIXME: just for testing
                                     [actorIdentifiers.MoveDiagonallyStatDefinitionId] = 0, // FIXME: just for testing
                                     [actorIdentifiers.LevelStatDefinitionId] = 1,
-                                    [actorIdentifiers.AttributePointsStatDefinitionId] = 0,
-                                    [actorIdentifiers.SkillPointsStatDefinitionId] = 0,
-                                    [actorIdentifiers.AbilityPointsStatDefinitionId] = 0,
-                                    [actorIdentifiers.CurrentExperienceStatDefinitionId] = 0,
                                     [actorIdentifiers.ExperienceForNextLevelStatDefinitionId] = 100, // FIXME: just for testing
 
                                 }),
@@ -203,10 +199,6 @@ namespace Macerus.Plugins.Content.Actors
                                     [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = 3, // FIXME: just for testing
                                     [actorIdentifiers.MoveDiagonallyStatDefinitionId] = 0, // FIXME: just for testing
                                     [actorIdentifiers.LevelStatDefinitionId] = 1,
-                                    [actorIdentifiers.AttributePointsStatDefinitionId] = 0,
-                                    [actorIdentifiers.SkillPointsStatDefinitionId] = 0,
-                                    [actorIdentifiers.AbilityPointsStatDefinitionId] = 0,
-                                    [actorIdentifiers.CurrentExperienceStatDefinitionId] = 0,
                                     [actorIdentifiers.ExperienceForNextLevelStatDefinitionId] = 100, // FIXME: just for testing
                                 }),
                             },

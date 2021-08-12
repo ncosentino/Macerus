@@ -26,13 +26,15 @@ namespace Macerus.Shared.Behaviors
         {
             var hasStatsGeneratorComponent = (HasStatsGeneratorComponent)generatorComponent;
             var hasStatsBehavior = _hasStatsBehaviorFactory.Create();
-            hasStatsBehavior.MutateStats(stats =>
-            {
-                foreach (var stat in hasStatsGeneratorComponent.Stats)
+            hasStatsBehavior.
+                MutateStatsAsync(async stats =>
                 {
-                    stats[stat.Key] = stat.Value;
-                }
-            });
+                    foreach (var stat in hasStatsGeneratorComponent.Stats)
+                    {
+                        stats[stat.Key] = stat.Value;
+                    }
+                })
+                .Wait();
             yield return hasStatsBehavior;
         }
     }

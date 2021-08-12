@@ -29,21 +29,23 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
             var mutableStats = behaviors
                 .Get<IHasStatsBehavior>()
                 .First();
-            mutableStats.MutateStats(stats =>
-            {
-                stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_RADIUS").StatDefinitionId] = 10;
-                stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_INTENSITY").StatDefinitionId] = 0.5;
-                stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_RED").StatDefinitionId] = 1;
-                stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_GREEN").StatDefinitionId] = 0;
-                stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_BLUE").StatDefinitionId] = 1;
+            mutableStats
+                .MutateStatsAsync(async stats =>
+                {
+                    stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_RADIUS").StatDefinitionId] = 10;
+                    stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_INTENSITY").StatDefinitionId] = 0.5;
+                    stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_RED").StatDefinitionId] = 1;
+                    stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_GREEN").StatDefinitionId] = 0;
+                    stats[_statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("LIGHT_RADIUS_BLUE").StatDefinitionId] = 1;
 
-                stats[_dynamicAnimationIdentifiers.AnimationSpeedMultiplierStatId] = 1;
-                stats[_dynamicAnimationIdentifiers.RedMultiplierStatId] = 1;
-                stats[_dynamicAnimationIdentifiers.GreenMultiplierStatId] = 1;
-                stats[_dynamicAnimationIdentifiers.BlueMultiplierStatId] = 1;
-                stats[_dynamicAnimationIdentifiers.AlphaMultiplierStatId] = 1;
-                stats[_dynamicAnimationIdentifiers.AnimationOverrideStatId] = 0;
-            });
+                    stats[_dynamicAnimationIdentifiers.AnimationSpeedMultiplierStatId] = 1;
+                    stats[_dynamicAnimationIdentifiers.RedMultiplierStatId] = 1;
+                    stats[_dynamicAnimationIdentifiers.GreenMultiplierStatId] = 1;
+                    stats[_dynamicAnimationIdentifiers.BlueMultiplierStatId] = 1;
+                    stats[_dynamicAnimationIdentifiers.AlphaMultiplierStatId] = 1;
+                    stats[_dynamicAnimationIdentifiers.AnimationOverrideStatId] = 0;
+                })
+                .Wait();
             return behaviors;
         }
     }

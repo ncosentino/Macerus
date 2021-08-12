@@ -10,6 +10,6 @@ namespace Macerus.Plugins.Features.GameObjects.Skills
             IGameObject actor,
             IGameObject skill);
 
-        void UseRequiredResources(IGameObject actor, IGameObject skill);
+        Task UseRequiredResourcesAsync(IGameObject actor, IGameObject skill);
     }
 }

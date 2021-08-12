@@ -118,9 +118,10 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                     .GetEquippedItems()
                     .Count();
 
-                skeleton
+                await skeleton
                     .GetOnly<IHasStatsBehavior>()
-                    .MutateStats(stats => stats[_combatStatIdentifiers.CurrentLifeStatId] = 0);
+                    .MutateStatsAsync(async stats => stats[_combatStatIdentifiers.CurrentLifeStatId] = 0)
+                    .ConfigureAwait(false);
 
                 await _interactionHandler.InteractAsync(player, skeleton.GetOnly<CorpseInteractableBehavior>());
 

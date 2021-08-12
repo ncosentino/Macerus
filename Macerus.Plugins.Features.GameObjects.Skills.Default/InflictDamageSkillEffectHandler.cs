@@ -74,7 +74,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                 var totalDamage = damageStats - resistStats;
 
                 var targetStatsBehavior = target.GetOnly<IHasStatsBehavior>();
-                targetStatsBehavior.MutateStats(targetStats => targetStats[_combatStatIdentifiers.CurrentLifeStatId] -= totalDamage);
+                await targetStatsBehavior
+                    .MutateStatsAsync(async targetStats => targetStats[_combatStatIdentifiers.CurrentLifeStatId] -= totalDamage)
+                    .ConfigureAwait(false);
 
                 _logger.Debug($"{user} inflicted {totalDamage} ({damageStats} - {resistStats}) to {target} using skill effect '{skillEffect}'");
                 await _hitTriggerMechanicSource

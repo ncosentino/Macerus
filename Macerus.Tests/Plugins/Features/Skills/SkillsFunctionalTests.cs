@@ -75,7 +75,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
                 var player = _testAmenities.CreatePlayerInstance();
                 var statsBehavior = player.GetOnly<IHasStatsBehavior>();
 
-                statsBehavior.MutateStats(stats =>
+                await statsBehavior.MutateStatsAsync(async stats =>
                 {
                     stats[new IntIdentifier(2)] = 1; // life current
                 });
@@ -108,7 +108,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
                 var skillsBehavior = player.GetOnly<IHasSkillsBehavior>();
                 var statsBehavior = player.GetOnly<IHasStatsBehavior>();
 
-                statsBehavior.MutateStats(stats =>
+                await statsBehavior.MutateStatsAsync(async stats =>
                 {
                     stats[new IntIdentifier(2)] = 1; // life current
                 });
@@ -149,7 +149,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
                 var skillsBehavior = player.GetOnly<IHasSkillsBehavior>();
                 var statsBehavior = player.GetOnly<IHasStatsBehavior>();
 
-                statsBehavior.MutateStats(stats =>
+                await statsBehavior.MutateStatsAsync(async stats =>
                 {
                     stats[new IntIdentifier(2)] = 1; // life current
                 });

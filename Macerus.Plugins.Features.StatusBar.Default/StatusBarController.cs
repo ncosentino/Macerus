@@ -155,9 +155,11 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 return;
             }
 
-            _skillUsage.UseRequiredResources(
-                actor,
-                skill);
+            await _skillUsage
+                .UseRequiredResourcesAsync(
+                    actor,
+                    skill)
+                .ConfigureAwait(false);
             await _skillHandlerFacade
                 .HandleSkillAsync(
                     actor,

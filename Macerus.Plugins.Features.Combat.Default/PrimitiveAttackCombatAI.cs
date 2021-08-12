@@ -151,9 +151,12 @@ namespace Macerus.Plugins.Features.Combat.Default
                 return true;
             }
 
-            _lazySkillUsage.Value.UseRequiredResources(
-                actor,
-                firstUsableSkill);
+            await _lazySkillUsage
+                .Value
+                .UseRequiredResourcesAsync(
+                    actor,
+                    firstUsableSkill)
+                .ConfigureAwait(false);
 
             await _lazySkillHandlerFacade
                 .Value
@@ -326,9 +329,10 @@ namespace Macerus.Plugins.Features.Combat.Default
                 $"Path:\r\n" +
                 string.Join("\r\n", pointsToWalk.Select(p => $"\t({p.X},{p.Y})")));
             actor.GetOnly<IMovementBehavior>().SetWalkPath(pointsToWalk);
-            actor
+            await actor
                 .GetOnly<IHasStatsBehavior>()
-                .MutateStats(stats => stats[_actorIdentifiers.MoveDistancePerTurnCurrentStatDefinitionId] -= walkPath.TotalDistance);
+                .MutateStatsAsync(async stats => stats[_actorIdentifiers.MoveDistancePerTurnCurrentStatDefinitionId] -= walkPath.TotalDistance)
+                .ConfigureAwait(false);
 
             _combatState = CombatState.WalkToTarget;
             return false;

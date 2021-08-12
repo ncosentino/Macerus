@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using Macerus.Plugins.Features.GameObjects.Actors.Triggers;
+
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
@@ -13,13 +15,16 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
     public sealed class LevelUpSystem : IDiscoverableSystem
     {
         private readonly Lazy<IMapGameObjectManager> _lazyMapGameObjectManager;
+        private readonly Lazy<ILevelUpTriggerMechanicSource> _lazyLevelUpTriggerMechanicSource;
         private readonly IMacerusActorIdentifiers _actorIdentifiers;
 
         public LevelUpSystem(
             Lazy<IMapGameObjectManager> lazyMapGameObjectManager,
+            Lazy<ILevelUpTriggerMechanicSource> lazyLevelUpTriggerMechanicSource,
             IMacerusActorIdentifiers actorIdentifiers)
         {
             _lazyMapGameObjectManager = lazyMapGameObjectManager;
+            _lazyLevelUpTriggerMechanicSource = lazyLevelUpTriggerMechanicSource;
             _actorIdentifiers = actorIdentifiers;
 
             // FIXME: no point in lazy because of this?
@@ -57,17 +62,43 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
             }
         }
 
-        private void HasStatsBehavior_BaseStatsChanged(
+        private async void HasStatsBehavior_BaseStatsChanged(
             object sender,
             StatsChangedEventArgs e)
         {
-            if (!e.ChangedStats.Any(x => Equals(x.Key, _actorIdentifiers.CurrentExperienceStatDefinitionId)) &&
-                !e.AddedStats.Any(x => Equals(x.Key, _actorIdentifiers.CurrentExperienceStatDefinitionId)))
+            if (e.ChangedStats.Any(x => Equals(x.Key, _actorIdentifiers.CurrentExperienceStatDefinitionId)) ||
+                e.AddedStats.Any(x => Equals(x.Key, _actorIdentifiers.CurrentExperienceStatDefinitionId)))
             {
-                return;
+                await HandleExperienceIncreaseAsync((IHasStatsBehavior)sender)
+                    .ConfigureAwait(false);
             }
 
-            var hasStatsBehavior = (IHasStatsBehavior)sender;
+            var levelChangeEntry = e.ChangedStats.FirstOrDefault(x => 
+                Equals(x.Key, _actorIdentifiers.LevelStatDefinitionId) &&
+                (x.Value.Item1 - x.Value.Item2) == 1);
+            if (levelChangeEntry.Key != default)
+            {
+                await HandleLevelIncrease(
+                    (IHasStatsBehavior)sender,
+                    (int)levelChangeEntry.Value.Item1)
+                    .ConfigureAwait(false);
+            }
+        }
+
+        private async Task HandleLevelIncrease(
+            IHasStatsBehavior hasStatsBehavior,
+            int level)
+        {
+            await _lazyLevelUpTriggerMechanicSource
+                .Value
+                .ActorLevelUpTriggeredAsync(
+                    hasStatsBehavior.Owner,
+                    level)
+                .ConfigureAwait(false);
+        }
+
+        private async Task HandleExperienceIncreaseAsync(IHasStatsBehavior hasStatsBehavior)
+        {
             var currentXp = hasStatsBehavior.BaseStats[_actorIdentifiers.CurrentExperienceStatDefinitionId];
             var nextXp = hasStatsBehavior.BaseStats[_actorIdentifiers.ExperienceForNextLevelStatDefinitionId];
             if (currentXp < nextXp)
@@ -75,17 +106,16 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default
                 return;
             }
 
-            hasStatsBehavior.MutateStats(stats =>
+            await hasStatsBehavior.MutateStatsAsync(async stats =>
             {
                 stats[_actorIdentifiers.AttributePointsStatDefinitionId] += 5;
                 stats[_actorIdentifiers.SkillPointsStatDefinitionId]++;
                 stats[_actorIdentifiers.AbilityPointsStatDefinitionId]++;
 
+                stats[_actorIdentifiers.LevelStatDefinitionId]++;
+                stats[_actorIdentifiers.CurrentExperienceStatDefinitionId] = currentXp - nextXp;
                 // FIXME: we need a formula here plzkthx
                 stats[_actorIdentifiers.ExperienceForNextLevelStatDefinitionId] = (stats[_actorIdentifiers.LevelStatDefinitionId] + 1) * 100;
-                stats[_actorIdentifiers.CurrentExperienceStatDefinitionId] = currentXp - nextXp;
-
-                stats[_actorIdentifiers.LevelStatDefinitionId]++;
             });
         }
     }

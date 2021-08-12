@@ -30,8 +30,9 @@ namespace Macerus.Plugins.Features.Combat.Default
             var combatTeamGeneratorComponent = (ICombatTeamGeneratorComponent)generatorComponent;
             var hasStatsBehavior = baseBehaviors.GetFirst<IHasStatsBehavior>();
 
-            hasStatsBehavior.MutateStats(baseStats =>
-                baseStats[_combatTeamIdentifiers.CombatTeamStatDefinitionId] = combatTeamGeneratorComponent.Team);
+            hasStatsBehavior
+                .MutateStatsAsync(async baseStats => baseStats[_combatTeamIdentifiers.CombatTeamStatDefinitionId] = combatTeamGeneratorComponent.Team)
+                .Wait();
 
             return Enumerable.Empty<IBehavior>();
         }

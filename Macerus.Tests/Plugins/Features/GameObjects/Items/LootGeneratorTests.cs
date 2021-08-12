@@ -1,31 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 using Autofac;
 
 using Macerus.Plugins.Features.GameObjects.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
-using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Framework.Autofac;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Default;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.DropTables;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.DropTables.Standard;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory.DropTables;
-using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;
 using Xunit.Sdk;
-using System.Threading.Tasks;
 
 namespace Macerus.Tests.Plugins.Features.GameObjects.Items
 {
@@ -152,9 +150,10 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
         {
             await _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async player =>
             {
-                player
+                await player
                     .GetOnly<IHasStatsBehavior>()
-                    .MutateStats(stats => stats[new IntIdentifier(1)] = 15);
+                    .MutateStatsAsync(async stats => stats[new IntIdentifier(1)] = 15)
+                    .ConfigureAwait(false);
 
                 var context = _filterContextProvider
                     .GetContext()
@@ -178,9 +177,10 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
         {
             await _testAmenities.UsingCleanMapAndObjectsWithPlayerAsync(async player =>
             {
-                player
+                await player
                     .GetOnly<IHasStatsBehavior>()
-                    .MutateStats(stats => stats[new IntIdentifier(1)] = 5);
+                    .MutateStatsAsync(async stats => stats[new IntIdentifier(1)] = 5)
+                    .ConfigureAwait(false);
 
                 var context = _filterContextProvider
                     .GetContext()

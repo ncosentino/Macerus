@@ -26,7 +26,11 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Death.Autofac
             builder
                 .RegisterType<HitTriggerMechanicSource>()
                 .AsImplementedInterfaces()
-                .SingleInstance();            
+                .SingleInstance();
+            builder
+                .RegisterType<LevelUpMechanicSource>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

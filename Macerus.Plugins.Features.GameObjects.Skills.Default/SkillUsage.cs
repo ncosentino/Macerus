@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
 using Macerus.Api.Behaviors;
-using Macerus.Plugins.Features.GameObjects.Skills;
 using Macerus.Plugins.Features.Stats;
 
 using ProjectXyz.Api.GameObjects;
@@ -88,7 +86,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             return true;
         }
 
-        public void UseRequiredResources(
+        public async Task UseRequiredResourcesAsync(
             IGameObject actor,
             IGameObject skill)
         {
@@ -99,16 +97,18 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             }
 
             var actorMutableStats = actor.GetOnly<IHasStatsBehavior>();
-            actorMutableStats.MutateStats(stats =>
-            {
-                foreach (var requiredResourceKvp in skillResourceUsageBehavior.StaticStatRequirements)
+            await actorMutableStats
+                .MutateStatsAsync(async stats =>
                 {
-                    var requiredStatDefinitionId = requiredResourceKvp.Key;
-                    var requiredStatValue = requiredResourceKvp.Value;
+                    foreach (var requiredResourceKvp in skillResourceUsageBehavior.StaticStatRequirements)
+                    {
+                        var requiredStatDefinitionId = requiredResourceKvp.Key;
+                        var requiredStatValue = requiredResourceKvp.Value;
 
-                    stats[requiredStatDefinitionId] -= requiredStatValue;
-                }
-            });
+                        stats[requiredStatDefinitionId] -= requiredStatValue;
+                    }
+                })
+                .ConfigureAwait(false);
         }
     }
 }

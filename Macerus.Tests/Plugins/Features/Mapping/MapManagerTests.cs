@@ -47,7 +47,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
                 var uniqueStatId = new StringIdentifier(Guid.NewGuid().ToString());
                 var player = CreatePlayerInstance(_container);
                 var playerStats = player.GetOnly<IHasStatsBehavior>();
-                playerStats.MutateStats(stats => stats.Add(uniqueStatId, 123));
+                await playerStats.MutateStatsAsync(async stats => stats.Add(uniqueStatId, 123));
 
                 player.GetOnly<IRosterBehavior>().IsPartyLeader = true;
                 _rosterManager.AddToRoster(player);
@@ -77,7 +77,7 @@ namespace Macerus.Tests.Plugins.Features.Mapping
                 var uniqueStatId = new StringIdentifier(Guid.NewGuid().ToString());
                 var player = CreatePlayerInstance(_container);
                 var playerStats = player.GetOnly<IHasStatsBehavior>();
-                playerStats.MutateStats(stats => stats.Add(uniqueStatId, 123));
+                await playerStats.MutateStatsAsync(async stats => stats.Add(uniqueStatId, 123));
 
                 player.GetOnly<IRosterBehavior>().IsPartyLeader = true;
                 _rosterManager.AddToRoster(player);

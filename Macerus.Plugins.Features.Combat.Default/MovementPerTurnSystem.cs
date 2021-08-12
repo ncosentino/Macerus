@@ -97,7 +97,7 @@ namespace Macerus.Plugins.Features.Combat.Default
                         {
                             _macerusActorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId,
                         });
-                    mutableStats.MutateStats(s =>
+                    await mutableStats.MutateStatsAsync(async s =>
                         s[_macerusActorIdentifiers.MoveDistancePerTurnCurrentStatDefinitionId] =
                         calculatedStats[_macerusActorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId]);
                 }))
