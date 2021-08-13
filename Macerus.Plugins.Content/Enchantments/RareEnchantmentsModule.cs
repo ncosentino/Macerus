@@ -4,8 +4,8 @@ using Macerus.Plugins.Features.GameObjects.Items.Generation.Rare.Enchantments;
 
 using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.Enchantments.Generation.InMemory;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation.InMemory;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Enchantments

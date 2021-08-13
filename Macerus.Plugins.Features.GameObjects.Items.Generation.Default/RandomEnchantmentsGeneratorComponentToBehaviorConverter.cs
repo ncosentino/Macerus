@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Default
 {
@@ -51,12 +51,14 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Default
                 hasEnchantmentsBehavior = HasEnchantmentsBehaviorFactory.Create();
                 wasNewlyCreatedEnchantmentsBehavior = true;
 
-                IHasReadOnlyEnchantmentsBehavior hasReadOnlyEnchantmentsBehavior;
+                IReadOnlyHasEnchantmentsBehavior hasReadOnlyEnchantmentsBehavior;
                 if ((hasReadOnlyEnchantmentsBehavior = baseBehaviors
-                    .Get<IHasReadOnlyEnchantmentsBehavior>()
+                    .Get<IReadOnlyHasEnchantmentsBehavior>()
                     .SingleOrDefault()) != null)
                 {
-                    hasEnchantmentsBehavior.AddEnchantments(hasReadOnlyEnchantmentsBehavior.Enchantments);
+                    hasEnchantmentsBehavior
+                        .AddEnchantmentsAsync(hasReadOnlyEnchantmentsBehavior.Enchantments)
+                        .Wait();
                 }
             }
 
@@ -77,7 +79,9 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Default
                     $"No enchantments were added to the base item.");
             }
 
-            hasEnchantmentsBehavior.AddEnchantments(enchantments);
+            hasEnchantmentsBehavior
+                .AddEnchantmentsAsync(enchantments)
+                .Wait();
 
             if (wasNewlyCreatedEnchantmentsBehavior)
             {

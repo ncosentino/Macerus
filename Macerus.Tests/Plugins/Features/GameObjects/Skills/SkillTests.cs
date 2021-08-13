@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 
+using ProjectXyz.Api.Enchantments.Calculations;
+using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
-using ProjectXyz.Api.Enchantments.Calculations;
-using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 
 using Xunit;
@@ -43,7 +43,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Skills
                     $"Expecting that skill '{skill}' has exactly one " +
                     $"{typeof(IHasEnchantmentsBehavior)} behavior.");
                 foreach (var enchantment in skill
-                    .GetOnly<IHasReadOnlyEnchantmentsBehavior>()
+                    .GetOnly<IReadOnlyHasEnchantmentsBehavior>()
                     .Enchantments)
                 {
                     Assert.True(

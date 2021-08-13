@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Enchantments.Triggering;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation;
 using ProjectXyz.Plugins.Features.Triggering;
 
 namespace Macerus.Shared.Behaviors.Triggering

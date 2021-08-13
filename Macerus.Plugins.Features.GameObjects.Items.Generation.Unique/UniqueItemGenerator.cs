@@ -3,14 +3,13 @@ using System.Linq;
 
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
+using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
-using ProjectXyz.Api.Enchantments.Generation;
-using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes; // FIXME: dependency on non-API
-using ProjectXyz.Plugins.Features.CommonBehaviors;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
 using ProjectXyz.Shared.Framework;
 
@@ -88,12 +87,14 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
                 {
                     hasEnchantmentsBehavior = _hasEnchantmentsBehaviorFactory.Create();
 
-                    IHasReadOnlyEnchantmentsBehavior hasReadOnlyEnchantmentsBehavior;
+                    IReadOnlyHasEnchantmentsBehavior hasReadOnlyEnchantmentsBehavior;
                     if ((hasReadOnlyEnchantmentsBehavior = baseItemBehaviorSet
-                        .Get<IHasReadOnlyEnchantmentsBehavior>()
+                        .Get<IReadOnlyHasEnchantmentsBehavior>()
                         .SingleOrDefault()) != null)
                     {
-                        hasEnchantmentsBehavior.AddEnchantments(hasReadOnlyEnchantmentsBehavior.Enchantments);
+                        hasEnchantmentsBehavior
+                            .AddEnchantmentsAsync(hasReadOnlyEnchantmentsBehavior.Enchantments)
+                            .Wait();
                     }
                 }
 
@@ -110,7 +111,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
                     .Concat(baseItemBehaviorSet
                     .Behaviors
                     .Where(b => 
-                        !(b is IHasReadOnlyEnchantmentsBehavior) &&
+                        !(b is IReadOnlyHasEnchantmentsBehavior) &&
                         !uniqueBehaviorSet
                             .Behaviors
                             .Any(u => u.GetType() != b.GetType())))

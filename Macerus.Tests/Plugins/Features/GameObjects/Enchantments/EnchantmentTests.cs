@@ -5,15 +5,15 @@ using Macerus.Plugins.Features.GameObjects.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
 
 using ProjectXyz.Api.Enchantments.Calculations;
-using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Plugins.Features.Stats;
-using ProjectXyz.Plugins.Features.Enchantments.Generation;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation.Default;
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
+using ProjectXyz.Plugins.Features.Stats;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;

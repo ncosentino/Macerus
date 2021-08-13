@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using ProjectXyz.Plugins.Features.Filtering.Api;
-using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Api.Data.Databases;
 using ProjectXyz.Api.Data.Serialization;
-using ProjectXyz.Api.Enchantments.Generation;
+using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation;
 
 namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql
 {

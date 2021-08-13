@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
+using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
-using ProjectXyz.Api.Enchantments.Generation;
-using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation;
 
 namespace Macerus.Plugins.Features.GameObjects.Enchantments
 {

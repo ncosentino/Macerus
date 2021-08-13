@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
 {

@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.GameObjects.Actors.Triggers;
 
-using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.Enchantments.Triggering;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation;
 
 namespace Macerus.Shared.Behaviors.Triggering
 {
@@ -69,9 +69,10 @@ namespace Macerus.Shared.Behaviors.Triggering
                     .ToArray();
                 _lazyLogger.Value.Debug(
                     $"Enchantment-on-hit Trigger adding {attackerEnchantments.Length} enchantments to attacker.");
-                attacker
+                await attacker
                     .GetOnly<IHasEnchantmentsBehavior>()
-                    .AddEnchantments(attackerEnchantments);
+                    .AddEnchantmentsAsync(attackerEnchantments)
+                    .ConfigureAwait(false);
 
                 var defenderEnchantments = _lazyEnchantmentLoader
                     .Value
@@ -79,9 +80,10 @@ namespace Macerus.Shared.Behaviors.Triggering
                     .ToArray();
                 _lazyLogger.Value.Debug(
                     $"Enchantment-on-hit Trigger adding {defenderEnchantments.Length} enchantments to defender.");
-                defender
+                await defender
                     .GetOnly<IHasEnchantmentsBehavior>()
-                    .AddEnchantments(defenderEnchantments);
+                    .AddEnchantmentsAsync(defenderEnchantments)
+                    .ConfigureAwait(false);
             }
             finally
             {

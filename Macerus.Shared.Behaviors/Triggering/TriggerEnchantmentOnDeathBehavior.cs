@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Macerus.Plugins.Features.GameObjects.Actors.Triggers;
 
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
 using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Shared.Behaviors.Triggering
@@ -39,7 +39,10 @@ namespace Macerus.Shared.Behaviors.Triggering
                 return;
             }
 
-            actor.GetOnly<IHasEnchantmentsBehavior>().AddEnchantments(_enchantments);
+            await actor
+                .GetOnly<IHasEnchantmentsBehavior>()
+                .AddEnchantmentsAsync(_enchantments)
+                .ConfigureAwait(false);
         }
 
         protected override void OnRegisteredToOwner(IGameObject owner)

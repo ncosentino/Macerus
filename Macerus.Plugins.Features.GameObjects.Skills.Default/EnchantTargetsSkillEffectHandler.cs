@@ -1,11 +1,9 @@
 ﻿using System.Threading.Tasks;
 
-using Macerus.Plugins.Features.GameObjects.Skills;
-
-using ProjectXyz.Api.Enchantments.Generation;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
@@ -46,7 +44,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             foreach (var target in skillTargets)
             {
                 var targetEnchantmentsBehavior = target.GetOnly<IHasEnchantmentsBehavior>();
-                targetEnchantmentsBehavior.AddEnchantments(statefulEnchantments);
+                await targetEnchantmentsBehavior
+                    .AddEnchantmentsAsync(statefulEnchantments)
+                    .ConfigureAwait(false);
                 _logger.Debug($"{user} enchanted {target} using skill effect '{skillEffect}'.");
             }
         }

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Triggers;
-using Macerus.Plugins.Features.GameObjects.Skills;
 using Macerus.Plugins.Features.Stats;
 
 using ProjectXyz.Api.Enchantments.Stats;
@@ -11,6 +10,7 @@ using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Shared.Framework;
 

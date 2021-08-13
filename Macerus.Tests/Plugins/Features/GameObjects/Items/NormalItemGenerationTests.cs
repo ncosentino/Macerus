@@ -4,9 +4,9 @@ using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
 using ProjectXyz.Shared.Framework;
 
