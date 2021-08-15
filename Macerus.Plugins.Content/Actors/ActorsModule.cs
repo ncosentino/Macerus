@@ -11,6 +11,7 @@ using Macerus.Plugins.Features.GameObjects.Actors.Default.Animations;
 using Macerus.Plugins.Features.GameObjects.Actors.Default.Interactions;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
 using Macerus.Plugins.Features.GameObjects.Skills;
+using Macerus.Plugins.Features.Summoning;
 using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Framework;
@@ -72,6 +73,7 @@ namespace Macerus.Plugins.Content.Actors
                     var combatTeamIdentifiers = c.Resolve<ICombatTeamIdentifiers>();
                     var skillAmenity = c.Resolve<ISkillAmenity>();
                     var dynamicAnimationBehaviorFactory = c.Resolve<IDynamicAnimationBehaviorFactory>();
+                    var summoningBehaviorFactory = c.Resolve<ISummoningBehaviorFactory>();
 
                     IReadOnlyCollection<IIdentifier> humanoidEquipSlotIds = new[]
                     {
@@ -118,6 +120,7 @@ namespace Macerus.Plugins.Content.Actors
                                         new CanEquipBehavior(humanoidEquipSlotIds),
                                         new HasPrefabResourceIdBehavior(new StringIdentifier("Mapping/Prefabs/Actors/PlayerPlaceholder")),
                                         new HasDisplayIconBehavior(new StringIdentifier("graphics/actors/portraits/do-not-distribute/test-player-male")),
+                                        summoningBehaviorFactory.Create(),
                                     }),
                                 new HasSkillsGeneratorComponent(new Dictionary<IIdentifier, int>()
                                 {

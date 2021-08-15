@@ -74,6 +74,9 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.Inventory.Default\Macerus.Plugins.Features.Inventory.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Mapping.Default\Macerus.Plugins.Features.Mapping.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Resources.Default\Macerus.Plugins.Features.Resources.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Spawning.Default\Macerus.Plugins.Features.Spawning.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Summoning.Default\Macerus.Plugins.Features.Summoning.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Summoning\Macerus.Plugins.Features.Summoning.csproj" />
   </ItemGroup>
 
   <ItemGroup>

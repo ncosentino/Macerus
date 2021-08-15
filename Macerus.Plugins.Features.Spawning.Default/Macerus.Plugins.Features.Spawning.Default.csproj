@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.10" />
+    <PackageReference Include="NexusLabs.Contracts" Version="0.0.4" />
+    <PackageReference Include="NexusLabs.Framework" Version="0.0.12" />
+    <PackageReference Include="ProjectXyz" Version="1.0.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Actors.Generation\Macerus.Plugins.Features.GameObjects.Actors.Generation.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Spawning\Macerus.Plugins.Features.Spawning.csproj" />
+  </ItemGroup>
+
+</Project>

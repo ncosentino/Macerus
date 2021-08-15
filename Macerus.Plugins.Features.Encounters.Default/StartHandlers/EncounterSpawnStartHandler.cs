@@ -2,15 +2,13 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using Macerus.Api.Behaviors.Filtering;
-using Macerus.Plugins.Features.Encounters.SpawnTables;
 using Macerus.Plugins.Features.GameObjects.Actors;
+using Macerus.Plugins.Features.Spawning;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
-using ProjectXyz.Plugins.Features.Filtering.Default;
 using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
@@ -21,22 +19,16 @@ namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
         private readonly Lazy<IReadOnlyMapGameObjectManager> _lazyMapGameObjectManager;
         private readonly Lazy<IMacerusActorIdentifiers> _lazyMacerusActorIdentifiers;
         private readonly IEncounterGameObjectPlacer _encounterGameObjectPlacer;
-        private readonly ISpawnTableIdentifiers _spawnTableIdentifiers;
-        private readonly IActorSpawner _actorSpawner;
-        private readonly IFilterContextAmenity _filterContextAmenity;
+        private readonly IActorSpawnerAmenity _actorSpawnerAmenity;
 
         public EncounterSpawnStartHandler(
-            ISpawnTableIdentifiers spawnTableIdentifiers,
-            IActorSpawner actorSpawner,
-            IFilterContextAmenity filterContextAmenity,
+            IActorSpawnerAmenity actorSpawnerAmenity,
             IEncounterGameObjectPlacer encounterGameObjectPlacer,
             ISpawnTableRepositoryFacade spawnTableRepositoryFacade,
             Lazy<IReadOnlyMapGameObjectManager> lazyMapGameObjectManager,
             Lazy<IMacerusActorIdentifiers> lazyMacerusActorIdentifiers)
         {
-            _spawnTableIdentifiers = spawnTableIdentifiers;
-            _actorSpawner = actorSpawner;
-            _filterContextAmenity = filterContextAmenity;
+            _actorSpawnerAmenity = actorSpawnerAmenity;
             _encounterGameObjectPlacer = encounterGameObjectPlacer;
             _spawnTableRepositoryFacade = spawnTableRepositoryFacade;
             _lazyMapGameObjectManager = lazyMapGameObjectManager;
@@ -54,19 +46,11 @@ namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
 
             var spawnTableId = encounterSpawnTableIdBehavior.SpawnTableId;
             var spawnTable = _spawnTableRepositoryFacade.GetForSpawnTableId(spawnTableId);
-            var spawnTableAttribute = _filterContextAmenity.CreateRequiredAttribute(
-                _spawnTableIdentifiers.FilterContextSpawnTableIdentifier,
-                spawnTableId);
-            var spawnFilterContext = filterContext
-                .WithAdditionalAttributes(new[] { spawnTableAttribute })
-                .WithRange(
-                    spawnTable.MinimumGenerateCount,
-                    spawnTable.MaximumGenerateCount);
-
-            var spawns = _actorSpawner
-                .SpawnActors(
-                    spawnFilterContext,
-                    encounterSpawnTableIdBehavior.AdditionalSpawnGeneratorComponents);
+            
+            var spawns = _actorSpawnerAmenity.SpawnActorsFromSpawnTableId(
+                spawnTableId,
+                filterContext,
+                encounterSpawnTableIdBehavior.AdditionalSpawnGeneratorComponents);
             var mapActors = _lazyMapGameObjectManager
                 .Value
                 .GameObjects

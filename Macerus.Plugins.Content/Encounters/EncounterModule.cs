@@ -10,7 +10,7 @@ using Macerus.Plugins.Features.Encounters;
 using Macerus.Plugins.Features.Encounters.Default;
 using Macerus.Plugins.Features.Encounters.Default.EndHandlers;
 using Macerus.Plugins.Features.Encounters.Default.StartHandlers;
-using Macerus.Plugins.Features.Encounters.SpawnTables;
+using Macerus.Plugins.Features.Spawning;
 
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Framework.Autofac;

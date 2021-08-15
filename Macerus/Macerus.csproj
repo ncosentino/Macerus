@@ -96,10 +96,14 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.PartyBar\Macerus.Plugins.Features.PartyBar.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Scripting.Default\Macerus.Plugins.Features.Scripting.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Scripting\Macerus.Plugins.Features.Scripting.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Spawning.Default\Macerus.Plugins.Features.Spawning.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Spawning\Macerus.Plugins.Features.Spawning.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Stats\Macerus.Plugins.Features.Stats.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Stats.Default\Macerus.Plugins.Features.Stats.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.StatusBar.Api\Macerus.Plugins.Features.StatusBar.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.StatusBar.Default\Macerus.Plugins.Features.StatusBar.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Summoning.Default\Macerus.Plugins.Features.Summoning.Default.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Summoning\Macerus.Plugins.Features.Summoning.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Weather\Macerus.Plugins.Features.Weather.csproj" />
     <ProjectReference Include="..\Macerus.Shared.Behaviors\Macerus.Shared.Behaviors.csproj" />
   </ItemGroup>

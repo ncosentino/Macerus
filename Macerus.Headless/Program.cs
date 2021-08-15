@@ -12,7 +12,6 @@ using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.DataPersistence;
 using Macerus.Plugins.Features.Encounters;
-using Macerus.Plugins.Features.Encounters.SpawnTables;
 using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Default;
 using Macerus.Plugins.Features.GameObjects.Actors.Default.AI;
@@ -21,7 +20,9 @@ using Macerus.Plugins.Features.GameObjects.Skills;
 using Macerus.Plugins.Features.Interactions.Api;
 using Macerus.Plugins.Features.MainMenu.Default.NewGame;
 using Macerus.Plugins.Features.Scripting;
+using Macerus.Plugins.Features.Spawning;
 using Macerus.Plugins.Features.StatusBar.Api;
+using Macerus.Plugins.Features.Summoning.Default;
 using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Data.Serialization;
@@ -36,7 +37,10 @@ using ProjectXyz.Plugins.Features.Behaviors.Default;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Default;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Plugins.Features.PartyManagement;
 using ProjectXyz.Plugins.Features.TurnBased;
@@ -49,7 +53,72 @@ namespace Macerus.Headless
         public static async Task Main(string[] args)
         {
             var container = new MacerusContainer();
-            await new SkillCastExercise().Go(container);
+            await new SummonExercise().Go(container);
+        }
+    }
+
+    public sealed class SummonExercise
+    {
+        public async Task Go(MacerusContainer container)
+        {
+            var gameEngine = container.Resolve<IGameEngine>();
+
+            var player = CreatePlayerInstance(container);
+            var movementBehavior = player.GetOnly<IMovementBehavior>();
+            movementBehavior.Direction = 3;
+            player.GetOnly<IDynamicAnimationBehavior>().BaseAnimationId = container.Resolve<IMacerusActorIdentifiers>().AnimationStand;
+
+            container.Resolve<IGameObjectRepository>().Save(player);
+            container.Resolve<IRosterManager>().AddToRoster(player);
+            player.GetOnly<IRosterBehavior>().IsPartyLeader = true;
+
+            var mapManager = container.Resolve<IMapManager>();
+            await mapManager.SwitchMapAsync(new StringIdentifier("swamp"));
+
+            var gameObjectFactory = container.Resolve<IGameObjectFactory>();
+
+            await player.GetOnly<IHasEnchantmentsBehavior>().AddEnchantmentsAsync(gameObjectFactory.Create(new IBehavior[]
+            {
+                new HasStatDefinitionIdBehavior()
+                {
+                    StatDefinitionId = new StringIdentifier("summon"),
+                },
+                new EnchantmentTargetBehavior(new StringIdentifier("owner.owner.owner")),
+                new SummonEnchantmentBehavior(gameObjectFactory.Create(new IBehavior[]
+                {
+                    new SummonSpawnTableBehavior(new StringIdentifier("test-multi-skeleton")),
+                    new SummonLimitStatBehavior(new StringIdentifier("test_summon_skeletons_stat_pair")),
+                })),
+            }));
+
+            //await container
+            //    .Resolve<ICombatTurnManager>()
+            //    .StartCombatAsync(container
+            //        .Resolve<IFilterContextAmenity>()
+            //        .GetContext());
+
+            await gameEngine.UpdateAsync();
+        }
+
+        private IGameObject CreatePlayerInstance(MacerusContainer container)
+        {
+            var filterContextAmenity = container.Resolve<IFilterContextAmenity>();
+            var actorIdentifiers = container.Resolve<IMacerusActorIdentifiers>();
+            var gameObjectIdentifiers = container.Resolve<IGameObjectIdentifiers>();
+            var actorGeneratorFacade = container.Resolve<IActorGeneratorFacade>();
+            var context = filterContextAmenity.CreateFilterContextForSingle(
+                filterContextAmenity.CreateRequiredAttribute(
+                    gameObjectIdentifiers.FilterContextTypeId,
+                    actorIdentifiers.ActorTypeIdentifier),
+                filterContextAmenity.CreateRequiredAttribute(
+                    actorIdentifiers.ActorDefinitionIdentifier,
+                    new StringIdentifier("player")));
+            var player = actorGeneratorFacade
+                .GenerateActors(
+                    context,
+                    new IGeneratorComponent[] { })
+                .Single();
+            return player;
         }
     }
 

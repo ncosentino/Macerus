@@ -3,9 +3,9 @@
 using Autofac;
 
 using Macerus.Api.Behaviors.Filtering;
-using Macerus.Plugins.Features.Encounters.Default.SpawnTables;
-using Macerus.Plugins.Features.Encounters.SpawnTables;
-using Macerus.Plugins.Features.Encounters.SpawnTables.Standard;
+using Macerus.Plugins.Features.Spawning;
+using Macerus.Plugins.Features.Spawning.Default;
+using Macerus.Plugins.Features.Spawning.Standard;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
@@ -16,7 +16,7 @@ using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.SpawnTables
 {
-    public sealed class SpawnTableModule : SingleRegistrationModule
+    public sealed class SummoningModule : SingleRegistrationModule
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {

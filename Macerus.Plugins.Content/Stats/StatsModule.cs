@@ -89,6 +89,8 @@ namespace Macerus.Plugins.Content.Stats
                         [new StringIdentifier("magicresist")] = "MAGIC_RESIST",
                         [new StringIdentifier("magicresistmin")] = "MAGIC_RESIST_MIN",
                         [new StringIdentifier("magicresistmax")] = "MAGIC_RESIST_MAX",
+                        // summoning
+                        [new StringIdentifier("maximum_summon_skeletons")] = "SUMMON_SKELETONS_MAX",
                     };
                     var statDefinitionToTermRepository = new InMemoryStatDefinitionToTermMappingRepository(mapping);
                     return statDefinitionToTermRepository;
