@@ -21,9 +21,9 @@ namespace Macerus.Plugins.Features.Summoning.Default
 
         private IObservableHasEnchantmentsBehavior _hasEnchantmentsBehavior;
 
-        public event EventHandler<SummonEventArgs> Summoned;
+        public event EventHandler<SummonEventArgs> SummonedAsync;
 
-        public event EventHandler<SummonEventArgs> Unsummoned;
+        public event EventHandler<SummonEventArgs> UnsummonedAsync;
 
         public SummoningBehavior(ISummonHandlerFacade summonHandlerFacade)
         {
@@ -56,7 +56,7 @@ namespace Macerus.Plugins.Features.Summoning.Default
                 summoningContext.Summons.Except(summonsToUnsummon));
             _summoningContextsByEnchantment[enchantment] = newContext;
 
-            await Unsummoned
+            await UnsummonedAsync
                 .InvokeOrderedAsync(
                     this,
                     new SummonEventArgs(summonsToUnsummon))
@@ -95,18 +95,18 @@ namespace Macerus.Plugins.Features.Summoning.Default
                 .RemovedEnchantments
                 .SelectMany(x => x
                     .Behaviors
-                    .TakeTypes<SummonEnchantmentBehavior>());
+                    .TakeTypes<ISummonEnchantmentBehavior>());
             // TODO: remove summons......
 
             var addedSummonEnchantmentBehaviors = e
                 .AddedEnchantments
                 .SelectMany(x => x
                     .Behaviors
-                    .TakeTypes<SummonEnchantmentBehavior>());
+                    .TakeTypes<ISummonEnchantmentBehavior>());
             await HandleAddedSummonEnchantmentsAsync(addedSummonEnchantmentBehaviors).ConfigureAwait(false);
         }
 
-        private async Task HandleAddedSummonEnchantmentsAsync(IEnumerable<SummonEnchantmentBehavior> addedSummonEnchantmentBehaviors)
+        private async Task HandleAddedSummonEnchantmentsAsync(IEnumerable<ISummonEnchantmentBehavior> addedSummonEnchantmentBehaviors)
         {
             var newSummons = new List<IGameObject>();
             foreach (var summonEnchantmentBehavior in addedSummonEnchantmentBehaviors)
@@ -123,14 +123,17 @@ namespace Macerus.Plugins.Features.Summoning.Default
                 newSummons.AddRange(summoningContext.Summons);
             }
 
-            await Summoned
-                .InvokeOrderedAsync(
-                    this,
-                    new SummonEventArgs(newSummons.AsFrozenCollection()))
-                .ConfigureAwait(false);
+            if (newSummons.Any())
+            {
+                await SummonedAsync
+                    .InvokeOrderedAsync(
+                        this,
+                        new SummonEventArgs(newSummons.AsFrozenCollection()))
+                    .ConfigureAwait(false);
+            }
         }
 
-        private async Task HandleRemovedSummonEnchantmentsAsync(IEnumerable<SummonEnchantmentBehavior> removedSummonEnchantmentBehaviors)
+        private async Task HandleRemovedSummonEnchantmentsAsync(IEnumerable<ISummonEnchantmentBehavior> removedSummonEnchantmentBehaviors)
         {
             var removedSummons = new List<IGameObject>();
             foreach (var summonEnchantmentBehavior in removedSummonEnchantmentBehaviors)
@@ -145,11 +148,14 @@ namespace Macerus.Plugins.Features.Summoning.Default
                 removedSummons.AddRange(summoningContext.Summons);
             }
 
-            await Unsummoned
-                .InvokeOrderedAsync(
-                    this,
-                    new SummonEventArgs(removedSummons.AsFrozenCollection()))
-                .ConfigureAwait(false);
+            if (removedSummons.Any())
+            {
+                await UnsummonedAsync
+                    .InvokeOrderedAsync(
+                        this,
+                        new SummonEventArgs(removedSummons.AsFrozenCollection()))
+                    .ConfigureAwait(false);
+            }
         }
     }
 }

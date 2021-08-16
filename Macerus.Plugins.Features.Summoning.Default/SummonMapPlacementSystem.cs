@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.GameObjects.Actors;
 
+using NexusLabs.Framework;
+
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
+using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Mapping;
@@ -16,16 +20,24 @@ namespace Macerus.Plugins.Features.Summoning.Default
     public sealed class SummonMapPlacementSystem : IDiscoverableSystem
     {
         private readonly Lazy<IMapGameObjectManager> _lazyMapGameObjectManager;
+        private readonly Lazy<IMapManager> _lazyMapManager;
         private readonly Lazy<IMacerusActorIdentifiers> _lazyMacerusActorIdentifiers;
+        private readonly IRandom _random;
+        private readonly ILogger _logger;
         private readonly Dictionary<IGameObject, ISummoningBehavior> _summoners;
 
         public SummonMapPlacementSystem(
             Lazy<IMapGameObjectManager> lazyMapGameObjectManager,
-            Lazy<IMacerusActorIdentifiers> lazyMacerusActorIdentifiers)
+            Lazy<IMapManager> lazyMapManager,
+            Lazy<IMacerusActorIdentifiers> lazyMacerusActorIdentifiers,
+            IRandom random,
+            ILogger logger)
         {
             _lazyMapGameObjectManager = lazyMapGameObjectManager;
+            _lazyMapManager = lazyMapManager;
             _lazyMacerusActorIdentifiers = lazyMacerusActorIdentifiers;
-
+            _random = random;
+            _logger = logger;
             _summoners = new Dictionary<IGameObject, ISummoningBehavior>();
 
             // FIXME: no point in lazy because of this?
@@ -36,6 +48,37 @@ namespace Macerus.Plugins.Features.Summoning.Default
 
         public async Task UpdateAsync(ISystemUpdateContext systemUpdateContext)
         {
+        }
+
+        private void PositionSummon(
+            IGameObject summoner, 
+            IGameObject summon)
+        {
+            _logger.Debug(
+                $"Positioning summon '{summon}' for '{summoner}'...");
+
+            var summonerPosition = summoner.GetOnly<IReadOnlyPositionBehavior>();
+            var adjacentPositions = _lazyMapManager
+                .Value
+                .PathFinder
+                .GetFreeAdjacentPositionsToTile(summonerPosition.GetPosition(), true)
+                .ToArray();
+            if (!adjacentPositions.Any())
+            {
+                throw new InvalidOperationException(
+                    "FIXME: need to make summon positioning based on skill " +
+                    "targeting, and validate at time of casting that we have " +
+                    "enough positions to place summons.");
+            }
+
+            var positionIndex = _random.Next(0, adjacentPositions.Length);
+            var chosenPosition = adjacentPositions[positionIndex];
+            var gameObjectPosition = summon.GetOnly<IPositionBehavior>();
+            gameObjectPosition.SetPosition(chosenPosition);
+
+            _logger.Debug(
+                $"Positioned summon '{summon}' for '{summoner}' at " +
+                $"({chosenPosition.X},{chosenPosition.Y}).");
         }
 
         private void MapGameObjectManager_Synchronized(
@@ -57,8 +100,8 @@ namespace Macerus.Plugins.Features.Summoning.Default
                 .Where(x => x.SummoningBehavior != null))
             {
                 _summoners[summonerEntry.Actor] = summonerEntry.SummoningBehavior;
-                summonerEntry.SummoningBehavior.Summoned += SummoningBehavior_Summoned;
-                summonerEntry.SummoningBehavior.Unsummoned += SummoningBehavior_Unsummoned;
+                summonerEntry.SummoningBehavior.SummonedAsync += SummoningBehavior_Summoned;
+                summonerEntry.SummoningBehavior.UnsummonedAsync += SummoningBehavior_Unsummoned;
             }
 
             foreach (var gameObject in e.Removed)
@@ -70,24 +113,49 @@ namespace Macerus.Plugins.Features.Summoning.Default
                     continue;
                 }
 
-                summoningBehavior.Summoned -= SummoningBehavior_Summoned;
-                summoningBehavior.Unsummoned -= SummoningBehavior_Unsummoned;
+                summoningBehavior.SummonedAsync -= SummoningBehavior_Summoned;
+                summoningBehavior.UnsummonedAsync -= SummoningBehavior_Unsummoned;
             }
         }
 
-        private void SummoningBehavior_Unsummoned(
+        private async void SummoningBehavior_Unsummoned(
             object sender,
             SummonEventArgs e)
         {
-            _lazyMapGameObjectManager.Value.MarkForRemoval(e.Summons);
+            _logger.Debug(
+                $"Unsummoning {e.Summons.Count} summons for '{((IBehavior)sender).Owner}'...");
+            _lazyMapGameObjectManager
+                .Value
+                .MarkForRemoval(e.Summons);
+            await _lazyMapGameObjectManager
+                .Value
+                .SynchronizeAsync()
+                .ConfigureAwait(false);
+            _logger.Debug(
+                $"Unsummoned {e.Summons.Count} summons for '{((IBehavior)sender).Owner}'.");
         }
 
-        private void SummoningBehavior_Summoned(
+        private async void SummoningBehavior_Summoned(
             object sender,
             SummonEventArgs e)
         {
+            var summoner = ((IBehavior)sender).Owner;
+
+            _logger.Debug(
+                $"Summoning {e.Summons.Count} summons for '{summoner}'...");
             _lazyMapGameObjectManager.Value.MarkForAddition(e.Summons);
-            // FIXME: where do these need to get placed?
+           
+            foreach (var summon in e.Summons)
+            {
+                PositionSummon(summoner, summon);
+            }
+
+            await _lazyMapGameObjectManager
+                .Value
+                .SynchronizeAsync()
+                .ConfigureAwait(false);
+            _logger.Debug(
+                $"Summoned {e.Summons.Count} summons for '{summoner}'.");
         }
     }
 }

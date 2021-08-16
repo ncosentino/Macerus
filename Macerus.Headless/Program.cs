@@ -42,6 +42,7 @@ using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Plugins.Features.Mapping;
+using ProjectXyz.Plugins.Features.Mapping.Default;
 using ProjectXyz.Plugins.Features.PartyManagement;
 using ProjectXyz.Plugins.Features.TurnBased;
 using ProjectXyz.Shared.Framework;

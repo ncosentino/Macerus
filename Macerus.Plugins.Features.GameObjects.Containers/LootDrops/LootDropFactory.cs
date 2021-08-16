@@ -7,8 +7,8 @@ using Macerus.Plugins.Features.GameObjects.Containers.Api.LootDrops;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
-using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Mapping.Default;
 
 namespace Macerus.Plugins.Features.GameObjects.Containers.LootDrops
 {

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Macerus.Plugins.Features.GameObjects.Enchantments;
+using Macerus.Plugins.Features.Summoning.Default;
 
 using NexusLabs.Contracts;
 
 using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.BaseStatEnchantments.Enchantments;
@@ -28,17 +30,20 @@ namespace Macerus.Plugins.Content.Enchantments
     {
         private readonly IEnchantmentIdentifiers _enchantmentIdentifiers;
         private readonly ICalculationPriorityFactory _calculationPriorityFactory;
+        private readonly IGameObjectFactory _gameObjectFactory;
         private readonly List<Func<IBehavior>> _statefulBehaviors;
 
         private IEnchantmentDefinition _current;
 
         public EnchantmentDefinitionBuilder(
             IEnchantmentIdentifiers enchantmentIdentifiers,
-            ICalculationPriorityFactory calculationPriorityFactory)
+            ICalculationPriorityFactory calculationPriorityFactory,
+            IGameObjectFactory gameObjectFactory)
         {
             _statefulBehaviors = new List<Func<IBehavior>>();
             _enchantmentIdentifiers = enchantmentIdentifiers;
             _calculationPriorityFactory = calculationPriorityFactory;
+            _gameObjectFactory = gameObjectFactory;
             Reset();
         }
 
@@ -113,6 +118,29 @@ namespace Macerus.Plugins.Content.Enchantments
                 _current.GeneratorComponents.AppendSingle(new EnchantmentTargetGeneratorComponent(new StringIdentifier("owner.owner.owner"))));
 
             return this;
+        }
+
+        public EnchantmentDefinitionBuilder ThatSummons(
+            IIdentifier spawnTableId,
+            IIdentifier summonLimitStatPairId)
+        {
+            var builder = WithStatDefinitionId(new StringIdentifier("summon"));
+
+            // FIXME: properly check if we can add these behaviors/components
+
+            _current = new EnchantmentDefinition(
+                _current.SupportedAttributes,
+                _current.GeneratorComponents.Concat(new IGeneratorComponent[]
+                {
+                    new StatelessBehaviorGeneratorComponent(
+                        new SummonEnchantmentBehavior(_gameObjectFactory.Create(new IBehavior[]
+                        {
+                            new SummonSpawnTableBehavior(spawnTableId),
+                            new SummonLimitStatBehavior(summonLimitStatPairId),
+                        }))),
+                }));
+
+            return builder;
         }
 
         public EnchantmentDefinitionBuilder ThatHasValueInRange(

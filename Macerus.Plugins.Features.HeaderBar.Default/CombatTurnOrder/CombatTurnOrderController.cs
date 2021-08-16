@@ -11,6 +11,7 @@ using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder
 {
@@ -22,6 +23,7 @@ namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder
         private readonly IGameObjectToCombatTurnOrderPortraitConverter _gameObjectToCombatTurnOrderPortraitConverter;
         private readonly Lazy<ICameraManager> _lazyCameraManager;
         private readonly Lazy<IMappingAmenity> _lazyMappingAmenity;
+        private readonly Lazy<IMapGameObjectManager> _lazyMapGameObjectManager;
 
         public CombatTurnOrderController(
             IFilterContextProvider filterContextProvider,
@@ -29,7 +31,8 @@ namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder
             ICombatTurnOrderViewModel combatTurnOrderViewModel,
             IGameObjectToCombatTurnOrderPortraitConverter gameObjectToCombatTurnOrderPortraitConverter,
             Lazy<ICameraManager> lazyCameraManager,
-            Lazy<IMappingAmenity> lazyMappingAmenity)
+            Lazy<IMappingAmenity> lazyMappingAmenity,
+            Lazy<IMapGameObjectManager> lazyMapGameObjectManager)
         {
             _filterContextProvider = filterContextProvider;
             _combatTurnManager = combatTurnManager;
@@ -37,8 +40,12 @@ namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder
             _gameObjectToCombatTurnOrderPortraitConverter = gameObjectToCombatTurnOrderPortraitConverter;
             _lazyCameraManager = lazyCameraManager;
             _lazyMappingAmenity = lazyMappingAmenity;
+            _lazyMapGameObjectManager = lazyMapGameObjectManager;
+
             _combatTurnManager.CombatStarted += CombatTurnManager_CombatStarted;
             _combatTurnManager.CombatEnded += CombatTurnManager_CombatEnded;
+            // FIXME: does this defeat the point of lazy?
+            _lazyMapGameObjectManager.Value.Synchronized += MapGameObjectManager_Synchronized;
         }
 
         public double UpdateIntervalInSeconds { get; } = TimeSpan.FromDays(99).TotalSeconds;
@@ -97,6 +104,10 @@ namespace Macerus.Plugins.Features.HeaderBar.Default.CombatTurnOrder
         private void CombatTurnManager_TurnProgressed(
             object sender,
             TurnProgressedEventArgs e) => RefreshPortraits();
+
+        private void MapGameObjectManager_Synchronized(
+            object sender,
+            GameObjectsSynchronizedEventArgs e) => RefreshPortraits();
 
         private void CombatTurnManager_CombatEnded(
             object sender,

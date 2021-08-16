@@ -24,6 +24,7 @@ using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Actors;
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
+using ProjectXyz.Plugins.Features.Mapping.Default;
 using ProjectXyz.Plugins.Features.PartyManagement.Default;
 using ProjectXyz.Plugins.Features.Stats.Default;
 using ProjectXyz.Shared.Framework;
@@ -129,6 +130,7 @@ namespace Macerus.Plugins.Content.Actors
                                     [new StringIdentifier("heal")] = 1,
                                     [new StringIdentifier("fireball")] = 1,
                                     [new StringIdentifier("passive-green-glow")] = 1,
+                                    [new StringIdentifier("summon-skeleton")] = 1,
                                 }),
                                 new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
@@ -144,6 +146,7 @@ namespace Macerus.Plugins.Content.Actors
                                     [actorIdentifiers.MoveDiagonallyStatDefinitionId] = 0, // FIXME: just for testing
                                     [actorIdentifiers.LevelStatDefinitionId] = 1,
                                     [actorIdentifiers.ExperienceForNextLevelStatDefinitionId] = 100, // FIXME: just for testing
+                                    [new StringIdentifier("maximum_summon_skeletons")] = 2, // FIXME: just for testing
 
                                 }),
                             },
@@ -188,6 +191,7 @@ namespace Macerus.Plugins.Content.Actors
                                     [new StringIdentifier("default-attack")] = 1,
                                     [new StringIdentifier("default-defend")] = 1,
                                     [new StringIdentifier("fireball")] = 1,
+                                    [new StringIdentifier("summon-skeleton")] = 1,
                                 }),
                                 new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
@@ -203,6 +207,7 @@ namespace Macerus.Plugins.Content.Actors
                                     [actorIdentifiers.MoveDiagonallyStatDefinitionId] = 0, // FIXME: just for testing
                                     [actorIdentifiers.LevelStatDefinitionId] = 1,
                                     [actorIdentifiers.ExperienceForNextLevelStatDefinitionId] = 100, // FIXME: just for testing
+                                    [new StringIdentifier("maximum_summon_skeletons")] = 2, // FIXME: just for testing
                                 }),
                             },
                             new IFilterAttribute[]

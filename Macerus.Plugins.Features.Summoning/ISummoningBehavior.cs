@@ -11,9 +11,9 @@ namespace Macerus.Plugins.Features.Summoning
 {
     public interface ISummoningBehavior : IBehavior
     {
-        event EventHandler<SummonEventArgs> Summoned;
+        event EventHandler<SummonEventArgs> SummonedAsync;
 
-        event EventHandler<SummonEventArgs> Unsummoned;
+        event EventHandler<SummonEventArgs> UnsummonedAsync;
 
         IReadOnlyDictionary<IGameObject, IFrozenCollection<IGameObject>> SummonsByEnchantment { get; }
 

@@ -13,8 +13,8 @@ using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Api.Systems;
 using ProjectXyz.Plugins.Features.Combat.Api;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Plugins.Features.TurnBased;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors.Default

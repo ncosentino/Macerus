@@ -27,6 +27,10 @@ namespace Macerus.Plugins.Features.Spawning.Default.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
+                .RegisterType<TeamAssignmentSummonHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                .RegisterType<SummonLimitingSystem>()
                .AsImplementedInterfaces()
                .SingleInstance();

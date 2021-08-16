@@ -97,6 +97,23 @@ namespace Macerus.Plugins.Content.Skills
                                             Tuple.Create(0, 1),
                                             Tuple.Create(0, 2)))),
                         SkillDefinition
+                            .FromId("summon-skeleton")
+                            .WithDisplayName("Summon Skeleton")
+                            .WithDisplayIcon(@"graphics\skills\heal")
+                            .WithResourceRequirement(4, 10)
+                            .CanBeUsedInCombat()
+                            .CanBeUsedOutOfCombat()
+                            .WithActorAnimation(actorIdentifiers.AnimationCast)
+                            .HasEffects(
+                                SkillEffectExecutors.Single(
+                                    SkillEffectDefinition
+                                        .New
+                                        .Enchant("summon-skeleton-enchantment")
+                                        .Targets(
+                                            new [] { 0 },
+                                            Tuple.Create(0, 0),
+                                            Tuple.Create(0, 0)))),
+                        SkillDefinition
                             .FromId("passive-green-glow")
                             .WithDisplayName("Passive Green Glow")
                             .WithDisplayIcon(@"graphics\skills\heal")

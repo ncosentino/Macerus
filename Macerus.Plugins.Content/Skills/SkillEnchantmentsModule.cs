@@ -125,6 +125,14 @@ namespace Macerus.Plugins.Content.Skills
                             .ThatsUsedForPassiveSkill()
                             .ThatModifiesBaseStatWithExpression("RAIN_DURATION_MAXIMUM * 2.5")
                             .Build(),
+                        enchantmentDefinitionBuilder
+                            .WithEnchantmentDefinitionId(new StringIdentifier("summon-skeleton-enchantment"))
+                            .ThatSummons(
+                                new StringIdentifier("test-multi-skeleton"),
+                                new StringIdentifier("test_summon_skeletons_stat_pair"))
+                            .ThatAppliesEffectsToSkillUser()
+                            .ThatExpiresAfterTurns(2)
+                            .Build(),
                     };
                     var repository = new InMemoryEnchantmentDefinitionRepository(
                         c.Resolve<IAttributeFilterer>(),
