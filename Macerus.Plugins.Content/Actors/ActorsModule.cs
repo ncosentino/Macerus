@@ -185,13 +185,13 @@ namespace Macerus.Plugins.Content.Actors
                                         new CanEquipBehavior(humanoidEquipSlotIds),
                                         new HasPrefabResourceIdBehavior(new StringIdentifier("Mapping/Prefabs/Actors/PlayerPlaceholder")),
                                         new HasDisplayIconBehavior(new StringIdentifier("graphics/actors/portraits/do-not-distribute/test-player-male")),
+                                        summoningBehaviorFactory.Create(),
                                     }),
                                 new HasSkillsGeneratorComponent(new Dictionary<IIdentifier, int>()
                                 {
                                     [new StringIdentifier("default-attack")] = 1,
                                     [new StringIdentifier("default-defend")] = 1,
                                     [new StringIdentifier("fireball")] = 1,
-                                    [new StringIdentifier("summon-skeleton")] = 1,
                                 }),
                                 new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
