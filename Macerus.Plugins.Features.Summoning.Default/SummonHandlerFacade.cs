@@ -9,10 +9,17 @@ namespace Macerus.Plugins.Features.Summoning.Default
     {
         private readonly Lazy<IReadOnlyCollection<IDiscoverableSummonHandler>> _summonHandlers;
 
-        public SummonHandlerFacade(Lazy<IEnumerable<IDiscoverableSummonHandler>> lazySummonHandlers)
+        public SummonHandlerFacade(
+            Lazy<IEnumerable<IDiscoverableSummonHandler>> lazySummonHandlers,
+            Lazy<ISummonHandlerLoadOrder> lazySummonHandlerLoadOrder)
         {
             _summonHandlers = new Lazy<IReadOnlyCollection<IDiscoverableSummonHandler>>(() =>
-                lazySummonHandlers.Value.ToArray());
+                lazySummonHandlers
+                    .Value
+                    .OrderBy(x => lazySummonHandlerLoadOrder
+                        .Value
+                        .GetOrder(x))
+                    .ToArray());
         }
 
         public async Task<ISummoningContext> HandleSummoningAsync(ISummoningContext summoningContext)

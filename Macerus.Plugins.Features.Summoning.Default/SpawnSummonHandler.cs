@@ -17,6 +17,8 @@ namespace Macerus.Plugins.Features.Summoning.Default
             _lazyActorSpawnerAmenity = lazyActorSpawnerAmenity;
         }
 
+        public int? Priority => 10000;
+
         public async Task<ISummoningContext> HandleSummoningAsync(ISummoningContext summoningContext)
         {
             var summonDefinition = summoningContext

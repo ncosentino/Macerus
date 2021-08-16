@@ -2,5 +2,6 @@
 {
     public interface IDiscoverableSummonHandler : ISummonHandler
     {
+        int? Priority { get; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Autofac;
 
+using Macerus.Plugins.Features.Summoning;
 using Macerus.Plugins.Features.Summoning.Default;
 
 using ProjectXyz.Framework.Autofac;
@@ -41,6 +42,11 @@ namespace Macerus.Plugins.Features.Spawning.Default.Autofac
             builder
                .RegisterType<SummonLimitStatPairRepositoryFacade>()
                .AsImplementedInterfaces()
+               .SingleInstance();
+            builder
+               .RegisterType<NoneSummonHandlerLoadOrder>()
+               .AsImplementedInterfaces()
+               .IfNotRegistered(typeof(ISummonHandlerLoadOrder))
                .SingleInstance();
         }
     }

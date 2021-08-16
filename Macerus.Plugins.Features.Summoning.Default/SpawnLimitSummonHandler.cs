@@ -23,6 +23,8 @@ namespace Macerus.Plugins.Features.Summoning.Default
             _summonLimitStatPairRepository = summonLimitStatPairRepository;
         }
 
+        public int? Priority => 20000;
+
         public async Task<ISummoningContext> HandleSummoningAsync(ISummoningContext summoningContext)
         {
             var summonDefinition = summoningContext
