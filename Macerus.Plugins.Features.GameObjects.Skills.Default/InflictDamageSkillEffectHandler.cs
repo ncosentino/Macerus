@@ -43,13 +43,14 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 
         public int? Priority { get; } = null;
 
-        public async Task HandleAsync(
+        public async Task<IGameObject> HandleAsync(
             IGameObject user,
+            IGameObject skill,
             IGameObject skillEffect)
         {
             if (!skillEffect.TryGetFirst<IInflictDamageBehavior>(out var inflictDamageBehavior))
             {
-                return;
+                return skillEffect;
             }
 
             var userEnchantments = user.GetOnly<IHasEnchantmentsBehavior>();
@@ -86,6 +87,8 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                         skillEffect)
                     .ConfigureAwait(false);
             }
+
+            return skillEffect;
         }
     }
 }

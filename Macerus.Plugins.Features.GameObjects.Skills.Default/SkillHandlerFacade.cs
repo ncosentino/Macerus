@@ -49,7 +49,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                     {
                         foreach (var effect in effectsToExecute)
                         {
-                            await HandleSkillEffectAsync(user, effect).ConfigureAwait(false);
+                            await HandleSkillEffectAsync(user, skill, effect).ConfigureAwait(false);
                         }
 
                         continue;
@@ -57,7 +57,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 
                     if (executorBehavior is IParallelSkillEffectExecutorBehavior)
                     {
-                        var tasks = effectsToExecute.Select(effect => HandleSkillEffectAsync(user, effect));
+                        var tasks = effectsToExecute.Select(effect => HandleSkillEffectAsync(user, skill, effect));
                         await Task
                             .WhenAll(tasks)
                             .ConfigureAwait(false);
@@ -72,11 +72,20 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             }
         }
 
-        private async Task HandleSkillEffectAsync(IGameObject user, IGameObject skillEffect)
+        private async Task HandleSkillEffectAsync(
+            IGameObject user,
+            IGameObject skill,
+            IGameObject skillEffect)
         {
+            var updatedSkillEffect = skillEffect;
             foreach (var handler in _lazySkillEffectHandlers.Value)
             {
-                await handler.HandleAsync(user, skillEffect);
+                updatedSkillEffect = await handler
+                    .HandleAsync(
+                        user, 
+                        skill,
+                        updatedSkillEffect)
+                    .ConfigureAwait(false);
             }
         }
     }

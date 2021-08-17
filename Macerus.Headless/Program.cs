@@ -78,19 +78,26 @@ namespace Macerus.Headless
 
             var gameObjectFactory = container.Resolve<IGameObjectFactory>();
 
-            await player.GetOnly<IHasEnchantmentsBehavior>().AddEnchantmentsAsync(gameObjectFactory.Create(new IBehavior[]
-            {
-                new HasStatDefinitionIdBehavior()
-                {
-                    StatDefinitionId = new StringIdentifier("summon"),
-                },
-                new EnchantmentTargetBehavior(new StringIdentifier("owner.owner.owner")),
-                new SummonEnchantmentBehavior(gameObjectFactory.Create(new IBehavior[]
-                {
-                    new SummonSpawnTableBehavior(new StringIdentifier("test-multi-skeleton")),
-                    new SummonLimitStatBehavior(new StringIdentifier("test_summon_skeletons_stat_pair")),
-                })),
-            }));
+            var skill = container
+                .Resolve<ISkillAmenity>()
+                .GetSkillById(new StringIdentifier("summon-skeleton"));
+            await container
+                .Resolve<ISkillHandlerFacade>()
+                .HandleSkillAsync(player, skill);
+
+            //await player.GetOnly<IHasEnchantmentsBehavior>().AddEnchantmentsAsync(gameObjectFactory.Create(new IBehavior[]
+            //{
+            //    new HasStatDefinitionIdBehavior()
+            //    {
+            //        StatDefinitionId = new StringIdentifier("summon"),
+            //    },
+            //    new EnchantmentTargetBehavior(new StringIdentifier("owner.owner.owner")),
+            //    new SummonEnchantmentBehavior(gameObjectFactory.Create(new IBehavior[]
+            //    {
+            //        new SummonSpawnTableBehavior(new StringIdentifier("test-multi-skeleton")),
+            //        new SummonLimitStatBehavior(new StringIdentifier("test_summon_skeletons_stat_pair")),
+            //    })),
+            //}));
 
             //await container
             //    .Resolve<ICombatTurnManager>()

@@ -12,6 +12,14 @@ namespace Macerus.Plugins.Features.Spawning.Default.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
+                .RegisterType<SummoningSkillEffectHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<SummoningSkillEffectComponentConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<SummoningBehaviorFactory>()
                 .AsImplementedInterfaces()
                 .SingleInstance();

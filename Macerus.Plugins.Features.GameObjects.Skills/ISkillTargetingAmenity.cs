@@ -9,10 +9,10 @@ namespace Macerus.Plugins.Features.GameObjects.Skills
     {
         IEnumerable<IGameObject> FindTargetsForSkillEffect(
             IGameObject user,
-            IGameObject skill);
+            IGameObject skillEffect);
 
         Tuple<int, IEnumerable<Vector2>> FindTargetLocationsForSkillEffect(
             IGameObject user,
-            IGameObject skill);
+            IGameObject skillEffect);
     }
 }

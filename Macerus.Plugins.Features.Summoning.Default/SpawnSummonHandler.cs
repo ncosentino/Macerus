@@ -27,7 +27,7 @@ namespace Macerus.Plugins.Features.Summoning.Default
             var summonedActors = _lazyActorSpawnerAmenity
                 .Value
                 .SpawnActorsFromSpawnTableId(summonDefinition
-                    .GetOnly<SummonSpawnTableBehavior>()
+                    .GetOnly<ISummonSpawnTableBehavior>()
                     .SpawnTableId);
             var newContext = new SummoningContext(
                 summoningContext.Summoner,

@@ -4,7 +4,9 @@ using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Plugins.Features.Summoning.Default
 {
-    public sealed class SummonSpawnTableBehavior : BaseBehavior
+    public sealed class SummonSpawnTableBehavior :
+        BaseBehavior,
+        ISummonSpawnTableBehavior
     {
         public SummonSpawnTableBehavior(IIdentifier spawnTableId)
         {

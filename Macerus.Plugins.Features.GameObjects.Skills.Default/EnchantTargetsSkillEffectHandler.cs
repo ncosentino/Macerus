@@ -26,13 +26,14 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 
         public int? Priority { get; } = int.MinValue;
 
-        public async Task HandleAsync(
+        public async Task<IGameObject> HandleAsync(
             IGameObject user,
+            IGameObject skill,
             IGameObject skillEffect)
         {
             if (!skillEffect.TryGetFirst<IApplyEnchantmentsBehavior>(out var enchantTargetsBehavior))
             {
-                return;
+                return skillEffect;
             }
 
             var statefulEnchantments = _enchantmentLoader
@@ -49,6 +50,8 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
                     .ConfigureAwait(false);
                 _logger.Debug($"{user} enchanted {target} using skill effect '{skillEffect}'.");
             }
+
+            return skillEffect;
         }
     }
 }

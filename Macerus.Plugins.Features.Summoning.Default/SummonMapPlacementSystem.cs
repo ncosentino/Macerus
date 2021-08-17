@@ -52,11 +52,13 @@ namespace Macerus.Plugins.Features.Summoning.Default
 
         private void PositionSummon(
             IGameObject summoner, 
-            IGameObject summon)
+            IGameObject summon,
+            ISummonTargetLocationBehavior summonTargetLocationBehavior)
         {
             _logger.Debug(
                 $"Positioning summon '{summon}' for '{summoner}'...");
 
+            // FIXME: actually use the SummonTargetLocationBehavior to position these things properly
             var summonerPosition = summoner.GetOnly<IReadOnlyPositionBehavior>();
             var adjacentPositions = _lazyMapManager
                 .Value
@@ -140,6 +142,9 @@ namespace Macerus.Plugins.Features.Summoning.Default
             SummonEventArgs e)
         {
             var summoner = ((IBehavior)sender).Owner;
+            var summonTargetLocationBehavior = e
+                .SummoningEnchantment
+                .GetOnly<ISummonTargetLocationBehavior>();
 
             _logger.Debug(
                 $"Summoning {e.Summons.Count} summons for '{summoner}'...");
@@ -147,7 +152,7 @@ namespace Macerus.Plugins.Features.Summoning.Default
            
             foreach (var summon in e.Summons)
             {
-                PositionSummon(summoner, summon);
+                PositionSummon(summoner, summon, summonTargetLocationBehavior);
             }
 
             await _lazyMapGameObjectManager

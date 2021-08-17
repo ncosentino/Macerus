@@ -4,11 +4,12 @@ using System.Linq;
 using Autofac;
 
 using Macerus.Plugins.Features.GameObjects.Actors;
-
+using Macerus.Plugins.Features.Summoning.Default;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Plugins.Features.GameObjects.Skills.Effects;
+using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Content.Skills
 {
@@ -108,7 +109,7 @@ namespace Macerus.Plugins.Content.Skills
                                 SkillEffectExecutors.Single(
                                     SkillEffectDefinition
                                         .New
-                                        .Enchant("summon-skeleton-enchantment")
+                                        .Summons(new StringIdentifier("summon-skeleton-enchantment"))
                                         .Targets(
                                             new [] { 0 },
                                             Tuple.Create(0, 0),

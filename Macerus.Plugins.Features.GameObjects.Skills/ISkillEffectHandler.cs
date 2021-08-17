@@ -6,8 +6,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills
 {
     public interface ISkillEffectHandler
     {
-        Task HandleAsync(
+        Task<IGameObject> HandleAsync(
             IGameObject user,
+            IGameObject skill,
             IGameObject skillEffect);
     }
 }
