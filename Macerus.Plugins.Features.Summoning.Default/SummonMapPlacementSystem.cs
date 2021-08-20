@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 
 using Macerus.Plugins.Features.GameObjects.Actors;
+using Macerus.Plugins.Features.GameObjects.Skills;
 
 using NexusLabs.Framework;
 
@@ -20,7 +21,7 @@ namespace Macerus.Plugins.Features.Summoning.Default
     public sealed class SummonMapPlacementSystem : IDiscoverableSystem
     {
         private readonly Lazy<IMapGameObjectManager> _lazyMapGameObjectManager;
-        private readonly Lazy<IMapManager> _lazyMapManager;
+        private readonly Lazy<ISkillTargetingAmenity> _lazySkillTargetingAmenity;
         private readonly Lazy<IMacerusActorIdentifiers> _lazyMacerusActorIdentifiers;
         private readonly IRandom _random;
         private readonly ILogger _logger;
@@ -28,13 +29,13 @@ namespace Macerus.Plugins.Features.Summoning.Default
 
         public SummonMapPlacementSystem(
             Lazy<IMapGameObjectManager> lazyMapGameObjectManager,
-            Lazy<IMapManager> lazyMapManager,
+            Lazy<ISkillTargetingAmenity> lazySkillTargetingAmenity,
             Lazy<IMacerusActorIdentifiers> lazyMacerusActorIdentifiers,
             IRandom random,
             ILogger logger)
         {
             _lazyMapGameObjectManager = lazyMapGameObjectManager;
-            _lazyMapManager = lazyMapManager;
+            _lazySkillTargetingAmenity = lazySkillTargetingAmenity;
             _lazyMacerusActorIdentifiers = lazyMacerusActorIdentifiers;
             _random = random;
             _logger = logger;
@@ -58,23 +59,18 @@ namespace Macerus.Plugins.Features.Summoning.Default
             _logger.Debug(
                 $"Positioning summon '{summon}' for '{summoner}'...");
 
-            // FIXME: actually use the SummonTargetLocationBehavior to position these things properly
-            var summonerPosition = summoner.GetOnly<IReadOnlyPositionBehavior>();
-            var adjacentPositions = _lazyMapManager
+            var summonablePositions = _lazySkillTargetingAmenity
                 .Value
-                .PathFinder
-                .GetFreeAdjacentPositionsToTile(summonerPosition.GetPosition(), true)
+                .GetUnobstructedTilePositions(summonTargetLocationBehavior.Locations)
                 .ToArray();
-            if (!adjacentPositions.Any())
+            if (!summonablePositions.Any())
             {
                 throw new InvalidOperationException(
-                    "FIXME: need to make summon positioning based on skill " +
-                    "targeting, and validate at time of casting that we have " +
-                    "enough positions to place summons.");
+                    "// FIXME: There's no free space around the summoner!");
             }
 
-            var positionIndex = _random.Next(0, adjacentPositions.Length);
-            var chosenPosition = adjacentPositions[positionIndex];
+            var positionIndex = _random.Next(0, summonablePositions.Length);
+            var chosenPosition = summonablePositions[positionIndex];
             var gameObjectPosition = summon.GetOnly<IPositionBehavior>();
             gameObjectPosition.SetPosition(chosenPosition);
 

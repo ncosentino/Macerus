@@ -14,5 +14,9 @@ namespace Macerus.Plugins.Features.GameObjects.Skills
         Tuple<int, IEnumerable<Vector2>> FindTargetLocationsForSkillEffect(
             IGameObject user,
             IGameObject skillEffect);
+
+        IEnumerable<Vector2> GetUnobstructedTilePositions(IEnumerable<Vector2> positions);
+
+        IEnumerable<Vector2> GetObstructedTilePositions(IEnumerable<Vector2> positions);
     }
 }

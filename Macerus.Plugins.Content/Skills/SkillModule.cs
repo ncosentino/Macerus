@@ -113,7 +113,14 @@ namespace Macerus.Plugins.Content.Skills
                                         .Targets(
                                             new [] { 0 },
                                             Tuple.Create(0, 0),
-                                            Tuple.Create(0, 0)))),
+                                            Tuple.Create(0, 1),
+                                            Tuple.Create(0, -1),
+                                            Tuple.Create(1, 0),
+                                            Tuple.Create(1, 1),
+                                            Tuple.Create(1, -1),
+                                            Tuple.Create(-1, 0),
+                                            Tuple.Create(-1, 1),
+                                            Tuple.Create(-1, -1)))),
                         SkillDefinition
                             .FromId("passive-green-glow")
                             .WithDisplayName("Passive Green Glow")

@@ -5,7 +5,6 @@ using System.Numerics;
 
 using Macerus.Api.Behaviors;
 using Macerus.Plugins.Features.Combat.Api;
-using Macerus.Plugins.Features.GameObjects.Skills;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
@@ -19,13 +18,36 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
     {
         private readonly ICombatTeamIdentifiers _combatTeamIdentifiers;
         private readonly IMapGameObjectManager _mapGameObjectManager;
+        private readonly IMapManager _mapManager;
 
         public SkillTargetingAmenity(
             ICombatTeamIdentifiers combatTeamIdentifiers,
-            IMapGameObjectManager mapGameObjectManager)
+            IMapGameObjectManager mapGameObjectManager,
+            IMapManager mapManager)
         {
             _combatTeamIdentifiers = combatTeamIdentifiers;
             _mapGameObjectManager = mapGameObjectManager;
+            _mapManager = mapManager;
+        }
+
+        public IEnumerable<Vector2> GetUnobstructedTilePositions(IEnumerable<Vector2> positions)
+        {
+            var results = positions
+                .Where(pos => !_mapManager
+                    .PathFinder
+                    .GetGameObjectsAtTile(pos)
+                    .Any());
+            return results;
+        }
+
+        public IEnumerable<Vector2> GetObstructedTilePositions(IEnumerable<Vector2> positions)
+        {
+            var results = positions
+                .Where(pos => _mapManager
+                    .PathFinder
+                    .GetGameObjectsAtTile(pos)
+                    .Any());
+            return results;
         }
 
         public IEnumerable<IGameObject> FindTargetsForSkillEffect(
