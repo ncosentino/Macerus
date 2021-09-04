@@ -8,6 +8,8 @@ using Macerus.ContentCreator.MapEditor.Behaviors.Shared;
 using Macerus.Plugins.Features.Encounters.Default;
 using Macerus.Plugins.Features.Encounters.Default.Triggers;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
+using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Static.Doors;
 using Macerus.Plugins.Features.Mapping;
 using Macerus.Shared.Behaviors;
@@ -22,9 +24,12 @@ using ProjectXyz.Plugins.Features.Behaviors.Default;
 using ProjectXyz.Plugins.Features.CommonBehaviors;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
+using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation.Default;
 using ProjectXyz.Plugins.Features.GameObjects.Generation.Default;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Socketing;
 using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Plugins.Features.Mapping.Default;
 using ProjectXyz.Plugins.Features.Weather.Default;
@@ -69,7 +74,23 @@ namespace Macerus.Plugins.Content.Data
                         [typeof(EditorPrefabResourceIdBehavior)] = "EditorPrefabIdBehavior",
                         [typeof(EditorNameBehavior)] = "ename",
                         [typeof(TriggerOnCombatEndBehavior)] = "TriggerOnCombatEndBehavior",
-                        [typeof(MapWeatherTableBehavior)] = "MapWeatherTableBehavior",                        
+                        [typeof(MapWeatherTableBehavior)] = "MapWeatherTableBehavior",
+                        [typeof(ItemDefinitionIdentifierBehavior)] = "ItemDefinitionIdBehavior",
+                        [typeof(HasInventoryDisplayName)] = "InventoryName",
+                        [typeof(HasInventoryIcon)] = "InventoryIcon",
+                        [typeof(HasInventoryBackgroundColor)] = "InventoryBackgroundColor",
+                        [typeof(CanBeEquippedBehavior)] = "CanBeEquippedBehavior",
+                        [typeof(CanBeSocketedBehavior)] = "CanBeSocketedBehavior",
+                        [typeof(CanFitSocketBehavior)] = "CanFitSocketBehavior",
+                        [typeof(ApplySocketEnchantmentsBehavior)] = "ApplySocketEnchantmentsBehavior",
+                        [typeof(HasEnchantmentsBehavior)] = "HasEnchantmentsBehavior",
+                        [typeof(EnchantmentExpressionBehavior)] = "EnchantmentExpressionBehavior",
+                        [typeof(EnchantmentTargetBehavior)] = "EnchantmentTargetBehavior",
+                        [typeof(HasStatDefinitionIdBehavior)] = "HasStatDefinitionIdBehavior",
+                        [typeof(HasPrefixBehavior)] = "HasPrefixBehavior",
+                        [typeof(HasSuffixBehavior)] = "HasSuffixBehavior",
+                        [typeof(HasAffixType)] = "HasAffixType",                        
+                        [typeof(HasStatsBehavior)] = "HasStatsBehavior",
                     };
                     mapping.AddRange(WithCollectionMappings<MapLayersBehavior>("MapLayersBehavior"));
                     mapping.AddRange(WithCollectionMappings<MapLayer>("MapLayer"));
