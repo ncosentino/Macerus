@@ -75,6 +75,7 @@ namespace Macerus.Plugins.Content.Data
                         [typeof(EditorNameBehavior)] = "ename",
                         [typeof(TriggerOnCombatEndBehavior)] = "TriggerOnCombatEndBehavior",
                         [typeof(MapWeatherTableBehavior)] = "MapWeatherTableBehavior",
+                        [typeof(ItemContainerBehavior)] = "ItemContainerBehavior",
                         [typeof(ItemDefinitionIdentifierBehavior)] = "ItemDefinitionIdBehavior",
                         [typeof(HasInventoryDisplayName)] = "InventoryName",
                         [typeof(HasInventoryIcon)] = "InventoryIcon",
