@@ -5,6 +5,6 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantmen
 {
     public interface IHasPrefixBehavior : IBehavior
     {
-        IIdentifier PrefixId { get; }
+        IIdentifier PrefixStringResourceId { get; }
     }
 }

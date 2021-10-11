@@ -23,8 +23,8 @@ namespace Macerus.Plugins.Content.Enchantments
 
         public IEnchantmentDefinition CreateMagicRangeEnchantment(
             IIdentifier statDefinitionId,
-            IIdentifier prefixId,
-            IIdentifier suffixId,
+            IIdentifier prefixStringResourceId,
+            IIdentifier suffixStringResourceId,
             double minValue,
             double maxValue,
             double minLevel,
@@ -44,8 +44,8 @@ namespace Macerus.Plugins.Content.Enchantments
                     new EnchantmentTargetGeneratorComponent(new StringIdentifier("self")),
                     new HasStatGeneratorComponent(statDefinitionId),
                     new StatelessBehaviorGeneratorComponent(
-                        new HasPrefixBehavior(prefixId),
-                        new HasSuffixBehavior(suffixId)),
+                        new HasPrefixBehavior(prefixStringResourceId),
+                        new HasSuffixBehavior(suffixStringResourceId)),
                     new RandomRangeExpressionGeneratorComponent(
                         statDefinitionId,
                         "+",

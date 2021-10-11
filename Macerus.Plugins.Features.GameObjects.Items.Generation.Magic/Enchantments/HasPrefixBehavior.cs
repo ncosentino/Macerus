@@ -5,16 +5,16 @@ using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments
 {
-    [DebuggerDisplay("{PrefixId}")]
+    [DebuggerDisplay("{PrefixStringResourceId}")]
     public sealed class HasPrefixBehavior :
         BaseBehavior,
         IHasPrefixBehavior
     {
-        public HasPrefixBehavior(IIdentifier prefixId)
+        public HasPrefixBehavior(IIdentifier prefixStringResourceId)
         {
-            PrefixId = prefixId;
+            PrefixStringResourceId = prefixStringResourceId;
         }
 
-        public IIdentifier PrefixId { get; }
+        public IIdentifier PrefixStringResourceId { get; }
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
+using Macerus.Plugins.Features.Resources;
 
 using NexusLabs.Framework;
 
@@ -14,14 +15,14 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
     public sealed class MagicItemNameGenerator : IMagicItemNameGenerator
     {
         private readonly IRandom _random;
-        private readonly IMagicAffixRepository _magicAffixRepository;
+        private readonly IStringResourceProvider _stringResourceProvider;
 
         public MagicItemNameGenerator(
             IRandom random,
-            IMagicAffixRepository magicAffixRepository)
+            IStringResourceProvider stringResourceProvider)
         {
             _random = random;
-            _magicAffixRepository = magicAffixRepository;
+            _stringResourceProvider = stringResourceProvider;
         }
 
         public IHasInventoryDisplayName GenerateName(
@@ -44,8 +45,8 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             if (enchantments.Count == 1)
             {
                 return new HasInventoryDisplayName(_random.NextDouble(0, 1) >= 0.5
-                    ? $"{baseDisplayName.DisplayName} {_magicAffixRepository.GetAffix(suffixes.Single().Value.SuffixId)}"
-                    : $"{_magicAffixRepository.GetAffix(prefixes.Single().Value.PrefixId)} {baseDisplayName.DisplayName}");
+                    ? $"{baseDisplayName.DisplayName} {_stringResourceProvider.GetString(suffixes.Single().Value.SuffixStringResourceId)}"
+                    : $"{_stringResourceProvider.GetString(prefixes.Single().Value.PrefixStringResourceId)} {baseDisplayName.DisplayName}");
             }
 
             var prefixEnchantmentIndex = _random.Next(0, 2);
@@ -56,9 +57,9 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             var suffix = suffixes[suffixEnchantmentIndex == 0 ? enchantments.First() : enchantments.Last()];
 
             return new HasInventoryDisplayName(
-                $"{_magicAffixRepository.GetAffix(prefix.PrefixId)} " +
+                $"{_stringResourceProvider.GetString(prefix.PrefixStringResourceId)} " +
                 $"{baseDisplayName.DisplayName} " +
-                $"{_magicAffixRepository.GetAffix(suffix.SuffixId)}");
+                $"{_stringResourceProvider.GetString(suffix.SuffixStringResourceId)}");
         }
     }
 }

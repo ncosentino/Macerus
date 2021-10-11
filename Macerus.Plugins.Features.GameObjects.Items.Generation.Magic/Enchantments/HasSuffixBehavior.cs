@@ -5,16 +5,16 @@ using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments
 {
-    [DebuggerDisplay("{SuffixId}")]
+    [DebuggerDisplay("{SuffixStringResourceId}")]
     public sealed class HasSuffixBehavior :
         BaseBehavior,
         IHasSuffixBehavior
     {
-        public HasSuffixBehavior(IIdentifier suffixId)
+        public HasSuffixBehavior(IIdentifier suffixStringResourceId)
         {
-            SuffixId = suffixId;
+            SuffixStringResourceId = suffixStringResourceId;
         }
 
-        public IIdentifier SuffixId { get; }
+        public IIdentifier SuffixStringResourceId { get; }
     }
 }
