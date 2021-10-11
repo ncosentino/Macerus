@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+using Macerus.Plugins.Features.Combat.Api;
+
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Plugins.Features.Combat.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
@@ -11,13 +13,17 @@ namespace Macerus.Plugins.Features.Combat.Default
     public sealed class CombatCalculations : ICombatCalculations
     {
         private readonly IStatCalculationService _statCalculationService;
+        private readonly ICombatStatIdentifiers _combatStatIdentifiers;
 
-        public CombatCalculations(IStatCalculationService statCalculationService)
+        public CombatCalculations(
+            IStatCalculationService statCalculationService,
+            ICombatStatIdentifiers combatStatIdentifiers)
         {
             CalculateActorIncrementValue = GetActorIncrementValue;
             CalculateActorRequiredTargetValuePerTurn = GetActorRequiredTargetValuePerTurn;
             
             _statCalculationService = statCalculationService;
+            _combatStatIdentifiers = combatStatIdentifiers;
         }
 
         public CombatCalculation<double> CalculateActorIncrementValue { get; }
@@ -31,7 +37,7 @@ namespace Macerus.Plugins.Features.Combat.Default
         {
             var speed = _statCalculationService.GetStatValue(
                 actor,
-                new StringIdentifier("speed"));
+                _combatStatIdentifiers.TurnSpeedStatId);
             return speed;
         }
 

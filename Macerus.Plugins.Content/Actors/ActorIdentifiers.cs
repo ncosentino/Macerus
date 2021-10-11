@@ -60,23 +60,23 @@ namespace Macerus.Plugins.Content.Actors
 
         public IIdentifier BeltIdentifier { get; } = new StringIdentifier("Belt");
 
-        public IIdentifier MoveDistancePerTurnTotalStatDefinitionId { get; } = new StringIdentifier("total move distance per turn");
+        public IIdentifier MoveDistancePerTurnTotalStatDefinitionId { get; } = new IntIdentifier(71);
 
-        public IIdentifier MoveDistancePerTurnCurrentStatDefinitionId { get; } = new StringIdentifier("current move distance per turn");
+        public IIdentifier MoveDistancePerTurnCurrentStatDefinitionId { get; } = new IntIdentifier(70);
 
-        public IIdentifier MoveDiagonallyStatDefinitionId { get; } = new StringIdentifier("move diagonally");
+        public IIdentifier MoveDiagonallyStatDefinitionId { get; } = new IntIdentifier(72);
 
-        public IIdentifier CurrentExperienceStatDefinitionId { get; } = new StringIdentifier("experience_current");
+        public IIdentifier CurrentExperienceStatDefinitionId { get; } = new IntIdentifier(74);
 
-        public IIdentifier ExperienceForNextLevelStatDefinitionId { get; } = new StringIdentifier("experience_next_level");
+        public IIdentifier ExperienceForNextLevelStatDefinitionId { get; } = new IntIdentifier(75);
 
-        public IIdentifier LevelStatDefinitionId { get; } = new StringIdentifier("level");
+        public IIdentifier LevelStatDefinitionId { get; } = new IntIdentifier(73);
 
-        public IIdentifier SkillPointsStatDefinitionId { get; } = new StringIdentifier("points_skill");
+        public IIdentifier SkillPointsStatDefinitionId { get; } = new IntIdentifier(76);
 
-        public IIdentifier AttributePointsStatDefinitionId { get; } = new StringIdentifier("points_attributes");
+        public IIdentifier AttributePointsStatDefinitionId { get; } = new IntIdentifier(78);
 
-        public IIdentifier AbilityPointsStatDefinitionId { get; } = new StringIdentifier("points_abilities");
+        public IIdentifier AbilityPointsStatDefinitionId { get; } = new IntIdentifier(77);
 
         public IIdentifier GetAnimationDirectionId(int direction)
         {

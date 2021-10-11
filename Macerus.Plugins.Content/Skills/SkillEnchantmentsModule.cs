@@ -5,6 +5,7 @@ using System.Linq;
 using Autofac;
 
 using Macerus.Plugins.Content.Enchantments;
+using Macerus.Plugins.Features.Combat.Api;
 using Macerus.Plugins.Features.GameObjects.Actors.Triggers;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
 using Macerus.Shared.Behaviors.Triggering;
@@ -41,6 +42,7 @@ namespace Macerus.Plugins.Content.Skills
                     var hitTriggerMechanicSource = c.Resolve<Lazy<IHitTriggerMechanicSource>>();
                     var attributeFilterer = c.Resolve<Lazy<IAttributeFilterer>>();
                     var enchantmentLoader = c.Resolve<Lazy<IEnchantmentLoader>>();
+                    var combatStatIdentifiers = c.Resolve<ICombatStatIdentifiers>();
                     var enchantmentDefinitionBuilder = c.Resolve<EnchantmentDefinitionBuilder>();
                     var enchantmentDefinitions = new[]
                     {
@@ -67,10 +69,17 @@ namespace Macerus.Plugins.Content.Skills
                             .ThatAppliesInstantlyAsSingleUse()
                             .Build(),
                         enchantmentDefinitionBuilder
-                            .WithEnchantmentDefinitionId(new StringIdentifier("increase-fire-damage"))
-                            .WithStatDefinitionId(new StringIdentifier("firedmg"))
+                            .WithEnchantmentDefinitionId(new StringIdentifier("increase-fire-damage-min"))
+                            .WithStatDefinitionId(combatStatIdentifiers.FireDamageMinStatId)
                             .ThatAppliesEffectsToSkillUser()
-                            .ThatModifiesBaseStatWithExpression("FIRE_DAMAGE + 30")
+                            .ThatModifiesBaseStatWithExpression("FIRE_DAMAGE_MIN + 30")
+                            .ThatAppliesInstantlyForAttack()
+                            .Build(),
+                        enchantmentDefinitionBuilder
+                            .WithEnchantmentDefinitionId(new StringIdentifier("increase-fire-damage-max"))
+                            .WithStatDefinitionId(combatStatIdentifiers.FireDamageMaxStatId)
+                            .ThatAppliesEffectsToSkillUser()
+                            .ThatModifiesBaseStatWithExpression("FIRE_DAMAGE_MAX + 30")
                             .ThatAppliesInstantlyForAttack()
                             .Build(),
                         enchantmentTemplate.CreateSkillEnchantment(
@@ -94,15 +103,22 @@ namespace Macerus.Plugins.Content.Skills
                                     }),
                             }),
                         enchantmentDefinitionBuilder
-                            .WithEnchantmentDefinitionId(new StringIdentifier("default-attack"))
-                            .WithStatDefinitionId(new StringIdentifier("physicaldmg"))
+                            .WithEnchantmentDefinitionId(new StringIdentifier("default-attack-min-dmg"))
+                            .WithStatDefinitionId(combatStatIdentifiers.PhysicalDamageMinStatId)
                             .ThatAppliesEffectsToSkillUser()
-                            .ThatModifiesBaseStatWithExpression("PHYSICAL_DAMAGE + 5")
+                            .ThatModifiesBaseStatWithExpression("PHYSICAL_DAMAGE_MIN + 5")
+                            .ThatAppliesInstantlyForAttack()
+                            .Build(),
+                        enchantmentDefinitionBuilder
+                            .WithEnchantmentDefinitionId(new StringIdentifier("default-attack-max-dmg"))
+                            .WithStatDefinitionId(combatStatIdentifiers.PhysicalDamageMaxStatId)
+                            .ThatAppliesEffectsToSkillUser()
+                            .ThatModifiesBaseStatWithExpression("PHYSICAL_DAMAGE_MAX + 5")
                             .ThatAppliesInstantlyForAttack()
                             .Build(),
                         enchantmentDefinitionBuilder
                             .WithEnchantmentDefinitionId(new StringIdentifier("increase-armor"))
-                            .WithStatDefinitionId(new StringIdentifier("armor"))
+                            .WithStatDefinitionId(new IntIdentifier(67)) // armor
                             .ThatAppliesEffectsToSkillUser()
                             .ThatModifiesBaseStatWithExpression("ARMOR + 10")
                             .ThatExpiresAfterTurns(1)

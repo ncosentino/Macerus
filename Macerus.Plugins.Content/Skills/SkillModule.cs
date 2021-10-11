@@ -30,12 +30,26 @@ namespace Macerus.Plugins.Content.Skills
                             .WithActorAnimation(actorIdentifiers.AnimationStrike)
                             .CanBeUsedInCombat()
                             .HasEffects(
-                                SkillEffectExecutors.Single(
+                                SkillEffectExecutors.Parallel(
+                                    SkillEffectDefinition
+                                        .New
+                                        .Enchant("default-attack-min")
+                                        .Targets(
+                                            new [] { 0 },
+                                            Tuple.Create(0, 0),
+                                            Tuple.Create(0, 0)),
+                                    SkillEffectDefinition
+                                        .New
+                                        .Enchant("default-attack-max")
+                                        .Targets(
+                                            new [] { 0 },
+                                            Tuple.Create(0, 0),
+                                            Tuple.Create(0, 0))),
+                                SkillEffectExecutors.Sequence(
                                     SkillEffectDefinition
                                         .New
                                         .InflictDamage()
-                                        .Enchant("default-attack")
-                                        .Targets(
+                                         .Targets(
                                             new [] { 1 },
                                             Tuple.Create(0, 0),
                                             Tuple.Create(0, 1)))),
@@ -83,7 +97,14 @@ namespace Macerus.Plugins.Content.Skills
                                 SkillEffectExecutors.Parallel(
                                     SkillEffectDefinition
                                         .New
-                                        .Enchant("increase-fire-damage")
+                                        .Enchant("increase-fire-damage-min")
+                                        .Targets(
+                                            new [] { 0 },
+                                            Tuple.Create(0, 0),
+                                            Tuple.Create(0, 0)),
+                                    SkillEffectDefinition
+                                        .New
+                                        .Enchant("increase-fire-damage-max")
                                         .Targets(
                                             new [] { 0 },
                                             Tuple.Create(0, 0),

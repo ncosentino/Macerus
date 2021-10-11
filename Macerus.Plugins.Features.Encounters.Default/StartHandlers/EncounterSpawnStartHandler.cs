@@ -15,7 +15,6 @@ namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
 {
     public sealed class EncounterSpawnStartHandler : IDiscoverableStartEncounterHandler
     {
-        private readonly ISpawnTableRepositoryFacade _spawnTableRepositoryFacade;
         private readonly Lazy<IReadOnlyMapGameObjectManager> _lazyMapGameObjectManager;
         private readonly Lazy<IMacerusActorIdentifiers> _lazyMacerusActorIdentifiers;
         private readonly IEncounterGameObjectPlacer _encounterGameObjectPlacer;
@@ -24,13 +23,11 @@ namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
         public EncounterSpawnStartHandler(
             IActorSpawnerAmenity actorSpawnerAmenity,
             IEncounterGameObjectPlacer encounterGameObjectPlacer,
-            ISpawnTableRepositoryFacade spawnTableRepositoryFacade,
             Lazy<IReadOnlyMapGameObjectManager> lazyMapGameObjectManager,
             Lazy<IMacerusActorIdentifiers> lazyMacerusActorIdentifiers)
         {
             _actorSpawnerAmenity = actorSpawnerAmenity;
             _encounterGameObjectPlacer = encounterGameObjectPlacer;
-            _spawnTableRepositoryFacade = spawnTableRepositoryFacade;
             _lazyMapGameObjectManager = lazyMapGameObjectManager;
             _lazyMacerusActorIdentifiers = lazyMacerusActorIdentifiers;
         }
@@ -45,7 +42,6 @@ namespace Macerus.Plugins.Features.Encounters.Default.StartHandlers
             }
 
             var spawnTableId = encounterSpawnTableIdBehavior.SpawnTableId;
-            var spawnTable = _spawnTableRepositoryFacade.GetForSpawnTableId(spawnTableId);
             
             var spawns = _actorSpawnerAmenity.SpawnActorsFromSpawnTableId(
                 spawnTableId,

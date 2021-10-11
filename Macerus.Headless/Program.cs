@@ -54,7 +54,7 @@ namespace Macerus.Headless
         public static async Task Main(string[] args)
         {
             var container = new MacerusContainer();
-            await new SummonExercise().Go(container);
+            await new CombatExercise().Go(container);
         }
     }
 

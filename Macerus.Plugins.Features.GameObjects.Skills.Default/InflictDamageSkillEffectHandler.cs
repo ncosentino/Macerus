@@ -12,7 +12,6 @@ using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
-using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 {
@@ -55,9 +54,11 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
 
             var userEnchantments = user.GetOnly<IHasEnchantmentsBehavior>();
 
+            // FIXME: this is obviously not right and just for testing...
+            // we'd need to get min/max of all damage types and resistances figured out
             var damageStats = _statCalculationServiceAmenity.GetStatValue(
                 user,
-                new StringIdentifier("firedmg"),
+                _combatStatIdentifiers.FireDamageMinStatId,
                 _statCalculationContextFactory.Create(
                     Enumerable.Empty<IComponent>(),
                     userEnchantments.Enchantments));
@@ -70,7 +71,7 @@ namespace Macerus.Plugins.Features.GameObjects.Skills.Default
             {
                 var resistStats = _statCalculationServiceAmenity.GetStatValue(
                     target,
-                    new StringIdentifier("fireresist"));
+                    _combatStatIdentifiers.FireResistStatId);
 
                 var totalDamage = damageStats - resistStats;
 

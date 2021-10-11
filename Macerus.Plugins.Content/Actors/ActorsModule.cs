@@ -72,6 +72,7 @@ namespace Macerus.Plugins.Content.Actors
                     var gameObjectIdentifiers = c.Resolve<IGameObjectIdentifiers>();
                     var actorIdentifiers = c.Resolve<IMacerusActorIdentifiers>();
                     var combatTeamIdentifiers = c.Resolve<ICombatTeamIdentifiers>();
+                    var combatStatIdentifiers = c.Resolve<ICombatStatIdentifiers>();
                     var skillAmenity = c.Resolve<ISkillAmenity>();
                     var dynamicAnimationBehaviorFactory = c.Resolve<IDynamicAnimationBehaviorFactory>();
                     var summoningBehaviorFactory = c.Resolve<ISummoningBehaviorFactory>();
@@ -139,9 +140,11 @@ namespace Macerus.Plugins.Content.Actors
                                     [new IntIdentifier(3)] = 100,
                                     [new IntIdentifier(4)] = 100,
                                     [combatTeamIdentifiers.CombatTeamStatDefinitionId] = combatTeamIdentifiers.PlayerTeamStatValue,
-                                    [new StringIdentifier("speed")] = 20, // FIXME: just for testing
-                                    [new StringIdentifier("firedmg")] = 10, // FIXME: just for testing
-                                    [new StringIdentifier("fireresist")] = 10, // FIXME: just for testing
+                                    [combatStatIdentifiers.TurnSpeedStatId] = 20, // FIXME: just for testing
+                                    [combatStatIdentifiers.AttackSpeedStatId] = 1.1, // FIXME: just for testing
+                                    [combatStatIdentifiers.FireDamageMinStatId] = 10, // FIXME: just for testing
+                                    [combatStatIdentifiers.FireDamageMaxStatId] = 15, // FIXME: just for testing
+                                    [combatStatIdentifiers.FireResistStatId] = 10, // FIXME: just for testing
                                     [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = 3, // FIXME: just for testing
                                     [actorIdentifiers.MoveDiagonallyStatDefinitionId] = 0, // FIXME: just for testing
                                     [actorIdentifiers.LevelStatDefinitionId] = 1,
@@ -200,9 +203,11 @@ namespace Macerus.Plugins.Content.Actors
                                     [new IntIdentifier(3)] = 100,
                                     [new IntIdentifier(4)] = 100,
                                     [combatTeamIdentifiers.CombatTeamStatDefinitionId] = combatTeamIdentifiers.PlayerTeamStatValue,
-                                    [new StringIdentifier("speed")] = 20, // FIXME: just for testing
-                                    [new StringIdentifier("firedmg")] = 10, // FIXME: just for testing
-                                    [new StringIdentifier("fireresist")] = 10, // FIXME: just for testing
+                                    [combatStatIdentifiers.TurnSpeedStatId] = 20, // FIXME: just for testing
+                                    [combatStatIdentifiers.AttackSpeedStatId] = 1, // FIXME: just for testing
+                                    [combatStatIdentifiers.FireDamageMinStatId] = 8, // FIXME: just for testing
+                                    [combatStatIdentifiers.FireDamageMaxStatId] = 12, // FIXME: just for testing
+                                    [combatStatIdentifiers.FireResistStatId] = 10, // FIXME: just for testing
                                     [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = 3, // FIXME: just for testing
                                     [actorIdentifiers.MoveDiagonallyStatDefinitionId] = 0, // FIXME: just for testing
                                     [actorIdentifiers.LevelStatDefinitionId] = 1,
@@ -252,9 +257,11 @@ namespace Macerus.Plugins.Content.Actors
                                     [new IntIdentifier(1)] = 15,
                                     [new IntIdentifier(2)] = 10,
                                     [new IntIdentifier(3)] = 10,
-                                    [new StringIdentifier("speed")] = 10, // FIXME: just for testing
-                                    [new StringIdentifier("firedmg")] = 0, // FIXME: just for testing
-                                    [new StringIdentifier("fireresist")] = 10, // FIXME: just for testing
+                                    [combatStatIdentifiers.TurnSpeedStatId] = 10, // FIXME: just for testing
+                                    [combatStatIdentifiers.AttackSpeedStatId] = 0.8, // FIXME: just for testing
+                                    [combatStatIdentifiers.FireDamageMinStatId] = 0, // FIXME: just for testing
+                                    [combatStatIdentifiers.FireDamageMaxStatId] = 0, // FIXME: just for testing
+                                    [combatStatIdentifiers.FireResistStatId] = 10, // FIXME: just for testing
                                     [actorIdentifiers.MoveDistancePerTurnTotalStatDefinitionId] = 4, // FIXME: just for testing
                                     [actorIdentifiers.MoveDiagonallyStatDefinitionId] = 1, // FIXME: just for testing
                                 }),
