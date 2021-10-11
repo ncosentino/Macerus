@@ -1,44 +1,44 @@
 ﻿{
-   "SerializableId":"iobj[Array]",
-  "Data": [
+   "i":"iobj[Array]",
+  "d": [
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TemplateIdBehavior",
-              "Data": {
+              "i": "TemplateIdBehavior",
+              "d": {
                 "templateId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static/wall"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static--8a27dfc3-7901-436c-a450-b04633f4d8bd"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 40.0,
                 "y": -28.75
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 6.0,
                 "height": 1.0
               }
@@ -48,43 +48,43 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TemplateIdBehavior",
-              "Data": {
+              "i": "TemplateIdBehavior",
+              "d": {
                 "templateId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static/wall"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static--8b7cf42e-2022-4ac5-ba03-dc41048107e6"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 46.75,
                 "y": -27.700000762939453
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 9.0,
                 "height": 1.0
               }
@@ -94,43 +94,43 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TemplateIdBehavior",
-              "Data": {
+              "i": "TemplateIdBehavior",
+              "d": {
                 "templateId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static/wall"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static--931d9abd-e697-4937-ae4d-63e210202f43"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 33.25,
                 "y": -27.700000762939453
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 9.0,
                 "height": 1.0
               }
@@ -140,43 +140,43 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TemplateIdBehavior",
-              "Data": {
+              "i": "TemplateIdBehavior",
+              "d": {
                 "templateId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static/wall"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static--1d49f078-c4cc-4ff7-b4e9-ca38a3386be9"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 28.25,
                 "y": -26.0
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 1.0,
                 "height": 4.0
               }
@@ -186,43 +186,43 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TemplateIdBehavior",
-              "Data": {
+              "i": "TemplateIdBehavior",
+              "d": {
                 "templateId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static/wall"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static--b273a571-9ce0-4baa-9d5d-0820c6fb9d4b"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 51.75,
                 "y": -26.0
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 1.0,
                 "height": 4.0
               }
@@ -232,43 +232,43 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TemplateIdBehavior",
-              "Data": {
+              "i": "TemplateIdBehavior",
+              "d": {
                 "templateId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static/wall"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static--b957ac5c-0643-4ecd-b710-6a2f73bf3eff"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 33.25,
                 "y": -24.25
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 9.0,
                 "height": 1.0
               }
@@ -278,43 +278,43 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TemplateIdBehavior",
-              "Data": {
+              "i": "TemplateIdBehavior",
+              "d": {
                 "templateId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static/wall"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static--a7830654-b336-4c70-8e4e-74f9d8a85549"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 46.75,
                 "y": -24.25
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 9.0,
                 "height": 1.0
               }
@@ -324,80 +324,80 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TemplateIdBehavior",
-              "Data": {
+              "i": "TemplateIdBehavior",
+              "d": {
                 "templateId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "container/base"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "container--c6a7f8b9-000a-41db-ac5e-d321f1722bf8"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 40.0,
                 "y": -22.25
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 1.0,
                 "height": 1.0
               }
             },
             {
-              "SerializableId": "Macerus.Plugins.Features.GameObjects.Containers.ContainerInteractableBehavior, Macerus.Plugins.Features.GameObjects.Containers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-              "Data": {
+              "i": "Macerus.Plugins.Features.GameObjects.Containers.ContainerInteractableBehavior, Macerus.Plugins.Features.GameObjects.Containers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "d": {
                 "destroyOnUse": false,
                 "automaticInteraction": false,
                 "transferItemsOnActivate": true
               }
             },
             {
-              "SerializableId": "PrefabIdBehavior",
-              "Data": {
+              "i": "PrefabIdBehavior",
+              "d": {
                 "prefabResourceId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "Mapping/Prefabs/container/chest"
                   }
                 }
               }
             },
             {
-              "SerializableId": "Macerus.Plugins.Features.GameObjects.Containers.ContainerGenerateItemsBehavior, Macerus.Plugins.Features.GameObjects.Containers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-              "Data": {
+              "i": "Macerus.Plugins.Features.GameObjects.Containers.ContainerGenerateItemsBehavior, Macerus.Plugins.Features.GameObjects.Containers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "d": {
                 "dropTableId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "any_normal_magic_rare_10x_lvl10"
                   }
                 }
               }
             },
             {
-              "SerializableId": "bcollide",
-              "Data": {
+              "i": "bcollide",
+              "d": {
                 "x": 0.0,
                 "y": 0.0,
                 "width": 1.0,
@@ -410,53 +410,53 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TemplateIdBehavior",
-              "Data": {
+              "i": "TemplateIdBehavior",
+              "d": {
                 "templateId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static/encounterspawn"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static-EncounterSpawn-40f1fa0f-1c0e-43ba-911e-4011c515d502"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 38.0,
                 "y": -16.0
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 1.0,
                 "height": 1.0
               }
             },
             {
-              "SerializableId": "EncounterSpawnLocationBehavior",
-              "Data": {
+              "i": "EncounterSpawnLocationBehavior",
+              "d": {
                 "allowedTeams": {
-                  "SerializableId": "int[Array]",
-                  "Data": [
+                  "i": "int[Array]",
+                  "d": [
                     0
                   ]
                 }
@@ -467,53 +467,53 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TemplateIdBehavior",
-              "Data": {
+              "i": "TemplateIdBehavior",
+              "d": {
                 "templateId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static/encounterspawn"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static-EncounterSpawn-c6999f1d-6437-4275-ae56-5e0147a41cc7"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 42.0,
                 "y": -16.0
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 1.0,
                 "height": 1.0
               }
             },
             {
-              "SerializableId": "EncounterSpawnLocationBehavior",
-              "Data": {
+              "i": "EncounterSpawnLocationBehavior",
+              "d": {
                 "allowedTeams": {
-                  "SerializableId": "int[Array]",
-                  "Data": [
+                  "i": "int[Array]",
+                  "d": [
                     1,
                     2,
                     3,
@@ -528,53 +528,53 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TemplateIdBehavior",
-              "Data": {
+              "i": "TemplateIdBehavior",
+              "d": {
                 "templateId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static/encounterspawn"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static-EncounterSpawn-d5bb70e6-3da5-41d8-b2fb-8ef41ff49b5d"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 44.0,
                 "y": -16.0
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 1.0,
                 "height": 1.0
               }
             },
             {
-              "SerializableId": "EncounterSpawnLocationBehavior",
-              "Data": {
+              "i": "EncounterSpawnLocationBehavior",
+              "d": {
                 "allowedTeams": {
-                  "SerializableId": "int[Array]",
-                  "Data": [
+                  "i": "int[Array]",
+                  "d": [
                     1,
                     2,
                     3,
@@ -589,53 +589,53 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TemplateIdBehavior",
-              "Data": {
+              "i": "TemplateIdBehavior",
+              "d": {
                 "templateId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static/encounterspawn"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static-EncounterSpawn-9cd6799b-b14c-4e4d-a646-5d0141fdcb81"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 46.0,
                 "y": -16.0
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 1.0,
                 "height": 1.0
               }
             },
             {
-              "SerializableId": "EncounterSpawnLocationBehavior",
-              "Data": {
+              "i": "EncounterSpawnLocationBehavior",
+              "d": {
                 "allowedTeams": {
-                  "SerializableId": "int[Array]",
-                  "Data": [
+                  "i": "int[Array]",
+                  "d": [
                     1,
                     2,
                     3,
@@ -650,53 +650,53 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TemplateIdBehavior",
-              "Data": {
+              "i": "TemplateIdBehavior",
+              "d": {
                 "templateId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static/encounterspawn"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static-EncounterSpawn-d64a263c-0bd4-482a-ab8f-6dff9334729d"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 48.0,
                 "y": -16.0
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 1.0,
                 "height": 1.0
               }
             },
             {
-              "SerializableId": "EncounterSpawnLocationBehavior",
-              "Data": {
+              "i": "EncounterSpawnLocationBehavior",
+              "d": {
                 "allowedTeams": {
-                  "SerializableId": "int[Array]",
-                  "Data": [
+                  "i": "int[Array]",
+                  "d": [
                     1,
                     2,
                     3,
@@ -711,53 +711,53 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TemplateIdBehavior",
-              "Data": {
+              "i": "TemplateIdBehavior",
+              "d": {
                 "templateId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static/encounterspawn"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static-EncounterSpawn-d64a263c-0bd4-482a-ab8f-6dff9334729d"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 50.0,
                 "y": -16.0
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 1.0,
                 "height": 1.0
               }
             },
             {
-              "SerializableId": "EncounterSpawnLocationBehavior",
-              "Data": {
+              "i": "EncounterSpawnLocationBehavior",
+              "d": {
                 "allowedTeams": {
-                  "SerializableId": "int[Array]",
-                  "Data": [
+                  "i": "int[Array]",
+                  "d": [
                     0
                   ]
                 }
@@ -768,125 +768,125 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TypeIdBehavior",
-              "Data": {
+              "i": "TypeIdBehavior",
+              "d": {
                 "typeId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static--ff20d5ae-3e23-4d75-98b4-24943c77a029"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 48.0,
                 "y": -18.75
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 1.0,
                 "height": 1.0
               }
             },
             {
-              "SerializableId": "PrefabIdBehavior",
-              "Data": {
+              "i": "PrefabIdBehavior",
+              "d": {
                 "prefabResourceId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "Mapping/Prefabs/static/rectangulartrigger"
                   }
                 }
               }
             },
             {
-              "SerializableId": "TriggerOnCombatEndBehavior",
-              "Data": null
+              "i": "TriggerOnCombatEndBehavior",
+              "d": null
             },
             {
-              "SerializableId": "Macerus.Shared.Behaviors.SpawnTemplatePropertiesBehavior, Macerus.Shared.Behaviors, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-              "Data": {
+              "i": "Macerus.Shared.Behaviors.SpawnTemplatePropertiesBehavior, Macerus.Shared.Behaviors, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "d": {
                 "templateToSpawn": {
-                  "SerializableId": "obj",
-                  "Data": {
+                  "i": "obj",
+                  "d": {
                     "behaviors": {
-                      "SerializableId": "IBehavior[List]",
-                      "Data": [
+                      "i": "IBehavior[List]",
+                      "d": [
                         {
-                          "SerializableId": "TypeIdBehavior",
-                          "Data": {
+                          "i": "TypeIdBehavior",
+                          "d": {
                             "typeId": {
-                              "SerializableId": "sid",
-                              "Data": {
+                              "i": "sid",
+                              "d": {
                                 "identifier": "static"
                               }
                             }
                           }
                         },
                         {
-                          "SerializableId": "IdentifierBehavior",
-                          "Data": {
+                          "i": "IdentifierBehavior",
+                          "d": {
                             "id": {
-                              "SerializableId": "sid",
-                              "Data": {
+                              "i": "sid",
+                              "d": {
                                 "identifier": "XXX - Does this need to be here or can we autogenerate it?"
                               }
                             }
                           }
                         },
                         {
-                          "SerializableId": "pos",
-                          "Data": {
+                          "i": "pos",
+                          "d": {
                             "x": 50.0,
                             "y": -20.0
                           }
                         },
                         {
-                          "SerializableId": "size",
-                          "Data": {
+                          "i": "size",
+                          "d": {
                             "width": 1.0,
                             "height": 1.0
                           }
                         },
                         {
-                          "SerializableId": "PrefabIdBehavior",
-                          "Data": {
+                          "i": "PrefabIdBehavior",
+                          "d": {
                             "prefabResourceId": {
-                              "SerializableId": "sid",
-                              "Data": {
+                              "i": "sid",
+                              "d": {
                                 "identifier": "Mapping/Prefabs/static/encounterspawn"
                               }
                             }
                           }
                         },
                         {
-                          "SerializableId": "DoorBehavior",
-                          "Data": {
+                          "i": "DoorBehavior",
+                          "d": {
                             "AutomaticInteraction": false,
                             "TransitionToMapId": {
-                              "SerializableId": "sid",
-                              "Data": {
+                              "i": "sid",
+                              "d": {
                                 "identifier": "swamp"
                               }
                             },
@@ -905,140 +905,140 @@
       }
     },
     {
-      "SerializableId": "obj",
-      "Data": {
+      "i": "obj",
+      "d": {
         "behaviors": {
-          "SerializableId": "IBehavior[List]",
-          "Data": [
+          "i": "IBehavior[List]",
+          "d": [
             {
-              "SerializableId": "TypeIdBehavior",
-              "Data": {
+              "i": "TypeIdBehavior",
+              "d": {
                 "typeId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static"
                   }
                 }
               }
             },
             {
-              "SerializableId": "IdentifierBehavior",
-              "Data": {
+              "i": "IdentifierBehavior",
+              "d": {
                 "id": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "static--f1a58205-9328-4f34-ba1a-b7ce5e2008b7"
                   }
                 }
               }
             },
             {
-              "SerializableId": "pos",
-              "Data": {
+              "i": "pos",
+              "d": {
                 "x": 50.0,
                 "y": -18.75
               }
             },
             {
-              "SerializableId": "size",
-              "Data": {
+              "i": "size",
+              "d": {
                 "width": 1.0,
                 "height": 1.0
               }
             },
             {
-              "SerializableId": "PrefabIdBehavior",
-              "Data": {
+              "i": "PrefabIdBehavior",
+              "d": {
                 "prefabResourceId": {
-                  "SerializableId": "sid",
-                  "Data": {
+                  "i": "sid",
+                  "d": {
                     "identifier": "Mapping/Prefabs/static/rectangulartrigger"
                   }
                 }
               }
             },
             {
-              "SerializableId": "TriggerOnCombatEndBehavior",
-              "Data": null
+              "i": "TriggerOnCombatEndBehavior",
+              "d": null
             },
             {
-              "SerializableId": "Macerus.Shared.Behaviors.SpawnTemplatePropertiesBehavior, Macerus.Shared.Behaviors, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-              "Data": {
+              "i": "Macerus.Shared.Behaviors.SpawnTemplatePropertiesBehavior, Macerus.Shared.Behaviors, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "d": {
                 "templateToSpawn": {
-                  "SerializableId": "obj",
-                  "Data": {
+                  "i": "obj",
+                  "d": {
                     "behaviors": {
-                      "SerializableId": "IBehavior[List]",
-                      "Data": [
+                      "i": "IBehavior[List]",
+                      "d": [
                         {
-                          "SerializableId": "IdentifierBehavior",
-                          "Data": {
+                          "i": "IdentifierBehavior",
+                          "d": {
                             "id": {
-                              "SerializableId": "sid",
-                              "Data": {
+                              "i": "sid",
+                              "d": {
                                 "identifier": "XXX - Does this need to be here or can we autogenerate it?"
                               }
                             }
                           }
                         },
                         {
-                          "SerializableId": "TemplateIdBehavior",
-                          "Data": {
+                          "i": "TemplateIdBehavior",
+                          "d": {
                             "templateId": {
-                              "SerializableId": "sid",
-                              "Data": {
+                              "i": "sid",
+                              "d": {
                                 "identifier": "container/base"
                               }
                             }
                           }
                         },
                         {
-                          "SerializableId": "pos",
-                          "Data": {
+                          "i": "pos",
+                          "d": {
                             "x": 48.0,
                             "y": -20.0
                           }
                         },
                         {
-                          "SerializableId": "size",
-                          "Data": {
+                          "i": "size",
+                          "d": {
                             "width": 1.0,
                             "height": 1.0
                           }
                         },
                         {
-                          "SerializableId": "PrefabIdBehavior",
-                          "Data": {
+                          "i": "PrefabIdBehavior",
+                          "d": {
                             "prefabResourceId": {
-                              "SerializableId": "sid",
-                              "Data": {
+                              "i": "sid",
+                              "d": {
                                 "identifier": "Mapping/Prefabs/container/chest"
                               }
                             }
                           }
                         },
                         {
-                          "SerializableId": "Macerus.Plugins.Features.GameObjects.Containers.ContainerInteractableBehavior, Macerus.Plugins.Features.GameObjects.Containers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-                          "Data": {
+                          "i": "Macerus.Plugins.Features.GameObjects.Containers.ContainerInteractableBehavior, Macerus.Plugins.Features.GameObjects.Containers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                          "d": {
                             "destroyOnUse": false,
                             "automaticInteraction": false,
                             "transferItemsOnActivate": true
                           }
                         },
                         {
-                          "SerializableId": "Macerus.Plugins.Features.GameObjects.Containers.ContainerGenerateItemsBehavior, Macerus.Plugins.Features.GameObjects.Containers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-                          "Data": {
+                          "i": "Macerus.Plugins.Features.GameObjects.Containers.ContainerGenerateItemsBehavior, Macerus.Plugins.Features.GameObjects.Containers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                          "d": {
                             "dropTableId": {
-                              "SerializableId": "sid",
-                              "Data": {
+                              "i": "sid",
+                              "d": {
                                 "identifier": "any_normal_magic_rare_10x_lvl10"
                               }
                             }
                           }
                         },
                         {
-                          "SerializableId": "bcollide",
-                          "Data": {
+                          "i": "bcollide",
+                          "d": {
                             "x": 0.0,
                             "y": 0.0,
                             "width": 1.0,
