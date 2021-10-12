@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Api;
 
 using NexusLabs.Contracts;
@@ -18,13 +19,16 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
     {
         private readonly IMacerusActorIdentifiers _actorIdentifiers;
         private readonly ILootGeneratorAmenity _lootGeneratorAmenity;
+        private readonly Lazy<IFilterContextAmenity> _lazyFilterContextAmenity;
 
         public SpawnWithItemsGeneratorComponentToBehaviorConverter(
             IMacerusActorIdentifiers actorIdentifiers,
-            ILootGeneratorAmenity lootGeneratorAmenity)
+            ILootGeneratorAmenity lootGeneratorAmenity,
+            Lazy<IFilterContextAmenity> lazyFilterContextAmenity)
         {
             _actorIdentifiers = actorIdentifiers;
             _lootGeneratorAmenity = lootGeneratorAmenity;
+            _lazyFilterContextAmenity = lazyFilterContextAmenity;
         }
 
         public Type ComponentType => typeof(SpawnWithItemsGeneratorComponent);
@@ -44,7 +48,12 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
                 $"'{_actorIdentifiers.InventoryIdentifier}' when converting " +
                 $"'{generatorComponent}'.");
 
-            var generatedItems = _lootGeneratorAmenity.GenerateLoot(spawnWithItemsComponent.DropTableId);
+            var lootContext = _lazyFilterContextAmenity
+                .Value
+                .CreateFilterContextForAnyAmount(filterContext.Attributes.Where(x => !x.Required));
+            var generatedItems = _lootGeneratorAmenity.GenerateLoot(
+                spawnWithItemsComponent.DropTableId,
+                lootContext);
             foreach (var generatedItem in generatedItems)
             {
                 if (!inventoryBehavior.TryAddItem(generatedItem))

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Macerus.Plugins.Features.Interactions.Api;
 
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 
 namespace Macerus.Plugins.Features.Interactions.Default
 {
@@ -21,6 +22,7 @@ namespace Macerus.Plugins.Features.Interactions.Default
         }
 
         public async Task InteractAsync(
+            IFilterContext filterContext,
             IGameObject actor,
             IInteractableBehavior behavior)
         {
@@ -34,7 +36,10 @@ namespace Macerus.Plugins.Features.Interactions.Default
             }
 
             await handler
-                .InteractAsync(actor, behavior)
+                .InteractAsync(
+                    filterContext,
+                    actor, 
+                    behavior)
                 .ConfigureAwait(false);
         }
     }

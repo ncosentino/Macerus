@@ -6,6 +6,7 @@ using Macerus.Plugins.Features.GameObjects.Actors.Interactions;
 using Macerus.Plugins.Features.Interactions.Api;
 
 using ProjectXyz.Api.GameObjects;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Interactions
 {
@@ -22,7 +23,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Interactions
             _actorActionCheck = actorActionCheck;
         }
 
-        public async Task<bool> TryInteractAsync(IGameObject actor)
+        public async Task<bool> TryInteractAsync(
+            IFilterContext filterContext,
+            IGameObject actor)
         {
             // stop moving if we try to interact
             var movementBehavior = actor.GetOnly<IMovementBehavior>();
@@ -30,7 +33,9 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Interactions
             movementBehavior.SetThrottle(0, 0);
             movementBehavior.ClearWalkPath();
 
-            if (!_actorActionCheck.CanAct(actor))
+            if (!_actorActionCheck.CanAct(
+                filterContext,
+                actor))
             {
                 return false;
             }
@@ -45,12 +50,13 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Interactions
             }
 
             await _interactionHandler
-                .InteractAsync(actor, interactable)
+                .InteractAsync(filterContext, actor, interactable)
                 .ConfigureAwait(false);
             return true;
         }
 
         public async Task ObjectEnterInteractionRadiusAsync(
+            IFilterContext filterContext,
             IGameObject actor,
             IGameObject gameObject)
         {
@@ -62,7 +68,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Interactions
             if (interactionBehavior.AutomaticInteraction)
             {
                 await _interactionHandler
-                    .InteractAsync(actor, interactionBehavior)
+                    .InteractAsync(filterContext, actor, interactionBehavior)
                     .ConfigureAwait(false);
                 return;
             }
@@ -74,6 +80,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Interactions
         }
 
         public async Task ObjectExitInteractionRadiusAsync(
+            IFilterContext filterContext,
             IGameObject actor,
             IGameObject gameObject)
         {

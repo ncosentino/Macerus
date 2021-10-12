@@ -12,17 +12,15 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Interactions
     public sealed class ActorActionCheck : IActorActionCheck
     {
         private readonly IReadOnlyCombatTurnManager _combatTurnManager;
-        private readonly IFilterContextProvider _filterContextProvider;
 
-        public ActorActionCheck(
-            IReadOnlyCombatTurnManager combatTurnManager,
-            IFilterContextProvider filterContextProvider)
+        public ActorActionCheck(IReadOnlyCombatTurnManager combatTurnManager)
         {
             _combatTurnManager = combatTurnManager;
-            _filterContextProvider = filterContextProvider;
         }
 
-        public bool CanAct(IGameObject actor)
+        public bool CanAct(
+            IFilterContext filterContext,
+            IGameObject actor)
         {
             var isActivePlayerControlled =
                 actor.TryGetFirst<IReadOnlyPlayerControlledBehavior>(out var playerControlledBehavior) &&
@@ -30,7 +28,7 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Default.Interactions
             var isCurrentCombatTurn =
                 _combatTurnManager.InCombat &&
                 _combatTurnManager
-                    .GetSnapshot(_filterContextProvider.GetContext(), 1)
+                    .GetSnapshot(filterContext, 1)
                     .Single() == actor;
             bool canAct =
                 isActivePlayerControlled &&

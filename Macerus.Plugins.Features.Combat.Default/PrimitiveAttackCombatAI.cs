@@ -18,6 +18,7 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.Logging;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Skills;
 using ProjectXyz.Plugins.Features.Mapping;
 
@@ -33,6 +34,7 @@ namespace Macerus.Plugins.Features.Combat.Default
         private readonly ICombatStatIdentifiers _combatStatIdentifiers;
         private readonly IMacerusActorIdentifiers _actorIdentifiers;
         private readonly Lazy<IMapProvider> _lazyMapProvider;
+        private readonly Lazy<IFilterContextProvider> _lazyFilterContextProvider;
         private readonly ILogger _logger;
 
         private CombatState _combatState;
@@ -47,6 +49,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             ICombatStatIdentifiers combatStatIdentifiers,
             IMacerusActorIdentifiers actorIdentifiers,
             Lazy<IMapProvider> lazyMapProvider,
+            Lazy<IFilterContextProvider> lazyFilterContextProvider,
             ILogger logger)
         {
             _statCalculationServiceAmenity = statCalculationServiceAmenity;
@@ -57,6 +60,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             _combatStatIdentifiers = combatStatIdentifiers;
             _actorIdentifiers = actorIdentifiers;
             _lazyMapProvider = lazyMapProvider;
+            _lazyFilterContextProvider = lazyFilterContextProvider;
             _logger = logger;
         }
 
@@ -101,6 +105,7 @@ namespace Macerus.Plugins.Features.Combat.Default
                     break;
                 case CombatState.UseSkill:
                     turnShouldEnd = UseSkillOnTargetAsync(
+                        _lazyFilterContextProvider.Value.GetContext(), // FIXME: shouldn't need the provider here...
                         actor,
                         _combatTarget).Result; // FIXME: propagate async pattern pls
                     break;
@@ -115,6 +120,7 @@ namespace Macerus.Plugins.Features.Combat.Default
         }
 
         private async Task<bool> UseSkillOnTargetAsync(
+            IFilterContext filterContext,
             IGameObject actor,
             IGameObject target)
         {
@@ -143,6 +149,7 @@ namespace Macerus.Plugins.Features.Combat.Default
             }
 
             if (!await _lazySkillUsage.Value.CanUseSkillAsync(
+                filterContext,
                 actor,
                 firstUsableSkill))
             {

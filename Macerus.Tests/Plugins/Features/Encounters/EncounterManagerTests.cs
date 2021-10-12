@@ -168,6 +168,7 @@ namespace Macerus.Tests.Plugins.Features.Encounters
                     .Single(x => x.Has<DoorInteractableBehavior>())
                     .GetOnly<DoorInteractableBehavior>();
                 await _interactionHandler.InteractAsync(
+                    _filterContextProvider.GetContext(),
                     actor,
                     door);
 

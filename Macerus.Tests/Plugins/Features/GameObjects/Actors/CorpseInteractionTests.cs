@@ -79,7 +79,10 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                     .Count();
 
                 // should be no-op
-                await _interactionHandler.InteractAsync(player, skeleton.GetOnly<CorpseInteractableBehavior>());
+                await _interactionHandler.InteractAsync(
+                    _filterContextAmenity.GetContext(),
+                    player,
+                    skeleton.GetOnly<CorpseInteractableBehavior>());
 
                 var playerInventory = player
                     .Get<IItemContainerBehavior>()
@@ -123,7 +126,10 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Actors
                     .MutateStatsAsync(async stats => stats[_combatStatIdentifiers.CurrentLifeStatId] = 0)
                     .ConfigureAwait(false);
 
-                await _interactionHandler.InteractAsync(player, skeleton.GetOnly<CorpseInteractableBehavior>());
+                await _interactionHandler.InteractAsync(
+                    _filterContextAmenity.GetContext(),
+                    player,
+                    skeleton.GetOnly<CorpseInteractableBehavior>());
 
                 var playerInventory = player
                     .Get<IItemContainerBehavior>()

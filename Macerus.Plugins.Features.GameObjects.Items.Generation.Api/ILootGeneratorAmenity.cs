@@ -11,7 +11,5 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Api
         IEnumerable<IGameObject> GenerateLoot(
             IIdentifier dropTableId,
             IFilterContext lootGeneratorContext);
-
-        IEnumerable<IGameObject> GenerateLoot(IIdentifier dropTableId);
     }
 }

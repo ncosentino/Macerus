@@ -14,25 +14,22 @@ namespace Macerus.Plugins.Features.Encounters.Default
         private readonly IGeneratorComponentToBehaviorConverterFacade _generatorComponentToBehaviorConverter;
         private readonly IEncounterDefinitionRepositoryFacade _encounterDefinitionRepositoryFacade;
         private readonly IGameObjectFactory _gameObjectFactory;
-        private readonly IFilterContextProvider _filterContextProvider;
 
         public EncounterRepository(
             IGeneratorComponentToBehaviorConverterFacade generatorComponentToBehaviorConverter,
             IEncounterDefinitionRepositoryFacade encounterDefinitionRepositoryFacade,
-            IGameObjectFactory gameObjectFactory,
-            IFilterContextProvider filterContextProvider)
+            IGameObjectFactory gameObjectFactory)
         {
             _generatorComponentToBehaviorConverter = generatorComponentToBehaviorConverter;
             _encounterDefinitionRepositoryFacade = encounterDefinitionRepositoryFacade;
             _gameObjectFactory = gameObjectFactory;
-            _filterContextProvider = filterContextProvider;
         }
 
-        public IGameObject GetEncounterById(IIdentifier encounterDefinitionId)
+        public IGameObject GetEncounterById(
+            IFilterContext filterContext,
+            IIdentifier encounterDefinitionId)
         {
             var encounterDefinition = _encounterDefinitionRepositoryFacade.GetEncounterDefinitionById(encounterDefinitionId);
-            // FIXME: this should be passed in on the API not from a provider
-            var filterContext = _filterContextProvider.GetContext();
             var behaviors = _generatorComponentToBehaviorConverter.Convert(
                 filterContext,
                 new IBehavior[]

@@ -403,14 +403,14 @@ namespace Macerus.Headless
                     x.GetOnly<ITypeIdentifierBehavior>().TypeId.Equals(actorIdentifiers.ActorTypeIdentifier));
 
             // should be no-op
-            await interactionHandler.InteractAsync(player, skeleton.GetOnly<CorpseInteractableBehavior>());
+            await interactionHandler.InteractAsync(filterContext, player, skeleton.GetOnly<CorpseInteractableBehavior>());
 
             await skeleton
                 .GetOnly<IHasStatsBehavior>()
                 .MutateStatsAsync(async stats => stats[combatStatIdentifiers.CurrentLifeStatId] = 0)
                 .ConfigureAwait(false);
             
-            await interactionHandler.InteractAsync(player, skeleton.GetOnly<CorpseInteractableBehavior>());
+            await interactionHandler.InteractAsync(filterContext, player, skeleton.GetOnly<CorpseInteractableBehavior>());
         }
     }
 

@@ -9,6 +9,7 @@ using Macerus.Plugins.Features.Interactions.Api;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Shared.Framework;
 
 using Xunit;
@@ -22,6 +23,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Containers
         private static readonly IGameObjectRepositoryAmenity _gameObjectRepositoryAmenity;
         private static readonly IMacerusActorIdentifiers _actorIdentifiers;
         private static readonly IInteractionHandlerFacade _interactionHandler;
+        private static readonly IFilterContextProvider _filterContextProvider;
 
         static ContainerInteractableBehaviorTests()
         {
@@ -30,6 +32,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Containers
             _gameObjectRepositoryAmenity = _container.Resolve<IGameObjectRepositoryAmenity>();
             _actorIdentifiers = _container.Resolve<IMacerusActorIdentifiers>();
             _interactionHandler = _container.Resolve<IInteractionHandlerFacade>();
+            _filterContextProvider = _container.Resolve<IFilterContextProvider>();
         }
 
         [Fact]
@@ -50,6 +53,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Containers
             var player = _testAmenities.CreatePlayerInstance();
 
             await _interactionHandler.InteractAsync(
+                _filterContextProvider.GetContext(),
                 player,
                 container.GetOnly<IInteractableBehavior>());
 

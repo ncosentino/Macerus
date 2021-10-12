@@ -11,16 +11,21 @@ using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api;
+using Macerus.Api.Behaviors.Filtering;
 
 namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
 {
     public sealed class SpawnWithEquipmentGeneratorComponentToBehaviorConverter : IDiscoverableGeneratorComponentToBehaviorConverter
     {
         private readonly ILootGeneratorAmenity _lootGeneratorAmenity;
+        private readonly Lazy<IFilterContextAmenity> _lazyFilterContextAmenity;
 
-        public SpawnWithEquipmentGeneratorComponentToBehaviorConverter(ILootGeneratorAmenity lootGeneratorAmenity)
+        public SpawnWithEquipmentGeneratorComponentToBehaviorConverter(
+            ILootGeneratorAmenity lootGeneratorAmenity,
+            Lazy<IFilterContextAmenity> lazyFilterContextAmenity)
         {
             _lootGeneratorAmenity = lootGeneratorAmenity;
+            _lazyFilterContextAmenity = lazyFilterContextAmenity;
         }
 
         public Type ComponentType => typeof(SpawnWithEquipmentGeneratorComponent);
@@ -46,7 +51,12 @@ namespace Macerus.Plugins.Features.GameObjects.Actors.Generation
                     .Get<IItemContainerBehavior>()
                     .FirstOrDefault(x => x.ContainerId.Equals(spawnWithEquipmentComponent.FailedEquipInventoryId));
 
-            var generatedItems = _lootGeneratorAmenity.GenerateLoot(spawnWithEquipmentComponent.DropTableId);
+            var lootContext = _lazyFilterContextAmenity
+                .Value
+                .CreateFilterContextForAnyAmount(filterContext.Attributes.Where(x => !x.Required));
+            var generatedItems = _lootGeneratorAmenity.GenerateLoot(
+                spawnWithEquipmentComponent.DropTableId,
+                lootContext);
             foreach (var generatedItem in generatedItems)
             {
                 var canBeEquippedBehavior = generatedItem

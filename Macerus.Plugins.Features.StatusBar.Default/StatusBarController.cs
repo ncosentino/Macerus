@@ -137,6 +137,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
         }
 
         public async Task ActivateSkillSlotAsync(
+            IFilterContext filterContext,
             IGameObject actor,
             int slotIndex)
         {
@@ -148,6 +149,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
 
             if (!await _skillUsage
                 .CanUseSkillAsync(
+                    filterContext,
                     actor,
                     skill)
                 .ConfigureAwait(false))
@@ -177,6 +179,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
         }
 
         public async Task PreviewSkillSlotAsync(
+            IFilterContext filterContext,
             IGameObject actor,
             int slotIndex)
         {
@@ -190,6 +193,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
 
             if (!await _skillUsage
                 .CanUseSkillAsync(
+                    filterContext,
                     actor,
                     skill)
                 .ConfigureAwait(false))
@@ -256,6 +260,7 @@ namespace Macerus.Plugins.Features.StatusBar.Default
                 return false;
             }
 
+            // FIXME: find a way to pull this off the system update context
             var filterContext = _filterContextProvider.GetContext();
             var actorWithCurrentTurn = _lazyCombatTurnManager.Value.GetSnapshot(filterContext, 1).Single();
             var canCompleteTurn = Equals(actor, actorWithCurrentTurn);
@@ -298,11 +303,14 @@ namespace Macerus.Plugins.Features.StatusBar.Default
         {
             var viewModels = new ConcurrentDictionary<IGameObject, IStatusBarAbilityViewModel>();
 
+            // FIXME: find a way to pull this off the system update context
+            var filterContext = _filterContextProvider.GetContext();
+
             // FIXME: convert to IAsyncEnumerable when supported?
             var tasks = skills
                 .Select(skill => Task.Run(async () =>
                 {
-                    var canUseSkill = await _skillUsage.CanUseSkillAsync(actor, skill);
+                    var canUseSkill = await _skillUsage.CanUseSkillAsync(filterContext, actor, skill);
                     var viewModel = new StatusBarAbilityViewModel(
                         canUseSkill,
                         skill.GetOnly<IHasDisplayIconBehavior>().IconResourceId,

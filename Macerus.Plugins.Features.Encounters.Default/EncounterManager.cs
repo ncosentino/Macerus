@@ -54,7 +54,9 @@ namespace Macerus.Plugins.Features.Encounters.Default
             Contract.Requires(
                 _encounter == null,
                 $"Cannot start an encounter because '{_encounter}' is already in progress.");
-            var encounter = _encounterRepository.GetEncounterById(encounterDefinitioId);
+            var encounter = _encounterRepository.GetEncounterById(
+                filterContext,
+                encounterDefinitioId);
 
             await _startEncounterHandlerFacade
                 .HandleAsync(

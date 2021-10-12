@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Macerus.Plugins.Features.Interactions.Api;
 
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Mapping;
 
 namespace Macerus.Plugins.Features.GameObjects.Static.Doors
@@ -21,6 +21,7 @@ namespace Macerus.Plugins.Features.GameObjects.Static.Doors
         public Type InteractableType { get; } = typeof(DoorInteractableBehavior);
 
         public async Task InteractAsync(
+            IFilterContext filterContext,
             IGameObject actor,
             IInteractableBehavior behavior)
         {

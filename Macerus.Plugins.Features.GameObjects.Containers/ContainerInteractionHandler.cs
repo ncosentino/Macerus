@@ -13,6 +13,7 @@ using NexusLabs.Contracts;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Shared.Framework;
 
@@ -40,6 +41,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         public Type InteractableType { get; } = typeof(ContainerInteractableBehavior);
 
         public async Task InteractAsync(
+            IFilterContext filterContext,
             IGameObject actor,
             IInteractableBehavior behavior)
         {
@@ -61,6 +63,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 $"'{interactableObject}' did not have a single '{typeof(IItemContainerBehavior)}'.");
 
             GenerateNecessaryLoot(
+                filterContext,
                 interactableObject,
                 sourceItemContainer);
 
@@ -89,6 +92,7 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
         }
 
         private void GenerateNecessaryLoot(
+            IFilterContext filterContext,
             IGameObject interactableObject,
             IItemContainerBehavior sourceItemContainer)
         {
@@ -100,7 +104,11 @@ namespace Macerus.Plugins.Features.GameObjects.Containers
                 }
 
                 var dropTableId = containerGenerateItemsBehavior.DropTableId;
-                var generatedItems = _lazyLootGeneratorAmenity.Value.GenerateLoot(dropTableId);
+                var generatedItems = _lazyLootGeneratorAmenity
+                    .Value
+                    .GenerateLoot(
+                        dropTableId,
+                        filterContext);
                 foreach (var generatedItem in generatedItems)
                 {
                     if (!sourceItemContainer.TryAddItem(generatedItem))
