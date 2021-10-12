@@ -22,32 +22,32 @@ namespace Macerus.Plugins.Content.Affixes
                     {
                         affixTemplate.CreateRareAffix(
                             new StringIdentifier("rare-life-affix"),
-                            1,
+                            0,
                             10,
                             new StringIdentifier("rare-life-ench")),
                         affixTemplate.CreateRareAffix(
                             new StringIdentifier("rare-mana-affix"),
-                            1,
+                            0,
                             10,
                             new StringIdentifier("rare-mana-ench")),
                         affixTemplate.CreateRareAffix(
                             new StringIdentifier("rare-fire-res-affix"),
-                            1,
+                            0,
                             10,
                             new StringIdentifier("rare-fire-res-ench")),
                         affixTemplate.CreateRareAffix(
                             new StringIdentifier("rare-ice-res-affix"),
-                            1,
+                            0,
                             10,
                             new StringIdentifier("rare-ice-res-ench")),
                         affixTemplate.CreateRareAffix(
                             new StringIdentifier("rare-water-res-affix"),
-                            1,
+                            0,
                             10,
                             new StringIdentifier("rare-water-res-ench")),
                         affixTemplate.CreateRareAffix(
                             new StringIdentifier("rare-lightning-res-affix"),
-                            1,
+                            0,
                             10,
                             new StringIdentifier("rare-lightning-res-ench")),
                     };

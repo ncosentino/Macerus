@@ -22,7 +22,7 @@ namespace Macerus.Plugins.Content.Affixes
                     {
                         affixTemplate.CreateMagicAffix(
                             new StringIdentifier("lively"),
-                            1,
+                            0,
                             10,
                             new IntIdentifier(1),
                             new IntIdentifier(2),
@@ -36,7 +36,7 @@ namespace Macerus.Plugins.Content.Affixes
                             new StringIdentifier("hearty-ench")),
                         affixTemplate.CreateMagicAffix(
                             new StringIdentifier("magic"),
-                            1,
+                            0,
                             10,
                             new IntIdentifier(5),
                             new IntIdentifier(6),
