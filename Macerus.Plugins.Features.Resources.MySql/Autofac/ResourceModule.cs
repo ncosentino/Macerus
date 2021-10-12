@@ -2,14 +2,14 @@
 
 using ProjectXyz.Framework.Autofac;
 
-namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Default.Autofac
+namespace Macerus.Plugins.Features.Resources.MySql.Autofac
 {
-    public sealed class ItemGenerationModule : SingleRegistrationModule
+    public sealed class ResourceModule : SingleRegistrationModule
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<LootGeneratorAmenity>()
+                .RegisterType<MySqlStringResourceRepository>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

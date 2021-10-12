@@ -20,6 +20,10 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                 .RegisterType<MagicItemNameGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<MagicItemAffixGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

@@ -31,6 +31,16 @@ namespace Macerus.Api.Behaviors.Filtering
         IFilterContext CreateFilterContextForAnyAmount(
             IEnumerable<IFilterAttribute> attributes);
 
+        IFilterContext CreateFilterContext(
+            int minimum,
+            int maximum,
+            params IFilterAttribute[] attributes);
+
+        IFilterContext CreateFilterContext(
+            int minimum,
+            int maximum,
+            IEnumerable<IFilterAttribute> attributes);
+
         IFilterContext CreateNoneFilterContext();
 
         IIdentifier GetGameObjectTypeIdFromContext(
@@ -131,5 +141,9 @@ namespace Macerus.Api.Behaviors.Filtering
         IFilterAttribute CreateRequiredAttributeForAny(
             IIdentifier id,
             IEnumerable<string> value);
+
+        IFilterAttribute CreateRequiredAttributeForAny(
+            IIdentifier id,
+            IEnumerable<IIdentifier> value);
     }
 }

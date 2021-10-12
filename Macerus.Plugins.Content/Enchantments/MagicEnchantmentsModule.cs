@@ -1,8 +1,5 @@
 ﻿using Autofac;
 
-using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
-
-using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation.InMemory;
@@ -17,7 +14,7 @@ namespace Macerus.Plugins.Content.Enchantments
             builder
                 .Register(c =>
                 {
-                    var enchantmentTemplate = new EnchantmentTemplate(c.Resolve<ICalculationPriorityFactory>());
+                    var enchantmentTemplate = c.Resolve<EnchantmentTemplate>();
 
                     // FIXME: it's totally a smell that we have a stat
                     // definition ID per enchantment when we have things like
@@ -29,30 +26,21 @@ namespace Macerus.Plugins.Content.Enchantments
                     // ProjectXyz.Shared.Game.GameObjects.Enchantments.EnchantmentFactory
                     var enchantmentDefinitions = new[]
                     {
-                        enchantmentTemplate.CreateMagicRangeEnchantment(
+                        enchantmentTemplate.CreateRangeEnchantment(
+                            new StringIdentifier("lively-ench"),
                             new IntIdentifier(1), // max life
-                            Affixes.Prefixes.Lively,
-                            Affixes.Suffixes.OfLife,
                             1,
-                            15,
-                            0,
-                            20),
-                        enchantmentTemplate.CreateMagicRangeEnchantment(
+                            15),
+                        enchantmentTemplate.CreateRangeEnchantment(
+                            new StringIdentifier("hearty-ench"),
                             new IntIdentifier(1), // max life
-                            Affixes.Prefixes.Hearty,
-                            Affixes.Suffixes.OfHeart,
                             16,
-                            50,
-                            10,
-                            30),
-                        enchantmentTemplate.CreateMagicRangeEnchantment(
+                            50),
+                        enchantmentTemplate.CreateRangeEnchantment(
+                            new StringIdentifier("magic-ench"),
                             new IntIdentifier(3), // max mana
-                            Affixes.Prefixes.Magic,
-                            Affixes.Suffixes.OfMana,
                             1,
-                            15,
-                            0,
-                            10),
+                            15),
                     };
                     var repository = new InMemoryEnchantmentDefinitionRepository(
                         c.Resolve<IAttributeFilterer>(),
@@ -61,10 +49,6 @@ namespace Macerus.Plugins.Content.Enchantments
                 })
                 .SingleInstance()
                 .AsImplementedInterfaces();
-            builder
-                .RegisterType<MagicEnchantmentGenerator>()
-                .AsImplementedInterfaces()
-                .SingleInstance();      
         }
     }
 }

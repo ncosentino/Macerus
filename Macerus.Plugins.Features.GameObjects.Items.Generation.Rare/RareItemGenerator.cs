@@ -2,8 +2,8 @@
 using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
+using Macerus.Plugins.Features.GameObjects.Items.Affixes.Default;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
-using Macerus.Plugins.Features.GameObjects.Items.Generation.Default;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
@@ -19,7 +19,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
 {
     public sealed class RareItemGenerator : IDiscoverableItemGenerator
     {
-        private readonly IFilterAttribute _requiresMagicAffix;
+        private readonly IFilterAttribute _requiresRareAffix;
         private readonly IBaseItemGenerator _baseItemGenerator;
         private readonly IFilterContextAmenity _filterContextAmenity;
         private readonly IGameObjectFactory _gameObjectFactory;
@@ -36,13 +36,13 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
             _gameObjectFactory = gameObjectFactory;
             _generatorComponentToBehaviorConverterFacade = generatorComponentToBehaviorConverterFacade;
 
-            _requiresMagicAffix = new FilterAttribute(
+            _requiresRareAffix = new FilterAttribute(
                 new StringIdentifier("affix-type"),
                 new StringFilterAttributeValue("rare"),
                 true);
             SupportedAttributes = new IFilterAttribute[]
             {
-                _requiresMagicAffix,
+                _requiresRareAffix,
             };
         }
         
@@ -83,7 +83,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
                         rareItemBehaviorsPreGeneration,
                         new IGeneratorComponent[]
                         {
-                            new RandomEnchantmentsGeneratorComponent(
+                            new RandomAffixGeneratorComponent(
                                 3,
                                 6,
                                 SupportedAttributes),

@@ -43,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Data.MySql"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{547493C6-791A-4655-9C7D-DC86A7B09F52}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Items.Affixes", "Macerus.Plugins.Features.GameObjects.Items.Affixes\Macerus.Plugins.Features.GameObjects.Items.Affixes.csproj", "{92ABF0BC-0EE0-49ED-AFAD-D4A440529145}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Items.Affixes.Default", "Macerus.Plugins.Features.GameObjects.Items.Affixes\Macerus.Plugins.Features.GameObjects.Items.Affixes.Default.csproj", "{92ABF0BC-0EE0-49ED-AFAD-D4A440529145}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.GameObjects.Items.Affixes.Api", "Macerus.Plugins.Features.GameObjects.Items.Affixes.Api\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api.csproj", "{3741E28A-723D-4BF8-9DAE-8FF0AEC4D637}"
 EndProject
@@ -249,15 +249,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Summoning", "Summoning", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Weather", "Weather", "{AE9911C8-AC6D-4F0B-BC52-8E120D879936}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Summoning", "Macerus.Plugins.Features.Summoning\Macerus.Plugins.Features.Summoning.csproj", "{BC36B992-F53A-4C07-AECE-5DFFD199C08C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Summoning", "Macerus.Plugins.Features.Summoning\Macerus.Plugins.Features.Summoning.csproj", "{BC36B992-F53A-4C07-AECE-5DFFD199C08C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Summoning.Default", "Macerus.Plugins.Features.Summoning.Default\Macerus.Plugins.Features.Summoning.Default.csproj", "{924484EB-AB85-42D4-8361-A897F139EBA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Summoning.Default", "Macerus.Plugins.Features.Summoning.Default\Macerus.Plugins.Features.Summoning.Default.csproj", "{924484EB-AB85-42D4-8361-A897F139EBA2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spawning", "Spawning", "{E35C4146-865A-44C6-8837-25BD8D512636}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Spawning", "Macerus.Plugins.Features.Spawning\Macerus.Plugins.Features.Spawning.csproj", "{9363C15E-6E1C-4095-9883-9A9AA88D998D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Spawning", "Macerus.Plugins.Features.Spawning\Macerus.Plugins.Features.Spawning.csproj", "{9363C15E-6E1C-4095-9883-9A9AA88D998D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Spawning.Default", "Macerus.Plugins.Features.Spawning.Default\Macerus.Plugins.Features.Spawning.Default.csproj", "{60CFF891-7FBC-443B-8DB1-E7D82A389EF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Spawning.Default", "Macerus.Plugins.Features.Spawning.Default\Macerus.Plugins.Features.Spawning.Default.csproj", "{60CFF891-7FBC-443B-8DB1-E7D82A389EF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.Plugins.Features.Resources.MySql", "Macerus.Plugins.Features.Resources.MySql\Macerus.Plugins.Features.Resources.MySql.csproj", "{D4509841-56C0-472E-8A2F-C454FB41B462}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -609,6 +611,10 @@ Global
 		{60CFF891-7FBC-443B-8DB1-E7D82A389EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60CFF891-7FBC-443B-8DB1-E7D82A389EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60CFF891-7FBC-443B-8DB1-E7D82A389EF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4509841-56C0-472E-8A2F-C454FB41B462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4509841-56C0-472E-8A2F-C454FB41B462}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4509841-56C0-472E-8A2F-C454FB41B462}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4509841-56C0-472E-8A2F-C454FB41B462}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -734,6 +740,7 @@ Global
 		{E35C4146-865A-44C6-8837-25BD8D512636} = {33A6C169-52DA-446B-A241-FEC05722752A}
 		{9363C15E-6E1C-4095-9883-9A9AA88D998D} = {E35C4146-865A-44C6-8837-25BD8D512636}
 		{60CFF891-7FBC-443B-8DB1-E7D82A389EF3} = {E35C4146-865A-44C6-8837-25BD8D512636}
+		{D4509841-56C0-472E-8A2F-C454FB41B462} = {8B252C85-1DC6-47B4-AA61-ADEE6B3B9851}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}

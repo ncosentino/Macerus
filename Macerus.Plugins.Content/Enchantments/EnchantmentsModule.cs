@@ -9,6 +9,7 @@ namespace Macerus.Plugins.Content.Enchantments
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder.RegisterType<EnchantmentDefinitionBuilder>();
+            builder.RegisterType<EnchantmentTemplate>().SingleInstance();
         }
     }
 }

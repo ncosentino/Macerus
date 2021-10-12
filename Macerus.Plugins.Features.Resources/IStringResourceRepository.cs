@@ -1,13 +1,12 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 using ProjectXyz.Api.Framework;
 
 namespace Macerus.Plugins.Features.Resources
 {
-    public interface IStringResourceProvider
+    public interface IStringResourceRepository
     {
-        CultureInfo CurrentCulture { get; }
-
         string GetString(
             IIdentifier stringResourceId,
             CultureInfo culture);

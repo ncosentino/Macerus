@@ -1,8 +1,9 @@
-﻿using Macerus.Plugins.Features.GameObjects.Items.Affixes.Api;
+﻿
+using Macerus.Plugins.Features.GameObjects.Items.Affixes.Api;
 
 using ProjectXyz.Api.Framework;
 
-namespace Macerus.Plugins.Features.GameObjects.Items.Affixes
+namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.Default
 {
     public sealed class AffixType : IAffixType
     {

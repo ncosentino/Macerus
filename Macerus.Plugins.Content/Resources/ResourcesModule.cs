@@ -14,7 +14,7 @@ namespace Macerus.Plugins.Content.Resources
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .Register(c => new InMemoryStringResourceProvider(new Dictionary<IIdentifier, string>()
+                .Register(c => new InMemoryStringResourceRepository(new Dictionary<IIdentifier, string>()
                 {
                     // TODO: add entries...
                 }))

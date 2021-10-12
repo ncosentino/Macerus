@@ -59,7 +59,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql\Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Enchantments\Macerus.Plugins.Features.GameObjects.Enchantments.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api\Macerus.Plugins.Features.GameObjects.Items.Affixes.Api.csproj" />
-    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Affixes\Macerus.Plugins.Features.GameObjects.Items.Affixes.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Affixes\Macerus.Plugins.Features.GameObjects.Items.Affixes.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Behaviors\Macerus.Plugins.Features.GameObjects.Items.Behaviors.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Api\Macerus.Plugins.Features.GameObjects.Items.Generation.Api.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.GameObjects.Items.Generation.Default\Macerus.Plugins.Features.GameObjects.Items.Generation.Default.csproj" />
@@ -94,6 +94,7 @@
     <ProjectReference Include="..\Macerus.Plugins.Features.Minimap\Macerus.Plugins.Features.Minimap.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.PartyBar.Default\Macerus.Plugins.Features.PartyBar.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.PartyBar\Macerus.Plugins.Features.PartyBar.csproj" />
+    <ProjectReference Include="..\Macerus.Plugins.Features.Resources.MySql\Macerus.Plugins.Features.Resources.MySql.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Scripting.Default\Macerus.Plugins.Features.Scripting.Default.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Scripting\Macerus.Plugins.Features.Scripting.csproj" />
     <ProjectReference Include="..\Macerus.Plugins.Features.Spawning.Default\Macerus.Plugins.Features.Spawning.Default.csproj" />

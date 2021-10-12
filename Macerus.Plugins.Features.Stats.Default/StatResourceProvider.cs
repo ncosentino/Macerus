@@ -8,9 +8,9 @@ namespace Macerus.Plugins.Features.Stats.Default
 {
     public sealed class StatResourceProvider : IStatResourceProvider
     {
-        private readonly Lazy<IStringResourceProvider> _lazyStringResourceProvider;
+        private readonly Lazy<IStringResourceRepository> _lazyStringResourceProvider;
 
-        public StatResourceProvider(Lazy<IStringResourceProvider> lazyStringResourceProvider)
+        public StatResourceProvider(Lazy<IStringResourceRepository> lazyStringResourceProvider)
         {
             _lazyStringResourceProvider = lazyStringResourceProvider;
         }

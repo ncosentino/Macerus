@@ -2,8 +2,8 @@
 using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
+using Macerus.Plugins.Features.GameObjects.Items.Affixes.Default;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
-using Macerus.Plugins.Features.GameObjects.Items.Generation.Default;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
@@ -83,7 +83,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                         magicItemBehaviorsPreGeneration,
                         new IGeneratorComponent[]
                         {
-                            new RandomEnchantmentsGeneratorComponent(
+                            new RandomAffixGeneratorComponent(
                                 1,
                                 2,
                                 SupportedAttributes),

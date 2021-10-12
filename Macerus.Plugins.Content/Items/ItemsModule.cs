@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Autofac;
 
 using Macerus.Api.Behaviors.Filtering;
-using Macerus.Plugins.Content.Enchantments;
+using Macerus.Plugins.Content.Affixes;
 using Macerus.Plugins.Features.GameObjects.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Socketing;
 using Macerus.Plugins.Features.Inventory.Default.HoverCards;
@@ -63,7 +63,7 @@ namespace Macerus.Plugins.Content.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentFilterAttributes.AllowsNormalMagicAndRareAffix,
+                                AffixFilterAttributes.AllowsNormalMagicAndRareAffix,
                                 filterContextAmenity.CreateSupportedAttribute(
                                     itemIdentifiers.ItemDefinitionIdentifier,
                                     new StringIdentifier("leather-gloves")),
@@ -85,7 +85,7 @@ namespace Macerus.Plugins.Content.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentFilterAttributes.AllowsNormalMagicAndRareAffix,
+                                AffixFilterAttributes.AllowsNormalMagicAndRareAffix,
                                 filterContextAmenity.CreateSupportedAttribute(
                                     itemIdentifiers.ItemDefinitionIdentifier,
                                     new StringIdentifier("cloth-hood")),
@@ -107,7 +107,7 @@ namespace Macerus.Plugins.Content.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentFilterAttributes.AllowsNormalMagicAndRareAffix,
+                                AffixFilterAttributes.AllowsNormalMagicAndRareAffix,
                                 filterContextAmenity.CreateSupportedAttribute(
                                     itemIdentifiers.ItemDefinitionIdentifier,
                                     new StringIdentifier("cloth-armor")),
@@ -129,7 +129,7 @@ namespace Macerus.Plugins.Content.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentFilterAttributes.RequiresNormalAffix,
+                                AffixFilterAttributes.RequiresNormalAffix,
                                 filterContextAmenity.CreateSupportedAttribute(
                                     itemIdentifiers.ItemDefinitionIdentifier,
                                     new StringIdentifier("junk")),
@@ -142,7 +142,7 @@ namespace Macerus.Plugins.Content.Items
                         new ItemDefinition(
                             new[]
                             {
-                                EnchantmentFilterAttributes.RequiresNormalAffix,
+                                AffixFilterAttributes.RequiresNormalAffix,
                                 filterContextAmenity.CreateSupportedAttribute(
                                     itemIdentifiers.ItemDefinitionIdentifier,
                                     new StringIdentifier("ruby")),

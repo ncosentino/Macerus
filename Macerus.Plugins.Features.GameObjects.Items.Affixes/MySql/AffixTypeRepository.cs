@@ -8,7 +8,8 @@ using ProjectXyz.Api.Data.Databases;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.MySql
+// FIXME: move this to a MySQL project?
+namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.Default.MySql
 {
     public sealed partial class AffixTypeRepository : IAffixTypeRepository
     {

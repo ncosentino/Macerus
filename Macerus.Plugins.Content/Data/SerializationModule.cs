@@ -9,7 +9,7 @@ using Macerus.Plugins.Features.Encounters.Default;
 using Macerus.Plugins.Features.Encounters.Default.Triggers;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
-using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic.Enchantments;
+using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic;
 using Macerus.Plugins.Features.GameObjects.Static.Doors;
 using Macerus.Plugins.Features.Mapping;
 using Macerus.Shared.Behaviors;
@@ -88,8 +88,7 @@ namespace Macerus.Plugins.Content.Data
                         [typeof(EnchantmentExpressionBehavior)] = "EnchantmentExpressionBehavior",
                         [typeof(EnchantmentTargetBehavior)] = "EnchantmentTargetBehavior",
                         [typeof(HasStatDefinitionIdBehavior)] = "HasStatDefinitionIdBehavior",
-                        [typeof(HasPrefixBehavior)] = "HasPrefixBehavior",
-                        [typeof(HasSuffixBehavior)] = "HasSuffixBehavior",
+                        [typeof(HasMagicAffixBehavior)] = "HasMagicAffixBehavior",
                         [typeof(HasAffixType)] = "HasAffixType",                        
                         [typeof(HasStatsBehavior)] = "HasStatsBehavior",
                     };

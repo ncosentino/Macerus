@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.Filtering.Api;
-using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
 {
@@ -25,9 +23,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             IEnumerable<IBehavior> baseBehaviors,
             IGeneratorComponent generatorComponent)
         {
-            var nameComponent = _lazyMagicItemNameGenerator.Value.GenerateName(
-                baseBehaviors,
-                baseBehaviors.GetOnly<IHasEnchantmentsBehavior>().Enchantments);
+            var nameComponent = _lazyMagicItemNameGenerator.Value.GenerateName(baseBehaviors);
             yield return nameComponent;
         }
     }

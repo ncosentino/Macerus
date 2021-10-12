@@ -48,6 +48,18 @@ namespace Macerus.Shared.Behaviors.Filtering
             IEnumerable<IFilterAttribute> attributes) =>
             _filterContextFactory.CreateFilterContextForAnyAmount(attributes);
 
+        public IFilterContext CreateFilterContext(
+            int minimum,
+            int maximum,
+            params IFilterAttribute[] attributes) =>
+            _filterContextFactory.CreateContext(minimum, maximum, attributes);
+
+        public IFilterContext CreateFilterContext(
+            int minimum,
+            int maximum,
+            IEnumerable<IFilterAttribute> attributes) =>
+            _filterContextFactory.CreateContext(minimum, maximum, attributes);
+
         public IFilterContext CreateNoneFilterContext() =>
             _filterContextFactory.CreateNoneFilterContext();
 
@@ -338,6 +350,17 @@ namespace Macerus.Shared.Behaviors.Filtering
             var filterAttribute = new FilterAttribute(
                 id,
                 new AnyStringCollectionFilterAttributeValue(value),
+                true);
+            return filterAttribute;
+        }
+
+        public  IFilterAttribute CreateRequiredAttributeForAny(
+            IIdentifier id,
+            IEnumerable<IIdentifier> value)
+        {
+            var filterAttribute = new FilterAttribute(
+                id,
+                new AnyIdentifierCollectionFilterAttributeValue(value),
                 true);
             return filterAttribute;
         }
