@@ -23,6 +23,11 @@ namespace Macerus.Plugins.Features.Animations.Lpc.Autofac
                     }
                 });
             builder
+                .RegisterType<NoneLpcAnimationDiscovererSettings>()
+                .AsImplementedInterfaces()
+                .IfNotRegistered(typeof(ILpcAnimationDiscovererSettings))
+                .SingleInstance();
+            builder
                 .RegisterType<LpcSheetAnimationFactory>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
