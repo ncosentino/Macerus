@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Macerus.Plugins.Content.Weather;
+using Macerus.Content.Weather;
 using Macerus.Plugins.Features.GameObjects.Skills;
 
 using ProjectXyz.Api.Framework;

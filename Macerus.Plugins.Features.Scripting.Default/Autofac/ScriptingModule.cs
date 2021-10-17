@@ -8,10 +8,17 @@ namespace Macerus.Plugins.Features.Scripting.Default.Autofac
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
+#if !NET5_0_OR_GREATER
             builder
-                .RegisterType<ScriptCompiler>()
+                .RegisterType<CSharpCodeProviderScriptCompiler>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+#else
+            builder
+                .RegisterType<RoslynScriptCompiler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+#endif
             builder
                 .RegisterType<ScriptReferenceCalculator>()
                 .AsImplementedInterfaces()

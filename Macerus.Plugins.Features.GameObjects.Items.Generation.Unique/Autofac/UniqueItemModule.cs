@@ -1,7 +1,5 @@
 ﻿using Autofac;
 
-using Macerus.Plugins.Content.Wip.Items;
-
 using ProjectXyz.Framework.Autofac;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique.Autofac

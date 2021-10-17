@@ -1,7 +1,7 @@
 ﻿using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects.Generation;
 
-namespace Macerus.Plugins.Content.Wip.Items
+namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
 {
     public sealed class UniqueBaseItemGeneratorComponent : IGeneratorComponent
     {
@@ -9,7 +9,7 @@ namespace Macerus.Plugins.Content.Wip.Items
         {
             Identifier = identifier;
         }
-        
+
         public IIdentifier Identifier { get; }
     }
 }

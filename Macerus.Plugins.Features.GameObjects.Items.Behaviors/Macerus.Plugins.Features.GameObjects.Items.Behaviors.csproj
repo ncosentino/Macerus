@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFrameworks>net46;net5.0</TargetFrameworks>
     <AssemblyTitle>Macerus.Plugins.Features.GameObjects.Items.Behaviors</AssemblyTitle>
     <Product>Macerus.Plugins.Features.GameObjects.Items.Behaviors</Product>
     <Copyright>Copyright ©  2018</Copyright>
@@ -17,7 +17,7 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.*" />
+    <PackageReference Include="ProjectXyz" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />

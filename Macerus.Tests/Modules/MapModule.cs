@@ -33,8 +33,8 @@ namespace Macerus.Tests.Modules
             {
                 _lazyResourceRoot =
                    new Lazy<DirectoryInfo>(() =>
-                   {
-                       return new DirectoryInfo(@"..\..\..\..\Macerus\bin\debug\net46");
+                   {                       
+                       return new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
                    });
                 _lazyMapsRoot =
                     new Lazy<DirectoryInfo>(() =>

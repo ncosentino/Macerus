@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFrameworks>net46;net5.0</TargetFrameworks>
     <AssemblyTitle>ProjectXyz.Plugins.Features.Enchantments.Generation.MySql</AssemblyTitle>
     <Product>ProjectXyz.Plugins.Features.Enchantments.Generation.MySql</Product>
     <Copyright>Copyright ©  2021</Copyright>
@@ -14,7 +14,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-    <PackageReference Include="ProjectXyz" Version="1.0.*" />
+    <PackageReference Include="ProjectXyz" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />

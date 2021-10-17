@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFrameworks>net46;net5.0</TargetFrameworks>
     <AssemblyTitle>Macerus.Plugins.Features.GameObjects.Items.Generation.Normal</AssemblyTitle>
     <Company>Nexus Labs</Company>
     <Product>Macerus.Plugins.Features.GameObjects.Items.Generation.Normal</Product>
@@ -20,7 +20,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-    <PackageReference Include="ProjectXyz" Version="1.0.*" />
+    <PackageReference Include="ProjectXyz" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Macerus.Api.Behaviors\Macerus.Api.Behaviors.csproj" />

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <RootNamespace>Macerus.Plugins.Features.Data.MySql</RootNamespace>
     <AssemblyName>Macerus.Plugins.Features.Data.MySql</AssemblyName>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFrameworks>net46;net5.0</TargetFrameworks>
     <AssemblyTitle>Macerus.Plugins.Features.Data.MySql</AssemblyTitle>
     <Product>Macerus.Plugins.Features.Data.MySql</Product>
     <Copyright>Copyright ©  2021</Copyright>
@@ -24,9 +24,9 @@
     <PackageReference Include="MySql.Data" Version="8.0.23" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.10" />
-    <PackageReference Include="NexusLabs.Contracts" Version="0.0.4" />
-    <PackageReference Include="NexusLabs.Framework" Version="0.0.12" />
-    <PackageReference Include="ProjectXyz" Version="1.0.*" />
+    <PackageReference Include="NexusLabs.Contracts" Version="*" />
+    <PackageReference Include="NexusLabs.Framework" Version="*" />
+    <PackageReference Include="ProjectXyz" Version="0.1.*" />
     <PackageReference Include="SSH.NET" Version="2020.0.0" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Memory" Version="4.5.3" />

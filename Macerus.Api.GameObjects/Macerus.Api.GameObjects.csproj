@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFrameworks>net46;net5.0</TargetFrameworks>
     <AssemblyTitle>Macerus.Api.GameObjects</AssemblyTitle>
     <Product>Macerus.Api.GameObjects</Product>
     <Copyright>Copyright ©  2018</Copyright>
@@ -17,6 +17,6 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ProjectXyz" Version="1.0.*" />
+    <PackageReference Include="ProjectXyz" Version="0.1.*" />
   </ItemGroup>
 </Project>

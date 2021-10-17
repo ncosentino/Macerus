@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Macerus.Plugins.Features.GameObjects.Items.Generation.Unique;
-
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 
-namespace Macerus.Plugins.Content.Wip.Items
+namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
 {
     public sealed class UniqueBaseItemGeneratorComponentToBehaviorConverter : IDiscoverableGeneratorComponentToBehaviorConverter
     {

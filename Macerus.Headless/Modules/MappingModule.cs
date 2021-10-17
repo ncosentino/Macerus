@@ -37,7 +37,7 @@ namespace Macerus.Headless
             _lazyResourceRoot =
                new Lazy<DirectoryInfo>(() =>
                {
-                   return new DirectoryInfo(@"..\..\..\Macerus\bin\debug\net46");
+                   return new DirectoryInfo(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location));
                });
             _lazyMapsRoot =
                 new Lazy<DirectoryInfo>(() =>

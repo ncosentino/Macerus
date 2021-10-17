@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFrameworks>net46;net5.0</TargetFrameworks>
     <AssemblyTitle>Macerus.Plugins.Features.GameObjects.Enchantments</AssemblyTitle>
     <Product>Macerus.Plugins.Features.GameObjects.Enchantments</Product>
     <Copyright>Copyright ©  2021</Copyright>
@@ -16,9 +16,9 @@
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.10" />
-    <PackageReference Include="NexusLabs.Contracts" Version="0.0.4" />
-    <PackageReference Include="NexusLabs.Framework" Version="0.0.12" />
-    <PackageReference Include="ProjectXyz" Version="1.0.*" />
+    <PackageReference Include="NexusLabs.Contracts" Version="*" />
+    <PackageReference Include="NexusLabs.Framework" Version="*" />
+    <PackageReference Include="ProjectXyz" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />
