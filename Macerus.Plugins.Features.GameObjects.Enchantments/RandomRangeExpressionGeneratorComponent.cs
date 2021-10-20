@@ -11,13 +11,15 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments
             string @operator,
             ICalculationPriority priority,
             double minimumInclusive,
-            double maximumInclusive)
+            double maximumInclusive,
+            int decimalPlaces)
         {
             StatDefinitionId = statDefinitionId;
             Operator = @operator;
             Priority = priority;
             MinimumInclusive = minimumInclusive;
             MaximumInclusive = maximumInclusive;
+            DecimalPlaces = decimalPlaces;
         }
         
         public IIdentifier StatDefinitionId { get; }
@@ -29,5 +31,7 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments
         public double MinimumInclusive { get; }
         
         public double MaximumInclusive { get; }
+
+        public int DecimalPlaces { get; }
     }
 }

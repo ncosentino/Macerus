@@ -30,17 +30,20 @@ namespace Macerus.Content.Enchantments
                             new StringIdentifier("lively-ench"),
                             new IntIdentifier(1), // max life
                             1,
-                            15),
+                            15,
+                            0),
                         enchantmentTemplate.CreateRangeEnchantment(
                             new StringIdentifier("hearty-ench"),
                             new IntIdentifier(1), // max life
                             16,
-                            50),
+                            50,
+                            0),
                         enchantmentTemplate.CreateRangeEnchantment(
                             new StringIdentifier("magic-ench"),
                             new IntIdentifier(3), // max mana
                             1,
-                            15),
+                            15,
+                            0),
                     };
                     var repository = new InMemoryEnchantmentDefinitionRepository(
                         c.Resolve<IAttributeFilterer>(),

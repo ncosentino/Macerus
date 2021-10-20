@@ -35,6 +35,7 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments
             var value = _random.NextDouble(
                 randomRangeExpressionGeneratorComponent.MinimumInclusive,
                 randomRangeExpressionGeneratorComponent.MaximumInclusive);
+            value = Math.Round(value, randomRangeExpressionGeneratorComponent.DecimalPlaces);
             var term = _statDefinitionToTermConverter[randomRangeExpressionGeneratorComponent.StatDefinitionId];
             var @operator = randomRangeExpressionGeneratorComponent.Operator;
             var expression = $"{term}{@operator}{value}";

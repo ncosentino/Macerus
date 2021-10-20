@@ -31,7 +31,8 @@ namespace Macerus.Content.Enchantments
             IIdentifier enchantmentDefinitionId,
             IIdentifier statDefinitionId,
             double minValue,
-            double maxValue)
+            double maxValue,
+            int decimalPlaces)
         {
             var enchantmentDefinition = new EnchantmentDefinition(
                 new[]
@@ -44,14 +45,13 @@ namespace Macerus.Content.Enchantments
                 {
                     new EnchantmentTargetGeneratorComponent(new StringIdentifier("self")),
                     new HasStatGeneratorComponent(statDefinitionId),
-                    //new StatelessBehaviorGeneratorComponent(
-                    //    new HasPrefixBehavior(prefixStringResourceId),
-                    //    new HasSuffixBehavior(suffixStringResourceId)),
                     new RandomRangeExpressionGeneratorComponent(
                         statDefinitionId,
                         "+",
                         _calculationPriorityFactory.Create<int>(1),
-                        minValue, maxValue)
+                        minValue,
+                        maxValue,
+                        decimalPlaces)
                 });
             return enchantmentDefinition;
         }

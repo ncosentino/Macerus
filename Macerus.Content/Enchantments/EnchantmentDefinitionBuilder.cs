@@ -145,7 +145,8 @@ namespace Macerus.Content.Enchantments
 
         public EnchantmentDefinitionBuilder ThatHasValueInRange(
             int minValue,
-            int maxValue)
+            int maxValue,
+            int decimalPlaces)
         {
             var statGeneratorComponent = (HasStatGeneratorComponent)_current.GeneratorComponents.FirstOrDefault(x => x is HasStatGeneratorComponent);
             Contract.Requires(
@@ -154,13 +155,15 @@ namespace Macerus.Content.Enchantments
             return ThatHasValueInRange(
                 statGeneratorComponent.StatDefinitionId,
                 minValue,
-                maxValue);
+                maxValue,
+                decimalPlaces);
         }
 
         public EnchantmentDefinitionBuilder ThatHasValueInRange(
             IIdentifier statDefinitionId,
             int minValue,
-            int maxValue)
+            int maxValue,
+            int decimalPlaces)
         {
             Contract.Requires(
                !_current.GeneratorComponents.Any(x => x is RandomRangeExpressionGeneratorComponent),
@@ -175,7 +178,8 @@ namespace Macerus.Content.Enchantments
                     "+",
                     _calculationPriorityFactory.Create<int>(1),
                     minValue,
-                    maxValue)));
+                    maxValue,
+                    decimalPlaces)));
 
             return this;
         }

@@ -52,7 +52,8 @@ namespace Macerus.Content.Skills
                             .ThatHasValueInRange(
                                 new IntIdentifier(8), // green light radius
                                 1,
-                                1) 
+                                1,
+                                0) 
                             .Build(),
                         enchantmentDefinitionBuilder
                             .WithEnchantmentDefinitionId(new StringIdentifier("heal-self"))
@@ -177,7 +178,8 @@ namespace Macerus.Content.Skills
             IIdentifier skillDefinitionId,
             IIdentifier statDefinitionId,
             double minValue,
-            double maxValue)
+            double maxValue,
+            int decimalPlaces)
         {
             var enchantmentDefinition = CreateSkillEnchantment(
                 skillDefinitionId,
@@ -188,7 +190,9 @@ namespace Macerus.Content.Skills
                         statDefinitionId,
                         "+",
                         _calculationPriorityFactory.Create<int>(1),
-                        minValue, maxValue)
+                        minValue, 
+                        maxValue,
+                        decimalPlaces)
                 });
             return enchantmentDefinition;
         }
