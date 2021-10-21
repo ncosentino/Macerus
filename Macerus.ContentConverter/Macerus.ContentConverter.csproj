@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NPOI" Version="2.5.4" />
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="ProjectXyz" Version="0.1.*" />
+    <PackageReference Include="Macerus" Version="0.1.*" />
+    <PackageReference Include="NexusLabs.Contracts" Version="*" />
+    <PackageReference Include="NexusLabs.Collections.Generic" Version="*" />
+    <PackageReference Include="NexusLabs.Framework" Version="*" />
+  </ItemGroup>
+
+</Project>

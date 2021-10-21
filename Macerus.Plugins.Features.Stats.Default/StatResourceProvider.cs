@@ -1,8 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Macerus.Plugins.Features.Resources;
 
+using NexusLabs.Framework;
+
 using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Behaviors;
+using ProjectXyz.Api.GameObjects.Generation;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api;
 
 namespace Macerus.Plugins.Features.Stats.Default
 {

@@ -259,6 +259,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Sp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macerus.Plugins.Features.Resources.MySql", "Macerus.Plugins.Features.Resources.MySql\Macerus.Plugins.Features.Resources.MySql.csproj", "{D4509841-56C0-472E-8A2F-C454FB41B462}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Macerus.ContentConverter", "Macerus.ContentConverter\Macerus.ContentConverter.csproj", "{1D02D1E8-9A17-4240-B403-A8E6406AB6D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -613,6 +615,10 @@ Global
 		{D4509841-56C0-472E-8A2F-C454FB41B462}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4509841-56C0-472E-8A2F-C454FB41B462}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4509841-56C0-472E-8A2F-C454FB41B462}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D02D1E8-9A17-4240-B403-A8E6406AB6D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D02D1E8-9A17-4240-B403-A8E6406AB6D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D02D1E8-9A17-4240-B403-A8E6406AB6D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D02D1E8-9A17-4240-B403-A8E6406AB6D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -737,6 +743,7 @@ Global
 		{9363C15E-6E1C-4095-9883-9A9AA88D998D} = {E35C4146-865A-44C6-8837-25BD8D512636}
 		{60CFF891-7FBC-443B-8DB1-E7D82A389EF3} = {E35C4146-865A-44C6-8837-25BD8D512636}
 		{D4509841-56C0-472E-8A2F-C454FB41B462} = {8B252C85-1DC6-47B4-AA61-ADEE6B3B9851}
+		{1D02D1E8-9A17-4240-B403-A8E6406AB6D2} = {E2ADBB67-8741-4A57-A227-03CD65C651D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42D53D44-DB15-42C1-8A13-62FFD5C069BD}
