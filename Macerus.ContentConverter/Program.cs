@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -17,7 +18,18 @@ namespace Macerus.ContentConverter
     {
         static void Main(string[] args)
         {
-            var filePath = @"C:\Users\Nick\Downloads\Macerus - Game Data.xlsx";
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Macerus Game Data.xlsx");
+            var gameDataUrl = args[0];
+
+            Console.WriteLine($"Fetching game data from '{gameDataUrl}'...");
+            using (var webClient = new WebClient())
+            {
+                File.WriteAllBytes(filePath, webClient.DownloadData(gameDataUrl));
+            }
+
+            Console.WriteLine($"Game data written to '{filePath}'.");
+
+            Console.WriteLine($"Converting data...");
             using (var filestream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
                 var workbook = new XSSFWorkbook(filestream);
@@ -25,6 +37,8 @@ namespace Macerus.ContentConverter
                 ConvertBaseArmor(workbook, statDefinitionToTermMappingRepository);
                 ConvertBaseWeapons(workbook, statDefinitionToTermMappingRepository);
             }
+
+            Console.WriteLine("Data has been converted.");
         }
 
         private static void ConvertBaseWeapons(

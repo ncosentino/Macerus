@@ -244,3 +244,4 @@ ModelManifest.xml
 
 #Tool for rev'ing versions
 !/**/GenerateProjectAssemblyVersion.*
+launchSettings.json
