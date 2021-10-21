@@ -23,6 +23,176 @@ namespace Macerus.ContentConverter
                 var workbook = new XSSFWorkbook(filestream);
                 var statDefinitionToTermMappingRepository = ConvertStats(workbook);
                 ConvertBaseArmor(workbook, statDefinitionToTermMappingRepository);
+                ConvertBaseWeapons(workbook, statDefinitionToTermMappingRepository);
+            }
+        }
+
+        private static void ConvertBaseWeapons(
+           XSSFWorkbook workbook,
+           IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository)
+        {
+            var baseWeaponsSheet = workbook.GetSheet("Base Weapons");
+            var columnHeaderMapping = GetColumnHeaderMapping(baseWeaponsSheet.GetRow(0));
+
+            var itemDefinitionCodeTemplates = GetWeaponItemDefinitionCodeTemplates(
+                baseWeaponsSheet,
+                columnHeaderMapping,
+                statDefinitionToTermMappingRepository);
+
+            var templatedItemDefinitionCode = @$"
+using System;
+using System.Collections.Generic;
+
+using Autofac;
+
+using Macerus.Api.Behaviors.Filtering;
+using Macerus.Content.Affixes;
+using Macerus.Plugins.Features.GameObjects.Items;
+using Macerus.Plugins.Features.GameObjects.Items.Socketing;
+using Macerus.Plugins.Features.Inventory.Default.HoverCards;
+using Macerus.Shared.Behaviors;
+
+using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Generation;
+using ProjectXyz.Framework.Autofac;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
+using ProjectXyz.Plugins.Features.GameObjects.Items;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.InMemory;
+using ProjectXyz.Shared.Framework;
+
+namespace Macerus.Content.Generated.Items
+{{
+    public sealed class BaseWeaponsModule : SingleRegistrationModule
+    {{
+        protected override void SafeLoad(ContainerBuilder builder)
+        {{
+            builder
+                .Register(c =>
+                {{
+                    var itemDefinitions = new[]
+                    {{
+{string.Join(",\r\n", itemDefinitionCodeTemplates.Select(x => "						" + x))}
+                    }};
+                    var itemDefinitionRepository = new InMemoryItemDefinitionRepository(
+                        c.Resolve<IAttributeFilterer>(),
+                        itemDefinitions);
+                    return itemDefinitionRepository;
+                }})
+                .SingleInstance()
+                .AsImplementedInterfaces();
+        }}
+    }}
+}}
+";
+            var directoryPath = @"Generated\Items";
+            Directory.CreateDirectory(directoryPath);
+
+            var filePath = Path.Combine(directoryPath, "BaseWeaponsModule.cs");
+            File.Delete(filePath);
+            File.WriteAllText(filePath, templatedItemDefinitionCode);
+        }
+
+        private static IEnumerable<string> GetWeaponItemDefinitionCodeTemplates(
+            ISheet baseArmorSheet,
+            IReadOnlyDictionary<string, int> columnHeaderMapping,
+            IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository)
+        {
+            for (int rowIndex = 1; rowIndex < baseArmorSheet.PhysicalNumberOfRows; rowIndex++)
+            {
+                var row = baseArmorSheet.GetRow(rowIndex);
+                var itemId = $"weapon_{rowIndex}";
+
+                var itemNameStringResource = row.GetCell(columnHeaderMapping["name"]).StringCellValue;
+                var itemNameStringResourceId = $"weapon_name_{rowIndex}";
+
+                var itemIconResource = row.GetCell(columnHeaderMapping["icon"]).StringCellValue;
+                var itemIconResourceId = $"weapon_icon_{rowIndex}";
+
+                var itemEquipSlotName = row.GetCell(columnHeaderMapping["slot"]).StringCellValue; // FIXME: Split for multi-slot?
+                var itemEquipSlotId = itemEquipSlotName; // FIXME: convert???
+
+                var itemLevel = GetIntValue(row, columnHeaderMapping["item level"]);
+                
+                var itemAttackSpeed = GetIntValue(row, columnHeaderMapping["attack speed"]);
+                var itemRange = GetIntValue(row, columnHeaderMapping["range"]);
+
+                var itemLevelRequirement = GetIntValue(row, columnHeaderMapping["level requirement"]);
+                var itemStrengthRequirement = GetIntValue(row, columnHeaderMapping["req str"]);
+                var itemDexterityRequirement = GetIntValue(row, columnHeaderMapping["req dex"]);
+                var itemIntelligenceRequirement = GetIntValue(row, columnHeaderMapping["req int"]);
+                var itemSpeedRequirement = GetIntValue(row, columnHeaderMapping["req spd"]);
+                var itemVitalityRequirement = GetIntValue(row, columnHeaderMapping["req vit"]);
+
+                var itemPhysicalDamageMinMin = GetIntValue(row, columnHeaderMapping["physical damage min min"]);
+                var itemPhysicalDamageMinMax = GetIntValue(row, columnHeaderMapping["physical damage min max"]);
+                var itemPhysicalDamageMaxMin = GetIntValue(row, columnHeaderMapping["physical damage max min"]);
+                var itemPhysicalDamageMaxMax = GetIntValue(row, columnHeaderMapping["physical damage max max"]);
+                var itemMagicDamageMinMin = GetIntValue(row, columnHeaderMapping["magic damage min min"]);
+                var itemMagicDamageMinMax = GetIntValue(row, columnHeaderMapping["magic damage min max"]);
+                var itemMagicDamageMaxMin = GetIntValue(row, columnHeaderMapping["magic damage max min"]);
+                var itemMagicDamageMaxMax = GetIntValue(row, columnHeaderMapping["magic damage max max"]);
+
+                var itemDurabilityMinimum = GetIntValue(row, columnHeaderMapping["durability min"]);
+                var itemDurabilityMaximum = GetIntValue(row, columnHeaderMapping["durability max"]);
+
+                var itemSocketsMinimum = GetIntValue(row, columnHeaderMapping["sockets min"]);
+                var itemSocketsMaximum = GetIntValue(row, columnHeaderMapping["sockets max"]);
+
+                var physicalDamageCode = itemPhysicalDamageMaxMax < 1
+                    ? string.Empty
+                    : @$"new RandomStatRangeGeneratorComponent({statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("PHYSICAL_DAMAGE_MIN").StatDefinitionId}, {itemPhysicalDamageMinMin}, {itemPhysicalDamageMinMax}, 0),
+                                new RandomStatRangeGeneratorComponent({ statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("PHYSICAL_DAMAGE_MAX").StatDefinitionId }, { itemPhysicalDamageMaxMin}, { itemPhysicalDamageMaxMax}, 0),";
+                var magicDamageCode = itemMagicDamageMaxMax < 1
+                   ? string.Empty
+                   : @$"new RandomStatRangeGeneratorComponent({statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("MAGIC_DAMAGE_MIN").StatDefinitionId}, {itemMagicDamageMinMin}, {itemMagicDamageMinMax}, 0),
+                                new RandomStatRangeGeneratorComponent({statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("MAGIC_DAMAGE_MAX").StatDefinitionId}, {itemMagicDamageMaxMin}, {itemMagicDamageMaxMax}, 0),";
+
+                var itemDefinitionCodeTemplate = @$"
+                        new ItemDefinition(
+                            new[]
+                            {{
+                                AffixFilterAttributes.RequiresNormalAffix,
+                                filterContextAmenity.CreateSupportedAttribute(
+                                    itemIdentifiers.ItemDefinitionIdentifier,
+                                    new StringIdentifier(""{itemId}"")),
+                            }},
+                            new IGeneratorComponent[]
+                            {{
+                                new NameGeneratorComponent(""{itemNameStringResourceId}""),
+                                new IconGeneratorComponent(""{itemIconResourceId}""),
+                                new EquippableGeneratorComponent(new[] {{ new StringIdentifier(""{itemEquipSlotId}"") }}),
+                                {(
+                                    itemSocketsMaximum > 0
+                                        ? @$"new SocketGeneratorComponent(new[]
+                                            {{
+                                                KeyValuePair.Create((IIdentifier)new StringIdentifier(""socket_type_gem""), Tuple.Create({itemSocketsMinimum}, {itemSocketsMaximum})),
+                                                KeyValuePair.Create((IIdentifier)new StringIdentifier(""socket_type_jewel""), Tuple.Create({itemSocketsMinimum}, {itemSocketsMaximum})),
+                                                KeyValuePair.Create((IIdentifier)new StringIdentifier(""socket_type_rune""), Tuple.Create({itemSocketsMinimum}, {itemSocketsMaximum})),
+                                            }},
+                                            {itemSocketsMaximum}),".Trim()
+                                        : string.Empty
+                                )}
+                                new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
+                                {{
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("ITEM_LEVEL").StatDefinitionId}"")] = {itemLevel},
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("ATTACK_SPEED").StatDefinitionId}"")] = {itemAttackSpeed},
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("RANGE").StatDefinitionId}"")] = {itemRange},
+                                    // requirements
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("REQUIRED_LEVEL").StatDefinitionId}"")] = {itemLevelRequirement},
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("REQUIRED_STRENGTH").StatDefinitionId}"")] = {itemStrengthRequirement},
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("REQUIRED_DEXTERITY").StatDefinitionId}"")] = {itemDexterityRequirement},
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("REQUIRED_INTELLIGENCE").StatDefinitionId}"")] = {itemIntelligenceRequirement},
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("REQUIRED_SPEED").StatDefinitionId}"")] = {itemSpeedRequirement},
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("REQUIRED_VITALITY").StatDefinitionId}"")] = {itemVitalityRequirement},
+                                    // durability
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("DURABILITY_MAXIMUM").StatDefinitionId}"")] = {(itemDurabilityMaximum < 1 ? 0 : itemDurabilityMaximum)},
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("DURABILITY_CURRENT").StatDefinitionId}"")] = {(itemDurabilityMaximum < 1 ? 0 : itemDurabilityMinimum)},
+                                }}),
+                                {physicalDamageCode}
+                                {magicDamageCode}
+                            }})".Trim();
+                yield return itemDefinitionCodeTemplate;
             }
         }
 
