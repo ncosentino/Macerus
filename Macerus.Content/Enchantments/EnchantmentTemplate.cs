@@ -1,6 +1,8 @@
 ﻿using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
 
+using NexusLabs.Contracts;
+
 using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.Framework;
@@ -32,8 +34,27 @@ namespace Macerus.Content.Enchantments
             IIdentifier statDefinitionId,
             double minValue,
             double maxValue,
+            int decimalPlaces) => CreateRangeEnchantment(
+                enchantmentDefinitionId,
+                statDefinitionId,
+                "+",
+                minValue,
+                maxValue,
+                decimalPlaces);
+
+
+        public IEnchantmentDefinition CreateRangeEnchantment(
+            IIdentifier enchantmentDefinitionId,
+            IIdentifier statDefinitionId,
+            string modifier,
+            double minValue,
+            double maxValue,
             int decimalPlaces)
         {
+            Contract.Requires(
+                modifier == "+" || modifier == "-" || modifier == "*",
+                $"Unsupported modifier '{modifier}'. Must be +, -, or *.");
+
             var enchantmentDefinition = new EnchantmentDefinition(
                 new[]
                 {
@@ -47,7 +68,7 @@ namespace Macerus.Content.Enchantments
                     new HasStatGeneratorComponent(statDefinitionId),
                     new RandomRangeExpressionGeneratorComponent(
                         statDefinitionId,
-                        "+",
+                        modifier,
                         _calculationPriorityFactory.Create<int>(1),
                         minValue,
                         maxValue,
