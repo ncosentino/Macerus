@@ -3,11 +3,11 @@ using System.Linq;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Api.GameObjects.Generation;
 
-namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.Default
+namespace Macerus.Plugins.Features.GameObjects.Items
 {
-    public sealed class AffixEnchantmentsGeneratorComponent : IGeneratorComponent
+    public sealed class EnchantmentsGeneratorComponent : IGeneratorComponent
     {
-        public AffixEnchantmentsGeneratorComponent(
+        public EnchantmentsGeneratorComponent(
             int minimumEnchantments,
             int maximumEnchantments,
             IEnumerable<IFilterAttribute> enchantmentDefinitionFilter)

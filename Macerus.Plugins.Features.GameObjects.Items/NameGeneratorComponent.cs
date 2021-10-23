@@ -1,4 +1,7 @@
-﻿using ProjectXyz.Api.GameObjects.Generation;
+﻿using System.Collections.Generic;
+
+using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Generation;
 
 namespace Macerus.Plugins.Features.GameObjects.Items
 {

@@ -5,7 +5,8 @@
         static void Main(string[] args)
         {
             var gameDataUrl = args[0];
-            var contentConverter = new ExcelContentConverter();
+            var sheetHelper = new SheetHelper();
+            var contentConverter = new ExcelContentConverter(sheetHelper);
             contentConverter.Convert(gameDataUrl);
         }
     }

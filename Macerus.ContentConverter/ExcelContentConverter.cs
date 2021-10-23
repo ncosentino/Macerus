@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -18,9 +17,12 @@ namespace Macerus.ContentConverter
 {
     public sealed class ExcelContentConverter
     {
-        private static readonly Regex ENCHANTMENT_REGEX = new Regex(
-            @"([-+\*])\s*\((\d*\.?\d+)\s*-\s*(\d*\.?\d+),\s*(\d+)\)\s*\((.+)\)",
-            RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private readonly ISheetHelper _sheetHelper;
+
+        public ExcelContentConverter(ISheetHelper sheetHelper)
+        {
+            _sheetHelper = sheetHelper;
+        }
 
         public void Convert(string gameDataUrl)
         {
@@ -35,123 +37,30 @@ namespace Macerus.ContentConverter
             Console.WriteLine($"Game data written to '{filePath}'.");
 
             Console.WriteLine($"Converting data...");
+
+            var stringResourceContentConverter = new StringResourceContentConverter();
+            var uniqueItemConverer = new UniqueItemExcelContentConverter(
+                _sheetHelper,
+                stringResourceContentConverter);
+
             using (var filestream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
                 var workbook = new XSSFWorkbook(filestream);
                 var statDefinitionToTermMappingRepository = ConvertStats(workbook);
                 ConvertBaseArmor(workbook, statDefinitionToTermMappingRepository);
                 ConvertBaseWeapons(workbook, statDefinitionToTermMappingRepository);
-                ConvertUniqueItems(workbook, statDefinitionToTermMappingRepository);
+                uniqueItemConverer.ConvertUniqueItems(workbook, statDefinitionToTermMappingRepository);
             }
 
             Console.WriteLine("Data has been converted.");
         }
 
-        private static void ConvertUniqueItems(
-            XSSFWorkbook workbook,
-            IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository)
-        {
-            var uniqueItemsSheet = workbook.GetSheet("Unique Items");
-            var columnHeaderMapping = GetColumnHeaderMapping(uniqueItemsSheet.GetRow(0));
-
-            for (int rowIndex = 1; rowIndex < uniqueItemsSheet.PhysicalNumberOfRows; rowIndex++)
-            {
-                var row = uniqueItemsSheet.GetRow(rowIndex);
-
-                var enchantmentCodeTemplates = GetEnchantmentCodeTemplates(
-                    row,
-                    columnHeaderMapping,
-                    statDefinitionToTermMappingRepository,
-                    $"unique_item_{rowIndex}_enchantment")
-                    .ToArray();
-            }
-        }
-
-        private static IEnumerable<string> GetEnchantmentCodeTemplates(
-            IRow row,
-            IReadOnlyDictionary<string, int> columnHeaderMapping,
-            IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
-            string enchantmentIdentifierPrefix)
-        {
-            var counter = 0;
-            for (int enchantmentCellIndex = 1; enchantmentCellIndex < 10; enchantmentCellIndex++)
-            {
-                var beforeCount = counter;
-
-                var columnHeader = "Enchantment " + enchantmentCellIndex;
-                var rawEnchantment = columnHeaderMapping.ContainsKey(columnHeader)
-                    ? row.GetCell(columnHeaderMapping[columnHeader]).StringCellValue
-                    : null;
-                if (string.IsNullOrWhiteSpace(rawEnchantment))
-                {
-                    yield break;
-                }
-
-                foreach (var enchantmentCodeTemplate in GetEnchantmentCodeTemplates(
-                    rawEnchantment,
-                    statDefinitionToTermMappingRepository,
-                    enchantmentIdentifierPrefix,
-                    counter))
-                {
-                    yield return enchantmentCodeTemplate;
-                    counter++;
-                }
-
-                var afterCount = counter;
-                if (afterCount <= beforeCount)
-                {
-                    break;
-                }
-            }
-        }
-
-        private static IEnumerable<string> GetEnchantmentCodeTemplates(
-            string rawEnchantment,
-            IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
-            string enchantmentIdentifierPrefix,
-            int startCount)
-        {
-            if (string.IsNullOrWhiteSpace(rawEnchantment))
-            {
-                yield break;
-            }
-
-            var match = ENCHANTMENT_REGEX.Match(rawEnchantment);
-            if (!match.Success)
-            {
-                throw new FormatException(
-                    $"Could not parse enchantment '{rawEnchantment}'.");
-            }
-
-            var modifier = match.Groups[1].Value;
-            var rangeMin = double.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-            var rangeMax = double.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-            var decimalPlaces = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
-            var statTerms = match.Groups[5].Value.Replace(" ", string.Empty).Split(',', StringSplitOptions.RemoveEmptyEntries);
-
-            int counter = 0;
-            foreach (var statTerm in statTerms)
-            {
-                var enchantmentIdentifier = enchantmentIdentifierPrefix + "_" + (startCount + counter);
-                var enchantmentCodeTemplate = @$"
-                enchantmentTemplate.CreateRangeEnchantment(
-                    new StringIdentifier(""{enchantmentIdentifier}""),
-                    new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm(statTerm).StatDefinitionId}""), // {statTerm}
-                    {modifier},
-                    {rangeMin},
-                    {rangeMax},
-                    {decimalPlaces})";
-                yield return enchantmentCodeTemplate;
-                counter++;
-            }
-        }
-
-        private static void ConvertBaseWeapons(
+        private void ConvertBaseWeapons(
             XSSFWorkbook workbook,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository)
         {
             var baseWeaponsSheet = workbook.GetSheet("Base Weapons");
-            var columnHeaderMapping = GetColumnHeaderMapping(baseWeaponsSheet.GetRow(0));
+            var columnHeaderMapping = _sheetHelper.GetColumnHeaderMapping(baseWeaponsSheet.GetRow(0));
 
             var itemDefinitionCodeTemplates = GetWeaponItemDefinitionCodeTemplates(
                 baseWeaponsSheet,
@@ -212,7 +121,7 @@ namespace Macerus.Content.Generated.Items
             File.WriteAllText(filePath, templatedItemDefinitionCode);
         }
 
-        private static IEnumerable<string> GetWeaponItemDefinitionCodeTemplates(
+        private IEnumerable<string> GetWeaponItemDefinitionCodeTemplates(
             ISheet baseArmorSheet,
             IReadOnlyDictionary<string, int> columnHeaderMapping,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository)
@@ -231,32 +140,32 @@ namespace Macerus.Content.Generated.Items
                 var itemEquipSlotName = row.GetCell(columnHeaderMapping["slot"]).StringCellValue; // FIXME: Split for multi-slot?
                 var itemEquipSlotId = itemEquipSlotName; // FIXME: convert???
 
-                var itemLevel = GetIntValue(row, columnHeaderMapping["item level"]);
+                var itemLevel = _sheetHelper.GetIntValue(row, columnHeaderMapping["item level"]);
 
-                var itemAttackSpeed = GetIntValue(row, columnHeaderMapping["attack speed"]);
-                var itemRange = GetIntValue(row, columnHeaderMapping["range"]);
+                var itemAttackSpeed = _sheetHelper.GetIntValue(row, columnHeaderMapping["attack speed"]);
+                var itemRange = _sheetHelper.GetIntValue(row, columnHeaderMapping["range"]);
 
-                var itemLevelRequirement = GetIntValue(row, columnHeaderMapping["level requirement"]);
-                var itemStrengthRequirement = GetIntValue(row, columnHeaderMapping["req str"]);
-                var itemDexterityRequirement = GetIntValue(row, columnHeaderMapping["req dex"]);
-                var itemIntelligenceRequirement = GetIntValue(row, columnHeaderMapping["req int"]);
-                var itemSpeedRequirement = GetIntValue(row, columnHeaderMapping["req spd"]);
-                var itemVitalityRequirement = GetIntValue(row, columnHeaderMapping["req vit"]);
+                var itemLevelRequirement = _sheetHelper.GetIntValue(row, columnHeaderMapping["level requirement"]);
+                var itemStrengthRequirement = _sheetHelper.GetIntValue(row, columnHeaderMapping["req str"]);
+                var itemDexterityRequirement = _sheetHelper.GetIntValue(row, columnHeaderMapping["req dex"]);
+                var itemIntelligenceRequirement = _sheetHelper.GetIntValue(row, columnHeaderMapping["req int"]);
+                var itemSpeedRequirement = _sheetHelper.GetIntValue(row, columnHeaderMapping["req spd"]);
+                var itemVitalityRequirement = _sheetHelper.GetIntValue(row, columnHeaderMapping["req vit"]);
 
-                var itemPhysicalDamageMinMin = GetIntValue(row, columnHeaderMapping["physical damage min min"]);
-                var itemPhysicalDamageMinMax = GetIntValue(row, columnHeaderMapping["physical damage min max"]);
-                var itemPhysicalDamageMaxMin = GetIntValue(row, columnHeaderMapping["physical damage max min"]);
-                var itemPhysicalDamageMaxMax = GetIntValue(row, columnHeaderMapping["physical damage max max"]);
-                var itemMagicDamageMinMin = GetIntValue(row, columnHeaderMapping["magic damage min min"]);
-                var itemMagicDamageMinMax = GetIntValue(row, columnHeaderMapping["magic damage min max"]);
-                var itemMagicDamageMaxMin = GetIntValue(row, columnHeaderMapping["magic damage max min"]);
-                var itemMagicDamageMaxMax = GetIntValue(row, columnHeaderMapping["magic damage max max"]);
+                var itemPhysicalDamageMinMin = _sheetHelper.GetIntValue(row, columnHeaderMapping["physical damage min min"]);
+                var itemPhysicalDamageMinMax = _sheetHelper.GetIntValue(row, columnHeaderMapping["physical damage min max"]);
+                var itemPhysicalDamageMaxMin = _sheetHelper.GetIntValue(row, columnHeaderMapping["physical damage max min"]);
+                var itemPhysicalDamageMaxMax = _sheetHelper.GetIntValue(row, columnHeaderMapping["physical damage max max"]);
+                var itemMagicDamageMinMin = _sheetHelper.GetIntValue(row, columnHeaderMapping["magic damage min min"]);
+                var itemMagicDamageMinMax = _sheetHelper.GetIntValue(row, columnHeaderMapping["magic damage min max"]);
+                var itemMagicDamageMaxMin = _sheetHelper.GetIntValue(row, columnHeaderMapping["magic damage max min"]);
+                var itemMagicDamageMaxMax = _sheetHelper.GetIntValue(row, columnHeaderMapping["magic damage max max"]);
 
-                var itemDurabilityMinimum = GetIntValue(row, columnHeaderMapping["durability min"]);
-                var itemDurabilityMaximum = GetIntValue(row, columnHeaderMapping["durability max"]);
+                var itemDurabilityMinimum = _sheetHelper.GetIntValue(row, columnHeaderMapping["durability min"]);
+                var itemDurabilityMaximum = _sheetHelper.GetIntValue(row, columnHeaderMapping["durability max"]);
 
-                var itemSocketsMinimum = GetIntValue(row, columnHeaderMapping["sockets min"]);
-                var itemSocketsMaximum = GetIntValue(row, columnHeaderMapping["sockets max"]);
+                var itemSocketsMinimum = _sheetHelper.GetIntValue(row, columnHeaderMapping["sockets min"]);
+                var itemSocketsMaximum = _sheetHelper.GetIntValue(row, columnHeaderMapping["sockets max"]);
 
                 var physicalDamageCode = itemPhysicalDamageMaxMax < 1
                     ? string.Empty
@@ -315,12 +224,12 @@ namespace Macerus.Content.Generated.Items
             }
         }
 
-        private static void ConvertBaseArmor(
+        private void ConvertBaseArmor(
             XSSFWorkbook workbook,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository)
         {
             var baseArmorSheet = workbook.GetSheet("Base Armor");
-            var columnHeaderMapping = GetColumnHeaderMapping(baseArmorSheet.GetRow(0));
+            var columnHeaderMapping = _sheetHelper.GetColumnHeaderMapping(baseArmorSheet.GetRow(0));
 
             var itemDefinitionCodeTemplates = GetArmorItemDefinitionCodeTemplates(
                 baseArmorSheet,
@@ -381,7 +290,7 @@ namespace Macerus.Content.Generated.Items
             File.WriteAllText(filePath, templatedBaseArmorDefinitionCode);
         }
 
-        private static IEnumerable<string> GetArmorItemDefinitionCodeTemplates(
+        private IEnumerable<string> GetArmorItemDefinitionCodeTemplates(
             ISheet baseArmorSheet,
             IReadOnlyDictionary<string, int> columnHeaderMapping,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository)
@@ -400,25 +309,25 @@ namespace Macerus.Content.Generated.Items
                 var itemEquipSlotName = row.GetCell(columnHeaderMapping["slot"]).StringCellValue;
                 var itemEquipSlotId = itemEquipSlotName; // FIXME: convert???
 
-                var itemLevel = GetIntValue(row, columnHeaderMapping["item level"]);
+                var itemLevel = _sheetHelper.GetIntValue(row, columnHeaderMapping["item level"]);
 
-                var itemLevelRequirement = GetIntValue(row, columnHeaderMapping["level requirement"]);
-                var itemStrengthRequirement = GetIntValue(row, columnHeaderMapping["req str"]);
-                var itemDexterityRequirement = GetIntValue(row, columnHeaderMapping["req dex"]);
-                var itemIntelligenceRequirement = GetIntValue(row, columnHeaderMapping["req int"]);
-                var itemSpeedRequirement = GetIntValue(row, columnHeaderMapping["req spd"]);
-                var itemVitalityRequirement = GetIntValue(row, columnHeaderMapping["req vit"]);
+                var itemLevelRequirement = _sheetHelper.GetIntValue(row, columnHeaderMapping["level requirement"]);
+                var itemStrengthRequirement = _sheetHelper.GetIntValue(row, columnHeaderMapping["req str"]);
+                var itemDexterityRequirement = _sheetHelper.GetIntValue(row, columnHeaderMapping["req dex"]);
+                var itemIntelligenceRequirement = _sheetHelper.GetIntValue(row, columnHeaderMapping["req int"]);
+                var itemSpeedRequirement = _sheetHelper.GetIntValue(row, columnHeaderMapping["req spd"]);
+                var itemVitalityRequirement = _sheetHelper.GetIntValue(row, columnHeaderMapping["req vit"]);
 
-                var itemArmorMinimum = GetIntValue(row, columnHeaderMapping["armor min"]);
-                var itemArmorMaximum = GetIntValue(row, columnHeaderMapping["armor max"]);
-                var itemEvasionMinimum = GetIntValue(row, columnHeaderMapping["evasion min"]);
-                var itemEvasionMaximum = GetIntValue(row, columnHeaderMapping["evasion max"]);
+                var itemArmorMinimum = _sheetHelper.GetIntValue(row, columnHeaderMapping["armor min"]);
+                var itemArmorMaximum = _sheetHelper.GetIntValue(row, columnHeaderMapping["armor max"]);
+                var itemEvasionMinimum = _sheetHelper.GetIntValue(row, columnHeaderMapping["evasion min"]);
+                var itemEvasionMaximum = _sheetHelper.GetIntValue(row, columnHeaderMapping["evasion max"]);
 
-                var itemDurabilityMinimum = GetIntValue(row, columnHeaderMapping["durability min"]);
-                var itemDurabilityMaximum = GetIntValue(row, columnHeaderMapping["durability max"]);
+                var itemDurabilityMinimum = _sheetHelper.GetIntValue(row, columnHeaderMapping["durability min"]);
+                var itemDurabilityMaximum = _sheetHelper.GetIntValue(row, columnHeaderMapping["durability max"]);
 
-                var itemSocketsMinimum = GetIntValue(row, columnHeaderMapping["sockets min"]);
-                var itemSocketsMaximum = GetIntValue(row, columnHeaderMapping["sockets max"]);
+                var itemSocketsMinimum = _sheetHelper.GetIntValue(row, columnHeaderMapping["sockets min"]);
+                var itemSocketsMaximum = _sheetHelper.GetIntValue(row, columnHeaderMapping["sockets max"]);
 
                 var itemDefinitionCodeTemplate = @$"
                         new ItemDefinition(
@@ -466,10 +375,10 @@ namespace Macerus.Content.Generated.Items
             }
         }
 
-        private static IReadOnlyStatDefinitionToTermMappingRepository ConvertStats(XSSFWorkbook workbook)
+        private IReadOnlyStatDefinitionToTermMappingRepository ConvertStats(XSSFWorkbook workbook)
         {
             var statsSheet = workbook.GetSheet("Stats");
-            var columnHeaderMapping = GetColumnHeaderMapping(statsSheet.GetRow(0));
+            var columnHeaderMapping = _sheetHelper.GetColumnHeaderMapping(statsSheet.GetRow(0));
 
             var statToTermMapping = new Dictionary<string, string>();
             for (int rowIndex = 1; rowIndex < statsSheet.PhysicalNumberOfRows; rowIndex++)
@@ -527,26 +436,6 @@ namespace Macerus.Content.Generated.Stats
                 .ToDictionary(
                     x => (IIdentifier)new StringIdentifier(x.Key),
                     x => x.Value));
-        }
-
-        private static IReadOnlyDictionary<string, int> GetColumnHeaderMapping(IRow row)
-        {
-            var mapping = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-            for (int i = 0; i < row.Cells.Count; i++)
-            {
-                mapping[row.GetCell(i).StringCellValue] = i;
-            }
-
-            return mapping;
-        }
-
-        private static int GetIntValue(IRow row, int columnIndex)
-        {
-            var cell = row.GetCell(columnIndex);
-            var result = cell?.CellType == CellType.Numeric
-                ? (int)cell.NumericCellValue
-                : 0;
-            return result;
         }
     }
 }

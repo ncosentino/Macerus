@@ -20,6 +20,10 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Autofac
                 .RegisterType<IconGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<EnchantmentsGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

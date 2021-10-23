@@ -9,15 +9,15 @@ using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation;
 
-namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.Default
+namespace Macerus.Plugins.Features.GameObjects.Items
 {
-    public sealed class AffixEnchantmentsGeneratorComponentToBehaviorConverter : IDiscoverableGeneratorComponentToBehaviorConverter
+    public sealed class EnchantmentsGeneratorComponentToBehaviorConverter : IDiscoverableGeneratorComponentToBehaviorConverter
     {
         private readonly Lazy<IEnchantmentGenerator> _lazyEnchantmentGenerator;
         private readonly Lazy<IHasEnchantmentsBehaviorFactory> _lazyHasEnchantmentsBehaviorFactory;
         private readonly Lazy<IFilterContextFactory> _lazyFilterContextFactory;
 
-        public AffixEnchantmentsGeneratorComponentToBehaviorConverter(
+        public EnchantmentsGeneratorComponentToBehaviorConverter(
             Lazy<IEnchantmentGenerator> lazyEnchantmentGenerator,
             Lazy<IHasEnchantmentsBehaviorFactory> lazyHasEnchantmentsBehaviorFactory,
             Lazy<IFilterContextFactory> lazyFilterContextFactory)
@@ -27,7 +27,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.Default
             _lazyFilterContextFactory = lazyFilterContextFactory;
         }
 
-        public Type ComponentType => typeof(AffixEnchantmentsGeneratorComponent);
+        public Type ComponentType => typeof(EnchantmentsGeneratorComponent);
 
         private IEnchantmentGenerator EnchantmentGenerator => _lazyEnchantmentGenerator.Value;
 
@@ -40,7 +40,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.Default
             IEnumerable<IBehavior> baseBehaviors,
             IGeneratorComponent generatorComponent)
         {
-            var randomEnchantmentsGeneratorComponent = (AffixEnchantmentsGeneratorComponent)generatorComponent;
+            var enchantmentsGeneratorComponent = (EnchantmentsGeneratorComponent)generatorComponent;
 
             var wasNewlyCreatedEnchantmentsBehavior = false;
             IHasEnchantmentsBehavior hasEnchantmentsBehavior;
@@ -64,11 +64,11 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.Default
 
             var attributes = filterContext
                 .Attributes
-                .Where(x => !randomEnchantmentsGeneratorComponent.EnchantmentDefinitionFilter.Any(s => s.Id.Equals(x.Id)))
-                .Concat(randomEnchantmentsGeneratorComponent.EnchantmentDefinitionFilter);
+                .Where(x => !enchantmentsGeneratorComponent.EnchantmentDefinitionFilter.Any(s => s.Id.Equals(x.Id)))
+                .Concat(enchantmentsGeneratorComponent.EnchantmentDefinitionFilter);
             var enchantmentGeneratorContext = FilterContextFactory.CreateContext(
-                randomEnchantmentsGeneratorComponent.MinimumEnchantments,
-                randomEnchantmentsGeneratorComponent.MaximumEnchantments,
+                enchantmentsGeneratorComponent.MinimumEnchantments,
+                enchantmentsGeneratorComponent.MaximumEnchantments,
                 attributes);
             var enchantments = EnchantmentGenerator
                 .GenerateEnchantments(enchantmentGeneratorContext)
