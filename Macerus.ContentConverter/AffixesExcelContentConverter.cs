@@ -85,7 +85,7 @@ namespace Macerus.ContentConverter
                         row,
                         columnHeaderMapping,
                         statDefinitionToTermMappingRepository,
-                        affixId,
+                        "magic_" + affixId,
                         "Magic",
                         string.IsNullOrWhiteSpace(prefixStringResource) ? null : prefixStringResourceId,
                         string.IsNullOrWhiteSpace(suffixStringResource) ? null : suffixStringResourceId);
@@ -100,7 +100,7 @@ namespace Macerus.ContentConverter
                     row,
                     columnHeaderMapping,
                     statDefinitionToTermMappingRepository,
-                    affixId,
+                    "rare_" + affixId,
                     "Rare",
                     null,
                     null);
@@ -127,6 +127,9 @@ namespace Macerus.ContentConverter
             string suffixStringResourceId)
         {
             var enchantmentDefinitionDtos = new List<EnchantmentDefinitionDto>();
+
+            var minimumLevel = _sheetHelper.GetIntValue(row, columnHeaderMapping["Minimum Level"]);
+            var maximumLevel = _sheetHelper.GetIntValue(row, columnHeaderMapping["Maximum Level"]);
 
             for (int statCellIndex = 1; statCellIndex < 10; statCellIndex++)
             {
@@ -189,6 +192,8 @@ namespace Macerus.ContentConverter
             var affixDto = new AffixDto(
                 affixId,
                 affixType.ToLowerInvariant(),
+                minimumLevel,
+                maximumLevel,
                 prefixStringResourceId,
                 suffixStringResourceId,
                 enchantmentDefinitionDtos.Select(x => x.EnchantmentDefinitionId).ToArray());

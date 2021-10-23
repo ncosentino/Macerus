@@ -40,6 +40,7 @@ namespace Macerus.ContentConverter
             var stringResourceContentConverter = new StringResourceContentConverter();
 
             var affixConverter = new AffixesExcelContentConverter(_sheetHelper);
+            var affixCodeWriter = new AffixCodeWriter();
 
             var uniqueItemConverer = new UniqueItemExcelContentConverter(_sheetHelper);
             var uniqueItemCodeWriter = new UniqueItemCodeWriter();
@@ -56,7 +57,7 @@ namespace Macerus.ContentConverter
                 var affixContent = affixConverter.GetAffixContent(
                     workbook,
                     statDefinitionToTermMappingRepository);
-                // FIXME: write affix content
+                affixCodeWriter.WriteAffixesCode(affixContent.SelectMany(x => x.AffixDtos));
                 enchantmentDefinitionDtos = enchantmentDefinitionDtos.Concat(affixContent.SelectMany(x => x.EnchantmentDefinitionDtos));
                 stringResourceDtos = stringResourceDtos.Concat(affixContent.SelectMany(x => x.StringResourceDtos));
 
