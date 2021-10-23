@@ -8,8 +8,6 @@ namespace Macerus.ContentConverter
 {
     public interface IUniqueItemExcelContentConverter
     {
-        void WriteUniqueItemsCode(IEnumerable<UniqueItemDto> uniqueItemDtos);
-
         IEnumerable<UniqueItemConvertedContent> GetUniqueItemContent(
             XSSFWorkbook workbook,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository);

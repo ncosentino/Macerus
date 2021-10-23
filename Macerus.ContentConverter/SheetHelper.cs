@@ -26,5 +26,39 @@ namespace Macerus.ContentConverter
                 : 0;
             return result;
         }
+
+        public bool TryGetIntValue(
+            IRow row,
+            int columnIndex,
+            out int value)
+        {
+            value = 0;
+
+            var cell = row.GetCell(columnIndex);
+            if (cell?.CellType != CellType.Numeric)
+            {
+                return false;
+            }
+
+            value = (int)cell.NumericCellValue;
+            return true;
+        }
+
+        public bool TryGetDoubleValue(
+           IRow row,
+           int columnIndex,
+           out double value)
+        {
+            value = 0;
+
+            var cell = row.GetCell(columnIndex);
+            if (cell?.CellType != CellType.Numeric)
+            {
+                return false;
+            }
+
+            value = cell.NumericCellValue;
+            return true;
+        }
     }
 }

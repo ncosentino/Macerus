@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
 
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -39,21 +38,39 @@ namespace Macerus.ContentConverter
             Console.WriteLine($"Converting data...");
 
             var stringResourceContentConverter = new StringResourceContentConverter();
+
+            var affixConverter = new AffixesExcelContentConverter(_sheetHelper);
+
             var uniqueItemConverer = new UniqueItemExcelContentConverter(_sheetHelper);
+            var uniqueItemCodeWriter = new UniqueItemCodeWriter();
+
+            var enchantmentDefinitionCodeWriter = new EnchantmentDefinitionCodeWriter();
 
             IEnumerable<StringResourceDto> stringResourceDtos = new List<StringResourceDto>();
+            IEnumerable<EnchantmentDefinitionDto> enchantmentDefinitionDtos = new List<EnchantmentDefinitionDto>();
             using (var filestream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
                 var workbook = new XSSFWorkbook(filestream);
                 var statDefinitionToTermMappingRepository = ConvertStats(workbook);
+
+                var affixContent = affixConverter.GetAffixContent(
+                    workbook,
+                    statDefinitionToTermMappingRepository);
+                // FIXME: write affix content
+                enchantmentDefinitionDtos = enchantmentDefinitionDtos.Concat(affixContent.SelectMany(x => x.EnchantmentDefinitionDtos));
+                stringResourceDtos = stringResourceDtos.Concat(affixContent.SelectMany(x => x.StringResourceDtos));
+
                 ConvertBaseArmor(workbook, statDefinitionToTermMappingRepository);
                 ConvertBaseWeapons(workbook, statDefinitionToTermMappingRepository);
                 
                 var uniqueItemContent = uniqueItemConverer.GetUniqueItemContent(
                     workbook, 
                     statDefinitionToTermMappingRepository);
-                uniqueItemConverer.WriteUniqueItemsCode(uniqueItemContent.Select(x => x.UniqueItemDto));
+                uniqueItemCodeWriter.WriteUniqueItemsCode(uniqueItemContent.Select(x => x.UniqueItemDto));
+                enchantmentDefinitionDtos = enchantmentDefinitionDtos.Concat(uniqueItemContent.SelectMany(x => x.EnchantmentDefinitionDtos));
                 stringResourceDtos = stringResourceDtos.Concat(uniqueItemContent.Select(x => x.StringResourceDto));
+
+                enchantmentDefinitionCodeWriter.WriteEnchantmentDefinitionsCode(enchantmentDefinitionDtos);
 
                 // at the end after we've accumulated alllllll the resources
                 // (which should be optimized to be streamed out and not just
