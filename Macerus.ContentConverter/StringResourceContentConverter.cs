@@ -9,7 +9,7 @@ namespace Macerus.ContentConverter
         public void WriteStringResourceModule(
             string namespaceForModule,
             string moduleClassName,
-            IEnumerable<KeyValuePair<string, string>> resourceKvps,
+            IEnumerable<StringResourceDto> stringResourceDtos,
             string outputFilePath)
         {
             var stringResourceCode = @$"
@@ -32,7 +32,7 @@ namespace {namespaceForModule}
                 .Register(c => new InMemoryStringResourceRepository(new Dictionary<IIdentifier, string>()
                 {{
 
-{string.Join(",\r\n", resourceKvps.Select(x => @$"                   [new StringIdentifier(""{x.Key}"")] = ""{x.Value}"""))}
+{string.Join(",\r\n", stringResourceDtos.Select(x => @$"                   [new StringIdentifier(""{x.StringResourceId}"")] = ""{x.Value}"""))}
                 }}))
                 .SingleInstance()
                 .AsImplementedInterfaces();

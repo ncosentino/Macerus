@@ -19,29 +19,14 @@ namespace Macerus.ContentConverter
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         private readonly ISheetHelper _sheetHelper;
-        private readonly IStringResourceContentConverter _stringResourceContentConverter;
 
-        public UniqueItemExcelContentConverter(
-            ISheetHelper sheetHelper,
-            IStringResourceContentConverter stringResourceContentConverter)
+        public UniqueItemExcelContentConverter(ISheetHelper sheetHelper)
         {
             _sheetHelper = sheetHelper;
-            _stringResourceContentConverter = stringResourceContentConverter;
         }
 
-        public void ConvertUniqueItems(
-            XSSFWorkbook workbook,
-            IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository)
+        public void WriteUniqueItemsCode(IEnumerable<UniqueItemDto> uniqueItemDtos)
         {
-            var uniqueItemsSheet = workbook.GetSheet("Unique Items");
-            var columnHeaderMapping = _sheetHelper.GetColumnHeaderMapping(uniqueItemsSheet.GetRow(0));
-
-            var uniqueItemContent = GetUniqueItemContent(
-                uniqueItemsSheet,
-                columnHeaderMapping,
-                statDefinitionToTermMappingRepository)
-                .ToArray();
-
             var uniqueItemCode = @$"
 using System;
 using System.Collections.Generic; // needed for NET5
@@ -82,7 +67,7 @@ namespace Macerus.Content.Items
                 {{
                     var itemDefinitions = new[]
                     {{
-{string.Join(",\r\n", uniqueItemContent.Select(x => "                    " + x.ItemCodeTemplate))}
+{string.Join(",\r\n", uniqueItemDtos.Select(x => "                    " + GetUniqueItemCodeTemplateFromDto(x)))}
                     }};
                     var itemDefinitionRepository = new InMemoryItemDefinitionRepository(
                         c.Resolve<IAttributeFilterer>(),
@@ -107,15 +92,21 @@ namespace Macerus.Content.Items
             var filePath = Path.Combine(directoryPath, "UniqueItemModule.cs");
             File.Delete(filePath);
             File.WriteAllText(filePath, uniqueItemCode);
-
-            _stringResourceContentConverter.WriteStringResourceModule(
-                "Macerus.Content.Generated.Items",
-                "UniqueItemStringResourcesModule",
-                uniqueItemContent.Select(x => x.StringResourceKvp),
-                Path.Combine(directoryPath, "UniqueItemStringResourcesModule.cs"));
         }
 
-        private IEnumerable<UniqueItemContent> GetUniqueItemContent(
+        public IEnumerable<UniqueItemConvertedContent> GetUniqueItemContent(
+            XSSFWorkbook workbook,
+            IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository)
+        {
+            var uniqueItemsSheet = workbook.GetSheet("Unique Items");
+            var columnHeaderMapping = _sheetHelper.GetColumnHeaderMapping(uniqueItemsSheet.GetRow(0));
+            return GetUniqueItemContent(
+                uniqueItemsSheet,
+                columnHeaderMapping,
+                statDefinitionToTermMappingRepository);
+        }
+
+        private IEnumerable<UniqueItemConvertedContent> GetUniqueItemContent(
             ISheet uniqueItemsSheet,
             IReadOnlyDictionary<string, int> columnHeaderMapping,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository)
@@ -125,7 +116,7 @@ namespace Macerus.Content.Items
                 var row = uniqueItemsSheet.GetRow(rowIndex);
 
                 var uniqueItemId = $"unique_item_{rowIndex}";
-                var enchantmentIdsAndCodeTemplates = GetEnchantmentCodeTemplates(
+                var enchantmentDefinitionDtos = GetEnchantmentDefinitionDtos(
                     row,
                     columnHeaderMapping,
                     statDefinitionToTermMappingRepository,
@@ -136,49 +127,65 @@ namespace Macerus.Content.Items
 
                 var itemNameStringResource = row.GetCell(columnHeaderMapping["name"]).StringCellValue;
                 var itemNameStringResourceId = $"unique_item_name_{rowIndex}";
+                var itemNameStringResourceDto = new StringResourceDto(
+                    itemNameStringResourceId,
+                    itemNameStringResource);
 
                 var itemIconResource = row.GetCell(columnHeaderMapping["icon"]).StringCellValue;
                 var itemIconResourceId = $"unique_item_icon_{rowIndex}";
+                var itemIconImageResourceDto = new ImageResourceDto(
+                    itemIconResourceId,
+                    itemIconResource);
 
-                var enchantmentComponentCode = enchantmentIdsAndCodeTemplates.Length < 1
+                var uniqueItemDto = new UniqueItemDto(
+                    uniqueItemId,
+                    baseItemId,
+                    itemNameStringResourceId,
+                    itemIconResourceId,
+                    enchantmentDefinitionDtos.Select(x => x.EnchantmentDefinitionId).ToArray());
+                yield return new UniqueItemConvertedContent(
+                    uniqueItemDto,
+                    enchantmentDefinitionDtos,
+                    itemNameStringResourceDto,
+                    itemIconImageResourceDto);
+            }
+        }
+
+        private string GetUniqueItemCodeTemplateFromDto(UniqueItemDto uniqueItemDto)
+        {
+            var enchantmentComponentCode = uniqueItemDto.EnchantmentDefinitionIds.Count < 1
                     ? string.Empty
                     :
                     @$"new EnchantmentsGeneratorComponent(
-                                    {enchantmentIdsAndCodeTemplates.Length},
-                                    {enchantmentIdsAndCodeTemplates.Length},
+                                    {uniqueItemDto.EnchantmentDefinitionIds.Count},
+                                    {uniqueItemDto.EnchantmentDefinitionIds.Count},
                                     new[]
                                     {{
                                         new FilterAttribute(
                                             _enchantmentIdentifiers.EnchantmentDefinitionId,
                                             new AllIdentifierCollectionFilterAttributeValue(
-{string.Join(",\r\n", enchantmentIdsAndCodeTemplates.Select(x => @$"                                                new StringIdentifier(""{x.Key}"")"))},
+{string.Join(",\r\n", uniqueItemDto.EnchantmentDefinitionIds.Select(x => @$"                                                new StringIdentifier(""{x}"")"))},
                                             true),
                                     }}),";
 
-                var uniqueItemCodeTemplate = @$"
+            var uniqueItemCodeTemplate = @$"
                         new ItemDefinition(
                             new[]
                             {{
                                 RequiresUniqueAffixAttribute,
-                                CreateItemIdFilterAttribute(new StringIdentifier(""{uniqueItemId}"")),
+                                CreateItemIdFilterAttribute(new StringIdentifier(""{uniqueItemDto.UniqueItemId}"")),
                             }},
                             new IGeneratorComponent[]
                             {{
-                                new UniqueBaseItemGeneratorComponent(new StringIdentifier(""{baseItemId}"")),
-                                new NameGeneratorComponent(""{itemNameStringResourceId}""),
-                                new IconGeneratorComponent(""{itemIconResourceId}""),
+                                new UniqueBaseItemGeneratorComponent(new StringIdentifier(""{uniqueItemDto.BaseItemId}"")),
+                                new NameGeneratorComponent(""{uniqueItemDto.ItemNameStringResourceId}""),
+                                new IconGeneratorComponent(""{uniqueItemDto.ItemIconStringResourceId}""),
                                 {enchantmentComponentCode}
                             }})";
-
-                yield return new UniqueItemContent(
-                    uniqueItemCodeTemplate,
-                    enchantmentIdsAndCodeTemplates.Select(x => x.Value).ToArray(),
-                    new KeyValuePair<string, string>(itemNameStringResourceId, itemNameStringResource),
-                    itemIconResourceId);// FIXME: get the code for this
-            }
+            return uniqueItemCodeTemplate;
         }
 
-        private IEnumerable<KeyValuePair<string, string>> GetEnchantmentCodeTemplates(
+        private IEnumerable<EnchantmentDefinitionDto> GetEnchantmentDefinitionDtos(
             IRow row,
             IReadOnlyDictionary<string, int> columnHeaderMapping,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
@@ -198,7 +205,7 @@ namespace Macerus.Content.Items
                     yield break;
                 }
 
-                foreach (var enchantmentIdAndCodeTemplate in GetEnchantmentIdsAndCodeTemplates(
+                foreach (var enchantmentIdAndCodeTemplate in GetEnchantmentDefinitionDtos(
                     rawEnchantment,
                     statDefinitionToTermMappingRepository,
                     enchantmentIdentifierPrefix,
@@ -216,7 +223,7 @@ namespace Macerus.Content.Items
             }
         }
 
-        private IEnumerable<KeyValuePair<string, string>> GetEnchantmentIdsAndCodeTemplates(
+        private IEnumerable<EnchantmentDefinitionDto> GetEnchantmentDefinitionDtos(
             string rawEnchantment,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
             string enchantmentIdentifierPrefix,
@@ -244,19 +251,29 @@ namespace Macerus.Content.Items
             foreach (var statTerm in statTerms)
             {
                 var enchantmentIdentifier = enchantmentIdentifierPrefix + "_" + (startCount + counter);
-                var enchantmentCodeTemplate = @$"
-                enchantmentTemplate.CreateRangeEnchantment(
-                    new StringIdentifier(""{enchantmentIdentifier}""),
-                    new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm(statTerm).StatDefinitionId}""), // {statTerm}
-                    {modifier},
-                    {rangeMin},
-                    {rangeMax},
-                    {decimalPlaces})";
-                yield return new KeyValuePair<string, string>(
+                var enchantmentDefinitionDto = new EnchantmentDefinitionDto(
                     enchantmentIdentifier,
-                    enchantmentCodeTemplate);
+                    statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm(statTerm).StatDefinitionId.ToString(),
+                    statTerm,
+                    modifier,
+                    rangeMin,
+                    rangeMax,
+                    decimalPlaces);
                 counter++;
             }
+        }
+
+        private string GetEnchantmentCodeTemplateFromDto(EnchantmentDefinitionDto enchantmentDefinitionDto)
+        {
+            var enchantmentCodeTemplate = @$"
+                enchantmentTemplate.CreateRangeEnchantment(
+                    new StringIdentifier(""{enchantmentDefinitionDto.EnchantmentDefinitionId}""),
+                    new StringIdentifier(""{enchantmentDefinitionDto.StatDefinitionId}""), // {enchantmentDefinitionDto.StatTerm}
+                    {enchantmentDefinitionDto.Modifier},
+                    {enchantmentDefinitionDto.RangeMinimum},
+                    {enchantmentDefinitionDto.RangeMaximum},
+                    {enchantmentDefinitionDto.DecimalPlaces})";
+            return enchantmentCodeTemplate;
         }
     }
 }

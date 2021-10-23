@@ -39,17 +39,30 @@ namespace Macerus.ContentConverter
             Console.WriteLine($"Converting data...");
 
             var stringResourceContentConverter = new StringResourceContentConverter();
-            var uniqueItemConverer = new UniqueItemExcelContentConverter(
-                _sheetHelper,
-                stringResourceContentConverter);
+            var uniqueItemConverer = new UniqueItemExcelContentConverter(_sheetHelper);
 
+            IEnumerable<StringResourceDto> stringResourceDtos = new List<StringResourceDto>();
             using (var filestream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
                 var workbook = new XSSFWorkbook(filestream);
                 var statDefinitionToTermMappingRepository = ConvertStats(workbook);
                 ConvertBaseArmor(workbook, statDefinitionToTermMappingRepository);
                 ConvertBaseWeapons(workbook, statDefinitionToTermMappingRepository);
-                uniqueItemConverer.ConvertUniqueItems(workbook, statDefinitionToTermMappingRepository);
+                
+                var uniqueItemContent = uniqueItemConverer.GetUniqueItemContent(
+                    workbook, 
+                    statDefinitionToTermMappingRepository);
+                uniqueItemConverer.WriteUniqueItemsCode(uniqueItemContent.Select(x => x.UniqueItemDto));
+                stringResourceDtos = stringResourceDtos.Concat(uniqueItemContent.Select(x => x.StringResourceDto));
+
+                // at the end after we've accumulated alllllll the resources
+                // (which should be optimized to be streamed out and not just
+                // loaded into memory like a total dumpster fire)
+                stringResourceContentConverter.WriteStringResourceModule(
+                    "Macerus.Content.Generated.Resources",
+                    "StringResourceModule",
+                    stringResourceDtos,
+                    @"Generated\Resources\StringResourceModule.cs");
             }
 
             Console.WriteLine("Data has been converted.");
