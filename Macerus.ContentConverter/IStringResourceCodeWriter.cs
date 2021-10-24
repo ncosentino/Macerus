@@ -2,12 +2,10 @@
 
 namespace Macerus.ContentConverter
 {
-    public interface IStringResourceContentConverter
+    public interface IStringResourceCodeWriter
     {
         void WriteStringResourceModule(
-            string namespaceForModule, 
-            string moduleClassName,
             IEnumerable<StringResourceDto> stringResourceDtos,
-            string outputFilePath);
+            string outputDirectory);
     }
 }

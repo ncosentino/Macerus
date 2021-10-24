@@ -7,20 +7,23 @@ namespace Macerus.ContentConverter
 {
     public sealed class AffixCodeWriter
     {
-        public void WriteAffixesCode(IEnumerable<AffixDto> affixDtos)
+        public void WriteAffixesCode(
+            IEnumerable<AffixDto> affixDtos,
+            string outputDirectory)
         {
             var codeToWrite = @$"
 using System;
 
 using Autofac;
 
+using Macerus.Content.Affixes;
 using Macerus.Plugins.Features.GameObjects.Items.Affixes.Default;
 
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Content.Affixes
+namespace Macerus.Content.Generated.Affixes
 {{
     public sealed class AffixesModule : SingleRegistrationModule
     {{
@@ -44,7 +47,7 @@ namespace Macerus.Content.Affixes
         }}
     }}
 }}";
-            var directoryPath = @"Generated\Affixes";
+            var directoryPath = Path.Combine(outputDirectory, @"Generated\Affixes");
             Directory.CreateDirectory(directoryPath);
 
             var filePath = Path.Combine(directoryPath, "AffixesModule.cs");

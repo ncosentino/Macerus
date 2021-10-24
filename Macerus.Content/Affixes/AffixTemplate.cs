@@ -2,6 +2,7 @@
 using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
+using Macerus.Plugins.Features.GameObjects.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Affixes.Api;
 using Macerus.Plugins.Features.GameObjects.Items.Affixes.Default;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic;
@@ -73,15 +74,15 @@ namespace Macerus.Content.Affixes
                 affixId,
                 new IGeneratorComponent[]
                 {
-                    new AffixEnchantmentsGeneratorComponent(
+                    new EnchantmentsGeneratorComponent(
                         enchantmentDefinitionIds.Count,
                         enchantmentDefinitionIds.Count,
                         new[]
                         {
                             new FilterAttribute(
-                            _enchantmentIdentifiers.EnchantmentDefinitionId,
-                            new AllIdentifierCollectionFilterAttributeValue(enchantmentDefinitionIds),
-                            true)
+                                _enchantmentIdentifiers.EnchantmentDefinitionId,
+                                new AllIdentifierCollectionFilterAttributeValue(enchantmentDefinitionIds),
+                                true)
                         }),
                 }.Concat(extraComponents),
                 new[]

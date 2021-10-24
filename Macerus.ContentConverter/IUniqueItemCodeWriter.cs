@@ -4,6 +4,8 @@ namespace Macerus.ContentConverter
 {
     public interface IUniqueItemCodeWriter
     {
-        void WriteUniqueItemsCode(IEnumerable<UniqueItemDto> uniqueItemDtos);
+        void WriteUniqueItemsCode(
+            IEnumerable<UniqueItemDto> uniqueItemDtos,
+            string outputDirectory);
     }
 }

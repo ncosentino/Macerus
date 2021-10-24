@@ -6,10 +6,14 @@ namespace Macerus.ContentConverter
 {
     public sealed class EnchantmentDefinitionCodeWriter
     {
-        public void WriteEnchantmentDefinitionsCode(IEnumerable<EnchantmentDefinitionDto> enchantmentDefinitionDtos)
+        public void WriteEnchantmentDefinitionsCode(
+            IEnumerable<EnchantmentDefinitionDto> enchantmentDefinitionDtos,
+            string outputDirectory)
         {
             var codeToWrite = @$"
 using Autofac;
+
+using Macerus.Content.Enchantments;
 
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
@@ -41,7 +45,7 @@ namespace Macerus.Content.Generated.Enchantments
         }}
     }}
 }}";
-            var directoryPath = @"Generated\Enchantments";
+            var directoryPath = Path.Combine(outputDirectory, @"Generated\Enchantments");
             Directory.CreateDirectory(directoryPath);
 
             var filePath = Path.Combine(directoryPath, "EnchantmentsModule.cs");
@@ -54,7 +58,7 @@ namespace Macerus.Content.Generated.Enchantments
             var enchantmentCodeTemplate = @$"enchantmentTemplate.CreateRangeEnchantment(
                             new StringIdentifier(""{enchantmentDefinitionDto.EnchantmentDefinitionId}""),
                             new StringIdentifier(""{enchantmentDefinitionDto.StatDefinitionId}""), // {enchantmentDefinitionDto.StatTerm}
-                            {enchantmentDefinitionDto.Modifier},
+                            ""{enchantmentDefinitionDto.Modifier}"",
                             {enchantmentDefinitionDto.RangeMinimum},
                             {enchantmentDefinitionDto.RangeMaximum},
                             {enchantmentDefinitionDto.DecimalPlaces})";

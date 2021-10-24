@@ -23,21 +23,25 @@ namespace Macerus.ContentConverter
             _sheetHelper = sheetHelper;
         }
 
-        public void Convert(string gameDataUrl)
+        public void Convert(
+            string gameDataUrl,
+            string outputDirectory)
         {
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Macerus Game Data.xlsx");
+            var gameDataSourceLocalFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Macerus Game Data.xlsx");
 
             Console.WriteLine($"Fetching game data from '{gameDataUrl}'...");
             using (var webClient = new WebClient())
             {
-                File.WriteAllBytes(filePath, webClient.DownloadData(gameDataUrl));
+                File.WriteAllBytes(gameDataSourceLocalFilePath, webClient.DownloadData(gameDataUrl));
             }
 
-            Console.WriteLine($"Game data written to '{filePath}'.");
+            Console.WriteLine($"Game data written to '{gameDataSourceLocalFilePath}'.");
 
-            Console.WriteLine($"Converting data...");
+            outputDirectory = new DirectoryInfo(outputDirectory).FullName;
 
-            var stringResourceContentConverter = new StringResourceContentConverter();
+            Console.WriteLine($"Converting data with output directory '{outputDirectory}'...");
+
+            var stringResourceContentConverter = new StringResourceCodeWriter();
 
             var affixConverter = new AffixesExcelContentConverter(_sheetHelper);
             var affixCodeWriter = new AffixCodeWriter();
@@ -49,7 +53,7 @@ namespace Macerus.ContentConverter
 
             IEnumerable<StringResourceDto> stringResourceDtos = new List<StringResourceDto>();
             IEnumerable<EnchantmentDefinitionDto> enchantmentDefinitionDtos = new List<EnchantmentDefinitionDto>();
-            using (var filestream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+            using (var filestream = File.Open(gameDataSourceLocalFilePath, FileMode.Open, FileAccess.Read))
             {
                 var workbook = new XSSFWorkbook(filestream);
                 var statDefinitionToTermMappingRepository = ConvertStats(workbook);
@@ -57,7 +61,9 @@ namespace Macerus.ContentConverter
                 var affixContent = affixConverter.GetAffixContent(
                     workbook,
                     statDefinitionToTermMappingRepository);
-                affixCodeWriter.WriteAffixesCode(affixContent.SelectMany(x => x.AffixDtos));
+                affixCodeWriter.WriteAffixesCode(
+                    affixContent.SelectMany(x => x.AffixDtos),
+                    outputDirectory);
                 enchantmentDefinitionDtos = enchantmentDefinitionDtos.Concat(affixContent.SelectMany(x => x.EnchantmentDefinitionDtos));
                 stringResourceDtos = stringResourceDtos.Concat(affixContent.SelectMany(x => x.StringResourceDtos));
 
@@ -67,20 +73,22 @@ namespace Macerus.ContentConverter
                 var uniqueItemContent = uniqueItemConverer.GetUniqueItemContent(
                     workbook, 
                     statDefinitionToTermMappingRepository);
-                uniqueItemCodeWriter.WriteUniqueItemsCode(uniqueItemContent.Select(x => x.UniqueItemDto));
+                uniqueItemCodeWriter.WriteUniqueItemsCode(
+                    uniqueItemContent.Select(x => x.UniqueItemDto),
+                    outputDirectory);
                 enchantmentDefinitionDtos = enchantmentDefinitionDtos.Concat(uniqueItemContent.SelectMany(x => x.EnchantmentDefinitionDtos));
                 stringResourceDtos = stringResourceDtos.Concat(uniqueItemContent.Select(x => x.StringResourceDto));
 
-                enchantmentDefinitionCodeWriter.WriteEnchantmentDefinitionsCode(enchantmentDefinitionDtos);
+                enchantmentDefinitionCodeWriter.WriteEnchantmentDefinitionsCode(
+                    enchantmentDefinitionDtos,
+                    outputDirectory);
 
                 // at the end after we've accumulated alllllll the resources
                 // (which should be optimized to be streamed out and not just
                 // loaded into memory like a total dumpster fire)
                 stringResourceContentConverter.WriteStringResourceModule(
-                    "Macerus.Content.Generated.Resources",
-                    "StringResourceModule",
                     stringResourceDtos,
-                    @"Generated\Resources\StringResourceModule.cs");
+                    outputDirectory);
             }
 
             Console.WriteLine("Data has been converted.");

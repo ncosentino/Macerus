@@ -5,9 +5,13 @@
         static void Main(string[] args)
         {
             var gameDataUrl = args[0];
+            var outputDirectory = args[1];
+
             var sheetHelper = new SheetHelper();
             var contentConverter = new ExcelContentConverter(sheetHelper);
-            contentConverter.Convert(gameDataUrl);
+            contentConverter.Convert(
+                gameDataUrl,
+                outputDirectory);
         }
     }
 }

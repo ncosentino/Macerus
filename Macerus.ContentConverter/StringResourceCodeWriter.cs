@@ -4,13 +4,11 @@ using System.Linq;
 
 namespace Macerus.ContentConverter
 {
-    public sealed class StringResourceContentConverter : IStringResourceContentConverter
+    public sealed class StringResourceCodeWriter : IStringResourceCodeWriter
     {
         public void WriteStringResourceModule(
-            string namespaceForModule,
-            string moduleClassName,
             IEnumerable<StringResourceDto> stringResourceDtos,
-            string outputFilePath)
+            string outputDirectory)
         {
             var stringResourceCode = @$"
 using System.Collections.Generic;
@@ -21,10 +19,11 @@ using Macerus.Plugins.Features.Resources.Default;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
+using ProjectXyz.Shared.Framework;
 
-namespace {namespaceForModule}
+namespace Macerus.Content.Generated.Resources
 {{
-    public sealed class {moduleClassName} : SingleRegistrationModule
+    public sealed class StringResourceModule : SingleRegistrationModule
     {{
         protected override void SafeLoad(ContainerBuilder builder)
         {{
@@ -40,11 +39,12 @@ namespace {namespaceForModule}
     }}
 }}";
 
-            var directoryPath = Path.GetDirectoryName(outputFilePath);
+            var directoryPath = Path.Combine(outputDirectory, @"Generated\Resources");
             Directory.CreateDirectory(directoryPath);
 
-            File.Delete(outputFilePath);
-            File.WriteAllText(outputFilePath, stringResourceCode);
+            var filePath = Path.Combine(directoryPath, "StringResourceModule.cs");
+            File.Delete(filePath);
+            File.WriteAllText(filePath, stringResourceCode);
         }
     }
 }
