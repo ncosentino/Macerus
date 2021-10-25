@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Macerus.ContentConverter
 {
-    public sealed class StringResourceCodeWriter : IStringResourceCodeWriter
+    public sealed class StringResourceCodeWriter
     {
         public void WriteStringResourceModule(
             IEnumerable<StringResourceDto> stringResourceDtos,

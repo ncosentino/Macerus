@@ -43,8 +43,14 @@ namespace Macerus.ContentConverter
 
             var stringResourceContentConverter = new StringResourceCodeWriter();
 
+            var statContentConverter = new StatExcelContentConverter(_sheetHelper);
+            var statCodeWriter = new StatCodeWriter();
+
             var affixConverter = new AffixesExcelContentConverter(_sheetHelper);
             var affixCodeWriter = new AffixCodeWriter();
+
+            var rareItemAffixConverter = new RareItemAffixExcelContentConverter(_sheetHelper);
+            var rareItemAffixCodeWriter = new RareItemAffixCodeWriter();
 
             var uniqueItemConverer = new UniqueItemExcelContentConverter(_sheetHelper);
             var uniqueItemCodeWriter = new UniqueItemCodeWriter();
@@ -56,7 +62,14 @@ namespace Macerus.ContentConverter
             using (var filestream = File.Open(gameDataSourceLocalFilePath, FileMode.Open, FileAccess.Read))
             {
                 var workbook = new XSSFWorkbook(filestream);
-                var statDefinitionToTermMappingRepository = ConvertStats(workbook);
+                var stats = statContentConverter
+                    .ConvertStats(workbook)
+                    .ToArray();
+                statCodeWriter.WriteStatsCode(stats, outputDirectory);
+
+                var statDefinitionToTermMappingRepository = new InMemoryStatDefinitionToTermMappingRepository(stats.ToDictionary(
+                    x => (IIdentifier)new StringIdentifier(x.StatDefinitionId),
+                    x => x.StatTerm));
 
                 var affixContent = affixConverter.GetAffixContent(
                     workbook,
@@ -66,6 +79,14 @@ namespace Macerus.ContentConverter
                     outputDirectory);
                 enchantmentDefinitionDtos = enchantmentDefinitionDtos.Concat(affixContent.SelectMany(x => x.EnchantmentDefinitionDtos));
                 stringResourceDtos = stringResourceDtos.Concat(affixContent.SelectMany(x => x.StringResourceDtos));
+
+                var rareItemAffixContent = rareItemAffixConverter.GetRareItemAffixesContent(
+                    workbook,
+                    statDefinitionToTermMappingRepository);
+                rareItemAffixCodeWriter.WriteRareItemAffixesCode(
+                    rareItemAffixContent.Select(x => x.RareItemAffixDto),
+                    outputDirectory);
+                stringResourceDtos = stringResourceDtos.Concat(rareItemAffixContent.Select(x => x.StringResourceDto));
 
                 ConvertBaseArmor(workbook, statDefinitionToTermMappingRepository);
                 ConvertBaseWeapons(workbook, statDefinitionToTermMappingRepository);
@@ -412,69 +433,6 @@ namespace Macerus.Content.Generated.Items
                             }})".Trim();
                 yield return itemDefinitionCodeTemplate;
             }
-        }
-
-        private IReadOnlyStatDefinitionToTermMappingRepository ConvertStats(XSSFWorkbook workbook)
-        {
-            var statsSheet = workbook.GetSheet("Stats");
-            var columnHeaderMapping = _sheetHelper.GetColumnHeaderMapping(statsSheet.GetRow(0));
-
-            var statToTermMapping = new Dictionary<string, string>();
-            for (int rowIndex = 1; rowIndex < statsSheet.PhysicalNumberOfRows; rowIndex++)
-            {
-                var row = statsSheet.GetRow(rowIndex);
-                var statDefinitionId = $"stat_{rowIndex}";
-
-                var statTerm = row.GetCell(columnHeaderMapping["term"]).StringCellValue;
-                statToTermMapping[statDefinitionId] = statTerm;
-            }
-
-            var templatedStatToTermCode = @$"
-using System.Collections.Generic;
-
-using Autofac;
-
-using Macerus.Plugins.Features.Combat.Api;
-using Macerus.Plugins.Features.GameObjects.Actors;
-
-using ProjectXyz.Api.Framework;
-using ProjectXyz.Framework.Autofac;
-using ProjectXyz.Plugins.Features.Stats.Default;
-using ProjectXyz.Shared.Framework;
-
-namespace Macerus.Content.Generated.Stats
-{{
-    public sealed class StatsModule : SingleRegistrationModule
-    {{
-        protected override void SafeLoad(ContainerBuilder builder)
-        {{
-            builder
-                .Register(c =>
-                {{
-                    var mapping = new Dictionary<IIdentifier, string>()
-                    {{
-{string.Join(",\r\n", statToTermMapping.Select(x => $"                        [\"{x.Key}\"] = \"{x.Value}\""))}
-                    }};
-                    var statDefinitionToTermRepository = new InMemoryStatDefinitionToTermMappingRepository(mapping);
-                    return statDefinitionToTermRepository;
-                }})
-                .AsImplementedInterfaces()
-                .SingleInstance();
-        }}
-    }}
-}}
-";
-            var directoryPath = @"Generated\Stats";
-            Directory.CreateDirectory(directoryPath);
-
-            var filePath = Path.Combine(directoryPath, "StatsModule.cs");
-            File.Delete(filePath);
-            File.WriteAllText(filePath, templatedStatToTermCode);
-
-            return new InMemoryStatDefinitionToTermMappingRepository(statToTermMapping
-                .ToDictionary(
-                    x => (IIdentifier)new StringIdentifier(x.Key),
-                    x => x.Value));
-        }
+        }       
     }
 }

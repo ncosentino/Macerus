@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Macerus.ContentConverter
 {
-    public sealed class UniqueItemCodeWriter : IUniqueItemCodeWriter
+    public sealed class UniqueItemCodeWriter
     {
         public void WriteUniqueItemsCode(
             IEnumerable<UniqueItemDto> uniqueItemDtos,
@@ -67,7 +67,7 @@ namespace Macerus.Content.Generated.Items
     }}
 }}
 ";
-            var directoryPath = Path.Combine(outputDirectory, @"Generated\Items\Unique");
+            var directoryPath = Path.Combine(outputDirectory, @"Generated\Items");
             Directory.CreateDirectory(directoryPath);
 
             var filePath = Path.Combine(directoryPath, "UniqueItemModule.cs");

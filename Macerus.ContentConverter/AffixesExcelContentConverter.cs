@@ -10,7 +10,7 @@ using ProjectXyz.Plugins.Features.Stats;
 
 namespace Macerus.ContentConverter
 {
-    public sealed class AffixesExcelContentConverter : IAffixesExcelContentConverter
+    public sealed class AffixesExcelContentConverter
     {
         private readonly ISheetHelper _sheetHelper;
 

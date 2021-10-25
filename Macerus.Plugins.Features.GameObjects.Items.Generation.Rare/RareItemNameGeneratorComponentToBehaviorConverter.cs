@@ -27,7 +27,8 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
         {
             var nameComponent = _lazyRareItemNameGenerator.Value.GenerateName(
                 baseBehaviors,
-                baseBehaviors.GetOnly<IHasEnchantmentsBehavior>().Enchantments);
+                baseBehaviors.GetOnly<IHasEnchantmentsBehavior>().Enchantments,
+                filterContext);
             yield return nameComponent;
         }
     }

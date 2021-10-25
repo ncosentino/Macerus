@@ -23,7 +23,7 @@ using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Shared.Framework;
 
-namespace Macerus.Content.Generated.Affixes
+namespace Macerus.Content.Generated.Items
 {{
     public sealed class AffixesModule : SingleRegistrationModule
     {{
@@ -47,7 +47,7 @@ namespace Macerus.Content.Generated.Affixes
         }}
     }}
 }}";
-            var directoryPath = Path.Combine(outputDirectory, @"Generated\Affixes");
+            var directoryPath = Path.Combine(outputDirectory, @"Generated\Items");
             Directory.CreateDirectory(directoryPath);
 
             var filePath = Path.Combine(directoryPath, "AffixesModule.cs");

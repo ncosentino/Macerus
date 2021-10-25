@@ -134,6 +134,10 @@ namespace Macerus.Api.Behaviors.Filtering
             IIdentifier id,
             string value);
 
+        IFilterAttribute CreateRequiredAttribute(
+            IIdentifier id,
+            bool value);
+
         IFilterAttribute CreateRequiredAttributeForAny(
             IIdentifier id,
             params string[] value);

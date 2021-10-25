@@ -1,7 +1,5 @@
 ﻿using Autofac;
 
-using Macerus.Plugins.Features.GameObjects.Items.Generation.Rare.MySql;
-
 using ProjectXyz.Framework.Autofac;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
@@ -23,7 +21,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
-                .RegisterType<RareAffixRepository>()
+                .RegisterType<RareAffixRepositoryFacade>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

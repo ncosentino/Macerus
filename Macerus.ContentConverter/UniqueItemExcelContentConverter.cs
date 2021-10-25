@@ -11,7 +11,7 @@ using ProjectXyz.Plugins.Features.Stats;
 
 namespace Macerus.ContentConverter
 {
-    public sealed class UniqueItemExcelContentConverter : IUniqueItemExcelContentConverter
+    public sealed class UniqueItemExcelContentConverter
     {
         private static readonly Regex ENCHANTMENT_REGEX = new Regex(
             @"([-+\*])\s*\((\d*\.?\d+)\s*-\s*(\d*\.?\d+),\s*(\d+)\)\s*\((.+)\)",
@@ -94,7 +94,7 @@ namespace Macerus.ContentConverter
 
                 var columnHeader = "Enchantment " + enchantmentCellIndex;
                 var rawEnchantment = columnHeaderMapping.ContainsKey(columnHeader)
-                    ? row.GetCell(columnHeaderMapping[columnHeader]).StringCellValue
+                    ? row.GetCell(columnHeaderMapping[columnHeader])?.StringCellValue
                     : null;
                 if (string.IsNullOrWhiteSpace(rawEnchantment))
                 {

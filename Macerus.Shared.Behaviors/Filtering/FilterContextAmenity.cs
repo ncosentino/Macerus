@@ -337,6 +337,17 @@ namespace Macerus.Shared.Behaviors.Filtering
             return filterAttribute;
         }
 
+        public IFilterAttribute CreateRequiredAttribute(
+            IIdentifier id,
+            bool value)
+        {
+            var filterAttribute = new FilterAttribute(
+                id,
+                new BooleanFilterAttributeValue(value),
+                true);
+            return filterAttribute;
+        }
+
         public IFilterAttribute CreateRequiredAttributeForAny(
             IIdentifier id,
             params string[] value) => CreateRequiredAttributeForAny(
