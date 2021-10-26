@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
@@ -7,6 +8,7 @@ using Macerus.Plugins.Features.Resources;
 
 using NexusLabs.Framework;
 
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Collections;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
@@ -53,17 +55,32 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
                 .GetAffixes(rareAffixFilterContext)
                 .Random(_random);
 
-            IRareItemAffix suffix = null;
-            while (suffix == null || Equals(prefix.StringResourceId, suffix.StringResourceId))
+            rareAffixFilterContext = _filterContextAmenity.CreateFilterContextForAnyAmount(CreateRareAffixFilter(tagsFilter, false));
+            var suffixResourceIds = new HashSet<IIdentifier>(_rareAffixRepository
+                .GetAffixes(rareAffixFilterContext)
+                .Select(x => x.StringResourceId));
+
+            IIdentifier suffixStringResourceId = null;
+            while (suffixStringResourceId == null)
             {
-                rareAffixFilterContext = _filterContextAmenity.CreateFilterContextForAnyAmount(CreateRareAffixFilter(tagsFilter, false));
-                suffix = _rareAffixRepository
-                    .GetAffixes(rareAffixFilterContext)
-                    .Random(_random);
+                if (!suffixResourceIds.Any())
+                {
+                    throw new InvalidOperationException(
+                        $"There was nor are suffix that coule be paired with prefix '{prefix.StringResourceId}'.");
+                }
+
+                suffixStringResourceId = suffixResourceIds.Random(_random);
+                if (Equals(prefix.StringResourceId, suffixStringResourceId))
+                {
+                    suffixResourceIds.Remove(suffixStringResourceId);
+                    continue;
+                }
+
+                break;
             }
 
             var prefixName = _stringResourceProvider.GetString(prefix.StringResourceId);
-            var suffixName = _stringResourceProvider.GetString(suffix.StringResourceId);
+            var suffixName = _stringResourceProvider.GetString(suffixStringResourceId);
             return new HasInventoryDisplayName($"{prefixName} {suffixName}");
         }
 
