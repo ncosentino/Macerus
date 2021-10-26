@@ -124,11 +124,19 @@ namespace Macerus.Api.Behaviors.Filtering
             IIdentifier id,
             IEnumerable<IIdentifier> value);
 
+        IFilterAttribute CreateSupportedAttribute(
+            IIdentifier id,
+            IFilterAttributeValue filterAttributeValue);
+
         IFilterAttribute CreateSupportedAlwaysMatchingAttribute(IIdentifier id);
 
         IFilterAttribute CreateRequiredAttribute(
             IIdentifier id,
             IIdentifier value);
+
+        IFilterAttribute CreateRequiredAttribute(
+            IIdentifier id,
+            IFilterAttributeValue filterAttributeValue);
 
         IFilterAttribute CreateRequiredAttribute(
             IIdentifier id,

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -49,6 +50,12 @@ namespace Macerus.ContentConverter
                 imageResourceDtos.Add(new ImageResourceDto(
                     itemIconResource,
                     itemIconResourceId));
+
+                var tags = (row
+                    .GetCell(columnHeaderMapping["Tags"])
+                    ?.StringCellValue
+                    ?? string.Empty)
+                    .Split(",", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
                 var itemEquipSlotName = row.GetCell(columnHeaderMapping["slot"]).StringCellValue; // FIXME: Split for multi-slot?
                 var itemEquipSlotId = itemEquipSlotName; // FIXME: convert???
@@ -108,7 +115,8 @@ namespace Macerus.ContentConverter
                     itemDurabilityMinimum,
                     itemDurabilityMaximum,
                     itemSocketsMinimum,
-                    itemSocketsMaximum));
+                    itemSocketsMaximum,
+                    tags));
             }
 
             var baseWeaponConvertedContent = new BaseWeaponConvertedContent(

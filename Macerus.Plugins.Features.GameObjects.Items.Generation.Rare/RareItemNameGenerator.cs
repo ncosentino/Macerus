@@ -10,7 +10,10 @@ using NexusLabs.Framework;
 using ProjectXyz.Api.Framework.Collections;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Filtering;
 using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
@@ -39,13 +42,13 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
             IReadOnlyCollection<IGameObject> enchantments,
             IFilterContext filterContext)
         {
-            // FIXME: later we need to be able to filter the affixes by the types of items
+            // FIXME: incorporate the passed in filter context properly
+
+            // we need to be able to filter the affixes by the types of items
             // i.e. "Entropy Chain" is a good amulet name, not a good sword name
-            var rareAffixFilterContext = _filterContextAmenity
-                .CreateFilterContextForAnyAmount(
-                    _filterContextAmenity.CreateRequiredAttribute(
-                        new StringIdentifier("is-prefix"),
-                        true));
+            var tagsFilter = new AnyTagsFilter(itemBehaviors.Get<ITagsBehavior>().SelectMany(x => x.Tags));          
+
+            var rareAffixFilterContext = _filterContextAmenity.CreateFilterContextForAnyAmount(CreateRareAffixFilter(tagsFilter, true));
             var prefix = _rareAffixRepository
                 .GetAffixes(rareAffixFilterContext)
                 .Random(_random);
@@ -53,11 +56,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
             IRareItemAffix suffix = null;
             while (suffix == null || Equals(prefix.StringResourceId, suffix.StringResourceId))
             {
-                rareAffixFilterContext = _filterContextAmenity
-                    .CreateFilterContextForAnyAmount(
-                        _filterContextAmenity.CreateRequiredAttribute(
-                            new StringIdentifier("is-prefix"),
-                            false));
+                rareAffixFilterContext = _filterContextAmenity.CreateFilterContextForAnyAmount(CreateRareAffixFilter(tagsFilter, false));
                 suffix = _rareAffixRepository
                     .GetAffixes(rareAffixFilterContext)
                     .Random(_random);
@@ -66,6 +65,25 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
             var prefixName = _stringResourceProvider.GetString(prefix.StringResourceId);
             var suffixName = _stringResourceProvider.GetString(suffix.StringResourceId);
             return new HasInventoryDisplayName($"{prefixName} {suffixName}");
+        }
+
+        private IReadOnlyCollection<IFilterAttribute> CreateRareAffixFilter(
+            AnyTagsFilter tagsFilter,
+            bool prefix)
+        {
+            var requiredFilters = new List<IFilterAttribute>();
+            requiredFilters.Add(_filterContextAmenity.CreateRequiredAttribute(
+                new StringIdentifier("is-prefix"),
+                prefix));
+
+            if (tagsFilter.Tags.Any())
+            {
+                requiredFilters.Add(_filterContextAmenity.CreateSupportedAttribute(
+                    new StringIdentifier("tags"),
+                    tagsFilter));
+            }
+
+            return requiredFilters;
         }
     }
 }

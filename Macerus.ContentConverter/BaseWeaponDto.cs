@@ -1,4 +1,6 @@
-﻿namespace Macerus.ContentConverter
+﻿using System.Collections.Generic;
+
+namespace Macerus.ContentConverter
 {
     public sealed class BaseWeaponDto
     {
@@ -30,7 +32,8 @@
             int itemDurabilityMinimum, 
             int itemDurabilityMaximum, 
             int itemSocketsMinimum, 
-            int itemSocketsMaximum)
+            int itemSocketsMaximum,
+            IReadOnlyCollection<string> tags)
         {
             ItemId = itemId;
             ItemNameStringResource = itemNameStringResource;
@@ -60,6 +63,7 @@
             ItemDurabilityMaximum = itemDurabilityMaximum;
             ItemSocketsMinimum = itemSocketsMinimum;
             ItemSocketsMaximum = itemSocketsMaximum;
+            Tags = tags;
         }
 
         public string ItemId { get; }
@@ -99,5 +103,6 @@
 
         public int ItemSocketsMinimum { get; }
         public int ItemSocketsMaximum { get; }
+        public IReadOnlyCollection<string> Tags { get; }
     }
 }

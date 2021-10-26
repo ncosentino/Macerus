@@ -1,6 +1,7 @@
 ﻿using Autofac;
 
 using ProjectXyz.Framework.Autofac;
+using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
 {
@@ -24,6 +25,15 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
                 .RegisterType<RareAffixRepositoryFacade>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+               .RegisterType<RareItemTagsFilterHandler>()
+               .SingleInstance();
+            builder
+                .RegisterBuildCallback(c =>
+                {
+                    var facade = c.Resolve<IAttributeValueMatchFacade>();
+                    facade.Register(c.Resolve<RareItemTagsFilterHandler>().Matcher);
+                });
         }
     }
 }

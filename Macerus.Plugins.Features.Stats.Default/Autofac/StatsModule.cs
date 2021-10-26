@@ -16,6 +16,10 @@ namespace Macerus.Plugins.Features.Stats.Default.Autofac
                 .RegisterType<StatResourceProvider>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<RandomStatRangeGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

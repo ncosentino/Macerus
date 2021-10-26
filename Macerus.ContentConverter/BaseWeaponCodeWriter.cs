@@ -85,7 +85,7 @@ namespace Macerus.Content.Generated.Items
                         new ItemDefinition(
                             new[]
                             {{
-                                AffixFilterAttributes.RequiresNormalAffix,
+                                AffixFilterAttributes.AllowsNormalMagicAndRareAffix,
                                 filterContextAmenity.CreateSupportedAttribute(
                                     itemIdentifiers.ItemDefinitionIdentifier,
                                     new StringIdentifier(""{baseWeaponDto.ItemId}"")),
@@ -105,7 +105,11 @@ namespace Macerus.Content.Generated.Items
                                             }},
                                             {baseWeaponDto.ItemSocketsMaximum}),".Trim()
                                     : string.Empty
-                            )}
+                                )}
+                                new ItemTagsGeneratorComponent(new IIdentifier[]
+                                {{
+{string.Join(",\r\n", baseWeaponDto.Tags.Select(x => @$"                                    new StringIdentifier(""{x}"")"))}
+                                }}),
                                 new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {{
                                     [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("ITEM_LEVEL").StatDefinitionId}"")] = {baseWeaponDto.ItemLevel},

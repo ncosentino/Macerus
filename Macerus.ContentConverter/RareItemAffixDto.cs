@@ -13,7 +13,7 @@ namespace Macerus.ContentConverter
             StringResourceId = stringResourceId;
             StringResource = stringResource;
             IsPrefix = isPrefix;
-            RequiredItemTypes = requiredItemTypes;
+            TagFilter = requiredItemTypes;
         }
 
         public string StringResourceId { get; }
@@ -22,6 +22,6 @@ namespace Macerus.ContentConverter
 
         public bool IsPrefix { get; }
 
-        public IReadOnlyCollection<string> RequiredItemTypes { get; }
+        public IReadOnlyCollection<string> TagFilter { get; }
     }
 }

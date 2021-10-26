@@ -328,6 +328,28 @@ namespace Macerus.Shared.Behaviors.Filtering
 
         public IFilterAttribute CreateRequiredAttribute(
             IIdentifier id,
+            IFilterAttributeValue filterAttributeValue)
+        {
+            var filterAttribute = new FilterAttribute(
+                id,
+                filterAttributeValue,
+                true);
+            return filterAttribute;
+        }
+
+        public IFilterAttribute CreateSupportedAttribute(
+            IIdentifier id,
+            IFilterAttributeValue filterAttributeValue)
+        {
+            var filterAttribute = new FilterAttribute(
+                id,
+                filterAttributeValue,
+                false);
+            return filterAttribute;
+        }
+
+        public IFilterAttribute CreateRequiredAttribute(
+            IIdentifier id,
             string value)
         {
             var filterAttribute = new FilterAttribute(

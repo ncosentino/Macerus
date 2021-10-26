@@ -236,7 +236,7 @@ namespace Macerus.Content.Generated.Items
                         new ItemDefinition(
                             new[]
                             {{
-                                AffixFilterAttributes.RequiresNormalAffix,
+                                AffixFilterAttributes.AllowsNormalMagicAndRareAffix,
                                 filterContextAmenity.CreateSupportedAttribute(
                                     itemIdentifiers.ItemDefinitionIdentifier,
                                     new StringIdentifier(""{itemId}"")),
