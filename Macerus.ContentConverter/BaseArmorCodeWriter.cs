@@ -74,10 +74,10 @@ namespace Macerus.Content.Generated.Items
         {
             var physicalDamageCode = baseArmorDto.ItemArmorMaximum < 1
                 ? string.Empty
-                : @$"new RandomStatRangeGeneratorComponent(new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("ARMOR").StatDefinitionId}""), {baseArmorDto.ItemArmorMinimum}, {baseArmorDto.ItemArmorMaximum}, 0),";
+                : @$"new RandomStatRangeGeneratorComponent(new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("ARMOR").StatDefinitionId}""), {baseArmorDto.ItemArmorMinimum}, {baseArmorDto.ItemArmorMaximum}, 0), // armor";
             var magicDamageCode = baseArmorDto.ItemEvasionMaximum < 1
                ? string.Empty
-               : @$"new RandomStatRangeGeneratorComponent(new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("EVASION").StatDefinitionId}""), {baseArmorDto.ItemEvasionMinimum}, {baseArmorDto.ItemEvasionMaximum}, 0),";
+               : @$"new RandomStatRangeGeneratorComponent(new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("EVASION").StatDefinitionId}""), {baseArmorDto.ItemEvasionMinimum}, {baseArmorDto.ItemEvasionMaximum}, 0), // evasion";
 
             var itemDefinitionCodeTemplate = @$"
                         new ItemDefinition(
@@ -110,12 +110,12 @@ namespace Macerus.Content.Generated.Items
                                 }}),
                                 new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {{
-                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("ITEM_LEVEL").StatDefinitionId}"")] = {baseArmorDto.ItemLevel},
-                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("BLOCK").StatDefinitionId}"")] = {baseArmorDto.ItemBlock},
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("ITEM_LEVEL").StatDefinitionId}"")] = {baseArmorDto.ItemLevel}, // item level
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("BLOCK").StatDefinitionId}"")] = {baseArmorDto.ItemBlock}, // block
 {GetRequirementsCode(baseArmorDto, statDefinitionToTermMappingRepository)}
                                     // durability
-                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("DURABILITY_MAXIMUM").StatDefinitionId}"")] = {(baseArmorDto.ItemDurabilityMaximum < 1 ? 0 : baseArmorDto.ItemDurabilityMaximum)},
-                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("DURABILITY_CURRENT").StatDefinitionId}"")] = {(baseArmorDto.ItemDurabilityMaximum < 1 ? 0 : baseArmorDto.ItemDurabilityMinimum)},
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("DURABILITY_MAXIMUM").StatDefinitionId}"")] = {(baseArmorDto.ItemDurabilityMaximum < 1 ? 0 : baseArmorDto.ItemDurabilityMaximum)}, // durability maximum
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("DURABILITY_CURRENT").StatDefinitionId}"")] = {(baseArmorDto.ItemDurabilityMaximum < 1 ? 0 : baseArmorDto.ItemDurabilityMinimum)}, // durability current
                                 }}),
                                 {physicalDamageCode}
                                 {magicDamageCode}

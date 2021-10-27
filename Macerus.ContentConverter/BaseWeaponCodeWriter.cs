@@ -74,12 +74,12 @@ namespace Macerus.Content.Generated.Items
         {
             var physicalDamageCode = baseWeaponDto.ItemPhysicalDamageMaxMax < 1
                      ? string.Empty
-                     : @$"new RandomStatRangeGeneratorComponent(new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("PHYSICAL_DAMAGE_MIN").StatDefinitionId}""), {baseWeaponDto.ItemPhysicalDamageMinMin}, {baseWeaponDto.ItemPhysicalDamageMinMax}, 0),
-                                new RandomStatRangeGeneratorComponent(new StringIdentifier(""{ statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("PHYSICAL_DAMAGE_MAX").StatDefinitionId }""), { baseWeaponDto.ItemPhysicalDamageMaxMin}, { baseWeaponDto.ItemPhysicalDamageMaxMax}, 0),";
+                     : @$"new RandomStatRangeGeneratorComponent(new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("PHYSICAL_DAMAGE_MIN").StatDefinitionId}""), {baseWeaponDto.ItemPhysicalDamageMinMin}, {baseWeaponDto.ItemPhysicalDamageMinMax}, 0), // physical damage min
+                                new RandomStatRangeGeneratorComponent(new StringIdentifier(""{ statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("PHYSICAL_DAMAGE_MAX").StatDefinitionId }""), { baseWeaponDto.ItemPhysicalDamageMaxMin}, { baseWeaponDto.ItemPhysicalDamageMaxMax}, 0), // physical damage max";
             var magicDamageCode = baseWeaponDto.ItemMagicDamageMaxMax < 1
                ? string.Empty
-               : @$"new RandomStatRangeGeneratorComponent(new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("MAGIC_DAMAGE_MIN").StatDefinitionId}""), {baseWeaponDto.ItemMagicDamageMinMin}, {baseWeaponDto.ItemMagicDamageMinMax}, 0),
-                                new RandomStatRangeGeneratorComponent(new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("MAGIC_DAMAGE_MAX").StatDefinitionId}""), {baseWeaponDto.ItemMagicDamageMaxMin}, {baseWeaponDto.ItemMagicDamageMaxMax}, 0),";
+               : @$"new RandomStatRangeGeneratorComponent(new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("MAGIC_DAMAGE_MIN").StatDefinitionId}""), {baseWeaponDto.ItemMagicDamageMinMin}, {baseWeaponDto.ItemMagicDamageMinMax}, 0), // magic damage min
+                                new RandomStatRangeGeneratorComponent(new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("MAGIC_DAMAGE_MAX").StatDefinitionId}""), {baseWeaponDto.ItemMagicDamageMaxMin}, {baseWeaponDto.ItemMagicDamageMaxMax}, 0), // magic damage max";
 
             var itemDefinitionCodeTemplate = @$"
                         new ItemDefinition(
@@ -112,13 +112,13 @@ namespace Macerus.Content.Generated.Items
                                 }}),
                                 new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {{
-                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("ITEM_LEVEL").StatDefinitionId}"")] = {baseWeaponDto.ItemLevel},
-                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("ATTACK_SPEED").StatDefinitionId}"")] = {baseWeaponDto.ItemAttackSpeed},
-                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("RANGE").StatDefinitionId}"")] = {baseWeaponDto.ItemRange},
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("ITEM_LEVEL").StatDefinitionId}"")] = {baseWeaponDto.ItemLevel}, // item level
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("ATTACK_SPEED").StatDefinitionId}"")] = {baseWeaponDto.ItemAttackSpeed}, // attack speed
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("RANGE").StatDefinitionId}"")] = {baseWeaponDto.ItemRange}, // range
 {GetRequirementsCode(baseWeaponDto, statDefinitionToTermMappingRepository)}
                                     // durability
-                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("DURABILITY_MAXIMUM").StatDefinitionId}"")] = {(baseWeaponDto.ItemDurabilityMaximum < 1 ? 0 : baseWeaponDto.ItemDurabilityMaximum)},
-                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("DURABILITY_CURRENT").StatDefinitionId}"")] = {(baseWeaponDto.ItemDurabilityMaximum < 1 ? 0 : baseWeaponDto.ItemDurabilityMinimum)},
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("DURABILITY_MAXIMUM").StatDefinitionId}"")] = {(baseWeaponDto.ItemDurabilityMaximum < 1 ? 0 : baseWeaponDto.ItemDurabilityMaximum)}, // durability maximum
+                                    [new StringIdentifier(""{statDefinitionToTermMappingRepository.GetStatDefinitionToTermMappingByTerm("DURABILITY_CURRENT").StatDefinitionId}"")] = {(baseWeaponDto.ItemDurabilityMaximum < 1 ? 0 : baseWeaponDto.ItemDurabilityMinimum)}, // durability current
                                 }}),
                                 {physicalDamageCode}
                                 {magicDamageCode}
