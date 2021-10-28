@@ -1,4 +1,5 @@
-﻿using ProjectXyz.Shared.Game.Behaviors;
+﻿using ProjectXyz.Api.Framework;
+using ProjectXyz.Shared.Game.Behaviors;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Behaviors
 {
@@ -6,11 +7,11 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Behaviors
         BaseBehavior,
         IHasInventoryIcon
     {
-        public HasInventoryIcon(string iconResource)
+        public HasInventoryIcon(IIdentifier iconResourceId)
         {
-            IconResource = iconResource;
+            IconResourceId = iconResourceId;
         }
 
-        public string IconResource { get; }
+        public IIdentifier IconResourceId { get; }
     }
 }

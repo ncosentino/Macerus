@@ -13,6 +13,10 @@ namespace Macerus.Plugins.Features.Resources.Default.Autofac
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder
+                .RegisterType<ImageResourceRepositoryFacade>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
                 .RegisterType<StringResourceProvider>()
                 .AsImplementedInterfaces()
                 .SingleInstance();

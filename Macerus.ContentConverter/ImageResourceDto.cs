@@ -2,16 +2,11 @@
 {
     public sealed class ImageResourceDto
     {
-        public ImageResourceDto(
-            string imageResourceId,
-            string value)
+        public ImageResourceDto(string relativeResourcePath)
         {
-            ImageResourceId = imageResourceId;
-            Value = value;
+            RelativeResourcePath = relativeResourcePath;
         }
 
-        public string ImageResourceId { get; }
-
-        public string Value { get; }
+        public string RelativeResourcePath { get; }
     }
 }

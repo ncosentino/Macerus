@@ -106,7 +106,7 @@ namespace Macerus.Content.Generated.Items
                             {{
                                 new UniqueBaseItemGeneratorComponent(new StringIdentifier(""{uniqueItemDto.BaseItemId}"")),
                                 new NameGeneratorComponent(""{uniqueItemDto.ItemNameStringResourceId}""),
-                                new IconGeneratorComponent(""{uniqueItemDto.ItemIconStringResourceId}""),
+                                new IconGeneratorComponent(new StringIdentifier(@""{uniqueItemDto.ItemIconResourceDto.RelativeResourcePath}"")),
                                 {enchantmentComponentCode}
                             }})";
             return uniqueItemCodeTemplate;

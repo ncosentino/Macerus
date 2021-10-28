@@ -45,7 +45,7 @@ namespace Macerus.Content.Items
                             {
                                 new UniqueBaseItemGeneratorComponent(new StringIdentifier("cloth-armor")),
                                 new NameGeneratorComponent("Torn Flesh of Souls"),
-                                new IconGeneratorComponent(@"graphics\items\body\cloth_armor"),
+                                new IconGeneratorComponent(new StringIdentifier(@"graphics\items\body\cloth_armor")),
                                 new EquippableGeneratorComponent(new[] { new StringIdentifier("body") }),
                                 new SocketGeneratorComponent(new[]
                                 {

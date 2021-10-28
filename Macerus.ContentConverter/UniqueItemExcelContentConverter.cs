@@ -61,17 +61,14 @@ namespace Macerus.ContentConverter
                     itemNameStringResourceId,
                     itemNameStringResource);
 
-                var itemIconResource = row.GetCell(columnHeaderMapping["icon"]).StringCellValue;
-                var itemIconResourceId = $"unique_item_icon_{rowIndex}";
-                var itemIconImageResourceDto = new ImageResourceDto(
-                    itemIconResourceId,
-                    itemIconResource);
+                var itemIconResourcePath = row.GetCell(columnHeaderMapping["icon"]).StringCellValue;
+                var itemIconImageResourceDto = new ImageResourceDto(itemIconResourcePath);
 
                 var uniqueItemDto = new UniqueItemDto(
                     uniqueItemId,
                     baseItemId,
                     itemNameStringResourceId,
-                    itemIconResourceId,
+                    itemIconImageResourceDto,
                     enchantmentDefinitionDtos.Select(x => x.EnchantmentDefinitionId).ToArray());
                 yield return new UniqueItemConvertedContent(
                     uniqueItemDto,

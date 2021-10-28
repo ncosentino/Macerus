@@ -7,7 +7,6 @@ using Macerus.Plugins.Features.Inventory.Api;
 
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
-using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.Inventory.Default
 {
@@ -17,10 +16,7 @@ namespace Macerus.Plugins.Features.Inventory.Default
             IIdentifier idForItemSet,
             IGameObject item)
         {
-            var rawIconResource = item?.Get<IHasInventoryIcon>().FirstOrDefault()?.IconResource;
-            var iconResourceId = string.IsNullOrWhiteSpace(rawIconResource)
-                ? null
-                : new StringIdentifier(rawIconResource);
+            var iconResourceId = item?.Get<IHasInventoryIcon>().FirstOrDefault()?.IconResourceId;
             var inventoryIconColorBehavior = item?.Get<IHasInventoryIconColor>().FirstOrDefault();
             var iconOpacity = inventoryIconColorBehavior == null ? 1 : inventoryIconColorBehavior.IconOpacity;
             var iconColor = inventoryIconColorBehavior == null ? (IColor)null : new Color()

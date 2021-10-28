@@ -8,8 +8,7 @@ namespace Macerus.ContentConverter
             string itemId, 
             string itemNameStringResource, 
             string itemNameStringResourceId, 
-            string itemIconResource, 
-            string itemIconResourceId, 
+            ImageResourceDto itemIconResourceDto,
             string itemEquipSlotName, 
             string itemEquipSlotId, 
             int itemLevel, 
@@ -33,8 +32,7 @@ namespace Macerus.ContentConverter
             ItemId = itemId;
             ItemNameStringResource = itemNameStringResource;
             ItemNameStringResourceId = itemNameStringResourceId;
-            ItemIconResource = itemIconResource;
-            ItemIconResourceId = itemIconResourceId;
+            ItemIconResourceDto = itemIconResourceDto;
             ItemEquipSlotName = itemEquipSlotName;
             ItemEquipSlotId = itemEquipSlotId;
             ItemLevel = itemLevel;
@@ -61,8 +59,7 @@ namespace Macerus.ContentConverter
         public string ItemNameStringResource { get; }
         public string ItemNameStringResourceId { get; }
 
-        public string ItemIconResource { get; }
-        public string ItemIconResourceId { get; }
+        public ImageResourceDto ItemIconResourceDto { get; }
 
         public string ItemEquipSlotName { get; }
         public string ItemEquipSlotId { get; }

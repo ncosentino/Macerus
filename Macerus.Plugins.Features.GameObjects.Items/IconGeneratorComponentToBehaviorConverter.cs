@@ -19,7 +19,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items
             IGeneratorComponent generatorComponent)
         {
             var iconGeneratorComponent = (IconGeneratorComponent)generatorComponent;
-            yield return new HasInventoryIcon(iconGeneratorComponent.IconResource);
+            yield return new HasInventoryIcon(iconGeneratorComponent.IconResourceId);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Deterministic>true</Deterministic>
@@ -7,7 +7,7 @@
     <Copyright>Copyright © Nexus Software Labs 2020</Copyright>
     <PackageId>Macerus.Content</PackageId>
     <Company>Nexus Software Labs</Company>
-    <Version>0.1.25</Version>
+    <Version>0.1.30</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>The content plugin for Macerus.</Description>
     <PackageProjectUrl>https://github.com/ncosentino/Macerus</PackageProjectUrl>
@@ -53,15 +53,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Mapping\Maps\swamp.objects.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
-    </Content>
     <Content Include="Mapping\Maps\swamp.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-    <Content Include="Mapping\Maps\test_encounter_map.objects.json">
+    <Content Include="Mapping\Maps\swamp.objects.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
@@ -69,19 +65,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-    <Content Include="Resources\Graphics\Actors\LpcUniversal\player_male.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
-    </Content>
-    <Content Include="Resources\Graphics\Actors\LpcUniversal\skeleton_basic.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
-    </Content>
-    <Content Include="Resources\Graphics\Actors\Portraits\do-not-distribute\test-player-male.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
-    </Content>
-    <Content Include="Resources\Graphics\Actors\Portraits\do-not-distribute\test-skeleton.png">
+    <Content Include="Mapping\Maps\test_encounter_map.objects.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
@@ -90,6 +74,46 @@
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="Resources\Graphics\Containers\lootbag.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\gold.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\junk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Skills\default-attack.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Skills\default-defend.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Skills\default-pass.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Skills\elder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Skills\fireball.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Skills\heal.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Actors\LpcUniversal\player_male.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Actors\LpcUniversal\skeleton_basic.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
@@ -173,42 +197,106 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-    <Content Include="Resources\Graphics\Items\gold.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
-    </Content>
     <Content Include="Resources\Graphics\Items\Helms\hood.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-    <Content Include="Resources\Graphics\Items\junk.png">
+    <Content Include="Resources\Graphics\Items\Swords\blue-fuscia-broad.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-    <Content Include="Resources\Graphics\Skills\default-attack.png">
+    <Content Include="Resources\Graphics\Items\Swords\blue-fuscia-broad2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-    <Content Include="Resources\Graphics\Skills\default-defend.png">
+    <Content Include="Resources\Graphics\Items\Swords\blue-gold-long.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-    <Content Include="Resources\Graphics\Skills\default-pass.png">
+    <Content Include="Resources\Graphics\Items\Swords\blue-gold-long2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-    <Content Include="Resources\Graphics\Skills\elder.png">
+    <Content Include="Resources\Graphics\Items\Swords\blue-gold-short.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-    <Content Include="Resources\Graphics\Skills\fireball.png">
+    <Content Include="Resources\Graphics\Items\Swords\blue-green-long.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-    <Content Include="Resources\Graphics\Skills\heal.png">
+    <Content Include="Resources\Graphics\Items\Swords\blue-red-long.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-  </ItemGroup>
+    <Content Include="Resources\Graphics\Items\Swords\blue-red-needle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Swords\blue-short.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Swords\bronze-long.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Swords\bronze-steel-long.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Swords\fuscia-broad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Swords\fuscia-steel-long.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Swords\green-blue-long-exotic.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Swords\green-blue-long-exotic2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Swords\green-short.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Swords\red-broad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Swords\red-gold-long.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Swords\steel-broad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Swords\steel-gold-long.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Swords\steel-purple-long.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Items\Swords\steel-purple-long2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Actors\Portraits\do-not-distribute\test-player-male.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="Resources\Graphics\Actors\Portraits\do-not-distribute\test-skeleton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+</ItemGroup>
 
 </Project>

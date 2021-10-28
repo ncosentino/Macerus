@@ -1,14 +1,15 @@
-﻿using ProjectXyz.Api.GameObjects.Generation;
+﻿using ProjectXyz.Api.Framework;
+using ProjectXyz.Api.GameObjects.Generation;
 
 namespace Macerus.Plugins.Features.GameObjects.Items
 {
     public sealed class IconGeneratorComponent : IGeneratorComponent
     {
-        public IconGeneratorComponent(string iconResource)
+        public IconGeneratorComponent(IIdentifier iconResourceId)
         {
-            IconResource = iconResource;
+            IconResourceId = iconResourceId;
         }
 
-        public string IconResource { get; }
+        public IIdentifier IconResourceId { get; }
     }
 }

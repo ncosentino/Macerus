@@ -58,7 +58,7 @@ namespace Macerus.Content.Items
                             new IGeneratorComponent[]
                             {
                                 new NameGeneratorComponent("Gold"),
-                                new IconGeneratorComponent(@"graphics\items\gold"),
+                                new IconGeneratorComponent(new StringIdentifier(@"graphics\items\gold")),
                             }),
                         new ItemDefinition(
                             new[]
@@ -71,7 +71,7 @@ namespace Macerus.Content.Items
                             new IGeneratorComponent[]
                             {
                                 new NameGeneratorComponent("Leather Gloves"),
-                                new IconGeneratorComponent(@"graphics\items\gloves\leather gloves"),
+                                new IconGeneratorComponent(new StringIdentifier(@"graphics\items\gloves\leather gloves")),
                                 new EquippableGeneratorComponent(new[] { new StringIdentifier("hands") }),
                                 new SocketGeneratorComponent(new[]
                                 {
@@ -93,7 +93,7 @@ namespace Macerus.Content.Items
                             new IGeneratorComponent[]
                             {
                                 new NameGeneratorComponent("Cloth Hood"),
-                                new IconGeneratorComponent(@"graphics\items\helms\hood"),
+                                new IconGeneratorComponent(new StringIdentifier(@"graphics\items\helms\hood")),
                                 new EquippableGeneratorComponent(new[] { new StringIdentifier("head") }),
                                 new SocketGeneratorComponent(new[]
                                 {
@@ -115,7 +115,7 @@ namespace Macerus.Content.Items
                             new IGeneratorComponent[]
                             {
                                 new NameGeneratorComponent("Cloth Armor"),
-                                new IconGeneratorComponent(@"graphics\items\body\cloth_armor"),
+                                new IconGeneratorComponent(new StringIdentifier(@"graphics\items\body\cloth_armor")),
                                 new EquippableGeneratorComponent(new[] { new StringIdentifier("body") }),
                                 new SocketGeneratorComponent(new[]
                                 {
@@ -137,7 +137,7 @@ namespace Macerus.Content.Items
                             new IGeneratorComponent[]
                             {
                                 new NameGeneratorComponent("Junk"),
-                                new IconGeneratorComponent(@"graphics\items\junk"),
+                                new IconGeneratorComponent(new StringIdentifier(@"graphics\items\junk")),
                             }),
                         new ItemDefinition(
                             new[]
@@ -150,7 +150,7 @@ namespace Macerus.Content.Items
                             new IGeneratorComponent[]
                             {
                                 new NameGeneratorComponent("Ruby"),
-                                new IconGeneratorComponent(@"graphics\items\gems\ruby"),
+                                new IconGeneratorComponent(new StringIdentifier(@"graphics\items\gems\ruby")),
                                 new CanFitSocketGeneratorComponent(new StringIdentifier("gem"), 1),
                             }),
                     };

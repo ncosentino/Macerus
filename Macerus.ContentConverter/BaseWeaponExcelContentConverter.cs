@@ -45,11 +45,9 @@ namespace Macerus.ContentConverter
                     itemNameStringResourceId,
                     itemNameStringResource));
 
-                var itemIconResource = row.GetCell(columnHeaderMapping["icon"]).StringCellValue;
-                var itemIconResourceId = $"weapon_icon_{rowIndex}";
-                imageResourceDtos.Add(new ImageResourceDto(
-                    itemIconResource,
-                    itemIconResourceId));
+                var itemIconResourcePath = row.GetCell(columnHeaderMapping["icon"]).StringCellValue;
+                var itemIconResourceDto = new ImageResourceDto(itemIconResourcePath);
+                imageResourceDtos.Add(itemIconResourceDto);
 
                 var tags = (row
                     .GetCell(columnHeaderMapping["Tags"])
@@ -91,8 +89,7 @@ namespace Macerus.ContentConverter
                     itemId,
                     itemNameStringResource,
                     itemNameStringResourceId,
-                    itemIconResource,
-                    itemIconResourceId,
+                    itemIconResourceDto,
                     itemEquipSlotName,
                     itemEquipSlotId,
                     itemLevel,

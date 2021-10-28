@@ -7,14 +7,14 @@ namespace Macerus.ContentConverter
         public UniqueItemDto(
             string uniqueItemId,
             string baseItemId, 
-            string itemNameStringResourceId, 
-            string itemIconStringResourceId, 
+            string itemNameStringResourceId,
+            ImageResourceDto itemIconResourceDto, 
             IReadOnlyCollection<string> enchantmentDefinitionIds)
         {
             UniqueItemId = uniqueItemId;
             BaseItemId = baseItemId;
             ItemNameStringResourceId = itemNameStringResourceId;
-            ItemIconStringResourceId = itemIconStringResourceId;
+            ItemIconResourceDto = itemIconResourceDto;
             EnchantmentDefinitionIds = enchantmentDefinitionIds;
         }
 
@@ -24,7 +24,7 @@ namespace Macerus.ContentConverter
 
         public string ItemNameStringResourceId { get; }
 
-        public string ItemIconStringResourceId { get; }
+        public ImageResourceDto ItemIconResourceDto { get; }
 
         public IReadOnlyCollection<string> EnchantmentDefinitionIds { get; }
     }

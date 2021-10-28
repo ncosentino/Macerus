@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Autofac;
 
@@ -18,6 +19,10 @@ namespace Macerus.Content.Resources
                 {
                     // TODO: add entries...
                 }))
+                .SingleInstance()
+                .AsImplementedInterfaces();
+            builder
+                .Register(c => new FileSystemImageResourceRepository(AppDomain.CurrentDomain.BaseDirectory))
                 .SingleInstance()
                 .AsImplementedInterfaces();
         }
