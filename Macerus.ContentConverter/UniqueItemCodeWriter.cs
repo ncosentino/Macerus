@@ -76,24 +76,19 @@ namespace Macerus.Content.Generated.Items
         }
 
         private string GetUniqueItemCodeTemplateFromDto(UniqueItemDto uniqueItemDto)
-        {
+        {           
             var enchantmentComponentCode = uniqueItemDto.EnchantmentDefinitionIds.Count < 1
                     ? string.Empty
-                    :
-                    @$"new EnchantmentsGeneratorComponent(
-                                    {uniqueItemDto.EnchantmentDefinitionIds.Count},
-                                    {uniqueItemDto.EnchantmentDefinitionIds.Count},
-                                    new[]
-                                    {{
+                    : @$"new EnchantmentsGeneratorComponent(new IFilterAttribute[][]
+                                {{
+{string.Join(",\r\n", uniqueItemDto.EnchantmentDefinitionIds.Select(enchantmentDefinitionId => @$"                                  new IFilterAttribute[]
+                                   {{
                                         new FilterAttribute(
                                             enchantmentIdentifiers.EnchantmentDefinitionId,
-                                            new AllIdentifierCollectionFilterAttributeValue(
-                                            new IIdentifier[]
-                                            {{
-{string.Join(",\r\n", uniqueItemDto.EnchantmentDefinitionIds.Select(x => @$"                                                new StringIdentifier(""{x}"")"))}
-                                            }}),
+                                            new IdentifierFilterAttributeValue(new StringIdentifier(""{enchantmentDefinitionId}"")),
                                             true),
-                                    }}),";
+                                   }}"))}
+                                }}),";
 
             var uniqueItemCodeTemplate = @$"
                         new ItemDefinition(
@@ -105,7 +100,7 @@ namespace Macerus.Content.Generated.Items
                             new IGeneratorComponent[]
                             {{
                                 new UniqueBaseItemGeneratorComponent(new StringIdentifier(""{uniqueItemDto.BaseItemId}"")),
-                                new NameGeneratorComponent(""{uniqueItemDto.ItemNameStringResourceId}""),
+                                new UniqueItemInventoryNameGeneratorComponent(new StringIdentifier(""{uniqueItemDto.ItemNameStringResourceId}"")),
                                 new IconGeneratorComponent(new StringIdentifier(@""{uniqueItemDto.ItemIconResourceDto.RelativeResourcePath}"")),
                                 {enchantmentComponentCode}
                             }})";

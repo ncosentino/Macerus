@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 using Macerus.Api.Behaviors.Filtering;
@@ -79,9 +80,12 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
                 break;
             }
 
-            var prefixName = _stringResourceProvider.GetString(prefix.StringResourceId);
-            var suffixName = _stringResourceProvider.GetString(suffixStringResourceId);
-            return new HasInventoryDisplayName($"{prefixName} {suffixName}");
+            var prefixName = _stringResourceProvider.GetString(prefix.StringResourceId, CultureInfo.InvariantCulture);
+            var suffixName = _stringResourceProvider.GetString(suffixStringResourceId, CultureInfo.InvariantCulture);
+            return new HasRareInventoryDisplayName(
+                prefix.StringResourceId,
+                suffixStringResourceId,
+                $"{prefixName} {suffixName}");
         }
 
         private IReadOnlyCollection<IFilterAttribute> CreateRareAffixFilter(

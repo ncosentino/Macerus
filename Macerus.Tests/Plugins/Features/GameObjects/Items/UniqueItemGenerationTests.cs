@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Items.Generation;
+using Macerus.Plugins.Features.GameObjects.Items.Generation.Unique;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
@@ -88,15 +90,25 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                 Assert.True(
                     2 == inventoryDisplayNames.Length,
                     $"Expecting to have two '{typeof(IHasInventoryDisplayName)}' (one for base name, one for unique name).");
+
+                var baseItemInventoryDisplayName = (IBaseItemInventoryDisplayName)inventoryDisplayNames[0];
                 Assert.True(
-                    !string.IsNullOrWhiteSpace(inventoryDisplayNames[0].DisplayName),
-                    $"Expecting '{inventoryDisplayNames[0]}' (base name) to have a populated display name.");
+                    !string.IsNullOrWhiteSpace(baseItemInventoryDisplayName.DisplayName),
+                    $"Expecting '{baseItemInventoryDisplayName}' (base name) to have a populated display name.");
                 Assert.True(
-                    !string.IsNullOrWhiteSpace(inventoryDisplayNames[1].DisplayName),
-                    $"Expecting '{inventoryDisplayNames[1]}' (unique name) to have a populated display name.");
+                    !string.IsNullOrWhiteSpace(baseItemInventoryDisplayName.DisplayName),
+                    $"Expecting '{baseItemInventoryDisplayName}' (base name) to have a populated display name.");
+
+                var uniqueItemInventoryDisplayName = (IUniqueItemInventoryDisplayName)inventoryDisplayNames[1];
+                Assert.True(
+                    uniqueItemInventoryDisplayName.UniqueItemStringResourceId != null,
+                    $"Expecting '{uniqueItemInventoryDisplayName}' (unique name) to have a populated string resource ID.");
+                Assert.True(
+                    !string.IsNullOrWhiteSpace(uniqueItemInventoryDisplayName.DisplayName),
+                    $"Expecting '{uniqueItemInventoryDisplayName}' (unique name) to have a populated display name.");
                 Assert.NotEqual(
-                    inventoryDisplayNames[0].DisplayName,
-                    inventoryDisplayNames[1].DisplayName);
+                    baseItemInventoryDisplayName.DisplayName,
+                    uniqueItemInventoryDisplayName.DisplayName);
 
                 _assertionHelpers.AssertSocketBehaviors(item);
             }

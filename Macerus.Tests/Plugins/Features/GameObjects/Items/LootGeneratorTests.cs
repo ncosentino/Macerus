@@ -7,7 +7,9 @@ using Autofac;
 
 using Macerus.Plugins.Features.GameObjects.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Items.Generation;
 
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Framework.Autofac;
@@ -31,9 +33,9 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
     {
         private static readonly MacerusContainer _container;
         private static readonly TestAmenities _testAmenities;
-        private static readonly Lazy<IReadOnlyDictionary<string, IItemDefinition>> _lazyAllowNormalItems;
-        private static readonly Lazy<IReadOnlyDictionary<string, IItemDefinition>> _lazyAllowMagicItems;
-        private static readonly Lazy<IReadOnlyDictionary<string, IItemDefinition>> _lazyAllowRareItems;
+        private static readonly Lazy<IReadOnlyDictionary<IIdentifier, IItemDefinition>> _lazyAllowNormalItems;
+        private static readonly Lazy<IReadOnlyDictionary<IIdentifier, IItemDefinition>> _lazyAllowMagicItems;
+        private static readonly Lazy<IReadOnlyDictionary<IIdentifier, IItemDefinition>> _lazyAllowRareItems;
         private static readonly ILootGenerator _lootGenerator;
         private static readonly IFilterContextProvider _filterContextProvider;
 
@@ -44,17 +46,17 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
 
             var filterContextFactory = _container.Resolve<IFilterContextFactory>();
             var itemDefinitionRepository = _container.Resolve<IItemDefinitionRepositoryFacade>();
-            _lazyAllowNormalItems = new Lazy<IReadOnlyDictionary<string, IItemDefinition>>(() =>
+            _lazyAllowNormalItems = new Lazy<IReadOnlyDictionary<IIdentifier, IItemDefinition>>(() =>
                 GetAllowedItemsByName(
                     filterContextFactory,
                     itemDefinitionRepository,
                     "normal"));
-            _lazyAllowMagicItems = new Lazy<IReadOnlyDictionary<string, IItemDefinition>>(() =>
+            _lazyAllowMagicItems = new Lazy<IReadOnlyDictionary<IIdentifier, IItemDefinition>>(() =>
                 GetAllowedItemsByName(
                     filterContextFactory,
                     itemDefinitionRepository,
                     "magic"));
-            _lazyAllowRareItems = new Lazy<IReadOnlyDictionary<string, IItemDefinition>>(() =>
+            _lazyAllowRareItems = new Lazy<IReadOnlyDictionary<IIdentifier, IItemDefinition>>(() =>
                 GetAllowedItemsByName(
                     filterContextFactory,
                     itemDefinitionRepository,
@@ -64,7 +66,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
             _filterContextProvider = _container.Resolve<IFilterContextProvider>();
         }
 
-        private static IReadOnlyDictionary<string, IItemDefinition> GetAllowedItemsByName(
+        private static IReadOnlyDictionary<IIdentifier, IItemDefinition> GetAllowedItemsByName(
             IFilterContextFactory filterContextFactory,
             IItemDefinitionRepositoryFacade itemDefinitionRepository,
             string affixType)
@@ -78,18 +80,18 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                         new StringFilterAttributeValue(affixType),
                         true)))
                 .ToDictionary(
-                    x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
+                    x => ((BaseItemInventoryNameGeneratorComponent)x.GeneratorComponents.Single(c => c is BaseItemInventoryNameGeneratorComponent)).StringResourceId,
                     x => x);
             return allowedItems;
         }
 
-        private static IReadOnlyDictionary<string, IItemDefinition> AllowNormalItems =>
+        private static IReadOnlyDictionary<IIdentifier, IItemDefinition> AllowNormalItems =>
             _lazyAllowNormalItems.Value;
 
-        private static IReadOnlyDictionary<string, IItemDefinition> AllowMagicItems =>
+        private static IReadOnlyDictionary<IIdentifier, IItemDefinition> AllowMagicItems =>
             _lazyAllowMagicItems.Value;
 
-        private static IReadOnlyDictionary<string, IItemDefinition> AllowRareItems =>
+        private static IReadOnlyDictionary<IIdentifier, IItemDefinition> AllowRareItems =>
             _lazyAllowRareItems.Value;
 
         [Fact]
@@ -111,29 +113,29 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                 var affixTypeId = item
                    .GetOnly<IHasAffixType>()
                    .AffixTypeId;
-                var baseDisplayName = item
-                    .Get<IHasInventoryDisplayName>()
+                var baseNameStringResourceId = item
+                    .Get<IBaseItemInventoryDisplayName>()
                     .First()
-                    .DisplayName;
+                    .BaseItemStringResourceId;
 
                 if (affixTypeId.Equals(new StringIdentifier("normal")))
                 {
                     Assert.True(
-                        AllowNormalItems.ContainsKey(baseDisplayName),
+                        AllowNormalItems.ContainsKey(baseNameStringResourceId),
                         $"Item was generated with affix type '{affixTypeId}' " +
                         $"but was not found in the allowed collection.");
                 } 
                 else if (affixTypeId.Equals(new StringIdentifier("magic")))
                 {
                     Assert.True(
-                        AllowMagicItems.ContainsKey(baseDisplayName),
+                        AllowMagicItems.ContainsKey(baseNameStringResourceId),
                         $"Item was generated with affix type '{affixTypeId}' " +
                         $"but was not found in the allowed collection.");
                 }
                 else if (affixTypeId.Equals(new StringIdentifier("rare")))
                 {
                     Assert.True(
-                        AllowRareItems.ContainsKey(baseDisplayName),
+                        AllowRareItems.ContainsKey(baseNameStringResourceId),
                         $"Item was generated with affix type '{affixTypeId}' " +
                         $"but was not found in the allowed collection.");
                 }

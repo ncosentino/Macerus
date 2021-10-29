@@ -110,9 +110,11 @@ namespace Macerus.ContentConverter
                 stringResourceDtos = stringResourceDtos.Concat(baseWeaponConvertedContent.StringResourceDtos);
                 // FIXME: collect image resources
 
-                var uniqueItemContent = uniqueItemConverer.GetUniqueItemContent(
-                    workbook,
-                    statDefinitionToTermMappingRepository);
+                var uniqueItemContent = uniqueItemConverer
+                    .GetUniqueItemContent(
+                        workbook,
+                        statDefinitionToTermMappingRepository)
+                    .ToArray();
                 uniqueItemCodeWriter.WriteUniqueItemsCode(
                     uniqueItemContent.Select(x => x.UniqueItemDto),
                     outputDirectory);

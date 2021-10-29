@@ -54,6 +54,13 @@ namespace Macerus.ContentConverter
                     .ToArray();
 
                 var baseItemId = row.GetCell(columnHeaderMapping["base item"]).StringCellValue;
+                if (row.GetCell(columnHeaderMapping["base item name"]).CachedFormulaResultType == CellType.Error)
+                {
+                    Console.WriteLine(
+                        $"ERROR: Unique item {uniqueItemId} does not have a " +
+                        $"valid base item mapped for ID '{baseItemId}'. Skipping...");
+                    continue;
+                }
 
                 var itemNameStringResource = row.GetCell(columnHeaderMapping["name"]).StringCellValue;
                 var itemNameStringResourceId = $"unique_item_name_{rowIndex}";

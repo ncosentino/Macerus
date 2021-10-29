@@ -8,8 +8,12 @@ using Macerus.ContentCreator.MapEditor.Behaviors.Shared;
 using Macerus.Plugins.Features.Encounters.Default;
 using Macerus.Plugins.Features.Encounters.Default.Triggers;
 using Macerus.Plugins.Features.GameObjects.Enchantments;
+using Macerus.Plugins.Features.GameObjects.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Items.Generation;
 using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic;
+using Macerus.Plugins.Features.GameObjects.Items.Generation.Rare;
+using Macerus.Plugins.Features.GameObjects.Items.Generation.Unique;
 using Macerus.Plugins.Features.GameObjects.Static.Doors;
 using Macerus.Plugins.Features.Mapping;
 using Macerus.Shared.Behaviors;
@@ -77,7 +81,10 @@ namespace Macerus.Content.Data
                         [typeof(MapWeatherTableBehavior)] = "MapWeatherTableBehavior",
                         [typeof(ItemContainerBehavior)] = "ItemContainerBehavior",
                         [typeof(ItemDefinitionIdentifierBehavior)] = "ItemDefinitionIdBehavior",
-                        [typeof(HasInventoryDisplayName)] = "InventoryName",
+                        [typeof(BaseItemInventoryDisplayName)] = "BaseItemInventoryDisplayName",
+                        [typeof(HasMagicInventoryDisplayName)] = "MagicInventoryDisplayName",
+                        [typeof(HasRareInventoryDisplayName)] = "RareInventoryDisplayName",
+                        [typeof(UniqueItemInventoryDisplayName)] = "UniqueItemInventoryDisplayName",
                         [typeof(HasInventoryIcon)] = "InventoryIcon",
                         [typeof(HasInventoryBackgroundColor)] = "InventoryBackgroundColor",
                         [typeof(CanBeEquippedBehavior)] = "CanBeEquippedBehavior",

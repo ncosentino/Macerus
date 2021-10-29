@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
@@ -36,12 +37,24 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
                 $"There were {affixes.Length} '{typeof(IHasMagicAffixBehavior)}' instances when maximum of 2 were expected.");
 
             // FIXME: this code has the assumption that every single affix has BOTH a prefix and a suffix.
-            var baseDisplayName = itemBehaviors.GetOnly<IHasInventoryDisplayName>();
+            var baseItemDisplayName = itemBehaviors.GetOnly<IBaseItemInventoryDisplayName>();
             if (affixes.Length == 1)
             {
-                return new HasInventoryDisplayName(_random.NextDouble(0, 1) >= 0.5
-                    ? $"{baseDisplayName.DisplayName} {_stringResourceProvider.GetString(affixes.Single().SuffixStringResourceId)}"
-                    : $"{_stringResourceProvider.GetString(affixes.Single().PrefixStringResourceId)} {baseDisplayName.DisplayName}");
+                var affix = affixes.Single();
+                if (_random.NextDouble(0, 1) >= 0.5)
+                {
+                    return new HasMagicInventoryDisplayName(
+                        null,
+                        affix.SuffixStringResourceId,
+                        baseItemDisplayName.BaseItemStringResourceId,
+                        $"{baseItemDisplayName.DisplayName} {_stringResourceProvider.GetString(affix.SuffixStringResourceId, CultureInfo.InvariantCulture)}");
+                }
+                
+                return new HasMagicInventoryDisplayName(
+                    affix.PrefixStringResourceId,
+                    null,
+                    baseItemDisplayName.BaseItemStringResourceId,
+                    $"{_stringResourceProvider.GetString(affixes.Single().PrefixStringResourceId, CultureInfo.InvariantCulture)} {baseItemDisplayName.DisplayName}");
             }
 
             var prefixAffixIndex = _random.Next(0, 2);
@@ -56,10 +69,13 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Magic
             // system... truly, this behavior should NOT do the stringification
             // but instead leave things as resources to work with and be
             // interpreted by a UI later on...
-            return new HasInventoryDisplayName(
-                $"{_stringResourceProvider.GetString(prefix.PrefixStringResourceId)} " +
-                $"{baseDisplayName.DisplayName} " +
-                $"{_stringResourceProvider.GetString(suffix.SuffixStringResourceId)}");
+            return new HasMagicInventoryDisplayName(
+                prefix?.PrefixStringResourceId,
+                suffix?.SuffixStringResourceId,
+                baseItemDisplayName.BaseItemStringResourceId,
+                $"{_stringResourceProvider.GetString(prefix.PrefixStringResourceId, CultureInfo.InvariantCulture)} " +
+                $"{baseItemDisplayName.DisplayName} " +
+                $"{_stringResourceProvider.GetString(suffix.SuffixStringResourceId, CultureInfo.InvariantCulture)}");
         }
     }
 }

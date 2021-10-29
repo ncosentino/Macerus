@@ -2,6 +2,8 @@
 
 using Macerus.Plugins.Features.GameObjects.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Items.Generation;
+using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic;
 
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
@@ -44,17 +46,6 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                     new StringIdentifier("item-level"),
                     new DoubleFilterAttributeValue(5),
                     false));
-            var nonMagicItems = itemDefinitionRepository
-                .LoadItemDefinitions(filterContextFactory.CreateContext(
-                    0,
-                    int.MaxValue,
-                    new FilterAttribute(
-                        new StringIdentifier("affix-type"),
-                        new NotFilterAttributeValue(new StringFilterAttributeValue("normal")),
-                        true)))
-                .ToDictionary(
-                    x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
-                    x => x);
 
             var generatedItems = itemGenerator
                 .GenerateItems(itemGenerationContext)
@@ -78,19 +69,26 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                 Assert.True(
                     2 == inventoryDisplayNames.Length,
                     $"Expecting to have two '{typeof(IHasInventoryDisplayName)}' (one for base name, one for magic name).");
-                Assert.True(
-                    !string.IsNullOrWhiteSpace(inventoryDisplayNames[0].DisplayName),
-                    $"Expecting '{inventoryDisplayNames[0]}' (base name) to have a populated display name.");
-                Assert.True(
-                    !string.IsNullOrWhiteSpace(inventoryDisplayNames[1].DisplayName),
-                    $"Expecting '{inventoryDisplayNames[1]}' (magic name) to have a populated display name.");
-                Assert.Contains(
-                    inventoryDisplayNames[0].DisplayName,
-                    inventoryDisplayNames[1].DisplayName);
 
-                Assert.False(
-                    nonMagicItems.ContainsKey(inventoryDisplayNames[0].DisplayName),
-                    $"Expecting that '{inventoryDisplayNames[0].DisplayName}' (base name) cannot have magic affixes.");
+                var baseItemInventoryDisplayName = (IBaseItemInventoryDisplayName)inventoryDisplayNames[0];
+                Assert.True(
+                    baseItemInventoryDisplayName.BaseItemStringResourceId != null,
+                    $"Expecting '{baseItemInventoryDisplayName}' (base name) to have a populated string resource ID.");
+                Assert.True(
+                    !string.IsNullOrWhiteSpace(baseItemInventoryDisplayName.DisplayName),
+                    $"Expecting '{baseItemInventoryDisplayName}' (base name) to have a populated display name.");
+
+                var magicInventoryDisplayName = (IHasMagicInventoryDisplayName)inventoryDisplayNames[1];
+                Assert.True(
+                    !string.IsNullOrWhiteSpace(magicInventoryDisplayName.DisplayName),
+                    $"Expecting '{magicInventoryDisplayName}' (magic name) to have a populated display name.");
+                Assert.True(
+                    magicInventoryDisplayName.PrefixStringResourceId != null ||
+                    magicInventoryDisplayName.SuffixStringResourceId != null,
+                    $"Expecting '{magicInventoryDisplayName}' (magic name) to have at least a prefix or suffix string resource ID set.");
+                Assert.Contains(
+                    baseItemInventoryDisplayName.DisplayName,
+                    magicInventoryDisplayName.DisplayName);
 
                 _assertionHelpers.AssertSocketBehaviors(item);
             }

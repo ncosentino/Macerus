@@ -9,10 +9,6 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<NameGeneratorComponentToBehaviorConverter>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
                 .RegisterType<EquippableGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
@@ -26,6 +22,10 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Autofac
                 .SingleInstance();
             builder
                 .RegisterType<ItemTagsGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+            builder
+                .RegisterType<BaseItemInventoryNameGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }

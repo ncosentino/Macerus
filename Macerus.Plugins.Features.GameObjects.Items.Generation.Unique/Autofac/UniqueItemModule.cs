@@ -16,6 +16,10 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique.Autofac
                 .RegisterType<UniqueBaseItemGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<UniqueItemInventoryNameGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();            
         }
     }
 }

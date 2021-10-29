@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 
-using Macerus.Plugins.Features.GameObjects.Items;
 using Macerus.Plugins.Features.GameObjects.Items.Affixes.Api;
 
 using ProjectXyz.Plugins.Features.Filtering.Api;
@@ -40,15 +39,10 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                         new StringIdentifier("affix-type"),
                         new AnyStringCollectionFilterAttributeValue(allAffixes),
                         true)))
-                .ToDictionary(
-                    x => ((NameGeneratorComponent)x.GeneratorComponents.Single(c => c is NameGeneratorComponent)).DisplayName,
-                    x => x);
+                .ToArray();
 
-            foreach (var entry in allItems)
-            {
-                var name = entry.Key;
-                var item = entry.Value;
-                
+            foreach (var item in allItems)
+            {                
                 foreach (var requiredAttribute in item
                     .SupportedAttributes
                     .Where(x => x.Required))

@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Macerus.Api.Behaviors.Filtering;
+
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation;
 
@@ -15,25 +18,19 @@ namespace Macerus.Plugins.Features.GameObjects.Items
     {
         private readonly Lazy<IEnchantmentGenerator> _lazyEnchantmentGenerator;
         private readonly Lazy<IHasEnchantmentsBehaviorFactory> _lazyHasEnchantmentsBehaviorFactory;
-        private readonly Lazy<IFilterContextFactory> _lazyFilterContextFactory;
+        private readonly Lazy<IFilterContextAmenity> _lazyFilterContextAmenity;
 
         public EnchantmentsGeneratorComponentToBehaviorConverter(
             Lazy<IEnchantmentGenerator> lazyEnchantmentGenerator,
             Lazy<IHasEnchantmentsBehaviorFactory> lazyHasEnchantmentsBehaviorFactory,
-            Lazy<IFilterContextFactory> lazyFilterContextFactory)
+            Lazy<IFilterContextAmenity> lazyFilterContextAmenity)
         {
             _lazyEnchantmentGenerator = lazyEnchantmentGenerator;
             _lazyHasEnchantmentsBehaviorFactory = lazyHasEnchantmentsBehaviorFactory;
-            _lazyFilterContextFactory = lazyFilterContextFactory;
+            _lazyFilterContextAmenity = lazyFilterContextAmenity;
         }
 
         public Type ComponentType => typeof(EnchantmentsGeneratorComponent);
-
-        private IEnchantmentGenerator EnchantmentGenerator => _lazyEnchantmentGenerator.Value;
-
-        private IHasEnchantmentsBehaviorFactory HasEnchantmentsBehaviorFactory => _lazyHasEnchantmentsBehaviorFactory.Value;
-
-        private IFilterContextFactory FilterContextFactory => _lazyFilterContextFactory.Value;
 
         public IEnumerable<IBehavior> Convert(
             IFilterContext filterContext,
@@ -48,7 +45,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items
                 .Get<IHasEnchantmentsBehavior>()
                 .SingleOrDefault()) == null)
             {
-                hasEnchantmentsBehavior = HasEnchantmentsBehaviorFactory.Create();
+                hasEnchantmentsBehavior = _lazyHasEnchantmentsBehaviorFactory.Value.Create();
                 wasNewlyCreatedEnchantmentsBehavior = true;
 
                 IReadOnlyHasEnchantmentsBehavior hasReadOnlyEnchantmentsBehavior;
@@ -62,23 +59,9 @@ namespace Macerus.Plugins.Features.GameObjects.Items
                 }
             }
 
-            var attributes = filterContext
-                .Attributes
-                .Where(x => !enchantmentsGeneratorComponent.EnchantmentDefinitionFilter.Any(s => s.Id.Equals(x.Id)))
-                .Concat(enchantmentsGeneratorComponent.EnchantmentDefinitionFilter);
-            var enchantmentGeneratorContext = FilterContextFactory.CreateContext(
-                enchantmentsGeneratorComponent.MinimumEnchantments,
-                enchantmentsGeneratorComponent.MaximumEnchantments,
-                attributes);
-            var enchantments = EnchantmentGenerator
-                .GenerateEnchantments(enchantmentGeneratorContext)
-                .ToArray();
-            if (!enchantments.Any())
-            {
-                throw new InvalidOperationException(
-                    $"No enchantments were added to the base item.");
-            }
-
+            var enchantments = GenerateEnchantments(
+                filterContext,
+                enchantmentsGeneratorComponent);
             hasEnchantmentsBehavior
                 .AddEnchantmentsAsync(enchantments)
                 .Wait();
@@ -86,6 +69,34 @@ namespace Macerus.Plugins.Features.GameObjects.Items
             if (wasNewlyCreatedEnchantmentsBehavior)
             {
                 yield return hasEnchantmentsBehavior;
+            }
+        }
+
+        private IEnumerable<IGameObject> GenerateEnchantments(
+            IFilterContext filterContext,
+            EnchantmentsGeneratorComponent enchantmentsGeneratorComponent)
+        {
+            bool generatedAny = false;
+            foreach (var enchantmentDefinitionFilter in enchantmentsGeneratorComponent.FiltersForEachEnchantmentDefinition)
+            {
+                var attributes = filterContext
+                    .Attributes
+                    .Where(x => !enchantmentDefinitionFilter.Any(s => s.Id.Equals(x.Id)))
+                    .Select(x => x.CopyWithRequired(false))
+                    .Concat(enchantmentDefinitionFilter);
+                var enchantmentGeneratorContext = _lazyFilterContextAmenity.Value.CreateFilterContextForAnyAmount(attributes);
+                foreach (var enchantment in _lazyEnchantmentGenerator.Value.GenerateEnchantments(enchantmentGeneratorContext))
+                {
+                    generatedAny = true;
+                    yield return enchantment;
+                }                
+            }
+
+            if (!generatedAny)
+            {
+                throw new InvalidOperationException(
+                    $"No enchantments were generated for the specified context" +
+                    $". Please consider debugging to see if the context is invalid.");
             }
         }
     }

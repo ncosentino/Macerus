@@ -74,16 +74,13 @@ namespace Macerus.Content.Affixes
                 affixId,
                 new IGeneratorComponent[]
                 {
-                    new EnchantmentsGeneratorComponent(
-                        enchantmentDefinitionIds.Count,
-                        enchantmentDefinitionIds.Count,
-                        new[]
-                        {
-                            new FilterAttribute(
-                                _enchantmentIdentifiers.EnchantmentDefinitionId,
-                                new AllIdentifierCollectionFilterAttributeValue(enchantmentDefinitionIds),
-                                true)
-                        }),
+                    new EnchantmentsGeneratorComponent(enchantmentDefinitionIds.Select(enchantmentDefinitionId => new IFilterAttribute[] 
+                    {
+                        new FilterAttribute(
+                            _enchantmentIdentifiers.EnchantmentDefinitionId,
+                            new IdentifierFilterAttributeValue(enchantmentDefinitionId),
+                            true)
+                    })),
                 }.Concat(extraComponents),
                 new[]
                 {

@@ -92,7 +92,7 @@ namespace Macerus.Content.Generated.Items
                             }},
                             new IGeneratorComponent[]
                             {{
-                                new NameGeneratorComponent(""{baseWeaponDto.ItemNameStringResourceId}""),
+                                new BaseItemInventoryNameGeneratorComponent(new StringIdentifier(""{baseWeaponDto.ItemNameStringResourceId}"")),
                                 new IconGeneratorComponent(new StringIdentifier(@""{baseWeaponDto.ItemIconResourceDto.RelativeResourcePath}"")),
                                 new EquippableGeneratorComponent(new[] {{ new StringIdentifier(""{baseWeaponDto.ItemEquipSlotId}"") }}),
                                 {(
