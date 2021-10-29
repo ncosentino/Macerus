@@ -135,10 +135,10 @@ namespace Macerus.Content.Actors
                                 }),
                                 new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
-                                    [new IntIdentifier(1)] = 10,
-                                    [new IntIdentifier(2)] = 100,
-                                    [new IntIdentifier(3)] = 100,
-                                    [new IntIdentifier(4)] = 100,
+                                    [new StringIdentifier("stat_1")] = 10,
+                                    [new StringIdentifier("stat_2")] = 100,
+                                    [new StringIdentifier("stat_3")] = 100,
+                                    [new StringIdentifier("stat_4")] = 100,
                                     [combatTeamIdentifiers.CombatTeamStatDefinitionId] = combatTeamIdentifiers.PlayerTeamStatValue,
                                     [combatStatIdentifiers.TurnSpeedStatId] = 20, // FIXME: just for testing
                                     [combatStatIdentifiers.AttackSpeedStatId] = 1.1, // FIXME: just for testing
@@ -198,10 +198,10 @@ namespace Macerus.Content.Actors
                                 }),
                                 new HasStatsGeneratorComponent(new Dictionary<IIdentifier, double>()
                                 {
-                                    [new IntIdentifier(1)] = 10,
-                                    [new IntIdentifier(2)] = 100,
-                                    [new IntIdentifier(3)] = 100,
-                                    [new IntIdentifier(4)] = 100,
+                                    [new StringIdentifier("stat_1")] = 10,
+                                    [new StringIdentifier("stat_2")] = 100,
+                                    [new StringIdentifier("stat_3")] = 100,
+                                    [new StringIdentifier("stat_4")] = 100,
                                     [combatTeamIdentifiers.CombatTeamStatDefinitionId] = combatTeamIdentifiers.PlayerTeamStatValue,
                                     [combatStatIdentifiers.TurnSpeedStatId] = 20, // FIXME: just for testing
                                     [combatStatIdentifiers.AttackSpeedStatId] = 1, // FIXME: just for testing
@@ -253,10 +253,10 @@ namespace Macerus.Content.Actors
                                     // FIXME: shouldn't need to rely on an override to set the animation?
                                     [new StringIdentifier("animation_override")] = 1,
                                     // resources...
-                                    [new IntIdentifier(0)] = 15,
-                                    [new IntIdentifier(1)] = 15,
-                                    [new IntIdentifier(2)] = 10,
-                                    [new IntIdentifier(3)] = 10,
+                                    [new StringIdentifier("stat_1")] = 15,
+                                    [new StringIdentifier("stat_2")] = 15,
+                                    [new StringIdentifier("stat_3")] = 10,
+                                    [new StringIdentifier("stat_4")] = 10,
                                     [combatStatIdentifiers.TurnSpeedStatId] = 10, // FIXME: just for testing
                                     [combatStatIdentifiers.AttackSpeedStatId] = 0.8, // FIXME: just for testing
                                     [combatStatIdentifiers.FireDamageMinStatId] = 0, // FIXME: just for testing

@@ -39,14 +39,14 @@ namespace Macerus.Plugins.Features.StatusBar.Default
         private readonly IFilterContextProvider _filterContextProvider;
         private readonly Lazy<IStatCalculationServiceAmenity> _lazyStatCalculationServiceAmenity;
         private readonly Lazy<IReadOnlyRosterManager> _lazyRosterManager;
-        private readonly IReadOnlyStatDefinitionToTermMappingRepository _statDefinitionToTermMappingRepository;
+        private readonly IReadOnlyStatDefinitionToTermMappingRepositoryFacade _statDefinitionToTermMappingRepository;
 
         private readonly Lazy<IReadOnlyCollection<Tuple<IIdentifier, IIdentifier, IIdentifier>>> _lazyCurrentAndMaxResourceIdentifiers;
 
         public StatusBarController(
             Lazy<IStatCalculationServiceAmenity> lazyStatCalculationServiceAmenity,
             Lazy<IReadOnlyRosterManager> lazyRosterManager,
-            IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
+            IReadOnlyStatDefinitionToTermMappingRepositoryFacade statDefinitionToTermMappingRepository,
             IStatusBarViewModel statusBarViewModel,
             ISkillUsage skillUsage,
             ISkillHandlerFacade skillHandlerFacade,

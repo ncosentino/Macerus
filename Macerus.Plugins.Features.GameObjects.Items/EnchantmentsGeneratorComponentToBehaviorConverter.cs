@@ -84,7 +84,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items
                     .Where(x => !enchantmentDefinitionFilter.Any(s => s.Id.Equals(x.Id)))
                     .Select(x => x.CopyWithRequired(false))
                     .Concat(enchantmentDefinitionFilter);
-                var enchantmentGeneratorContext = _lazyFilterContextAmenity.Value.CreateFilterContextForAnyAmount(attributes);
+                var enchantmentGeneratorContext = _lazyFilterContextAmenity.Value.CreateFilterContextForSingle(attributes);
                 foreach (var enchantment in _lazyEnchantmentGenerator.Value.GenerateEnchantments(enchantmentGeneratorContext))
                 {
                     generatedAny = true;

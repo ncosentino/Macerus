@@ -7,22 +7,22 @@ namespace Macerus.Content.Combat
 {
     public sealed class CombatStatIdentifiers : ICombatStatIdentifiers
     {
-        public IIdentifier CurrentLifeStatId { get; } = new IntIdentifier(2);
+        public IIdentifier CurrentLifeStatId { get; } = new StringIdentifier("stat_2");
 
-        public IIdentifier TurnSpeedStatId { get; } = new IntIdentifier(79);
+        public IIdentifier TurnSpeedStatId { get; } = new StringIdentifier("stat_80");
 
-        public IIdentifier AttackSpeedStatId { get; } = new IntIdentifier(63);
+        public IIdentifier AttackSpeedStatId { get; } = new StringIdentifier("stat_64");
 
-        public IIdentifier FireDamageMinStatId { get; } = new IntIdentifier(14);
+        public IIdentifier FireDamageMinStatId { get; } = new StringIdentifier("stat_15");
 
-        public IIdentifier FireDamageMaxStatId { get; } = new IntIdentifier(24);
+        public IIdentifier FireDamageMaxStatId { get; } = new StringIdentifier("stat_25");
 
-        public IIdentifier FireResistStatId { get; } = new IntIdentifier(34);
+        public IIdentifier FireResistStatId { get; } = new StringIdentifier("stat_35");
 
-        public IIdentifier PhysicalDamageMinStatId { get; } = new IntIdentifier(18);
+        public IIdentifier PhysicalDamageMinStatId { get; } = new StringIdentifier("stat_19");
 
-        public IIdentifier PhysicalDamageMaxStatId { get; } = new IntIdentifier(28);
+        public IIdentifier PhysicalDamageMaxStatId { get; } = new StringIdentifier("stat_29");
 
-        public IIdentifier PhysicalResistStatId { get; } = new IntIdentifier(38);
+        public IIdentifier PhysicalResistStatId { get; } = new StringIdentifier("stat_49");
     }
 }

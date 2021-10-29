@@ -15,12 +15,12 @@ namespace Macerus.Plugins.Features.CharacterSheet.Default
         private readonly ICharacterSheetViewModel _characterSheetViewModel;
         private readonly IStatCalculationServiceAmenity _statCalculationServiceAmenity;
         private readonly Lazy<IReadOnlyRosterManager> _lazyRosterManager;
-        private readonly IReadOnlyStatDefinitionToTermMappingRepository _statDefinitionToTermMappingRepository;
+        private readonly IReadOnlyStatDefinitionToTermMappingRepositoryFacade _statDefinitionToTermMappingRepository;
 
         public CharacterSheetController(
             IStatCalculationServiceAmenity statCalculationServiceAmenity,
             Lazy<IReadOnlyRosterManager> lazyRosterManager,
-            IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository,
+            IReadOnlyStatDefinitionToTermMappingRepositoryFacade statDefinitionToTermMappingRepository,
             ICharacterSheetViewModel characterSheetViewModel)
         {
             _statCalculationServiceAmenity = statCalculationServiceAmenity;

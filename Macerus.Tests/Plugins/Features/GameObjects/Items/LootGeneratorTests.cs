@@ -154,7 +154,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
             {
                 await player
                     .GetOnly<IHasStatsBehavior>()
-                    .MutateStatsAsync(async stats => stats[new IntIdentifier(1)] = 15)
+                    .MutateStatsAsync(async stats => stats[new StringIdentifier("stat_1")] = 15)
                     .ConfigureAwait(false);
 
                 var context = _filterContextProvider
@@ -181,7 +181,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
             {
                 await player
                     .GetOnly<IHasStatsBehavior>()
-                    .MutateStatsAsync(async stats => stats[new IntIdentifier(1)] = 5)
+                    .MutateStatsAsync(async stats => stats[new StringIdentifier("stat_1")] = 5)
                     .ConfigureAwait(false);
 
                 var context = _filterContextProvider
@@ -221,7 +221,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                                     new StringIdentifier("actor-stats"),
                                     new ActorStatFilterAttributeValue(
                                         new StringIdentifier("player"),
-                                        new IntIdentifier(1),
+                                        new StringIdentifier("stat_1"),
                                         10,
                                         20),
                                     true),

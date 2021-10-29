@@ -60,23 +60,23 @@ namespace Macerus.Content.Actors
 
         public IIdentifier BeltIdentifier { get; } = new StringIdentifier("Belt");
 
-        public IIdentifier MoveDistancePerTurnTotalStatDefinitionId { get; } = new IntIdentifier(71);
+        public IIdentifier MoveDistancePerTurnTotalStatDefinitionId { get; } = new StringIdentifier("stat_70");
 
-        public IIdentifier MoveDistancePerTurnCurrentStatDefinitionId { get; } = new IntIdentifier(70);
+        public IIdentifier MoveDistancePerTurnCurrentStatDefinitionId { get; } = new StringIdentifier("stat_71");
 
-        public IIdentifier MoveDiagonallyStatDefinitionId { get; } = new IntIdentifier(72);
+        public IIdentifier MoveDiagonallyStatDefinitionId { get; } = new StringIdentifier("stat_73");
 
-        public IIdentifier CurrentExperienceStatDefinitionId { get; } = new IntIdentifier(74);
+        public IIdentifier CurrentExperienceStatDefinitionId { get; } = new StringIdentifier("stat_75");
 
-        public IIdentifier ExperienceForNextLevelStatDefinitionId { get; } = new IntIdentifier(75);
+        public IIdentifier ExperienceForNextLevelStatDefinitionId { get; } = new StringIdentifier("stat_76");
 
-        public IIdentifier LevelStatDefinitionId { get; } = new IntIdentifier(73);
+        public IIdentifier LevelStatDefinitionId { get; } = new StringIdentifier("stat_74");
 
-        public IIdentifier SkillPointsStatDefinitionId { get; } = new IntIdentifier(76);
+        public IIdentifier SkillPointsStatDefinitionId { get; } = new StringIdentifier("stat_77");
 
-        public IIdentifier AttributePointsStatDefinitionId { get; } = new IntIdentifier(78);
+        public IIdentifier AttributePointsStatDefinitionId { get; } = new StringIdentifier("stat_79");
 
-        public IIdentifier AbilityPointsStatDefinitionId { get; } = new IntIdentifier(77);
+        public IIdentifier AbilityPointsStatDefinitionId { get; } = new StringIdentifier("stat_78");
 
         public IIdentifier GetAnimationDirectionId(int direction)
         {

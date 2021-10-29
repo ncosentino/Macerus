@@ -9,7 +9,6 @@ using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
-using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Generation;
 using ProjectXyz.Plugins.Features.GameObjects.Items.Generation;
 using ProjectXyz.Shared.Framework;
 
@@ -23,20 +22,17 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
             true);
 
         private readonly IBaseItemGenerator _baseItemGenerator;
-        private readonly IEnchantmentGenerator _enchantmentGenerator;
         private readonly IHasEnchantmentsBehaviorFactory _hasEnchantmentsBehaviorFactory;
         private readonly IFilterContextFactory _filterContextFactory;
         private readonly IGameObjectFactory _gameObjectFactory;
 
         public UniqueItemGenerator(
             IBaseItemGenerator baseItemGenerator,
-            IEnchantmentGenerator enchantmentGenerator,
             IHasEnchantmentsBehaviorFactory hasEnchantmentsBehaviorFactory,
             IFilterContextFactory filterContextFactory,
             IGameObjectFactory gameObjectFactory)
         {
             _baseItemGenerator = baseItemGenerator;
-            _enchantmentGenerator = enchantmentGenerator;
             _hasEnchantmentsBehaviorFactory = hasEnchantmentsBehaviorFactory;
             _filterContextFactory = filterContextFactory;
             _gameObjectFactory = gameObjectFactory;
@@ -46,7 +42,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
         {
             // create our new context by keeping information about attributes 
             // from our caller, but acknowledging that any that were required
-            // are now fulfilled up until this point. we then cobine in the
+            // are now fulfilled up until this point. we then combine in the
             // newly provided attributes from the drop table.
             var generatorRequired = SupportedAttributes
                 .Where(attr => attr.Required)
@@ -57,9 +53,6 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Unique
                 filterContext
                     .Attributes
                     .Where(x => !generatorRequired.ContainsKey(x.Id))
-                    .Select(x => x.Required
-                        ? x.CopyWithRequired(false)
-                        : x)
                     .Concat(generatorRequired.Values));
             var uniqueBehaviorSets = _baseItemGenerator.GenerateItems(uniqueItemGeneratorContext);
             

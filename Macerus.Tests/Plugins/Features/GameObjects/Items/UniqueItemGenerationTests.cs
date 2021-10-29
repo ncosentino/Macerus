@@ -57,11 +57,11 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                     new FilterAttribute(
                         new StringIdentifier("affix-type"),
                         new StringFilterAttributeValue("unique"),
-                        true),
+                        false),
                     new FilterAttribute(
                         new StringIdentifier("item-id"),
                         new IdentifierFilterAttributeValue(uniqueItemId),
-                        false),
+                        true),
                     new FilterAttribute(
                         new StringIdentifier("item-level"),
                         new DoubleFilterAttributeValue(double.MaxValue),
@@ -82,7 +82,7 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                     .ToArray();
                 Assert.True(
                     enchantmentBehaviors.Length == 1,
-                    "We expect unique items have enchantments.");
+                    $"We expect unique items have enchantments. Unique item '{uniqueItemId}' did not.");
 
                 var inventoryDisplayNames = item
                     .Get<IHasInventoryDisplayName>()

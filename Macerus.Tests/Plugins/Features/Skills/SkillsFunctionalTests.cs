@@ -60,7 +60,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
                 var statValue = await _statCalculationServiceAmenity
                     .GetStatValueAsync(
                         player,
-                        new IntIdentifier(8)) // green light radius
+                        new StringIdentifier("stat_8")) // green light radius
                     .ConfigureAwait(false);
 
                 Assert.Equal(1, statValue);
@@ -77,7 +77,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
 
                 await statsBehavior.MutateStatsAsync(async stats =>
                 {
-                    stats[new IntIdentifier(2)] = 1; // life current
+                    stats[new StringIdentifier("stat_2")] = 1; // life current
                 });
 
                 var skill = _skillAmenity.EnsureHasSkill(
@@ -110,7 +110,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
 
                 await statsBehavior.MutateStatsAsync(async stats =>
                 {
-                    stats[new IntIdentifier(2)] = 1; // life current
+                    stats[new StringIdentifier("stat_2")] = 1; // life current
                 });
 
                 var skill = _skillAmenity.EnsureHasSkill(
@@ -133,7 +133,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
                 var statValue = await _statCalculationServiceAmenity
                     .GetStatValueAsync(
                         player,
-                        new IntIdentifier(2)) // life current
+                        new StringIdentifier("stat_2")) // life current
                     .ConfigureAwait(false);
 
                 Assert.Equal(6, statValue); // healed 10% max life over 5 turns (so... 1+5=6)
@@ -151,7 +151,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
 
                 await statsBehavior.MutateStatsAsync(async stats =>
                 {
-                    stats[new IntIdentifier(2)] = 1; // life current
+                    stats[new StringIdentifier("stat_2")] = 1; // life current
                 });
 
                 var skill = _skillAmenity.EnsureHasSkill(
@@ -186,7 +186,7 @@ namespace Macerus.Tests.Plugins.Features.Weather
                 var statValue = await _statCalculationServiceAmenity
                     .GetStatValueAsync(
                         player,
-                        new IntIdentifier(2)) // life current
+                        new StringIdentifier("stat_2")) // life current
                     .ConfigureAwait(false);
 
                 Assert.Equal(6, statValue); // healed 10% max life over 5 turns (so... 1+5=6)

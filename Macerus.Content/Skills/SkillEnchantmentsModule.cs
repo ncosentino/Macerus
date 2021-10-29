@@ -50,21 +50,21 @@ namespace Macerus.Content.Skills
                             .WithEnchantmentDefinitionId(new StringIdentifier("green-glow-ench"))
                             .ThatsUsedForPassiveSkill()
                             .ThatHasValueInRange(
-                                new IntIdentifier(8), // green light radius
+                                new StringIdentifier("stat_8"), // green light radius
                                 1,
                                 1,
                                 0) 
                             .Build(),
                         enchantmentDefinitionBuilder
                             .WithEnchantmentDefinitionId(new StringIdentifier("heal-self"))
-                            .WithStatDefinitionId(new IntIdentifier(2)) // life current
+                            .WithStatDefinitionId(combatStatIdentifiers.CurrentLifeStatId)
                             .ThatAppliesEffectsToSkillUser()
                             .ThatModifiesBaseStatWithExpression("LIFE_CURRENT + (LIFE_MAXIMUM * 0.1 * MIN($PER_TURN, 5))")
                             .ThatExpiresAfterTurns(5)
                             .Build(),
                         enchantmentDefinitionBuilder
                             .WithEnchantmentDefinitionId(new StringIdentifier("heal-self-immediate"))
-                            .WithStatDefinitionId(new IntIdentifier(2)) // life current
+                            .WithStatDefinitionId(combatStatIdentifiers.CurrentLifeStatId)
                             .ThatAppliesEffectsToSkillUser()
                             .ThatModifiesBaseStatWithExpression("LIFE_CURRENT + 10")
                             .ThatAppliesInstantlyAsSingleUse()
@@ -119,7 +119,7 @@ namespace Macerus.Content.Skills
                             .Build(),
                         enchantmentDefinitionBuilder
                             .WithEnchantmentDefinitionId(new StringIdentifier("increase-armor"))
-                            .WithStatDefinitionId(new IntIdentifier(67)) // armor
+                            .WithStatDefinitionId(new StringIdentifier("stat_68")) // armor
                             .ThatAppliesEffectsToSkillUser()
                             .ThatModifiesBaseStatWithExpression("ARMOR + 10")
                             .ThatExpiresAfterTurns(1)

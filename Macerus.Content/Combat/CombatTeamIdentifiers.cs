@@ -7,7 +7,7 @@ namespace Macerus.Content.Combat
 {
     public sealed class CombatTeamIdentifiers : ICombatTeamIdentifiers
     {
-        public IIdentifier CombatTeamStatDefinitionId { get; } = new IntIdentifier(66);
+        public IIdentifier CombatTeamStatDefinitionId { get; } = new StringIdentifier("stat_67");
 
         public int PlayerTeamStatValue { get; } = 0;
 

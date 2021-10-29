@@ -56,10 +56,19 @@ namespace Macerus.Tests.Plugins.Features.GameObjects.Items
                     item,
                     new StringIdentifier("magic"));
 
+                // NOTE: this assertion is no longer true. we can have affixes
+                // that each have 2+ enchantments. for example, consider an
+                // affix that is + all stats (which would be multiple
+                // enchantments, one for each stat)
+                //Assert.InRange(
+                //    item.GetOnly<IHasEnchantmentsBehavior>().Enchantments.Count,
+                //    1,
+                //    2);
                 Assert.InRange(
                     item.GetOnly<IHasEnchantmentsBehavior>().Enchantments.Count,
                     1,
-                    2);
+                    int.MaxValue);
+
                 // TODO: check that the enchantments are allowed to exist with each other
                 // i.e. generating two enchantments that add + life when it might not be allowed
 
