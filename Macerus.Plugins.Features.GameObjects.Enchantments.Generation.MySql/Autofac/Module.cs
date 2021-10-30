@@ -8,10 +8,6 @@ namespace Macerus.Plugins.Features.GameObjects.Enchantments.Generation.MySql.Aut
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
-            builder
-                .RegisterType<EnchantmentDefinitionRepository>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
         }
     }
 }

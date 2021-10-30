@@ -7,7 +7,7 @@
     <Copyright>Copyright © Nexus Software Labs 2020</Copyright>
     <PackageId>Macerus.Content</PackageId>
     <Company>Nexus Software Labs</Company>
-    <Version>0.1.56</Version>
+    <Version>0.1.58</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>The content plugin for Macerus.</Description>
     <PackageProjectUrl>https://github.com/ncosentino/Macerus</PackageProjectUrl>

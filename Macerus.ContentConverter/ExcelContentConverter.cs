@@ -49,6 +49,9 @@ namespace Macerus.ContentConverter
             var affixConverter = new AffixesExcelContentConverter(_sheetHelper);
             var affixCodeWriter = new AffixCodeWriter();
 
+            var affixTypeConverter = new AffixTypeExcelContentConverter(_sheetHelper);
+            var affixTypeCodeWriter = new AffixTypeCodeWriter();
+
             var rareItemAffixConverter = new RareItemAffixExcelContentConverter(_sheetHelper);
             var rareItemAffixCodeWriter = new RareItemAffixCodeWriter();
 
@@ -76,6 +79,9 @@ namespace Macerus.ContentConverter
                 var statDefinitionToTermMappingRepository = new InMemoryStatDefinitionToTermMappingRepository(stats.ToDictionary(
                     x => (IIdentifier)new StringIdentifier(x.StatDefinitionId),
                     x => x.StatTerm));
+
+                var affixTypeDtos = affixTypeConverter.GetAffixContent(workbook);
+                affixTypeCodeWriter.WriteAffixTypesCode(affixTypeDtos, outputDirectory);
 
                 var affixContent = affixConverter.GetAffixContent(
                     workbook,

@@ -1,6 +1,8 @@
-﻿using Autofac;
+﻿using System.Linq;
 
-using Macerus.Plugins.Features.GameObjects.Items.Affixes.Default.MySql;
+using Autofac;
+
+using Macerus.Plugins.Features.GameObjects.Items.Affixes.Api;
 
 using ProjectXyz.Framework.Autofac;
 
@@ -11,7 +13,8 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.Default.Autofac
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<AffixTypeRepository>()
+                .Register(c => new InMemoryAffixTypeRepository(Enumerable.Empty<IAffixType>()))
+                .IfNotRegistered(typeof(IDiscoverableReadOnlyAffixDefinitionRepository))
                 .AsImplementedInterfaces()
                 .SingleInstance();
             builder

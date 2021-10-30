@@ -19,18 +19,6 @@ namespace Macerus.ContentConverter
             _sheetHelper = sheetHelper;
         }
 
-        public void WriteAffixesCode(IEnumerable<AffixDto> magicAffixDtos)
-        {
-            var codeToWrite = @$"
-";
-            var directoryPath = @"Generated\Affixes";
-            Directory.CreateDirectory(directoryPath);
-
-            var filePath = Path.Combine(directoryPath, "AffixesModule.cs");
-            File.Delete(filePath);
-            File.WriteAllText(filePath, codeToWrite);
-        }
-
         public IEnumerable<AffixConvertedContent> GetAffixContent(
             XSSFWorkbook workbook,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository)
@@ -44,13 +32,13 @@ namespace Macerus.ContentConverter
         }
 
         private IEnumerable<AffixConvertedContent> GetAffixContent(
-            ISheet uniqueItemsSheet,
+            ISheet sheet,
             IReadOnlyDictionary<string, int> columnHeaderMapping,
             IReadOnlyStatDefinitionToTermMappingRepository statDefinitionToTermMappingRepository)
         {
-            for (int rowIndex = 1; rowIndex < uniqueItemsSheet.PhysicalNumberOfRows; rowIndex++)
+            for (int rowIndex = 1; rowIndex < sheet.PhysicalNumberOfRows; rowIndex++)
             {
-                var row = uniqueItemsSheet.GetRow(rowIndex);
+                var row = sheet.GetRow(rowIndex);
 
                 var affixId = $"item_affix_{rowIndex}";
 
