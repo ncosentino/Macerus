@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Macerus.Plugins.Features.Inventory.Api.HoverCards;
-using Macerus.Plugins.Features.Stats;
+using Macerus.Plugins.Features.Resources;
 
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
@@ -12,11 +12,11 @@ namespace Macerus.Plugins.Features.Inventory.Default.HoverCards
 {
     public sealed class BaseStatsHoverCardPartConverter : IDiscoverableBehaviorsToHoverCardPartViewModelConverter
     {
-        private readonly Lazy<IStatResourceProvider> _lazyStatResourceProvider;
+        private readonly Lazy<IStringResourceProvider> _lazyStringResourceProvider;
 
-        public BaseStatsHoverCardPartConverter(Lazy<IStatResourceProvider> lazyStatResourceProvider)
+        public BaseStatsHoverCardPartConverter(Lazy<IStringResourceProvider> lazyStringResourceProvider)
         {
-            _lazyStatResourceProvider = lazyStatResourceProvider;
+            _lazyStringResourceProvider = lazyStringResourceProvider;
         }
 
         public IEnumerable<IHoverCardPartViewModel> Convert(IEnumerable<IBehavior> behaviors)
@@ -29,7 +29,7 @@ namespace Macerus.Plugins.Features.Inventory.Default.HoverCards
             var namesAndValues = hasStatsBehavior
                 .BaseStats
                 .Select(x => Tuple.Create(
-                    _lazyStatResourceProvider.Value.GetStatName(x.Key),
+                    _lazyStringResourceProvider.Value.GetString(x.Key),
                     x.Value));
             yield return new BaseStatsHoverCardPartViewModel(namesAndValues);
         }
