@@ -17,10 +17,6 @@ namespace Macerus.Content.Stats
         protected override void SafeLoad(ContainerBuilder builder)
         {
             builder
-                .RegisterType<StatDefinitionIdToBoundsMappingRepository>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-            builder
                 .Register(c =>
                 {
                     var combatTeamIdentifiers = c.Resolve<ICombatTeamIdentifiers>();

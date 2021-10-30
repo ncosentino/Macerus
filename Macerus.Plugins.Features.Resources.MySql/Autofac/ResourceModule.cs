@@ -8,10 +8,6 @@ namespace Macerus.Plugins.Features.Resources.MySql.Autofac
     {
         protected override void SafeLoad(ContainerBuilder builder)
         {
-            builder
-                .RegisterType<MySqlStringResourceRepository>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
         }
     }
 }

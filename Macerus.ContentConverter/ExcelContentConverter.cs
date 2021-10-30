@@ -45,6 +45,7 @@ namespace Macerus.ContentConverter
 
             var statContentConverter = new StatExcelContentConverter(_sheetHelper);
             var statCodeWriter = new StatCodeWriter();
+            var statBoundsCodeWriter = new StatBoundsCodeWriter();
 
             var affixConverter = new AffixesExcelContentConverter(_sheetHelper);
             var affixCodeWriter = new AffixCodeWriter();
@@ -71,12 +72,12 @@ namespace Macerus.ContentConverter
             using (var filestream = File.Open(gameDataSourceLocalFilePath, FileMode.Open, FileAccess.Read))
             {
                 var workbook = new XSSFWorkbook(filestream);
-                var stats = statContentConverter
-                    .ConvertStats(workbook)
-                    .ToArray();
-                statCodeWriter.WriteStatsCode(stats, outputDirectory);
+                var statContent = statContentConverter.ConvertStats(workbook);
+                statCodeWriter.WriteStatsCode(statContent.StatDtos, outputDirectory);
+                statBoundsCodeWriter.WriteStatBoundsCode(statContent.StatBoundsDtos, outputDirectory);
+                stringResourceDtos = stringResourceDtos.Concat(statContent.StringResourceDtos);
 
-                var statDefinitionToTermMappingRepository = new InMemoryStatDefinitionToTermMappingRepository(stats.ToDictionary(
+                var statDefinitionToTermMappingRepository = new InMemoryStatDefinitionToTermMappingRepository(statContent.StatDtos.ToDictionary(
                     x => (IIdentifier)new StringIdentifier(x.StatDefinitionId),
                     x => x.StatTerm));
 
