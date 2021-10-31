@@ -67,6 +67,9 @@ namespace Macerus.ContentConverter
 
             var enchantmentDefinitionCodeWriter = new EnchantmentDefinitionCodeWriter();
 
+            var dropTableConverter = new DropTableExcelContentConverter(_sheetHelper);
+            var dropTableCodeWriter = new DropTableCodeWriter();
+
             IEnumerable<StringResourceDto> stringResourceDtos = new List<StringResourceDto>();
             IEnumerable<EnchantmentDefinitionDto> enchantmentDefinitionDtos = new List<EnchantmentDefinitionDto>();
             using (var filestream = File.Open(gameDataSourceLocalFilePath, FileMode.Open, FileAccess.Read))
@@ -132,6 +135,9 @@ namespace Macerus.ContentConverter
                 enchantmentDefinitionCodeWriter.WriteEnchantmentDefinitionsCode(
                     enchantmentDefinitionDtos,
                     outputDirectory);
+
+                var dropTableDtos = dropTableConverter.GetDropTableContent(workbook).ToArray();
+                dropTableCodeWriter.WriteDropTableCode(dropTableDtos, outputDirectory);
 
                 // at the end after we've accumulated alllllll the resources
                 // (which should be optimized to be streamed out and not just
