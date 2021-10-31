@@ -620,6 +620,34 @@ namespace Macerus.Content.Generated.Items
                                 new UniqueItemInventoryNameGeneratorComponent(new StringIdentifier("unique_item_name_40")),
                                 new IconGeneratorComponent(new StringIdentifier(@"TODO")),
                                 
+                            }),
+                    
+                        new ItemDefinition(
+                            new[]
+                            {
+                                RequiresUniqueAffixAttribute,
+                                CreateItemIdFilterAttribute(new StringIdentifier("unique_item_42")),
+                            },
+                            new IGeneratorComponent[]
+                            {
+                                new UniqueBaseItemGeneratorComponent(new StringIdentifier("armor_8")),
+                                new UniqueItemInventoryNameGeneratorComponent(new StringIdentifier("unique_item_name_42")),
+                                new IconGeneratorComponent(new StringIdentifier(@"TODO")),
+                                
+                            }),
+                    
+                        new ItemDefinition(
+                            new[]
+                            {
+                                RequiresUniqueAffixAttribute,
+                                CreateItemIdFilterAttribute(new StringIdentifier("unique_item_43")),
+                            },
+                            new IGeneratorComponent[]
+                            {
+                                new UniqueBaseItemGeneratorComponent(new StringIdentifier("weapon_3")),
+                                new UniqueItemInventoryNameGeneratorComponent(new StringIdentifier("unique_item_name_43")),
+                                new IconGeneratorComponent(new StringIdentifier(@"TODO")),
+                                
                             })
                     };
                     var itemDefinitionRepository = new InMemoryItemDefinitionRepository(
