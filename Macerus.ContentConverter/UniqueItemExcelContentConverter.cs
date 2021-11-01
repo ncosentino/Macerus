@@ -17,6 +17,10 @@ namespace Macerus.ContentConverter
             @"([-+\*])\s*\((\d*\.?\d+)\s*-\s*(\d*\.?\d+),\s*(\d+)\)\s*\((.+)\)",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
+        private static readonly Regex FORCED_SOCKETS_REGEX = new Regex(
+            @"FORCED_SOCKETS\(\d+,(\s*\w+,\s*\d+)(,\s*(\s*\w+,\s*\d+))*\)",
+            RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
         private readonly ISheetHelper _sheetHelper;
 
         public UniqueItemExcelContentConverter(ISheetHelper sheetHelper)
@@ -134,18 +138,26 @@ namespace Macerus.ContentConverter
                 yield break;
             }
 
-            var match = ENCHANTMENT_REGEX.Match(rawEnchantment);
-            if (!match.Success)
+            var forcedSocketsMatch = FORCED_SOCKETS_REGEX.Match(rawEnchantment);
+            if (forcedSocketsMatch.Success)
+            {
+                Console.WriteLine(
+                    $"// TODO: no handling yet for forced sockets!\r\n\t{rawEnchantment}");
+                yield break;
+            }
+
+            var enchantmentMatch = ENCHANTMENT_REGEX.Match(rawEnchantment);
+            if (!enchantmentMatch.Success)
             {
                 throw new FormatException(
                     $"Could not parse enchantment '{rawEnchantment}'.");
             }
 
-            var modifier = match.Groups[1].Value;
-            var rangeMin = double.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-            var rangeMax = double.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-            var decimalPlaces = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
-            var statTerms = match.Groups[5].Value.Replace(" ", string.Empty).Split(',', StringSplitOptions.RemoveEmptyEntries);
+            var modifier = enchantmentMatch.Groups[1].Value;
+            var rangeMin = double.Parse(enchantmentMatch.Groups[2].Value, CultureInfo.InvariantCulture);
+            var rangeMax = double.Parse(enchantmentMatch.Groups[3].Value, CultureInfo.InvariantCulture);
+            var decimalPlaces = int.Parse(enchantmentMatch.Groups[4].Value, CultureInfo.InvariantCulture);
+            var statTerms = enchantmentMatch.Groups[5].Value.Replace(" ", string.Empty).Split(',', StringSplitOptions.RemoveEmptyEntries);
 
             int counter = 0;
             foreach (var statTerm in statTerms)
