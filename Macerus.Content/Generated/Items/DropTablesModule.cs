@@ -37,15 +37,12 @@ namespace Macerus.Content.Generated.Items
                             new IWeightedEntry[]
                             {
                              new WeightedEntry(60, new StringIdentifier("_apprentice_1@1_normal")),
-                             new WeightedEntry(20, new StringIdentifier("_apprentice_1@1_magic")),
+                             new WeightedEntry(30, new StringIdentifier("_apprentice_1@1_magic")),
                              new WeightedEntry(10, new StringIdentifier("_apprentice_1@1_rare"))
                             },
                             new IFilterAttribute[]
                             {
-                                new FilterAttribute(
-                                    new StringIdentifier("item-level"),
-                                    new DoubleFilterAttributeValue(0),
-                                    true),
+                                // required item level was 0 so ignoring
                             },
                             new IFilterAttribute[]
                             {
@@ -58,10 +55,7 @@ namespace Macerus.Content.Generated.Items
                             1,
                             new IFilterAttribute[]
                             {
-                                new FilterAttribute(
-                                    new StringIdentifier("item-level"),
-                                    new DoubleFilterAttributeValue(0),
-                                    true),
+                                // required item level was 0 so ignoring
                             },
                             new IFilterAttribute[]
                             {
@@ -80,10 +74,7 @@ namespace Macerus.Content.Generated.Items
                             1,
                             new IFilterAttribute[]
                             {
-                                new FilterAttribute(
-                                    new StringIdentifier("item-level"),
-                                    new DoubleFilterAttributeValue(0),
-                                    true),
+                                // required item level was 0 so ignoring
                             },
                             new IFilterAttribute[]
                             {
@@ -102,10 +93,7 @@ namespace Macerus.Content.Generated.Items
                             1,
                             new IFilterAttribute[]
                             {
-                                new FilterAttribute(
-                                    new StringIdentifier("item-level"),
-                                    new DoubleFilterAttributeValue(0),
-                                    true),
+                                // required item level was 0 so ignoring
                             },
                             new IFilterAttribute[]
                             {

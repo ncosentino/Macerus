@@ -74,7 +74,9 @@ namespace Macerus.Content.Generated.Items
                                     new StringIdentifier(""item-level""),
                                     new DoubleFilterAttributeValue({dropTableDto.ProvidedItemLevel.Value}),
                                     false),";
-            var requiredItemLevelFilterCode = @$"new FilterAttribute(
+            var requiredItemLevelFilterCode = dropTableDto.RequiredItemLevel <= 1
+                ? @$"// required item level was {dropTableDto.RequiredItemLevel} so ignoring"
+                : @$"new FilterAttribute(
                                     new StringIdentifier(""item-level""),
                                     new DoubleFilterAttributeValue({dropTableDto.RequiredItemLevel}),
                                     true),";
