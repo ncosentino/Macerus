@@ -777,6 +777,16 @@ namespace Macerus.Content.Generated.Items
                                 new StringIdentifier("magic_item_affix_71_enchantment_0")
                             }),
                         affixTemplate.CreateMagicAffix(
+                            new StringIdentifier("magic_item_affix_80"),
+                            80,
+                            100,
+                            new StringIdentifier("item_prefix_name_80"),
+                            new StringIdentifier("item_suffix_name_80"),
+                            new[]
+                            {
+                                new StringIdentifier("magic_item_affix_80_enchantment_0")
+                            }),
+                        affixTemplate.CreateMagicAffix(
                             new StringIdentifier("magic_item_affix_81"),
                             0,
                             50,

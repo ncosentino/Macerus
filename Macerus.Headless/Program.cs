@@ -16,6 +16,8 @@ using Macerus.Plugins.Features.GameObjects.Actors;
 using Macerus.Plugins.Features.GameObjects.Actors.Default;
 using Macerus.Plugins.Features.GameObjects.Actors.Default.AI;
 using Macerus.Plugins.Features.GameObjects.Actors.Generation;
+using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
+using Macerus.Plugins.Features.GameObjects.Items.Generation.Api;
 using Macerus.Plugins.Features.GameObjects.Skills;
 using Macerus.Plugins.Features.Interactions.Api;
 using Macerus.Plugins.Features.MainMenu.Default.NewGame;
@@ -41,6 +43,7 @@ using ProjectXyz.Plugins.Features.Filtering.Default;
 using ProjectXyz.Plugins.Features.GameObjects.Actors.Api;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments;
 using ProjectXyz.Plugins.Features.GameObjects.Enchantments.Default.Calculations;
+using ProjectXyz.Plugins.Features.GameObjects.Items.Generation.DropTables;
 using ProjectXyz.Plugins.Features.Mapping;
 using ProjectXyz.Plugins.Features.Mapping.Default;
 using ProjectXyz.Plugins.Features.PartyManagement;
@@ -54,7 +57,35 @@ namespace Macerus.Headless
         public static async Task Main(string[] args)
         {
             var container = new MacerusContainer();
-            await new CombatExercise().Go(container);
+            await new PrintLootExercise().Go(container);
+        }
+    }
+
+    public sealed class PrintLootExercise
+    {
+        public async Task Go(MacerusContainer container)
+        {
+            var lootGeneratorAmenity = container.Resolve<ILootGeneratorAmenity>();
+            var filterContextAmenity = container.Resolve<IFilterContextAmenity>();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                foreach (var item in lootGeneratorAmenity.GenerateLoot(
+                    new StringIdentifier("apprentice_3-5@1_normal/magic/rare"),
+                    filterContextAmenity.CreateNoneFilterContext()))
+                {
+                    var names = item.Get<IHasInventoryDisplayName>().Select(x => x.DisplayName).ToArray();
+                    if (names.Length == 1)
+                    {
+                        Console.WriteLine(names[0]);
+                    }
+                    else
+                    {
+                        Console.WriteLine(names[1]);
+                        Console.WriteLine($"  ({item.GetOnly<IHasAffixType>().AffixTypeId} {names[0]})");
+                    }
+                }
+            }
         }
     }
 

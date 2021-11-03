@@ -645,6 +645,13 @@ namespace Macerus.Content.Generated.Enchantments
                             10,
                             0),
                         enchantmentTemplate.CreateRangeEnchantment(
+                            new StringIdentifier("magic_item_affix_80_enchantment_0"),
+                            new StringIdentifier("stat_3"), // MANA_MAXIMUM
+                            "+",
+                            275,
+                            445,
+                            0),
+                        enchantmentTemplate.CreateRangeEnchantment(
                             new StringIdentifier("magic_item_affix_81_enchantment_0"),
                             new StringIdentifier("stat_15"), // FIRE_DAMAGE_MIN
                             "+",
