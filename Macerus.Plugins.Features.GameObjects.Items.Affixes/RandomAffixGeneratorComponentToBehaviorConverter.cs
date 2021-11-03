@@ -5,6 +5,7 @@ using System.Linq;
 using Macerus.Api.Behaviors.Filtering;
 using Macerus.Plugins.Features.GameObjects.Items.Affixes.Api;
 
+using NexusLabs.Contracts;
 using NexusLabs.Framework;
 
 using ProjectXyz.Api.Framework;
@@ -74,25 +75,26 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.Default
 
             var baseBehaviorSet = new HashSet<IBehavior>(baseBehaviors);
             var accumulatedBehaviors = new HashSet<IBehavior>();
-            var mutexKeys = new List<IIdentifier>();
-            var nextAffixGeneratorContext = !mutexKeys.Any()
-                ? affixGeneratorContext
-                : _lazyFilterContextAmenity
-                .Value
-                .CopyWithAdditionalAttributes(
-                    affixGeneratorContext,
-                    new[]
-                    {
-                        _lazyFilterContextAmenity.Value.CreateRequiredAttribute(
-                            new StringIdentifier("affix-mutex-key"),
-                            new NotFilterAttributeValue(new AnyIdentifierCollectionFilterAttributeValue(mutexKeys)))
-                    });
+            var mutexKeys = new HashSet<IIdentifier>();
 
             while (currentCount < targetCount)
             {
+                var nextAffixGeneratorContext = !mutexKeys.Any()
+                    ? affixGeneratorContext
+                    : _lazyFilterContextAmenity
+                    .Value
+                    .CopyWithAdditionalAttributes(
+                        affixGeneratorContext,
+                        new[]
+                        {
+                            _lazyFilterContextAmenity.Value.CreateRequiredAttribute(
+                                new StringIdentifier("affix-mutex-key"),
+                                new NotFilterAttributeValue(new AnyIdentifierCollectionFilterAttributeValue(mutexKeys)))
+                        });
+
                 var affixDefinitions = _lazyAffixDefinitionRepository
                     .Value
-                    .GetAffixDefinitions(affixGeneratorContext);
+                    .GetAffixDefinitions(nextAffixGeneratorContext);
                 var affixDefinition = affixDefinitions.RandomOrDefault(_random);
                 if (affixDefinition == null)
                 {
@@ -115,6 +117,11 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.Default
                 {
                     if (newBehavior is IAffixMutexBehavior affixMutexBehavior)
                     {
+                        Contract.Requires(
+                            !mutexKeys.Contains(affixMutexBehavior.MutexKey),
+                            $"The affix mutex '{affixMutexBehavior.MutexKey}' " +
+                            $"from affix definition '{affixDefinition.Id}' has " +
+                            $"already been used for this pass of generation.");
                         mutexKeys.Add(affixMutexBehavior.MutexKey);
                         continue; // we don't need to add this
                     }

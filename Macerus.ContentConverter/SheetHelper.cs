@@ -63,7 +63,8 @@ namespace Macerus.ContentConverter
             value = 0;
 
             var cell = row.GetCell(columnIndex);
-            if (cell?.CellType != CellType.Numeric)
+            if (cell?.CellType != CellType.Numeric &&
+                cell?.CellType != CellType.Formula)
             {
                 return false;
             }
@@ -80,7 +81,8 @@ namespace Macerus.ContentConverter
             value = 0;
 
             var cell = row.GetCell(columnIndex);
-            if (cell?.CellType != CellType.Numeric)
+            if (cell?.CellType != CellType.Numeric &&
+                cell?.CellType != CellType.Formula)
             {
                 return false;
             }

@@ -85,16 +85,16 @@ namespace Macerus.Content.Affixes
                             _enchantmentIdentifiers.EnchantmentDefinitionId,
                             new IdentifierFilterAttributeValue(enchantmentDefinitionId),
                             true),
-                        new FilterAttribute(
-                            new StringIdentifier("affix-mutex-key"),
-                            new IdentifierFilterAttributeValue(mutexKey),
-                            false),
                     })),
                     new AffixMutexGeneratorComponent(mutexKey),
                 }.Concat(extraComponents),
                 new[]
                 {
                     affixTypeFilterAttribute,
+                    new FilterAttribute(
+                        new StringIdentifier("affix-mutex-key"),
+                        new IdentifierFilterAttributeValue(mutexKey),
+                        false),
                     new FilterAttribute(
                         new StringIdentifier("item-level"),
                         new RangeFilterAttributeValue(minLevel, maxLevel),
