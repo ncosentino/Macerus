@@ -10,6 +10,8 @@ namespace Macerus.ContentConverter
 
         int GetIntValue(IRow row, int columnIndex);
 
+        string GetStringValue(IRow row, int columnIndex);
+
         bool TryGetIntValue(
             IRow row,
             int columnIndex,

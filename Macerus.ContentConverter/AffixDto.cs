@@ -11,6 +11,7 @@ namespace Macerus.ContentConverter
             int levelMaximum,
             string prefixStringResourceId, 
             string suffixStringResourceId,
+            string mutexKey,
             IReadOnlyCollection<string> enchantmentDefinitionIds)
         {
             AffixId = affixId;
@@ -19,6 +20,7 @@ namespace Macerus.ContentConverter
             LevelMaximum = levelMaximum;
             PrefixStringResourceId = prefixStringResourceId;
             SuffixStringResourceId = suffixStringResourceId;
+            MutexKey = mutexKey;
             EnchantmentDefinitionIds = enchantmentDefinitionIds;
         }
 
@@ -34,6 +36,8 @@ namespace Macerus.ContentConverter
 
         public string SuffixStringResourceId { get; }
 
+        public string MutexKey { get; }
+        
         public IReadOnlyCollection<string> EnchantmentDefinitionIds { get; }
     }
 }

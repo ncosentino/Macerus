@@ -86,6 +86,8 @@ namespace Macerus.Headless
                     }
                 }
             }
+
+            Console.ReadLine();
         }
     }
 

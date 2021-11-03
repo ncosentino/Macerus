@@ -6,7 +6,7 @@
     <Copyright>Copyright © Nexus Software Labs 2020</Copyright>
     <PackageId>Macerus</PackageId>
     <Company>Nexus Software Labs</Company>
-    <Version>0.1.46</Version>
+    <Version>0.1.48</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>A role playing game created in Unity for the purpose of playing with designs, patterns, and frameworks.</Description>
     <PackageProjectUrl>https://github.com/ncosentino/Macerus</PackageProjectUrl>

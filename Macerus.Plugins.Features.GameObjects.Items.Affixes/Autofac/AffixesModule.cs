@@ -25,6 +25,10 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.Default.Autofac
                 .RegisterType<RandomAffixGeneratorComponentToBehaviorConverter>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+            builder
+                .RegisterType<AffixMutexGeneratorComponentToBehaviorConverter>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
         }
     }
 }

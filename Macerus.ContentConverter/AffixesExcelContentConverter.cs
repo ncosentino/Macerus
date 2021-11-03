@@ -119,6 +119,12 @@ namespace Macerus.ContentConverter
             var minimumLevel = _sheetHelper.GetIntValue(row, columnHeaderMapping["Minimum Level"]);
             var maximumLevel = _sheetHelper.GetIntValue(row, columnHeaderMapping["Maximum Level"]);
 
+            var mutexKey = _sheetHelper.GetStringValue(row, columnHeaderMapping["mutex key"]);
+            if (string.IsNullOrEmpty(mutexKey))
+            {
+                mutexKey = Guid.NewGuid().ToString();
+            }
+
             for (int statCellIndex = 1; statCellIndex < 10; statCellIndex++)
             {
                 var columnHeader = "Stat " + statCellIndex;
@@ -184,6 +190,7 @@ namespace Macerus.ContentConverter
                 maximumLevel,
                 prefixStringResourceId,
                 suffixStringResourceId,
+                mutexKey,
                 enchantmentDefinitionDtos.Select(x => x.EnchantmentDefinitionId).ToArray());
             return new Tuple<AffixDto, IReadOnlyCollection<EnchantmentDefinitionDto>>(
                 affixDto,

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 using NPOI.SS.UserModel;
 
@@ -25,6 +26,33 @@ namespace Macerus.ContentConverter
                 ? (int)cell.NumericCellValue
                 : 0;
             return result;
+        }
+
+        public string GetStringValue(
+            IRow row, 
+            int columnIndex)
+        {
+            var cell = row.GetCell(columnIndex);
+            if (cell == null)
+            {
+                return null;
+            }
+
+            if (cell.CellType == CellType.Numeric)
+            {
+                return cell.NumericCellValue.ToString(CultureInfo.InvariantCulture);
+            }
+
+            if (cell.CellType == CellType.Formula)
+            {
+                try
+                {
+                    return cell.NumericCellValue.ToString(CultureInfo.InvariantCulture);
+                }
+                catch { }
+            }
+
+            return cell.StringCellValue;
         }
 
         public bool TryGetIntValue(

@@ -35,12 +35,14 @@ namespace Macerus.Content.Affixes
             double maxLevel,
             IIdentifier prefixStringResourceId,
             IIdentifier suffixStringResourceId,
+            IIdentifier mutexKey,
             params IIdentifier[] enchantmentDefinitionIds) =>
             CreateAffix(
                 affixId,
                 AffixFilterAttributes.RequiresMagicAffix,
                 minLevel,
                 maxLevel,
+                mutexKey,
                 enchantmentDefinitionIds,
                 new IGeneratorComponent[]
                 {
@@ -53,12 +55,14 @@ namespace Macerus.Content.Affixes
             IIdentifier affixId,
             double minLevel,
             double maxLevel,
+            IIdentifier mutexKey,
             params IIdentifier[] enchantmentDefinitionIds) =>
             CreateAffix(
                 affixId,
                 AffixFilterAttributes.RequiresRareAffix,
                 minLevel,
                 maxLevel,
+                mutexKey,
                 enchantmentDefinitionIds,
                 Enumerable.Empty<IGeneratorComponent>());
 
@@ -67,6 +71,7 @@ namespace Macerus.Content.Affixes
             IFilterAttribute affixTypeFilterAttribute, 
             double minLevel,
             double maxLevel,
+            IIdentifier mutexKey,
             IReadOnlyCollection<IIdentifier> enchantmentDefinitionIds,
             IEnumerable<IGeneratorComponent> extraComponents)
         {
@@ -79,8 +84,13 @@ namespace Macerus.Content.Affixes
                         new FilterAttribute(
                             _enchantmentIdentifiers.EnchantmentDefinitionId,
                             new IdentifierFilterAttributeValue(enchantmentDefinitionId),
-                            true)
+                            true),
+                        new FilterAttribute(
+                            new StringIdentifier("affix-mutex-key"),
+                            new IdentifierFilterAttributeValue(mutexKey),
+                            false),
                     })),
+                    new AffixMutexGeneratorComponent(mutexKey),
                 }.Concat(extraComponents),
                 new[]
                 {

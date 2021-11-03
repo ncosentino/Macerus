@@ -71,6 +71,7 @@ namespace Macerus.Content.Generated.Items
                             {affixDto.LevelMaximum},
                             {prefixCode},
                             {suffixCode},
+                            new StringIdentifier(""{affixDto.MutexKey}""),
                             new[]
                             {{
 {string.Join(",\r\n", affixDto.EnchantmentDefinitionIds.Select(x => @$"                                new StringIdentifier(""{x}"")"))}
@@ -84,6 +85,7 @@ namespace Macerus.Content.Generated.Items
                             new StringIdentifier(""{affixDto.AffixId}""),
                             {affixDto.LevelMinimum},
                             {affixDto.LevelMaximum},
+                            new StringIdentifier(""{affixDto.MutexKey}""),
                             new[]
                             {{
 {string.Join(",\r\n", affixDto.EnchantmentDefinitionIds.Select(x => @$"                                new StringIdentifier(""{x}"")"))}

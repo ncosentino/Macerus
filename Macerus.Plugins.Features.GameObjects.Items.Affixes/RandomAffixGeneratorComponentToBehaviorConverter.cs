@@ -7,10 +7,13 @@ using Macerus.Plugins.Features.GameObjects.Items.Affixes.Api;
 
 using NexusLabs.Framework;
 
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.Framework.Collections;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
 using ProjectXyz.Plugins.Features.Filtering.Api;
+using ProjectXyz.Plugins.Features.Filtering.Default.Attributes;
+using ProjectXyz.Shared.Framework;
 
 namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.Default
 {
@@ -71,6 +74,20 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.Default
 
             var baseBehaviorSet = new HashSet<IBehavior>(baseBehaviors);
             var accumulatedBehaviors = new HashSet<IBehavior>();
+            var mutexKeys = new List<IIdentifier>();
+            var nextAffixGeneratorContext = !mutexKeys.Any()
+                ? affixGeneratorContext
+                : _lazyFilterContextAmenity
+                .Value
+                .CopyWithAdditionalAttributes(
+                    affixGeneratorContext,
+                    new[]
+                    {
+                        _lazyFilterContextAmenity.Value.CreateRequiredAttribute(
+                            new StringIdentifier("affix-mutex-key"),
+                            new NotFilterAttributeValue(new AnyIdentifierCollectionFilterAttributeValue(mutexKeys)))
+                    });
+
             while (currentCount < targetCount)
             {
                 var affixDefinitions = _lazyAffixDefinitionRepository
@@ -96,6 +113,12 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Affixes.Default
                             affixGeneratorComponent))
                     .Where(x => !baseBehaviorSet.Contains(x)))
                 {
+                    if (newBehavior is IAffixMutexBehavior affixMutexBehavior)
+                    {
+                        mutexKeys.Add(affixMutexBehavior.MutexKey);
+                        continue; // we don't need to add this
+                    }
+
                     accumulatedBehaviors.Add(newBehavior);
                 }
                 
