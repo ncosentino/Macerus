@@ -49,7 +49,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
 
             // we need to be able to filter the affixes by the types of items
             // i.e. "Entropy Chain" is a good amulet name, not a good sword name
-            var tagsFilter = new AnyTagsFilter(itemBehaviors.Get<ITagsBehavior>().SelectMany(x => x.Tags));          
+            var tagsFilter = new AnyTagsFilter(itemBehaviors.Get<ITagsBehavior>().SelectMany(x => x.Tags));
 
             var rareAffixFilterContext = _filterContextAmenity.CreateFilterContextForAnyAmount(CreateRareAffixFilter(tagsFilter, true));
             var prefix = _rareAffixRepository

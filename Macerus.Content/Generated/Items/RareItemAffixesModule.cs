@@ -817,7 +817,14 @@ namespace Macerus.Content.Generated.Items
                                     new StringIdentifier("is-prefix"),
                                     new BooleanFilterAttributeValue(false),
                                     true),
-
+                                new FilterAttribute(
+                                    new StringIdentifier("tags"),
+                                    new AnyTagsFilter(new IIdentifier[]
+                                    {
+                                        new StringIdentifier("blade"),
+                                        new StringIdentifier("spear")
+                                    }),
+                                    true),
                             }),
                         new RareItemAffix(
                             new StringIdentifier("rare_item_affix_68"), // Cleaver
@@ -827,7 +834,13 @@ namespace Macerus.Content.Generated.Items
                                     new StringIdentifier("is-prefix"),
                                     new BooleanFilterAttributeValue(false),
                                     true),
-
+                                new FilterAttribute(
+                                    new StringIdentifier("tags"),
+                                    new AnyTagsFilter(new IIdentifier[]
+                                    {
+                                        new StringIdentifier("blade")
+                                    }),
+                                    true),
                             }),
                         new RareItemAffix(
                             new StringIdentifier("rare_item_affix_69"), // Cloak
@@ -837,7 +850,14 @@ namespace Macerus.Content.Generated.Items
                                     new StringIdentifier("is-prefix"),
                                     new BooleanFilterAttributeValue(false),
                                     true),
-
+                                new FilterAttribute(
+                                    new StringIdentifier("tags"),
+                                    new AnyTagsFilter(new IIdentifier[]
+                                    {
+                                        new StringIdentifier("body"),
+                                        new StringIdentifier("back")
+                                    }),
+                                    true),
                             }),
                         new RareItemAffix(
                             new StringIdentifier("rare_item_affix_70"), // Clutches
@@ -1163,7 +1183,14 @@ namespace Macerus.Content.Generated.Items
                                     new StringIdentifier("is-prefix"),
                                     new BooleanFilterAttributeValue(false),
                                     true),
-
+                                new FilterAttribute(
+                                    new StringIdentifier("tags"),
+                                    new AnyTagsFilter(new IIdentifier[]
+                                    {
+                                        new StringIdentifier("wand"),
+                                        new StringIdentifier("staff")
+                                    }),
+                                    true),
                             }),
                         new RareItemAffix(
                             new StringIdentifier("rare_item_affix_92"), // Gnash
@@ -1313,7 +1340,13 @@ namespace Macerus.Content.Generated.Items
                                     new StringIdentifier("is-prefix"),
                                     new BooleanFilterAttributeValue(false),
                                     true),
-
+                                new FilterAttribute(
+                                    new StringIdentifier("tags"),
+                                    new AnyTagsFilter(new IIdentifier[]
+                                    {
+                                        new StringIdentifier("amulet")
+                                    }),
+                                    true),
                             }),
                         new RareItemAffix(
                             new StringIdentifier("rare_item_affix_102"), // Hand
@@ -1340,7 +1373,13 @@ namespace Macerus.Content.Generated.Items
                                     new StringIdentifier("is-prefix"),
                                     new BooleanFilterAttributeValue(false),
                                     true),
-
+                                new FilterAttribute(
+                                    new StringIdentifier("tags"),
+                                    new AnyTagsFilter(new IIdentifier[]
+                                    {
+                                        new StringIdentifier("belt")
+                                    }),
+                                    true),
                             }),
                         new RareItemAffix(
                             new StringIdentifier("rare_item_affix_104"), // Harp
@@ -3332,7 +3371,13 @@ namespace Macerus.Content.Generated.Items
                                     new StringIdentifier("is-prefix"),
                                     new BooleanFilterAttributeValue(false),
                                     true),
-
+                                new FilterAttribute(
+                                    new StringIdentifier("tags"),
+                                    new AnyTagsFilter(new IIdentifier[]
+                                    {
+                                        new StringIdentifier("weapon")
+                                    }),
+                                    true),
                             }),
                         new RareItemAffix(
                             new StringIdentifier("rare_item_affix_250"), // Faith
@@ -3816,7 +3861,13 @@ namespace Macerus.Content.Generated.Items
                                     new StringIdentifier("is-prefix"),
                                     new BooleanFilterAttributeValue(false),
                                     true),
-
+                                new FilterAttribute(
+                                    new StringIdentifier("tags"),
+                                    new AnyTagsFilter(new IIdentifier[]
+                                    {
+                                        new StringIdentifier("head")
+                                    }),
+                                    true),
                             }),
                         new RareItemAffix(
                             new StringIdentifier("rare_item_affix_295"), // Devourer
@@ -3826,7 +3877,13 @@ namespace Macerus.Content.Generated.Items
                                     new StringIdentifier("is-prefix"),
                                     new BooleanFilterAttributeValue(false),
                                     true),
-
+                                new FilterAttribute(
+                                    new StringIdentifier("tags"),
+                                    new AnyTagsFilter(new IIdentifier[]
+                                    {
+                                        new StringIdentifier("weapon")
+                                    }),
+                                    true),
                             }),
                         new RareItemAffix(
                             new StringIdentifier("rare_item_affix_296"), // Desire

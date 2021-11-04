@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -21,6 +22,7 @@ using Macerus.Plugins.Features.GameObjects.Items.Generation.Api;
 using Macerus.Plugins.Features.GameObjects.Skills;
 using Macerus.Plugins.Features.Interactions.Api;
 using Macerus.Plugins.Features.MainMenu.Default.NewGame;
+using Macerus.Plugins.Features.Resources;
 using Macerus.Plugins.Features.Scripting;
 using Macerus.Plugins.Features.Spawning;
 using Macerus.Plugins.Features.StatusBar.Api;
@@ -28,6 +30,8 @@ using Macerus.Plugins.Features.Summoning.Default;
 using Macerus.Shared.Behaviors;
 
 using ProjectXyz.Api.Data.Serialization;
+using ProjectXyz.Api.Enchantments;
+using ProjectXyz.Api.Enchantments.Calculations;
 using ProjectXyz.Api.Framework.Entities;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
@@ -67,6 +71,7 @@ namespace Macerus.Headless
         {
             var lootGeneratorAmenity = container.Resolve<ILootGeneratorAmenity>();
             var filterContextAmenity = container.Resolve<IFilterContextAmenity>();
+            var stringResourceProvider = container.Resolve<IStringResourceProvider>();
 
             for (int i = 0; i < 1000; i++)
             {
@@ -74,6 +79,24 @@ namespace Macerus.Headless
                     new StringIdentifier("apprentice_3-5@1_normal/magic/rare"),
                     filterContextAmenity.CreateNoneFilterContext()))
                 {
+                    var affixTypeId = item.GetOnly<IHasAffixType>().AffixTypeId;
+                    if (affixTypeId.Equals(new StringIdentifier("normal")))
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else if (affixTypeId.Equals(new StringIdentifier("magic")))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                    }
+                    else if (affixTypeId.Equals(new StringIdentifier("rare")))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                    }
+                    else if (affixTypeId.Equals(new StringIdentifier("unique")))
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    }
+
                     var names = item.Get<IHasInventoryDisplayName>().Select(x => x.DisplayName).ToArray();
                     if (names.Length == 1)
                     {
@@ -82,7 +105,23 @@ namespace Macerus.Headless
                     else
                     {
                         Console.WriteLine(names[1]);
-                        Console.WriteLine($"  ({item.GetOnly<IHasAffixType>().AffixTypeId} {names[0]})");
+                        Console.WriteLine($"  ({affixTypeId} {names[0]})");
+                    }
+
+                    if (item.TryGetFirst<IHasEnchantmentsBehavior>(out var enchantments))
+                    {
+                        Console.WriteLine($"  Enchantments:");
+
+                        foreach (var enchantment in enchantments.Enchantments)
+                        {
+                            var statDefinitionId = enchantment
+                                .GetOnly<IHasStatDefinitionIdBehavior>()
+                                .StatDefinitionId;
+                            var statName = stringResourceProvider.GetString(
+                                statDefinitionId,
+                                CultureInfo.InvariantCulture);
+                            Console.WriteLine($"    {statName}: {enchantment.GetOnly<IEnchantmentExpressionBehavior>().Expression}");
+                        }
                     }
                 }
             }

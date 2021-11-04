@@ -12,7 +12,8 @@ namespace Macerus.ContentConverter
             string prefixStringResourceId, 
             string suffixStringResourceId,
             string mutexKey,
-            IReadOnlyCollection<string> enchantmentDefinitionIds)
+            IReadOnlyCollection<string> enchantmentDefinitionIds,
+            IReadOnlyCollection<string> tagFilter)
         {
             AffixId = affixId;
             AffixType = affixType;
@@ -22,6 +23,7 @@ namespace Macerus.ContentConverter
             SuffixStringResourceId = suffixStringResourceId;
             MutexKey = mutexKey;
             EnchantmentDefinitionIds = enchantmentDefinitionIds;
+            TagFilter = tagFilter;
         }
 
         public string AffixId { get; }
@@ -39,5 +41,7 @@ namespace Macerus.ContentConverter
         public string MutexKey { get; }
         
         public IReadOnlyCollection<string> EnchantmentDefinitionIds { get; }
+
+        public IReadOnlyCollection<string> TagFilter { get; }
     }
 }

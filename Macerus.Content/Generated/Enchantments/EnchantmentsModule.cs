@@ -1534,6 +1534,20 @@ namespace Macerus.Content.Generated.Enchantments
                             26,
                             0),
                         enchantmentTemplate.CreateRangeEnchantment(
+                            new StringIdentifier("magic_item_affix_95_enchantment_0"),
+                            new StringIdentifier("stat_16"), // ICE_DAMAGE_MIN
+                            "+",
+                            34,
+                            84,
+                            0),
+                        enchantmentTemplate.CreateRangeEnchantment(
+                            new StringIdentifier("magic_item_affix_95_enchantment_1"),
+                            new StringIdentifier("stat_26"), // ICE_DAMAGE_MAX
+                            "+",
+                            55,
+                            136,
+                            0),
+                        enchantmentTemplate.CreateRangeEnchantment(
                             new StringIdentifier("rare_item_affix_95_enchantment_0"),
                             new StringIdentifier("stat_16"), // ICE_DAMAGE_MIN
                             "+",
@@ -1588,6 +1602,20 @@ namespace Macerus.Content.Generated.Enchantments
                             "+",
                             494,
                             1220,
+                            0),
+                        enchantmentTemplate.CreateRangeEnchantment(
+                            new StringIdentifier("magic_item_affix_99_enchantment_0"),
+                            new StringIdentifier("stat_16"), // ICE_DAMAGE_MIN
+                            "+",
+                            1597,
+                            3948,
+                            0),
+                        enchantmentTemplate.CreateRangeEnchantment(
+                            new StringIdentifier("magic_item_affix_99_enchantment_1"),
+                            new StringIdentifier("stat_26"), // ICE_DAMAGE_MAX
+                            "+",
+                            2584,
+                            6388,
                             0),
                         enchantmentTemplate.CreateRangeEnchantment(
                             new StringIdentifier("rare_item_affix_99_enchantment_0"),

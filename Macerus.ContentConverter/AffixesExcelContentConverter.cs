@@ -125,6 +125,14 @@ namespace Macerus.ContentConverter
                 mutexKey = Guid.NewGuid().ToString();
             }
 
+            var requiredTagsString = _sheetHelper.GetStringValue(
+                row,
+                columnHeaderMapping["required tags"])
+                ?? string.Empty;
+            var requiredTags = requiredTagsString.Split(
+                ",",
+                StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+
             for (int statCellIndex = 1; statCellIndex < 10; statCellIndex++)
             {
                 var columnHeader = "Stat " + statCellIndex;
@@ -148,6 +156,11 @@ namespace Macerus.ContentConverter
                     continue;
                 }
 
+                columnHeader = $"Stat {statCellIndex} Decimal Places";
+                var decimalPlaces = _sheetHelper.TryGetIntValue(row, columnHeaderMapping[columnHeader], out var decimalPlacesFromSheet)
+                    ? decimalPlacesFromSheet
+                    : 0;
+
                 columnHeader = $"Stat {statCellIndex} {affixType} Min";
                 if (!_sheetHelper.TryGetDoubleValue(
                     row,
@@ -166,7 +179,6 @@ namespace Macerus.ContentConverter
                     continue;
                 }
 
-                var decimalPlaces = 0; // FIXME: pull from sheet
                 var enchantmentDefinitionDto = new EnchantmentDefinitionDto(
                     $"{affixId}_enchantment_{statCellIndex - 1}",
                     statDefinitionId,
@@ -191,7 +203,8 @@ namespace Macerus.ContentConverter
                 prefixStringResourceId,
                 suffixStringResourceId,
                 mutexKey,
-                enchantmentDefinitionDtos.Select(x => x.EnchantmentDefinitionId).ToArray());
+                enchantmentDefinitionDtos.Select(x => x.EnchantmentDefinitionId).ToArray(),
+                requiredTags);
             return new Tuple<AffixDto, IReadOnlyCollection<EnchantmentDefinitionDto>>(
                 affixDto,
                 enchantmentDefinitionDtos);

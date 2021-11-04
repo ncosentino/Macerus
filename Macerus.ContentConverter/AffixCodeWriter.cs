@@ -19,6 +19,7 @@ using Autofac;
 using Macerus.Content.Affixes;
 using Macerus.Plugins.Features.GameObjects.Items.Affixes.Default;
 
+using ProjectXyz.Api.Framework;
 using ProjectXyz.Framework.Autofac;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Shared.Framework;
@@ -57,6 +58,10 @@ namespace Macerus.Content.Generated.Items
 
         private string GetAffixCodeTemplateFromDto(AffixDto affixDto)
         {
+            var tagFilterCode = affixDto.TagFilter.Any()
+                ? string.Join(",\r\n", affixDto.TagFilter.Select(x => @$"                                new StringIdentifier(""{x}"")"))
+                : "                                // no tag filter";
+
             if (string.Equals("magic", affixDto.AffixType, StringComparison.OrdinalIgnoreCase))
             {
                 var prefixCode = string.IsNullOrWhiteSpace(affixDto.PrefixStringResourceId)
@@ -72,6 +77,10 @@ namespace Macerus.Content.Generated.Items
                             {prefixCode},
                             {suffixCode},
                             new StringIdentifier(""{affixDto.MutexKey}""),
+                            new IIdentifier[]
+                            {{
+{tagFilterCode}
+                            }},
                             new[]
                             {{
 {string.Join(",\r\n", affixDto.EnchantmentDefinitionIds.Select(x => @$"                                new StringIdentifier(""{x}"")"))}
@@ -86,6 +95,10 @@ namespace Macerus.Content.Generated.Items
                             {affixDto.LevelMinimum},
                             {affixDto.LevelMaximum},
                             new StringIdentifier(""{affixDto.MutexKey}""),
+                            new IIdentifier[]
+                            {{
+{tagFilterCode}
+                            }},
                             new[]
                             {{
 {string.Join(",\r\n", affixDto.EnchantmentDefinitionIds.Select(x => @$"                                new StringIdentifier(""{x}"")"))}

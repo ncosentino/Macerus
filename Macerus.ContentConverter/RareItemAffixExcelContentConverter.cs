@@ -51,9 +51,9 @@ namespace Macerus.ContentConverter
                         : (object)row.GetCell(columnHeaderMapping["Is Prefix"]).StringCellValue,
                     CultureInfo.InvariantCulture);
 
-                var requiredTagsString = row
-                    .GetCell(columnHeaderMapping["required tags"])
-                    ?.StringCellValue
+                var requiredTagsString = _sheetHelper.GetStringValue(
+                    row,
+                    columnHeaderMapping["required tags"])
                     ?? string.Empty;
                 var requiredTags = requiredTagsString.Split(
                     ",",

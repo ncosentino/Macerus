@@ -8,6 +8,8 @@ using Macerus.Plugins.Features.GameObjects.Items.Behaviors;
 using ProjectXyz.Api.GameObjects;
 using ProjectXyz.Api.GameObjects.Behaviors;
 using ProjectXyz.Api.GameObjects.Generation;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Api;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Filtering;
 using ProjectXyz.Plugins.Features.Filtering.Api;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes; // FIXME: dependency on non-API
@@ -57,14 +59,27 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
 
             foreach (var baseItem in baseItems)
             {
-                // TODO: we may need to create a NEW context here to add even more specific information.
+                // NOTE: we may need to create a NEW context here to add even more specific information.
                 // i.e.
-                // - original context says items can be "any armor", but we
+                // - (DONE) original context says items can be "any armor", but we
                 //   generate a helm... we might want helm specific enchantments
-                // - original context has a range for item level, but if our 
+                // - (TODO) original context has a range for item level, but if our 
                 //   item was at one end of that range, it might mean better or
                 //    worse enchantments given the item level.
-                
+                var additionalItemSpecificFilters = new List<IFilterAttribute>();
+
+                var tagsFilter = new AnyTagsFilter(baseItem.Get<ITagsBehavior>().SelectMany(x => x.Tags));
+                if (tagsFilter.Tags.Any())
+                {
+                    additionalItemSpecificFilters.Add(_filterContextAmenity.CreateSupportedAttribute(
+                        new StringIdentifier("tags"),
+                        tagsFilter));
+                }
+
+                var itemSpecificFilterContext = _filterContextAmenity.CopyWithAdditionalAttributes(
+                    rareItemGeneratorContext,
+                    additionalItemSpecificFilters);
+
                 var additionalStaticBehaviors = new List<IBehavior>()
                 {
                     new HasInventoryBackgroundColor(255, 221, 51),
@@ -79,7 +94,7 @@ namespace Macerus.Plugins.Features.GameObjects.Items.Generation.Rare
                     .ToArray();
                 var rareItemBehaviorsPostGeneration = _generatorComponentToBehaviorConverterFacade
                     .Convert(
-                        rareItemGeneratorContext,
+                        itemSpecificFilterContext,
                         rareItemBehaviorsPreGeneration,
                         new IGeneratorComponent[]
                         {

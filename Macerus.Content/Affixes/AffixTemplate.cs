@@ -10,6 +10,7 @@ using Macerus.Plugins.Features.GameObjects.Items.Generation.Magic;
 using ProjectXyz.Api.Enchantments;
 using ProjectXyz.Api.Framework;
 using ProjectXyz.Api.GameObjects.Generation;
+using ProjectXyz.Plugins.Features.CommonBehaviors.Filtering;
 using ProjectXyz.Plugins.Features.Filtering.Api.Attributes;
 using ProjectXyz.Plugins.Features.Filtering.Default.Attributes; // FIXME: dependency on non-API
 using ProjectXyz.Shared.Framework;
@@ -36,6 +37,7 @@ namespace Macerus.Content.Affixes
             IIdentifier prefixStringResourceId,
             IIdentifier suffixStringResourceId,
             IIdentifier mutexKey,
+            IReadOnlyCollection<IIdentifier> requiredItemTags,
             params IIdentifier[] enchantmentDefinitionIds) =>
             CreateAffix(
                 affixId,
@@ -43,6 +45,7 @@ namespace Macerus.Content.Affixes
                 minLevel,
                 maxLevel,
                 mutexKey,
+                requiredItemTags,
                 enchantmentDefinitionIds,
                 new IGeneratorComponent[]
                 {
@@ -56,6 +59,7 @@ namespace Macerus.Content.Affixes
             double minLevel,
             double maxLevel,
             IIdentifier mutexKey,
+            IReadOnlyCollection<IIdentifier> requiredItemTags,
             params IIdentifier[] enchantmentDefinitionIds) =>
             CreateAffix(
                 affixId,
@@ -63,6 +67,7 @@ namespace Macerus.Content.Affixes
                 minLevel,
                 maxLevel,
                 mutexKey,
+                requiredItemTags,
                 enchantmentDefinitionIds,
                 Enumerable.Empty<IGeneratorComponent>());
 
@@ -72,9 +77,33 @@ namespace Macerus.Content.Affixes
             double minLevel,
             double maxLevel,
             IIdentifier mutexKey,
+            IReadOnlyCollection<IIdentifier> requiredItemTags,
             IReadOnlyCollection<IIdentifier> enchantmentDefinitionIds,
             IEnumerable<IGeneratorComponent> extraComponents)
         {
+            var filters = new List<IFilterAttribute>()
+            {
+                affixTypeFilterAttribute,
+                new FilterAttribute(
+                    new StringIdentifier("affix-mutex-key"),
+                    new IdentifierFilterAttributeValue(mutexKey),
+                    false),
+                new FilterAttribute(
+                    new StringIdentifier("item-level"),
+                    new RangeFilterAttributeValue(minLevel, maxLevel),
+                    true),
+                _filterContextAmenity.CreateSupportedAttribute(
+                    new StringIdentifier("affix-id"),
+                    affixId),
+            };
+
+            if (requiredItemTags.Any())
+            {
+                filters.Add(_filterContextAmenity.CreateRequiredAttribute(
+                    new StringIdentifier("tags"),
+                    new AnyTagsFilter(requiredItemTags)));
+            }
+
             var affixDefinition = new AffixDefinition(
                 affixId,
                 new IGeneratorComponent[]
@@ -88,21 +117,7 @@ namespace Macerus.Content.Affixes
                     })),
                     new AffixMutexGeneratorComponent(mutexKey),
                 }.Concat(extraComponents),
-                new[]
-                {
-                    affixTypeFilterAttribute,
-                    new FilterAttribute(
-                        new StringIdentifier("affix-mutex-key"),
-                        new IdentifierFilterAttributeValue(mutexKey),
-                        false),
-                    new FilterAttribute(
-                        new StringIdentifier("item-level"),
-                        new RangeFilterAttributeValue(minLevel, maxLevel),
-                        true),
-                    _filterContextAmenity.CreateSupportedAttribute(
-                        new StringIdentifier("affix-id"),
-                        affixId),
-                });
+                filters);
             return affixDefinition;
         }
     }
