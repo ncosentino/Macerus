@@ -27,7 +27,7 @@
     <PackageReference Include="NexusLabs.Contracts" Version="*" />
     <PackageReference Include="NexusLabs.Framework" Version="*" />
     <PackageReference Include="ProjectXyz" Version="0.1.*" />
-    <PackageReference Include="SSH.NET" Version="2020.0.0" />
+    <PackageReference Include="SSH.NET" Version="2020.0.2" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Memory" Version="4.5.3" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
