@@ -28,7 +28,7 @@
     <PackageReference Include="Macerus" Version="0.1.*" />
     <PackageReference Include="Macerus.Content" Version="0.1.*" />
     <PackageReference Include="MySql.Data" Version="8.0.23" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.10" />
     <PackageReference Include="NexusLabs.Contracts" Version="*" />
     <PackageReference Include="NexusLabs.Framework" Version="*" />
