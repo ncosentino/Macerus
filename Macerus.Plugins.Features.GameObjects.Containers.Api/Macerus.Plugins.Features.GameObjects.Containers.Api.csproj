@@ -14,7 +14,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="NexusLabs.Collections.Generic" Version="0.0.10" />
     <PackageReference Include="NexusLabs.Contracts" Version="*" />
     <PackageReference Include="NexusLabs.Framework" Version="*" />
